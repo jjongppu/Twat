@@ -128,10 +128,12 @@
                 var nMinutes = ((sDate.substr(10, 2) == "") ? 0 : sDate.substr(10, 2));
                 var nSeconds = ((sDate.substr(12, 2) == "") ? 0 : sDate.substr(12, 2));
                 var objDate = new Date(parseInt(nYear), parseInt(nMonth) - 1, parseInt(nDate), parseInt(nHours), parseInt(nMinutes), parseInt(nSeconds));
+
             }
             else {
                 var objDate = new Date(parseInt(nYear), parseInt(nMonth) - 1, parseInt(((nDate == null) ? 1 : nDate)));
             }
+
             var strYear = objDate.getYear().toString();
             var strMonth = (objDate.getMonth() + 1).toString();
             var strDate = objDate.getDate().toString();
@@ -1036,12 +1038,14 @@
                     $(a).css("backgroundColor", "white");
                     //                    scheArr[parseInt(dayInfo)] = false;
                     scheSet.delete(yearInfo + monthInfo + dayInfo);
+
                 }
                 else {
                     $(a).css("backgroundColor", "green");
                     //                    scheArr[parseInt(dayInfo)] = dayInfo;
                     scheSet.add(yearInfo + monthInfo + dayInfo);
                 }
+
                 //                addSche += yearInfo + monthInfo + dayInfo + ",";
             }
         }
@@ -1105,6 +1109,7 @@
                     }
                     else {
                         dateParam = today.getFullYear() + "0" + (today.getMonth() + 1) + "" + calDay;
+
                     }
                 }
                 else {
@@ -1115,6 +1120,7 @@
                         dateParam = today.getFullYear() + "" + (today.getMonth() + 1) + "" + calDay;
                     }
                 }
+
                 for (let item of scheSet.keys()) {
                     if (item == dateParam) {
                         $('#date' + calDay).css("backgroundColor", "green");
@@ -1397,6 +1403,7 @@
                         <div id="user_Id"></div>
                     </li>
                 </ul>
+
             </div>
             <ul class="nav_ul" id="nav_menu">
                 <li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
@@ -1417,6 +1424,7 @@
             <div id="openModal" onclick="detailModal();"> 버튼인가</div>
             
         
+
             <div id="blindCover" onclick="closeModal();"></div><!-- 뒷 까만 배경이에유-->
             
             
