@@ -420,7 +420,7 @@ public class MemberDAO {
 		            e.printStackTrace();
 		         }finally {
 		               try {
-		                     if(rs != null)
+		                     if(rs != null) rs.close();
 		                     if(psmt != null) psmt.close();
 		                     if(con != null) con.close();
 		                  } catch (SQLException e) {
@@ -431,5 +431,54 @@ public class MemberDAO {
 		   }
 
 	
-	
+	   // 회원정보 배열을 통해 회원의 생일 반환하는 함수, 배열로 반환하며 형태는 생일+이름으로 저장
+	   public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList)
+	   {
+		   ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
+		   String sql = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH from MEMBER";
+		   
+		   try
+		   {
+			   con = getConnection();
+			   psmt = con.prepareStatement(sql);
+			   rs = psmt.executeQuery();
+			   
+			   while(rs.next())
+			   {
+				   for(int i = 0; i < memberList.size(); i++)
+				   {
+					   // memberList의 ID와 member_id값이 같다면 member 객체 생성해서 arrList에 추가
+					   if(rs.getString(1).equals(memberList.get(i)))
+					   {
+						   MemberVO member = new MemberVO();
+						   
+						   member.setMEMBER_ID(rs.getString(1));
+						   member.setMEMBER_NAME(rs.getString(2));
+						   member.setMEMBER_BIRTH(rs.getString(3));
+						   
+						   arrList.add(member);
+					   }
+				   }
+			   }
+		   }
+		   catch (Exception e)
+		   {
+			   e.printStackTrace();
+		   }
+		   finally
+		   {
+			   try
+			   {
+				   if(rs != null) rs.close();
+				   if(psmt != null) psmt.close();
+				   if(con != null) con.close();
+			   }
+			   catch (SQLException e)
+			   {
+				   e.printStackTrace();
+			   }
+		   }
+		   
+		   return arrList;
+	   }
 }
