@@ -1473,6 +1473,31 @@
 
         }
         
+        function getGroupSchedule()
+        {
+        	var groupScheduleId = 2;
+        	
+        	$.ajax({
+                type: 'post'
+                , url: 'groupSchedule.do'
+                , data:
+                {
+                    group: groupScheduleId
+                }
+                , dataType: "json"
+                , success: function (data)
+                {
+                    console.log("getGroupSchedule : " + data);
+                    
+                }
+                , error: function (req)
+                {
+                    //                    alert('통신실패');
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            })
+		}
+        
         function getGroupInfo()
         {
             var para = document.location.href.split("?");
