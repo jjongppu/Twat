@@ -49,7 +49,7 @@ public class AdminDAO {
 		public String adminlogin(String MEMBER_ID, String MEMBER_PW) {
 			String result = "";
 			
-			String selectSql = "select * from ADMIN where MEMBER_ID=? and MEMBER_PW=?";
+			String selectSql = "select * from ADMIN where ADMIN_ID=? and ADMIN_PW=?";
 			
 			try {
 				con = getConnection();
