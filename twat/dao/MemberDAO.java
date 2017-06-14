@@ -80,8 +80,39 @@ public class MemberDAO {
 	   
 	   
 	   
-	   // 비밀번호 찾는 메서드 ---------승우-------------------------------
-	   
+// 비밀번호 찾는 메서드 ---------승우-------------------------------
+	   public String searchPW(String MEMBER_ID, String MEMBER_NAME, String MEMBER_PHONE) {
+		   String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
+		   String getPW = "";
+		   
+		   try {
+			con = getConnection();
+			psmt = con.prepareStatement(selectSql);
+			psmt.setString(1, MEMBER_ID);
+			psmt.setString(2, MEMBER_NAME);
+			psmt.setString(3, MEMBER_PHONE);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				getPW = rs.getString(1);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	         try {
+		            if(rs != null)   rs.close();
+		            if(psmt != null) psmt.close();
+		            if(con != null) con.close();
+		         } catch (SQLException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		         }
+		      
+		   }
+		   return getPW;
+	   }	   
 	   
 
 		// 회원 로그인을 위한 메서드 ----------------------------------
@@ -163,12 +194,14 @@ public class MemberDAO {
 
 	   
 	   
-	   // 회원 가입을 위한 메서드 ------승우----------------------------
-	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_IMG, String MEMBER_GENDER, String MEMBER_BIRTH ) {
+// 회원 가입을 위한 메서드 ------승우----------------------------
+	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_GENDER, String MEMBER_BIRTH ) {
 	      
 	      int result = -1;
+	      int signUp = 0;
 	      
-	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
+//	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
+	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
 	      
 	      try {
 	         con = getConnection();
@@ -178,14 +211,19 @@ public class MemberDAO {
 	         psmt.setString(2, MEMBER_PW);
 	         psmt.setString(3, MEMBER_NAME);
 	         psmt.setString(4, MEMBER_PHONE);
-	         psmt.setString(5, MEMBER_IMG);
+	         psmt.setString(5, "img/member/basis_photo.png");
 	         psmt.setString(6, MEMBER_GENDER);
 	         psmt.setString(7, MEMBER_BIRTH);
 	         psmt.setString(8, null);
 	         psmt.setString(9, null);
-	         psmt.setTimestamp(10, null);
-	         
+//	         psmt.setTimestamp(10, null);
+//	         System.out.println(psmt.executeUpdate());
+//	         return result;
 	         result = psmt.executeUpdate();
+//	         if(psmt.executeUpdate() > 0)
+//	         {
+//	        	 result = 1;
+//	         }
 	      
 //	         rs = psmt.executeQuery();
 //	         
@@ -208,12 +246,20 @@ public class MemberDAO {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	         }
-	      
+	         System.out.println(result);
+	         
+//	         if(signUp != 1)
+//	        	 return result;
+//	         else
+//	        	 return 1;
+	         
+	         return result;
+	         
 	   }
-	      return result;      
+//	      System.out.println(result);
+//	      return result;      
 	                     
-	   }
-	   
+	   }	   
 	   
 	   
 	   

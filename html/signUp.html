@@ -5,6 +5,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="js/jquery-3.2.1.min.js"></script>    
 <style>
+    * {
+        background-color: beige;
+    }
     .mainText {
         margin-top: 100px;
     }
@@ -13,11 +16,13 @@
         text-align: center;
         width: 450px;
         margin: 0 auto;
+        
     }
     
     .idpwContaioner {
 /*        border: 1px solid darkgray;*/
         margin: 70px 0 50px 0;
+        
     }
     
     .infoContainer {
@@ -26,7 +31,7 @@
     }
     
     .inputBox{
-        width: 60%;
+        width: 80%;
         height: 32px;
         margin: 6px 0;
         padding-left: 8px;  
@@ -36,8 +41,9 @@
     
     #genderDiv {
 /*        height: 40px;*/
-        border: 1px solid darkgray;
+/*        border: 1px solid darkgray;*/
 /*        position: relative;*/
+        margin-top: 20px;
     }
     #genderSmallDiv {
         position: absolute;
@@ -55,7 +61,7 @@
         float: left;
         display: inline-block;
 */
-        width: 30%;
+/*        width: 30%;*/
     }
     #man {
         border: 1px solid darkgray;
@@ -73,6 +79,15 @@
         margin: 6px 0 0 0;
         background-color: #80aaff;
         color: white;
+    }
+    #yearBox{
+        width: 25%;
+    }
+    #monthBox{
+        width: 25%;
+    }
+    #dayBox{
+        width: 25%;
     }
 
     
@@ -119,11 +134,11 @@
             dataType : "json",
             success : function(data) {
                 console.log(data);
-                var result = data[0].result;
+                var result = data[0].signUpResult;
                 
                 console.log(result);
-                
-             
+                alert('회원가입이 완료되었습니다.');
+                location.href="index.html";
 //                var re_id = /^[a-z0-9_-]{3,16}$/; // 아이디 검사식
 //                var re_pw = /^[a-z0-9_-]{6,18}$/; // 비밀번호 검사식
 //                var re_tel = /^[0-9]{8,11}$/; // 전화번호 검사식
@@ -188,7 +203,7 @@
         };
     
     
-    // 성별 중복 선택 불가
+    
     
     
     
@@ -252,7 +267,26 @@
                     <input type="radio" name="signUpGender" value="M"  class="genderBtn" id="man" onclick="test(this)"/>남자
                     <input type="radio" name="signUpGender" value="F"  class="genderBtn" id="woman" onclick="test(this)"/>여자
                 </div>
-                <div><input type="text" name="signUpBirth" placeholder="생년월일" id="birthBox" class="inputBox"/></div>
+                <div>
+                    <input type="text" name="signUpBirthYear" placeholder="년(4자리)" id="yearBox" class="inputBox"/>
+                    <select name="signUpBirthMonth" placeholder="월" id="monthBox" class="inputBox">
+                        <option value="00">월</option>
+                        <option value="01">1</option>
+                        <option value="02">2</option>
+                        <option value="03">3</option>
+                        <option value="04">4</option>
+                        <option value="05">5</option>
+                        <option value="06">6</option>
+                        <option value="07">7</option>
+                        <option value="08">8</option>
+                        <option value="09">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+<!--                    <input type="text" name="signUpBirth" placeholder="" id="monthBox" class="inputBox"/>-->
+                    <input type="text" name="signUpBirthDay" placeholder="일" id="dayBox" class="inputBox"/>
+                </div>
                 <div><input type="tel" name="signUpPhone" placeholder="전화번호" maxlength="13" id="phoneBox" class="inputBox" onkeyup="autoHypen()"/></div>
             </div>
 
@@ -260,7 +294,7 @@
 
             <div id="btn">
 <!--                <input type="submit" value="확인" />-->
-                <input type="submit" value="확인" class="btns" onclick="signUpEnter()"/>
+                <input type="button" value="확인" class="btns" onclick="signUpEnter()"/>
                 <input type="button" value="취소" class="btns" />
             </div>
 		</div>
