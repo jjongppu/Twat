@@ -106,6 +106,17 @@
         <url-pattern>/searchID.do</url-pattern> 
     </servlet-mapping>
 
+<!-- ÃÖ½Â¿ì SearchPWServlet -->
+    <servlet> 
+        <servlet-name>SearchPWServletcsw</servlet-name> 
+        <servlet-class>com.twat.controller.SearchPWServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>SearchPWServletcsw</servlet-name> 
+        <url-pattern>/SearchPW.do</url-pattern> 
+    </servlet-mapping>
+
+
 <!-- ÃÖ½Â¿ì idCheckServlet -->
     <servlet> 
         <servlet-name>idCheckServletcsw</servlet-name> 
