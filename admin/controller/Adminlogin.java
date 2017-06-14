@@ -13,7 +13,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.twat.dao.MemberDAO;
+import com.admin.dao.AdminDAO;
+
 
 @WebServlet("/adminlogin.do")
 public class Adminlogin extends HttpServlet {
@@ -36,21 +37,19 @@ public class Adminlogin extends HttpServlet {
 		String userid = request.getParameter("userid");
 		String userpw = request.getParameter("userpw");
 		
-		MemberDAO memDao = MemberDAO.getInstance();
-		int result = memDao.loginMember(userid, userpw);
-		
-		// 날짜 해보다 만거
-//		Calendar cal = Calendar.getInstance();
-//		cal.add(Calendar.DATE, 15);
+		AdminDAO adDao = AdminDAO.getInstance();
+		String result = adDao.adminlogin(userid, userpw);
 		
 		PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 		
 		// 로그인 성공/실패 
-		if(result == 1){
+		if(result != ""){
 			HttpSession session = request.getSession();
-			session.setAttribute("loginUserId", userid);
+			
+			session.setAttribute("loginAdmin", userid);
+			session.setAttribute("adminGrade", result);
 			
 			jsonOb.put("result", "success");
 		} else {
