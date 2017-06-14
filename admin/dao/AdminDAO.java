@@ -45,28 +45,24 @@ public class AdminDAO {
 	   
 
 
-		// 회원 로그인을 위한 메서드 ----------------------------------
-		public int adminlogin(String MEMBER_ID, String MEMBER_PW) {
-			int result = -1;
+		// 관리자 로그인을 위한 메서드 ----------------------------------쫑길빵길
+		public String adminlogin(String MEMBER_ID, String MEMBER_PW) {
+			String result = "";
 			
-			
-			String selectSql = "select * from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
-			
+			String selectSql = "select * from ADMIN where MEMBER_ID=? and MEMBER_PW=?";
 			
 			try {
 				con = getConnection();
 				psmt = con.prepareStatement(selectSql);
 				psmt.setString(1, MEMBER_ID);
 				psmt.setString(2, MEMBER_PW);
-				System.out.println("!");
 				rs = psmt.executeQuery();
 				
 				if(rs.next()) {
 					// 로그인 성공
-					result = 1;
+					result = rs.getString("ADMIN_GRADE");
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 					try {
@@ -74,7 +70,6 @@ public class AdminDAO {
 						if(psmt != null) psmt.close();
 						if(con != null) con.close();
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				
