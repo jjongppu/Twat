@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="../js/jquery-3.2.1.min.js"></script>
+
+<style>
+    *{
+        color: white;
+    }
+    body{
+        margin: 0;
+        padding: 0;
+        background-image: url(../img/background/background2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+    a{
+        text-decoration: none;
+    }
+    .loginContainer {
+        text-align: center;
+        width: 100%;
+        
+        
+    }
+    .logoBox {
+        height: 100px;
+        line-height: 180px;
+        font-size: 40px;
+    }
+    .idpwBox{
+        width: 60%;
+        height: 38px;
+        margin: 6px 0;
+        padding-left: 18px;
+        background-color:transparent;
+        border: none;
+        border-bottom: 1px solid gray;
+    }
+    .btn {
+        width: 60%;
+        border: none;
+        height: 38px;
+        margin: 6px 0 0 0;
+        background-color:transparent;
+        cursor: pointer;
+    }
+
+
+    #userLoginCover{
+        
+/*        transform: translate(-50%,-50%);*/
+        width: 400px;
+        margin: auto;
+        height: 300px;
+    }
+    #search-bg {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      z-index: 99;
+      -webkit-filter: blur(10px);
+      filter: blur(10px);
+        
+    }
+    #cover{
+        position: relative;
+        height: 300px;
+    }
+    
+    #cover:before {
+      content: '';
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+/*        transform: translate(50%,50%);*/
+      z-index: 0;
+      background-image: url('../img/background/background2.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;/* make it match #bg position and size */
+      -webkit-filter: blur(5px);
+      filter: blur(5px);
+    }
+    #cover_inCover{
+        position: relative;
+        z-index: 1;
+/*        padding: 20px;*/
+        display:flex;
+    }
+    #logo{
+        width: 100px;
+        height: auto;
+    }
+        textarea:focus, input:focus{
+        outline: none;
+    }
+    
+    
+    input:-ms-input-placeholder { color: #ffffff; } 
+   input::-webkit-input-placeholder { color: #ffffff; } 
+   input::-moz-placeholder { color: #ffffff;  } 
+   input::-moz-placeholder { color: #ffffff;  } 
+</style>    
+
+
+<script>
+    
+	function loginEnter() {
+        if($('#idBox').val() == "") {
+            alert("아이디를 입력하세요.");
+            $('#idBox').focus();
+        } else if($('#pwBox').val() == "") {
+            alert("비밀번호를 입력하세요.");
+            $('#pwBox').focus();
+        } else{
+            $.ajax ({
+                type : 'post',
+                url : 'adminlogin.do',
+                data : $('#idpwPass').serialize(),
+                dataType : "json",
+                success : function(data) {
+                    var result = data[0].result;
+                    if(result == 'success') {
+                        alert("환영합니다.");
+                        location.href="home.html"
+                    } else {
+                        alert("아이디 또는 비밀번호가 잘못되었습니다.");
+                    }
+                }
+
+            });
+        } 
+    }
+    
+    // 중앙정렬 시켜줌 ----------
+     $(document).ready(function(){
+         $('#userLoginCover').css('margin-top',($(window).height()-300)/2);
+         $(window).resize(function(){
+            $('#userLoginCover').css('margin-top',($(window).height()-300)/2);
+         });
+     });
+    
+    
+    function enterLog(){        
+        if(window.event.keyCode == 13) {
+            loginEnter();
+        }
+    }
+                       
+    
+</script>
+
+<title>Insert title here</title>
+</head>
+<body>
+
+    <div id="userLoginCover">
+        <form id="idpwPass" action="login.do" method="post">
+            <div id="cover">
+                <div id="cover_inCover">
+                <div class='loginContainer'>
+                    <div class='logoBox'><img id="logo" src="../img/etcIcon/admin-logo.png"/>
+                    </div>
+
+                    <div>
+                        <div>
+                            <input type="text" id="idBox" name = "userid" class="idpwBox" placeholder='아이디'/>
+                        </div>
+                        <div>
+                            <input type="password" id="pwBox" name="userpw" class="idpwBox" placeholder='비밀번호' onkeypress="enterLog()"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <input type="button"  id='loginBtn' class='btn' value="로그인" onclick="loginEnter()"/>
+                            <input type="hidden" id="date" name="date" value=""/>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                    </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
