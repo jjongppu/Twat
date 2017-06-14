@@ -396,39 +396,6 @@ public class MemberDAO {
 	      return arList;
 	   }
 	   
-	   
-	   
-	   public ArrayList<String> test(){
-		      ArrayList<String> str = new ArrayList<String>(); 
-		      String sql = "select * from test";
-		      int a=0;
-		      
-		      try {
-		         a=4;
-		            con = getConnection();
-		            a=5;
-		             psmt = con.prepareStatement(sql);
-		             a=1;  
-		             rs = psmt.executeQuery();
-		               a=2;    
-		               while(rs.next()){
-		                  str.add(rs.getString(1));
-		                  str.add(rs.getString(2));
-		               }
-		               a=3;
-		         } catch (Exception e) {
-		            e.printStackTrace();
-		         }finally {
-		               try {
-		                     if(rs != null)
-		                     if(psmt != null) psmt.close();
-		                     if(con != null) con.close();
-		                  } catch (SQLException e) {
-		                     e.printStackTrace();
-		                  }
-		            }
-		      return str;
-		   }
 
 	
 	
