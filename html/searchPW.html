@@ -14,7 +14,7 @@
     }
     
     
-    function signUpEnter() {
+    function searchEnter() {
         
             $.ajax ({
             type : 'post',
@@ -23,11 +23,11 @@
 
             dataType : "json",
             success : function(data) {
-                console.log(data);
-                var result = data[0].signUpResult;
+//                console.log(data);
+                var result = data[0].result;
                 
                 console.log(result);
-                
+                alert(result);
                 
             },
             error: function(req) {
