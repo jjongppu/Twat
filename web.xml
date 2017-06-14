@@ -174,4 +174,17 @@
         <url-pattern>/Logout.do</url-pattern> 
     </servlet-mapping>
 
+<!-- 종길 어드민 로그인 처리-->
+
+     <servlet> 
+        <servlet-name>AdminloginServlet</servlet-name> 
+        <servlet-class>com.twat.controller.Adminlogin</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminloginServlet</servlet-name> 
+        <url-pattern>/adminlogin.do</url-pattern> 
+    </servlet-mapping>
+
+
+
 </web-app>
