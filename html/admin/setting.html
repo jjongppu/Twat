@@ -1,12 +1,125 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>twat admin</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="../js/jquery-3.2.1.min.js"></script>
+
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        background-image: url(../img/background/background2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+    div{
+        position: relative;
+    }
+    #wrap{
+        min-width: 800px;
+        max-width: 1500px;
+        height: 700px; 
+        margin: auto;
+    }
+    #contents{
+        margin-top: 30px;
+    }
+    a{
+        text-decoration: none;
+        display: block;
+        padding: 14px 0;
+        color: white;
+    }
+
+
+    ul{
+        margin: 0;
+        list-style: none;
+        background-color:gray;
+        opacity: 0.7;
+        
+    }
+    li{
+        cursor: pointer;
+        display: inline-block;
+        text-align: center;
+        width: 120px;
+    }
+        #logout > li:hover,#nav_menu > li:hover{
+        background-color: black;
+        opacity: 0.7;
+    }
+    #logout{
+        position: absolute;
+        top: 0;
+        right: 0;
+        
+    }
+    
+    @media screen and (min-width:1130px) and (max-width : 1500px){
+    
+    }
+    
+    @media screen and (max-width : 1129px){
+
+    }
+    
+    
+    
+    
+</style>    
+
+<script>
+    
+    // 세션 확인 
+        
+        $.ajax ({
+            type : 'post',
+            url : '../adminSetting.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result != 'success') {
+                    alert("권한이 없습니다.");
+                    location.href="admin.html";
+                }
+            }
+        });
+        
+    
+
+    
+          
+    
+</script>
+
+<title>Insert title here</title>
 </head>
 <body>
+        <nav>
+            <ul id="nav_menu">
+                <li><a href="home.html">홈</a></li>
+                <li><a href="#">회원 관리</a></li>
+                <li><a href="#">게시글 관리</a></li>
+                <li><a href="#">문의사항 관리</a></li>
+                <li><a href="#">기타 작업</a></li>
+                <li id="logout" onclick="logout()"><a>로그아웃</a></li>
+            </ul>
+        </nav>
 
+    <div id="wrap">
+        
+        
+        <div id="contents">
+            
+          
+            
+            
+        </div>
+    </div>
 </body>
 </html>

@@ -42,10 +42,10 @@ public class GetTwatDataInfo extends HttpServlet {
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 		
-		jsonOb.put("memberCount", info.get(1));
-		jsonOb.put("qnaCount", info.get(2));
-		jsonOb.put("calendatCount", info.get(3));
-		jsonOb.put("visitCount", info.get(4));
+		jsonOb.put("memberCount", info.get(0));
+		jsonOb.put("qnaCount", info.get(1));
+		jsonOb.put("calendatCount", info.get(2));
+		jsonOb.put("visitCount", info.get(3));
 		
 		jsonList.add(jsonOb);
 		

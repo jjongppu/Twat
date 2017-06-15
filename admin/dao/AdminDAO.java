@@ -41,9 +41,6 @@ public class AdminDAO {
 	      return ds.getConnection();
 	   }
 
-	
-	   
-
 
 		// 관리자 로그인을 위한 메서드 ----------------------------------쫑길빵길
 		public String adminlogin(String MEMBER_ID, String MEMBER_PW) {
@@ -76,16 +73,18 @@ public class AdminDAO {
 			}
 			return result;
 		}
-	   
+		
 		
 		// 쫑길빵길의 어드민 홈 db정보 뿌려주기
 		public ArrayList<Integer> getAllInfo(){
 			ArrayList<Integer> info = new ArrayList<Integer>();
+			
 			String selectGetInfo = "SELECT"; 
 			selectGetInfo +="(SELECT COUNT(*) FROM member) as memC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM qna) as qnaC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM calendar where CAL_DEPTH=0) as calC,";
-			selectGetInfo +="(SELECT VISIT_COUNT FROM visit where VISIT_KIND='TOTAL') as visC";						
+			selectGetInfo +="(SELECT VISIT_COUNT FROM visit where VISIT_KIND='TOTAL') as visC";		
+			
 			try {
 				con = getConnection();
 				psmt = con.prepareStatement(selectGetInfo);
@@ -109,6 +108,5 @@ public class AdminDAO {
 			}
 			return info;
 		}
-	   
-	
+	   	
 }
