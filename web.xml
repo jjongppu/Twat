@@ -185,6 +185,15 @@
         <url-pattern>/adminlogin.do</url-pattern> 
     </servlet-mapping>
 
+<!-- 종기리 보이의 어드민 세션 체크-->
 
+     <servlet> 
+        <servlet-name>AdminSettingServlet</servlet-name> 
+        <servlet-class>com.twat.controller.AdminSetting</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminSettingServlet</servlet-name> 
+        <url-pattern>/adminSetting.do</url-pattern> 
+    </servlet-mapping>
 
 </web-app>
