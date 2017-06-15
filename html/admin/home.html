@@ -164,6 +164,18 @@
 </style>    
 
 <script>
+        $.ajax ({
+            type : 'post',
+            url : '../getinfo.do',
+            dataType : "json",
+            success : function(data) {
+                $('#memVal').html(data[0].memberCount);
+                $('#qnaVal').html(data[0].qnaCount);
+                $('#calVal').html(data[0].calendatCount);
+                $('#viewData').html(data[0].visitCount);
+                
+            }
+        });
     
     // 현재 admin 이 master 인지 확인함
 	function clickSetting() {
@@ -183,10 +195,6 @@
         });
         
     } 
-    
-
-    
-          
     
 </script>
 
@@ -220,7 +228,7 @@
                             </div>
                             <div class="viewContents">
                                 <div class="viewName">Visit</div>
-                                <div class="viewData" id="visVal">45</div>
+                                <div class="viewData" id="visVal">0</div>
                             </div>
                         </div>
                         <div class="viewBottomCover">
@@ -237,7 +245,7 @@
                             </div>
                             <div class="viewContents">
                                 <div class="viewName">Calendar</div>
-                                <div class="viewData" id="calVal">4545</div>
+                                <div class="viewData" id="calVal">0</div>
                             </div>
                         </div>
                         <div class="viewBottomCover">
@@ -254,7 +262,7 @@
                             </div>
                             <div class="viewContents">
                                 <div class="viewName">Member</div>
-                                <div class="viewData" id="memVal">45</div>
+                                <div class="viewData" id="memVal">0</div>
                             </div>
                         </div>
                         <div class="viewBottomCover">
@@ -271,7 +279,7 @@
                             </div>
                             <div class="viewContents">
                                 <div class="viewName">QnA</div>
-                                <div class="viewData" id="qnaVal">108</div>
+                                <div class="viewData" id="qnaVal">0</div>
                             </div>
                         </div>
                         <div class="viewBottomCover">
