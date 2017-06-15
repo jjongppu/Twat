@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>젖같애</title>
+    <title>단체페이지</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -13,6 +13,8 @@
     <script src="js/nav.js"></script>
     <script language="javascript" type="text/javascript">
         var scheSet = new Set();
+        var initDay = new Date();
+        var cal_date  = "";
         /*음력 알고리즘..시작*/
         function gfnRight(strString, nSize) {
             var nStart = String(strString).length;
@@ -897,6 +899,7 @@
                 드레그앤 드롭
             */
             /////////////////////////////    
+         
             getGroupInfo();
             //            $('.saturday').css('color','blue');
             $('#yearSelect').change(function () { //연도 선택
@@ -961,6 +964,13 @@
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
+            
+            
+            
+//            getGroupInfo();
+            
+            
+            
         }
         
         function dateToFormat(sendCal){
@@ -988,9 +998,11 @@
 
         function initToday() {
             
-            var initDay = new Date();
             
-            console.log(dateToFormat(initDay));
+            
+//            console.log(dateToFormat(initDay));
+//			console.log("!");
+
             $('tr').children().each(function (i) {
                 if ($(this).text() == initDay.getDate() && $('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1){
                     
@@ -1013,6 +1025,8 @@
                
                     
             });
+            
+            voteMeeting(cal_date);
 //            update();
         }
 
@@ -1056,10 +1070,12 @@
         //        
         //        var scheSet = new Set();
         function getDayInfo(a) { // 선택한 날짜 정보를 얻기 위한 함수
+            
             if (a != null) {
                 var yearInfo = $("#yearSelect").val() + "";
                 var monthInfo = $("#monthSelect").val() + "";
                 var dayInfo = $(a).attr("id").substr(4, $(a).attr("id").length - 4) + "";
+                
                 if (monthInfo.length == 1) {
                     monthInfo = "0" + monthInfo;
                 }
@@ -1067,18 +1083,44 @@
                     dayInfo = "0" + dayInfo;
                 }
                 //                scheArr[0] = yearInfo + monthInfo;
-                console.log(yearInfo + monthInfo + dayInfo);
-                if ($(a).css("backgroundColor") == "rgb(0, 128, 0)") {
+                var selectDate = yearInfo + monthInfo + dayInfo;
+//                console.log(selectDate);
+                
+//                for(var vote = 0; vote < cal_date.length; vote++){//투표가 현재
+//                    
+//                    
+//                }
+                
+                
+                
+                
+                if(selectDate < dateToFormat(initDay)){
+                    alert("지난 날짜는 선택할수 없습니다!")
+                    
+                    
+                }else{
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    if ($(a).css("backgroundColor") == "rgb(0, 128, 0)") {
                     $(a).css("backgroundColor", "white");
                     //                    scheArr[parseInt(dayInfo)] = false;
                     scheSet.delete(yearInfo + monthInfo + dayInfo);
                     initToday();
-                }
-                else {
+                    }
+                    else {
                     $(a).css("backgroundColor", "green");
                     //                    scheArr[parseInt(dayInfo)] = dayInfo;
                     scheSet.add(yearInfo + monthInfo + dayInfo);
+                    }
+                    
                 }
+                
                 //                addSche += yearInfo + monthInfo + dayInfo + ",";
             }
         }
@@ -1207,18 +1249,18 @@
                     // 1주일이 7일 이므로                 
                     row = calendar.insertRow(); // 줄 추가
                 }
-                var choiceDate = "";
-                if (memChoiceArr != null) {
-                    for (var dateNum = 0; dateNum < memChoiceArr.length; dateNum++) {
-                        choiceDate = memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length - 8, 8);
-                        //                    console.log(memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length-8 , 8));
-                        if (choiceDate == dateParam) {
-                            //                        console.log(parseInt(choiceDate.substr(6,2)));
-                            console.log("#date" + parseInt(choiceDate.substr(6, 2)));
-                            $("#date" + parseInt(choiceDate.substr(6, 2))).css("background-color", "yellow");
-                        }
-                    }
-                }
+//                var choiceDate = "";
+//                if (memChoiceArr != null) {
+//                    for (var dateNum = 0; dateNum < memChoiceArr.length; dateNum++) {
+//                        choiceDate = memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length - 8, 8);
+//                        //                    console.log(memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length-8 , 8));
+//                        if (choiceDate == dateParam) {
+//                            //                        console.log(parseInt(choiceDate.substr(6,2)));
+//                            console.log("#date" + parseInt(choiceDate.substr(6, 2)));
+//                            $("#date" + parseInt(choiceDate.substr(6, 2))).css("background-color", "yellow");
+//                        }
+//                    }
+//                }
             }
             
             
@@ -1326,7 +1368,14 @@
                     //                        console.log(choiceInfo[viewNum]);
                     //                        
                     //                    }
-                    buildCalendar(null, null, mem_choice);
+//                    console.log(data[1].cal_date.split(","));
+                    console.log(mem_choice);
+                    buildCalendar();
+//                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
+                    cal_date = data[1].cal_date.split(",");
+                    voteMeeting(cal_date);
+                    
+                    
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
@@ -1334,6 +1383,47 @@
                 }
             })
         }
+//        
+        function voteMeeting(cal_date){
+//            console.log(cal_date);
+//            console.log($("#yearSelect option:selected").val() + $("#monthSelect option:selected").val());
+//            console.log(scheSet);
+            
+            for(var vote = 0; vote < cal_date.length; vote++){
+                if(cal_date[vote].substr(0,4) == $("#yearSelect option:selected").val() && parseInt(cal_date[vote].substr(4,2)) == parseInt($("#monthSelect option:selected").val()) ){
+                    $("#date" + parseInt(cal_date[vote].substr(6,2))).css("backgroundColor","red");
+                    
+               
+                    
+                    
+                }
+                
+//                for (let item of scheSet.keys()){             
+//                    if(item = cal_date[vote]){
+//                        if($('#yearSelect option:selected').val() == cal_date[vote].substr(0,4) && $('#monthSelect option:selected').val() == parseInt(cal_date[vote].substr(4,2))){
+//                        
+//                        $('#date' + parseInt(cal_date[vote].substr(6,2))).css("backgroundColor","green");
+//                        
+//
+//                        }
+//                        
+//                    }
+//
+//                    
+//
+//                } 
+                    
+                
+            }
+            
+                             
+
+            
+            
+        }
+        
+        
+        
     </script>
 </head>
 
