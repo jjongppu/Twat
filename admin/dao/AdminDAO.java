@@ -83,7 +83,8 @@ public class AdminDAO {
 			selectGetInfo +="(SELECT COUNT(*) FROM member) as memC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM qna) as qnaC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM calendar where CAL_DEPTH=0) as calC,";
-			selectGetInfo +="(SELECT VISIT_COUNT FROM visit where VISIT_KIND='TOTAL') as visC";		
+			selectGetInfo +="(SELECT VISIT_COUNT FROM visit where VISIT_KIND='TOTAL') as visC";
+			selectGetInfo +="(SELECT COUNT(*) FROM calgather) as calgCC";	
 			
 			try {
 				con = getConnection();
@@ -94,6 +95,7 @@ public class AdminDAO {
 					info.add(rs.getInt("qnaC"));
 					info.add(rs.getInt("calC"));
 					info.add(rs.getInt("visC"));
+					info.add(rs.getInt("calgC"));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
