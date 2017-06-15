@@ -2,28 +2,17 @@
 <html>
 
 <head>
-    <title>단체페이지</title>
+    <title>단체 페이지</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
     <link rel="stylesheet" type="text/css" href="css/groupCalendar.css">
-    <!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
     <!--    네브바 js, 세션검사 -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/nav.js"></script>
     <script language="javascript" type="text/javascript">
-        // 일정 잡기 저장용
         var scheSet = new Set();
-        // 생일자 저장용
-        var birthSet = new Set();
-        // 일정(확정) 저장용
-        var scheduleSet = new Set();
-        // 일정(미확정) 저장용
-        var voteSet = new Set();
-        // 전체 일정 저장용
-        var groupScheduleSet = new Set();
-        var initDay = new Date();
-        var cal_date = "";
         /*음력 알고리즘..시작*/
         function gfnRight(strString, nSize) {
             var nStart = String(strString).length;
@@ -139,10 +128,12 @@
                 var nMinutes = ((sDate.substr(10, 2) == "") ? 0 : sDate.substr(10, 2));
                 var nSeconds = ((sDate.substr(12, 2) == "") ? 0 : sDate.substr(12, 2));
                 var objDate = new Date(parseInt(nYear), parseInt(nMonth) - 1, parseInt(nDate), parseInt(nHours), parseInt(nMinutes), parseInt(nSeconds));
+
             }
             else {
                 var objDate = new Date(parseInt(nYear), parseInt(nMonth) - 1, parseInt(((nDate == null) ? 1 : nDate)));
             }
+
             var strYear = objDate.getYear().toString();
             var strMonth = (objDate.getMonth() + 1).toString();
             var strDate = objDate.getDate().toString();
@@ -908,11 +899,7 @@
                 드레그앤 드롭
             */
             /////////////////////////////    
-            // console.log("getGroupInfo");
             getGroupInfo();
-            // console.log("getGroupBirth");
-            getGroupBrith();
-            // console.log("cal");
             //            $('.saturday').css('color','blue');
             $('#yearSelect').change(function () {
                 initToday();
@@ -932,7 +919,7 @@
                     $("#preButton").css("display", "block");
                     $("#nextButton").css("display", "block");
                 }
-            }); //연도 선택
+            });
             $('#monthSelect').change(function () {
                 initToday();
                 //                console.log(parseInt($("#monthSelect").val()));            
@@ -950,16 +937,31 @@
                     $("#preButton").css("display", "block");
                     $("#nextButton").css("display", "block");
                 }
-            }); // 달 선택
+            });
             $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
             $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
-            //            initToday(); //  주석1
+            initToday();
         });
+        //드래그앤드롭
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
 
+        function drop(ev) {
+            alert("일정을 추가하시겠습니까??");
+            ev.preventDefault();
+            var c = ev.dataTransfer.getData("text");
+            ev.target.appendChild(document.getElementById(c));
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+        //---
         function update() {
             $.ajax({
                 type: "POST"
-                , url: "json/holiday.json"
+                , url: "holiday.json"
                 , dataType: "JSON"
                 , success: function (data) {
                     var dateArr = new Array();
@@ -969,58 +971,24 @@
                         titleArr.push(item.이벤트);
                     });
                     buildCalendar(dateArr, titleArr);
-                    initToday();
                 }
-                , error: function (req) {
-                    //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                , error: function (xhr, status, error) {
+                	alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
-        }
-
-        function dateToFormat(sendCal) {
-            var dateStr = "";
-            if ((sendCal.getMonth() + 1) / 10 < 1) {
-                if (sendCal.getDate() / 10 < 1) {
-                    dateStr = sendCal.getFullYear() + "0" + (sendCal.getMonth() + 1) + "0" + sendCal.getDate();
-                }
-                else {
-                    dateStr = sendCal.getFullYear() + "0" + (sendCal.getMonth() + 1) + "" + sendCal.getDate();
-                }
-            }
-            else {
-                if (sendCal.getDate() / 10 < 1) {
-                    dateStr = sendCal.getFullYear() + "" + (sendCal.getMonth() + 1) + "0" + sendCal.getDate();
-                }
-                else {
-                    dateStr = sendCal.getFullYear() + "" + (sendCal.getMonth() + 1) + "" + sendCal.getDate();
-                }
-            }
-            return dateStr;
         }
 
         function initToday() {
-            //            console.log(dateToFormat(initDay));
-            //			console.log("!");
             $('tr').children().each(function (i) {
-                if ($(this).text() == initDay.getDate() && $('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1) {
-                    $(this).css("background-color", "yellow");
-                }
-                for (let item of scheSet.keys()) {
-                    if (item == dateToFormat(initDay)) {
-                        if ($('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1) {
-                            $('#date' + initDay.getDate()).css("backgroundColor", "green");
-                            //                            console.log(initDay.getDate());
-                        }
-                    }
-                }
+                if ($(this).text() == today.getDate()) $(this).css("background-color", "pink");
             });
-            voteMeeting(cal_date);
+            update();
         }
 
         function prevCalendar() {
             // 이전 달을 today에 값을 저장하고 달력을 뿌려줍니다.
             today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            initToday();
             $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
             $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
             if ($("#yearSelect").val() == "2017" && $("#monthSelect").val() == "1") {
@@ -1029,13 +997,13 @@
             else {
                 $("#nextButton").css("display", "block");
             }
-            update();
         }
 
         function nextCalendar() {
             // 다음 달을 today에 값을 저장하고 달력을 뿌려줍니다.
             today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
             //            console.log(today);
+            initToday();
             $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
             $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
             if ($("#yearSelect").val() == "2030" && $("#monthSelect").val() == "12") {
@@ -1044,7 +1012,6 @@
             else {
                 $("#preButton").css("display", "block");
             }
-            update();
         }
         //        addSche = "";
         //        scheArr = new Array(32);
@@ -1066,46 +1033,19 @@
                     dayInfo = "0" + dayInfo;
                 }
                 //                scheArr[0] = yearInfo + monthInfo;
-                var selectDate = yearInfo + monthInfo + dayInfo;
-                //                console.log(selectDate);
-                //                for(var vote = 0; vote < cal_date.length; vote++){//투표가 현재
-                //                    
-                //                    
-                //                }
-                if (selectDate < dateToFormat(initDay)) {
-                    alert("지난 날짜는 선택할수 없습니다!")
+                console.log(yearInfo + monthInfo + dayInfo);
+                if ($(a).css("backgroundColor") == "rgb(0, 128, 0)") {
+                    $(a).css("backgroundColor", "white");
+                    //                    scheArr[parseInt(dayInfo)] = false;
+                    scheSet.delete(yearInfo + monthInfo + dayInfo);
+
                 }
                 else {
-                    if ($(a).css("backgroundColor") == "rgb(0, 128, 0)") {
-                        $(a).css("backgroundColor", "white");
-                        //                    scheArr[parseInt(dayInfo)] = false;
-                        scheSet.delete(yearInfo + monthInfo + dayInfo);
-                        for (let item of voteSet.keys()) {
-                            if (item.split("-")[0] == (yearInfo + monthInfo + dayInfo)) {
-                                //                            console.log(yearInfo + monthInfo + dayInfo);
-                                $(a).css("backgroundColor", "#ff8080");
-                            }
-                        }
-                        for (let item of voteSet.keys()) {
-                            if (item.split("-")[0] == (yearInfo + monthInfo + dayInfo)) {
-                                $(a).css("backgroundColor", "#00ff80");
-                            }
-                        }
-                        // 생일표시
-                        for (let item of birthSet.keys()) {
-                            if (item.split("-")[0].substr(2, 4) == (monthInfo + dayInfo)) {
-                                $(a).css("backgroundColor", "#0080ff");
-                                console.log(monthInfo + dayInfo);
-                            }
-                        }
-                        initToday();
-                    }
-                    else {
-                        $(a).css("backgroundColor", "green");
-                        //                    scheArr[parseInt(dayInfo)] = dayInfo;
-                        scheSet.add(yearInfo + monthInfo + dayInfo);
-                    }
+                    $(a).css("backgroundColor", "green");
+                    //                    scheArr[parseInt(dayInfo)] = dayInfo;
+                    scheSet.add(yearInfo + monthInfo + dayInfo);
                 }
+
                 //                addSche += yearInfo + monthInfo + dayInfo + ",";
             }
         }
@@ -1118,12 +1058,15 @@
         }
 
         function buildCalendar(dateArr, titleArr, memChoiceArr) {
+        	//변경 테스트 
+        	//변경 테스트2
             var nMonth = new Date(today.getFullYear(), today.getMonth(), 1); // 이번 달의 첫째 날
             var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // 이번 달의 마지막 날
             var tblCalendar = document.getElementById("calendar"); // 테이블 달력을 만들 테이블
             var tblCalendarYM = document.getElementById("calendarYM"); // yyyy년 m월 출력할 곳
             var dateParam = "";
             var dateColor = new Date();
+            var saveHoliday = new Array();
             var holiday = gfnGetHolidays(today.getFullYear());
             var t = 0;
             var countHoliday = 0;
@@ -1136,6 +1079,9 @@
             //                console.log(holiday[k]);
             //                
             //            }
+            for (var k = 0; k < holiday.length; k++) {
+                saveHoliday[k] = holiday[k];
+            }
             while (tblCalendar.rows.length > 2) {
                 tblCalendar.deleteRow(tblCalendar.rows.length - 1);
             }
@@ -1152,14 +1098,18 @@
                 cell = row.insertCell();
                 $(cell).attr("id", "date" + calDay);
                 $(cell).attr("onclick", "getDayInfo(this)");
+                $(cell).attr("draggable", "true");
+                $(cell).attr("ondragstart", "drag(event)");
                 $(cell).attr("style", "cursor:pointer");
-                initToday();
+                //                $(cell).attr("ondrop", "drop(event)");
+                //                $(cell).attr("ondragover", "allowDrop(event)");
                 if ((today.getMonth() + 1) / 10 < 1) {
                     if (calDay / 10 < 1) {
                         dateParam = today.getFullYear() + "0" + (today.getMonth() + 1) + "0" + calDay;
                     }
                     else {
                         dateParam = today.getFullYear() + "0" + (today.getMonth() + 1) + "" + calDay;
+
                     }
                 }
                 else {
@@ -1170,11 +1120,12 @@
                         dateParam = today.getFullYear() + "" + (today.getMonth() + 1) + "" + calDay;
                     }
                 }
+
                 for (let item of scheSet.keys()) {
                     if (item == dateParam) {
                         $('#date' + calDay).css("backgroundColor", "green");
                     }
-                } //선택한 날짜 초록색으로 표기
+                }
                 var saveSolar = gfnSolar2Lunar(dateParam);
                 dateColor.setFullYear(today.getFullYear());
                 dateColor.setMonth(today.getMonth());
@@ -1200,37 +1151,10 @@
                 //                    
                 //                    
                 //                }
-                // 확정된 일정표시
-                for (let item of scheduleSet.keys()) {
-                    if (item.split("-")[0] == dateParam) {
-                        cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        //                        $('.votedSchedule').prevAll().css("background-color", "#ff8080");
-                        console.log("#date" + parseInt(dateParam.substr(6)));
-                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
-                    }
-                }
-                // 미확정된 일정표시
-                for (let item of voteSet.keys()) {
-                    if (item.split("-")[0] == dateParam) {
-                        cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        //                        $('.voteSchedule').prevAll().css("background-color", "#00ff80");
-                        console.log("#date" + parseInt(dateParam.substr(6)));
-                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
-                    }
-                }
-                // 생일표시
-                for (let item of birthSet.keys()) {
-                    if (item.split("-")[0].substr(2, 4) == dateParam.substr(4)) {
-                        cell.innerHTML += "<div class='memberBirthDay' style='font-size:13px'>" + item.split("-")[1] + "(" + item.split("-")[2] + ")님의 생일</div>";
-                        console.log("#date" + parseInt(dateParam.substr(6)));
-                        //                        $('.memberBirthDay').prevAll().css("background-color", "#0080ff");
-                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#0080ff");
-                    }
-                }
-                for (var markHoliday = 0; markHoliday < holiday.length; markHoliday++) {
+                for (var markHoliday = 0; markHoliday < saveHoliday.length; markHoliday++) {
                     var whatHoliday;
-                    if (holiday[markHoliday].substr(0, 8) == parseInt(dateParam)) {
-                        whatHoliday = holiday[markHoliday].substr(8, holiday[markHoliday].length - 8);
+                    if (saveHoliday[markHoliday].substr(0, 8) == parseInt(dateParam)) {
+                        whatHoliday = saveHoliday[markHoliday].substr(8, saveHoliday[markHoliday].length - 8);
                         cell.innerHTML += "<div class='holi'>" + whatHoliday + "</div>";
                         $('.holi').css("color", "red");
                         $('.holi').prevAll().css("color", "red");
@@ -1251,28 +1175,27 @@
                     // 1주일이 7일 이므로                 
                     row = calendar.insertRow(); // 줄 추가
                 }
-                //                var choiceDate = "";
-                //                if (memChoiceArr != null) {
-                //                    for (var dateNum = 0; dateNum < memChoiceArr.length; dateNum++) {
-                //                        choiceDate = memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length - 8, 8);
-                //                        //                    console.log(memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length-8 , 8));
-                //                        if (choiceDate == dateParam) {
-                //                            //                        console.log(parseInt(choiceDate.substr(6,2)));
-                //                            console.log("#date" + parseInt(choiceDate.substr(6, 2)));
-                //                            $("#date" + parseInt(choiceDate.substr(6, 2))).css("background-color", "yellow");
-                //                        }
-                //                    }
-                //                }
+                var choiceDate = "";
+                if (memChoiceArr != null) {
+                    for (var dateNum = 0; dateNum < memChoiceArr.length; dateNum++) {
+                        choiceDate = memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length - 8, 8);
+                        //                    console.log(memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length-8 , 8));
+                        if (choiceDate == dateParam) {
+                            //                        console.log(parseInt(choiceDate.substr(6,2)));
+                            console.log("#date" + parseInt(choiceDate.substr(6, 2)));
+                            $("#date" + parseInt(choiceDate.substr(6, 2))).css("background-color", "yellow");
+                        }
+                    }
+                }
             }
-            //            initToday();
         }
-        // 일정들 전부 출력
+
         function getGroupInfo() {
             var para = document.location.href.split("?");
-            //            console.log("para : " + para);
-            //            console.log("para[1] : " + para[1]);
+            console.log("para : " + para);
+            console.log("para[1] : " + para[1]);
             para = para[1].split("=");
-            //            console.log("para2 : " + para);
+            console.log("para2 : " + para);
             //            
             //            para = par[1];
             //            console.log("click");
@@ -1325,16 +1248,10 @@
                         str += '<div class="left">';
                         if (str2.indexOf(',') == -1) {
                             str += data[arrCal].cal_date;
-                            console.log("확정 : " + data[arrCal].cal_memo);
-                            scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo);
                         }
                         else {
                             var res = str2.split(",");
                             str += res[0] + "~" + res[res.length - 1];
-                            console.log("투표 : " + data[arrCal].cal_memo);
-                            for (var i = 0; i < res.length; i++) {
-                                voteSet.add(res[i] + "-" + data[arrCal].cal_memo);
-                            }
                         }
                         str += '</div>';
                         str += '<div class="middle"><div class="up">' + data[arrCal].cal_memo + '</div><div class="down"><span>' + data[arrCal].cal_writer + '님</span><span>외 ' + data[0].group_count + '명 참여</span>';
@@ -1374,96 +1291,108 @@
                     //                        console.log(choiceInfo[viewNum]);
                     //                        
                     //                    }
-                    //                    console.log(data[1].cal_date.split(","));
-                    console.log(mem_choice);
-                    buildCalendar();
-                    //                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
-                    cal_date = data[1].cal_date.split(",");
-                    voteMeeting(cal_date);
+                    buildCalendar(null, null, mem_choice);
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             })
-        }
-        // 모달 작업 부분
-        function getGroupBrith() {
-            var para = document.location.href.split("?");
-            //            console.log("para : " + para);
-            //            console.log("para[1] : " + para[1]);
-            para = para[1].split("=");
-            //            console.log("para2 : " + para);
-            //            
-            //            para = par[1];
-            //            console.log("click");
-            $.ajax({
-                type: 'post'
-                , url: 'groupBirth.do'
-                , data: {
-                    group: para[1]
-                }
-                , dataType: "json"
-                , success: function (data) {
-                    console.log("groupBirth");
-                    console.log(data);
-                    //                    console.log("이런");
-                    //                    $(data).find(Object).each(function()
-                    //                    {
-                    //                        console.log($(this).find('memberNa    me').text());
-                    //                    });
-                    for (var i = 0; i < data.length; i++) {
-                        //                        console.log(data[i].memberBirth + "-" + data[i].memberName + "-" + data[i].memberId);
-                        var memBirth = data[i].memberBirth + "-" + data[i].memberName + "-" + data[i].memberId;
-                        birthSet.add(memBirth);
-                        //                        console.log(memBirth);
-                        //                        console.log(birthSet[i]);
-                    }
-                    console.log("birthSet");
-                    for (let item of birthSet.keys()) {
-                        console.log(item.split("-"));
-                        console.log("split : " + item.split("-")[0].substr(2, 4));
-                    }
-                }
-                , error: function (req) {
-                    //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-                }
-            })
-        }
-        // 확정된 일정 정보 출력
-        function getScheduleInfo() {}
-        // 미확정된 일정 정보 출력
-        function getVoteInfo() {}
-
-        function voteMeeting(cal_date) {
-            //            console.log(cal_date);
-            //            console.log($("#yearSelect option:selected").val() + $("#monthSelect option:selected").val());
-            //            console.log(scheSet);
-            for (var vote = 0; vote < cal_date.length; vote++) {
-                if (cal_date[vote].substr(0, 4) == $("#yearSelect option:selected").val() && parseInt(cal_date[vote].substr(4, 2)) == parseInt($("#monthSelect option:selected").val())) {
-                    $("#date" + parseInt(cal_date[vote].substr(6, 2))).css("backgroundColor", "red");
-                }
-                //                for (let item of scheSet.keys()){             
-                //                    if(item = cal_date[vote]){
-                //                        if($('#yearSelect option:selected').val() == cal_date[vote].substr(0,4) && $('#monthSelect option:selected').val() == parseInt(cal_date[vote].substr(4,2))){
-                //                        
-                //                        $('#date' + parseInt(cal_date[vote].substr(6,2))).css("backgroundColor","green");
-                //                        
-                //
-                //                        }
-                //                        
-                //                    }
-                //
-                //                    
-                //
-                //                } 
-            }
         }
     </script>
+    
+    <script>
+        
+        //모달 띄워주깅
+        function detailModal(){
+            $('#blindCover').css('display','block');
+        }
+    
+        
+        //화면 사이즈가 변할때마다 블라인드 창의 크기를 맞춰줍니당
+    $(document).ready(function(){
+        $('#blindCover').css("height",$(window).height());
+        $('#blindCover').css("width",$(window).width());
+        $(window).resize(function(){
+            $('#blindCover').css("height",$(window).height());
+            $('#blindCover').css("width",$(window).width());
+        });
+    });
+        
+            //모달 사라짐
+    function closeModal(){
+        $('#blindCover').css('display','none');
+//        $('#messagMeodal').remove();
+//        $('#modal').remove();
+        
+    }
+    //메시지모달만 없앰
+    function closeMessageModal(){
+        $('#messagMeodal').remove();
+        
+    }
+    </script>
+    
 </head>
-
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        background-image: url(img/background/background4.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+    #openModal{
+        width: 80px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: greenyellow;
+        cursor: pointer;
+    }
+    #blindCover{
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0.7;
+        display: none;
+    }
+    #detailModal{
+        position: fixed;
+        width: 500px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        background-color: white;
+        z-index: 50;
+        border: 1px solid black;
+    }
+    #detailTop{
+        height: 100px;
+    }
+    #detailMiddle{
+        height: 100px;
+    }
+    
+    
+    
+    .comentsImgCover,.comentsImg{
+        width: 60px;
+        height: 60px;
+        display: inline-block;
+    }
+    .comentsImg{
+        border-radius: 60px;
+    }
+    
+</style>
 <body>
+    
+    
+    
     <div id="wrap">
         <!--        네브바 입니다 ```````````````````````````````````````````````` -->
         <nav class="left_nav">
@@ -1474,11 +1403,12 @@
                         <div id="user_Id"></div>
                     </li>
                 </ul>
+
             </div>
             <ul class="nav_ul" id="nav_menu">
                 <li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
                 <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-                <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="#">단체 캘린더</a></li>
+                <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="groupList.html">단체 캘린더</a></li>
                 <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
                 <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
             </ul>
@@ -1486,7 +1416,23 @@
                 <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
             </ul>
         </nav>
+        
+        
         <div id="main_container">
+            
+<!--          쫑기리 모달 만드는중  --------------------------------------------------------------------------------->
+            <div id="openModal" onclick="detailModal();"> 버튼인가</div>
+            
+        
+
+            <div id="blindCover" onclick="closeModal();"></div><!-- 뒷 까만 배경이에유-->
+            
+            
+            
+            
+<!--          쫑기리 모달 만드는중  --------------------------------------------------------------------------------->            
+            
+            
             <div id="container">
                 <!-- {방 이름, 방장, 설정}, {단체일정}, {진행중인 투표}, {가까운 이벤트} -->
                 <div id="left-side">
@@ -1531,7 +1477,8 @@
                         <div class="down"></div>
                     </div>
                 </div>
---></div>
+-->
+                    </div>
                     <!-- {진행중인 투표} -->
                     <div class="vote">
                         <div class="title">
@@ -1552,7 +1499,8 @@
                         <div class="down"></div>
                     </div>
                 </div>
---></div>
+-->
+                    </div>
                     <!-- {가까운 이벤트} -->
                     <div class="event">
                         <div class="title">
@@ -1620,7 +1568,7 @@
                             </tr>
                         </table>
                         <script>
-                            //                            buildCalendar();
+                            buildCalendar();
                         </script>
                     </div>
                     <input type="button" value="일정추가하기" onclick="addSchedule()" />

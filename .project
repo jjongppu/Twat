@@ -6,17 +6,65 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
+<<<<<<< HEAD
 			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
+=======
+<<<<<<< HEAD
+			<name>org.eclipse.jdt.core.javabuilder</name>
+=======
+<<<<<<< HEAD
 			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+=======
+<<<<<<< HEAD
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+=======
+			<name>org.eclipse.jdt.core.javabuilder</name>
+>>>>>>> twat/최승우
+>>>>>>> branch1
+>>>>>>> b24b74ca2c00a60892337f262c0d1dac58e5c6c3
+>>>>>>> b928634e34c63e790d0d5ae006b68afeac307818
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+<<<<<<< HEAD
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+=======
+<<<<<<< HEAD
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+=======
+<<<<<<< HEAD
 			<name>org.eclipse.wst.validation.validationbuilder</name>
+=======
+<<<<<<< HEAD
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+=======
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+>>>>>>> twat/최승우
+>>>>>>> branch1
+>>>>>>> b24b74ca2c00a60892337f262c0d1dac58e5c6c3
+>>>>>>> b928634e34c63e790d0d5ae006b68afeac307818
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+<<<<<<< HEAD
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+=======
+<<<<<<< HEAD
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+=======
+<<<<<<< HEAD
+			<name>org.eclipse.jdt.core.javabuilder</name>
+=======
+<<<<<<< HEAD
+			<name>org.eclipse.jdt.core.javabuilder</name>
+=======
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+>>>>>>> twat/최승우
+>>>>>>> branch1
+>>>>>>> b24b74ca2c00a60892337f262c0d1dac58e5c6c3
+>>>>>>> b928634e34c63e790d0d5ae006b68afeac307818
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -24,8 +72,32 @@
 	<natures>
 		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
+<<<<<<< HEAD
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+=======
+<<<<<<< HEAD
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+=======
+<<<<<<< HEAD
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+=======
+<<<<<<< HEAD
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+=======
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+>>>>>>> twat/최승우
+>>>>>>> branch1
+>>>>>>> b24b74ca2c00a60892337f262c0d1dac58e5c6c3
+>>>>>>> b928634e34c63e790d0d5ae006b68afeac307818
 	</natures>
 </projectDescription>
