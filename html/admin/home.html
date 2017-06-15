@@ -4,115 +4,164 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="js/jquery-3.2.1.min.js"></script>
+<script src="../js/jquery-3.2.1.min.js"></script>
 
 <style>
-    *{
-        color: white;
-    }
     body{
         margin: 0;
         padding: 0;
-        background-image: url(img/background/background2.jpg);
+        background-image: url(../img/background/background2.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
         background-position: center top;
     }
+    div{
+        position: relative;
+    }
+    #wrap{
+        min-width: 800px;
+        max-width: 1500px;
+        height: 700px; 
+        margin: auto;
+    }
+    #contents{
+        margin-top: 30px;
+    }
     a{
         text-decoration: none;
+        display: block;
+        padding: 14px 0;
+        color: white;
     }
-    .loginContainer {
+
+
+    ul{
+        margin: 0;
+        list-style: none;
+        background-color:gray;
+        opacity: 0.7;
+        
+    }
+    li{
+        cursor: pointer;
+        display: inline-block;
         text-align: center;
-        width: 100%;
-        
+        width: 120px;
+    }
+        #logout > li:hover,#nav_menu > li:hover{
+        background-color: black;
+        opacity: 0.7;
+    }
+    #logout{
+        position: absolute;
+        top: 0;
+        right: 0;
         
     }
-    .logoBox {
-        height: 100px;
-        line-height: 180px;
+    
+/*     미리보기 메인 뷰*/
+    .mainViewInfoCover{
+        width: 24.7%;
+        height: 180px;
+        display: inline-block;
+    }
+    
+    .mainViewInfo{
+        width: 300px;
+        cursor: pointer;
+        margin: auto;
+        background-color: white;
+        opacity: 0.9;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    
+    #viewCover{
+        margin: auto;
+    }
+    .viewImgCover{
+        display: inline-block;
+        width: 110px;
+        height: 110px;
+        text-align: center;
+        padding-top: 20px;
+    }
+    
+    .viewImg{
+        width: 70px;
+        height: 70px;
+    }
+    
+    .viewTopCover{
+         padding: 0 10px;
+        height: 110px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .viewBottomCover{
+        padding: 0 10px 0 30px;
+        border-top: 1px solid gray;
+        height: 50px;
+        width: 100%;
+        line-height: 50px;
+        box-sizing: border-box;
+    }
+    
+    
+    .viewContents{
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        height: 110px;
+        width: 180px;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+    .viewName,.viewData{
+        height: 50%;
+        text-align: right;
+    }
+    .viewName{
+        font-size: 20px;
+        line-height: 70px;
+    }
+    .viewData{
         font-size: 40px;
     }
-    .idpwBox{
-        width: 60%;
-        height: 38px;
-        margin: 6px 0;
-        padding-left: 18px;
-        background-color:transparent;
-        border: none;
-        border-bottom: 1px solid gray;
-    }
-    .btn {
-        width: 60%;
-        border: none;
-        height: 38px;
-        margin: 6px 0 0 0;
-        background-color:transparent;
-        cursor: pointer;
-    }
-
-
-    #userLoginCover{
-        
-/*        transform: translate(-50%,-50%);*/
-        width: 400px;
-        margin: auto;
-        height: 300px;
-    }
-    #search-bg {
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      bottom: 0px;
-      left: 0px;
-      z-index: 99;
-      -webkit-filter: blur(10px);
-      filter: blur(10px);
+    
+    .viewBottomText{
         
     }
-    #cover{
-        position: relative;
-        height: 300px;
+    
+    .enterImg{
+        position: absolute;
+        top: 14px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
     }
     
-    #cover:before {
-      content: '';
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      bottom: 0px;
-      left: 0px;
-/*        transform: translate(50%,50%);*/
-      z-index: 0;
-      background-image: url('img/background/background2.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center top;
-      background-attachment: fixed;/* make it match #bg position and size */
-      -webkit-filter: blur(5px);
-      filter: blur(5px);
+    @media screen and (min-width:1130px) and (max-width : 1500px){
+    
+         .mainViewInfoCover{
+            width: 32%;
+        }
     }
-    #cover_inCover{
-        position: relative;
-        z-index: 1;
-/*        padding: 20px;*/
-        display:flex;
-    }
-    #logo{
-        width: 100px;
-        height: auto;
-    }
-        textarea:focus, input:focus{
-        outline: none;
+    
+    @media screen and (max-width : 1129px){
+
+         .mainViewInfoCover{
+            width: 48%;
+        }
     }
     
     
-    input:-ms-input-placeholder { color: #ffffff; } 
-   input::-webkit-input-placeholder { color: #ffffff; } 
-   input::-moz-placeholder { color: #ffffff;  } 
-   input::-moz-placeholder { color: #ffffff;  } 
+    
+    
 </style>    
-
 
 <script>
     
@@ -126,13 +175,14 @@
         } else{
             $.ajax ({
                 type : 'post',
-                url : 'adminlogin.do',
+                url : '../adminlogin.do',
                 data : $('#idpwPass').serialize(),
                 dataType : "json",
                 success : function(data) {
                     var result = data[0].result;
                     if(result == 'success') {
-                        alert("로그인 되었습니다.");
+                        alert("환영합니다.");
+                        location.href="home.html"
                     } else {
                         alert("아이디 또는 비밀번호가 잘못되었습니다.");
                     }
@@ -141,59 +191,124 @@
             });
         } 
     }
+
     
-    // 중앙정렬 시켜줌 ----------
-     $(document).ready(function(){
-         $('#userLoginCover').css('margin-top',($(window).height()-300)/2);
-         $(window).resize(function(){
-            $('#userLoginCover').css('margin-top',($(window).height()-300)/2);
-         });
-     });
-    
-    
-    function enterLog(){        
-        if(window.event.keyCode == 13) {
-            loginEnter();
-        }
-    }
-                       
+          
     
 </script>
 
 <title>Insert title here</title>
 </head>
 <body>
+        <nav>
+            <ul id="nav_menu">
+                <li><a href="home.html">홈</a></li>
+                <li><a href="#">회원 관리</a></li>
+                <li><a href="#">게시글 관리</a></li>
+                <li><a href="#">문의사항 관리</a></li>
+                <li><a href="#">기타 작업</a></li>
+                <li id="logout" onclick="logout()"><a>로그아웃</a></li>
+            </ul>
+        </nav>
 
-    <div id="userLoginCover">
-        <form id="idpwPass" action="login.do" method="post">
-            <div id="cover">
-                <div id="cover_inCover">
-                <div class='loginContainer'>
-                    <div class='logoBox'><img id="logo" src="img/etcIcon/admin-logo.png"/>
-                    </div>
-
-                    <div>
-                        <div>
-                            <input type="text" id="idBox" name = "userid" class="idpwBox" placeholder='아이디'/>
+    <div id="wrap">
+        
+        
+        <div id="contents">
+            
+            <div id="viewCover">
+                
+                
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="visit" onclick="clickView(this);">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_visit.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Visit</div>
+                                <div class="viewData">45</div>
+                            </div>
                         </div>
-                        <div>
-                            <input type="password" id="pwBox" name="userpw" class="idpwBox" placeholder='비밀번호' onkeypress="enterLog()"/>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">방문자 수</span>
                         </div>
                     </div>
-
-                    <div>
-                        <div>
-                            <input type="button"  id='loginBtn' class='btn' value="로그인" onclick="loginEnter()"/>
-                            <input type="hidden" id="date" name="date" value=""/>
-                        </div>
-
-                    </div>
-
-
                 </div>
+                
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="qna" onclick="clickView(this);">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_cal.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Calendar</div>
+                                <div class="viewData">4545</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">일정 조회 및 관리</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
                     </div>
+                </div>
+                
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="members" onclick="clickView(this);">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_mem.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Member</div>
+                                <div class="viewData">45</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">회원조회, 회원관리 등등..</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="ask" onclick="clickView(this);">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_ask.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">QnA</div>
+                                <div class="viewData">108</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">QnA 조회 및 답변</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="setting" onclick="clickView(this);">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_set.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Setting</div>
+                                <div class="viewData">설정</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">admin 관리 등등..</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
+                    </div>
+                </div>
+                
+                
             </div>
-        </form>
+            
+            
+        </div>
     </div>
 </body>
 </html>
