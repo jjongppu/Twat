@@ -165,32 +165,25 @@
 
 <script>
     
-	function loginEnter() {
-        if($('#idBox').val() == "") {
-            alert("아이디를 입력하세요.");
-            $('#idBox').focus();
-        } else if($('#pwBox').val() == "") {
-            alert("비밀번호를 입력하세요.");
-            $('#pwBox').focus();
-        } else{
-            $.ajax ({
-                type : 'post',
-                url : '../adminlogin.do',
-                data : $('#idpwPass').serialize(),
-                dataType : "json",
-                success : function(data) {
-                    var result = data[0].result;
-                    if(result == 'success') {
-                        alert("환영합니다.");
-                        location.href="home.html"
-                    } else {
-                        alert("아이디 또는 비밀번호가 잘못되었습니다.");
-                    }
+    // 현재 admin 이 master 인지 확인함
+	function clickSetting() {
+        
+        $.ajax ({
+            type : 'post',
+            url : '../adminSetting.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result == 'success') {
+                    location.href="setting.html"
+                } else {
+                    alert("권한이 없습니다.");
                 }
-
-            });
-        } 
-    }
+            }
+        });
+        
+    } 
+    
 
     
           
@@ -220,7 +213,7 @@
                 
                 
                 <div class="mainViewInfoCover">
-                    <div class="mainViewInfo" id="visit" onclick="clickView(this);">
+                    <div class="mainViewInfo" id="visit"  onclick="location.href='#'">
                         <div class="viewTopCover">
                             <div class="viewImgCover">
                                 <img class="viewImg" src="../img/etcIcon/adminView_visit.png"/> 
@@ -237,7 +230,7 @@
                 </div>
                 
                 <div class="mainViewInfoCover">
-                    <div class="mainViewInfo" id="qna" onclick="clickView(this);">
+                    <div class="mainViewInfo" id="qna" onclick="location.href='#'">
                         <div class="viewTopCover">
                             <div class="viewImgCover">
                                 <img class="viewImg" src="../img/etcIcon/adminView_cal.png"/> 
@@ -254,7 +247,7 @@
                 </div>
                 
                 <div class="mainViewInfoCover">
-                    <div class="mainViewInfo" id="members" onclick="clickView(this);">
+                    <div class="mainViewInfo" id="members"  onclick="location.href='#'">
                         <div class="viewTopCover">
                             <div class="viewImgCover">
                                 <img class="viewImg" src="../img/etcIcon/adminView_mem.png"/> 
@@ -271,7 +264,7 @@
                 </div>
                 
                 <div class="mainViewInfoCover">
-                    <div class="mainViewInfo" id="ask" onclick="clickView(this);">
+                    <div class="mainViewInfo" id="ask"  onclick="location.href='#'">
                         <div class="viewTopCover">
                             <div class="viewImgCover">
                                 <img class="viewImg" src="../img/etcIcon/adminView_ask.png"/> 
@@ -288,7 +281,7 @@
                 </div>
                 
                 <div class="mainViewInfoCover">
-                    <div class="mainViewInfo" id="setting" onclick="clickView(this);">
+                    <div class="mainViewInfo" id="setting"  onclick="location.href='clickSetting();'">
                         <div class="viewTopCover">
                             <div class="viewImgCover">
                                 <img class="viewImg" src="../img/etcIcon/adminView_set.png"/> 
