@@ -83,8 +83,8 @@ public class AdminDAO {
 			selectGetInfo +="(SELECT COUNT(*) FROM member) as memC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM qna) as qnaC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM calendar where CAL_DEPTH=0) as calC,";
-			selectGetInfo +="(SELECT VISIT_COUNT FROM visit where VISIT_KIND='TOTAL') as visC";
-			selectGetInfo +="(SELECT COUNT(*) FROM calgather) as calgCC";	
+			selectGetInfo +="(SELECT VISIT_COUNT FROM visit where VISIT_KIND='TOTAL') as visC,";
+			selectGetInfo +="(SELECT COUNT(*) FROM calgather) as calgC";	
 			
 			try {
 				con = getConnection();
