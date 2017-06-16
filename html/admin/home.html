@@ -196,7 +196,21 @@
         });
         
     } 
-    
+    // 로그아웃처리 
+    function logout(){
+        $.ajax ({
+            type : 'post',
+            url : '../Logout.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result != 'success') {
+                    alert("권한이 없습니다.");
+                    location.href="admin.html";
+                }
+            }
+        });
+    }
 </script>
 
 <title>admin</title>

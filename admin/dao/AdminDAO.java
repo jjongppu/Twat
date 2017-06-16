@@ -110,5 +110,55 @@ public class AdminDAO {
 			}
 			return info;
 		}
-	   	
+		
+		
+		
+		// 어드민 페이지 현재 정상 로그인 되는 회원들만 얻어옴
+		public ArrayList<MemberVO> adminlogin(int page){
+			ArrayList<MemberVO> members = new ArrayList<MemberVO>();
+			
+			String selectGetAllMemeber = "SELECT * FROM MEMBER WHERE OUT_TIME=0 LIMIT "+ (page*10-10) +",10";
+			String selectMemberCount = "SELECT COUNT(*) FROM MEMBER";
+			
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(selectMemberCount);
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					String count = rs.getInt("COUNT(*)")+"";
+					MemberVO countMem = new MemberVO();
+					countMem.setMEMBER_ID(count);
+					members.add(countMem);
+				}
+				
+				psmt = con.prepareStatement(selectGetAllMemeber);
+				rs = psmt.executeQuery();
+				while(rs.next()){
+					MemberVO Mem = new MemberVO();
+					Mem.setMEMBER_ID(rs.getString("MEMBER_ID"));
+					Mem.setMEMBER_NAME(rs.getString("MEMBER_NAME"));
+					Mem.setMEMBER_PHONE(rs.getString("MEMBER_PHONE"));
+					Mem.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
+					Mem.setMEMBER_GENDER(rs.getString("MEMBER_GENDER"));
+					Mem.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
+					Mem.setSTART_DATE(rs.getTimestamp("START_DATE"));
+					members.add(Mem);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs != null)
+						if(psmt != null) psmt.close();
+						if(con != null) con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			}
+			return members;
+		}
+		
+		
+		
 }
