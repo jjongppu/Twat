@@ -43,7 +43,7 @@ public class MemberDAO {
 
 	
 	
-	  // 아이디 찾는 메서드 (이름,전화번호로 찾기)-----승우-------------------------
+// 아이디 찾는 메서드 (이름,전화번호로 찾기)-----승우-------------------------
 	   public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
 	      
 	      String selectSql = "select MEMBER_ID from MEMBER where MEMBER_NAME=? and MEMBER_PHONE=?";
@@ -76,20 +76,49 @@ public class MemberDAO {
 	      
 	   }
 	      return getID;
-	   }
+	   }	   
 	   
 	   
-	   
-	   // 비밀번호 찾는 메서드 ---------승우-------------------------------
-	   
+// 비밀번호 찾는 메서드 ---------승우-------------------------------
+	   public String searchPW(String MEMBER_ID, String MEMBER_NAME, String MEMBER_PHONE) {
+		   String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
+		   String getPW = "";
+		   
+		   try {
+			con = getConnection();
+			psmt = con.prepareStatement(selectSql);
+			psmt.setString(1, MEMBER_ID);
+			psmt.setString(2, MEMBER_NAME);
+			psmt.setString(3, MEMBER_PHONE);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				getPW = rs.getString(1);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	         try {
+		            if(rs != null)   rs.close();
+		            if(psmt != null) psmt.close();
+		            if(con != null) con.close();
+		         } catch (SQLException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		         }
+		      
+		   }
+		   return getPW;
+	   }	     
 	   
 
-		// 회원 로그인을 위한 메서드 ----------------------------------
+	// 회원 로그인을 위한 메서드 ----------------------------------
 		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
 			int result = -1;
 			
-			
-			String selectSql = "select * from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
+			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
 			
 			
 			try {
@@ -101,15 +130,20 @@ public class MemberDAO {
 				rs = psmt.executeQuery();
 				
 				if(rs.next()) {
-					// 로그인 성공
-					result = 1;
+					if(rs.getInt(1) == 0) {
+						// 로그인 성공
+						result = 1;
+					} else {
+						result = rs.getInt(1);
+					}
 				}
 			} catch (Exception e) {
+				System.out.print("접속 에러");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 					try {
-						if(rs != null)
+						if(rs != null)rs.close();
 						if(psmt != null) psmt.close();
 						if(con != null) con.close();
 					} catch (SQLException e) {
@@ -119,8 +153,7 @@ public class MemberDAO {
 				
 			}
 			return result;
-		}
-	   
+		}	   
 	   
 	   
 	// 로그인 한사람의 그룹 얻어오기 쫑기리
@@ -163,12 +196,14 @@ public class MemberDAO {
 
 	   
 	   
-	   // 회원 가입을 위한 메서드 ------승우----------------------------
-	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_IMG, String MEMBER_GENDER, String MEMBER_BIRTH ) {
+// 회원 가입을 위한 메서드 ------승우----------------------------
+	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_GENDER, String MEMBER_BIRTH, int OUT_TIME) {
 	      
-	      int result = -1;
+	      int result = 0;
+	      int signUp = 0;
 	      
-	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
+//	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
+	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?)";
 	      
 	      try {
 	         con = getConnection();
@@ -178,24 +213,19 @@ public class MemberDAO {
 	         psmt.setString(2, MEMBER_PW);
 	         psmt.setString(3, MEMBER_NAME);
 	         psmt.setString(4, MEMBER_PHONE);
-	         psmt.setString(5, MEMBER_IMG);
+	         psmt.setString(5, "img/member/basis_photo.png");
 	         psmt.setString(6, MEMBER_GENDER);
 	         psmt.setString(7, MEMBER_BIRTH);
 	         psmt.setString(8, null);
 	         psmt.setString(9, null);
-	         psmt.setTimestamp(10, null);
+//	         psmt.setTimestamp(10, null);
+	         psmt.setInt(10, OUT_TIME);
 	         
 	         result = psmt.executeUpdate();
-	      
+	         
 //	         rs = psmt.executeQuery();
 //	         
-//	         if(rs.next()) {
-//	            // 회원가입이 되었다면 ?
-//	            result = 1;
-//	         } else {
-//	            // 안됨
-//	            result = -1;
-//	         }
+
 	      } catch (Exception e) {
 	         // TODO Auto-generated catch block
 	         e.printStackTrace();
@@ -208,12 +238,10 @@ public class MemberDAO {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	         }
-	      
-	   }
-	      return result;      
-	                     
-	   }
-	   
+//	         System.out.println(result);
+	         return result;
+	      }    
+	   }	    
 	   
 	   
 	   
@@ -248,8 +276,7 @@ public class MemberDAO {
 		   }
 	       return result;
 		  
-	   }	   
-	   
+	   }	   	   
 	   
 	   
 

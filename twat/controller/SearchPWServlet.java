@@ -2,18 +2,12 @@ package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,16 +15,16 @@ import org.json.simple.JSONObject;
 import com.twat.dao.MemberDAO;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class SearchPW
  */
-@WebServlet("/login.do")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/SearchPW.do")
+public class SearchPWServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public SearchPWServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,39 +41,23 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-	    response.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
-		
-		String userid = request.getParameter("userid");
-		String userpw = request.getParameter("userpw");
-	
-		
-		
-//		String date = request.getParameter("date");
-		
-		MemberDAO memDao = MemberDAO.getInstance();
-		int result = memDao.loginMember(userid, userpw);
-		
-		// 날짜 해보다 만거
-//		Calendar cal = Calendar.getInstance();
-//		cal.add(Calendar.DATE, 15);
-		
-		PrintWriter writer = response.getWriter();
+	    
+	    String id = request.getParameter("userId");
+	    String name = request.getParameter("userName");
+	    String phone = request.getParameter("userPhone");
+	    
+	    MemberDAO memDao = MemberDAO.getInstance();
+	    String result = memDao.searchPW(id, name, phone);
+	    
+	    PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
-		
-		System.out.println(userid);
-		System.out.println(userpw);
-//		
-		// 로그인 성공/실패 
-		if(result == 1){
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUserId", userid);
-			
-			jsonOb.put("result", "success");
-		} else if(result == -1) {
+	    
+	    if(result.equals("")) {
 			jsonOb.put("result", "fail");
 		} else {
 			jsonOb.put("result", result);
@@ -89,4 +67,5 @@ public class LoginServlet extends HttpServlet {
 		
 		writer.println(jsonList);
 	}
+
 }

@@ -44,7 +44,7 @@ public class signUpServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		PrintWriter writer = response.getWriter();
+		
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
@@ -53,50 +53,58 @@ public class signUpServlet extends HttpServlet {
 	    String signUpId = request.getParameter("signUpId");
 	    String signUpPw = request.getParameter("signUpPw");
 	    
-	    // 사진 업로드 해결x----------------------------------------------------------
-	    String savePath = "img/member";
-	    int uploadFileSize = 5 * 1024 * 1024; // 파일의 크기를 5MB로 제한 (1024 = 2^10)
-//	    String encType = "UTF-8";
-	    
-	    ServletContext context = getServletContext(); // 서블릿 컨텍스트 객체 생성
-	    String uploadFilePath = context.getContextPath(); // 서블릿 서버에 실제 저장경로를 얻어옴
-	    System.out.println("서버상의 저장경로 : " + uploadFilePath);
-	    
-	    MultipartRequest multi = new MultipartRequest(
-				request
-				, uploadFilePath
-				, uploadFileSize
-				, new DefaultFileRenamePolicy());
-	    
-	    // 업로드 된 파일 이름 얻기
-	 	String fileName = multi.getFilesystemName("uploadFile");
-	    // ------예제 붙여넣기 맞는지 안맞는지 몰라연----------------------------------------------------------------------
-	    String signUpImgName = request.getParameter("signUpImg");
-	    String signUpImg = savePath + fileName;
+//	    // 사진 업로드 해결x----------------------------------------------------------
+//	    String savePath = "img/member";
+//	    int uploadFileSize = 5 * 1024 * 1024; // 파일의 크기를 5MB로 제한 (1024 = 2^10)
+////	    String encType = "UTF-8";
+//	    
+//	    ServletContext context = getServletContext(); // 서블릿 컨텍스트 객체 생성
+//	    String uploadFilePath = context.getContextPath(); // 서블릿 서버에 실제 저장경로를 얻어옴
+//	    System.out.println("서버상의 저장경로 : " + uploadFilePath);
+//	    
+//	    MultipartRequest multi = new MultipartRequest(
+//				request
+//				, uploadFilePath
+//				, uploadFileSize
+//				, new DefaultFileRenamePolicy());
+//	    
+//	    // 업로드 된 파일 이름 얻기
+//	 	String fileName = multi.getFilesystemName("uploadFile");
+//	    // ------예제 붙여넣기 맞는지 안맞는지 몰라연----------------------------------------------------------------------
+//	    String signUpImgName = request.getParameter("signUpImg");
+//	    String signUpImg = savePath + fileName;
 	    String signUpName = request.getParameter("signUpName");
 	    String signUpGender = request.getParameter("signUpGender");
-	    String signUpBirth = request.getParameter("signUpBirth");
+	    
+	    String signUpBirthYear = request.getParameter("signUpBirthYear");
+	    String signUpBirthMonth = request.getParameter("signUpBirthMonth");
+	    String signUpBirthDay = request.getParameter("signUpBirthDay");
+	    String signUpBirth = signUpBirthYear.substring(2) + signUpBirthMonth + signUpBirthDay;
+	    
 	    String signUpPhone = request.getParameter("signUpPhone");
+	    int signUpOutTime = 0;
 	    
 	    MemberDAO memdao = MemberDAO.getInstance();
-	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone, signUpImg, signUpGender, signUpBirth);
+	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, signUpBirth, signUpOutTime);
 	    
-	    
+	    PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 	    
 	    if(result == 1) {
 	    	jsonOb.put("result", "success");
+	    	jsonOb.put("signUpOutTime", signUpOutTime);
 	    } else {
 	    	jsonOb.put("result", "fail");
 	    	
 	    	jsonOb.put("signUpId", signUpId);
 	    	jsonOb.put("signUpPw", signUpPw);
-	    	jsonOb.put("signUpImg", signUpImg);
+//	    	jsonOb.put("signUpImg", signUpImg);
 	    	jsonOb.put("signUpName", signUpName);
 	    	jsonOb.put("signUpGender", signUpGender);
 	    	jsonOb.put("signUpBirth", signUpBirth);
 	    	jsonOb.put("signUpPhone", signUpPhone);
+	    	jsonOb.put("signUpOutTime", signUpOutTime);
 	    }
 	    
 	    jsonList.add(jsonOb);

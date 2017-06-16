@@ -128,18 +128,28 @@
 		$.ajax ({
 			type : 'post',
 			url : 'login.do',
-			data : $('#idpwPass').serialize(),
+			//data : $('#idpwPass').serialize(),
+			data :
+			{
+				userid : $("#idBox").val(),
+				userpw : $("#pwBox").val()
+			},
 			dataType : "json",
 			success : function(data) {
+				console.log(data);
                 var result = data[0].result;
+                
 //                theForm = document.frm1
                 console.log(result);
+                
+                
+                
                 
                 
                 // 로그인 시 유효성 검사
                 if($('#idBox').val() == "") {
                     alert("아이디를 입력하세요.");
-                    $('#idBox').focus();
+                    $('#idBox').focus();	
                 } else if($('#pwBox').val() == "") {
                     alert("비밀번호를 입력하세요.");
                     $('#pwBox').focus();
@@ -152,7 +162,10 @@
                     $('#idBox').val("");
                     $('#pwBox').val("");
                 }
-			}
+			},error: function(req) {
+                alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+            }
+			
 		});
     }
     
@@ -202,7 +215,7 @@
                         </div>
 
                         <div>
-                            <input type="button" id='signUpBtn' class='btn' value="회원가입" onclick='location.href="signUp_csw.html"'/>
+                            <input type="button" id='signUpBtn' class='btn' value="회원가입" onclick='location.href="signUp.html"'/>
                         </div>
                     </div>
 
