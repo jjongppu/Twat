@@ -53,13 +53,13 @@ public class AdminGetMemberList extends HttpServlet {
 			for (int i = 0; i < result.size(); i++) {
 				JSONObject jsonOb = new JSONObject();
 				jsonOb.put("memberCount", result.get(0).getMEMBER_ID());
-				jsonOb.put("memberId", result.get(0).getMEMBER_ID());
-				jsonOb.put("memberImg",result.get(0).getMEMBER_IMG() );
-				jsonOb.put("memberName",result.get(0).getMEMBER_NAME() );
-				jsonOb.put("memberPhone", result.get(0).getMEMBER_PHONE());
-				jsonOb.put("memberGender", result.get(0).getMEMBER_GENDER());
-				jsonOb.put("memberBir", result.get(0).getMEMBER_BIRTH());
-				jsonOb.put("memberStar", result.get(0).getSTART_DATE());
+				jsonOb.put("memberId", result.get(i).getMEMBER_ID());
+				jsonOb.put("memberImg",result.get(i).getMEMBER_IMG() );
+				jsonOb.put("memberName",result.get(i).getMEMBER_NAME() );
+				jsonOb.put("memberPhone", result.get(i).getMEMBER_PHONE());
+				jsonOb.put("memberGender", result.get(i).getMEMBER_GENDER());
+				jsonOb.put("memberBir", result.get(i).getMEMBER_BIRTH());
+				jsonOb.put("memberStar", result.get(i).getSTART_DATE());
 				
 				jsonList.add(jsonOb);
 			}

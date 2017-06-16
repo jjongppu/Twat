@@ -120,6 +120,7 @@
         width: 990px;
         margin: auto;
         padding: 0;
+        opacity: 1;
     }
 /*    공용...*/
     /* 실제로 데이터가 뿌려질 영역*/
@@ -191,9 +192,23 @@
         vertical-align: middle;
     }
     
+    
+    
+    
+    /*아래 버튼들...*/
+    #pageChoiceCover{
+        margin-top: 10px;
+        text-align: center;
+    }
+    .pageBtn{
+        margin: 0 5px 0 5px;
+        cursor: pointer;
+    }
+    
 </style>    
 
 <script>
+    nowPage = 0;
     
     // 세션 확인 
         
@@ -210,46 +225,51 @@
                 //페이지 로딩시 1번 멤버 를 얻어오고 뿌려줌
                    getNextFriends(1);
                 }
+            } , error: function (req) {
+                
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }
+            
         });
         
     //1번 친구들 호출 
     
     function getNextFriends(page) {
+        nowPage = page;
+        
         $.ajax ({
             type : 'post',
             url : '../getmemberInfo.do',
             dataType : "json",
-            data:{page : page},
+            data: {page : page} ,
             success : function(data) {
-                var userInfos = "";
-
-                for(var i=0; i< data.length i++){
-
+                console.log(data);
+                var memberCount = Math.ceil(data[0].memberCount/10);
+                for(var i=0; i< data.length;i++){
+                    var userInfos = "";
                     userInfos += '<li>';
-                    userInfos += '<span class="tdNum">'page*10+i-10'</span>';
-                    userInfos += '<span class="tdPp"> <img class="memberImg" src="../'data[i].memberImg'"/> </span>';
-                    userInfos += '<span class="tdId">' data[i].memberId '</span>';
-                    userInfos += '<span class="tdNa">' data[i].memberName '</span>';
-                    userInfos += '<span class="tdPh">' data[i].memberPhone '</span>';
-                    userInfos += '<span class="tdGn">' data[i].memberGender '</span>';
+                    userInfos += '<span class="tdNum">'+page*10+i+1-10+'</span>';
+                    userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].memberImg+'"/> </span>';
+                    userInfos += '<span class="tdId">'+ data[i].memberId +'</span>';
+                    userInfos += '<span class="tdNa">'+ data[i].memberName +'</span>';
+                    userInfos += '<span class="tdPh">'+ data[i].memberPhone +'</span>';
+                    userInfos += '<span class="tdGn">'+ data[i].memberGender +'</span>';
                     userInfos += '<span class="tdBi">'; 
-                    userInfos += data[i].memberBir
+                    userInfos += data[i].memberBir;
                     userInfos += '</span>';
                     userInfos += '<span class="tdHd">';
-                    userInfos += data[i].memberStar
+                    userInfos += data[i].memberStar;
                     userInfos += '</span>';
-                    userInfos += '<span class="tdBt"> <input type="button" value="탈퇴 처리" id="'data[i].memberId'" onclick="getOutMember(this);"/> </span>';
+                    userInfos += '<span class="tdBt"> <input type="button" value="탈퇴 처리" id="'+data[i].memberId+'" onclick="getOutMember(this);"/> </span>';
                     userInfos += '<span class="tdBt"> <input type="button" value="버튼인듯" onclick=""/> </span>';
-                    userInfos += '</li>
-
-                }    
+                    userInfos += '</li>';
+                    $('#memberInfoTable').append(userInfos);
+                }
+            }, error: function (req) {
+                
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }
-            
         });
-        
-        
-        
     }
     
     
@@ -348,24 +368,20 @@
                             <span class="tdBt"> 정지 </span>
                         </li>
                         
-                        <li>
-                            <span class="tdNum"> 1</span>
-                            <span class="tdPp"> <img class="memberImg" src="../img/member/hyunwoo.jpg"/> </span>
-                            <span class="tdId"> jjongppu </span>
-                            <span class="tdNa"> 김종길 </span>
-                            <span class="tdPh"> 010-0000-0000 </span>
-                            <span class="tdGn"> 남 </span>
-                            <span class="tdBi"> 1994-08-03 </span>
-                            <span class="tdHd"> 2017-06-05 </span>
-                            <span class="tdBt"> <input type="button" value="탈퇴 처리" id="jjongppu" onclick="getOutMember(this);"/> </span>
-                            <span class="tdBt"> <input type="button" value="버튼인듯" onclick=""/> </span>
-                        </li>
-                    
-                    
+         
                     
                     </ul>
                         
 
+                    
+                    
+                    <div id="pageChoiceCover">
+                        <span class="pageBtn" id="prePre_">&lt;&lt; </sapn>
+                        <span class="pageBtn" id="pre_"> &lt; </sapn>
+                        <span class="pageBtn pageNum" id="page_1" onclick=""> 1 </span>
+                        <span class="pageBtn" id="next_"> &gt; </sapn>
+                        <span class="pageBtn" id="nextnext_"> &gt;&gt; </sapn>
+                    </div>
                 </div>
             
             </div>

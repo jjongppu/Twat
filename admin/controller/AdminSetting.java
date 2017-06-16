@@ -34,7 +34,7 @@ public class AdminSetting extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 	    String adminGrade = request.getParameter("adminGrade");
-		
+		String loginAdmin = request.getParameter("loginAdmin");
 		AdminDAO adDao = AdminDAO.getInstance();
 		
 		PrintWriter writer = response.getWriter();
@@ -42,10 +42,11 @@ public class AdminSetting extends HttpServlet {
 		JSONObject jsonOb = new JSONObject();
 		
 		// 로그인 성공/실패 
-		if(adminGrade.equals("MASTER") && request.getParameter("loginAdmin") != null ){
-			jsonOb.put("result", "success");
-		} else {
+		if(loginAdmin == "" || adminGrade == "" ){
+			
 			jsonOb.put("result", "fail");
+		} else {
+			jsonOb.put("result", "success");
 		}
 		
 		jsonList.add(jsonOb);
