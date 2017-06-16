@@ -1367,8 +1367,31 @@
                             }
                         }
                         str += '</div>';
-                        str += '<div class="middle"><div class="up">' + data[arrCal].cal_memo + '</div><div class="down"><span>' + data[arrCal].cal_writer + '님</span><span>외 ' + data[0].group_count + '명 참여</span>';
-                        str += '</div></div><div class="right"><div class="up"></div><div class="down"></div></div></div>';
+                        str += '<div class="middle">';
+                        str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
+                        str += '<div class="middle-bottom">';
+                        str += '<span>' + data[arrCal].cal_writer + '님</span>';
+                        str += '<span>외 ' + data[0].group_count + '명 참여</span>';
+                        str += '</div>'; // div-down
+                        str += '</div>'; // div-up
+                        str += '<div class="right">';
+                        str += '<div class="right-top"></div>';
+                        str += '<div class="right-bottom">';
+                        
+                        if (str2.indexOf(',') == -1)
+                        {
+                            // 전체 일정(확정)
+                            str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+                        }
+                        else
+                        {
+                            // 투표(미확정)
+                            str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+                        }
+                        
+                        str += '</div>';
+                        str += '</div>'; // div-right
+                        str += '</div>'; // div=middle
                         if (str2.indexOf(',') == -1) {
                             $(".schedule").append(str);
                             //                            document.getElementById("schedule").innerHTML += str;
@@ -1461,10 +1484,54 @@
                 }
             })
         }
-        // 확정된 일정 정보 출력
-        function getScheduleInfo() {}
+     	// 확정된 일정 정보 출력
+        function getScheduleInfo(cal_num)
+        {
+            console.log("확정된 일정 : " + cal_num);
+            
+            var para = document.location.href.split("?");
+            para = para[1].split("=");
+            $.ajax({
+                type: 'post'
+                , url: 'groupSchedule.do'
+                , data: {
+                    group: para[1],
+                    calNum: cal_num
+                }
+                , dataType: "json"
+                , success: function (data) {
+                    console.log(data);
+                }
+                , error: function (req) {
+                    //                    alert('통신실패');
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            })
+        }
         // 미확정된 일정 정보 출력
-        function getVoteInfo() {}
+        function getVoteInfo(cal_num)
+        {
+            console.log("투표할 일정 : " + cal_num);
+
+            var para = document.location.href.split("?");
+            para = para[1].split("=");
+            $.ajax({
+                type: 'post'
+                , url: 'groupSchedule.do'
+                , data: {
+                    group: para[1],
+                    calNum: cal_num
+                }
+                , dataType: "json"
+                , success: function (data) {
+                    console.log(data);
+                }
+                , error: function (req) {
+                    //                    alert('통신실패');
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            })
+        }
 
         function voteMeeting(cal_date) {
             //            console.log(cal_date);

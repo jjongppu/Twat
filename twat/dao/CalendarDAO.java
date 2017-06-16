@@ -34,7 +34,7 @@ public class CalendarDAO
 	public Connection getConnection() throws Exception
 	{
 		Context initCtx = new InitialContext();
-		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
+		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");   
 			      
 		return ds.getConnection();
 	}
@@ -88,5 +88,57 @@ public class CalendarDAO
 		}
 		
 		return arrList;
-	}	
+	}
+	
+	// 각종일정 받아오기(그룹 아이디, 일정 아이디)
+	public ArrayList<CalendarVO> getInfo(String groupId, String calId)
+	{
+		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
+		
+		try
+		{
+			con = getConnection();
+			String sql = "select * from CALENDAR where CAL_DEPTH=0 and GROUP_ID=? and CAL_NUM=?";
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, Integer.parseInt(groupId));
+			psmt.setInt(2, Integer.parseInt(calId));
+			
+			rs = psmt.executeQuery();
+				
+			while(rs.next())
+			{
+				CalendarVO schedule = new CalendarVO();
+				schedule.setCal_num(rs.getInt(1));
+				schedule.setCal_date(rs.getString(3));
+				schedule.setCal_group(rs.getInt(4));
+				schedule.setCal_memo(rs.getString(5));
+				schedule.setCal_writer(rs.getString(6));
+				schedule.setStat_icon(rs.getString(7));
+				schedule.setMember_choice(rs.getString(8));
+				schedule.setCal_reference(rs.getInt(9));
+				schedule.setCal_depth(rs.getInt(10));
+				
+				arrList.add(schedule);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(rs != null)rs.close();
+				if(psmt != null)psmt.close();
+				if(con != null)con.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return arrList;
+	}
 }
