@@ -1,4 +1,4 @@
-package com.twat.dao;
+package com.twat.dto;
 
 import java.sql.Timestamp;
 

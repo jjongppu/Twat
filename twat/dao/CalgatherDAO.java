@@ -34,7 +34,7 @@ public class CalgatherDAO {
 	// DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
 	public Connection getConnection() throws Exception {
 		   Context initCtx = new InitialContext();
-		   DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/aclass0201");      
+		   DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
 		      
 		return ds.getConnection();
 	}

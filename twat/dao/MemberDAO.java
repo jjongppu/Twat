@@ -36,7 +36,7 @@ public class MemberDAO {
 	   // DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
 	   public Connection getConnection() throws Exception {
 	         Context initCtx = new InitialContext();
-	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/aclass0201");      
+	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
 	         
 	      return ds.getConnection();
 	   }
@@ -136,6 +136,7 @@ public class MemberDAO {
 					result = 1;
 				}
 			} catch (Exception e) {
+				System.out.print("접속 에러");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {

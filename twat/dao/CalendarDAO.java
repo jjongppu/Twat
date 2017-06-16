@@ -11,7 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.twat.dto.CalendarVO;
-import com.twat.dto.CalgatherVO2;
+import com.twat.dto.CalgatherVO;
 
 public class CalendarDAO
 {
@@ -34,7 +34,7 @@ public class CalendarDAO
 	public Connection getConnection() throws Exception
 	{
 		Context initCtx = new InitialContext();
-		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/aclass0201");      
+		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
 			      
 		return ds.getConnection();
 	}

@@ -54,6 +54,9 @@ public class LoginServlet extends HttpServlet {
 		
 		String userid = request.getParameter("userid");
 		String userpw = request.getParameter("userpw");
+	
+		
+		
 //		String date = request.getParameter("date");
 		
 		MemberDAO memDao = MemberDAO.getInstance();
@@ -67,6 +70,9 @@ public class LoginServlet extends HttpServlet {
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 		
+		System.out.println(userid);
+		System.out.println(userpw);
+//		
 		// 로그인 성공/실패 
 		if(result == 1){
 			HttpSession session = request.getSession();

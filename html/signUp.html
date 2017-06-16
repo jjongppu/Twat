@@ -189,7 +189,7 @@
     // 비밀번호 길이, 같은지, 정규식 검사
     function onkeyupPwCheck() {
         var pw1 = $('#pwBox').val();
-        var pw2 = $('#pwBox2').val()
+        var pw2 = $('#pwBox2').val();
         var pwVal = $('#pwBox').val().length;
         var retVal = false;
         var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
@@ -251,7 +251,7 @@
 
                     console.log(result);
 
-                    if(result == 'success') {
+                    if(result == 'fail') {
                         $('#idMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 아이디입니다.</p>");
                     } else {
                         $('#idMessage').html("<p style='font-size:10px; color:red'>사용중이거나 사용 불가한 아이디입니다.</p>");
