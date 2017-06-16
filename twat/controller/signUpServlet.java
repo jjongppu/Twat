@@ -44,7 +44,7 @@ public class signUpServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		PrintWriter writer = response.getWriter();
+		
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
@@ -75,18 +75,25 @@ public class signUpServlet extends HttpServlet {
 //	    String signUpImg = savePath + fileName;
 	    String signUpName = request.getParameter("signUpName");
 	    String signUpGender = request.getParameter("signUpGender");
-	    String signUpBirth = request.getParameter("signUpBirth");
+	    
+	    String signUpBirthYear = request.getParameter("signUpBirthYear");
+	    String signUpBirthMonth = request.getParameter("signUpBirthMonth");
+	    String signUpBirthDay = request.getParameter("signUpBirthDay");
+	    String signUpBirth = signUpBirthYear.substring(2) + signUpBirthMonth + signUpBirthDay;
+	    
 	    String signUpPhone = request.getParameter("signUpPhone");
+	    int signUpOutTime = 0;
 	    
 	    MemberDAO memdao = MemberDAO.getInstance();
-	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, signUpBirth);
+	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, signUpBirth, signUpOutTime);
 	    
-	    
+	    PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 	    
 	    if(result == 1) {
 	    	jsonOb.put("result", "success");
+	    	jsonOb.put("signUpOutTime", signUpOutTime);
 	    } else {
 	    	jsonOb.put("result", "fail");
 	    	
@@ -97,6 +104,7 @@ public class signUpServlet extends HttpServlet {
 	    	jsonOb.put("signUpGender", signUpGender);
 	    	jsonOb.put("signUpBirth", signUpBirth);
 	    	jsonOb.put("signUpPhone", signUpPhone);
+	    	jsonOb.put("signUpOutTime", signUpOutTime);
 	    }
 	    
 	    jsonList.add(jsonOb);

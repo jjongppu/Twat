@@ -79,8 +79,10 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("loginUserId", userid);
 			
 			jsonOb.put("result", "success");
-		} else {
+		} else if(result == -1) {
 			jsonOb.put("result", "fail");
+		} else {
+			jsonOb.put("result", result);
 		}
 		
 		jsonList.add(jsonOb);

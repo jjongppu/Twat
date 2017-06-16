@@ -95,6 +95,7 @@
 </style>
     
 <script>
+    // 성별 M/F
     function test(a) {
         console.log($(a).val());
     }
@@ -137,11 +138,16 @@
             dataType : "json",
             success : function(data) {
                 console.log(data);
-                var result = data[0].signUpResult;
+                var result = data[0].result;
                 
-                console.log(result);
+//                console.log(result);
+//                console.log(outTime);
+                
+                
+                
+
                 alert('회원가입이 완료되었습니다.');
-                location.href="index.html";
+//                location.href="index.html";
 //                var re_id = /^[a-z0-9_-]{3,16}$/; // 아이디 검사식
 //                var re_pw = /^[a-z0-9_-]{6,18}$/; // 비밀번호 검사식
 //                var re_tel = /^[0-9]{8,11}$/; // 전화번호 검사식
