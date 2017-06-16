@@ -208,5 +208,15 @@
     </servlet-mapping>
 
 
+<!-- 종기리 보이의 어드민 멤버정보 얻어오기-->
+
+     <servlet> 
+        <servlet-name>AdminGetMemberListServlet</servlet-name> 
+        <servlet-class>com.twat.controller.AdminGetMemberList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminGetMemberListServlet</servlet-name> 
+        <url-pattern>/getmemberInfo.do</url-pattern> 
+    </servlet-mapping>
 
 </web-app>
