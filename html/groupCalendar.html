@@ -1067,13 +1067,21 @@
                 }
                 //                scheArr[0] = yearInfo + monthInfo;
                 var selectDate = yearInfo + monthInfo + dayInfo;
-                //                console.log(selectDate);
-                //                for(var vote = 0; vote < cal_date.length; vote++){//투표가 현재
-                //                    
-                //                    
-                //                }
+
+//                console.log($(a).css("backgroundColor"));
+                if($(a).css("backgroundColor") == "rgb(255, 0, 0)"){
+                    alert("현재 투표중인 날짜입니다!");
+                    return;                    
+                }else if($(a).css("backgroundColor") == "rgb(255, 128, 128)"){
+                    alert("이미 확정된 날짜 입니다!");
+                    return;   
+                }
+                
+                
+               
                 if (selectDate < dateToFormat(initDay)) {
                     alert("지난 날짜는 선택할수 없습니다!")
+                    return;
                 }
                 else {
                     if ($(a).css("backgroundColor") == "rgb(0, 128, 0)") {
@@ -1104,6 +1112,7 @@
                         $(a).css("backgroundColor", "green");
                         //                    scheArr[parseInt(dayInfo)] = dayInfo;
                         scheSet.add(yearInfo + monthInfo + dayInfo);
+                        console.log(selectDate);
                     }
                 }
                 //                addSche += yearInfo + monthInfo + dayInfo + ",";
@@ -1111,10 +1120,29 @@
         }
         //스케줄 추가 함수
         function addSchedule() {
+//            console.log(scheSet.size);
+            if(scheSet.size == 0){
+                alert("일정이 선택 되지 않았습니다.");
+                return;
+            }
+            
+            
+            
+            
+            $("#modal").css("display", "block");
+            $("#titleAdd").css("display", "block");
+            $("#answerBox").css("display", "none");
+            
+            
+            
+
+            
+            
+            
             var a = "";
             //            console.log(scheSet);
             for (let item of scheSet.keys()) console.log(item);
-            scheSet = new Set();
+//            scheSet = new Set();
         }
 
         function buildCalendar(dateArr, titleArr, memChoiceArr) {
@@ -1263,6 +1291,8 @@
                 //                        }
                 //                    }
                 //                }
+                
+                
             }
             //            initToday();
         }
@@ -1385,7 +1415,7 @@
                     //                    alert('통신실패');
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
-            })
+            });
         }
         // 모달 작업 부분
         function getGroupBrith() {
@@ -1440,9 +1470,17 @@
             //            console.log(cal_date);
             //            console.log($("#yearSelect option:selected").val() + $("#monthSelect option:selected").val());
             //            console.log(scheSet);
+        
             for (var vote = 0; vote < cal_date.length; vote++) {
+                
+               
+                
+                
                 if (cal_date[vote].substr(0, 4) == $("#yearSelect option:selected").val() && parseInt(cal_date[vote].substr(4, 2)) == parseInt($("#monthSelect option:selected").val())) {
+                    
                     $("#date" + parseInt(cal_date[vote].substr(6, 2))).css("backgroundColor", "red");
+                    
+                    
                 }
                 //                for (let item of scheSet.keys()){             
                 //                    if(item = cal_date[vote]){
@@ -1460,6 +1498,52 @@
                 //                } 
             }
         }
+        
+        function selectYes(){
+//            console.log("!");
+//            console.log(scheSet.toString());
+            var calTitle = $("#calTitle").val();
+            console.log("");
+             $.ajax({
+                type: 'post'
+                , url: 'ScheduleAdd.do'
+                , data: {                    
+                    title : calTitle
+                }
+                , dataType: "json"
+                , success: function (data) {
+                    
+                    console.log("!");
+                }
+                , error: function (req) {
+                    
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            });
+//                        
+            
+            
+        }
+        
+        function selectNo(){
+            $("#modal").css("display","none");
+            console.log("!!!!");
+            $("#calTitle").val("");
+            
+        }
+        
+        function clickAddCal(){
+            console.log("!");
+            
+            $("#titleAdd").css("display", "block"); 
+            
+            $("#answerBox").css("display", "block");
+            $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
+            $("#yesButton").css("display", "block");
+            $("#noButton").css("display", "block");
+            
+        }
+        
     </script>
 </head>
 
@@ -1628,10 +1712,35 @@
                         <div class="title"></div>
                         <div class="content"></div>
                     </div>
+                    
+                       <footer>
+        <div id='modal' style="border:1px solid black; display:none;">
+            <div id="titleAdd">
+                <input type="text" placeholder="일정 제목을 입력하세요" id="calTitle"/> 
+                <input type="button" value="추가하기" onclick="clickAddCal()"/>
+            </div>
+            <div id="answerBox" style="display:none;" >
+	            <div id="selectAnswer"></div>
+	            
+	            <div id="yesButton" style="background-color:red; cursor:pointer" onclick="selectYes()"  > 예 </div>
+	            <div id="noButton" style="background-color:blue; cursor:pointer" onclick="selectNo()"> 아니오 </div>
+        	</div>
+        </div>
+        
+        <div id='modal2'>
+            
+             
+        </div>
+    
+    </footer>
+                    
                 </div>
             </div>
         </div>
     </div>
+    
+    
+  
 </body>
 
 </html>
