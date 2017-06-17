@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>개인정보를가져오긔</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <script src="js/jquery-3.2.1.min.js"></script>
+
+</head>
+    <style>
+        div{
+            position: relative;
+        }
+        .container{
+            width: 800px;
+            border: 1px solid black;
+            height: 600px;
+        }
+        .userIn{
+            width: 780px;
+            height: 500px;
+            border: 1px solid black;
+            margin: auto;
+            margin-top: 10px; 
+        }
+        .userInfo{
+            border: 1px solid pink;
+            width: 340px;
+            height: 480px;
+            margin-left: 10px;
+            margin-top: 10px;
+            float: left;
+        }
+        .userInfo2{
+            width: 280px;
+            border: 1px solid blue;
+            margin-top: 10px;
+            margin-left: 10px;
+            height: 460px;
+        }
+        #userImg{
+            border: 1px solid red;
+            width: 150px;
+            height: 160px;
+            margin: auto;
+            margin-top: 10px;
+            display: block; 
+        }
+        #uImg{
+            width: 150px;
+            height: 150px;
+            margin: auto;
+            
+        }
+        #userName{
+            border: 1px solid black;
+            width: 200px;
+            margin: auto;
+            margin-top: 10px;
+            text-align: center;
+            height: 30px;
+            
+        }
+        #userPhone{
+            border: 1px solid black;
+            width: 200px;
+            margin: auto;
+            margin-top: 30px;
+            text-align: center;
+            height: 30px;
+        }
+        #userBirth{
+            border: 1px solid black;
+            width: 200px;
+            margin: auto;
+            margin-top: 10px;
+            text-align: center;
+            height: 30px;
+        }
+        #chInfo{
+            border: 1px solid black;
+            width: 200px;
+            margin: auto;
+            margin-top: 30px;
+            text-align: center;
+            height: 30px;
+            cursor: pointer;
+        }
+        .chPwd{
+            border: 1px solid pink;
+            float: right;
+            width: 340px;
+            height: 480px;
+            margin-left: 10px;
+            
+        }
+        #ckck{
+            
+            cursor: pointer;
+            width: 250px;
+            display: block;
+            height: 30px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        #nowPwd{
+            width: 250px;
+            display: block;
+            height: 30px;
+            margin-top: 100px;
+            padding-left: 20px;
+            margin-bottom: 
+            
+        }
+        #chPwd{
+            width: 250px;
+            display: block;
+            height: 30px;
+            margin-top: 20px;
+            padding-left: 20px;
+        }
+        #chkPwd{
+            width: 250px;
+            display: block;
+            height: 30px;
+            margin-top: 20px;
+            padding-left: 20px;
+            margin-bottom: 50px;
+        }
+        #uOut{
+            width: 100px;
+            height: 30px;
+            float: right;
+            display: inline-block;
+            top: 30px;
+            border: 1px solid red;
+            cursor: pointer;
+        }
+        
+        
+        
+        
+    </style>
+    <script>
+        
+            $.ajax({
+                type:"post",
+                url:"PersonalServlet.do",
+                datatype:"json",
+                data: $('#info').serialize(),
+                success: function(data){
+                console.log(data);
+                    var out = "";
+                    out += '<div class="container">';
+                    out += '<div class="userIn">';
+                    out += '<div class="userInfo">';
+                    out += '<div class="userInfo2">';
+                    out += '<div id="userImg">';
+                    out += '<img src="'+ data[0].MEMBER_IMG + '">';
+                    out += '</div>';
+                    out += '<div id="userName">' + data[0].MEMBER_NAME + '</div>';
+                    out += '<div id="userPhone">' + data[0].MEMBER_PHONE + '</div>';
+                    out += '<div id="userBirth">' + data[0].MEMBER_BIRTH + '</div>';
+                    out += '</div></div></div>';
+                    out += '<div id="chInfo" onclick="changeInfo();">';
+                    out += '</div></div>';
+                    out += '<div class="secondInfo">';
+                    out += '<div class="chPwd">';
+                    out += '<input type="password" placeholder="현재 비밀번호" id="nowPwd">';
+                    out += '<input type="password" placeholder="변경할 비밀번호" id="chPwd">';
+                    out += '<div id="ckck" onclick="changePwd();" >비밀번호 변경</div>';
+                    out += '</div></div>';
+                    out += '<div class="userout">';
+                    out += '<div>';
+                    out += '<div id="uOut" onclick="outclick">회원 탈퇴</div>';
+                    out += '</div>';
+                    out += '</div>';
+                    out += '</div>';
+                
+                }
+            
+                
+            });
+//        개인정보 번경
+        function changeInfo(){
+            
+        }
+//        이미지 변경
+        function changeImg(){
+            
+        }
+//        비밀번호 변경
+        function changePwd(){
+            
+        }
+        
+    </script>
+<body>
+<!--
+    <form action="PersonalServlet.do" id="info" method="post">
+        
+    </form>
+-->
+    <div class="container">
+        <div class="userIn">
+            <div class="userInfo"> 
+                <div class="userInfo2">
+                    <div id="userImg">
+                        <img src="D:\javascript\img\user.png" id="uImg" onclick="changeImg()">
+                    </div>
+                    
+                    <div id="userName">정 현 우</div>
+                    <div id="userPhone">010-6304-6041</div>
+                    <div id="userBirth">3월 15일</div>
+                    <div id="chInfo" onclick="changeInfo();" >정보 수정하기</div>
+                </div>
+            
+            </div>
+
+            <div class=""secondInfo>
+                <div class="chPwd">
+                    <input type="password" placeholder="현재 비밀번호" id="nowPwd">
+                    <input type="password" placeholder="변경할 비밀번호" id="chPwd">
+                    <input type="password" placeholder="비밀번호 확인" id="chkPwd">
+                    <div id="ckck" onclick="changePwd();" >비밀번호 변경</div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="userout">
+            <div> 
+                <div id="uOut" onclick="outclick"> 회원 탈퇴</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
