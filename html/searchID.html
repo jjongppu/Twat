@@ -6,9 +6,38 @@
 <style>
     .container {
         text-align: center;
-        width: 450px;
-        border: 1px solid red;
+        width: 600px;
+/*        border: 1px solid #e5e5e5;*/
+		margin: 0 auto;
     }
+	#contentHeader {
+		margin-top: 120px;
+/*		border: 1px solid blue;*/
+	}
+	#contentBody {
+		border: 1px solid #e5e5e5;
+		padding: 60px 0 60px 0;
+	}
+	#contentSubmit {
+		margin-top: 40px;
+/*		border: 1px solid red;*/
+	}
+	.text {
+		display: inline-block;
+		width: 120px;
+/*		border: 1px dotted red;*/
+	}
+	
+	.textBox {
+/*		border: 1px solid green;*/
+		width: 400px;
+		margin: 0 auto;
+	}
+	#button {
+		border: none;
+		width: 50px;
+		height: 28px;
+	}
 </style>
     
 <script>
@@ -59,9 +88,28 @@
 <body>
 	<form id="searchID" action="searchID.do" method="post">
         <div class="container">
-            <div>이름 : <input type="text" name="userName" /></div>
-            <div>전화번호 : <input type="text" name="userPhone" id="phoneBox" onkeyup="autoHypen()"/></div>
-            <div><input type="button" value="확인" onclick="searchEnter()"/></div>
+			<div id="contentHeader">
+				<h4 id="contentHeader_text">아이디 찾기</h4>
+			</div>
+			<div id="contentBody">
+				<div id="name" class="textBox">
+					<div class="text">
+						이름
+					</div>
+					<input type="text" name="userName" />
+				</div>
+				<div id="phone" class="textBox">
+					<div class="text">
+						전화번호
+					</div>
+					<input type="text" name="userPhone" id="phoneBox" onkeyup="autoHypen()"/>
+				</div>
+			</div>
+			<div id="contentSubmit">
+				<div>
+					<input type="button" value="확인" id="button" onclick="searchEnter()"/>
+				</div>
+			</div>
         </div>
     </form>
     
