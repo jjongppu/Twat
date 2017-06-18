@@ -55,8 +55,6 @@ public class LoginServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		String userpw = request.getParameter("userpw");
 	
-		
-		
 //		String date = request.getParameter("date");
 		
 		MemberDAO memDao = MemberDAO.getInstance();
