@@ -1569,13 +1569,21 @@
         function selectYes(){
 //            console.log("!");
 //            console.log(scheSet.toString());
+            var calDate = "";
+            for (let item of scheSet.keys())
+                calDate += item + ",";
+                
+            
+            
             var calTitle = $("#calTitle").val();
             console.log("");
+            
              $.ajax({
                 type: 'post'
                 , url: 'ScheduleAdd.do'
                 , data: {                    
-                    title : calTitle
+                    title : calTitle,
+                    calDate : calDate
                 }
                 , dataType: "json"
                 , success: function (data) {
@@ -1588,7 +1596,7 @@
                 }
             });
 //                        
-            
+            location.reload();
             
         }
         

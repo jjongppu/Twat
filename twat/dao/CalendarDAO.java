@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 import javax.sql.DataSource;
+
 
 import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
@@ -18,6 +22,7 @@ public class CalendarDAO
 	Connection con = null;
 	PreparedStatement psmt= null;
 	ResultSet rs= null;
+	Statement stmt;
 
 	
 	// CalendarDAO ¿« ΩÃ±€≈Ê ================================================================================================
@@ -140,5 +145,94 @@ public class CalendarDAO
 		}
 		
 		return arrList;
+	}
+	
+	public int getLastCalNum(){
+		String sql = "";
+		int cal_num = 0;
+		
+		try {
+			con = getConnection();
+			sql = "SELECT * FROM calendar order by CAL_NUM desc limit 1";
+			psmt = con.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()){
+				cal_num = rs.getInt("CAL_NUM"); 
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			try {
+				if(rs != null)
+					rs.close();
+				if(psmt != null)
+					psmt.close();
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return cal_num + 1; 
+		
+		
+		
+	}
+	
+	public void addGroupCal(int cal_num, String cal_date, int group_id, String cal_memo, String cal_writer ) {
+		String sql ="";
+		
+		
+		
+		try {
+			con = getConnection();			
+			sql = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+			
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, cal_num);			
+			psmt.setString(2, cal_date);
+			psmt.setInt(3, group_id);
+			psmt.setString(4, cal_memo);
+			psmt.setString(5, cal_writer);
+			psmt.setString(6, "");
+			psmt.setString(7, "");
+			psmt.setInt(8, cal_num);
+			psmt.setInt(9, 0);
+			
+			psmt.executeUpdate();
+//			psmt.executeQuery();
+			
+			
+			
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+		
+				try {
+					if(psmt != null)
+					psmt.close();
+					else if(con != null)
+						con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			
+		}
+		
+		
+		
+		
 	}
 }
