@@ -118,7 +118,7 @@ public class AdminDAO {
 			ArrayList<MemberVO> members = new ArrayList<MemberVO>();
 			
 			String selectGetAllMemeber = "SELECT * FROM MEMBER WHERE OUT_TIME=0 LIMIT "+ (page*10-10) +",10";
-			String selectMemberCount = "SELECT COUNT(*) FROM MEMBER";
+			String selectMemberCount = "SELECT COUNT(*) FROM MEMBER WHERE OUT_TIME=0";
 			
 			try {
 				con = getConnection();

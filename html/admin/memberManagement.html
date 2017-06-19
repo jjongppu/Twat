@@ -258,7 +258,7 @@
                     userInfos += data[i].memberBir;
                     userInfos += '</span>';
                     userInfos += '<span class="tdHd">';
-                    userInfos += data[i].memberStar;
+                    userInfos += data[i].memberStar.substring(0,10);
                     userInfos += '</span>';
                     userInfos += '<span class="tdBt"> <input type="button" value="탈퇴 처리" id="'+data[i].memberId+'" onclick="getOutMember(this);"/> </span>';
                     userInfos += '<span class="tdBt"> <input type="button" value="버튼인듯" onclick=""/> </span>';
@@ -267,7 +267,7 @@
                 }
             }, error: function (req) {
                 
-                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                console.log(req);
             }
         });
     }
