@@ -1120,27 +1120,15 @@
         }
         //스케줄 추가 함수
         function addSchedule() {
-//            console.log(scheSet.size);
+            console.log(scheSet.size);
             if(scheSet.size == 0){
                 alert("일정이 선택 되지 않았습니다.");
                 return;
             }
-            
-            
-            
-            
-            $("#modal").css("display", "block");
-            $("#titleAdd").css("display", "block");
-            $("#answerBox").css("display", "none");
-            
-            
-            
-
-            
-            
+            $(".modal").css("display", "block");
+            $("#blindCover").css("display", "block");
             
             var a = "";
-            //            console.log(scheSet);
             for (let item of scheSet.keys()) console.log(item);
 //            scheSet = new Set();
         }
@@ -1600,23 +1588,25 @@
             
         }
         
-        function selectNo(){
-            $("#modal").css("display","none");
-            console.log("!!!!");
-            $("#calTitle").val("");
-            
-        }
+        // close모달로 대체됨
+//        function selectNo(){
+//            $("#modal").css("display","none");
+//            console.log("!!!!");
+//            $("#calTitle").val("");
+//            
+//        }
         
+        // 모달 에니매이션
         function clickAddCal(){
-            console.log("!");
-            
-            $("#titleAdd").css("display", "block"); 
-            
-            $("#answerBox").css("display", "block");
             $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
-            $("#yesButton").css("display", "block");
-            $("#noButton").css("display", "block");
-            
+            var heights = $('#contentsHeight').css('height');
+            if($("#calTitle").val() != ""){
+                $('.modal').animate({
+                    
+                    height : heights ,
+
+                }, 300);
+            }
         }
         
     </script>
@@ -1782,25 +1772,31 @@
                             //                            buildCalendar();
                         </script>
                     </div>
+                    
                     <input type="button" value="일정추가하기" onclick="addSchedule()" />
                     <div class="admin">
                         <div class="title"></div>
                         <div class="content"></div>
                     </div>
-                    
+                    <!-- 모달~ 모달~                                 ------------------------------>
                        <footer>
-        <div id='modal' style="border:1px solid black; display:none;">
+       <div id="blindCover" onclick="closeModal();"></div>      
+        <span class='modal' style="border:1px solid black;">
+            <div id="contentsHeight">
             <div id="titleAdd">
-                <input type="text" placeholder="일정 제목을 입력하세요" id="calTitle"/> 
-                <input type="button" value="추가하기" onclick="clickAddCal()"/>
+                <input type="text" placeholder="일정 제목을 입력하세요" id="calTitle" maxlength="20"/> 
+                <div id="groupAddBtn" onclick="clickAddCal()">추가하기</div>
             </div>
-            <div id="answerBox" style="display:none;" >
+                           
+            <div id="answerBox">
 	            <div id="selectAnswer"></div>
-	            
-	            <div id="yesButton" style="background-color:red; cursor:pointer" onclick="selectYes()"  > 예 </div>
-	            <div id="noButton" style="background-color:blue; cursor:pointer" onclick="selectNo()"> 아니오 </div>
+	            <div class="btnCenter">
+                    <div class="choiceBtn" id="yesButton" onclick="selectYes()"  > 예 </div>
+                    <div class="choiceBtn" id="noButton" onclick="closeModal()"> 아니오 </div>
+                </div>
         	</div>
-        </div>
+            </div>
+        </span>
         
         <div id='modal2'>
             
@@ -1808,6 +1804,97 @@
         </div>
     
     </footer>
+                    <script>
+                        //모달 사라짐
+                        function closeModal(){
+                            $('#blindCover').css('display','none');
+                            $('.modal').css('display','none');
+                            $('.modal input').val("");
+                        }
+                        
+                        //모달 뜰떄 뒤에 까만화면 크기를....
+                        $(document).ready(function(){
+//                            $('#blindCover').css("height",$(window).height());
+//                            $('#blindCover').css("width",$(window).width());
+                            $('#blindCover').css("height",$(document).height());
+                                $('#blindCover').css("width",$(document).width());
+                            $(window).resize(function(){
+//                                $('#blindCover').css("height",$(window).height());
+//                                $('#blindCover').css("width",$(window).width());
+                                $('#blindCover').css("height",$(document).height());
+                                $('#blindCover').css("width",$(document).width());
+                            });
+                        });
+                    </script>
+                    <style>
+                        #blindCover{
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            background-color: black;
+                            opacity: 0.7;
+                            display: none;
+                            z-index: 10;
+                        }
+                        .modal{
+                            position: fixed;
+                            display: none;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%,-50%);
+                            background-color: white;
+                            width: 350px;
+                            padding: 30px 10px 20px 10px;
+                            overflow: hidden;
+                            height: 40px;
+                            z-index: 100;
+                        }
+                        textarea:focus, input:focus{
+                            outline: none;
+                        }
+                        #titleAdd{
+                            margin-bottom: 30px;
+                        }
+                        #groupAddBtn{
+                            display: inline-block;
+                            width: 70px;
+                            height: 30px;
+                            line-height: 30px;
+                            text-align: center;
+                            cursor: pointer;
+                        }
+                        #calTitle{
+                            height: 23px;
+                            width: 250px;
+                            padding-left: 10px;
+                            margin-left: 10px;
+                            background-color:transparent;
+                            border: none;
+                            border-bottom: 1px solid gray;
+                            
+                        }
+                        #selectAnswer{
+                            margin-top: 10px;
+                            text-align: center;
+                            font-size: 17px;
+                        }
+                        .btnCenter{
+                            width: 290px;
+                            margin: 20px auto 20px auto;
+                            font-size: 17px;
+                        }
+                        .choiceBtn{
+                            display: inline-block;
+                            width: 48%;
+                            height: 50px;
+                            text-align: center;
+                            line-height: 50px;
+                            cursor:pointer;
+                            margin: none;
+                        }
+                    </style>
+                    
+              <!-- 모달~ 모달~                                 ------------------------------>         
                     
                 </div>
             </div>
