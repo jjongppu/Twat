@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>   
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="js/jquery-3.2.1.min.js"></script>   
+<style>
+    .container {
+        text-align: center;
+        width: 450px;
+        border: 1px solid red;
+    }
+</style>
+    
+<script>
+    function searchEnter() {
+        $.ajax ({
+            type : 'post',
+            url : 'searchID.do',
+            data : $('#searchID').serialize(),
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+//                console.log(result);
+                alert(result);
+            },
+            error: function(req) {
+                console.log("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+            }
+        });
+    }
+</script>
+<title>Insert title here</title>
+</head>
+    
+<body>
+	<form id="searchID" action="searchID.do" method="post">
+        <div class="container">
+            <div>이름 : <input type="text" name="userName" /></div>
+            <div>전화번호 : <input type="text" name="userPhone" /></div>
+            <div><input type="button" value="확인" onclick="searchEnter()"/></div>
+        </div>
+    </form>
+    
+    
+    
+    
+    
+</body>
+</html>

@@ -1172,9 +1172,8 @@
             
             
             
-            $("#modal").css("display", "block");
-            $("#titleAdd").css("display", "block");
-            $("#answerBox").css("display", "none");
+            $(".modal").css("display", "block");
+             $('#blindCover').css('display','block');
             
             
             
@@ -1663,15 +1662,15 @@
         }
         
         function clickAddCal(){
-            console.log("!");
-            
-            $("#titleAdd").css("display", "block"); 
-            
-            $("#answerBox").css("display", "block");
             $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
-            $("#yesButton").css("display", "block");
-            $("#noButton").css("display", "block");
-            
+            var heights = $('#contentsHeight').css('height');
+            if($("#calTitle").val() != ""){
+                $('.modal').animate({
+                    
+                    height : heights ,
+
+                }, 300);
+            }
         }
         
     </script>
