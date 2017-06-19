@@ -56,10 +56,6 @@ public class groupMasterServlet extends HttpServlet {
 	    	
 	    }
 	    
-	    
-	    
-	    
-	    
 	    out.print(jsonArr);
 	    
 	    
