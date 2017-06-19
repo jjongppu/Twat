@@ -1403,7 +1403,10 @@
                         //                        console.log(str);
                     }
                     //                    console.log(data[1].member_choice);
-                    var mem_choice = data[1].member_choice.split(",");
+//                    if(data[1].member_choice != null)
+//                    {
+//                        var mem_choice = data[1].member_choice.split(",");
+//                    }
                     //                    var choiceInfo = new Array();
                     //                    for(var chNum = 0; chNum < mem_choice.length; chNum++){
                     //                       
@@ -1428,11 +1431,14 @@
                     //                        
                     //                    }
                     //                    console.log(data[1].cal_date.split(","));
-                    console.log(mem_choice);
+//                    console.log(mem_choice);
                     buildCalendar();
                     //                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
-                    cal_date = data[1].cal_date.split(",");
-                    voteMeeting(cal_date);
+//                    if(data[1].cal_date.contains(","))
+//                    {
+//                        var cal_date = data[1].cal_date.split(",");
+//                        voteMeeting(cal_date);
+//                    }
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
@@ -1487,7 +1493,7 @@
      	// 확정된 일정 정보 출력
         function getScheduleInfo(cal_num)
         {
-            console.log("확정된 일정 : " + cal_num);
+//            console.log("확정된 일정 : " + cal_num);
             
             var para = document.location.href.split("?");
             para = para[1].split("=");
@@ -1501,6 +1507,57 @@
                 , dataType: "json"
                 , success: function (data) {
                     console.log(data);
+                    
+                    var scheduleString = "";
+                    var commentsString = "<div id='CommentBox'>";
+                    var scheduleObject = data[0];
+                    var memberList = scheduleObject.member_choice.split(",");
+                    
+                    for(var i = 0; i < data.length; i++)
+                    {
+                        // 일정 정보
+                        if(data[i].cal_depth == 0)
+                        {
+                            scheduleString += "<div id='scheduleMemo'>내용 : " + scheduleObject.cal_memo + "</div>";
+                            scheduleString += "<div id='scheduleWriter'>작성자 : " + findMemberName(scheduleObject.cal_writer) + "</div>";
+                            scheduleString += "<div id='scheduleDate'>일정 : " + scheduleObject.cal_date.substr(0,4) + "년 " + scheduleObject.cal_date.substr(4,2) + "월 " + scheduleObject.cal_date.substr(6,2) + "일</div>";
+                            scheduleString += "<div id='scheduleMember'>참가자 : ";
+                            // 참가자 출력
+                            for(var j = 0; j < memberList.length; j++)
+                            {
+        //                        console.log(memberList[i].substr(8));
+                                scheduleString += findMemberName(memberList[j].substr(8));
+
+                                if((j+1) < memberList.length)
+                                {
+                                    scheduleString += ", ";
+                                }
+                            }
+                            scheduleString += "</div>";
+                        }
+                        else if(data[i].cal_depth > 0)
+                        {
+//                            console.log("확인!");
+                            
+                            commentsString += "<div id='commentWriter'>" + findMemberName(data[i].cal_writer) + "</div>";
+                            commentsString += "<div id='commentMemo'>" + data[i].cal_memo + "</div>";
+//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
+                        }
+                        
+                        // 댓글창
+//                        scheduleString += "<div id='CommentBox'>";
+                        
+                        console.log(data[i].cal_depth);
+    //                    console.log(scheduleString);
+    //                    console.log(memberList);
+                    }
+                    // 댓글입력란
+                    scheduleString += "<div id='Comment'>";
+                    scheduleString += commentsString;
+                    scheduleString += "</div>"; // Comment
+                    scheduleString += "</div>"; // CommentBox
+
+                    document.getElementById('modal2').innerHTML = scheduleString;
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
@@ -1531,6 +1588,21 @@
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             })
+        }
+        // 아이디로 생일목록에서 이름 검색
+        function findMemberName(mem_id)
+        {
+            for (let item of birthSet.keys())
+            {
+//                console.log(item);
+//                console.log(item.split("-")[2]);
+                
+                if (item.split("-")[2] == mem_id)
+                {
+                    return item.split("-")[1];
+                }
+            }
+            return '(방에서 나간 사용자)';
         }
 
         function voteMeeting(cal_date) {
