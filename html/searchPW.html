@@ -25,13 +25,13 @@
 	}
 	.text {
 		display: inline-block;
-		width: 120px;
+		width: 200px;
 /*		border: 1px dotted red;*/
 	}
 	
 	.textBox {
 /*		border: 1px solid green;*/
-		width: 400px;
+		width: 420px;
 		margin: 0 auto;
 	}
 	#button {
@@ -120,6 +120,26 @@
 				<div id="phone" class="textBox">
 					<div class="text">
 						전화번호
+					</div>
+					<input type="text" name="userPhone" id="phoneBox" onkeyup="autoHypen()"/>
+				</div>
+				<div id="question" class="textBox">
+					<div class="text">
+						본인확인 질문
+					</div>
+					
+					<select name="signUpQuestion" id="questionBox" class="inputBox">
+						<option>- 선택 -</option>
+						<option>졸업한 초등학교 이름은 ?</option>
+						<option>어머니의 고향은 ?</option>
+						<option>자신의 첫사랑 이름은 ?</option>
+						<option>가장 인상 깊었던 여행지는 ?</option>
+					</select>
+			
+				</div>
+				<div id="answer" class="textBox">
+					<div class="text">
+						본인확인 질문 답변
 					</div>
 					<input type="text" name="userPhone" id="phoneBox" onkeyup="autoHypen()"/>
 				</div>
