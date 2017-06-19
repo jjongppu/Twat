@@ -219,7 +219,7 @@
 
 <script>
     nowPage = 0;
-    
+    nowPage2 = 0;
     // 세션 확인 
         
         $.ajax ({
@@ -467,7 +467,7 @@
     var goPaging_S = function(cPage){
 //        var vals = $('#findMember').val();
 //        console.log(vals);
-        getNextFriends(cPage);
+        getNextFriends2(cPage);
     };
     
     
@@ -551,7 +551,7 @@
                     <div class="topName">현재 회원 조회 및 관리
                     </div>
                         <div id="findMemCover"> 
-                            <input id="findMember" type="text" onkeyup="getNextFriends2();" maxlength="13" placeholder="아이디 검색"/>
+                            <input id="findMember" type="text" onkeyup="getNextFriends2(nowPage2);" maxlength="13" placeholder="아이디 검색"/>
                         </div>
                 </div>
 
