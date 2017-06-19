@@ -1,5 +1,6 @@
 package com.twat.controller;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -51,43 +52,31 @@ public class GroupSchedule extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		JSONArray group = new JSONArray();
-
-		out.print("<script>console.log('groupTitle값 안들어옴');</script>");
 		
 		// Calendar에서 그룹의 일정 가져옴
 		CalendarDAO calDao = CalendarDAO.getInstance();
-		ArrayList<CalendarVO> arrList = calDao.getInfo(request.getParameter("group"));
-//		ArrayList<CalendarVO> arrList = calDao.getInfo((String)session.getAttribute("loginUserId"));
-//		ArrayList<CalendarVO> arrList = calDao.getInfo("2");
+		ArrayList<CalendarVO> arrList = calDao.getInfo(request.getParameter("group"), request.getParameter("calNum"));
 		
 		if(arrList.size() > 0)
 		{
 			for(int i = 0; i < arrList.size(); i++)
 			{
-				// 확정된 날짜만 배열에 저장
-				if(!arrList.get(i).getCal_date().contains(","))
-				{
-					JSONObject groupSchedule = new JSONObject();
-					
-					groupSchedule.put("cal_num", arrList.get(i).getCal_num());
-					groupSchedule.put("cal_date", arrList.get(i).getCal_date());
-//					groupSchedule.put("cal_group", arrList.get(i).getCal_group());
-					groupSchedule.put("cal_group", arrList.get(i).getCal_group());
-					//getCal_group
-					groupSchedule.put("cal_memo", arrList.get(i).getCal_memo());
-					groupSchedule.put("cal_writer", arrList.get(i).getCal_writer());
-					groupSchedule.put("state_icon", arrList.get(i).getState_icon());
-					groupSchedule.put("member_choice", arrList.get(i).getMember_choice());
-					groupSchedule.put("cal_reference", arrList.get(i).getCal_reference());
-					groupSchedule.put("cal_depth", arrList.get(i).getCal_depth());
-					
-					group.add(groupSchedule);
-				}
+				JSONObject groupSchedule = new JSONObject();
+				
+				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
+				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
+//				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
+				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
+				//getCal_group
+				groupSchedule.put("cal_memo", arrList.get(i).getCal_memo());
+				groupSchedule.put("cal_writer", arrList.get(i).getCal_writer());
+				groupSchedule.put("state_icon", arrList.get(i).getState_icon());
+				groupSchedule.put("member_choice", arrList.get(i).getMember_choice());
+				groupSchedule.put("cal_reference", arrList.get(i).getCal_reference());
+				groupSchedule.put("cal_depth", arrList.get(i).getCal_depth());
+//				System.out.println(arrList.get(i).toString());
+				group.add(groupSchedule);
 			}
-		}
-		else
-		{
-//			out.print("<script>console.log('groupSchedule값 안들어옴');</script>");
 		}
 		
 		// JSON 전송

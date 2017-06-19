@@ -53,11 +53,14 @@ public class MakeGroupProcess extends HttpServlet {
         String masterId = (String)session.getAttribute("loginUserId");
         int groupCount = (int)application.getAttribute("groupCount");
         
-        
+        //이미지 랜덤 생성..
+        int rand = (int)(Math.random()*10+1);
+        String GroupImg = "img/group/groupImg"+rand+".png";
+
         application.setAttribute("groupCount", groupCount+1);
 //        
 //	    Boolean result = md.makeGorup(groupName,friends,today,masterId,groupCount);
-        int result = md.makeGorup(groupName,friends,today,masterId,groupCount);
+        int result = md.makeGorup(groupName,friends,today,masterId,GroupImg,groupCount);
 //        String result = md.makeGorup(groupName,friends,today,masterId,groupCount);
         
         
