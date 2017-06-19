@@ -115,7 +115,7 @@
 <script>
     
 	function loginEnter() {
-        console.log("!");
+//        console.log("!");
         var loginDate = new Date();
         $('#date').val(loginDate);
         
@@ -129,14 +129,13 @@
 			type : 'post',
 			url : 'login.do',
 			//data : $('#idpwPass').serialize(),
-			data :
-			{
+			data : {
 				userid : $("#idBox").val(),
 				userpw : $("#pwBox").val()
 			},
 			dataType : "json",
 			success : function(data) {
-				console.log(data);
+//				console.log(data);
                 var result = data[0].result;
                 
 //                theForm = document.frm1
@@ -157,7 +156,9 @@
                     alert("로그인 되었습니다.");
 //                    location.href='Home.html';
                     location.href='home.html';
-                } else {
+                } else if(result > 0){
+                    alert("회원탈퇴가 진행중인 회원입니다.");
+                }else {
                     alert("아이디 또는 비밀번호가 잘못되었습니다.");
                     $('#idBox').val("");
                     $('#pwBox').val("");
@@ -221,7 +222,7 @@
 
 
                     <div id='idpwSearchBox'>
-                        <a href="searchID_csw.html" class="idSearch" >아이디 찾기</a>
+                        <a href="searchID.html" class="idSearch" >아이디 찾기</a>
                         <span>  &nbsp;|&nbsp; </span>
                         <a href="" class="pwSearch">비밀번호 찾기</a>
                     </div>

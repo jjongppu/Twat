@@ -55,8 +55,6 @@ public class LoginServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		String userpw = request.getParameter("userpw");
 	
-		
-		
 //		String date = request.getParameter("date");
 		
 		MemberDAO memDao = MemberDAO.getInstance();
@@ -74,15 +72,29 @@ public class LoginServlet extends HttpServlet {
 		System.out.println(userpw);
 //		
 		// 로그인 성공/실패 
-		if(result == 1){
-			HttpSession session = request.getSession();
-			session.setAttribute("loginUserId", userid);
-			
-			jsonOb.put("result", "success");
-		} else if(result == -1) {
+//		if(result == 1){
+//			HttpSession session = request.getSession();
+//			session.setAttribute("loginUserId", userid);
+//			
+//			jsonOb.put("result", "success");
+//		} else if(result == -1) {
+//			jsonOb.put("result", "fail");
+//		} else {
+//			jsonOb.put("result", result);
+//		}
+		
+		// 로그인 성공/실패 
+		if(result == -1) {
 			jsonOb.put("result", "fail");
-		} else {
-			jsonOb.put("result", result);
+		} else if(result > 0) {
+			if(result == 1) {
+				HttpSession session = request.getSession();
+				session.setAttribute("loginUserId", userid);
+				
+				jsonOb.put("result", "success");
+			} else {
+				jsonOb.put("result", result);
+			}
 		}
 		
 		jsonList.add(jsonOb);

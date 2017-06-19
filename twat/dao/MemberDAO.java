@@ -43,7 +43,7 @@ public class MemberDAO {
 
 	
 	
-// 아이디 찾는 메서드 (이름,전화번호로 찾기)-----승우-------------------------
+	  // 아이디 찾는 메서드 (이름,전화번호로 찾기)-----승우-------------------------
 	   public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
 	      
 	      String selectSql = "select MEMBER_ID from MEMBER where MEMBER_NAME=? and MEMBER_PHONE=?";
@@ -76,7 +76,8 @@ public class MemberDAO {
 	      
 	   }
 	      return getID;
-	   }	   
+	   }
+	   
 	   
 	   
 // 비밀번호 찾는 메서드 ---------승우-------------------------------
@@ -111,10 +112,10 @@ public class MemberDAO {
 		      
 		   }
 		   return getPW;
-	   }	     
+	   }	   
 	   
 
-	// 회원 로그인을 위한 메서드 ----------------------------------
+		// 회원 로그인을 위한 메서드 ----------------------------------
 		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
 			int result = -1;
 			
@@ -126,15 +127,17 @@ public class MemberDAO {
 				psmt = con.prepareStatement(selectSql);
 				psmt.setString(1, MEMBER_ID);
 				psmt.setString(2, MEMBER_PW);
-				System.out.println("!");
+//				System.out.println("!");
 				rs = psmt.executeQuery();
 				
 				if(rs.next()) {
+					// out_time이 0이면 로그인 성공 result에 1넣어줌
 					if(rs.getInt(1) == 0) {
 						// 로그인 성공
 						result = 1;
 					} else {
 						result = rs.getInt(1);
+						System.out.println(result);
 					}
 				}
 			} catch (Exception e) {
@@ -153,7 +156,8 @@ public class MemberDAO {
 				
 			}
 			return result;
-		}	   
+		}
+	   
 	   
 	   
 	// 로그인 한사람의 그룹 얻어오기 쫑기리
@@ -241,7 +245,7 @@ public class MemberDAO {
 //	         System.out.println(result);
 	         return result;
 	      }    
-	   }	    
+	   }	   
 	   
 	   
 	   
@@ -276,7 +280,8 @@ public class MemberDAO {
 		   }
 	       return result;
 		  
-	   }	   	   
+	   }	   
+	   
 	   
 	   
 
@@ -423,9 +428,41 @@ public class MemberDAO {
 	      return arList;
 	   }
 	   
+	   
+	   
+	   public ArrayList<String> test(){
+		      ArrayList<String> str = new ArrayList<String>(); 
+		      String sql = "select * from test";
+		      int a=0;
+		      
+		      try {
+		         a=4;
+		            con = getConnection();
+		            a=5;
+		             psmt = con.prepareStatement(sql);
+		             a=1;  
+		             rs = psmt.executeQuery();
+		               a=2;    
+		               while(rs.next()){
+		                  str.add(rs.getString(1));
+		                  str.add(rs.getString(2));
+		               }
+		               a=3;
+		         } catch (Exception e) {
+		            e.printStackTrace();
+		         }finally {
+		               try {
+		                     if(rs != null)
+		                     if(psmt != null) psmt.close();
+		                     if(con != null) con.close();
+		                  } catch (SQLException e) {
+		                     e.printStackTrace();
+		                  }
+		            }
+		      return str;
+		   }
 
-	
-	   // 회원정보 배열을 통해 회원의 생일 반환하는 함수, 배열로 반환하며 형태는 생일+이름으로 저장
+// 회원정보 배열을 통해 회원의 생일 반환하는 함수, 배열로 반환하며 형태는 생일+이름으로 저장
 	   public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList)
 	   {
 		   ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
@@ -475,4 +512,8 @@ public class MemberDAO {
 		   
 		   return arrList;
 	   }
+
+
+	
+	
 }
