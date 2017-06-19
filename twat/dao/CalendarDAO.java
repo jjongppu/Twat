@@ -186,14 +186,13 @@ public class CalendarDAO
 	}
 	
 	public void addGroupCal(int cal_num, String cal_date, int group_id, String cal_memo, String cal_writer ) {
-		String sql = "";		
+		String sql ="";
+		
 		
 		
 		try {
 			con = getConnection();			
 			sql = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
-			
-			
 
 			
 			psmt = con.prepareStatement(sql);
