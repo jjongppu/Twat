@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.twat.dto.FriendMemberVO;
 import com.twat.dao.MemberDAO;
+import com.twat.dto.MemberVO;
 
 @WebServlet("/friend.do")
 public class FriendListServlet extends HttpServlet {
@@ -48,7 +48,7 @@ public class FriendListServlet extends HttpServlet {
 		
 		JSONObject jsonOb = new JSONObject();
 		
-		FriendMemberVO fvo = new FriendMemberVO();
+		MemberVO fvo = new MemberVO();
 		
 		jsonOb.put("MEMBER_NAME", fvo.getMEMBER_NAME());
 		jsonOb.put("MEMBER_BIRTH", fvo.getMEMBER_BIRTH());

@@ -12,13 +12,14 @@ public class MemberVO {
 	private String MEMBER_BIRTH;
 	private long MEMBER_CAL;
 	private long FRIENDS_LIST;
-	private Timestamp OUT_TIME;
+	private int OUT_TIME;
+	private Timestamp START_DATE;
 	
 	public MemberVO(){}
 	
 	public MemberVO(String mEMBER_ID, String mEMBER_PW, String mEMBER_NAME, String mEMBER_PHONE,
 			String mEMBER_IMG, String mEMBER_GENDER, String mEMBER_BIRTH, long mEMBER_CAL, long fRIENDS_LIST,
-			Timestamp oUT_TIME) {
+			int oUT_TIME, Timestamp sTART_DATE) {
 		super();
 		MEMBER_ID = mEMBER_ID;
 		MEMBER_PW = mEMBER_PW;
@@ -30,6 +31,7 @@ public class MemberVO {
 		MEMBER_CAL = mEMBER_CAL;
 		FRIENDS_LIST = fRIENDS_LIST;
 		OUT_TIME = oUT_TIME;
+		START_DATE = sTART_DATE;
 	}
 	
 	public MemberVO(String mEMBER_IMG, String mEMBER_NAME, String mEMBER_BIRTH, String mEMBER_PHONE){
@@ -116,12 +118,20 @@ public class MemberVO {
 		FRIENDS_LIST = fRIENDS_LIST;
 	}
 
-	public Timestamp getOUT_TIME() {
+	public int getOUT_TIME() {
 		return OUT_TIME;
 	}
 
-	public void setOUT_TIME(Timestamp oUT_TIME) {
+	public void setOUT_TIME(int oUT_TIME) {
 		OUT_TIME = oUT_TIME;
+	}
+	
+	public Timestamp getSTART_DATE() {
+		return START_DATE;
+	}
+
+	public void setSTART_DATE(Timestamp sTART_DATE) {
+		START_DATE = sTART_DATE;
 	}
 
 	@Override
