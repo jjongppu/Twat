@@ -92,14 +92,14 @@ public class CalgatherDAO {
 	
 
 	// 새로운 그룹을 생성과 동시에 정규화테이블에도 쮺쮺넣어줌
-	public int makeGorup(String groupName, String[] members, String Today, String masterId,String GroupImg, int GroupPk){
+	public int makeGorup(String groupName, String[] members, String Today, String masterId, int GroupPk){
 		int result = 0;
 		int GroupCount = members.length;
 		String masterName="불러오지 못함";
 		
 		String selectMasterName = "SELECT * FROM MEMBER WHERE MEMBER_ID=?";
 		
-		String selectMakeGroupSql = "INSERT INTO CALGATHER VALUES(?,?,?,?,?,?,?)";
+		String selectMakeGroupSql = "INSERT INTO CALGATHER VALUES(?,?,?,?,?,'img/group/default.png',?)";
 		
 		String selectaddGMSql = "INSERT INTO MEMBER_JOIN_GROUP VALUES";
 		selectaddGMSql += "('" + masterId + "','" + GroupPk + "')," ;
@@ -135,8 +135,7 @@ public class CalgatherDAO {
 			psmt.setString(3,Today);
 			psmt.setString(4,masterId);
 			psmt.setString(5,masterName);
-			psmt.setString(6,GroupImg);
-			psmt.setInt(7,GroupCount);
+			psmt.setInt(6,GroupCount);
 			
 			
 			int res = psmt.executeUpdate();
@@ -250,6 +249,43 @@ public class CalgatherDAO {
 	      }
 	      
 	      return cv;
+	   }
+	   
+	   public String getGroupMaster(int groupId){//현재 그룹방의 그룹 마스터 알아오기 // 나동주 추가
+		String sql = "";
+		String groupMaster = "";
+		   
+		try {
+			sql = "select GROUP_MASTER from calgather where GROUP_ID = ?";
+			con = getConnection();
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, groupId);
+			rs = psmt.executeQuery();
+			while(rs.next()){
+				groupMaster = rs.getString("GROUP_MASTER");
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+	         try
+	         {
+	            if(rs != null)rs.close();
+	            if(psmt != null)psmt.close();
+	            if(con != null)con.close();
+	         }
+	         catch (SQLException e)
+	         {
+	            e.printStackTrace();
+	         }
+	    }
+	      
+		return groupMaster;
+		   
+		   
+		   
 	   }
 	
 	
