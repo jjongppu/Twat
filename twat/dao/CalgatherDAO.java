@@ -252,7 +252,6 @@ public class CalgatherDAO {
 	      return cv;
 	   }
 
-
 	      public String getGroupMaster(int groupId){//현재 그룹방의 그룹 마스터 알아오기 // 나동주 추가
 		String sql = "";
 		String groupMaster = "";
@@ -289,7 +288,10 @@ public class CalgatherDAO {
 		   
 		   
 	   }
-
+	
+	
+	
+	
 	
 	
 }
