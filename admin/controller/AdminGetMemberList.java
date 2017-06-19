@@ -40,9 +40,10 @@ public class AdminGetMemberList extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 		
 		int page = Integer.parseInt(request.getParameter("page"));
+		String val = request.getParameter("val");
 		
 		AdminDAO adDao = AdminDAO.getInstance();
-		ArrayList<MemberVO> result = adDao.adminlogin(page);
+		ArrayList<MemberVO> result = adDao.adminlogin(page,val);
 		
 		
 		PrintWriter out = response.getWriter();
