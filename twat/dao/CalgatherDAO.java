@@ -92,14 +92,14 @@ public class CalgatherDAO {
 	
 
 	// 새로운 그룹을 생성과 동시에 정규화테이블에도 쮺쮺넣어줌
-	public int makeGorup(String groupName, String[] members, String Today, String masterId, int GroupPk){
+	public int makeGorup(String groupName, String[] members, String Today, String masterId,String GroupImg, int GroupPk){
 		int result = 0;
 		int GroupCount = members.length;
 		String masterName="불러오지 못함";
 		
 		String selectMasterName = "SELECT * FROM MEMBER WHERE MEMBER_ID=?";
 		
-		String selectMakeGroupSql = "INSERT INTO CALGATHER VALUES(?,?,?,?,?,'img/group/default.png',?)";
+		String selectMakeGroupSql = "INSERT INTO CALGATHER VALUES(?,?,?,?,?,?,?)";
 		
 		String selectaddGMSql = "INSERT INTO MEMBER_JOIN_GROUP VALUES";
 		selectaddGMSql += "('" + masterId + "','" + GroupPk + "')," ;
@@ -135,7 +135,8 @@ public class CalgatherDAO {
 			psmt.setString(3,Today);
 			psmt.setString(4,masterId);
 			psmt.setString(5,masterName);
-			psmt.setInt(6,GroupCount);
+			psmt.setString(6,GroupImg);
+			psmt.setInt(7,GroupCount);
 			
 			
 			int res = psmt.executeUpdate();
