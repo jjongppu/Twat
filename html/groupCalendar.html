@@ -905,6 +905,11 @@
         var today = new Date(); // 오늘 날짜
         
         $(document).ready(function () {
+<<<<<<< HEAD
+=======
+//            console.log("여기다");
+            
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
             var groupId = location.href.split("=")[1];
         
             
@@ -918,10 +923,18 @@
                 , dataType: "json"
                 , success: function (data) {
 
+<<<<<<< HEAD
                     console.log(data);
 
                     
                     $.each(data, function (index, item) {
+=======
+//                    console.log(data);
+
+                    
+                    $.each(data, function (index, item) {
+//                        console.log(item.groupMaster);
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
                         if(item.groupMaster == "no"){
                             $("#addschedule").css("display","none");
                         }
@@ -1411,7 +1424,7 @@
                             }
                         }
                         str += '</div>';
-                        str += '<div class="middle">';
+                        str += '<div class="middle" onclick="addComment(this)">';
                         str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
                         str += '<div class="middle-bottom">';
                         str += '<span>' + data[arrCal].cal_writer + '님</span>';
@@ -1447,7 +1460,14 @@
                         //                        console.log(str);
                     }
                     //                    console.log(data[1].member_choice);
+<<<<<<< HEAD
 //                    var mem_choice = data[1].member_choice.split(",");
+=======
+//                    if(data[1].member_choice != null)
+//                    {
+//                        var mem_choice = data[1].member_choice.split(",");
+//                    }
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
                     //                    var choiceInfo = new Array();
                     //                    for(var chNum = 0; chNum < mem_choice.length; chNum++){
                     //                       
@@ -1475,8 +1495,16 @@
 //                    console.log(mem_choice);
                     buildCalendar();
                     //                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
+<<<<<<< HEAD
 //                    cal_date = data[1].cal_date.split(",");
 //                    voteMeeting(cal_date);
+=======
+//                    if(data[1].cal_date.contains(","))
+//                    {
+//                        var cal_date = data[1].cal_date.split(",");
+//                        voteMeeting(cal_date);
+//                    }
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
@@ -1531,7 +1559,7 @@
      	// 확정된 일정 정보 출력
         function getScheduleInfo(cal_num)
         {
-            console.log("확정된 일정 : " + cal_num);
+//            console.log("확정된 일정 : " + cal_num);
             
             var para = document.location.href.split("?");
             para = para[1].split("=");
@@ -1545,6 +1573,57 @@
                 , dataType: "json"
                 , success: function (data) {
                     console.log(data);
+                    
+                    var scheduleString = "";
+                    var commentsString = "<div id='CommentBox'>";
+                    var scheduleObject = data[0];
+                    var memberList = scheduleObject.member_choice.split(",");
+                    
+                    for(var i = 0; i < data.length; i++)
+                    {
+                        // 일정 정보
+                        if(data[i].cal_depth == 0)
+                        {
+                            scheduleString += "<div id='scheduleMemo'>내용 : " + scheduleObject.cal_memo + "</div>";
+                            scheduleString += "<div id='scheduleWriter'>작성자 : " + findMemberName(scheduleObject.cal_writer) + "</div>";
+                            scheduleString += "<div id='scheduleDate'>일정 : " + scheduleObject.cal_date.substr(0,4) + "년 " + scheduleObject.cal_date.substr(4,2) + "월 " + scheduleObject.cal_date.substr(6,2) + "일</div>";
+                            scheduleString += "<div id='scheduleMember'>참가자 : ";
+                            // 참가자 출력
+                            for(var j = 0; j < memberList.length; j++)
+                            {
+        //                        console.log(memberList[i].substr(8));
+                                scheduleString += findMemberName(memberList[j].substr(8));
+
+                                if((j+1) < memberList.length)
+                                {
+                                    scheduleString += ", ";
+                                }
+                            }
+                            scheduleString += "</div>";
+                        }
+                        else if(data[i].cal_depth > 0)
+                        {
+//                            console.log("확인!");
+                            
+                            commentsString += "<div id='commentWriter'>" + findMemberName(data[i].cal_writer) + "</div>";
+                            commentsString += "<div id='commentMemo'>" + data[i].cal_memo + "</div>";
+//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
+                        }
+                        
+                        // 댓글창
+//                        scheduleString += "<div id='CommentBox'>";
+                        
+                        console.log(data[i].cal_depth);
+    //                    console.log(scheduleString);
+    //                    console.log(memberList);
+                    }
+                    // 댓글입력란
+                    scheduleString += "<div id='Comment'>";
+                    scheduleString += commentsString;
+                    scheduleString += "</div>"; // Comment
+                    scheduleString += "</div>"; // CommentBox
+
+                    document.getElementById('modal2').innerHTML = scheduleString;
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
@@ -1575,6 +1654,21 @@
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             })
+        }
+        // 아이디로 생일목록에서 이름 검색
+        function findMemberName(mem_id)
+        {
+            for (let item of birthSet.keys())
+            {
+//                console.log(item);
+//                console.log(item.split("-")[2]);
+                
+                if (item.split("-")[2] == mem_id)
+                {
+                    return item.split("-")[1];
+                }
+            }
+            return '(방에서 나간 사용자)';
         }
 
         function voteMeeting(cal_date) {
@@ -1614,8 +1708,12 @@
 //            console.log("!");
 //            console.log(scheSet.toString());
             
+<<<<<<< HEAD
             var groupId = location.href.split("=")[1];
             console.log(groupId);
+=======
+            
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
             var calDate = "";
             var groupId = location.href.split("=")[1];
             console.log(groupId);
@@ -1632,7 +1730,7 @@
             
              $.ajax({
                 type: 'post'
-                , url: 'ScheduleAdd.do'
+                , url: 'ScheduleAdd.do'                
                 , data: {                    
                     title : calTitle,
                     calDate : calDate,
@@ -1643,10 +1741,19 @@
                 , success: function (data) {
                     
                     console.log(data);
+<<<<<<< HEAD
+=======
+                    
+                     $.each(data, function (index, item) {
+//                        console.log(item.groupMaster);
+                        console.log(item.result);
+                        
+                    });
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
                 }
                 , error: function (req) {
                     
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
 //                        
@@ -1671,6 +1778,48 @@
 
                 }, 300);
             }
+<<<<<<< HEAD
+=======
+        }
+            
+            
+        function addComment(comment){
+         
+            console.log($(comment).children().eq(0).text());
+            var cal_memo = $(comment).children().eq(0).text();
+            var group_id = location.href.split("=")[1];
+            var first_cal = $(comment).prev().text().split("~")[0];
+            var new_memo = "똥매려";
+            console.log(first_cal);
+            
+            $.ajax({
+                type: 'post'
+                , url: 'addComment.do'
+                , data: {                    
+                    cal_memo : cal_memo,
+                    group_id : group_id,
+                    first_cal : first_cal,
+                    new_memo : new_memo
+
+                }
+                , dataType: "json"
+                , success: function (data) {
+
+
+                    
+                    $.each(data, function (index, item) {                   
+                    });
+                    
+                }
+                , error: function (req) {
+
+//                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+                 
+            });
+            
+            
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
         }
         
     </script>
@@ -1862,6 +2011,8 @@
         </span>
         
         <div id='modal2'>
+            <input type='text' id='commentCal'/>
+            <input type='button' value="댓글달기" />
             
              
         </div>
@@ -1876,7 +2027,13 @@
                         }
                         
                         //모달 뜰떄 뒤에 까만화면 크기를....
+<<<<<<< HEAD
                         $(document).ready(function(){
+=======
+                        $(document).ready(function(){                     
+                            
+                            
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
 //                            $('#blindCover').css("height",$(window).height());
 //                            $('#blindCover').css("width",$(window).width());
                             $('#blindCover').css("height",$(document).height());

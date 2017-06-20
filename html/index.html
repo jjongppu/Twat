@@ -115,7 +115,7 @@
 <script>
     
 	function loginEnter() {
-        console.log("!");
+//        console.log("!");
         var loginDate = new Date();
         $('#date').val(loginDate);
         
@@ -128,18 +128,27 @@
 		$.ajax ({
 			type : 'post',
 			url : 'login.do',
-			data : $('#idpwPass').serialize(),
+			//data : $('#idpwPass').serialize(),
+			data : {
+				userid : $("#idBox").val(),
+				userpw : $("#pwBox").val()
+			},
 			dataType : "json",
 			success : function(data) {
+//				console.log(data);
                 var result = data[0].result;
+                
 //                theForm = document.frm1
                 console.log(result);
+                
+                
+                
                 
                 
                 // 로그인 시 유효성 검사
                 if($('#idBox').val() == "") {
                     alert("아이디를 입력하세요.");
-                    $('#idBox').focus();
+                    $('#idBox').focus();	
                 } else if($('#pwBox').val() == "") {
                     alert("비밀번호를 입력하세요.");
                     $('#pwBox').focus();
@@ -147,12 +156,17 @@
                     alert("로그인 되었습니다.");
 //                    location.href='Home.html';
                     location.href='home.html';
-                } else {
+                } else if(result > 0){
+                    alert("회원탈퇴가 진행중인 회원입니다.");
+                }else {
                     alert("아이디 또는 비밀번호가 잘못되었습니다.");
                     $('#idBox').val("");
                     $('#pwBox').val("");
                 }
-			}
+			},error: function(req) {
+                alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+            }
+			
 		});
     }
     
@@ -202,13 +216,13 @@
                         </div>
 
                         <div>
-                            <input type="button" id='signUpBtn' class='btn' value="회원가입" onclick='location.href="signUp_csw.html"'/>
+                            <input type="button" id='signUpBtn' class='btn' value="회원가입" onclick='location.href="signUp.html"'/>
                         </div>
                     </div>
 
 
                     <div id='idpwSearchBox'>
-                        <a href="searchID_csw.html" class="idSearch" >아이디 찾기</a>
+                        <a href="searchID.html" class="idSearch" >아이디 찾기</a>
                         <span>  &nbsp;|&nbsp; </span>
                         <a href="" class="pwSearch">비밀번호 찾기</a>
                     </div>

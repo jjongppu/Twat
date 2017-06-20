@@ -52,7 +52,7 @@ public class ScheduleAdd extends HttpServlet {
 	    CalgatherDAO calgatherDAO = CalgatherDAO.getInstance();
 		CalendarDAO calendarDao = CalendarDAO.getInstance();
 		int count = calendarDao.getLastCalNum();		
-		HttpSession session = request.getSession();
+//		HttpSession session = request.getSession();
 
 		
 		String cal_date = request.getParameter("calDate");
@@ -76,8 +76,14 @@ public class ScheduleAdd extends HttpServlet {
 		
 		jsonObj.put("result", "succesCalAdd");
 		jsonArr.add(jsonObj);
+<<<<<<< HEAD
 		
 		out.println(jsonArr);
+=======
+		System.out.println(jsonArr);
+		
+		out.print(jsonArr);
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
 		
 	
 	}

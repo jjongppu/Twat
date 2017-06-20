@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Untitled Document</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<style>
+		ul {
+			list-style: none;
+/*			background: yellow;*/
+		}
+		#contentListWrap {
+			background-color: bisque;
+			height: 330px;
+		}
+		#contentTitleWrapUl li span, #contentListWrapUl li span {
+			display: inline-block;
+		}
+		#contentTitleWrapUl {
+			background-color: aliceblue;
+		}
+		#contentListWrapUl {
+			border: 1px solid black;
+		}
+		span {
+			border: 1px solid red;
+		}
+		.listNum {
+			width: 60px;
+		}
+		.listCate {
+			width: 100px;
+		}
+		.listTitle {
+			width: 250px;
+		}
+		.listWriter {
+			width: 80px;
+		}
+		.listDate {
+			width: 50px;
+		}
+		.listViewNum {
+			width: 70px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h4>문의사항 페이지</h4>
+	</div>
+	<div id="wrap">
+		<div id="contentTitleWrap">
+			<ul id="contentTitleWrapUl">
+				<li>
+					<span class="listNum">글번호</span>
+					<span class="listCate">카테고리</span>
+					<span class="listTitle">제목</span>
+					<span class="listWriter">작성자</span>
+					<span class="listDate">날짜</span>
+					<span class="listViewNum">조회수</span>
+				</li>
+			</ul>
+		</div>
+		<div id="contentListWrap">
+<!--		글 목록 예시			-->
+			<ul id="contentListWrapUl">
+				<li>
+					<span class="listNum">1</span>
+					<span class="listCate">불만사항</span>
+					<span class="listTitle">너무 불편해요.</span>
+					<span class="listWriter">최승우</span>
+					<span class="listDate">06-18</span>
+					<span class="listViewNum">0</span>
+				</li>
+			</ul>
+		</div>
+		<div>
+			<input type="button" value="글쓰기" onclick="location.href='QnAWrite.html'"/>
+			</div>
+		<div id="contentBottomWrap">
+			<span class="pageBtn" id="prePre_">처음</sapn>
+            <span class="pageBtn" id="pre_"> &lt; </sapn>
+    		<span class="pageBtn pageNum" id="page_1" onclick=""> 1 </span>
+            <span class="pageBtn" id="next_"> &gt; </sapn>
+            <span class="pageBtn" id="nextnext_">끝</sapn>
+		</div>
+		<div>
+			<select>
+				<option>제목</option>
+				<option>작성자</option>
+				<option>날짜</option>
+			</select>
+			<input type="text" name="searchBox" />
+			<input type="button" value="검색" name="searchVal "/>
+		</div>
+	</div>
+</body>
+</html>

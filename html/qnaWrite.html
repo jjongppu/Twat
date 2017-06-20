@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Untitled Document</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<style>
+		#wrap {
+			border: 1px solid black;
+		}
+		.container {
+			border: 1px solid black;
+			margin: 4px;
+		}
+		span {
+			display: inline-block;
+			width: 110px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h4>문의사항 작성하기</h4>
+	</div>
+	
+	<div id="wrap">
+		<div id="wrap_Cate" class="container">
+			<span>카테고리</span>
+			<select>
+				<option>--</option>
+				<option>서비스 문의</option>
+				<option>불만사항</option>
+			</select>
+		</div>
+		<div id="wrap_Title" class="container">
+			<span>제목</span>
+			<input type="text" name="title"/>
+		</div>
+		<div id="wrap_Pw" class="container">
+			<span>비밀번호</span>
+			<input type="text" name="pw"/>
+		</div>
+		<div id="wrap_Content" class="container">
+			<span>내용</span>
+			<textarea></textarea>
+		</div>
+	</div>
+	<div id="btnWrap">
+		<input type="button" value="작성완료"/>
+		<input type="button" value="취소" onclick="location.href='QnA.html'"/>
+	</div>
+</body>
+</html>

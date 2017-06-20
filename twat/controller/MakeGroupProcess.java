@@ -72,6 +72,7 @@ public class MakeGroupProcess extends HttpServlet {
 		}
 	    
 		jarr.add(job);
+		
 		out.println(jarr);
 	    
 	    

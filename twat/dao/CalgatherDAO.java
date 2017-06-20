@@ -19,7 +19,7 @@ public class CalgatherDAO {
 	ResultSet rs= null;
 
 	
-	// MemberDAO ÀÇ ½Ì±ÛÅæ -----------------------------------
+	// MemberDAO ì˜ ì‹±ê¸€í†¤ -----------------------------------
 	private static CalgatherDAO instance = new CalgatherDAO();
 	
 	private CalgatherDAO(){}
@@ -31,7 +31,7 @@ public class CalgatherDAO {
 	
 	
 	
-	// DB¿¬°áÀ» À§ÇØ conÀ» ¹İÈ¯ÇÏ´Â ¸Ş¼­µå --------------------------------------------
+	// DBì—°ê²°ì„ ìœ„í•´ conì„ ë°˜í™˜í•˜ëŠ” ë©”ì„œë“œ --------------------------------------------
 	public Connection getConnection() throws Exception {
 		   Context initCtx = new InitialContext();
 		   DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
@@ -40,7 +40,7 @@ public class CalgatherDAO {
 	}
 	
 	
-	// Âü¿©ÁßÀÎ Ä¶¸°´õ¸¦ »Ñ·ÁÁÖ±âÀ§ÇØ ÀÚ½ÅÀÌ Âü¿©ÇÏ°íÀÖ´Â ¸ğµç Ä¶¸°´õÀÇ Á¤º¸¸¦ ¾ò¾î¿É´Ï´Ù..
+	// ì°¸ì—¬ì¤‘ì¸ ìº˜ë¦°ë”ë¥¼ ë¿Œë ¤ì£¼ê¸°ìœ„í•´ ìì‹ ì´ ì°¸ì—¬í•˜ê³ ìˆëŠ” ëª¨ë“  ìº˜ë¦°ë”ì˜ ì •ë³´ë¥¼ ì–»ì–´ì˜µë‹ˆë‹¤..
 	public ArrayList<CalgatherVO> myGroupList(ArrayList<Integer> groupList){
 		
 		ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();
@@ -91,11 +91,15 @@ public class CalgatherDAO {
 	}
 	
 
+<<<<<<< HEAD
 	// »õ·Î¿î ±×·ìÀ» »ı¼º°ú µ¿½Ã¿¡ Á¤±ÔÈ­Å×ÀÌºí¿¡µµ ¨–¨–³Ö¾îÁÜ
+=======
+	// ìƒˆë¡œìš´ ê·¸ë£¹ì„ ìƒì„±ê³¼ ë™ì‹œì— ì •ê·œí™”í…Œì´ë¸”ì—ë„ ì®ºì®ºë„£ì–´ì¤Œ
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
 	public int makeGorup(String groupName, String[] members, String Today, String masterId,String GroupImg, int GroupPk){
 		int result = 0;
 		int GroupCount = members.length;
-		String masterName="ºÒ·¯¿ÀÁö ¸øÇÔ";
+		String masterName="ë¶ˆëŸ¬ì˜¤ì§€ ëª»í•¨";
 		
 		String selectMasterName = "SELECT * FROM MEMBER WHERE MEMBER_ID=?";
 		
@@ -115,7 +119,7 @@ public class CalgatherDAO {
 		
 		try{
 			con = getConnection();
-			// ¹æÀå ÀÌ¸§ ¾ò¾î¿È ¤Ñ¤Ñ
+			// ë°©ì¥ ì´ë¦„ ì–»ì–´ì˜´ ã…¡ã…¡
 			psmt = con.prepareStatement(selectMasterName);
 			psmt.setString(1,masterId);
 			
@@ -127,7 +131,7 @@ public class CalgatherDAO {
 				masterName = rs.getString("MEMBER_NAME");
 			}
 			result =3 ;
-			// ¹æÁ¤º¸ ÀÎ¼­Æ® ¤¡
+			// ë°©ì •ë³´ ì¸ì„œíŠ¸ ã„±
 			
 			psmt = con.prepareStatement(selectMakeGroupSql);
 			psmt.setInt(1,GroupPk);
@@ -172,7 +176,7 @@ public class CalgatherDAO {
 	
 	
 	
-	// ¼­¹ö Àç ½ÃÀÛ½Ã.... ÇöÀç ±×·ì Ä¶¸°´õÀÇ ¸¶Áö¸· pk °ªÀ» ¹İÈ¯ÇØÁİ´Ï´Ù
+	// ì„œë²„ ì¬ ì‹œì‘ì‹œ.... í˜„ì¬ ê·¸ë£¹ ìº˜ë¦°ë”ì˜ ë§ˆì§€ë§‰ pk ê°’ì„ ë°˜í™˜í•´ì¤ë‹ˆë‹¤
 	public int getLastGroupId(){
 		int count = 0;
 		String selectMygroupSql = "SELECT * FROM CALGATHER order by GROUP_ID desc limit 1";
@@ -206,7 +210,7 @@ public class CalgatherDAO {
 	}
 	
 	
-	// ¹æ ÀÔÀå½Ã »Ñ·ÁÁÙ ¹æÁ¤º¸ ¾ò¾î¿À±â ===============================================================
+	// ë°© ì…ì¥ì‹œ ë¿Œë ¤ì¤„ ë°©ì •ë³´ ì–»ì–´ì˜¤ê¸° ===============================================================
 	   public CalgatherVO getGroupInfo(String grouId)
 	   {
 	      CalgatherVO cv = new CalgatherVO();
@@ -252,7 +256,11 @@ public class CalgatherDAO {
 	      return cv;
 	   }
 
+<<<<<<< HEAD
 	      public String getGroupMaster(int groupId){//ÇöÀç ±×·ì¹æÀÇ ±×·ì ¸¶½ºÅÍ ¾Ë¾Æ¿À±â // ³ªµ¿ÁÖ Ãß°¡
+=======
+	      public String getGroupMaster(int groupId){//í˜„ì¬ ê·¸ë£¹ë°©ì˜ ê·¸ë£¹ ë§ˆìŠ¤í„° ì•Œì•„ì˜¤ê¸° // ë‚˜ë™ì£¼ ì¶”ê°€
+>>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
 		String sql = "";
 		String groupMaster = "";
 		   
