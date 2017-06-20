@@ -114,7 +114,7 @@
         padding: 70px 0 20px 0;
         background-color: beige;
     }
-    #memberInfoTable{
+    .memberInfoTable{
   
         display: block;
         width: 990px;
@@ -127,7 +127,6 @@
     .realContentsPlace{
         width: 90%;
         background-color: #3960C3;
-        height: 300px;
         margin: auto;
     }
     /*테이블 td 크기*/
@@ -155,7 +154,7 @@
         width: 40px;
     }
     .tdBi{
-        width: 100px;
+        width: 150px;
     }
     .tdHd{
         width: 100px;
@@ -181,13 +180,13 @@
         height: 30px;
     }
     
-    #memberInfoTable li{
+    .memberInfoTable li{
         display: block;
         width: 100%;
         border-bottom: 1px solid white;
         cursor: auto;
     }
-    #memberInfoTable li span{
+    .memberInfoTable li span{
         display: inline-block;
         vertical-align: middle;
     }
@@ -197,7 +196,7 @@
     
     /*아래 버튼들...*/
     #pageChoiceCover{
-        margin-top: 10px;
+        padding: 10px 0;
         text-align: center;
     }
     .pageBtn{
@@ -205,11 +204,25 @@
         cursor: pointer;
     }
     
+    #addPageCover a{
+        display: inline-block;
+        width: 24px;
+        color: black;
+    }
+    strong{
+        display: inline-block;
+        width: 24px;
+        color: darkslategray;
+    }
+    
+    #inputMemberinfo{
+    	height:650px;
+    }
 </style>    
 
 <script>
     nowPage = 0;
-    
+    nowPage2 = 0;
     // 세션 확인 
         
         $.ajax ({
@@ -232,50 +245,239 @@
             
         });
         
-    //1번 친구들 호출 
     
+    //친구들 호출 무식하게 호출
     function getNextFriends(page) {
         nowPage = page;
-        
+        var notfind = '0';
         $.ajax ({
             type : 'post',
             url : '../getmemberInfo.do',
             dataType : "json",
-            data: {page : page} ,
+            data: {page : page , val : notfind } ,
             success : function(data) {
                 console.log(data);
-                var memberCount = Math.ceil(data[0].memberCount/10);
+                var userInfos = "";
                 for(var i=0; i< data.length;i++){
-                    var userInfos = "";
+                    var num = page*10+i+1-10;
                     userInfos += '<li>';
-                    userInfos += '<span class="tdNum">'+page*10+i+1-10+'</span>';
+                    userInfos += '<span class="tdNum">'+num+'</span>';
                     userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].memberImg+'"/> </span>';
                     userInfos += '<span class="tdId">'+ data[i].memberId +'</span>';
                     userInfos += '<span class="tdNa">'+ data[i].memberName +'</span>';
                     userInfos += '<span class="tdPh">'+ data[i].memberPhone +'</span>';
                     userInfos += '<span class="tdGn">'+ data[i].memberGender +'</span>';
                     userInfos += '<span class="tdBi">'; 
-                    userInfos += data[i].memberBir;
+                    var bir = data[i].memberBir;
+                    userInfos += bir.substr(0,2)+'년';
+                    userInfos += bir.substr(2,2)+'월';    
+                    userInfos += bir.substr(4,2)+'일';    
                     userInfos += '</span>';
                     userInfos += '<span class="tdHd">';
-                    userInfos += data[i].memberStar;
+                    userInfos += data[i].memberStar.substring(0,10);
                     userInfos += '</span>';
                     userInfos += '<span class="tdBt"> <input type="button" value="탈퇴 처리" id="'+data[i].memberId+'" onclick="getOutMember(this);"/> </span>';
                     userInfos += '<span class="tdBt"> <input type="button" value="버튼인듯" onclick=""/> </span>';
                     userInfos += '</li>';
-                    $('#memberInfoTable').append(userInfos);
                 }
+                $('#inputMemberinfo').html(userInfos);
+                
+                var page_viewList = Paging(data[0].memberCount, 10, 10 ,nowPage, "PagingView");
+                $("#addPageCover").empty().html(page_viewList);
+
+                
             }, error: function (req) {
                 
-                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                console.log(req);
             }
         });
     }
     
+        //페이지 나타내기
+    Paging = function(totalCnt, dataSize, pageSize, pageNo, token){
+        totalCnt = parseInt(totalCnt);// 전체레코드수 dataSize = parseInt(dataSize);
+        // 페이지당 보여줄 데이타수 
+        pageSize = parseInt(pageSize); // 페이지 그룹 범위 1 2 3 5 6 7 8 9 10 
+        pageNo = parseInt(pageNo); // 현재페이지 
+        var html = new Array(); 
+        if(totalCnt == 0){
+            return ""; 
+        } // 페이지 카운트 
+        var pageCnt = totalCnt % dataSize; 
+        if(pageCnt == 0){
+            pageCnt = parseInt(totalCnt / dataSize);
+        }else{
+            pageCnt = parseInt(totalCnt / dataSize) + 1;
+        } 
+        var pRCnt = parseInt(pageNo / pageSize);
+        if(pageNo % pageSize == 0){
+            pRCnt = parseInt(pageNo / pageSize) - 1; 
+        } //이전 화살표
+        if(pageNo > pageSize){ 
+            var s2; if(pageNo % pageSize == 0){
+                s2 = pageNo - pageSize; 
+            }else{
+                    s2 = pageNo - pageNo % pageSize; 
+                } 
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push(s2); html.push('");>');
+            html.push('◀'); html.push("</a>"); 
+        }else{
+            html.push('<a href="#">\n');
+            html.push('◀'); html.push('</a>'); 
+            
+        } //paging Bar 
+        for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            if(index == pageNo){ 
+                html.push('<strong>');
+                html.push(index);
+                html.push('</strong>'); 
+            }else{ 
+                html.push('<a href=javascript:goPaging_' + token + '("');
+                html.push(index); html.push('");>');
+                html.push(index); html.push('</a>'); 
+            } 
+            if(index == pageCnt){ 
+                break;
+            }else html.push('|'); 
+        } //다음 화살표 
+        if(pageCnt > (pRCnt + 1) * pageSize){
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push((pRCnt + 1)*pageSize+1); 
+            html.push('");>'); html.push('▶'); 
+            html.push('</a>');
+        }else{
+            html.push('<a href="#">');
+            html.push('▶'); html.push('</a>');
+        } 
+        return html.join("");
+    }
+
+    var goPaging_PagingView = function(cPage){
+        getNextFriends(cPage);
+    };
+    
+    //검색으로 실시간 호출
+    function getNextFriends2(page) {
+        nowPage = page;
+        var pages =1;
+        if(page >pages){
+            pages = page
+        }
+    $.ajax ({
+        type : 'post',
+        url : '../getmemberInfo.do',
+        dataType : "json",
+        data: {page : pages ,val : $('#findMember').val()} ,
+        success : function(data) {
+            console.log(data);
+            var userInfos = "";
+            for(var i=0; i< data.length;i++){
+            var num = pages*10+i+1-10;
+                userInfos += '<li>';
+                userInfos += '<span class="tdNum">'+num+'</span>';
+                userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].memberImg+'"/> </span>';
+                userInfos += '<span class="tdId">'+ data[i].memberId +'</span>';
+                userInfos += '<span class="tdNa">'+ data[i].memberName +'</span>';
+                userInfos += '<span class="tdPh">'+ data[i].memberPhone +'</span>';
+                userInfos += '<span class="tdGn">'+ data[i].memberGender +'</span>';
+                userInfos += '<span class="tdBi">'; 
+                var bir = data[i].memberBir;
+                userInfos += bir.substr(0,2)+'년';
+                userInfos += bir.substr(2,2)+'월';    
+                userInfos += bir.substr(4,2)+'일';    
+                userInfos += '</span>';
+                userInfos += '<span class="tdHd">';
+                userInfos += data[i].memberStar.substring(0,10);
+                userInfos += '</span>';
+                userInfos += '<span class="tdBt"> <input type="button" value="탈퇴 처리" id="'+data[i].memberId+'" onclick="getOutMember(this);"/> </span>';
+                userInfos += '<span class="tdBt"> <input type="button" value="버튼인듯" onclick=""/> </span>';
+                userInfos += '</li>';
+            }
+            $('#inputMemberinfo').html(userInfos);
+
+            var page_viewList2 = Paging2(data[0].memberCount, 10, 10 ,pages, "S");
+            $("#addPageCover").empty().html(page_viewList2);
+
+
+        }, error: function (req) {
+
+            console.log(req);
+        }
+    });
+}
+    
+            //페이지 나타내기
+    Paging2 = function(totalCnt, dataSize, pageSize, pageNo, token){
+        totalCnt = parseInt(totalCnt);// 전체레코드수 dataSize = parseInt(dataSize);
+        // 페이지당 보여줄 데이타수 
+        pageSize = parseInt(pageSize); // 페이지 그룹 범위 1 2 3 5 6 7 8 9 10 
+        pageNo = parseInt(pageNo); // 현재페이지 
+        var html = new Array(); 
+        if(totalCnt == 0){
+            return ""; 
+        } // 페이지 카운트 
+        var pageCnt = totalCnt % dataSize; 
+        if(pageCnt == 0){
+            pageCnt = parseInt(totalCnt / dataSize);
+        }else{
+            pageCnt = parseInt(totalCnt / dataSize) + 1;
+        } 
+        var pRCnt = parseInt(pageNo / pageSize);
+        if(pageNo % pageSize == 0){
+            pRCnt = parseInt(pageNo / pageSize) - 1; 
+        } //이전 화살표
+        if(pageNo > pageSize){ 
+            var s2; if(pageNo % pageSize == 0){
+                s2 = pageNo - pageSize; 
+            }else{
+                    s2 = pageNo - pageNo % pageSize; 
+                } 
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push(s2); html.push('");>');
+            html.push('◀'); html.push("</a>"); 
+        }else{
+            html.push('<a href="#">\n');
+            html.push('◀'); html.push('</a>'); 
+            
+        } //paging Bar 
+        for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            if(index == pageNo){ 
+                html.push('<strong>');
+                html.push(index);
+                html.push('</strong>'); 
+            }else{ 
+                html.push('<a href=javascript:goPaging_' + token + '("');
+                html.push(index); html.push('");>');
+                html.push(index); html.push('</a>'); 
+            } 
+            if(index == pageCnt){ 
+                break;
+            }else html.push('|'); 
+        } //다음 화살표 
+        if(pageCnt > (pRCnt + 1) * pageSize){
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push((pRCnt + 1)*pageSize+1); 
+            html.push('");>'); html.push('▶'); 
+            html.push('</a>');
+        }else{
+            html.push('<a href="#">');
+            html.push('▶'); html.push('</a>');
+        } 
+        return html.join("");
+    }
+
+    var goPaging_S = function(cPage){
+//        var vals = $('#findMember').val();
+//        console.log(vals);
+        getNextFriends2(cPage);
+    };
     
     
     
     
+
+
     
     
     function logout(){
@@ -286,7 +488,7 @@
             success : function(data) {
                 var result = data[0].result;
                 if(result != 'success') {
-                    alert("권한이 없습니다.");
+                    alert("로그아웃 되었습니다.");
                     location.href="admin.html";
                 }
             }
@@ -295,25 +497,25 @@
     }
            
     //인풋에서 검색시 맴버를 찾아와줘용
-        function findMember(){
-            if($('#findMember').val().length>5 && $('#findMember').val().length<13 ){
-                console.log("!");
-            $.ajax ({
-                type : 'post',
-                url : '../Logout.do',
-                dataType : "json",
-                success : function(data) {
-                    var result = data[0].result;
-                    if(result != 'success') {
-                        alert("권한이 없습니다.");
-                        location.href="admin.html";
-                    }
-                }
-            });
-            }
-            
-            
-        }
+//        function findMember(){
+//            if($('#findMember').val().length>5 && $('#findMember').val().length<13 ){
+//                console.log("!");
+//            $.ajax ({
+//                type : 'post',
+//                url : '../Logout.do',
+//                dataType : "json",
+//                success : function(data) {
+//                    var result = data[0].result;
+//                    if(result != 'success') {
+//                        alert("권한이 없습니다.");
+//                        location.href="admin.html";
+//                    }
+//                }
+//            });
+//            }
+//            
+//            
+//        }
     // 선택한 멤버 추방
     function getOutMember(user){
         // 탈퇴시킬 유저 이름
@@ -322,6 +524,10 @@
     }
     
     
+    function changePage(pagenum){
+        
+    }    
+        
 </script>
 
 
@@ -348,39 +554,34 @@
                     <div class="topName">현재 회원 조회 및 관리
                     </div>
                         <div id="findMemCover"> 
-                            <input id="findMember" type="text" onkeyup="findMember();" maxlength="13" placeholder="아이디 검색"/>
+                            <input id="findMember" type="text" onkeyup="getNextFriends2(nowPage2);" maxlength="13" placeholder="아이디 검색"/>
                         </div>
                 </div>
 
                 <div class="realContentsPlace">
                     
-                    <ul id="memberInfoTable">
+                    <ul class="memberInfoTable">
                         <li>
-                            <span class="tdNum"> No.</span>
-                            <span class="tdPp"> 프로필 사진 </span>
-                            <span class="tdId"> 아이디 </span>
-                            <span class="tdNa"> 이름 </span>
-                            <span class="tdPh"> 전화번호 </span>
-                            <span class="tdGn"> 성별 </span>
-                            <span class="tdBi"> 생일 </span>
-                            <span class="tdHd"> 가입일 </span>
-                            <span class="tdBt"> 추방 </span>
-                            <span class="tdBt"> 정지 </span>
+                            <span class="tdNum">No.</span>
+                            <span class="tdPp">프로필 사진</span>
+                            <span style="width:100px;">아이디</span>
+                            <span class="tdNa">이름</span>
+                            <span class="tdPh">전화번호</span>
+                            <span class="tdGn">성별</span>
+                            <span style="width:130px;">생일</span>
+                            <span class="tdHd">가입일</span>
+                            <span class="tdBt">추방</span>
+                            <span class="tdBt">정지</span>
                         </li>
-                        
-         
-                    
                     </ul>
-                        
+                    <ul class="memberInfoTable" id="inputMemberinfo">
+                    </ul>
 
                     
                     
                     <div id="pageChoiceCover">
-                        <span class="pageBtn" id="prePre_">&lt;&lt; </sapn>
-                        <span class="pageBtn" id="pre_"> &lt; </sapn>
-                        <span class="pageBtn pageNum" id="page_1" onclick=""> 1 </span>
-                        <span class="pageBtn" id="next_"> &gt; </sapn>
-                        <span class="pageBtn" id="nextnext_"> &gt;&gt; </sapn>
+                        <span id="addPageCover">
+                        </span>
                     </div>
                 </div>
             

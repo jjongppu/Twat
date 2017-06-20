@@ -113,16 +113,27 @@ public class AdminDAO {
 		
 		
 		
-		// 어드민 페이지 현재 정상 로그인 되는 회원들만 얻어옴
-		public ArrayList<MemberVO> adminlogin(int page){
+		// 어드민 페이지 현재 정상 로그인 되는 회원들만 얻어옴 + 검색
+		public ArrayList<MemberVO> adminlogin(int page, String val){
 			ArrayList<MemberVO> members = new ArrayList<MemberVO>();
 			
-			String selectGetAllMemeber = "SELECT * FROM MEMBER WHERE OUT_TIME=0 LIMIT "+ (page*10-10) +",10";
-			String selectMemberCount = "SELECT COUNT(*) FROM MEMBER";
+			String selectGetAllMemeber = "SELECT * FROM MEMBER WHERE OUT_TIME=0 ";
+			if(!val.equals("0")){
+				selectGetAllMemeber+= "AND MEMBER_ID LIKE ? ";
+			}
+			selectGetAllMemeber += "LIMIT "+ (page*10-10) +",10";
+			
+			String selectMemberCount = "SELECT COUNT(*) FROM MEMBER WHERE OUT_TIME=0";
+			if(!val.equals("0")){
+				selectMemberCount+= " AND MEMBER_ID LIKE ?";
+			}
 			
 			try {
 				con = getConnection();
 				psmt = con.prepareStatement(selectMemberCount);
+				if(!val.equals("0")){
+					psmt.setString(1, val+"%");
+				}
 				rs = psmt.executeQuery();
 				if(rs.next()) {
 					String count = rs.getInt("COUNT(*)")+"";
@@ -132,6 +143,9 @@ public class AdminDAO {
 				}
 				
 				psmt = con.prepareStatement(selectGetAllMemeber);
+				if(!val.equals("0")){
+					psmt.setString(1, val+"%");
+				}
 				rs = psmt.executeQuery();
 				while(rs.next()){
 					MemberVO Mem = new MemberVO();

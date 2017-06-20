@@ -2,6 +2,7 @@ package com.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -39,9 +40,10 @@ public class AdminGetMemberList extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 		
 		int page = Integer.parseInt(request.getParameter("page"));
+		String val = request.getParameter("val");
 		
 		AdminDAO adDao = AdminDAO.getInstance();
-		ArrayList<MemberVO> result = adDao.adminlogin(page);
+		ArrayList<MemberVO> result = adDao.adminlogin(page,val);
 		
 		
 		PrintWriter out = response.getWriter();
@@ -50,7 +52,7 @@ public class AdminGetMemberList extends HttpServlet {
 		
 		// 로그인 성공/실패 
 		if(result.size() !=0 ){
-			for (int i = 0; i < result.size(); i++) {
+			for (int i = 1; i < result.size(); i++) {
 				JSONObject jsonOb = new JSONObject();
 				jsonOb.put("memberCount", result.get(0).getMEMBER_ID());
 				jsonOb.put("memberId", result.get(i).getMEMBER_ID());
@@ -59,7 +61,7 @@ public class AdminGetMemberList extends HttpServlet {
 				jsonOb.put("memberPhone", result.get(i).getMEMBER_PHONE());
 				jsonOb.put("memberGender", result.get(i).getMEMBER_GENDER());
 				jsonOb.put("memberBir", result.get(i).getMEMBER_BIRTH());
-				jsonOb.put("memberStar", result.get(i).getSTART_DATE());
+				jsonOb.put("memberStar", result.get(i).getSTART_DATE().toString());
 				
 				jsonList.add(jsonOb);
 			}
