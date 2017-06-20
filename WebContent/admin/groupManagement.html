@@ -49,6 +49,7 @@
         background-color: black;
         opacity: 0.7;
     }
+ 
     #logout{
         position: absolute;
         top: 0;
@@ -168,11 +169,6 @@
     
 
     
-    /*폰겝 전용 미디어 쿼리*/
-    @media screen and (max-width : 360px){
-
-    }
-    
     
     td{
         border: 1px solid black;
@@ -240,6 +236,42 @@
    input::-webkit-input-placeholder { color: #3B3E42; } 
    input::-moz-placeholder { color: #3B3E42;  } 
    input::-moz-placeholder { color: #3B3E42;  } 
+    
+    
+    
+    
+    /*폰겝 전용 미디어 쿼리*/
+    @media screen and (max-width : 360px){
+        #wrap, ul,#pageChoiceCover{
+            width: 360px;
+        }
+        #findMemCover{
+            position: relative;
+            float: both;
+        }
+        .contentsTopCover{
+            position: relative;
+            height: 160px;
+        }
+        .memberInfoTableTitle{
+            width: 360px;
+        }
+        #inputMemberinfo{
+            width: 360px;
+        }
+        .realContentsPlace{
+            width: 100%;
+        }
+        #nav_menu{
+            padding: 0;
+        }
+        #titleCover{
+            display: none;
+        }
+        
+    }
+    
+    
     
 </style>    
 
