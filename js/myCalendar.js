@@ -1488,27 +1488,60 @@
         }
         
         function selectYes(){
+//            console.log("!");
+//            console.log(scheSet.toString());
             
-            $("#calTitle").val()
+            var groupId = location.href.split("=")[1];
+            console.log(groupId);
+            var calDate = "";
+            var groupId = location.href.split("=")[1];
+            console.log(groupId);
             
+            for (let item of scheSet.keys())
+                calDate += item + ",";
+            
+            var calTitle = $("#calTitle").val();
+            console.log("");
+            
+             $.ajax({
+                type: 'post'
+                , url: 'ScheduleAdd.do'
+                , data: {                    
+                    title : calTitle,
+                    calDate : calDate,
+                    groupId : groupId
+                    
+                }
+                , dataType: "json"
+                , success: function (data) {
+                    
+                    console.log(data);
+                }
+                , error: function (req) {
+                    
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            });
+//                        
+            location.reload();
             
         }
         
         function selectNo(){
             $("#modal").css("display","none");
-            console.log(scheSet.size);
+            console.log("!!!!");
             $("#calTitle").val("");
             
         }
         
         function clickAddCal(){
-            console.log("!");
-            
-            $("#titleAdd").css("display", "block"); 
-            
-            $("#answerBox").css("display", "block");
             $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
-            $("#yesButton").css("display", "block");
-            $("#noButton").css("display", "block");
-            
+            var heights = $('#contentsHeight').css('height');
+            if($("#calTitle").val() != ""){
+                $('.modal').animate({
+                    
+                    height : heights ,
+
+                }, 300);
+            }
         }
