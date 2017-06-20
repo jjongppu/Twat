@@ -6,6 +6,8 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 	<script src="js/jquery-3.2.1.min.js"></script>
+	
+	
 	<style>
 		#wrap {
 			border: 1px solid black;
@@ -19,6 +21,14 @@
 			width: 110px;
 		}
 	</style>
+	
+	<script>
+		function qnaEnter() {
+			
+		}
+	
+	
+	</script>
 </head>
 <body>
 	<div>
@@ -31,6 +41,9 @@
 			<select>
 				<option>--</option>
 				<option>서비스 문의</option>
+				<option>아이디 관련</option>
+				<option>해킹신고 및 예방</option>
+				<option>신고하기</option>
 				<option>불만사항</option>
 			</select>
 		</div>
@@ -48,8 +61,8 @@
 		</div>
 	</div>
 	<div id="btnWrap">
-		<input type="button" value="작성완료"/>
-		<input type="button" value="취소" onclick="location.href='QnA.html'"/>
+		<input type="button" value="작성완료" onclick="qnaEnter()"/>
+		<input type="button" value="취소" onclick="location.href='qna.html'"/>
 	</div>
 </body>
 </html>

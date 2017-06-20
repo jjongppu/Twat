@@ -103,7 +103,7 @@ public class CalendarDAO
 		try
 		{
 			con = getConnection();
-			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? ORDER BY CAL_REFERENCE, CAL_DEPTH";
+			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? CAL_NUM";
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, Integer.parseInt(groupId));
 			psmt.setInt(2, Integer.parseInt(calId));
@@ -204,6 +204,7 @@ public class CalendarDAO
 			psmt.setInt(3, group_id);
 			psmt.setString(4, cal_memo);
 			psmt.setString(5, cal_writer);
+//			psmt.setString(5, "111");
 			psmt.setString(6, "");
 			psmt.setString(7, "");
 			psmt.setInt(8, cal_num);
@@ -311,7 +312,7 @@ public class CalendarDAO
 			System.out.println(psmt2.isClosed());
 			psmt2.setInt(3, group_id);
 			psmt2.setString(4, new_memo);
-			psmt2.setString(5," ");
+			psmt2.setString(5,cal_writer);
 			psmt2.setString(6, " ");
 			psmt2.setString(7, " ");
 			psmt2.setInt(8, cal_num);
