@@ -27,7 +27,7 @@
 
 
 
-// 일정 잡기 저장용
+        // 일정 잡기 저장용
         var scheSet = new Set();
         // 생일자 저장용
         var birthSet = new Set();
@@ -1085,8 +1085,6 @@
                     return;   
                 }
                 
-                
-               
                 if (selectDate < dateToFormat(initDay)) {
                     alert("지난 날짜는 선택할수 없습니다!")
                     return;
@@ -1123,10 +1121,12 @@
                         console.log(selectDate);
                     }
                 }
-                //                addSche += yearInfo + monthInfo + dayInfo + ",";
             }
         }
-        //스케줄 추가 함수
+
+
+
+        //  날짜 선택하고 스케줄 추가 함수
         function addSchedule() {
 //            console.log(scheSet.size);
             if(scheSet.size == 0){
