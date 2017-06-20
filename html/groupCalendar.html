@@ -905,11 +905,7 @@
         var today = new Date(); // 오늘 날짜
         
         $(document).ready(function () {
-<<<<<<< HEAD
-=======
-//            console.log("여기다");
-            
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
             var groupId = location.href.split("=")[1];
         
             
@@ -923,18 +919,13 @@
                 , dataType: "json"
                 , success: function (data) {
 
-<<<<<<< HEAD
-                    console.log(data);
 
-                    
-                    $.each(data, function (index, item) {
-=======
 //                    console.log(data);
 
                     
                     $.each(data, function (index, item) {
 //                        console.log(item.groupMaster);
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
                         if(item.groupMaster == "no"){
                             $("#addschedule").css("display","none");
                         }
@@ -1460,20 +1451,12 @@
                         //                        console.log(str);
                     }
                     //                    console.log(data[1].member_choice);
-<<<<<<< HEAD
-<<<<<<< HEAD
-//                    var mem_choice = data[1].member_choice.split(",");
-=======
-=======
->>>>>>> dea6cf49c5bbd913d17f55f99845b6b26b2a48c0
+
 //                    if(data[1].member_choice != null)
 //                    {
 //                        var mem_choice = data[1].member_choice.split(",");
 //                    }
-<<<<<<< HEAD
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-=======
->>>>>>> dea6cf49c5bbd913d17f55f99845b6b26b2a48c0
+
                     //                    var choiceInfo = new Array();
                     //                    for(var chNum = 0; chNum < mem_choice.length; chNum++){
                     //                       
@@ -1501,22 +1484,13 @@
 //                    console.log(mem_choice);
                     buildCalendar();
                     //                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
-<<<<<<< HEAD
-<<<<<<< HEAD
-//                    cal_date = data[1].cal_date.split(",");
-//                    voteMeeting(cal_date);
-=======
-=======
->>>>>>> dea6cf49c5bbd913d17f55f99845b6b26b2a48c0
+
 //                    if(data[1].cal_date.contains(","))
 //                    {
 //                        var cal_date = data[1].cal_date.split(",");
 //                        voteMeeting(cal_date);
 //                    }
-<<<<<<< HEAD
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-=======
->>>>>>> dea6cf49c5bbd913d17f55f99845b6b26b2a48c0
+
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
@@ -1720,12 +1694,7 @@
 //            console.log("!");
 //            console.log(scheSet.toString());
             
-<<<<<<< HEAD
-            var groupId = location.href.split("=")[1];
-            console.log(groupId);
-=======
-            
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
             var calDate = "";
             var groupId = location.href.split("=")[1];
             console.log(groupId);
@@ -1753,15 +1722,13 @@
                 , success: function (data) {
                     
                     console.log(data);
-<<<<<<< HEAD
-=======
-                    
+          
                      $.each(data, function (index, item) {
 //                        console.log(item.groupMaster);
                         console.log(item.result);
                         
                     });
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
                 }
                 , error: function (req) {
                     
@@ -1790,8 +1757,7 @@
 
                 }, 300);
             }
-<<<<<<< HEAD
-=======
+
         }
             
             
@@ -1831,7 +1797,7 @@
             });
             
             
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
         }
         
     </script>
@@ -2039,13 +2005,9 @@
                         }
                         
                         //모달 뜰떄 뒤에 까만화면 크기를....
-<<<<<<< HEAD
+
                         $(document).ready(function(){
-=======
-                        $(document).ready(function(){                     
-                            
-                            
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
 //                            $('#blindCover').css("height",$(window).height());
 //                            $('#blindCover').css("width",$(window).width());
                             $('#blindCover').css("height",$(document).height());
