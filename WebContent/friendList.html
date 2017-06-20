@@ -45,6 +45,7 @@
             margin-top: 20px;
             width: 360px;
             height: 110px;
+            cursor: pointer;
         }
         #userImg{
             border: 1px solid aqua;
@@ -79,6 +80,35 @@
             text-align: center;
             display: inline-block;
         }
+        .center_cover{
+            width: 505px;
+            margin: 25px 0;
+        }
+        .group_Cover{
+            display: block;
+            height: 100px;
+            width: 350px;
+            margin: auto;
+        }
+        #addGroup{
+            position: absolute;
+            margin: auto;
+            text-align: center;
+            font-size: 20px;
+        }
+        #addGroupBtn{
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        #plusImg{
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            margin: auto;
+        }
         
     </style>
     <script>
@@ -91,8 +121,40 @@
                 var result = data[0].result;
                 var out = '';
                 console.log(data);
+                
+                
+                for(var i=0; i < data.length; i++){
+                    out += '<div id="userIn" onclick="detailUser();">';
+                    out += '<div id="userImg"></div>';
+                    out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
+                    out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
+                    out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
+                    out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
+                    out += '</div></div>';
+                    out += '</div></div>';
+                }
+                document.getElementById('personal').innerHTML = out;
             }
+            
+            
         });
+           
+        function addFriend(){
+        	$.ajax({
+        		type:"post",
+        		url:"AddFriendservlet.do",
+        		data:$("#addFriend").serialize(),
+        		dataType:"json",
+        		success:function(data){
+        			console.log(data);
+        		}
+        		
+        	});
+        }
+        
+        
+        
+       
     </script>
 <body>
     
@@ -121,22 +183,42 @@
             <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
         </ul>
     </nav>
+        
         <div id="main_container">
              <div id="cont1">
                 <div id="cont2">
                     <div id="cont3">
                         <form id="personal" method="post">
-                            <div id="userIn">
-                                <div id="userImg"></div>
-                                <div id="userName">정 현우</div>
-                                <div id="userBirth">3월 15일</div>
-                                <div id="userPhone">010-6304-6041</div>
+                            
+                         </form> 
+                         <div class="center_cover">
+                            <div class="group_Cover">
+                                <div id="addGroup">
+                                    
+                                    <span id="addFriendBtn" onclick="addfriend();">
+                                    <img id="plusImg" src="img/etcIcon/plus.png"/>
+                                    </span>
+                            	<form id="addFriend" method="post">
+                            	
+                            	</form>
+                                </div>
                             </div>
-                         </form>    
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        
     </div>
+<!--
+    href는 온클릭으
+    <a href="#modalLayer" class="modalLink">간단한 모달 창 만들기</a>
+        <div id="modalLayer">
+          <div class="modalContent">
+            <a href="#">모달창 테스트</a> 
+            <button type="button">닫기</button>
+          </div>
+        </div>
+-->
 </body>
 </html>
