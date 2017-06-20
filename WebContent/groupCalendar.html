@@ -1379,6 +1379,7 @@
                     document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
                     $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
                     document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
+                    
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
                         //                        console.log(data[arrCal].cal_num);
                         //                        console.log(data[arrCal].cal_date);
@@ -1389,19 +1390,13 @@
                         //                        console.log(data[arrCal].member_choice);
                         var str = "";
                         var str2 = data[arrCal].cal_date;
-                        //                        str += "<div class='title'>";
-                        //                        if(str2.indexOf(',') == -1)
-                        //                        {
-                        //                            str += "<div id='secheduleName'>단체 일정</div>";
-                        //                        }
-                        //                        else
-                        //                        {
-                        //                            str += "";
-                        //                        }
+                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
                         str += '<div class="content">';
-                        //                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
+//                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
                         str += '<div class="left">';
-                        if (str2.indexOf(',') == -1) {
+//                        if (str2.indexOf(',') == -1)
+                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+                        {
                             str += data[arrCal].cal_date;
                             console.log("확정 : " + data[arrCal].cal_memo);
                             scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo);
@@ -1426,7 +1421,8 @@
                         str += '<div class="right-top"></div>';
                         str += '<div class="right-bottom">';
                         
-                        if (str2.indexOf(',') == -1)
+//                        if (str2.indexOf(',') == -1)
+                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
                         {
                             // 전체 일정(확정)
                             str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
@@ -1532,8 +1528,8 @@
                     }
                     console.log("birthSet");
                     for (let item of birthSet.keys()) {
-                        console.log(item.split("-"));
-                        console.log("split : " + item.split("-")[0].substr(2, 4));
+//                        console.log(item.split("-"));
+//                        console.log("split : " + item.split("-")[0].substr(2, 4));
                     }
                 }
                 , error: function (req) {
@@ -1578,7 +1574,8 @@
                             for(var j = 0; j < memberList.length; j++)
                             {
         //                        console.log(memberList[i].substr(8));
-                                scheduleString += findMemberName(memberList[j].substr(8));
+//                                scheduleString += findMemberName(memberList[j].substr(8));
+                                scheduleString += findMemberName(memberList[j]);
 
                                 if((j+1) < memberList.length)
                                 {
@@ -1655,6 +1652,54 @@
                 }
             }
             return '(방에서 나간 사용자)';
+        }
+        // member_choice로 확정/투표 구분
+        function scheduleCheck(member_choice, cal_date)
+        {
+            // member_birth?
+            // 확정되면 true값 아니면 false값 반환
+            // 아이디는 6~12
+//            console.log(member_choice);
+            console.log(cal_date);
+            
+            if(member_choice == "" || cal_date.indexOf(',') >= 0)
+            {
+//                console.log("false");
+                return false;
+            }
+            else
+            {
+//                console.log(member_choice);
+//                var memSplit = member_choice.split(",");
+                var memSplit = new Array(member_choice.split(","));
+                var dateSplit;
+                var count = 0;
+                
+                // str2.indexOf(',') == -1
+                if(cal_date.indexOf(',') >= 0)
+                {
+                    dateSplit = new Array(cal_date.split(","));
+                }
+//                console.log(memSplit);
+                
+                for(var i = 0; i < memSplit.length; i++)
+                {
+                    if(memSplit[i].length > 8)
+                    {
+                        if(memSplit[i].substr(0,8).match(cal_date))
+                        {
+                            console.log(memSplit[i].substr(0,8) + " / " + cal_date);
+                            count++;
+                        }
+                    }
+                    else if(count > 1)
+                    {
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
         }
 
         function voteMeeting(cal_date) {
