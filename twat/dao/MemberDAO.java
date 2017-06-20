@@ -393,7 +393,7 @@ public class MemberDAO {
 	      return myfriendsList;   
 	   }
 	   
-	 //회원정보를 가져오고싶어함------------------------------------------------
+	 //회원정보를 가져오고싶어함---------------현우--------------------------------
 	   public ArrayList<MemberVO> myInfo(String MEMBER_ID){
 	      String sql = "select MEMBER_IMG, MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH from MEMBER where MEMBER_ID = ? ";
 	      
@@ -429,7 +429,7 @@ public class MemberDAO {
 	   }
 	   
 	   
-	   
+//////////////////////////////////////////////////////////////////////////////////////////////	   
 	   public ArrayList<String> test(){
 		      ArrayList<String> str = new ArrayList<String>(); 
 		      String sql = "select * from test";
@@ -513,7 +513,166 @@ public class MemberDAO {
 		   return arrList;
 	   }
 
+///////////////////////////////////////////////////////////////////현우 비밀번호 변경.
+	   
+	   public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String chkpwd){
+		   
+		   
+		   
+		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
+		   // ?에는 세션으로 받아온 아이디를 넣고 비밀번호를 받아온다음에 받아온 비밀번호랑 현재비밀번호 입력란이랑 비교해서 맞으면 두번쨰 쿼리문으로 넘어가서 비밀번호를 바꿔준다.
+		   String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
+		   //1번쨰 ?에는 바뀐 비밀번호를 넣고  2번쨰 ? 에는 아이디값 세션으로 받아넣는다.
+		   int result = 0;
+		   
+		   try {
+			   
+			con = getConnection();
+			
+			psmt = con.prepareStatement(chkpw);
+			psmt.setString(1, MEMBER_ID);
+			rs = psmt.executeQuery();
+			
+			if(chpwd.equals(chkpwd)){
+				
+			while(rs.next()){
+				
+			if(rs.getString("MEMBER_PW").equals(nowpwd)){
+				
+				
+				psmt = con.prepareStatement(changepwd);
+				psmt.setString(1, chpwd);
+				psmt.setString(2, MEMBER_ID);
+				result = psmt.executeUpdate();
+				
+				if(result ==1 ){
+					System.out.println("비밀번호가 일치합니다");
+				}else{
+					System.out.println("비밀번호가 일치하지 않습니다.");
+				}
+				
+			
+		}else{
+			System.out.println("비밀번호가 서로 맞지 않습니다.");
+		}
+		}//while 끝나는 곳.
+		}else{
+			System.out.println("변경할 비밀번호가 서로 맞지 않습니다.");
+		}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+            try {
+                if(rs != null)rs.close();
+                if(psmt != null) psmt.close();
+                if(con != null) con.close();
+             } catch (SQLException e) {
+             }
+       }
+		return result;
+ }
+///////////////////////////현우 회원탈퇴.////////////////////////
+		   public int outUser(String MEMBER_ID){
+			   
+//			   SimpleDateFormat outDate = new SimpleDateFormat("yyyy년 MM월dd일 HH시mm분");
+//			   Date date = new Date();
+//			   String today = outDate.format(date);
+			   
+			   long outTime = System.currentTimeMillis()+60*60*24*1000*7;
+			   
+			   System.out.println(outTime * 60*60*24*1000*7);
+			   
+			   
+			   String delUser = "UPDATE member SET OUT_TIME=? WHERE MEMBER_ID =?";
+			   int result = 0;
+			   try {
+				con = getConnection();
+				psmt = con.prepareStatement(delUser);
+				psmt.setLong(1, outTime);
+				psmt.setString(2, MEMBER_ID);
+				result = psmt.executeUpdate();
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs != null)
+	                if(psmt != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	             }
+	       }
+			   
+			   return result;
+		   }
+/////////////////////////////////회원정보 변 경////////////////////////////////////////
+		   public int changeInfo(String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_BIRTH, String MEMBER_ID){
+			   String changeInfo = "UPDATE MEMBER set MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? where MEMBER_ID =?";
+			   int result = 0;
+			   try {
+				con = getConnection();
+				psmt = con.prepareStatement(changeInfo);
+				
+				psmt.setString(1, MEMBER_NAME);
+				psmt.setString(2, MEMBER_PHONE);
+				psmt.setString(3, MEMBER_BIRTH);
+				psmt.setString(4, MEMBER_ID);
+				result = psmt.executeUpdate();
+				
+				if(result != 1){
+					System.out.println("회원 수정되엇다.");
+					System.out.println("왜");
+				}else{
+					System.out.println("회원 수정안되엇다.");
+					System.out.println("왜2");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs != null)
+	                if(psmt != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	             }
+	       }
+			   
+			   return result;
+			   
+			   
+		   }
+		  		   
+///////////////////////////////////////////////////////////////////////////
+		public int changeImg(String MEMBER_ID, String MEMBER_IMG){
+			String changepwd = "update MEMBER set MEMBER_IMG = ? where MEMBER_ID = ?";
+			int result = 0;
+			
+			 try {
+					con = getConnection();
+					
+					psmt = con.prepareStatement(changepwd);
+					psmt.setString(1, "img/" + MEMBER_IMG);
+					psmt.setString(2, MEMBER_ID);
+					result = psmt.executeUpdate();
+						
+					
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+		            try {
+		                if(rs != null)rs.close();
+		                if(psmt != null) psmt.close();
+		                if(con != null) con.close();
+		             } catch (SQLException e) {
+		             }
+		       }
+				return result;
+			
+		}
 	
 	
 }

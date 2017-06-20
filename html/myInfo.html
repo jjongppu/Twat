@@ -6,13 +6,20 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <script src="js/jquery-3.2.1.min.js"></script>
-
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!--    네브바 css-->
+    <link rel= "stylesheet" type="text/css" href="css/nav.css">
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="js/nav.js"></script>
 </head>
     <style>
         div{
             position: relative;
         }
         .container{
+            margin-left: 30px;
+            margin-top: 30px;
             width: 800px;
             border: 1px solid black;
             height: 600px;
@@ -40,24 +47,32 @@
             height: 460px;
         }
         #userImg{
-            border: 1px solid red;
-            width: 150px;
+            width: 160px;
             height: 160px;
             margin: auto;
-            margin-top: 10px;
             display: block; 
+            border: 1px solid black;
         }
         #uImg{
             width: 150px;
             height: 150px;
             margin: auto;
+            cursor: pointer;
+            border: 1px solid black;
+            
+        }
+        #chImg{
+            display: inline-block;
+            cursor: pointer;
+            margin-left: 40px;
+            /* border: 1px solid black; */
             
         }
         #userName{
             border: 1px solid black;
             width: 200px;
-            margin: auto;
-            margin-top: 10px;
+            margin-left: 40px;
+            margin-top: 40px;
             text-align: center;
             height: 30px;
             
@@ -65,16 +80,16 @@
         #userPhone{
             border: 1px solid black;
             width: 200px;
-            margin: auto;
-            margin-top: 30px;
+            margin-left: 40px;
+            margin-top: 20px;
             text-align: center;
             height: 30px;
         }
         #userBirth{
             border: 1px solid black;
             width: 200px;
-            margin: auto;
-            margin-top: 10px;
+            margin-left: 40px;
+            margin-top: 20px;
             text-align: center;
             height: 30px;
         }
@@ -82,7 +97,7 @@
             border: 1px solid black;
             width: 200px;
             margin: auto;
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: center;
             height: 30px;
             cursor: pointer;
@@ -138,102 +153,225 @@
             cursor: pointer;
         }
         
-        
-        
-        
     </style>
     <script>
-        
+        ////////////////정보가져오기///////////////////////////////////////////////////
             $.ajax({
                 type:"post",
                 url:"PersonalServlet.do",
                 datatype:"json",
-                data: $('#info').serialize(),
                 success: function(data){
-                console.log(data);
-                    var out = "";
-                    out += '<div class="container">';
-                    out += '<div class="userIn">';
-                    out += '<div class="userInfo">';
-                    out += '<div class="userInfo2">';
-                    out += '<div id="userImg">';
-                    out += '<img src="'+ data[0].MEMBER_IMG + '">';
-                    out += '</div>';
-                    out += '<div id="userName">' + data[0].MEMBER_NAME + '</div>';
-                    out += '<div id="userPhone">' + data[0].MEMBER_PHONE + '</div>';
-                    out += '<div id="userBirth">' + data[0].MEMBER_BIRTH + '</div>';
-                    out += '</div></div></div>';
-                    out += '<div id="chInfo" onclick="changeInfo();">';
-                    out += '</div></div>';
-                    out += '<div class="secondInfo">';
-                    out += '<div class="chPwd">';
-                    out += '<input type="password" placeholder="현재 비밀번호" id="nowPwd">';
-                    out += '<input type="password" placeholder="변경할 비밀번호" id="chPwd">';
-                    out += '<div id="ckck" onclick="changePwd();" >비밀번호 변경</div>';
-                    out += '</div></div>';
-                    out += '<div class="userout">';
-                    out += '<div>';
-                    out += '<div id="uOut" onclick="outclick">회원 탈퇴</div>';
-                    out += '</div>';
-                    out += '</div>';
-                    out += '</div>';
-                
+                        $("#uImg").val(data[0].MEMBER_IMG);
+                        $('#userName').val(data[0].MEMBER_NAME);
+                        $('#userPhone').val(data[0].MEMBER_PHONE);
+                        $('#userBirth').val(data[0].MEMBER_BIRTH);                  
                 }
-            
-                
             });
-//        개인정보 번경
-        function changeInfo(){
-            
-        }
-//        이미지 변경
-        function changeImg(){
-            
-        }
-//        비밀번호 변경
-        function changePwd(){
-            
+        //////////////////////////정보변경/////////////////////////////////////////        
+            function changeInfo(){
+                 $.ajax({
+                type:"post",
+                url:"ChangeInfo.do",
+                datatype:"json",
+                data: $('#changeInfo').serialize(),
+                success: function(data){
+                    var result = data[0].result;
+                        if(result == 'success'){
+                        	alert("정보가 변경되었습니다.");
+                            $("#uImg").val(data[0].MEMBER_IMG);
+                            $('#userName').val(data[0].MEMBER_NAME);
+                            $('#userPhone').val(data[0].MEMBER_PHONE);
+                            $('#userBirth').val(data[0].MEMBER_BIRTH);
+                            location.href='myInfo.html';
+                            
+                        }else{
+                            alert("정보변경 실패");
+                        }
+                }
+            });
+                $.ajax({
+                type:"post",
+                url:"PersonalServlet.do",
+                datatype:"json",
+                data: $('#changeInfo').serialize(),
+                
+                success: function(data){
+                        $("#uImg").val(data[0].MEMBER_IMG);
+                        $('#userName').val(data[0].MEMBER_NAME);
+                        $('#userPhone').val(data[0].MEMBER_PHONE);
+                        $('#userBirth').val(data[0].MEMBER_BIRTH);                  
+                }
+            });
         }
         
+        ////////////////비밀번호 변경///////////////////////////////////////////////////
+//                var nowPwd = document.getElementById('nowPwd').value;
+//                var chPwd = document.getElementById('chPwd').value;
+//                var chkPwd = document.getElementById('chkPwd').value;
+            function changePwd(){
+//                if(nowPwd == null || chPwd == null || chkPwd == null ||
+//                   nowPwd == ""   || chPwd == ""   || chkPwd == "") {
+//                    alert("공백이 있습니다");
+//                    
+//            }else {
+//                     alert("새로운 비밀번호가 맞지않습니다.");
+//            }
+            	$.ajax({
+                    type: "post",
+                    url: "ChangePwd.do",
+                    datatype: "json",
+                    data: $('#userPWD').serialize(),
+                    success: function(data){
+                        var result = data[0].result;
+                            if(result == 'success'){
+                                alert("비밀번호 변경되었습니다.");
+                                
+                            }else{
+                                alert("비밀번호 변경실패하였습니다.");
+                            }
+                        
+                        }
+                       })
+                  }
+        ///////////////////////////회원탈퇴/////////////////////////////////////
+            function outclick(){
+                $.ajax({
+                    type:"post",
+                    url: "OutUser.do",
+                    data: $('#outout').serialize(),
+                    success: function(data){
+                    var result = data[0].result;
+                        if(result != 'success'){
+                        	alert("회원 정보를 다시 확인해주세요");
+                        }else{
+                        	alert("회원 탈퇴가 완료되었습니다. 7일후에 자동으로 삭제됩니다.");
+                        	location.href='index.html'
+                        }
+                    }
+                })
+            }
+        //////////////////////////사진 변경/////////////////////
+//         function changeImg(){
+//            $.ajax({
+//                type:"post",
+//                url:"changeImg.do",
+//                data:$('#chImg').serialize(),
+//                success:function(data){
+//                    var result = data[0].result;
+//                    if(result == 'success'){
+//                        alert("사진변경이 완료되었습니다.");
+//                    }else{
+//                        alert("사진 변경이 실패하였습니다");
+//                    }
+//            });
+//        } 
+         function changeImg(){
+             var myImg = document.getElementById('upLoad');
+             var fileName = myImg.value;
+             var fileNameLen = fileName.length;
+             var dotPositiion = fileName.split('.');
+             var extension = fileName.substring(12, fileNameLen);
+             console.log(extension);
+             if(fileName != ''){
+                 alert('사진 형식이 맞습니다.');
+                $.ajax({
+                    type:"post",
+                    url:"changeImg.do",
+                    data: $('#chImg').serialize(),
+                    success: function(data){
+                        var result = data[0].result;
+                        console.log(extension);
+                        var out = '';
+                        out += '<img src="img/member/"'+extension+'"" id="uImg" name="uImg"/>';
+                        out += '<input type="file" id="upLoad" name="upLoad"/>';
+                        out += '<input id="uploadfile" type="button" value="사진변경" onclick="changeImg();"/>';
+                    }
+                })    
+//                 if(extension == 'jpg' || extension =='jpeg' || extension == 'png' || extension =='gif'){
+//                     console.log("2");
+             }else{
+                     alert('사진 형식이 아닙니다.');
+                 }
+              
+         }
+
+        
+
+
+
+
+
     </script>
 <body>
-<!--
-    <form action="PersonalServlet.do" id="info" method="post">
-        
-    </form>
--->
+ <div id="wrap">
+<!--        네브바 입니다 ```````````````````````````````````````````````` -->
+    <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src="img/member/basis_photo.png"/>
+                </li>
+                <li class="nav_li">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="#">홈</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+        </ul>
+    </nav>
+        <div id="main_container">
+
+
+    <form method="post" id="changeInfo">
     <div class="container">
         <div class="userIn">
             <div class="userInfo"> 
                 <div class="userInfo2">
                     <div id="userImg">
-                        <img src="D:\javascript\img\user.png" id="uImg" onclick="changeImg()">
+                        <form method="post" id="chImg" action="changeImg.do">
+                            <img src="img/member/basis_photo.png" id="uImg" name="uImg"/>
+<!--
+                            <input type="file" id="upLoad" name="upLoad"/>
+                            <input id="uploadfile" type="button" value="사진변경" onclick="changeImg();"/>
+-->
+                        </form>
                     </div>
-                    
-                    <div id="userName">정 현 우</div>
-                    <div id="userPhone">010-6304-6041</div>
-                    <div id="userBirth">3월 15일</div>
-                    <div id="chInfo" onclick="changeInfo();" >정보 수정하기</div>
+                    <input type="text" id="userName" name="userName">
+                    <input type="text" id="userPhone" name="userPhone">
+                    <input type="text" id="userBirth" name="userBirth">
+                    <div id="chInfo" onclick="changeInfo()" >정보 수정하기</div>
                 </div>
-            
             </div>
-
-            <div class=""secondInfo>
+            </form>
+            <form method="post" id="userPWD">
+            <div class="secondInfo">
                 <div class="chPwd">
-                    <input type="password" placeholder="현재 비밀번호" id="nowPwd">
-                    <input type="password" placeholder="변경할 비밀번호" id="chPwd">
-                    <input type="password" placeholder="비밀번호 확인" id="chkPwd">
-                    <div id="ckck" onclick="changePwd();" >비밀번호 변경</div>
-                </div>
-                
+                    <input type="password" placeholder="현재 비밀번호" id="nowPwd" name="nowPwd" >
+                    <input type="password" placeholder="변경할 비밀번호" id="chPwd" name="chPwd">
+                    <input type="password" placeholder="비밀번호 확인" id="chkPwd" name="chkPwd">
+                    <div id="ckck" onclick="changePwd()">비밀번호 변경</div>
+                </div>  
             </div>
+            </form>
+        
         </div>
+        <form method="post" id="outout">
         <div class="userout">
             <div> 
-                <div id="uOut" onclick="outclick"> 회원 탈퇴</div>
+                <div id="uOut" onclick="outclick()"> 회원 탈퇴</div>
             </div>
         </div>
-
-    </div>
+        </form>
+        </div>
+            </div>
+            </div>
 </body>
 </html>
