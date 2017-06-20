@@ -25,7 +25,7 @@ public class CalendarDAO
 	Statement stmt;
 
 	
-	// CalendarDAO ÀÇ ½Ì±ÛÅæ ================================================================================================
+	// CalendarDAO ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ ================================================================================================
 	private static CalendarDAO instance = new CalendarDAO();
 	
 	private CalendarDAO() {	}
@@ -35,7 +35,7 @@ public class CalendarDAO
 		return instance;
 	}
 	
-	// DB¿¬°áÀ» À§ÇØ conÀ» ¹ÝÈ¯ÇÏ´Â ¸Þ¼­µå ==================================================================================
+	// DBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ conï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ==================================================================================
 	public Connection getConnection() throws Exception
 	{
 		Context initCtx = new InitialContext();
@@ -44,7 +44,7 @@ public class CalendarDAO
 		return ds.getConnection();
 	}
 
-	// °¢Á¾ ÀÏÁ¤ ¹Þ¾Æ¿À±â ===================================================================================================
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ===================================================================================================
 	public ArrayList<CalendarVO> getInfo(String groupId)
 	{
 		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
@@ -95,7 +95,7 @@ public class CalendarDAO
 		return arrList;
 	}
 	
-	// °¢Á¾ÀÏÁ¤ ¹Þ¾Æ¿À±â(±×·ì ¾ÆÀÌµð, ÀÏÁ¤ ¾ÆÀÌµð)
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½(ï¿½×·ï¿½ ï¿½ï¿½ï¿½Ìµï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½)
 	public ArrayList<CalendarVO> getInfo(String groupId, String calId)
 	{
 		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
@@ -214,8 +214,6 @@ public class CalendarDAO
 			
 			
 			
-			
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -251,7 +249,7 @@ public class CalendarDAO
 			rs = psmt.executeQuery();
 			while(rs.next()){
 				cal_depth = rs.getInt("CAL_DEPTH"); 
-				System.out.println("±íÀÌ : " + cal_depth);
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + cal_depth);
 			}
 			
 		} catch (Exception e) {

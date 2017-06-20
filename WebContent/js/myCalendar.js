@@ -27,7 +27,7 @@
 
 
 
-// 일정 잡기 저장용
+        // 일정 잡기 저장용
         var scheSet = new Set();
         // 생일자 저장용
         var birthSet = new Set();
@@ -1061,14 +1061,7 @@
             }
             update();
         }
-        //        addSche = "";
-        //        scheArr = new Array(32);
-        ////        scheArr[0] = "";
-        //        for(var s = 0; s < 32; s++ ){
-        //            scheArr[s] = false;
-        //        }
-        //        
-        //        var scheSet = new Set();
+
         function getDayInfo(a) { // 선택한 날짜 정보를 얻기 위한 함수
             if (a != null) {
                 var yearInfo = $("#yearSelect").val() + "";
@@ -1092,8 +1085,6 @@
                     return;   
                 }
                 
-                
-               
                 if (selectDate < dateToFormat(initDay)) {
                     alert("지난 날짜는 선택할수 없습니다!")
                     return;
@@ -1130,10 +1121,12 @@
                         console.log(selectDate);
                     }
                 }
-                //                addSche += yearInfo + monthInfo + dayInfo + ",";
             }
         }
-        //스케줄 추가 함수
+
+
+
+        //  날짜 선택하고 스케줄 추가 함수
         function addSchedule() {
 //            console.log(scheSet.size);
             if(scheSet.size == 0){
@@ -1373,30 +1366,6 @@
                     }
                     //                    console.log(data[1].member_choice);
                     var mem_choice = data[1].member_choice.split(",");
-                    //                    var choiceInfo = new Array();
-                    //                    for(var chNum = 0; chNum < mem_choice.length; chNum++){
-                    //                       
-                    //                        
-                    ////                        console.log(mem_choice[chNum]);
-                    ////                        console.log(mem_choice[chNum].substr(0 , mem_choice[chNum].length - 8)); //아이디
-                    ////                        console.log(mem_choice[chNum].substr(mem_choice[chNum].length - 8 , 4)); //년
-                    ////                        console.log(mem_choice[chNum].substr(mem_choice[chNum].length - 4 , 2)); //월
-                    ////                        console.log(mem_choice[chNum].substr(mem_choice[chNum].length - 2 , 2)); //일
-                    //                        
-                    //                        
-                    //                        
-                    //                        
-                    //                        choiceInfo.push(mem_choice[chNum].substr(0 , mem_choice[chNum].length - 8));
-                    //                        choiceInfo.push(mem_choice[chNum].substr(mem_choice[chNum].length - 8 , 4));
-                    //                        choiceInfo.push(mem_choice[chNum].substr(mem_choice[chNum].length - 4 , 2));
-                    //                        choiceInfo.push(mem_choice[chNum].substr(mem_choice[chNum].length - 2 , 2));
-                    //                        
-                    //                    }
-                    //                    for(var viewNum = 0; viewNum < choiceInfo.length; viewNum++){
-                    //                        console.log(choiceInfo[viewNum]);
-                    //                        
-                    //                    }
-                    //                    console.log(data[1].cal_date.split(","));
                     console.log(mem_choice);
                     buildCalendar();
                     //                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
@@ -1412,13 +1381,7 @@
         // 모달 작업 부분
         function getGroupBrith() {
             var para = document.location.href.split("?");
-            //            console.log("para : " + para);
-            //            console.log("para[1] : " + para[1]);
             para = para[1].split("=");
-            //            console.log("para2 : " + para);
-            //            
-            //            para = par[1];
-            //            console.log("click");
             $.ajax({
                 type: 'post'
                 , url: 'groupBirth.do'
@@ -1429,17 +1392,9 @@
                 , success: function (data) {
                     console.log("groupBirth");
                     console.log(data);
-                    //                    console.log("이런");
-                    //                    $(data).find(Object).each(function()
-                    //                    {
-                    //                        console.log($(this).find('memberNa    me').text());
-                    //                    });
                     for (var i = 0; i < data.length; i++) {
-                        //                        console.log(data[i].memberBirth + "-" + data[i].memberName + "-" + data[i].memberId);
                         var memBirth = data[i].memberBirth + "-" + data[i].memberName + "-" + data[i].memberId;
                         birthSet.add(memBirth);
-                        //                        console.log(memBirth);
-                        //                        console.log(birthSet[i]);
                     }
                     console.log("birthSet");
                     for (let item of birthSet.keys()) {
@@ -1459,9 +1414,6 @@
         function getVoteInfo() {}
 
         function voteMeeting(cal_date) {
-            //            console.log(cal_date);
-            //            console.log($("#yearSelect option:selected").val() + $("#monthSelect option:selected").val());
-            //            console.log(scheSet);
             for (var vote = 0; vote < cal_date.length; vote++) {
                 $("#date" + parseInt(cal_date[vote].substr(6, 2))).children().last().html();
                 
@@ -1470,27 +1422,12 @@
                     $("#date" + parseInt(cal_date[vote].substr(6, 2))).children().last().append("<div>투표중..</div>");
                     
                 }
-                //                for (let item of scheSet.keys()){             
-                //                    if(item = cal_date[vote]){
-                //                        if($('#yearSelect option:selected').val() == cal_date[vote].substr(0,4) && $('#monthSelect option:selected').val() == parseInt(cal_date[vote].substr(4,2))){
-                //                        
-                //                        $('#date' + parseInt(cal_date[vote].substr(6,2))).css("backgroundColor","green");
-                //                        
-                //
-                //                        }
-                //                        
-                //                    }
-                //
-                //                    
-                //
-                //                } 
             }
         }
         
         function selectYes(){
 //            console.log("!");
 //            console.log(scheSet.toString());
-            
             var groupId = location.href.split("=")[1];
             console.log(groupId);
             var calDate = "";
@@ -1510,21 +1447,16 @@
                     title : calTitle,
                     calDate : calDate,
                     groupId : groupId
-                    
                 }
                 , dataType: "json"
                 , success: function (data) {
-                    
                     console.log(data);
                 }
                 , error: function (req) {
-                    
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
-//                        
             location.reload();
-            
         }
         
         function selectNo(){
