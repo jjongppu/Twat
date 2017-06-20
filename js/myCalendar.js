@@ -1,18 +1,33 @@
-<!DOCTYPE html>
-<html>
+//  gfnToday() : 해당 PC의 오늘 날짜를 가져온다. String.
+//  gfnTodayTime() : 해당 PC의 오늘 날짜+시간를 가져온다. String.
+//  gfnCurrentTime() : 해당 PC의 현재시간를 가져온다. String.
+//  gfnAddDate(date, nOffSet) : 입력된 날자에 OffSet 으로 지정된 만큼의 일을 더한다.
+//                              Date Type을 String으로 변환.
+//                     argument    : date ('yyyyMMdd' 형태로 표현된 날자)
+//                                  nOffSet (날짜로부터 증가 감소값. 지정하지 않으면 Default Value = 1 로 적용됩니다)
+//
+//  gfnAddMonth(date, nOffSet) : 입력된 날자에 OffSet 으로 지정된 만큼의 달을 더한다.
+//
+//  gfnDatetime(nYear, nMonth, nDate) : MiPlatform에서 사용하던 Datetime형식으로 변환
+//          nYear (년도), nMonth (월), nDate (일)
+//
+//
+//  gfnGetDiffDay(sFdate, sTdate) : gfnGetDiffDay("20090808", "20091001")
+//         sFdate : 시작일자,  sTdate : 종료일자        2개의 날짜간의 Day count.
+//
+//  gfnDateCheck(sDate) : 날짜에 대한 형식 체크
+//          sDate : 검사일자
+//
+//  gfnGetDay(sDate) : 입력된 날자로부터 요일을 구함
+//      sDate  8자리 형식으로된 날짜. yyyyMMdd의 형식으로 입력됩니다.
+//  요일에 따른 숫자,   0 = 일요일 ~ 6 = 토요일 로 대응됩니다., 오류가 발생할 경우 -1이 Return됩니다.
+//
+//
+//
 
-<head>
-    <title>단체페이지</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <link rel="stylesheet" type="text/css" href="css/groupCalendar.css">
-    <!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
-    <!--    네브바 js, 세션검사 -->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/nav.js"></script>
-    <script language="javascript" type="text/javascript">
-        // 일정 잡기 저장용
+
+
+// 일정 잡기 저장용
         var scheSet = new Set();
         // 생일자 저장용
         var birthSet = new Set();
@@ -182,7 +197,7 @@
         /******************************************************************************
          * Function명 : gfnDateCheck
          * 설명       : 날짜에 대한 형식 체크
-         * Params     : sFdate   검사일자
+         * Params     : sDate   검사일자
          * Return     : 유효성반환 (날짜형식이 아닐경우 FLASE)
          ******************************************************************************/
         function gfnDateCheck(sDate) {
@@ -903,61 +918,7 @@
         }
         /*음력 알고리즘..끝*/
         var today = new Date(); // 오늘 날짜
-        
         $(document).ready(function () {
-<<<<<<< HEAD
-=======
-//            console.log("여기다");
-            
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-            var groupId = location.href.split("=")[1];
-        
-            
-             $.ajax({
-                type: 'post'
-                , url: 'groupMaster.do'
-                , data: {                    
-                    groupId : groupId
-
-                }
-                , dataType: "json"
-                , success: function (data) {
-
-<<<<<<< HEAD
-                    console.log(data);
-
-                    
-                    $.each(data, function (index, item) {
-=======
-//                    console.log(data);
-
-                    
-                    $.each(data, function (index, item) {
-//                        console.log(item.groupMaster);
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-                        if(item.groupMaster == "no"){
-                            $("#addschedule").css("display","none");
-                        }
-                        
-                    });
-                    
-                }
-                , error: function (req) {
-
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-                }
-                 
-            });
-            
-            
-            
-            
-            
-
-
-            
-            
-            
             /*
                 드레그앤 드롭
             */
@@ -1138,7 +1099,7 @@
                     return;
                 }
                 else {
-                    if ($(a).css("backgroundColor") == "rgb(0, 128, 0)") {
+                    if ($(a).css("backgroundColor") == "rgb(98, 188, 250)") {
                         $(a).css("backgroundColor", "white");
                         //                    scheArr[parseInt(dayInfo)] = false;
                         scheSet.delete(yearInfo + monthInfo + dayInfo);
@@ -1163,7 +1124,7 @@
                         initToday();
                     }
                     else {
-                        $(a).css("backgroundColor", "green");
+                        $(a).css("backgroundColor", "#62bcfa");
                         //                    scheArr[parseInt(dayInfo)] = dayInfo;
                         scheSet.add(yearInfo + monthInfo + dayInfo);
                         console.log(selectDate);
@@ -1175,31 +1136,23 @@
         //스케줄 추가 함수
         function addSchedule() {
 //            console.log(scheSet.size);
-            
-            
             if(scheSet.size == 0){
                 alert("일정이 선택 되지 않았습니다.");
                 return;
             }
             
-            
-            
-            
-            $(".modal").css("display", "block");
-             $('#blindCover').css('display','block');
-            
-            
-            
-
-            
-            
+            $("#modal").css("display", "block");
+            $("#titleAdd").css("display", "block");
+            $("#answerBox").css("display", "none");
             
             var a = "";
             //            console.log(scheSet);
             for (let item of scheSet.keys()) console.log(item);
 //            scheSet = new Set();
         }
+        
 
+// ================ 요넘이 캘린더 그려주는 애. ================ 
         function buildCalendar(dateArr, titleArr, memChoiceArr) {
             var nMonth = new Date(today.getFullYear(), today.getMonth(), 1); // 이번 달의 첫째 날
             var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // 이번 달의 마지막 날
@@ -1230,38 +1183,42 @@
                 cell = row.insertCell();
                 cnt = cnt + 1;
             }
-            // 달력 출력
+            
+            // =====================    달력 출력하는 코드!    ==============
             for (calDay = 1; calDay <= lastDate.getDate(); calDay++) { // 1일부터 마지막 일까지
                 cell = row.insertCell();
                 $(cell).attr("id", "date" + calDay);
                 $(cell).attr("onclick", "getDayInfo(this)");
                 $(cell).attr("style", "cursor:pointer");
                 initToday();
-                if ((today.getMonth() + 1) / 10 < 1) {
+                if ((today.getMonth() + 1) / 10 < 1) { // 월처리
                     if (calDay / 10 < 1) {
                         dateParam = today.getFullYear() + "0" + (today.getMonth() + 1) + "0" + calDay;
-                    }
+                    }  // dateParam은 원래 2017712에서  7앞에 0을 넣는다. 20170712
                     else {
                         dateParam = today.getFullYear() + "0" + (today.getMonth() + 1) + "" + calDay;
-                    }
+                    }  
                 }
                 else {
-                    if (calDay / 10 < 1) {
+                    if (calDay / 10 < 1) { // 일처리
                         dateParam = today.getFullYear() + "" + (today.getMonth() + 1) + "0" + calDay;
                     }
                     else {
                         dateParam = today.getFullYear() + "" + (today.getMonth() + 1) + "" + calDay;
                     }
                 }
+                
                 for (let item of scheSet.keys()) {
                     if (item == dateParam) {
-                        $('#date' + calDay).css("backgroundColor", "green");
+                        $('#date' + calDay).css("backgroundColor", "#62bcfa");   // 선택했을때 초록색으로 바꿔주는 부분!
                     }
                 } //선택한 날짜 초록색으로 표기
+                
                 var saveSolar = gfnSolar2Lunar(dateParam);
                 dateColor.setFullYear(today.getFullYear());
                 dateColor.setMonth(today.getMonth());
                 dateColor.setDate(calDay);
+                
                 if (dateColor.getDay() == 6) {
                     cell.innerHTML += "<div class='saturday' style='color:blue;'>" + calDay + "</div>";
                     //                    $('.saturday').css('color','blue');
@@ -1274,15 +1231,7 @@
                     cell.innerHTML += "<div>" + calDay + "</div>";
                 }
                 if (calDay % 9 == 0) cell.innerHTML += "<div style='font-size:1px;'>" + saveSolar.substr(5, 2) + "." + saveSolar.substr(7, 2) + "</div>";
-                //                if(countHoliday > 0)
-                //                {
-                //                    cell.innerHTML += "<div class='holi'></div>";
-                //                    $(".holi").css("color", "red"); 
-                //                    $(".holi").prev().css("color","red");
-                //                    countHoliday--;
-                //                    
-                //                    
-                //                }
+                
                 // 확정된 일정표시
                 for (let item of scheduleSet.keys()) {
                     if (item.split("-")[0] == dateParam) {
@@ -1296,7 +1245,6 @@
                 for (let item of voteSet.keys()) {
                     if (item.split("-")[0] == dateParam) {
                         cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        //                        $('.voteSchedule').prevAll().css("background-color", "#00ff80");
                         console.log("#date" + parseInt(dateParam.substr(6)));
                         $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
                     }
@@ -1306,7 +1254,6 @@
                     if (item.split("-")[0].substr(2, 4) == dateParam.substr(4)) {
                         cell.innerHTML += "<div class='memberBirthDay' style='font-size:13px'>" + item.split("-")[1] + "(" + item.split("-")[2] + ")님의 생일</div>";
                         console.log("#date" + parseInt(dateParam.substr(6)));
-                        //                        $('.memberBirthDay').prevAll().css("background-color", "#0080ff");
                         $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#0080ff");
                     }
                 }
@@ -1319,7 +1266,7 @@
                         $('.holi').prevAll().css("color", "red");
                     }
                 }
-                //                console.log(memChoiceArr);
+
                 if (dateArr != null) {
                     for (var dateNum = 0; dateNum < dateArr.length; dateNum++) {
                         if (dateArr[dateNum] == dateParam) {
@@ -1334,25 +1281,13 @@
                     // 1주일이 7일 이므로                 
                     row = calendar.insertRow(); // 줄 추가
                 }
-                //                var choiceDate = "";
-                //                if (memChoiceArr != null) {
-                //                    for (var dateNum = 0; dateNum < memChoiceArr.length; dateNum++) {
-                //                        choiceDate = memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length - 8, 8);
-                //                        //                    console.log(memChoiceArr[dateNum].substr(memChoiceArr[dateNum].length-8 , 8));
-                //                        if (choiceDate == dateParam) {
-                //                            //                        console.log(parseInt(choiceDate.substr(6,2)));
-                //                            console.log("#date" + parseInt(choiceDate.substr(6, 2)));
-                //                            $("#date" + parseInt(choiceDate.substr(6, 2))).css("background-color", "yellow");
-                //                        }
-                //                    }
-                //                }
-                
-                
             }
-            //            initToday();
         }
-        
-//        var para = document.location.href.split("?");
+//  ================================ 달력 출력 끝! ================================
+
+
+
+
         // 일정들 전부 출력
         function getGroupInfo() {
             var para = document.location.href.split("?");
@@ -1424,31 +1359,8 @@
                             }
                         }
                         str += '</div>';
-                        str += '<div class="middle" onclick="addComment(this)">';
-                        str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
-                        str += '<div class="middle-bottom">';
-                        str += '<span>' + data[arrCal].cal_writer + '님</span>';
-                        str += '<span>외 ' + data[0].group_count + '명 참여</span>';
-                        str += '</div>'; // div-down
-                        str += '</div>'; // div-up
-                        str += '<div class="right">';
-                        str += '<div class="right-top"></div>';
-                        str += '<div class="right-bottom">';
-                        
-                        if (str2.indexOf(',') == -1)
-                        {
-                            // 전체 일정(확정)
-                            str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
-                        }
-                        else
-                        {
-                            // 투표(미확정)
-                            str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
-                        }
-                        
-                        str += '</div>';
-                        str += '</div>'; // div-right
-                        str += '</div>'; // div=middle
+                        str += '<div class="middle"><div class="up">' + data[arrCal].cal_memo + '</div><div class="down"><span>' + data[arrCal].cal_writer + '님</span><span>외 ' + data[0].group_count + '명 참여</span>';
+                        str += '</div></div><div class="right"><div class="up"></div><div class="down"></div></div></div>';
                         if (str2.indexOf(',') == -1) {
                             $(".schedule").append(str);
                             //                            document.getElementById("schedule").innerHTML += str;
@@ -1460,20 +1372,7 @@
                         //                        console.log(str);
                     }
                     //                    console.log(data[1].member_choice);
-<<<<<<< HEAD
-<<<<<<< HEAD
-//                    var mem_choice = data[1].member_choice.split(",");
-=======
-=======
->>>>>>> dea6cf49c5bbd913d17f55f99845b6b26b2a48c0
-//                    if(data[1].member_choice != null)
-//                    {
-//                        var mem_choice = data[1].member_choice.split(",");
-//                    }
-<<<<<<< HEAD
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-=======
->>>>>>> dea6cf49c5bbd913d17f55f99845b6b26b2a48c0
+                    var mem_choice = data[1].member_choice.split(",");
                     //                    var choiceInfo = new Array();
                     //                    for(var chNum = 0; chNum < mem_choice.length; chNum++){
                     //                       
@@ -1498,31 +1397,17 @@
                     //                        
                     //                    }
                     //                    console.log(data[1].cal_date.split(","));
-//                    console.log(mem_choice);
+                    console.log(mem_choice);
                     buildCalendar();
                     //                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
-<<<<<<< HEAD
-<<<<<<< HEAD
-//                    cal_date = data[1].cal_date.split(",");
-//                    voteMeeting(cal_date);
-=======
-=======
->>>>>>> dea6cf49c5bbd913d17f55f99845b6b26b2a48c0
-//                    if(data[1].cal_date.contains(","))
-//                    {
-//                        var cal_date = data[1].cal_date.split(",");
-//                        voteMeeting(cal_date);
-//                    }
-<<<<<<< HEAD
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-=======
->>>>>>> dea6cf49c5bbd913d17f55f99845b6b26b2a48c0
+                    cal_date = data[1].cal_date.split(",");
+                    voteMeeting(cal_date);
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
-            });
+            })
         }
         // 모달 작업 부분
         function getGroupBrith() {
@@ -1568,135 +1453,21 @@
                 }
             })
         }
-     	// 확정된 일정 정보 출력
-        function getScheduleInfo(cal_num)
-        {
-//            console.log("확정된 일정 : " + cal_num);
-            
-            var para = document.location.href.split("?");
-            para = para[1].split("=");
-            $.ajax({
-                type: 'post'
-                , url: 'groupSchedule.do'
-                , data: {
-                    group: para[1],
-                    calNum: cal_num
-                }
-                , dataType: "json"
-                , success: function (data) {
-                    console.log(data);
-                    
-                    var scheduleString = "";
-                    var commentsString = "<div id='CommentBox'>";
-                    var scheduleObject = data[0];
-                    var memberList = scheduleObject.member_choice.split(",");
-                    
-                    for(var i = 0; i < data.length; i++)
-                    {
-                        // 일정 정보
-                        if(data[i].cal_depth == 0)
-                        {
-                            scheduleString += "<div id='scheduleMemo'>내용 : " + scheduleObject.cal_memo + "</div>";
-                            scheduleString += "<div id='scheduleWriter'>작성자 : " + findMemberName(scheduleObject.cal_writer) + "</div>";
-                            scheduleString += "<div id='scheduleDate'>일정 : " + scheduleObject.cal_date.substr(0,4) + "년 " + scheduleObject.cal_date.substr(4,2) + "월 " + scheduleObject.cal_date.substr(6,2) + "일</div>";
-                            scheduleString += "<div id='scheduleMember'>참가자 : ";
-                            // 참가자 출력
-                            for(var j = 0; j < memberList.length; j++)
-                            {
-        //                        console.log(memberList[i].substr(8));
-                                scheduleString += findMemberName(memberList[j].substr(8));
-
-                                if((j+1) < memberList.length)
-                                {
-                                    scheduleString += ", ";
-                                }
-                            }
-                            scheduleString += "</div>";
-                        }
-                        else if(data[i].cal_depth > 0)
-                        {
-//                            console.log("확인!");
-                            
-                            commentsString += "<div id='commentWriter'>" + findMemberName(data[i].cal_writer) + "</div>";
-                            commentsString += "<div id='commentMemo'>" + data[i].cal_memo + "</div>";
-//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
-                        }
-                        
-                        // 댓글창
-//                        scheduleString += "<div id='CommentBox'>";
-                        
-                        console.log(data[i].cal_depth);
-    //                    console.log(scheduleString);
-    //                    console.log(memberList);
-                    }
-                    // 댓글입력란
-                    scheduleString += "<div id='Comment'>";
-                    scheduleString += commentsString;
-                    scheduleString += "</div>"; // Comment
-                    scheduleString += "</div>"; // CommentBox
-
-                    document.getElementById('modal2').innerHTML = scheduleString;
-                }
-                , error: function (req) {
-                    //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-                }
-            })
-        }
+        // 확정된 일정 정보 출력
+        function getScheduleInfo() {}
         // 미확정된 일정 정보 출력
-        function getVoteInfo(cal_num)
-        {
-            console.log("투표할 일정 : " + cal_num);
-
-            var para = document.location.href.split("?");
-            para = para[1].split("=");
-            $.ajax({
-                type: 'post'
-                , url: 'groupSchedule.do'
-                , data: {
-                    group: para[1],
-                    calNum: cal_num
-                }
-                , dataType: "json"
-                , success: function (data) {
-                    console.log(data);
-                }
-                , error: function (req) {
-                    //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-                }
-            })
-        }
-        // 아이디로 생일목록에서 이름 검색
-        function findMemberName(mem_id)
-        {
-            for (let item of birthSet.keys())
-            {
-//                console.log(item);
-//                console.log(item.split("-")[2]);
-                
-                if (item.split("-")[2] == mem_id)
-                {
-                    return item.split("-")[1];
-                }
-            }
-            return '(방에서 나간 사용자)';
-        }
+        function getVoteInfo() {}
 
         function voteMeeting(cal_date) {
             //            console.log(cal_date);
             //            console.log($("#yearSelect option:selected").val() + $("#monthSelect option:selected").val());
             //            console.log(scheSet);
-        
             for (var vote = 0; vote < cal_date.length; vote++) {
-                
-               
-                
+                $("#date" + parseInt(cal_date[vote].substr(6, 2))).children().last().html();
                 
                 if (cal_date[vote].substr(0, 4) == $("#yearSelect option:selected").val() && parseInt(cal_date[vote].substr(4, 2)) == parseInt($("#monthSelect option:selected").val())) {
-                    
                     $("#date" + parseInt(cal_date[vote].substr(6, 2))).css("backgroundColor", "red");
-                    
+                    $("#date" + parseInt(cal_date[vote].substr(6, 2))).children().last().append("<div>투표중..</div>");
                     
                 }
                 //                for (let item of scheSet.keys()){             
@@ -1717,425 +1488,27 @@
         }
         
         function selectYes(){
-//            console.log("!");
-//            console.log(scheSet.toString());
             
-<<<<<<< HEAD
-            var groupId = location.href.split("=")[1];
-            console.log(groupId);
-=======
+            $("#calTitle").val()
             
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-            var calDate = "";
-            var groupId = location.href.split("=")[1];
-            console.log(groupId);
-            
-            for (let item of scheSet.keys())
-                calDate += item + ",";
-            
-            
-                
-            
-            
-            var calTitle = $("#calTitle").val();
-            console.log("");
-            
-             $.ajax({
-                type: 'post'
-                , url: 'ScheduleAdd.do'                
-                , data: {                    
-                    title : calTitle,
-                    calDate : calDate,
-                    groupId : groupId
-                    
-                }
-                , dataType: "json"
-                , success: function (data) {
-                    
-                    console.log(data);
-<<<<<<< HEAD
-=======
-                    
-                     $.each(data, function (index, item) {
-//                        console.log(item.groupMaster);
-                        console.log(item.result);
-                        
-                    });
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-                }
-                , error: function (req) {
-                    
-//                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-                }
-            });
-//                        
-            location.reload();
             
         }
         
         function selectNo(){
             $("#modal").css("display","none");
-            console.log("!!!!");
+            console.log(scheSet.size);
             $("#calTitle").val("");
             
         }
         
         function clickAddCal(){
+            console.log("!");
+            
+            $("#titleAdd").css("display", "block"); 
+            
+            $("#answerBox").css("display", "block");
             $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
-            var heights = $('#contentsHeight').css('height');
-            if($("#calTitle").val() != ""){
-                $('.modal').animate({
-                    
-                    height : heights ,
-
-                }, 300);
-            }
-<<<<<<< HEAD
-=======
+            $("#yesButton").css("display", "block");
+            $("#noButton").css("display", "block");
+            
         }
-            
-            
-        function addComment(comment){
-         
-            console.log($(comment).children().eq(0).text());
-            var cal_memo = $(comment).children().eq(0).text();
-            var group_id = location.href.split("=")[1];
-            var first_cal = $(comment).prev().text().split("~")[0];
-            var new_memo = "똥매려";
-            console.log(first_cal);
-            
-            $.ajax({
-                type: 'post'
-                , url: 'addComment.do'
-                , data: {                    
-                    cal_memo : cal_memo,
-                    group_id : group_id,
-                    first_cal : first_cal,
-                    new_memo : new_memo
-
-                }
-                , dataType: "json"
-                , success: function (data) {
-
-
-                    
-                    $.each(data, function (index, item) {                   
-                    });
-                    
-                }
-                , error: function (req) {
-
-//                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-                }
-                 
-            });
-            
-            
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-        }
-        
-    </script>
-</head>
-
-<body>
-    <div id="wrap">
-        <!--        네브바 입니다 ```````````````````````````````````````````````` -->
-        <nav class="left_nav">
-            <div id="userInfo">
-                <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-                    <li class="nav_li"> <img id="user_Img" src="/img/member/basis_photo.png" /> </li>
-                    <li class="nav_li">
-                        <div id="user_Id"></div>
-                    </li>
-                </ul>
-            </div>
-            <ul class="nav_ul" id="nav_menu">
-                <li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
-                <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-                <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="#">단체 캘린더</a></li>
-                <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
-                <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
-            </ul>
-            <ul id="logout" class="nav_ul" onclick="logout()">
-                <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
-            </ul>
-        </nav>
-        <div id="main_container">
-            <div id="container">
-                <!-- {방 이름, 방장, 설정}, {단체일정}, {진행중인 투표}, {가까운 이벤트} -->
-                <div id="left-side">
-                    <!-- {방 이름, 방장, 설정} -->
-                    <div class="top">
-                        <!-- 방 아이콘 -->
-                        <div id="icon"></div>
-                        <!-- 내용(제목, 방장, 방장 외 인원수) -->
-                        <div id="content">
-                            <!-- 방제목 -->
-                            <div id="title"></div>
-                            <!-- 방 인원 -->
-                            <div id="member">
-                                <!-- 방장 : span? div? 고민 -->
-                                <div id="master"></div>
-                                <!-- 방장 외 인원 : span? div? 고민 -->
-                                <div id="otherMembers"></div>
-                            </div>
-                        </div>
-                        <!-- 설정 -->
-                        <div id="config"></div>
-                    </div>
-                    <!-- {단체일정} -->
-                    <div class="schedule" ondrop="drop(event);" ondragover="allowDrop(event);">
-                        <!-- 4개의 div를 동일하게 셋팅 -->
-                        <div class="title">
-                            <!-- 제목 -->
-                            <div id="secheduleName">단체 일정</div>
-                        </div>
-                        <!--
-                <div class="content">
-                    <div class="left"></div>
-                    <div class="middle">
-                        <div class="up"></div>
-                        <div class="down">
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="up"></div>
-                        <div class="down"></div>
-                    </div>
-                </div>
---></div>
-                    <!-- {진행중인 투표} -->
-                    <div class="vote">
-                        <div class="title">
-                            <div id="voteName">진행중인 투표</div>
-                        </div>
-                        <!--
-                <div class="content">
-                    <div class="left"></div>
-                    <div class="middle">
-                        <div class="up"></div>
-                        <div class="down">
-                            <div></div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="up"></div>
-                        <div class="down"></div>
-                    </div>
-                </div>
---></div>
-                    <!-- {가까운 이벤트} -->
-                    <div class="event">
-                        <div class="title">
-                            <div id="eventName"></div>
-                        </div>
-                        <div class="content">
-                            <div class="left"></div>
-                            <div class="middle"></div>
-                            <div class="right"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- {달력}, {알수없는 무언가} -->
-                <div id="right-side">
-                    <!-- {달력} -->
-                    <div class="cal">
-                        <table id="calendar">
-                            <tr>
-                                <td>
-                                    <label id="preButton" onclick="prevCalendar()"><img src="img/moveIcon/left.png" style="cursor:pointer;" /></label>
-                                </td>
-                                <td colspan="5" align="center" id="calendarYM">
-                                    <select id="yearSelect">
-                                        <option>2017</option>
-                                        <option>2018</option>
-                                        <option>2019</option>
-                                        <option>2020</option>
-                                        <option>2021</option>
-                                        <option>2022</option>
-                                        <option>2023</option>
-                                        <option>2024</option>
-                                        <option>2025</option>
-                                        <option>2026</option>
-                                        <option>2027</option>
-                                        <option>2028</option>
-                                        <option>2029</option>
-                                        <option>2030</option>
-                                    </select> 년
-                                    <select id="monthSelect">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                        <option>10</option>
-                                        <option>11</option>
-                                        <option>12</option>
-                                    </select> 월 </td>
-                                <td>
-                                    <label id="nextButton" onclick="nextCalendar()"><img src="img/moveIcon/right.png" style="cursor:pointer;" /></label>
-                                </td>
-                            </tr>
-                            <tr style="height:30px;">
-                                <td>일</td>
-                                <td>월</td>
-                                <td>화</td>
-                                <td>수</td>
-                                <td>목</td>
-                                <td>금</td>
-                                <td>토</td>
-                            </tr>
-                        </table>
-                        <script>
-                            //                            buildCalendar();
-                        </script>
-                    </div>
-                    <input type="button" value="일정추가하기" onclick="addSchedule()" id="addschedule" />
-                    <div class="admin">
-                        <div class="title"></div>
-                        <div class="content"></div>
-                    </div>
-                         <!-- 모달~ 모달~                                 ------------------------------>
-                       <footer>
-       <div id="blindCover" onclick="closeModal();"></div>      
-        <span class='modal' style="border:1px solid black;">
-            <div id="contentsHeight">
-            <div id="titleAdd">
-                <input type="text" placeholder="일정 제목을 입력하세요" id="calTitle" maxlength="20"/> 
-                <div id="groupAddBtn" onclick="clickAddCal()">추가하기</div>
-            </div>
-                           
-            <div id="answerBox">
-	            <div id="selectAnswer"></div>
-	            <div class="btnCenter">
-                    <div class="choiceBtn" id="yesButton" onclick="selectYes()"  > 예 </div>
-                    <div class="choiceBtn" id="noButton" onclick="closeModal()"> 아니오 </div>
-                </div>
-        	</div>
-            </div>
-        </span>
-        
-        <div id='modal2'>
-            <input type='text' id='commentCal'/>
-            <input type='button' value="댓글달기" />
-            
-             
-        </div>
-    
-    </footer>
-                    <script>
-                        //모달 사라짐
-                        function closeModal(){
-                            $('#blindCover').css('display','none');
-                            $('.modal').css('display','none');
-                            $('.modal input').val("");
-                        }
-                        
-                        //모달 뜰떄 뒤에 까만화면 크기를....
-<<<<<<< HEAD
-                        $(document).ready(function(){
-=======
-                        $(document).ready(function(){                     
-                            
-                            
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
-//                            $('#blindCover').css("height",$(window).height());
-//                            $('#blindCover').css("width",$(window).width());
-                            $('#blindCover').css("height",$(document).height());
-                            $('#blindCover').css("width",$(document).width());
-                            $(window).resize(function(){
-//                                $('#blindCover').css("height",$(window).height());
-//                                $('#blindCover').css("width",$(window).width());
-                                $('#blindCover').css("height",$(document).height());
-                                $('#blindCover').css("width",$(document).width());
-                            });
-                        });
-                    </script>
-                    <style>
-                    
-                        #blindCover{
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            background-color: black;
-                            opacity: 0.7;
-                            display: none;
-                            z-index: 10;
-                        }
-                        .modal{
-                            position: fixed;
-                            display: none;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%,-50%);
-                            background-color: white;
-                            width: 350px;
-                            padding: 30px 10px 20px 10px;
-                            overflow: hidden;
-                            height: 40px;
-                            z-index: 100;
-                        }
-                        textarea:focus, input:focus{
-                            outline: none;
-                        }
-                        #titleAdd{
-                            margin-bottom: 30px;
-                        }
-                        #groupAddBtn{
-                            display: inline-block;
-                            width: 70px;
-                            height: 30px;
-                            line-height: 30px;
-                            text-align: center;
-                            cursor: pointer;
-                        }
-                        #calTitle{
-                            height: 23px;
-                            width: 250px;
-                            padding-left: 10px;
-                            margin-left: 10px;
-                            background-color:transparent;
-                            border: none;
-                            border-bottom: 1px solid gray;
-                            
-                        }
-                        #selectAnswer{
-                            margin-top: 10px;
-                            text-align: center;
-                            font-size: 17px;
-                        }
-                        .btnCenter{
-                            width: 290px;
-                            margin: 20px auto 20px auto;
-                            font-size: 17px;
-                        }
-                        .choiceBtn{
-                            display: inline-block;
-                            width: 48%;
-                            height: 50px;
-                            text-align: center;
-                            line-height: 50px;
-                            cursor:pointer;
-                            margin: none;
-                        }
-                    </style>
-                    
-              <!-- 모달~ 모달~                                 ------------------------------>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    
-  
-</body>
-
-</html>

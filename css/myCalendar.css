@@ -1,0 +1,328 @@
+/*  #6534ff : 청색
+    #62bcfa : 푸른색
+    #fccdd3 : 분홍색
+    #bbc4ef : 연보라색
+*/
+
+    html, body {
+       margin: 0;
+       padding: 0;
+/*       background-color: #fccdd3;*/
+       background-color: #6534ff;       
+   }
+   
+   #wrap {
+       display: block;
+   }
+   
+   .left_nav {
+       position: fixed;
+       top: 0;
+       left: 0;
+       display: inline-block;
+       width: 120px;
+/*       background-color: #2C3E50;*/
+/*       background-color: #bbc4ef;*/
+       background-color: #6534ff;
+/*       background-color: #62bcfa;*/
+       height: 210px;
+   }
+   
+   .nav_ul {
+       margin: 0;
+       padding: 0px;
+       list-style: none;
+       text-align: center;
+   }
+   
+   .nav_li {
+       cursor: pointer;
+   }
+   
+   #logout > li:hover,
+   #nav_menu > li:hover {
+       background-color: #62bcfa;
+   }
+   
+   #user_Id {
+       color: #FFFFFF;
+   }
+   
+   .nav_text {
+       text-decoration: none;
+       color: #FFFFFF;
+       font-family: sans-serif;
+       font-size: 20px;
+       display: block;
+       padding: 14px 0;
+   }
+   
+   #userInfo {
+       display: block;
+       height: 120px;
+   }
+   
+   #user_Img {
+       width: 60px;
+       height: 60px;
+       border-radius: 60px;
+   }
+   
+   #user_Img_Cover {
+       display: block;
+       width: 60px;
+       margin: 30px auto 0 auto;
+   }
+   
+   #logout {
+       position: absolute;
+       bottom: 10px;
+       width: 100%;
+   }
+   
+   #main_container {
+       display: block;
+       margin-left: 120px;
+       background-color: #fccdd3;
+       
+
+   }
+    /* 이쁘게 호버 */
+    .typeText{
+        width: 100%;
+        height: 700px;
+        background-color: antiquewhite;
+        opacity: 0;
+        position: absolute;
+        overflow: hidden;
+    }
+    #container:hover .typeText{
+        display: block;
+        width: 100%;
+        transition: opacity 0.3s linear; 
+        opacity: 0.5;
+    }
+    /* --------- */
+   #container {
+       /* 옆에 들어올 값만큼 띄워주기 */
+/*       width: 1200px;*/
+       width: 1500px;
+       /*    width: 95%;*/
+       height: 700px;
+/*       float: right;*/
+       margin: auto;
+       margin-top: 60px;
+       background-color: white;
+       position: relative;
+   }
+
+
+/*  왼편 ===============================================  */  
+.txt{
+    font-family: sans-serif;
+}
+    #left-side {
+        margin: 50px 0 0 0;
+       width: 40%;
+       height: 650px;
+       float: left;
+       background-color: white;
+    }
+        
+.leftUp{
+    display: inline-block;
+    height: 300px;
+}
+
+.privSchedule{
+    width: 600px;
+    display: inline-block;
+}
+
+.program{
+    width: 100px;
+    display: inline-block;
+}
+
+.decoLine{
+    display: inline-block;
+    width: 200px;
+    height: 10px;
+    background-color: #62bcfa;       
+}
+
+.schedule{
+    display:table;
+}
+
+.schCont{
+    display: inline-block;
+    border: 1px solid black;
+    display:table-cell; 
+    text-align:center; 
+    vertical-align:middle;
+}
+.scheDate{
+    height: 40px;
+    padding: 0 10px 0 0; 
+}
+.scheText{
+    text-align: left;
+    height: 40px;
+    width: 300px;
+    
+}
+
+.dayTime{
+
+}
+
+.leftDown{
+    display: inline-block;
+    width: 600px;
+    height: 350px;
+}
+
+
+
+
+
+
+
+
+
+
+   
+/*  오른편 ===============================================  */
+    .modalButton{        
+        float: right;
+    }
+   
+   #right-side {
+       width: 60%;
+       height: 700px;
+       float: right;
+       background-color: white;
+   }
+   
+   .cal {
+       height: 700px;
+   }
+   .weekdays{
+    font-size: 30px;
+   }
+   #calendar {
+       padding-left: 70px;
+       /*        width: 100%;*/
+       /*        height: 100%;*/
+       color: black;
+       border-color: wheat;
+   }
+   
+   td {
+       width: 85px;
+       height: 85px;
+       font-family: sans-serif;
+           
+   }
+   
+   #container {}
+   
+   .saturday {
+       color: blue;
+   }
+   
+   .sunday {
+       color: red;
+   }
+   
+   #yearSelect,
+   #monthSelect {
+       background-position: 300px;
+       width: 100px;
+       padding: 12px;
+       margin-top: 8px;
+       font-family: sans-serif;
+       line-height: 1;
+       border-radius: 5px;
+       background-color: #62bcfa;
+       color: #fccdd3;
+       font-size: 20px;
+       text-align:center; 
+       -webkit-appearance: none;
+       box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.6);
+       outline: none;
+   }
+   #container {}
+
+
+
+
+
+/*   ================   footer    ============  */
+.footer{
+    background-color: #bbc4ef;
+}
+
+.events{
+    background-color: white;
+    position: relative;
+    display: inline-block;    
+    margin: auto;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.eveLeft{
+    width:500px;
+    height: 170px;
+    display: inline-block;
+    background-color: white;
+}
+.eveRight{
+    width:500px;
+    height: 170px;
+    display: inline-block;
+    background-color: white;
+}
+    
+.closeEvent div {
+    display: inline-block;
+}
+
+.closeEvent{
+    display:table;
+
+}
+
+.closeText{
+    display:table-cell; 
+    text-align:center; 
+    vertical-align:middle;
+    font-size: 40px;
+    padding: 0 10px 0 0;
+}
+.closeDeco{
+    display: inline-block;
+    width: 200px;
+    height: 10px;
+    background-color: #62bcfa;   
+}
+.closeSub{
+    display:table;
+}
+.closeSub div {
+    display: inline-block;
+    display:table-cell; 
+    text-align:center; 
+    vertical-align:middle;
+    padding: 10px 10px;
+}
+
+
+
+
+
+
+
+
