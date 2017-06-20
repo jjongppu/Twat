@@ -119,6 +119,10 @@ public class MemberDAO {
 		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
 			int result = -1;
 			
+			long currentTime = System.currentTimeMillis();
+			   
+			System.out.println(currentTime);
+			
 			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
 			
 			
@@ -130,14 +134,29 @@ public class MemberDAO {
 //				System.out.println("!");
 				rs = psmt.executeQuery();
 				
+//				if(rs.next()) {
+//					// out_time이 0이면 로그인 성공 result에 1넣어줌
+//					if(rs.getInt(1) == 0) {
+//						// 로그인 성공
+//						result = 1;
+//					} else {
+//						result = rs.getInt(1);
+//						System.out.println(result);
+//					}
+//				}
+				
 				if(rs.next()) {
 					// out_time이 0이면 로그인 성공 result에 1넣어줌
-					if(rs.getInt(1) == 0) {
+					if(rs.getLong(1) == 0) {
 						// 로그인 성공
 						result = 1;
-					} else {
-						result = rs.getInt(1);
-						System.out.println(result);
+					} else if(rs.getLong(1) > currentTime) { // 탈퇴 진행중인 회원
+						result = -1;
+//						System.out.println(result);
+					} else if(rs.getLong(1) < currentTime) { // 탈퇴된 회원
+						result = -2;
+					} else { // 아이디, 비번 틀려서 실패
+						result = 0;
 					}
 				}
 			} catch (Exception e) {

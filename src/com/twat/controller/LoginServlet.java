@@ -70,6 +70,7 @@ public class LoginServlet extends HttpServlet {
 		
 		System.out.println(userid);
 		System.out.println(userpw);
+		System.out.println(result);
 //		
 		// 로그인 성공/실패 
 //		if(result == 1){
@@ -84,18 +85,34 @@ public class LoginServlet extends HttpServlet {
 //		}
 		
 		// 로그인 성공/실패 
-		if(result == -1) {
+//		if(result == -1) {
+//			jsonOb.put("result", "fail");
+//		} else if(result > 0) {
+//			if(result == 1) {
+//				HttpSession session = request.getSession();
+//				session.setAttribute("loginUserId", userid);
+//				
+//				jsonOb.put("result", "success");
+//			} else {
+//				jsonOb.put("result", result);
+//			}
+//		}
+		
+		// 로그인 성공/실패
+		if(result == 0) { // 아디, 비번 틀려서 실패함
 			jsonOb.put("result", "fail");
-		} else if(result > 0) {
-			if(result == 1) {
-				HttpSession session = request.getSession();
-				session.setAttribute("loginUserId", userid);
-				
-				jsonOb.put("result", "success");
-			} else {
-				jsonOb.put("result", result);
-			}
+		} else if(result == -1) { // 탈퇴중인 회원
+			jsonOb.put("result", "outIng");
+		} else if(result == -2) { // 탈퇴된 회원
+			jsonOb.put("result", "out");
+		} else { // 로그인 성공
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUserId", userid);
+			
+			jsonOb.put("result", "success");
 		}
+		
+		
 		
 		jsonList.add(jsonOb);
 		

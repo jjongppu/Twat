@@ -522,7 +522,7 @@
         var userId = $(user).attr('id');
         $.ajax({
             type:"post",
-            url: "memberout.do",
+            url: "../memberout.do",
             data: {out : userId},
             success: function(data){
             var result = data[0].result;
