@@ -142,30 +142,29 @@
                                 </tr>
                             </table>
                         </div>
-                         <!-- 텍스트 입력 모달창-->
-                         
-                    <div>
-                       <div id="blindCover" onclick="closeModal();"></div>      
-                        <span class='modal' style="border:1px solid black;">
-                            <div id="contentsHeight">
-                            <div id="titleAdd">
-                                <input type="text" placeholder="일정 제목을 입력하세요" id="calTitle" maxlength="20"/> 
-                                <div id="groupAddBtn" onclick="clickAddCal()">추가하기</div>
-                            </div>
+                        
+                    <!-- ============ 텍스트 입력 모달창 ============ -->
+                        <div>
+                           <div id="blindCover" onclick="closeModal();"></div>      
+                            <span class='modal' style="border:1px solid black;">
+                                <div id="contentsHeight">
+                                    <div id="titleAdd">
+                                        <input type="text" placeholder="일정 제목을 입력하세요" id="calTitle" maxlength="20"/> 
+                                        <div id="groupAddBtn" onclick="clickAddCal()">추가하기</div>
+                                    </div>
 
-                            <div id="answerBox">
-                                <div id="selectAnswer"></div>
-                                <div class="btnCenter">
-                                    <div class="choiceBtn" id="yesButton" onclick="selectYes()"  > 예 </div>
-                                    <div class="choiceBtn" id="noButton" onclick="closeModal()"> 아니오 </div>
+                                    <div id="answerBox">
+                                        <div id="selectAnswer"></div>
+                                        <div class="btnCenter">
+                                            <div class="choiceBtn" id="yesButton" onclick="selectYes()"> 예 </div>
+                                            <div class="choiceBtn" id="noButton" onclick="closeModal()"> 아니오 </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            </div>
-                        </span>
+                            </span>
 
-                        <div id='modal2'>
+                            <div id='modal2'> </div>
                         </div>
-                    </div>
 
                     <script>
                         //모달 사라짐
@@ -180,104 +179,27 @@
                             $('#blindCover').css("height",$(document).height());
                             $('#blindCover').css("width",$(document).width());
                             $(window).resize(function(){
-//                                $('#blindCover').css("height",$(window).height());
-//                                $('#blindCover').css("width",$(window).width());
                                 $('#blindCover').css("height",$(document).height());
                                 $('#blindCover').css("width",$(document).width());
                             });
                         });
                         
                         function addSchedule() {
-
-            $(".modal").css("display", "block");
-            $("#blindCover").css("display", "block");
-            
-
-        }
+                            $(".modal").css("display", "block");
+                            $("#blindCover").css("display", "block");
+                        }
                         
                         function clickAddCal(){
-            $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
-            var heights = $('#contentsHeight').css('height');
-            if($("#calTitle").val() != ""){
-                $('.modal').animate({
-                    
-                    height : heights ,
-
-                }, 300);
-            }
-        }
-                        
+                            $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
+                            var heights = $('#contentsHeight').css('height');
+                            if($("#calTitle").val() != ""){
+                                $('.modal').animate({
+                                    height : heights ,
+                                }, 300);
+                            }
+                        }
                     </script>
-                    <style>
-                        #blindCover{
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            background-color: black;
-                            opacity: 0.7;
-                            display: none;
-                            z-index: 10;
-                        }
-                        .modal{
-                            position: fixed;
-                            display: none;
-                            top: 50%;
-                            left: 50%;
-                            transform: translate(-50%,-50%);
-                            background-color: white;
-                            width: 350px;
-                            padding: 30px 10px 20px 10px;
-                            overflow: hidden;
-                            height: 40px;
-                            z-index: 100;
-                        }
-                        textarea:focus, input:focus{
-                            outline: none;
-                        }
-                        #titleAdd{
-                            margin-bottom: 30px;
-                        }
-                        #groupAddBtn{
-                            display: inline-block;
-                            width: 70px;
-                            height: 30px;
-                            line-height: 30px;
-                            text-align: center;
-                            cursor: pointer;
-                        }
-                        #calTitle{
-                            height: 23px;
-                            width: 250px;
-                            padding-left: 10px;
-                            margin-left: 10px;
-                            background-color:transparent;
-                            border: none;
-                            border-bottom: 1px solid gray;
-                            
-                        }
-                        #selectAnswer{
-                            margin-top: 10px;
-                            text-align: center;
-                            font-size: 17px;
-                        }
-                        .btnCenter{
-                            width: 290px;
-                            margin: 20px auto 20px auto;
-                            font-size: 17px;
-                        }
-                        .choiceBtn{
-                            display: inline-block;
-                            width: 48%;
-                            height: 50px;
-                            text-align: center;
-                            line-height: 50px;
-                            cursor:pointer;
-                            margin: none;
-                        }
-                    </style>
-                       
                 </div><!-- right-side 끝 -->
-                 
             </div><!-- contatiner 끝 -->
             
 <!--  ========================= FOOTER ========================== -->
