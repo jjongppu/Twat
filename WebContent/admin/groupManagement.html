@@ -520,13 +520,23 @@
     function getOutMember(user){
         // 탈퇴시킬 유저 이름
         var userId = $(user).attr('id');
-        console.log(userId);
+        $.ajax({
+            type:"post",
+            url: "../memberout.do",
+            data: {out : userId},
+            success: function(data){
+            var result = data[0].result;
+                if(result != 'success'){
+                    alert("오류");
+                }else{
+                    alert("회원 탈퇴가 완료되었습니다. 7일후에 자동으로 삭제됩니다.");
+                    location.href='groupManagement.html';
+                }
+            }
+        });
     }
     
     
-    function changePage(pagenum){
-        
-    }    
         
 </script>
 
@@ -550,8 +560,8 @@
             
             <div id="firstCover">
                 <div class="contentsTopCover">
-                    <div class="topKind">Member</div>
-                    <div class="topName">현재 그룹 조회 및 관리
+                    <div class="topKind">Group</div>
+                    <div class="topName">그룹 조회 및 관리
                     </div>
                         <div id="findMemCover"> 
                             <input id="findMember" type="text" onkeyup="getNextFriends2(nowPage2);" maxlength="13" placeholder="아이디 검색"/>
