@@ -75,15 +75,11 @@ public class ScheduleAdd extends HttpServlet {
 		
 		
 		jsonObj.put("result", "succesCalAdd");
-		jsonArr.add(jsonObj);
-<<<<<<< HEAD
-		
-		out.println(jsonArr);
-=======
-		System.out.println(jsonArr);
-		
+		jsonArr.add(jsonObj);		
+
+		System.out.println(jsonArr);		
 		out.print(jsonArr);
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
 		
 	
 	}

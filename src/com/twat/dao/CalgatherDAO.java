@@ -19,7 +19,7 @@ public class CalgatherDAO {
 	ResultSet rs= null;
 
 	
-	// MemberDAO 의 싱글톤 -----------------------------------
+	// MemberDAO �쓽 �떛湲��넠 -----------------------------------
 	private static CalgatherDAO instance = new CalgatherDAO();
 	
 	private CalgatherDAO(){}
@@ -31,7 +31,7 @@ public class CalgatherDAO {
 	
 	
 	
-	// DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
+	// DB�뿰寃곗쓣 �쐞�빐 con�쓣 諛섑솚�븯�뒗 硫붿꽌�뱶 --------------------------------------------
 	public Connection getConnection() throws Exception {
 		   Context initCtx = new InitialContext();
 		   DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
@@ -40,7 +40,7 @@ public class CalgatherDAO {
 	}
 	
 	
-	// 참여중인 캘린더를 뿌려주기위해 자신이 참여하고있는 모든 캘린더의 정보를 얻어옵니다..
+	// 李몄뿬以묒씤 罹섎┛�뜑瑜� 肉뚮젮二쇨린�쐞�빐 �옄�떊�씠 李몄뿬�븯怨좎엳�뒗 紐⑤뱺 罹섎┛�뜑�쓽 �젙蹂대�� �뼸�뼱�샃�땲�떎..
 	public ArrayList<CalgatherVO> myGroupList(ArrayList<Integer> groupList){
 		
 		ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();
@@ -91,15 +91,13 @@ public class CalgatherDAO {
 	}
 	
 
-<<<<<<< HEAD
-	// ���ο� �׷��� ������ ���ÿ� ����ȭ���̺����� �����־���
-=======
+
 	// 새로운 그룹을 생성과 동시에 정규화테이블에도 쮺쮺넣어줌
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
 	public int makeGorup(String groupName, String[] members, String Today, String masterId,String GroupImg, int GroupPk){
 		int result = 0;
 		int GroupCount = members.length;
-		String masterName="불러오지 못함";
+		String masterName="遺덈윭�삤吏� 紐삵븿";
 		
 		String selectMasterName = "SELECT * FROM MEMBER WHERE MEMBER_ID=?";
 		
@@ -119,7 +117,7 @@ public class CalgatherDAO {
 		
 		try{
 			con = getConnection();
-			// 방장 이름 얻어옴 ㅡㅡ
+			// 諛⑹옣 �씠由� �뼸�뼱�샂 �뀫�뀫
 			psmt = con.prepareStatement(selectMasterName);
 			psmt.setString(1,masterId);
 			
@@ -131,7 +129,7 @@ public class CalgatherDAO {
 				masterName = rs.getString("MEMBER_NAME");
 			}
 			result =3 ;
-			// 방정보 인서트 ㄱ
+			// 諛⑹젙蹂� �씤�꽌�듃 �꽦
 			
 			psmt = con.prepareStatement(selectMakeGroupSql);
 			psmt.setInt(1,GroupPk);
@@ -176,7 +174,7 @@ public class CalgatherDAO {
 	
 	
 	
-	// 서버 재 시작시.... 현재 그룹 캘린더의 마지막 pk 값을 반환해줍니다
+	// �꽌踰� �옱 �떆�옉�떆.... �쁽�옱 洹몃９ 罹섎┛�뜑�쓽 留덉�留� pk 媛믪쓣 諛섑솚�빐以띾땲�떎
 	public int getLastGroupId(){
 		int count = 0;
 		String selectMygroupSql = "SELECT * FROM CALGATHER order by GROUP_ID desc limit 1";
@@ -210,7 +208,7 @@ public class CalgatherDAO {
 	}
 	
 	
-	// 방 입장시 뿌려줄 방정보 얻어오기 ===============================================================
+	// 諛� �엯�옣�떆 肉뚮젮以� 諛⑹젙蹂� �뼸�뼱�삤湲� ===============================================================
 	   public CalgatherVO getGroupInfo(String grouId)
 	   {
 	      CalgatherVO cv = new CalgatherVO();
@@ -256,11 +254,8 @@ public class CalgatherDAO {
 	      return cv;
 	   }
 
-<<<<<<< HEAD
-	      public String getGroupMaster(int groupId){//���� �׷���� �׷� ������ �˾ƿ��� // ������ �߰�
-=======
 	      public String getGroupMaster(int groupId){//현재 그룹방의 그룹 마스터 알아오기 // 나동주 추가
->>>>>>> f7505ad46ec1f70fb726bea35131e073c366e797
+
 		String sql = "";
 		String groupMaster = "";
 		   
