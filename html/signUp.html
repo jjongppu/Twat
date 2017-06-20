@@ -147,7 +147,7 @@
                 
 
                 alert('회원가입이 완료되었습니다.');
-//                location.href="index.html";
+                location.href="index.html";
 //                var re_id = /^[a-z0-9_-]{3,16}$/; // 아이디 검사식
 //                var re_pw = /^[a-z0-9_-]{6,18}$/; // 비밀번호 검사식
 //                var re_tel = /^[0-9]{8,11}$/; // 전화번호 검사식
@@ -349,6 +349,20 @@
                     <input type="text" name="signUpBirthDay" placeholder="일" id="dayBox" class="inputBox" maxlength='2'/>
                 </div>
                 <div><input type="tel" name="signUpPhone" placeholder="전화번호" maxlength="13" id="phoneBox" class="inputBox" onkeyup="autoHypen()"/></div>
+				<div id="question" class="textBox">					
+					<select name="signUpQuestion" id="questionBox" class="inputBox">
+						<option>- 선택 -</option>
+						<option>졸업한 초등학교 이름은 ?</option>
+						<option>어머니의 고향은 ?</option>
+						<option>자신의 첫사랑 이름은 ?</option>
+						<option>가장 인상 깊었던 여행지는 ?</option>
+					</select>
+				</div>
+				<div>
+                    <input type="text" name="signUpAnswer" placeholder="본인확인 질문 답변 " class="inputBox" id="answerBox" />
+                    <div id="idMessage"></div>
+                </div>
+				
             </div>
 
 

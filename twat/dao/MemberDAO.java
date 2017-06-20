@@ -201,13 +201,14 @@ public class MemberDAO {
 	   
 	   
 // 회원 가입을 위한 메서드 ------승우----------------------------
-	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_GENDER, String MEMBER_BIRTH, int OUT_TIME) {
+	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, 
+			   String MEMBER_GENDER, String MEMBER_BIRTH, int OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
 	      
 	      int result = 0;
 	      int signUp = 0;
 	      
 //	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
-	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?)";
+	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 	      
 	      try {
 	         con = getConnection();
@@ -224,6 +225,8 @@ public class MemberDAO {
 	         psmt.setString(9, null);
 //	         psmt.setTimestamp(10, null);
 	         psmt.setInt(10, OUT_TIME);
+	         psmt.setString(11, MEMBER_QUESTION);
+	         psmt.setString(12, MEMBER_ANSWER);
 	         
 	         result = psmt.executeUpdate();
 	         
@@ -245,8 +248,7 @@ public class MemberDAO {
 //	         System.out.println(result);
 	         return result;
 	      }    
-	   }	   
-	   
+	   }	   	   
 	   
 	   
 // 회원가입시 아이디 실시간 검사...---------승우------------------------------

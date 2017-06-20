@@ -83,9 +83,12 @@ public class signUpServlet extends HttpServlet {
 	    
 	    String signUpPhone = request.getParameter("signUpPhone");
 	    int signUpOutTime = 0;
+	    String signUpQuestion = request.getParameter("signUpQuestion");
+	    String signUpAnswer = request.getParameter("signUpAnswer");
 	    
 	    MemberDAO memdao = MemberDAO.getInstance();
-	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, signUpBirth, signUpOutTime);
+	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, 
+	    		signUpBirth, signUpOutTime, signUpQuestion, signUpAnswer);
 	    
 	    PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
