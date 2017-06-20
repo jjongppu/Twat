@@ -56,9 +56,9 @@
     }
     
        #wrap{
-        min-width: 1100px;
-        max-width: 1500px;
+        width: 1100px;
         margin: auto;
+           border-radius: 5px;
     }
         #contents{
         margin-top: 40px;
@@ -73,7 +73,7 @@
         width:95%;
         height: 80px;
         border-radius: 5px;
-        background-color: #789FFF;
+        background-color: #0089E2;
         box-shadow: 10px 10px 5px rgba(0,0,0,0.3);
         padding-left: 10px;
     }
@@ -87,9 +87,9 @@
     #findMember{
         height: 24px;
         width: 250px;
-        font-size: 21px;
+        font-size: 19px;
         border: none;
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid #3B3E42;
         background-color: transparent;
         padding-left: 20px;
         
@@ -111,8 +111,9 @@
     
 /*    펏번쨰 칸 */
     #firstCover{
-        padding: 70px 0 20px 0;
-        background-color: beige;
+        padding-top: 70px;
+        background-color: #C7D5E2;
+        border-radius: 10px;
     }
     .memberInfoTable{
   
@@ -126,7 +127,6 @@
     /* 실제로 데이터가 뿌려질 영역*/
     .realContentsPlace{
         width: 90%;
-        background-color: #3960C3;
         margin: auto;
     }
     /*테이블 td 크기*/
@@ -194,10 +194,51 @@
     
     
     
+    td{
+        border: 1px solid black;
+        text-align: center;
+    }
+    tr{
+        height: 30px;
+    }
+    
+    .memberInfoTable li{
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid white;
+        cursor: auto;
+    }
+    .memberInfoTable li span{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .memberInfoTable div span{
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+    }
+    
+    .memberInfoTableTitle{
+        width: 990px;
+        margin: auto;
+        background-color: #AFB6C8;
+    }
+    #titleCover{
+        border-bottom: 1px solid white; 
+    }
+    
+    
+    
+    
+    
+    
+    
     /*아래 버튼들...*/
     #pageChoiceCover{
         padding: 10px 0;
         text-align: center;
+        width: 990px;
+        margin: auto;
     }
     .pageBtn{
         margin: 0 5px 0 5px;
@@ -217,7 +258,15 @@
     
     #inputMemberinfo{
     	height:650px;
+        background-color: #C7D5E2; 
     }
+    
+    input:-ms-input-placeholder { color: #3B3E42; } 
+   input::-webkit-input-placeholder { color: #3B3E42; } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+    
+    
 </style>    
 
 <script>
@@ -260,7 +309,11 @@
                 var userInfos = "";
                 for(var i=0; i< data.length;i++){
                     var num = page*10+i+1-10;
-                    userInfos += '<li>';
+                    if(i%2 !=0){
+                        userInfos += '<li style="background-color: #AFBACB;">';
+                    }else{
+                        userInfos += '<li>';    
+                    }
                     userInfos += '<span class="tdNum">'+num+'</span>';
                     userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].memberImg+'"/> </span>';
                     userInfos += '<span class="tdId">'+ data[i].memberId +'</span>';
@@ -364,48 +417,52 @@
         if(page >pages){
             pages = page
         }
-    $.ajax ({
-        type : 'post',
-        url : '../getmemberInfo.do',
-        dataType : "json",
-        data: {page : pages ,val : $('#findMember').val()} ,
-        success : function(data) {
-            console.log(data);
-            var userInfos = "";
-            for(var i=0; i< data.length;i++){
-            var num = pages*10+i+1-10;
-                userInfos += '<li>';
-                userInfos += '<span class="tdNum">'+num+'</span>';
-                userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].memberImg+'"/> </span>';
-                userInfos += '<span class="tdId">'+ data[i].memberId +'</span>';
-                userInfos += '<span class="tdNa">'+ data[i].memberName +'</span>';
-                userInfos += '<span class="tdPh">'+ data[i].memberPhone +'</span>';
-                userInfos += '<span class="tdGn">'+ data[i].memberGender +'</span>';
-                userInfos += '<span class="tdBi">'; 
-                var bir = data[i].memberBir;
-                userInfos += bir.substr(0,2)+'년';
-                userInfos += bir.substr(2,2)+'월';    
-                userInfos += bir.substr(4,2)+'일';    
-                userInfos += '</span>';
-                userInfos += '<span class="tdHd">';
-                userInfos += data[i].memberStar.substring(0,10);
-                userInfos += '</span>';
-                userInfos += '<span class="tdBt"> <input type="button" value="탈퇴 처리" id="'+data[i].memberId+'" onclick="getOutMember(this);"/> </span>';
-                userInfos += '<span class="tdBt"> <input type="button" value="버튼인듯" onclick=""/> </span>';
-                userInfos += '</li>';
+        $.ajax ({
+            type : 'post',
+            url : '../getmemberInfo.do',
+            dataType : "json",
+            data: {page : pages ,val : $('#findMember').val()} ,
+            success : function(data) {
+                console.log(data);
+                var userInfos = "";
+                for(var i=0; i< data.length;i++){
+                var num = pages*10+i+1-10;
+                    if(i%2 !=0){
+                        userInfos += '<li style="background-color: #AFBACB;">';
+                    }else{
+                        userInfos += '<li>';    
+                    }
+                    userInfos += '<span class="tdNum">'+num+'</span>';
+                    userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].memberImg+'"/> </span>';
+                    userInfos += '<span class="tdId">'+ data[i].memberId +'</span>';
+                    userInfos += '<span class="tdNa">'+ data[i].memberName +'</span>';
+                    userInfos += '<span class="tdPh">'+ data[i].memberPhone +'</span>';
+                    userInfos += '<span class="tdGn">'+ data[i].memberGender +'</span>';
+                    userInfos += '<span class="tdBi">'; 
+                    var bir = data[i].memberBir;
+                    userInfos += bir.substr(0,2)+'년';
+                    userInfos += bir.substr(2,2)+'월';    
+                    userInfos += bir.substr(4,2)+'일';    
+                    userInfos += '</span>';
+                    userInfos += '<span class="tdHd">';
+                    userInfos += data[i].memberStar.substring(0,10);
+                    userInfos += '</span>';
+                    userInfos += '<span class="tdBt"> <input type="button" value="탈퇴 처리" id="'+data[i].memberId+'" onclick="getOutMember(this);"/> </span>';
+                    userInfos += '<span class="tdBt"> <input type="button" value="버튼인듯" onclick=""/> </span>';
+                    userInfos += '</li>';
+                }
+                $('#inputMemberinfo').html(userInfos);
+
+                var page_viewList2 = Paging2(data[0].memberCount, 10, 10 ,pages, "S");
+                $("#addPageCover").empty().html(page_viewList2);
+
+
+            }, error: function (req) {
+
+                console.log(req);
             }
-            $('#inputMemberinfo').html(userInfos);
-
-            var page_viewList2 = Paging2(data[0].memberCount, 10, 10 ,pages, "S");
-            $("#addPageCover").empty().html(page_viewList2);
-
-
-        }, error: function (req) {
-
-            console.log(req);
-        }
-    });
-}
+        });
+    }
     
             //페이지 나타내기
     Paging2 = function(totalCnt, dataSize, pageSize, pageNo, token){
@@ -560,8 +617,8 @@
 
                 <div class="realContentsPlace">
                     
-                    <ul class="memberInfoTable">
-                        <li>
+                   <div class="memberInfoTable memberInfoTableTitle">
+                        <div id="titleCover">
                             <span class="tdNum">No.</span>
                             <span class="tdPp">프로필 사진</span>
                             <span style="width:100px;">아이디</span>
@@ -572,8 +629,11 @@
                             <span class="tdHd">가입일</span>
                             <span class="tdBt">추방</span>
                             <span class="tdBt">정지</span>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
+                    
+
+                    
                     <ul class="memberInfoTable" id="inputMemberinfo">
                     </ul>
 
