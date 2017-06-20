@@ -179,7 +179,7 @@
         var retVal = false;
         var idVal = $('#idBox').val().length;
         var idVal2 = $('#idBox').val();
-        var idRegex = /^[a-z]+[a-z0-9]{5,19}$/g;
+        var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
         console.log(idVal);
         if(idVal < 6 || idVal > 12) { // 1~5거나, 13이상 이면
             alert("아이디는 6자 이상, 12자 이하여야 합니다.");
