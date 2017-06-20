@@ -215,6 +215,9 @@
         color: darkslategray;
     }
     
+    #inputMemberinfo{
+    	height:650px;
+    }
 </style>    
 
 <script>
@@ -367,10 +370,10 @@
         dataType : "json",
         data: {page : pages ,val : $('#findMember').val()} ,
         success : function(data) {
-            var num = page*10+i+1-10;
             console.log(data);
             var userInfos = "";
             for(var i=0; i< data.length;i++){
+            var num = pages*10+i+1-10;
                 userInfos += '<li>';
                 userInfos += '<span class="tdNum">'+num+'</span>';
                 userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].memberImg+'"/> </span>';
@@ -485,7 +488,7 @@
             success : function(data) {
                 var result = data[0].result;
                 if(result != 'success') {
-                    alert("권한이 없습니다.");
+                    alert("로그아웃 되었습니다.");
                     location.href="admin.html";
                 }
             }
