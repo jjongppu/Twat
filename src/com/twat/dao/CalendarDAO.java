@@ -204,6 +204,7 @@ public class CalendarDAO
 			psmt.setInt(3, group_id);
 			psmt.setString(4, cal_memo);
 			psmt.setString(5, cal_writer);
+//			psmt.setString(5, "111");
 			psmt.setString(6, "");
 			psmt.setString(7, "");
 			psmt.setInt(8, cal_num);
@@ -311,7 +312,7 @@ public class CalendarDAO
 			System.out.println(psmt2.isClosed());
 			psmt2.setInt(3, group_id);
 			psmt2.setString(4, new_memo);
-			psmt2.setString(5," ");
+			psmt2.setString(5,cal_writer);
 			psmt2.setString(6, " ");
 			psmt2.setString(7, " ");
 			psmt2.setInt(8, cal_num);
