@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="../js/jquery-3.2.1.min.js"></script>
+
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        background-image: url(../img/background/background2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+    div{
+        position: relative;
+    }
+    #wrap{
+        min-width: 800px;
+        max-width: 1500px;
+        height: 700px; 
+        margin: auto;
+    }
+    #contents{
+        margin-top: 30px;
+    }
+    a{
+        text-decoration: none;
+        display: block;
+        padding: 14px 0;
+        color: white;
+    }
+
+
+    ul{
+        margin: 0;
+        list-style: none;
+        background-color:gray;
+        opacity: 0.7;
+        
+    }
+    li{
+        cursor: pointer;
+        display: inline-block;
+        text-align: center;
+        width: 120px;
+    }
+        #logout > li:hover,#nav_menu > li:hover{
+        background-color: black;
+        opacity: 0.7;
+    }
+    #logout{
+        position: absolute;
+        top: 0;
+        right: 0;
+        
+    }
+    
+/*     미리보기 메인 뷰*/
+    .mainViewInfoCover{
+        width: 24.7%;
+        height: 180px;
+        display: inline-block;
+    }
+    
+    .mainViewInfo{
+        width: 300px;
+        cursor: pointer;
+        margin: auto;
+        background-color: white;
+        opacity: 0.9;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    
+    #viewCover{
+        margin: auto;
+    }
+    .viewImgCover{
+        display: inline-block;
+        width: 110px;
+        height: 110px;
+        text-align: center;
+        padding-top: 20px;
+    }
+    
+    .viewImg{
+        width: 70px;
+        height: 70px;
+    }
+    
+    .viewTopCover{
+         padding: 0 10px;
+        height: 110px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .viewBottomCover{
+        padding: 0 10px 0 30px;
+        border-top: 1px solid gray;
+        height: 50px;
+        width: 100%;
+        line-height: 50px;
+        box-sizing: border-box;
+    }
+    
+    
+    .viewContents{
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        height: 110px;
+        width: 180px;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+    .viewName,.viewData{
+        height: 50%;
+        text-align: right;
+    }
+    .viewName{
+        font-size: 20px;
+        line-height: 70px;
+    }
+    .viewData{
+        font-size: 40px;
+    }
+    
+    .viewBottomText{
+        
+    }
+    
+    .enterImg{
+        position: absolute;
+        top: 14px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    @media screen and (min-width:1130px) and (max-width : 1500px){
+    
+         .mainViewInfoCover{
+            width: 32%;
+        }
+    }
+    
+    @media screen and (max-width : 1129px){
+
+         .mainViewInfoCover{
+            width: 48%;
+        }
+    }
+    
+    
+    
+    
+</style>    
+
+<script>
+        $.ajax ({
+            type : 'post',
+            url : '../getinfo.do',
+            dataType : "json",
+            success : function(data) {
+                $('#memVal').html(data[0].memberCount);
+                $('#qnaVal').html(data[0].qnaCount);
+                $('#calVal').html(data[0].calendatCount);
+                $('#viewData').html(data[0].visitCount);
+                $('#calgVal').html(data[0].calgtherCount);
+                
+            }
+        });
+    
+    // 현재 admin 이 master 인지 확인함
+	function clickSetting() {
+        
+        $.ajax ({
+            type : 'post',
+            url : '../adminSetting.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result == 'success') {
+                    location.href="setting.html"
+                } else {
+                    alert("권한이 없습니다.");
+                }
+            }
+        });
+        
+    } 
+    // 로그아웃처리 
+    function logout(){
+        $.ajax ({
+            type : 'post',
+            url : '../Logout.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result != 'success') {
+                    alert("권한이 없습니다.");
+                    location.href="admin.html";
+                }
+            }
+        });
+    }
+</script>
+
+<title>admin</title>
+</head>
+<body>
+        <nav>
+            <ul id="nav_menu">
+                <li><a href="home.html">홈</a></li>
+                <li><a href="#">회원 관리</a></li>
+                <li><a href="#">게시글 관리</a></li>
+                <li><a href="#">문의사항 관리</a></li>
+                <li><a href="#">기타 작업</a></li>
+                <li id="logout" onclick="logout()"><a>로그아웃</a></li>
+            </ul>
+        </nav>
+
+    <div id="wrap">
+        
+        
+        <div id="contents">
+            
+            <div id="viewCover">
+            
+                <!-------------------------------------           방문자 관련     ----------->
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="visit"  onclick="location.href='visitManagement.html'">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_visit.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Visit</div>
+                                <div class="viewData" id="visVal">0</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">방문자 수</span>
+                        </div>
+                    </div>
+                </div>
+                <!-------------------------------------           그룹 관련     ----------->
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="qna" onclick="location.href='groupManagement.html'">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_cal.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Group</div>
+                                <div class="viewData" id="calgVal">0</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">그룹 조회 및 관리</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
+                    </div>
+                </div>                
+                <!-------------------------------------           일정 관련     ----------->
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="qna" onclick="location.href='calendarManagement.html'">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_write.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Calendar</div>
+                                <div class="viewData" id="calVal">0</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">일정 조회 및 관리</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
+                    </div>
+                </div>
+                <!-------------------------------------           회원 관련     ----------->
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="members"  onclick="location.href='memberManagement.html'">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_mem.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Member</div>
+                                <div class="viewData" id="memVal">0</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">회원 조회 및 관리</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
+                    </div>
+                </div>
+                <!-------------------------------------           질문 관련     ----------->
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="ask"  onclick="location.href='qnaManagement.html'">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_ask.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">QnA</div>
+                                <div class="viewData" id="qnaVal">0</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">QnA 조회 및 답변</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
+                    </div>
+                </div>
+                <!-------------------------------------           설정 관련     ----------->
+                <div class="mainViewInfoCover">
+                    <div class="mainViewInfo" id="setting"  onclick="clickSetting();">
+                        <div class="viewTopCover">
+                            <div class="viewImgCover">
+                                <img class="viewImg" src="../img/etcIcon/adminView_set.png"/> 
+                            </div>
+                            <div class="viewContents">
+                                <div class="viewName">Setting</div>
+                                <div class="viewData">설정</div>
+                            </div>
+                        </div>
+                        <div class="viewBottomCover">
+                            <span class="viewBottomText">admin 관리 등등..</span><img class="enterImg" src="../img/etcIcon/admin_enter.png"/>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            
+        </div>
+    </div>
+</body>
+</html>
