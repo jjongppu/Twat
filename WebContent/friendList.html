@@ -221,42 +221,41 @@
         function addfriend(){
             $('#realFriend').css('display','inline-block');
             $('#realFriend').append('<div id="modalAddFriend"><div id="findFriend">친구의 핸드폰번호를 입력하세요</div><input type="text" placeholder="핸드폰번호를 입력해주세요"id="findPhoneNumber" name="findPhoneNumber"><input type="submit" value="찾기" onclick="findUserFriend()" id="findButton"></div>');
-            
-            $.ajax({
-            type: "post", 
-            url: "AddFriendservlet.do",
-            dataType: "json",
-            data:$('#findUser').serialize(),
-            success: function (data){
-                console.log(data);
-                var out = "";
-                    out += '<form method="post" id="findUser">';
-                    out += '<div id="findUserIn">';
-                    out += '<div id="findedFriend">';
-                    out += '<img src="img/member/basis_photo.png" id="findUserImg">';
-                    out += '<div id="findUserName">"'+ data[0].MEMBER_NAME +'"</div>';
-                    out += '</form>';
-                    var birth = data[i].MEMBER_BIRTH;
-                        if(birth.charAt(2) !=0){
-                            out += birth.substr(2,2)+'월';    
-                        }else{
-                            out += birth.charAt(3)+'월';
-                        }
-                        if(birth.charAt(4) !=0){
-                            out += birth.substr(4,2)+'일';    
-                        }else{
-                            out += birth.charAt(5)+'일';
-                        }
-                    out += '<div id="findUserBirth">"'+ data[0].MEMBER_BIRTH +'"</div>';
-                    out += '<div id="findUserPhone">"'+ data[0].MEMBER_PHONE +'"</div>';
-                    out += '</div></div>';
-                    
-                    }
-                
-            });
-        	
         }
+        function findUserFriend(){
+                $.ajax({
+                type: "post", 
+                url: "AddFriendservlet.do",
+                dataType: "json",
+                data:$('#realFriend').serialize(),
+                success: function (data){
+                    console.log(data);
+                    var out = "";
+                        out += '<form method="post" id="findUser">';
+                        out += '<div id="findUserIn">';
+                        out += '<div id="findedFriend">';
+                        out += '<img src="img/member/basis_photo.png" id="findUserImg">';
+                        out += '<div id="findUserName">"'+ data[0].MEMBER_NAME +'"</div>';
+                        out += '</form>';
+                        var birth = data[i].MEMBER_BIRTH;
+                            if(birth.charAt(2) !=0){
+                                out += birth.substr(2,2)+'월';    
+                            }else{
+                                out += birth.charAt(3)+'월';
+                            }
+                            if(birth.charAt(4) !=0){
+                                out += birth.substr(4,2)+'일';    
+                            }else{
+                                out += birth.charAt(5)+'일';
+                            }
+                        out += '<div id="findUserBirth">"'+ data[0].MEMBER_BIRTH +'"</div>';
+                        out += '<div id="findUserPhone">"'+ data[0].MEMBER_PHONE +'"</div>';
+                        out += '</div></div>';
 
+                        }
+
+                });
+        }
        
     </script>
     <style>
@@ -321,9 +320,6 @@
     </div>
 <!--    모달창 만들어-->
     <div id="realFriend">
-                
-                    
-                
-            </div>
+    </div>
 </body>
 </html>

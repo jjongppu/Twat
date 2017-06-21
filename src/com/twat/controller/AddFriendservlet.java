@@ -48,12 +48,12 @@ public class AddFriendservlet extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 		PrintWriter out = response.getWriter();
+		out.print("1");
 		HttpSession session = request.getSession();
 		
 	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
 	    String userPhone = request.getParameter("findPhoneNumber");
-		
-		
+	    out.print(userPhone);
 	    MemberDAO mdo = MemberDAO.getInstance();
 	    mdo.addFriends(userPhone);
 	    
