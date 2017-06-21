@@ -1,24 +1,26 @@
 package com.twat.dto;
 
+import java.sql.Timestamp;
+
 public class QnaVO {
-	private String QNA_ID;
+	private int QNA_ID;
 	private String MEMBER_ID;
-	private String MEMBER_CATEGORY;
-	private String MEMBER_PW;
+	private String QNA_CATEGORY;
+	private int MEMBER_PW;
 	private String QNA_TITLE;
 	private String QNA_CONTENTS;
-	private String QNA_DATE;
+	private Timestamp QNA_DATE;
 	private String QNA_REPLY;
 	
 	public QnaVO() {}
 	
 	
-	public QnaVO(String qNA_ID, String mEMBER_ID, String mEMBER_CATEGORY, String mEMBER_PW, String qNA_TITLE,
-			String qNA_CONTENTS, String qNA_DATE, String qNA_REPLY) {
+	public QnaVO(int qNA_ID, String mEMBER_ID, String mEMBER_CATEGORY, int mEMBER_PW, String qNA_TITLE,
+			String qNA_CONTENTS, Timestamp qNA_DATE, String qNA_REPLY) {
 		super();
 		QNA_ID = qNA_ID;
 		MEMBER_ID = mEMBER_ID;
-		MEMBER_CATEGORY = mEMBER_CATEGORY;
+		QNA_CATEGORY = mEMBER_CATEGORY;
 		MEMBER_PW = mEMBER_PW;
 		QNA_TITLE = qNA_TITLE;
 		QNA_CONTENTS = qNA_CONTENTS;
@@ -27,12 +29,12 @@ public class QnaVO {
 	}
 
 
-	public String getQNA_ID() {
+	public int getQNA_ID() {
 		return QNA_ID;
 	}
 
 
-	public void setQNA_ID(String qNA_ID) {
+	public void setQNA_ID(int qNA_ID) {
 		QNA_ID = qNA_ID;
 	}
 
@@ -48,21 +50,21 @@ public class QnaVO {
 
 
 	public String getMEMBER_CATEGORY() {
-		return MEMBER_CATEGORY;
+		return QNA_CATEGORY;
 	}
 
 
 	public void setMEMBER_CATEGORY(String mEMBER_CATEGORY) {
-		MEMBER_CATEGORY = mEMBER_CATEGORY;
+		QNA_CATEGORY = mEMBER_CATEGORY;
 	}
 
 
-	public String getMEMBER_PW() {
+	public int getMEMBER_PW() {
 		return MEMBER_PW;
 	}
 
 
-	public void setMEMBER_PW(String mEMBER_PW) {
+	public void setMEMBER_PW(int mEMBER_PW) {
 		MEMBER_PW = mEMBER_PW;
 	}
 
@@ -87,12 +89,12 @@ public class QnaVO {
 	}
 
 
-	public String getQNA_DATE() {
+	public Timestamp getQNA_DATE() {
 		return QNA_DATE;
 	}
 
 
-	public void setQNA_DATE(String qNA_DATE) {
+	public void setQNA_DATE(Timestamp qNA_DATE) {
 		QNA_DATE = qNA_DATE;
 	}
 
@@ -109,7 +111,7 @@ public class QnaVO {
 
 	@Override
 	public String toString() {
-		return "QnaVO [QNA_ID=" + QNA_ID + ", MEMBER_ID=" + MEMBER_ID + ", MEMBER_CATEGORY=" + MEMBER_CATEGORY
+		return "QnaVO [QNA_ID=" + QNA_ID + ", MEMBER_ID=" + MEMBER_ID + ", QNA_CATEGORY=" + QNA_CATEGORY
 				+ ", MEMBER_PW=" + MEMBER_PW + ", QNA_TITLE=" + QNA_TITLE + ", QNA_CONTENTS=" + QNA_CONTENTS
 				+ ", QNA_DATE=" + QNA_DATE + ", QNA_REPLY=" + QNA_REPLY + "]";
 	}

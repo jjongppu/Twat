@@ -2,6 +2,7 @@ package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,11 +15,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.twat.dao.MemberDAO;
+import com.twat.dto.MemberVO;
 
 /**
  * Servlet implementation class AddFriendservlet
  */
-@WebServlet("/AddFriendservlet.do")
+@WebServlet("/addFriendservlet.do")
 public class AddFriendservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,23 +45,41 @@ public class AddFriendservlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
+		
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
 	    
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
-		
 	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
-	    String userPhone = request.getParameter("fPhone");
-		
-		
+	    String userPhone = request.getParameter("findPhoneNumber");
+	    
 	    MemberDAO mdo = MemberDAO.getInstance();
-	    mdo.addFriends(userPhone);
+	    
+	    ArrayList<MemberVO> arList = mdo.addFriends(userPhone);
 	    
 	    JSONArray jsonList = new JSONArray();
-		JSONObject jsonOb = new JSONObject();
-	    
+	    if(arList.size() > 0){
+	    	for(int i = 0 ; i < arList.size(); i++){
+	    		JSONObject jsonOb = new JSONObject();
+	    		MemberVO mvo = arList.get(i);
+	    		jsonOb.put("MEMBER_ID",MEMBER_ID);
+	    		jsonOb.put("MEMBER_IMG", mvo.getMEMBER_IMG());
+	    		jsonOb.put("MEMBER_NAME", mvo.getMEMBER_NAME());
+	    		jsonOb.put("MEMBER_PHONE", mvo.getMEMBER_PHONE());
+	    		jsonOb.put("MEMBER_BIRTH", mvo.getMEMBER_BIRTH());
+	    		jsonList.add(jsonOb);
+	    		
+	    	}
+	    	
+	    }else{
+	    	JSONObject jsonob = new JSONObject();
+	    	jsonob.put("MEMBER_ID", "");
+	    	jsonList.add(jsonob);
+	    }
+	    out.print(jsonList);
+		
 	    
 	}
 
