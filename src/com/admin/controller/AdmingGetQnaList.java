@@ -49,14 +49,15 @@ public class AdmingGetQnaList extends HttpServlet {
 			if(groupInfo.size() > 0 ){
 				for (int i = 1; i < groupInfo.size(); i++) {
 					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("groupCount", groupInfo.get(0).getGroup_id());
-					jsonObj.put("group_id", groupInfo.get(i).getGroup_id());
-					jsonObj.put("group_name", groupInfo.get(i).getGroup_name());
-					jsonObj.put("create_date", groupInfo.get(i).getCreate_date());
-					jsonObj.put("group_master", groupInfo.get(i).getGroup_master());
-					jsonObj.put("group_master_name", groupInfo.get(i).getGroup_master_name());
-					jsonObj.put("group_img", groupInfo.get(i).getGroup_img());
-					jsonObj.put("group_count", groupInfo.get(i).getGroup_count());
+					jsonObj.put("QNA_ID", groupInfo.get(0).getQNA_ID());
+					jsonObj.put("QNA_ID", groupInfo.get(i).getQNA_ID());
+					jsonObj.put("MEMBER_ID", groupInfo.get(i).getMEMBER_ID());
+					jsonObj.put("QNA_CATEGORY", groupInfo.get(i).getQNA_CATEGORY());
+					jsonObj.put("QNA_PW", groupInfo.get(i).getQNA_PW());
+					jsonObj.put("QNA_TITLE", groupInfo.get(i).getQNA_TITLE());
+					jsonObj.put("QNA_CONTENTS", groupInfo.get(i).getQNA_CONTENTS());
+					jsonObj.put("QNA_DATE", groupInfo.get(i).getQNA_DATE().toString());
+					jsonObj.put("QNA_REPLY", groupInfo.get(i).getQNA_REPLY());
 					
 					jarr.add(jsonObj);
 				}

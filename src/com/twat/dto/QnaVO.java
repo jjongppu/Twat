@@ -6,7 +6,7 @@ public class QnaVO {
 	private int QNA_ID;
 	private String MEMBER_ID;
 	private String QNA_CATEGORY;
-	private int MEMBER_PW;
+	private int QNA_PW;
 	private String QNA_TITLE;
 	private String QNA_CONTENTS;
 	private Timestamp QNA_DATE;
@@ -21,7 +21,7 @@ public class QnaVO {
 		QNA_ID = qNA_ID;
 		MEMBER_ID = mEMBER_ID;
 		QNA_CATEGORY = mEMBER_CATEGORY;
-		MEMBER_PW = mEMBER_PW;
+		QNA_PW = mEMBER_PW;
 		QNA_TITLE = qNA_TITLE;
 		QNA_CONTENTS = qNA_CONTENTS;
 		QNA_DATE = qNA_DATE;
@@ -49,23 +49,23 @@ public class QnaVO {
 	}
 
 
-	public String getMEMBER_CATEGORY() {
+	public String getQNA_CATEGORY() {
 		return QNA_CATEGORY;
 	}
 
 
-	public void setMEMBER_CATEGORY(String mEMBER_CATEGORY) {
+	public void setQNA_CATEGORY(String mEMBER_CATEGORY) {
 		QNA_CATEGORY = mEMBER_CATEGORY;
 	}
 
 
-	public int getMEMBER_PW() {
-		return MEMBER_PW;
+	public int getQNA_PW() {
+		return QNA_PW;
 	}
 
 
-	public void setMEMBER_PW(int mEMBER_PW) {
-		MEMBER_PW = mEMBER_PW;
+	public void setQNA_PW(int QNA_PW) {
+		QNA_PW = QNA_PW;
 	}
 
 
@@ -112,7 +112,7 @@ public class QnaVO {
 	@Override
 	public String toString() {
 		return "QnaVO [QNA_ID=" + QNA_ID + ", MEMBER_ID=" + MEMBER_ID + ", QNA_CATEGORY=" + QNA_CATEGORY
-				+ ", MEMBER_PW=" + MEMBER_PW + ", QNA_TITLE=" + QNA_TITLE + ", QNA_CONTENTS=" + QNA_CONTENTS
+				+ ", QNA_PW=" + QNA_PW + ", QNA_TITLE=" + QNA_TITLE + ", QNA_CONTENTS=" + QNA_CONTENTS
 				+ ", QNA_DATE=" + QNA_DATE + ", QNA_REPLY=" + QNA_REPLY + "]";
 	}
 

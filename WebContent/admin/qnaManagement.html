@@ -139,14 +139,10 @@
     }
     .tdtit{
         width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
     }
     .tdCon{
         width: 200px;
-        height: 70px;
+        
 
     }
     .tdId{
@@ -223,7 +219,6 @@
     }
     
     #inputMemberinfo{
-    	height:750px;
         background-color: #C7D5E2; 
     }
     
@@ -353,7 +348,7 @@
                     location.href="admin.html";
                 }else{
                 //페이지 로딩시 1번 멤버 를 얻어오고 뿌려줌
-                   getGroupList(1);
+                   getList(1);
                 }
             } , error: function (req) {
                 
@@ -363,13 +358,13 @@
         });
         
     
-    //친구들 호출 무식하게 호출
-    function getGroupList(page) {
+    //문의사항을 호출 무식하게 호출
+    function getList(page) {
         nowPage = page;
         var notfind = '0';
         $.ajax ({
             type : 'post',
-            url : '../adminGetCalenarList.do',
+            url : '../admingGetQnaList.do',
             dataType : "json",
             data: {page : page , val : notfind } ,
             success : function(data) {
@@ -384,21 +379,26 @@
                     }
                     
                     userInfos += '<span class="tdNum">'+num+'</span>';
-                    userInfos += '<span class="tdKind">'+ 'Test' +'</span>';
-                    userInfos += '<span class="tdtit">'+ 'Test' +'</span>'
+                    userInfos += '<span class="tdKind">'+ data[i].QNA_CATEGORY +'</span>';
+                    userInfos += '<span class="tdtit">'+ data[i].QNA_TITLE +'</span>'
                     userInfos += '<div class="countText">게시글 방번호 :</div>';
-                    userInfos += '<span class="tdCon">'+ 'TestTest' +'</span>';
-                    userInfos += '<span class="tdId">'+ 'TestTest' +'</span>';
+                    userInfos += '<span class="tdCon">'+ data[i].QNA_CONTENTS +'</span>';
+                    userInfos += '<span class="tdId">'+ data[i].MEMBER_ID +'</span>';
                     userInfos += '<span class="tdBi">'; 
-                    userInfos += data[i].CAL_TIME.substring(0,10);
+                    userInfos += data[i].QNA_DATE.substring(0,10);
                     userInfos += '</span>';
-                    userInfos += '<span class="tdan"> <textarea rows="4" cols="20" style="resize :none;"></textarea></span>';
-                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].CAL_NUM+'"  onclick=""/> </span>';
+                    userInfos += '<span class="tdan"><textarea rows="4" cols="20" style="resize :none;">';
+                    var reply = data[i].QNA_REPLY;
+                    if(reply != null && reply != ""){
+                        userInfos += reply;    
+                    }
+                    userInfos += '</textarea></span>';
+                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick=""/> </span>';
                     userInfos += '</li>';
                 }
                 $('#inputMemberinfo').html(userInfos);
                 
-                var page_viewList = Paging(data[0].COUNT, 10, 10 ,nowPage, "PagingView");
+                var page_viewList = Paging(data[0].QNA_ID, 10, 10 ,nowPage, "PagingView");
                 $("#addPageCover").empty().html(page_viewList);
 
                 
@@ -470,11 +470,11 @@
     }
 
     var goPaging_PagingView = function(cPage){
-        getGroupList(cPage);
+        getList(cPage);
     };
     
     //검색으로 실시간 호출
-    function getGroupList2(page) {
+    function getList2(page) {
         nowPage = page;
         var pages =1;
         if(page >pages){
@@ -518,7 +518,7 @@
                 }
                 $('#inputMemberinfo').html(userInfos);
 
-            var page_viewList2 = Paging2(data[0].COUNT, 10, 10 ,pages, "S");
+            var page_viewList2 = Paging2(data[0].QNA_ID, 10, 10 ,pages, "S");
             $("#addPageCover").empty().html(page_viewList2);
 
 
@@ -592,7 +592,7 @@
     var goPaging_S = function(cPage){
 //        var vals = $('#findMember').val();
 //        console.log(vals);
-        getGroupList(cPage);
+        getList(cPage);
     };
     
     
@@ -686,7 +686,7 @@
                     <div class="topName">문의사항 조회 및 관리
                     </div>
                         <div id="findMemCover"> 
-                            <input id="findMember" type="text" onkeyup="getGroupList2(nowPage2);" maxlength="9" placeholder="게시글 내용 검색 (최대 8자)"/>
+                            <input id="findMember" type="text" onkeyup="getList2(nowPage2);" maxlength="9" placeholder="게시글 내용 검색 (최대 8자)"/>
                         </div>
                 </div>
 
