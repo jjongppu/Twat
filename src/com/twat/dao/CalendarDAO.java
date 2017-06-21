@@ -63,10 +63,10 @@ public class CalendarDAO
 				CalendarVO schedule = new CalendarVO();
 				schedule.setCal_num(rs.getInt(1));
 				schedule.setCal_date(rs.getString(3));
-				schedule.setCal_group(rs.getInt(4));
+				schedule.setGroup_id(rs.getInt(4));
 				schedule.setCal_memo(rs.getString(5));
 				schedule.setCal_writer(rs.getString(6));
-				schedule.setStat_icon(rs.getString(7));
+				schedule.setState_icon(rs.getString(7));
 				schedule.setMember_choice(rs.getString(8));
 				schedule.setCal_reference(rs.getInt(9));
 				schedule.setCal_depth(rs.getInt(10));
@@ -116,10 +116,10 @@ public class CalendarDAO
 				
 				schedule.setCal_num(rs.getInt(1));
 				schedule.setCal_date(rs.getString(3));
-				schedule.setCal_group(rs.getInt(4));
+				schedule.setGroup_id(rs.getInt(4));
 				schedule.setCal_memo(rs.getString(5));
 				schedule.setCal_writer(rs.getString(6));
-				schedule.setStat_icon(rs.getString(7));
+				schedule.setState_icon(rs.getString(7));
 				schedule.setMember_choice(rs.getString(8));
 				schedule.setCal_reference(rs.getInt(9));
 				schedule.setCal_depth(rs.getInt(10));
@@ -196,16 +196,22 @@ public class CalendarDAO
 		try {
 			con = getConnection();			
 			sql = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+			String[] dateStr = cal_date.split(",");
+			String writer_id = "";
+			for(int i = 0; i < dateStr.length; i++){
+				writer_id += dateStr[i] + cal_writer + ",";
+			}
+			
 			
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, cal_num);			
 			psmt.setString(2, cal_date);
 			psmt.setInt(3, group_id);
 			psmt.setString(4, cal_memo);
-			psmt.setString(5, cal_writer);
+			psmt.setString(5, cal_writer);	
+//			psmt.setString(5, "111");
 			psmt.setString(6, "");
-			psmt.setString(7, "");
+			psmt.setString(7, writer_id.substring(0, writer_id.length()-1));
 			psmt.setInt(8, cal_num);
 			psmt.setInt(9, 0);
 			
@@ -311,7 +317,7 @@ public class CalendarDAO
 			System.out.println(psmt2.isClosed());
 			psmt2.setInt(3, group_id);
 			psmt2.setString(4, new_memo);
-			psmt2.setString(5," ");
+			psmt2.setString(5,cal_writer);
 			psmt2.setString(6, " ");
 			psmt2.setString(7, " ");
 			psmt2.setInt(8, cal_num);
