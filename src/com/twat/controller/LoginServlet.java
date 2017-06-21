@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 		MemberDAO memDao = MemberDAO.getInstance();
 		int result = memDao.loginMember(userid, userpw);
 		
-		// ³¯Â¥ ÇØº¸´Ù ¸¸°Å
+		// ï¿½ï¿½Â¥ ï¿½Øºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //		Calendar cal = Calendar.getInstance();
 //		cal.add(Calendar.DATE, 15);
 		
@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
 		System.out.println(userpw);
 		System.out.println(result);
 //		
-		// ·Î±×ÀÎ ¼º°ø/½ÇÆÐ 
+		// ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ 
 //		if(result == 1){
 //			HttpSession session = request.getSession();
 //			session.setAttribute("loginUserId", userid);
@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 //			jsonOb.put("result", result);
 //		}
 		
-		// ·Î±×ÀÎ ¼º°ø/½ÇÆÐ 
+		// ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ 
 //		if(result == -1) {
 //			jsonOb.put("result", "fail");
 //		} else if(result > 0) {
@@ -98,14 +98,14 @@ public class LoginServlet extends HttpServlet {
 //			}
 //		}
 		
-		// ·Î±×ÀÎ ¼º°ø/½ÇÆÐ
-		if(result == 0) { // ¾Æµð, ºñ¹ø Æ²·Á¼­ ½ÇÆÐÇÔ
+		// ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½
+		if(result == 0) { // ï¿½Æµï¿½, ï¿½ï¿½ï¿½ Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			jsonOb.put("result", "fail");
-		} else if(result == -1) { // Å»ÅðÁßÀÎ È¸¿ø
+		} else if(result == -1) { // Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
 			jsonOb.put("result", "outIng");
-		} else if(result == -2) { // Å»ÅðµÈ È¸¿ø
+		} else if(result == -2) { // Å»ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
 			jsonOb.put("result", "out");
-		} else { // ·Î±×ÀÎ ¼º°ø
+		} else { // ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			HttpSession session = request.getSession();
 			session.setAttribute("loginUserId", userid);
 			

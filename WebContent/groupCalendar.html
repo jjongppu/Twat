@@ -938,6 +938,7 @@
                         
                     });
                     
+                    getGroupInfo();                    
                 }
                 , error: function (req) {
 
@@ -960,7 +961,7 @@
             */
             /////////////////////////////    
             // console.log("getGroupInfo");
-            getGroupInfo();
+//            getGroupInfo();
             // console.log("getGroupBirth");
             getGroupBrith();
             // console.log("cal");
@@ -1124,14 +1125,35 @@
                 var selectDate = yearInfo + monthInfo + dayInfo;
 
 //                console.log($(a).css("backgroundColor"));
-                if($(a).css("backgroundColor") == "rgb(255, 0, 0)"){
-                    alert("현재 투표중인 날짜입니다!");
-                    return;                    
-                }else if($(a).css("backgroundColor") == "rgb(255, 128, 128)"){
-                    alert("이미 확정된 날짜 입니다!");
-                    return;   
-                }
+//                if($(a).css("backgroundColor") == "rgb(255, 0, 0)"){
+//                    alert("현재 투표중인 날짜입니다!");
+//                    return;                    
+//                }
+//                else if($(a).css("backgroundColor") == "rgb(255, 128, 128)"){
+//                    alert("이미 확정된 날짜 입니다!");
+//                    return;   
+//                }
                 
+                for (let item of scheduleSet.keys())
+                {
+                    if(selectDate == item.split("-")[0])
+                    {
+//                        alert("이미 확정된 날짜 입니다!");
+                        getScheduleInfo(item.split("-")[2]);
+                        return; 
+                    }
+                }
+                console.log(scheduleSet);
+                for (let item of voteSet.keys())
+                {
+                    if(selectDate == item.split("-")[0])
+                    {
+//                        alert("투표중인 날짜 입니다!");
+                        getVoteInfo(item.split("-")[2]);
+                        return; 
+                    }
+                }
+                console.log(voteSet);
                 
                
                 if (selectDate < dateToFormat(initDay)) {
@@ -1301,7 +1323,7 @@
 //                        console.log(item);
 //                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
                         // 클릭 시 모달창 추가
-                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getScheduleInfo(' + item.split("-")[2] + ')');
+//                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getScheduleInfo(' + item.split("-")[2] + ')');
                     }
                 }
                 // 미확정된 일정표시
@@ -1312,7 +1334,7 @@
 //                        console.log("#date" + parseInt(dateParam.substr(6)));
 //                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
                          // 클릭 시 모달창 추가, 투표할 일정 눌러도 체크 안되게 onclick 덮음
-                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getVoteInfo(' + item.split("-")[2] + ')');
+//                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getVoteInfo(' + item.split("-")[2] + ')');
                     }
                 }
                 // 생일표시
@@ -1390,6 +1412,7 @@
                     //                    data[0].group_name;
                     //                    data[0].group_date;
                     group_master = data[0].group_master;
+                    console.log(group_master);
                     //                    data[0].group_master_name;
                     //                    data[0].group_img;
                     //                    data[0].group_count;
@@ -1400,29 +1423,45 @@
                     document.getElementById("title").innerHTML += "<span>" + data[0].group_name + "</span>";
                     $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
                     document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
-                    $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
+                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
                     document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
                     
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
-                        //                        console.log(data[arrCal].cal_num);
-                        //                        console.log(data[arrCal].cal_date);
-                        //                        console.log(data[arrCal].cal_group);
-                        //                        console.log(data[arrCal].cal_memo);
-                        //                        console.log(data[arrCal].cal_writer);
-                        //                        console.log(data[arrCal].state_icon);
-                        //                        console.log(data[arrCal].member_choice);
                         var str = "";
+                        var strA = "";
+                        strA += '</div>';
+                        strA += '<div class="middle" onclick="addComment(this)">';
+                        strA += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
+                        strA += '<div class="middle-bottom">';
+                        strA += '<span>' + data[arrCal].cal_writer + '님</span>';
+//                        strA += '<span>외 ' + data[0].group_count + '명 참여</span>';
+                        strA += '<span> 외 ' + getMemberCount(data[arrCal].member_choice) + '명 참여</span>';
+                        strA += '</div>'; // div-down
+                        strA += '</div>'; // div-up
+                        strA += '<div class="right">';
+                        strA += '<div class="right-top"></div>';
+                        strA += '<div class="right-bottom">';
+                        var strB = "";
+                        strB += '</div>';
+                        strB += '</div>'; // div-right
+                        strB += '</div>'; // div=middle
                         var str2 = data[arrCal].cal_date;
 //                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
                         str += '<div class="content">';
 //                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
                         str += '<div class="left">';
 //                        if (str2.indexOf(',') == -1)
+                        // ======================================================================================================
                         if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
                         {
                             str += data[arrCal].cal_date;
 //                            console.log("확정 : " + data[arrCal].cal_memo);
                             scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
+                            str += strA;
+                             // 전체 일정(확정)
+                            str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+                            str += strB;
+                            $(".schedule .contentBox").append(str);
                         }
                         else {
                             var res = str2.split(",");
@@ -1431,45 +1470,66 @@
                             for (var i = 0; i < res.length; i++) {
                                 voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
                             }
-                        }
-                        str += '</div>';
-                        str += '<div class="middle" onclick="addComment(this)">';
-                        str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
-                        str += '<div class="middle-bottom">';
-                        str += '<span>' + data[arrCal].cal_writer + '님</span>';
-                        str += '<span>외 ' + data[0].group_count + '명 참여</span>';
-                        str += '</div>'; // div-down
-                        str += '</div>'; // div-up
-                        str += '<div class="right">';
-                        str += '<div class="right-top"></div>';
-                        str += '<div class="right-bottom">';
-                        
-//                        if (str2.indexOf(',') == -1)
-                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
-                        {
-                            // 전체 일정(확정)
-                            str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
-                        }
-                        else
-                        {
+                            str += strA;
                             // 투표(미확정)
                             str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+                            str += strB;
+                            $(".vote .contentBox").append(str);
                         }
-                        
-                        str += '</div>';
-                        str += '</div>'; // div-right
-                        str += '</div>'; // div=middle
-//                        if (str2.indexOf(',') == -1)
-                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
-                        {
-                            $(".schedule").append(str);
-                            //                            document.getElementById("schedule").innerHTML += str;
-                        }
-                        else {
-                            $(".vote").append(str);
-                            //                            document.getElementById("vote").innerHTML += str;
-                        }
+//                        // ======================================================================================================
+//                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+//                        {
+//                            str += data[arrCal].cal_date;
+////                            console.log("확정 : " + data[arrCal].cal_memo);
+//                            scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
+//                        }
+//                        else {
+//                            var res = str2.split(",");
+//                            str += res[0] + "~" + res[res.length - 1];
+////                            console.log("투표 : " + data[arrCal].cal_memo);
+//                            for (var i = 0; i < res.length; i++) {
+//                                voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
+//                            }
+//                        }
+//                        str += '</div>';
+//                        str += '<div class="middle" onclick="addComment(this)">';
+//                        str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
+//                        str += '<div class="middle-bottom">';
+//                        str += '<span>' + data[arrCal].cal_writer + '님</span>';
+//                        str += '<span>외 ' + data[0].group_count + '명 참여</span>';
+//                        str += '</div>'; // div-down
+//                        str += '</div>'; // div-up
+//                        str += '<div class="right">';
+//                        str += '<div class="right-top"></div>';
+//                        str += '<div class="right-bottom">';
+//                        
+////                        if (str2.indexOf(',') == -1)
+//                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+//                        {
+//                            // 전체 일정(확정)
+//                            str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+//                        }
+//                        else
+//                        {
+//                            // 투표(미확정)
+//                            str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+//                        }
+//                        
+//                        str += '</div>';
+//                        str += '</div>'; // div-right
+//                        str += '</div>'; // div=middle
+////                        if (str2.indexOf(',') == -1)
+//                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+//                        {
+//                            $(".schedule").append(str);
+//                            //                            document.getElementById("schedule").innerHTML += str;
+//                        }
+//                        else {
+//                            $(".vote").append(str);
+//                            //                            document.getElementById("vote").innerHTML += str;
+//                        }
                         //                        console.log(str);
+                        // ======================================================================================================
                     }
                     //                    console.log(data[1].member_choice);
 
@@ -1519,6 +1579,35 @@
                 }
             });
         }
+        // 인원수 구하는 함수
+        function getMemberCount(member_choice)
+        {
+            if(member_choice.indexOf(",") == -1 || member_choice == "")
+            {
+                return 0;
+            }
+            else
+            {
+                var memberSet = new Set();
+                var arrayMember = member_choice.split(",");
+//                console.log(arrayMember);
+                
+                for(var i = 0; i < arrayMember.length; i++)
+                {
+                    if(arrayMember[i].indexOf("-") == -1)
+                    {
+                        memberSet.add(arrayMember[i]);
+                    }
+                    else
+                    {
+                        memberSet.add(arrayMember[i].split("-")[1]);
+//                        console.log(arrayMember[i].split("-")[1]);
+                    }
+                }
+                console.log(memberSet);
+                return (memberSet.size - 1);
+            }
+        }
         // 모달 작업 부분
         function getGroupBrith() {
             var para = document.location.href.split("?");
@@ -1550,6 +1639,19 @@
                         birthSet.add(memBirth);
                         //                        console.log(memBirth);
                         //                        console.log(birthSet[i]);
+                        // 생일자 작업중임
+//                        var today = new Date('YYYYMMDD');
+//                        console.log(today.getFullYear());
+                        if(data[i].memberBirth > 0)
+                        {
+                            var str = "<div class='content'><div class='left birth'>" + data[i].memberBirth + "</div>";
+                            str += "<div class='middle birth'>" + data[i].memberName + "님(" + data[i].memberId + ")의 생일</div>";
+                            str += "<div class='right birth'></div></div>"
+                            $('.event .contentBox').append(str);
+//                            console.log(today.getFullYear() + "" + (today.getMonth('MM') + 1) + "" + today.getDay());
+//                            console.log(today);
+                        }
+                        
                     }
                     console.log("birthSet");
                     for (let item of birthSet.keys()) {
@@ -1616,7 +1718,7 @@
 //                            console.log("확인!");
                             
                             commentsString += "<div id='commentWriter'>" + findMemberName(data[i].cal_writer) + "</div>";
-                            commentsString += "<div id='commentMemo'>" + data[i].cal_memo + "</div>";
+                            commentsString += "<div id='commentMemo'>\t" + data[i].cal_memo + "</div>";
 //                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
                         }
                         
@@ -1759,33 +1861,43 @@
             else
             {
 //                console.log(member_choice);
-//                var memSplit = member_choice.split(",");
-                var memSplit = new Array(member_choice.split(","));
-                var dateSplit;
-                var count = 0;
-                
-                // str2.indexOf(',') == -1
-                if(cal_date.indexOf(',') >= 0)
-                {
-                    dateSplit = new Array(cal_date.split(","));
-                }
+                var memSplit = member_choice.split(",");
+//                var memSplit = new Array(member_choice.split(","));
 //                console.log(memSplit);
                 
                 for(var i = 0; i < memSplit.length; i++)
                 {
-                    if(memSplit[i].length > 8)
-                    {
-                        if(memSplit[i].substr(0,8).match(cal_date))
-                        {
-//                            console.log(memSplit[i].substr(0,8) + " / " + cal_date);
-                            count++;
-                        }
-                    }
-                    else if(count > 1)
+                    if(memSplit[i].indexOf('-') >= 0)
                     {
                         return false;
                     }
+                        
                 }
+//                var dateSplit;
+//                var count = 0;
+//                
+//                // str2.indexOf(',') == -1
+//                if(cal_date.indexOf(',') >= 0)
+//                {
+//                    dateSplit = new Array(cal_date.split(","));
+//                }
+////                console.log(memSplit);
+//                
+//                for(var i = 0; i < memSplit.length; i++)
+//                {
+//                    if(memSplit[i].length > 8)
+//                    {
+//                        if(memSplit[i].substr(0,8).match(cal_date))
+//                        {
+////                            console.log(memSplit[i].substr(0,8) + " / " + cal_date);
+//                            count++;
+//                        }
+//                    }
+//                    else if(count > 1)
+//                    {
+//                        return false;
+//                    }
+//                }
             }
             
             return true;
@@ -1949,7 +2061,7 @@
 <body>
     <div id="wrap">
         <!--        네브바 입니다 ```````````````````````````````````````````````` -->
-        <nav class="left_nav">
+        <nav class="left_nav" style="z-index:15">
             <div id="userInfo">
                 <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                     <li class="nav_li">
@@ -2000,7 +2112,10 @@
                         <!-- 4개의 div를 동일하게 셋팅 -->
                         <div class="title">
                             <!-- 제목 -->
-                            <div id="secheduleName">단체 일정</div>
+                            <div id="secheduleName">단체 일정 <div class="stick">
+                    </div></div>
+                        </div>
+                        <div class="contentBox">
                         </div>
                         <!--
                 <div class="content">
@@ -2021,7 +2136,10 @@
                     <!-- {진행중인 투표} -->
                     <div class="vote">
                         <div class="title">
-                            <div id="voteName">진행중인 투표</div>
+                            <div id="voteName">진행중인 투표 <div class="stick">
+                    </div></div>
+                        </div>
+                        <div class="contentBox">
                         </div>
                         <!--
                 <div class="content">
@@ -2042,13 +2160,18 @@
                     <!-- {가까운 이벤트} -->
                     <div class="event">
                         <div class="title">
-                            <div id="eventName"></div>
+                            <div id="eventName">친구 생일 <div class="stick">
+                    </div></div>
                         </div>
+                        <div class="contentBox">
+                        </div>
+<!--
                         <div class="content">
                             <div class="left"></div>
                             <div class="middle"></div>
                             <div class="right"></div>
                         </div>
+-->
                     </div>
                 </div>
                 <!-- {달력}, {알수없는 무언가} -->
@@ -2251,12 +2374,21 @@
                         }
                         
                         #modal2{
-                            display: none;
+/*                            display: none;*/
 /*                            display: inline-block;*/
                             background-color:#FFFFFF;
-                            position:absolute;
+/*                            position:absolute;*/
+                            /* 추가 */
+                            position: fixed;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%,-50%);
+                            display: none;
+                            
+/*
                             top:300px;
                             left:200px;
+*/
                             padding:10px;
                             border:2px solid #E2E2E2;
                             z-Index:9999

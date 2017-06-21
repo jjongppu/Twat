@@ -101,6 +101,7 @@ public class GroupCalendar extends HttpServlet
 				JSONObject groupSchedule = new JSONObject();
 				
 				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
+//				groupSchedule.put("cal_time", arrList.get(i).getCal_time());
 				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
 //				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
 				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
