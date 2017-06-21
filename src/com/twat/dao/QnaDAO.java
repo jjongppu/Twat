@@ -115,6 +115,7 @@ public class QnaDAO {
 	public int searchQnA(String searchCategory, String searchBox) {
 		int result = -1;
 		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
+		QnaVO qnaVo = new QnaVO();
 		// 1 = 제목 / 제목으로 검색하기
 		if(searchCategory == "1") {
 			String selectSql = "select * from qna where QNA_TITLE = ?";
@@ -128,7 +129,21 @@ public class QnaDAO {
 				rs = psmt.executeQuery();
 				
 				while(rs.next()) {
+<<<<<<< HEAD
 //					arList.add(arg0)
+=======
+					// 여기 수정
+					qnaVo.setQNA_ID(qNA_ID);
+					qnaVo.setMEMBER_ID();
+					qnaVo.setQNA_CATEGORY();
+					qnaVo.getQNA_PW();
+					qnaVo.getQNA_TITLE();
+					qnaVo.getQNA_CONTENTS();
+					qnaVo.getQNA_DATE();
+					qnaVo.getQNA_REPLY();
+					
+					arList.add(qnaVo);
+>>>>>>> 7db9bc71ee7897199cce0cf7d4084b74e2789449
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
