@@ -88,7 +88,7 @@
    }
    
    #container {
-       /* ø∑ø° µÈæÓø√ ∞™∏∏≈≠ ∂Áøˆ¡÷±‚ */
+       /* ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ≈≠ ÔøΩÔøΩÔøΩÔøΩ÷±ÔøΩ */
 /*       width: 1200px;*/
        width: 1500px;
        /*    width: 95%;*/
@@ -98,7 +98,7 @@
        margin-top: 60px;
        background-color: #000000;
    }
-   /*  øﬁ∆Ì ===============================================  */
+   /*  ÔøΩÔøΩÔøΩÔøΩ ===============================================  */
    
    #left-side {
        width: 40%;
@@ -106,10 +106,10 @@
        float: left;
        background-color: #505050;
    }
-   /*  πÊ ∞¸∑√ ==============================================  */   
+   /*  ÔøΩÔøΩ ÔøΩÔøΩÔøΩÔøΩ ==============================================  */   
    
    .top {
-       /* ∫Í∂ÛøÏ¿˙ø°º≠ ∂ÁøÔ∏∏≈≠ º≥¡§ */
+       /* ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÔøΩÔ∏∏≈≠ ÔøΩÔøΩÔøΩÔøΩ */
        /*        margin: 0;*/
        width: 100%;
        height: 20%;
@@ -125,6 +125,14 @@
        transform: translate(0, -50%);
        background-color: #a0a0f0;
    }
+
+#icon>img
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
    
    #content {
        width: 40%;
@@ -165,18 +173,20 @@
        float: left;
        background-color: #a0f0a0;
    }
-   /*  ≥™∏”¡ˆ πÿø° ∞ÕµÈ ======================================  */
+   /*  ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ÔøΩÿøÔøΩ ÔøΩÕµÔøΩ ======================================  */
    
    .schedule {
        width: 100%;
        height: 30%;
        background-color: #665522;
+       overflow-y: hidden;
    }
    
    .vote {
        width: 100%;
        height: 30%;
        background-color: #a034a0;
+       overflow-y: hidden;
    }
    
    .event {
@@ -187,20 +197,32 @@
    
    .title {
        width: 100%;
-       height: 30%;
-       background-color: darkgray;
+/*       height: 30%;*/
+       height: 15%;
+/*       background-color: darkgray;*/
+       background-color: white;
    }
+
+.contentBox{
+    width: 100%;
+    height: 90%;
+    background-color: white;
+}
    
    .content {
        width: 100%;
-       height: 30%;
-       background-color: gray;
+       height: 32%;
+/*       background-color: gray;*/
+       background-color: white;
    }
    
    .left {
        width: 30%;
        height: 100%;
        float: left;
+       text-align: center;
+       /* ÎÜíÏù¥ Ï°∞Ï†ï */
+       line-height: 71px;
        background-color: white;
    }
    
@@ -210,6 +232,18 @@
        float: left;
        background-color: antiquewhite;
    }
+
+    .middle-top
+    {
+        width: 100%;
+        height: 50%;
+    }
+
+    .middle-bottom
+    {
+        width: 100%;
+        height: 50%;
+    }
    
    .right {
        width: 30%;
@@ -217,7 +251,20 @@
        float: left;
        background-color: gray;
    }
-   /*  ø¿∏•∆Ì ===============================================  */
+
+    .right-top
+    {
+        width: 100%;
+        height: 50%;
+    }
+
+    .right-bottom
+    {
+        width: 100%;
+        height: 50%;
+    }
+
+   /*  ÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ ===============================================  */
    
    #right-side {
        width: 60%;
@@ -249,6 +296,7 @@
        color: blue;
    }
    
+   
    .sunday {
        color: red;
    }
@@ -274,5 +322,15 @@
        outline: none;
        text-align: center;
    }
+
+    .stick
+    {
+        display: inline-block;
+        background-color: #83C5F1;
+        height: 5px;
+        width: 200px;
+        margin-top: 20px;
+    }
    
    #container {}
+   

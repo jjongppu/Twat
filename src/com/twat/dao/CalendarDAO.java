@@ -64,6 +64,7 @@ public class CalendarDAO
 			{
 				CalendarVO schedule = new CalendarVO();
 				schedule.setCal_num(rSet.getInt(1));
+				schedule.setCal_time(rSet.getTimestamp(2));
 				schedule.setCal_date(rSet.getString(3));
 				schedule.setGroup_id(rSet.getInt(4));
 				schedule.setCal_memo(rSet.getString(5));
@@ -121,6 +122,7 @@ public class CalendarDAO
 				CalendarVO schedule = new CalendarVO();
 				
 				schedule.setCal_num(rSet.getInt(1));
+				schedule.setCal_time(rSet.getTimestamp(2));
 				schedule.setCal_date(rSet.getString(3));
 				schedule.setGroup_id(rSet.getInt(4));
 				schedule.setCal_memo(rSet.getString(5));
