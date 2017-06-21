@@ -56,6 +56,9 @@ public class QnaVO {
 		QNA_PW = qNA_PW;
 	}
 
+	public int getQNA_PW() {
+		return QNA_PW;
+	}
 	public String getQNA_TITLE() {
 		return QNA_TITLE;
 	}
