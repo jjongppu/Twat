@@ -10,6 +10,7 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberVO;
 
 	
@@ -171,6 +172,75 @@ public class AdminDAO {
 					}
 			}
 			return members;
+		}
+		
+		
+		
+		
+		// 그룹리스트 다뽑아옴 ㅋㅋ val이 0이면 select* 검색값이 있으면 방이름으로 라이크검색
+		public ArrayList<CalgatherVO> getGroupList(int page, String val){
+			ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();	
+			
+			
+			// 그릅수 얻어옴
+			String selectGroupCount = "SELECT COUNT(*) FROM CALGATHER";
+			if(!val.equals("0")){
+				selectGroupCount+= " WHERE GROUP_NAME LIKE ?";
+			}
+			
+			String selectAllgroupSql = "SELECT * FROM CALGATHER";
+			if(!val.equals("0")){
+				selectAllgroupSql+= " WHERE GROUP_NAME LIKE ?";
+			}
+			selectAllgroupSql +=  " LIMIT "+ (page*10-10) +",10";
+			
+			try{
+				con = getConnection();
+				
+				psmt = con.prepareStatement(selectGroupCount);
+				if(!val.equals("0")){
+					psmt.setString(1, val+"%");
+				}
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					int count = rs.getInt("COUNT(*)");
+					CalgatherVO cv = new CalgatherVO();
+					cv.setGroup_id(count);
+					calArry.add(cv);
+				}
+				
+				psmt = con.prepareStatement(selectAllgroupSql);
+				if(!val.equals("0")){
+					psmt.setString(1,val+"%");
+				}
+				rs = psmt.executeQuery();
+					
+				while(rs.next()){
+					CalgatherVO cv = new CalgatherVO();
+					cv.setGroup_id(rs.getInt("GROUP_ID"));
+					cv.setGroup_name(rs.getString("GROUP_NAME"));
+					cv.setCreate_date(rs.getString("CREATE_DATE"));
+					cv.setGroup_master(rs.getString("GROUP_MASTER"));
+					cv.setGroup_master_name(rs.getString("GROUP_MASTER_NAME"));
+					cv.setGroup_img(rs.getString("GROUP_IMG"));
+					cv.setGroup_count(rs.getInt("GROUP_COUNT"));
+					calArry.add(cv);
+				}
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs != null)rs.close();
+					if(psmt != null)psmt.close();
+					if(con != null)con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return calArry;
+			
 		}
 		
 		
