@@ -16,7 +16,7 @@
             
         }
         body{
-            width: 1200px;;
+            width: 1200px;
             height: auto;
             margin: auto;
         }
@@ -113,17 +113,18 @@
 /*        ///////////////////////////////////////////////////////////////////////////////////////////////*/
         /*        모달창 css 매긴곳.*/
         #realFriend{
-            display: none;
+/*            display: none;*/
             position: fixed;
             transform: translate(-50%, -50%);
             top: 40%;
-            left: 30%;
+            left: 40%;
             opacity: 1;
             box-shadow: 0px 10px 14px 0px rgba(0, 0, 0, 0.2);
             border: 5px solid red;
             width: 500px;
             height: 300px;
             background-color: black;
+            z-index: 50;
             
         }
         #findUserImg{
@@ -136,12 +137,13 @@
             position: absolute;
         }
         #findUserName{
-            border: 1px solid black;
+            border: 1px solid white;
             width: 230px;
             height: 45px;
             display: inline-block;
             margin-left: 120px;
             margin-top: 5px;
+            
         }
         #findUserBirth{
             border: 1px solid gray;
@@ -162,6 +164,7 @@
         #modalAddFriend{
             width: 500px;   
             height: 500px;
+            border: 1px solid red;
         }
         #findFriend{
             text-align: center;
@@ -190,81 +193,70 @@
     </style>
     <script>
         /////친구 목록 가져오기.
-        $.ajax({
-           type:"post",
-            url:"friends.do",
-            data:$('#personal').serialize(),
-            dataType:"json",
-            success:function(data){
-                var result = data[0].result;
-                var out = '';
-                console.log(data);
-                
-                
-                for(var i=0; i < data.length; i++){
-                    
-                    out += '<div id="userIn" onclick="detailUser();">';
-                    out += '<div id="userImg"></div>';
-                    out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
-                    out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
-                    out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
-                    out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
-                    out += '</div></div>';
-                    out += '</div></div>';
-                }
-                document.getElementById('personal').innerHTML = out;
-            }
-            
-            
-        });
-           /////친구 추가하기.
-        function addfriend(){
-            $('#realFriend').css('display','inline-block');
-            $('#realFriend').append('<div id="modalAddFriend"><div id="findFriend">친구의 핸드폰번호를 입력하세요</div><input type="text" placeholder="핸드폰번호를 입력해주세요"id="findPhoneNumber" name="findPhoneNumber"><input type="submit" value="찾기" onclick="findUserFriend()" id="findButton"></div>');
-        }
-        function findUserFriend(){
-                $.ajax({
-                type: "post", 
-                url: "AddFriendservlet.do",
-                dataType: "json",
-                data:$('#realFriend').serialize(),
-                success: function (data){
-                    console.log(data);
-                    var out = "";
-                        out += '<form method="post" id="findUser">';
-                        out += '<div id="findUserIn">';
-                        out += '<div id="findedFriend">';
-                        out += '<img src="img/member/basis_photo.png" id="findUserImg">';
-                        out += '<div id="findUserName">"'+ data[0].MEMBER_NAME +'"</div>';
-                        out += '</form>';
-                        var birth = data[i].MEMBER_BIRTH;
-                            if(birth.charAt(2) !=0){
-                                out += birth.substr(2,2)+'월';    
-                            }else{
-                                out += birth.charAt(3)+'월';
-                            }
-                            if(birth.charAt(4) !=0){
-                                out += birth.substr(4,2)+'일';    
-                            }else{
-                                out += birth.charAt(5)+'일';
-                            }
-                        out += '<div id="findUserBirth">"'+ data[0].MEMBER_BIRTH +'"</div>';
-                        out += '<div id="findUserPhone">"'+ data[0].MEMBER_PHONE +'"</div>';
-                        out += '</div></div>';
-
-                        }
-
-                });
-        }
+//        $.ajax({
+//           type:"post",
+//            url:"friends.do",
+//            data:$('#personal').serialize(),
+//            dataType:"json",
+//            success:function(data){
+//                var result = data[0].result;
+//                var out = '';
+//                console.log(data);
+//                
+//                
+//                for(var i=0; i < data.length; i++){
+//                    
+//                    out += '<div id="userIn" onclick="detailUser();">';
+//                    out += '<div id="userImg"></div>';
+//                    out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
+//                    out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
+//                    out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
+//                    out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
+//                    out += '</div></div>';
+//                    out += '</div></div>';
+//                }
+//                document.getElementById('personal').innerHTML = out;
+//            }
+//            
+//            
+//        });
+//           /////친구 추가하기.
+//        function addfriend(){
+//            $('#realFriend').css('display','inline-block');
+//            $('#realFriend').append('<div id="modalAddFriend"><div id="findFriend">친구의 핸드폰번호를 입력하세요</div><input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber"><input type="submit" value="검색" onclick="findUserFriend()" id="findButton"></div>');
+//        }
+//        
+//        function findUserFriend(){
+//            
+//                $.ajax({
+//                type: "post", 
+//                url: "addFriendservlet.do",
+//                data:$('#realFriend').serialize(),
+//                dataType:"json",
+//                success: function (data){
+//                    
+//                    var out = "";
+////                        out += '<form method="post" id="findUser">';
+//                        out += '<div id="findUserIn">';
+//                        out += '<div id="findedFriend">';
+//                        out += '<img src="'+ data[0].MEMBER_IMG +'" id="findUserImg">';
+//                        out += '<div id="findUserName">"'+ data[0].MEMBER_NAME +'"</div>';
+//                        out += '<div id="findUserBirth">"'+ data[0].MEMBER_BIRTH +'"</div>';
+//                        out += '<div id="findUserPhone">"'+ data[0].MEMBER_PHONE +'"</div>';
+//                        out += '</div></div>';
+////                        out += '</form>';
+//                    console.log(out);
+//                   $('#findUser1').html(out);
+//                    }
+//                    
+//                });
+//            }
        
     </script>
     <style>
 
     </style>
 <body>
-    
-   
-    
     <div id="wrap">
     <nav class="left_nav">
         <div id="userInfo">
@@ -319,7 +311,27 @@
         
     </div>
 <!--    모달창 만들어-->
-    <div id="realFriend">
-    </div>
+    <form id="realFriend" name="findPhoneNumber">
+        <div id="modalAddFriend">
+            <div id="findFriend">친구의 핸드폰번호를 입력하세요</div>
+            <input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber">
+            <input type="submit" value="검색" onclick="findUserFriend()" id="findButton">
+            <div id="findUserIn">
+                <div id="findedFriend">
+                    <img src="img/member/basis_photo.png" id="findUserImg">
+                    <div id="findUserName"></div>
+                    <div id="findUserBirth"></div>
+                    <div id="findUserPhone"></div>
+                </div>
+            </div>
+            
+        </div>
+           
+    </form>
+    <form id="findaddfriend">
+    
+    
+    </form>
+        
 </body>
 </html>
