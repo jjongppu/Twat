@@ -33,12 +33,10 @@
         color: white;
     }
 
-
     ul{
         margin: 0;
         list-style: none;
-        background-color:gray;
-        opacity: 0.7;
+        padding: 0;
         
     }
     li{
@@ -46,10 +44,6 @@
         display: inline-block;
         text-align: center;
         width: 120px;
-    }
-        #logout > li:hover,#nav_menu > li:hover{
-        background-color: black;
-        opacity: 0.7;
     }
     #logout{
         position: absolute;
@@ -161,7 +155,11 @@
             width: 100%;
         }
     }
-    
+     @media screen and (max-width : 360px){
+        .menuMedia{
+            display: none;
+        }
+    }
     
 </style>    
 
@@ -221,11 +219,11 @@
         <nav>
             <ul id="nav_menu">
                 <li><a href="home.html">홈</a></li>
-                <li><a href="#">회원 관리</a></li>
-                <li><a href="#">게시글 관리</a></li>
-                <li><a href="#">문의사항 관리</a></li>
-                <li><a href="#">기타 작업</a></li>
-                <li id="logout" onclick="logout()"><a>로그아웃</a></li>
+                <li class="menuMedia"><a href="memberManagement.html">회원 관리</a></li>
+                <li class="menuMedia"><a href="groupManagement.html">그룹 관리</a></li>
+                <li class="menuMedia"><a href="#">문의사항 관리</a></li>
+                <li class="menuMedia"><a href="#">기타 작업</a></li>
+                <li id="logout" onclick="logout();"><a>로그아웃</a></li>
             </ul>
         </nav>
 
