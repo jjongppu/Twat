@@ -20,7 +20,7 @@ public class MemberDAO {
 	ResultSet rs= null;
 	
 	
-	// MemberDAO ÀÇ ½Ì±ÛÅæ -----------------------------------
+	// MemberDAO ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ -----------------------------------
 	private static MemberDAO instance = new MemberDAO();
 	
 	private MemberDAO(){}
@@ -33,7 +33,7 @@ public class MemberDAO {
 	
 	
 	
-	   // DB¿¬°áÀ» À§ÇØ conÀ» ¹ÝÈ¯ÇÏ´Â ¸Þ¼­µå --------------------------------------------
+	   // DBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ conï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ --------------------------------------------
 	   public Connection getConnection() throws Exception {
 	         Context initCtx = new InitialContext();
 	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
@@ -43,7 +43,7 @@ public class MemberDAO {
 
 	
 	
-	  // ¾ÆÀÌµð Ã£´Â ¸Þ¼­µå (ÀÌ¸§,ÀüÈ­¹øÈ£·Î Ã£±â)-----½Â¿ì-------------------------
+	  // ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ (ï¿½Ì¸ï¿½,ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ Ã£ï¿½ï¿½)-----ï¿½Â¿ï¿½-------------------------
 	   public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
 	      
 	      String selectSql = "select MEMBER_ID from MEMBER where MEMBER_NAME=? and MEMBER_PHONE=?";
@@ -80,7 +80,7 @@ public class MemberDAO {
 	   
 	   
 	   
-// ºñ¹Ð¹øÈ£ Ã£´Â ¸Þ¼­µå ---------½Â¿ì-------------------------------
+// ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ---------ï¿½Â¿ï¿½-------------------------------
 	   public String searchPW(String MEMBER_ID, String MEMBER_NAME, String MEMBER_PHONE) {
 		   String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
 		   String getPW = "";
@@ -115,7 +115,7 @@ public class MemberDAO {
 	   }	   
 	   
 
-		// È¸¿ø ·Î±×ÀÎÀ» À§ÇÑ ¸Þ¼­µå ----------------------------------
+		// È¸ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ----------------------------------
 		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
 			int result = -1;
 			
@@ -135,9 +135,9 @@ public class MemberDAO {
 				rs = psmt.executeQuery();
 				
 //				if(rs.next()) {
-//					// out_timeÀÌ 0ÀÌ¸é ·Î±×ÀÎ ¼º°ø result¿¡ 1³Ö¾îÁÜ
+//					// out_timeï¿½ï¿½ 0ï¿½Ì¸ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ resultï¿½ï¿½ 1ï¿½Ö¾ï¿½ï¿½ï¿½
 //					if(rs.getInt(1) == 0) {
-//						// ·Î±×ÀÎ ¼º°ø
+//						// ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //						result = 1;
 //					} else {
 //						result = rs.getInt(1);
@@ -146,21 +146,21 @@ public class MemberDAO {
 //				}
 				
 				if(rs.next()) {
-					// out_timeÀÌ 0ÀÌ¸é ·Î±×ÀÎ ¼º°ø result¿¡ 1³Ö¾îÁÜ
+					// out_timeï¿½ï¿½ 0ï¿½Ì¸ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ resultï¿½ï¿½ 1ï¿½Ö¾ï¿½ï¿½ï¿½
 					if(rs.getLong(1) == 0) {
-						// ·Î±×ÀÎ ¼º°ø
+						// ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 						result = 1;
-					} else if(rs.getLong(1) > currentTime) { // Å»Åð ÁøÇàÁßÀÎ È¸¿ø
+					} else if(rs.getLong(1) > currentTime) { // Å»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
 						result = -1;
 //						System.out.println(result);
-					} else if(rs.getLong(1) < currentTime) { // Å»ÅðµÈ È¸¿ø
+					} else if(rs.getLong(1) < currentTime) { // Å»ï¿½ï¿½ï¿½ È¸ï¿½ï¿½
 						result = -2;
-					} else { // ¾ÆÀÌµð, ºñ¹ø Æ²·Á¼­ ½ÇÆÐ
+					} else { // ï¿½ï¿½ï¿½Ìµï¿½, ï¿½ï¿½ï¿½ Æ²ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 						result = 0;
 					}
 				}
 			} catch (Exception e) {
-				System.out.print("Á¢¼Ó ¿¡·¯");
+				System.out.print("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
@@ -179,7 +179,7 @@ public class MemberDAO {
 	   
 	   
 	   
-	// ·Î±×ÀÎ ÇÑ»ç¶÷ÀÇ ±×·ì ¾ò¾î¿À±â ÂÐ±â¸®
+	// ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ñ»ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð±â¸®
 			public ArrayList<Integer> getMyGroupList(String MEMBER_ID) {
 				ArrayList<Integer> glList = new ArrayList<Integer>();
 				
@@ -187,7 +187,7 @@ public class MemberDAO {
 				try {
 					con = getConnection();
 					
-					// ¾ÆÀÌµð·Î ±×·ì¸ñ·Ï ºÒ·¯¿À±â
+					// ï¿½ï¿½ï¿½Ìµï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
 					String sql = "select GROUP_ID from MEMBER_JOIN_GROUP where MEMBER_ID =?";
 					
 					psmt = con.prepareStatement(sql);
@@ -219,7 +219,7 @@ public class MemberDAO {
 
 	   
 	   
-// È¸¿ø °¡ÀÔÀ» À§ÇÑ ¸Þ¼­µå ------½Â¿ì----------------------------
+// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ------ï¿½Â¿ï¿½----------------------------
 
 	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, 
 			   String MEMBER_GENDER, String MEMBER_BIRTH, int OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
@@ -279,7 +279,7 @@ public class MemberDAO {
 
 	   
 	   
-// È¸¿ø°¡ÀÔ½Ã ¾ÆÀÌµð ½Ç½Ã°£ °Ë»ç...---------½Â¿ì------------------------------
+// È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ç½Ã°ï¿½ ï¿½Ë»ï¿½...---------ï¿½Â¿ï¿½------------------------------
 	   public int checkID(String idCheck) {
 		   int result = -1;
 		   
@@ -316,12 +316,12 @@ public class MemberDAO {
 	   
 
 	
-	// Ä£±¸ ¸ñ·ÏÀ» »Ì¾Æ¿À°í½Í¾îÇÏ´Â ¸Þ¼­µå -----Çö¿ì ---------------------
+	// Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¾Æ¿ï¿½ï¿½ï¿½Í¾ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ -----ï¿½ï¿½ï¿½ï¿½ ---------------------
 	public ArrayList printFriendList(String MEMBER_ID, String MEMBER_NAME, String MEMBER_BIRTH, String MEMBER_PHONE, String MEMBER_IMG){
 		 
 
 		String sql = "SELECT MEMBER_IMG, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = 'asdfasdf'";
-		//·Î±×ÀÎ¼¼¼Ç ¾ÆÀÌµð ¹Þ¾Æ¿Í¼­ ³Ö±â.
+		//ï¿½Î±ï¿½ï¿½Î¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Þ¾Æ¿Í¼ï¿½ ï¿½Ö±ï¿½.
 		ArrayList arList = new ArrayList();
 		
 		HttpSession session = null;
@@ -332,19 +332,19 @@ public class MemberDAO {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
-				// Ä£±¸¸®½ºÆ®¸¦ ÂÉ°³¼­ str¿¡ Áý¾î³Ö°í
+				// Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½É°ï¿½ï¿½ï¿½ strï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö°ï¿½
 				String[] str = rs.getString(9).split(",");
 				System.out.println(str);
 				
-				// str¿¡¼­ b°¡ ÀÖ´ÂÁö ¾Ë¾Æº¸°í
+				// strï¿½ï¿½ï¿½ï¿½ bï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½Ë¾Æºï¿½ï¿½ï¿½
 				for(int i=0; i<arList.size(); i++){
-					// ¸¸¾à b°¡ ÀÖ´Ù¸é memberVO°´Ã¼¸¦ ¸¸µé¾î¼­ rs°ªÀ» ³ÖÀºµÚ arList¿¡ add
+					// ï¿½ï¿½ï¿½ï¿½ bï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ memberVOï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ rsï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ arListï¿½ï¿½ add
 					if(str[i] == MEMBER_ID) {	
 						MemberVO mdo = new MemberVO();
 					arList.add(mdo.getMEMBER_NAME());					
 					
 				}else{
-					System.out.println("Ä£±¸°¡ ¾ø½À´Ï´Ù.");
+					System.out.println("Ä£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 				}	
 			}								
 		}
@@ -358,7 +358,7 @@ public class MemberDAO {
 		return arList;	
 	}
 	
-	   // Ä£±¸¸ñ·Ï ¾ò¾î¿Í¼­ Ä£±¸µéÁ¤º¸ ³Ñ°ÜÁÖ±â Á¾±æver....
+	   // Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¼ï¿½ Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ver....
 	   public ArrayList<MemberVO> getFriendList(String MEMBER_ID){
 	       
 	      String myFrinds ="";
@@ -377,7 +377,7 @@ public class MemberDAO {
 	               
 	               myFrinds = rs.getString("FRIENDS_LIST");
 	               
-	               // Ä£±¸¸ñ·Ï ¸¸µé°í Äõ¸®ÀÛ¼ºÇÏ´Â°Ô ´À·ÁÀú db¸¦ ¿À·¡ Àâ°íÀÖÀ»¼öµµ ÀÖÀ¸¹Ç·Î,,,´Ý¾Æ¹ö·Ç.,,
+	               // Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û¼ï¿½ï¿½Ï´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ dbï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½,,,ï¿½Ý¾Æ¹ï¿½ï¿½ï¿½.,,
 //	               try {
 //	                  if(rs != null)
 //	                  if(psmt != null) psmt.close();
@@ -385,7 +385,7 @@ public class MemberDAO {
 //	               } catch (SQLException e) {
 //	                  e.printStackTrace();
 //	               }
-	               //Ä£±¸ ¼ö¿¡µû¶ó Äõ¸®¹® ´Ã·Á¹ö¸®±ê..
+	               //Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½..
 	               String[] str = myFrinds.split(",");
 	               for(int i = 1; i < str.length; i++){
 	                  getMyFriendsSql+= "or MEMBER_ID=?";
@@ -423,7 +423,7 @@ public class MemberDAO {
 	      return myfriendsList;   
 	   }
 	   
-	 //È¸¿øÁ¤º¸¸¦ °¡Á®¿À°í½Í¾îÇÔ---------------Çö¿ì--------------------------------
+	 //È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¾ï¿½ï¿½ï¿½---------------ï¿½ï¿½ï¿½ï¿½--------------------------------
 	   public ArrayList<MemberVO> myInfo(String MEMBER_ID){
 	      String sql = "select MEMBER_IMG, MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH from MEMBER where MEMBER_ID = ? ";
 	      
@@ -435,7 +435,7 @@ public class MemberDAO {
 	            psmt.setString(1, MEMBER_ID);
 	            rs = psmt.executeQuery();
 	            
-	            //ÀÌ·¸°ÔÇÏ¸éÀº rs.getstring(1)¿¡ ÀÌ¹ÌÁö 2¿¡ ÀÌ¸§ 3¿¡ ÀüÈ­¹øÈ£ 4¿¡ »ýÀÏÀÌ µé¾î¿Â´Ù.
+	            //ï¿½Ì·ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½ rs.getstring(1)ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ 2ï¿½ï¿½ ï¿½Ì¸ï¿½ 3ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½È£ 4ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½.
 	            while(rs.next()){
 	               MemberVO mvo = new MemberVO();
 	               mvo.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
@@ -444,7 +444,7 @@ public class MemberDAO {
 	               mvo.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
 	                 arList.add(mvo);
 	            }
-	            //arList¿¡ ÀÌ¹ÌÁö ÀÌ¸§ Æù¹øÈ£ »ýÀÏÀÌ ³ª¿Â´Ù.
+	            //arListï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½.
 	         
 	      } catch (Exception e) {
 	      }finally {
@@ -492,7 +492,7 @@ public class MemberDAO {
 		      return str;
 		   }
 
-// È¸¿øÁ¤º¸ ¹è¿­À» ÅëÇØ È¸¿øÀÇ »ýÀÏ ¹ÝÈ¯ÇÏ´Â ÇÔ¼ö, ¹è¿­·Î ¹ÝÈ¯ÇÏ¸ç ÇüÅÂ´Â »ýÀÏ+ÀÌ¸§À¸·Î ÀúÀå
+// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½, ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½+ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	   public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList)
 	   {
 		   ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
@@ -508,7 +508,7 @@ public class MemberDAO {
 			   {
 				   for(int i = 0; i < memberList.size(); i++)
 				   {
-					   // memberListÀÇ ID¿Í member_id°ªÀÌ °°´Ù¸é member °´Ã¼ »ý¼ºÇØ¼­ arrList¿¡ Ãß°¡
+					   // memberListï¿½ï¿½ IDï¿½ï¿½ member_idï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ member ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ arrListï¿½ï¿½ ï¿½ß°ï¿½
 					   if(rs.getString(1).equals(memberList.get(i)))
 					   {
 						   MemberVO member = new MemberVO();
@@ -543,16 +543,16 @@ public class MemberDAO {
 		   return arrList;
 	   }
 
-///////////////////////////////////////////////////////////////////Çö¿ì ºñ¹Ð¹øÈ£ º¯°æ.
+///////////////////////////////////////////////////////////////////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½.
 	   
 	   public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String chkpwd){
 		   
 		   
 		   
 		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
-		   // ?¿¡´Â ¼¼¼ÇÀ¸·Î ¹Þ¾Æ¿Â ¾ÆÀÌµð¸¦ ³Ö°í ºñ¹Ð¹øÈ£¸¦ ¹Þ¾Æ¿Â´ÙÀ½¿¡ ¹Þ¾Æ¿Â ºñ¹Ð¹øÈ£¶û ÇöÀçºñ¹Ð¹øÈ£ ÀÔ·Â¶õÀÌ¶û ºñ±³ÇØ¼­ ¸ÂÀ¸¸é µÎ¹ø¤Š Äõ¸®¹®À¸·Î ³Ñ¾î°¡¼­ ºñ¹Ð¹øÈ£¸¦ ¹Ù²ãÁØ´Ù.
+		   // ?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Þ¾Æ¿Â´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ð¹ï¿½È£ ï¿½Ô·Â¶ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¾î°¡ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½Ø´ï¿½.
 		   String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
-		   //1¹ø¤Š ?¿¡´Â ¹Ù²ï ºñ¹Ð¹øÈ£¸¦ ³Ö°í  2¹ø¤Š ? ¿¡´Â ¾ÆÀÌµð°ª ¼¼¼ÇÀ¸·Î ¹Þ¾Æ³Ö´Â´Ù.
+		   //1ï¿½ï¿½ï¿½ï¿½ ?ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ö°ï¿½  2ï¿½ï¿½ï¿½ï¿½ ? ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ³Ö´Â´ï¿½.
 		   int result = 0;
 		   
 		   try {
@@ -576,18 +576,18 @@ public class MemberDAO {
 				result = psmt.executeUpdate();
 				
 				if(result ==1 ){
-					System.out.println("ºñ¹Ð¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù");
+					System.out.println("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½Õ´Ï´ï¿½");
 				}else{
-					System.out.println("ºñ¹Ð¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+					System.out.println("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 				}
 				
 			
 		}else{
-			System.out.println("ºñ¹Ð¹øÈ£°¡ ¼­·Î ¸ÂÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 		}
-		}//while ³¡³ª´Â °÷.
+		}//while ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
 		}else{
-			System.out.println("º¯°æÇÒ ºñ¹Ð¹øÈ£°¡ ¼­·Î ¸ÂÁö ¾Ê½À´Ï´Ù.");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 		}
 
 		} catch (Exception e) {
@@ -602,10 +602,10 @@ public class MemberDAO {
        }
 		return result;
  }
-///////////////////////////Çö¿ì È¸¿øÅ»Åð.////////////////////////
+///////////////////////////ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½Å»ï¿½ï¿½.////////////////////////
 		   public int outUser(String MEMBER_ID){
 			   
-//			   SimpleDateFormat outDate = new SimpleDateFormat("yyyy³â MM¿ùddÀÏ HH½ÃmmºÐ");
+//			   SimpleDateFormat outDate = new SimpleDateFormat("yyyyï¿½ï¿½ MMï¿½ï¿½ddï¿½ï¿½ HHï¿½ï¿½mmï¿½ï¿½");
 //			   Date date = new Date();
 //			   String today = outDate.format(date);
 			   
@@ -637,7 +637,7 @@ public class MemberDAO {
 			   
 			   return result;
 		   }
-/////////////////////////////////È¸¿øÁ¤º¸ º¯ °æ////////////////////////////////////////
+/////////////////////////////////È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½////////////////////////////////////////
 		   public int changeInfo(String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_BIRTH, String MEMBER_ID){
 			   String changeInfo = "UPDATE MEMBER set MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? where MEMBER_ID =?";
 			   int result = 0;
@@ -652,11 +652,11 @@ public class MemberDAO {
 				result = psmt.executeUpdate();
 				
 				if(result != 1){
-					System.out.println("È¸¿ø ¼öÁ¤µÇ¾ù´Ù.");
-					System.out.println("¿Ö");
+					System.out.println("È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½.");
+					System.out.println("ï¿½ï¿½");
 				}else{
-					System.out.println("È¸¿ø ¼öÁ¤¾ÈµÇ¾ù´Ù.");
-					System.out.println("¿Ö2");
+					System.out.println("È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ÈµÇ¾ï¿½ï¿½ï¿½.");
+					System.out.println("ï¿½ï¿½2");
 				}
 				
 			} catch (Exception e) {
@@ -675,7 +675,7 @@ public class MemberDAO {
 			   
 		   }
 		  		   
-////////////////////////////////ÀÌ¹ÌÁö º¯°æÀº ½ÃÇèº¸°í ³ª¼­ ÇÏ±â.//////////////////////////////////////
+////////////////////////////////ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½èº¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï±ï¿½.//////////////////////////////////////
 		public int changeImg(String MEMBER_ID, String MEMBER_IMG){
 			String changepwd = "update MEMBER set MEMBER_IMG = ? where MEMBER_ID = ?";
 			int result = 0;
@@ -703,9 +703,9 @@ public class MemberDAO {
 				return result;
 			
 		}
-///////////////////Ä£±¸¸ñ·Ï¿¡¼­ Ä£±¸ Ãß°¡ÇÏ±â/////////////////////////////////////////
+///////////////////Ä£ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ Ä£ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï±ï¿½/////////////////////////////////////////
 		public ArrayList<MemberVO> addFriends(String userPhone){
-			//Ä£±¸ ÀüÈ­¹øÈ£¸¦ °¡Áö°í Ä£±¸¸¦ °¡Á®¿Â´Ù.
+			//Ä£ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
 			String addFriend = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG from MEMBER where MEMBER_PHONE = ?";
 			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 			try {

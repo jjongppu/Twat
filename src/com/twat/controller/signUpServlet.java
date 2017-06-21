@@ -53,14 +53,14 @@ public class signUpServlet extends HttpServlet {
 	    String signUpId = request.getParameter("signUpId");
 	    String signUpPw = request.getParameter("signUpPw");
 	    
-//	    // »çÁø ¾÷·Îµå ÇØ°áx----------------------------------------------------------
+//	    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ø°ï¿½x----------------------------------------------------------
 //	    String savePath = "img/member";
-//	    int uploadFileSize = 5 * 1024 * 1024; // ÆÄÀÏÀÇ Å©±â¸¦ 5MB·Î Á¦ÇÑ (1024 = 2^10)
+//	    int uploadFileSize = 5 * 1024 * 1024; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ 5MBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (1024 = 2^10)
 ////	    String encType = "UTF-8";
 //	    
-//	    ServletContext context = getServletContext(); // ¼­ºí¸´ ÄÁÅØ½ºÆ® °´Ã¼ »ý¼º
-//	    String uploadFilePath = context.getContextPath(); // ¼­ºí¸´ ¼­¹ö¿¡ ½ÇÁ¦ ÀúÀå°æ·Î¸¦ ¾ò¾î¿È
-//	    System.out.println("¼­¹ö»óÀÇ ÀúÀå°æ·Î : " + uploadFilePath);
+//	    ServletContext context = getServletContext(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø½ï¿½Æ® ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+//	    String uploadFilePath = context.getContextPath(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½
+//	    System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : " + uploadFilePath);
 //	    
 //	    MultipartRequest multi = new MultipartRequest(
 //				request
@@ -68,9 +68,9 @@ public class signUpServlet extends HttpServlet {
 //				, uploadFileSize
 //				, new DefaultFileRenamePolicy());
 //	    
-//	    // ¾÷·Îµå µÈ ÆÄÀÏ ÀÌ¸§ ¾ò±â
+//	    // ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½
 //	 	String fileName = multi.getFilesystemName("uploadFile");
-//	    // ------¿¹Á¦ ºÙ¿©³Ö±â ¸Â´ÂÁö ¾È¸Â´ÂÁö ¸ô¶ó¿¬----------------------------------------------------------------------
+//	    // ------ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½Ö±ï¿½ ï¿½Â´ï¿½ï¿½ï¿½ ï¿½È¸Â´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½----------------------------------------------------------------------
 //	    String signUpImgName = request.getParameter("signUpImg");
 //	    String signUpImg = savePath + fileName;
 	    String signUpName = request.getParameter("signUpName");

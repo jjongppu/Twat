@@ -339,15 +339,16 @@ public class AdminDAO {
 			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM QNA";
 			if(!val.equals("0")){
-				selectGroupCount+= " WHERE 	QNA_CONTENTS LIKE ?";
+				selectGroupCount+= " WHERE QNA_CONTENTS LIKE ?";
 			}
+			selectGroupCount+= " ORDER BY QNA_REPLY asc";
 			
 			//실질적인 내용
 			String selectAllgroupSql = "SELECT * FROM QNA";
 			if(!val.equals("0")){
 				selectAllgroupSql+= " WHERE QNA_CONTENTS LIKE ?";
 			}
-			selectAllgroupSql +=  " LIMIT "+ (page*10-10) +",10";
+			selectAllgroupSql +=  " ORDER BY QNA_REPLY asc LIMIT "+ (page*10-10) +",10";
 			
 			try{
 				con = getConnection();
@@ -373,13 +374,13 @@ public class AdminDAO {
 				while(rs.next()){
 					QnaVO qv = new QnaVO();
 					qv.setQNA_ID(rs.getInt("QNA_ID"));
-					qv.setMEMBER_ID(rs.getTimestamp("MEMBER_ID"));
-					qv.setqnaC(rs.getString("QNA_CATEGORY"));
-					qv.setGroup_id(rs.getInt("QNA_PW"));
-					qv.setCal_memo(rs.getString("QNA_TITLE"));
-					qv.setCal_writer(rs.getString("QNA_CONTENTS"));
-					qv.setState_icon(rs.getString("QNA_DATE"));
-					qv.setMember_choice(rs.getString("QNA_REPLY"));
+					qv.setMEMBER_ID(rs.getString("MEMBER_ID"));
+					qv.setQNA_CATEGORY(rs.getString("QNA_CATEGORY"));
+					qv.setQNA_PW(rs.getInt("QNA_PW"));
+					qv.setQNA_TITLE(rs.getString("QNA_TITLE"));
+					qv.setQNA_CONTENTS(rs.getString("QNA_CONTENTS"));
+					qv.setQNA_DATE(rs.getTimestamp("QNA_DATE"));
+					qv.setQNA_REPLY(rs.getString("QNA_REPLY"));
 					qnaArry.add(qv);
 				}
 		
