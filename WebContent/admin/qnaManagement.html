@@ -274,56 +274,49 @@
         }
         .tdNum{
             top: 10px;
-            left: 20px;
+            left: 10px;
         }
-        .tdKind{
-            top : 31px;
-            left: 20px;
-        }
-        .tdCon{
-            top : 40px;
-            left: 90px;
+
+         .tdKind{
+         width: 100px;
+             bottom: 55px;
+            left: 10px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             display: block;
         }
-        .tdBt{
-            top: 104px;
+        .tdtit{
+            bottom: 30px;
+            left: 10px;
+            width: 130px;
+           white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+        .tdCon{
             right: 40px;
-        }
-        .tdBt2{
-            top: 104px;
-            right: 130px;
-        }
-        .tdNa{
-            top: 40px;
-            left: 90px;
-        }
-        .tdPh{
-            top: 60px;
-            left: 90px;
-        }
-        .tdGn{
-            top: 100px;
-            left: 20px;
-        }
-        .tdBi{
-            top: 60px;
-            left: 190px;
+            top: 0px;
+            height: 60px;
+            overflow: hidden;
+            display: block;
         }
         .tdId{
-            top: 20px;
-            left: 210px;
+            bottom: 100px;
+            left: 10px;
         }
-        .menuMedia{
-            display: none;
+        .tdan{
+            bottom: 10px;
+            right: 60px;
         }
-        .countText{
-            position: absolute;
-            display: block;
-            left: 90px;
-            top: 20px;
+        .tdBt2{
+            bottom: 10px;
+            right: 0px;
+        }
+        .tdBi{
+            bottom: 77px;
+            left: 10px;
         }
         
     }
@@ -482,7 +475,7 @@
         }
     $.ajax ({
         type : 'post',
-        url : '../adminGetCalenarList.do',
+        url : '../admingGetQnaList.do',
         dataType : "json",
         data: {page : pages ,val : $('#findMember').val()} ,
         success : function(data) {
@@ -497,23 +490,21 @@
                     }
                     
                     userInfos += '<span class="tdNum">'+num+'</span>';
-                    userInfos += '<span class="tdKind"> </span>';
-                    userInfos += '<span class="tdCon">'+data[i].CAL_MEMO+'</span>'
-                    userInfos += '<span class="tdId">'+ data[i].GROUP_ID +'</span>';
-                    userInfos += '<span class="tdPh">'+ data[i].CAL_WRITER +'</span>';
-                    userInfos += '<span class="tdGn"'; 
-                    var progress = data[i].CAL_DATE.split(',').length;
-                    if(progress >1){
-                        userInfos += 'style="color:yellow;" >투표 진행중';    
-                    }else{
-                        userInfos += 'style="color:green;" >확정된 일정';    
-                    }
-                    userInfos += '</span>';
+                    userInfos += '<span class="tdKind">'+ data[i].QNA_CATEGORY +'</span>';
+                    userInfos += '<span class="tdtit">'+ data[i].QNA_TITLE +'</span>'
+                    userInfos += '<div class="countText">게시글 방번호 :</div>';
+                    userInfos += '<span class="tdCon">'+ data[i].QNA_CONTENTS +'</span>';
+                    userInfos += '<span class="tdId">'+ data[i].MEMBER_ID +'</span>';
                     userInfos += '<span class="tdBi">'; 
-                    userInfos += data[i].CAL_TIME.substring(0,10);
+                    userInfos += data[i].QNA_DATE.substring(0,10);
                     userInfos += '</span>';
-                    userInfos += '<span class="tdBt"> <input type="button" value="글 삭제" id="'+data[i].CAL_NUM+'" onclick="getOutMember(this);"/> </span>';
-                    userInfos += '<span class="tdBt2"> <input type="button" value="상세보기" disabled="true"  onclick=""/> </span>';
+                    userInfos += '<span class="tdan"><textarea rows="4" cols="20" style="resize :none;">';
+                    var reply = data[i].QNA_REPLY;
+                    if(reply != null && reply != ""){
+                        userInfos += reply;    
+                    }
+                    userInfos += '</textarea></span>';
+                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick=""/> </span>';
                     userInfos += '</li>';
                 }
                 $('#inputMemberinfo').html(userInfos);
