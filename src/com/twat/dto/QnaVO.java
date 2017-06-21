@@ -51,14 +51,14 @@ public class QnaVO {
 		QNA_CATEGORY = qNA_CATEGORY;
 	}
 
-	public int getQNA_PW() {
-		return QNA_PW;
-	}
 
 	public void setQNA_PW(int qNA_PW) {
 		QNA_PW = qNA_PW;
 	}
 
+	public int getQNA_PW() {
+		return QNA_PW;
+	}
 	public String getQNA_TITLE() {
 		return QNA_TITLE;
 	}
@@ -93,9 +93,9 @@ public class QnaVO {
 
 	@Override
 	public String toString() {
-		return "QnaVO [QNA_ID=" + QNA_ID + ", MEMBER_ID=" + MEMBER_ID + ", QNA_CATEGORY=" + QNA_CATEGORY + ", QNA_PW="
-				+ QNA_PW + ", QNA_TITLE=" + QNA_TITLE + ", QNA_CONTENTS=" + QNA_CONTENTS + ", QNA_DATE=" + QNA_DATE
-				+ ", QNA_REPLY=" + QNA_REPLY + "]";
+		return "QnaVO [QNA_ID=" + QNA_ID + ", MEMBER_ID=" + MEMBER_ID + ", QNA_CATEGORY=" + QNA_CATEGORY
+				+ ", QNA_PW=" + QNA_PW + ", QNA_TITLE=" + QNA_TITLE + ", QNA_CONTENTS=" + QNA_CONTENTS
+				+ ", QNA_DATE=" + QNA_DATE + ", QNA_REPLY=" + QNA_REPLY + "]";
 	}
 	
 	

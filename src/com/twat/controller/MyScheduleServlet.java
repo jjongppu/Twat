@@ -49,8 +49,6 @@ public class MyScheduleServlet extends HttpServlet {
 //		System.out.println(my_cal_date);
 		
 		mycalendarDAO.addMySchedule(member_id, my_cal_contents, my_cal_date);
-		System.out.println("좀 되라 시발");
-				
 		
 		jsonObj.put("result", "succesCalAdd");
 		jsonArr.add(jsonObj);		

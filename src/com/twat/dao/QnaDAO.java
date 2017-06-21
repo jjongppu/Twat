@@ -130,6 +130,7 @@ public class QnaDAO {
 				rs = psmt.executeQuery();
 				
 				while(rs.next()) {
+
 					// 여기 수정
 					qnaVo.setQNA_ID(rs.getInt(1));
 //					System.out.println(rs.getInt(1));
@@ -142,8 +143,8 @@ public class QnaDAO {
 					qnaVo.setQNA_REPLY(rs.getString(8));
 					
 					arList.add(qnaVo);
-//					System.out.println(qnaVo);
-//					System.out.println(arList);
+
+
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
