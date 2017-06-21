@@ -1159,16 +1159,16 @@
                 for (let item of scheduleSet.keys()) {
                     if (item.split("-")[0] == dateParam) {
                         cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        console.log("#date" + parseInt(dateParam.substr(6)));
-                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
+//                        console.log("#date" + parseInt(dateParam.substr(6)));
+//                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
                     }
                 }
                 // 미확정된 일정표시
                 for (let item of voteSet.keys()) {
                     if (item.split("-")[0] == dateParam) {
                         cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        console.log("#date" + parseInt(dateParam.substr(6)));
-                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
+//                        console.log("#date" + parseInt(dateParam.substr(6)));
+//                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
                     }
                 }
                 // 생일표시
