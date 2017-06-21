@@ -254,7 +254,7 @@ public class MemberDAO {
 
 	         
 	         result = psmt.executeUpdate();
-	         
+//	         System.out.println(result);
 //	         rs = psmt.executeQuery();
 //	         
 

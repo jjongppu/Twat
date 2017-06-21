@@ -24,45 +24,64 @@
 	
 	<script>
 		function qnaEnter() {
-			
+			$.ajax ({
+                type : 'post',
+                url : 'QnaWrite.do',
+                data : $('#qnaForm').serialize(),
+                dataType : "json",
+                success : function(data) {
+                    console.log(data);
+                    var result = data[0].result;
+
+                    console.log(result);
+					
+					alert("글 작성이 완료되었습니다.");
+					location.href='qnaList.html';
+                },
+                error: function(req) {
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+                }
+            });  
 		}
 	
 	
 	</script>
 </head>
 <body>
-	<div>
-		<h4>문의사항 작성하기</h4>
-	</div>
-	
-	<div id="wrap">
-		<div id="wrap_Cate" class="container">
-			<span>카테고리</span>
-			<select>
-				<option>--</option>
-				<option>서비스 문의</option>
-				<option>아이디 관련</option>
-				<option>해킹신고 및 예방</option>
-				<option>신고하기</option>
-				<option>불만사항</option>
-			</select>
+	<form id="qnaForm" action="QnaWrite.do" method="post">
+		<div>
+			<h4>문의사항 작성하기</h4>
 		</div>
-		<div id="wrap_Title" class="container">
-			<span>제목</span>
-			<input type="text" name="title"/>
+
+		<div id="wrap">
+			<div id="wrap_Cate" class="container">
+				<span>카테고리</span>
+				<select name="qnaCategory">
+					<option>--</option>
+					<option>서비스 문의</option>
+					<option>아이디 관련</option>
+					<option>해킹신고 및 예방</option>
+					<option>신고하기</option>
+					<option>개선/불만사항</option>
+				</select>
+			</div>
+			<div id="wrap_Pw" class="container">
+				<span>비밀번호</span>
+				<input type="text" name="qnaPw"/>
+			</div>
+			<div id="wrap_Title" class="container">
+				<span>제목</span>
+				<input type="text" name="qnaTitle"/>
+			</div>
+			<div id="wrap_Content" class="container">
+				<span>문의하실 내용</span>
+				<textarea name="qnaContents"></textarea>
+			</div>
 		</div>
-		<div id="wrap_Pw" class="container">
-			<span>비밀번호</span>
-			<input type="text" name="pw"/>
+		<div id="btnWrap">
+			<input type="button" value="작성완료" onclick="qnaEnter()"/>
+			<input type="button" value="취소" onclick="location.href='qna.html'"/>
 		</div>
-		<div id="wrap_Content" class="container">
-			<span>내용</span>
-			<textarea></textarea>
-		</div>
-	</div>
-	<div id="btnWrap">
-		<input type="button" value="작성완료" onclick="qnaEnter()"/>
-		<input type="button" value="취소" onclick="location.href='qna.html'"/>
-	</div>
+	</form>
 </body>
 </html>
