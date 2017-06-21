@@ -128,7 +128,7 @@ public class QnaDAO {
 				rs = psmt.executeQuery();
 				
 				while(rs.next()) {
-					arList.add(arg0)
+//					arList.add(arg0)
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
