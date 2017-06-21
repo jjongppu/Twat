@@ -294,9 +294,9 @@
             top : 31px;
             left: 20px;
         }
-        .tdId{
-            top : 104px;
-            left: 20px;
+        .tdCon{
+            top : 40px;
+            left: 90px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -318,22 +318,28 @@
             top: 60px;
             left: 90px;
         }
-        
-        .countText{
-            display: inline;
-        }
         .tdGn{
-            width: auto;
-            top: 40px;
-            left: 190px;
+            top: 100px;
+            left: 20px;
         }
         .tdBi{
             top: 60px;
             left: 190px;
         }
+        .tdId{
+            top: 20px;
+            left: 210px;
+        }
         .menuMedia{
             display: none;
         }
+        .countText{
+            position: absolute;
+            display: block;
+            left: 90px;
+            top: 20px;
+        }
+        
     }
     
     
@@ -389,7 +395,7 @@
                     userInfos += '<span class="tdNum">'+num+'</span>';
                     userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].STATE_ICON+'"/> </span>';
                     userInfos += '<span class="tdCon">'+data[i].CAL_MEMO+'</span>'
-                    userInfos += '<span class="tdId">'+ data[i].GROUP_ID +'</span>';
+                    userInfos += '<span class="countText">게시글 방번호 :</span><span class="tdId">'+ data[i].GROUP_ID +'</span>';
                     userInfos += '<span class="tdPh">'+ data[i].CAL_WRITER +'</span>';
                     userInfos += '<span class="tdGn"'; 
                     var progress = data[i].CAL_DATE.split(',').length;
