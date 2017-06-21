@@ -704,18 +704,25 @@ public class MemberDAO {
 			
 		}
 ///////////////////친구목록에서 친구 추가하기/////////////////////////////////////////
-		public void addFriends(String userPhone){
+		public ArrayList<MemberVO> addFriends(String userPhone){
 			//친구 전화번호를 가지고 친구를 가져온다.
 			String addFriend = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG from MEMBER where MEMBER_PHONE = ?";
-			
+			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 			try {
 				con =getConnection();
 				psmt = con.prepareStatement(addFriend);
-				psmt.setString(1, "63046041");
+				psmt.setString(1, userPhone);
 				rs = psmt.executeQuery();
 				
 				while(rs.next()){
-
+					MemberVO member = new MemberVO();
+					member.setMEMBER_IMG(rs.getString(5));
+					member.setMEMBER_NAME(rs.getString(2));
+					member.setMEMBER_BIRTH(rs.getString(3));
+					member.setMEMBER_PHONE(rs.getString(4));
+					member.setMEMBER_ID(rs.getString(1));
+					
+					arList.add(member);
 					System.out.println(rs.getString(1));
 					System.out.println(rs.getString(2));
 					System.out.println(rs.getString(3));
@@ -735,7 +742,7 @@ public class MemberDAO {
 	             }
 	       }
 			
-			
+			return arList;
 		}	
 		
 		
