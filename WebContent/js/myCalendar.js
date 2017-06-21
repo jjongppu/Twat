@@ -1318,24 +1318,20 @@
             var groupId = location.href.split("=")[1];
             console.log(groupId);
             var calDate = "";
-            var groupId = location.href.split("=")[1];
-            console.log(groupId);
-            for (let item of scheSet.keys())
-                calDate += item + ",";
-            
+            for (let item of scheSet.keys())     
+                calDate += item + ",";        // 달력에 날짜를 클릭했을때 (년도+월+선택한 일) + ","
             var calTitle = $("#calTitle").val();
             console.log("");
-            
              $.ajax({
                 type: 'post'
-                , url: 'ScheduleAdd.do'
-                , data: {                    
+                , url: 'mySchedule.do'
+                , data: {         // 이 데이터가 서블릿으로 보내주는것이다.
                     title : calTitle,
                     calDate : calDate,
                     groupId : groupId
                 }
                 , dataType: "json"
-                , success: function (data) {
+                , success: function (data) {  // 이것이 서블릿에서 받는 코드.
                     console.log(data);
                 }
                 , error: function (req) {
