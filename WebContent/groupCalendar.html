@@ -1290,8 +1290,11 @@
                     if (item.split("-")[0] == dateParam) {
                         cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
                         //                        $('.votedSchedule').prevAll().css("background-color", "#ff8080");
-                        console.log("#date" + parseInt(dateParam.substr(6)));
-                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
+//                        console.log("#date" + parseInt(dateParam.substr(6)));
+//                        console.log(item);
+//                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
+                        // 클릭 시 모달창 추가
+                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getScheduleInfo(' + item.split("-")[2] + ')');
                     }
                 }
                 // 미확정된 일정표시
@@ -1299,15 +1302,17 @@
                     if (item.split("-")[0] == dateParam) {
                         cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
                         //                        $('.voteSchedule').prevAll().css("background-color", "#00ff80");
-                        console.log("#date" + parseInt(dateParam.substr(6)));
-                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
+//                        console.log("#date" + parseInt(dateParam.substr(6)));
+//                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
+                         // 클릭 시 모달창 추가, 투표할 일정 눌러도 체크 안되게 onclick 덮음
+                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getVoteInfo(' + item.split("-")[2] + ')');
                     }
                 }
                 // 생일표시
                 for (let item of birthSet.keys()) {
                     if (item.split("-")[0].substr(2, 4) == dateParam.substr(4)) {
                         cell.innerHTML += "<div class='memberBirthDay' style='font-size:13px'>" + item.split("-")[1] + "(" + item.split("-")[2] + ")님의 생일</div>";
-                        console.log("#date" + parseInt(dateParam.substr(6)));
+//                        console.log("#date" + parseInt(dateParam.substr(6)));
                         //                        $('.memberBirthDay').prevAll().css("background-color", "#0080ff");
                         $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#0080ff");
                     }
@@ -1401,7 +1406,7 @@
                         //                        console.log(data[arrCal].member_choice);
                         var str = "";
                         var str2 = data[arrCal].cal_date;
-                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
+//                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
                         str += '<div class="content">';
 //                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
                         str += '<div class="left">';
@@ -1409,15 +1414,15 @@
                         if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
                         {
                             str += data[arrCal].cal_date;
-                            console.log("확정 : " + data[arrCal].cal_memo);
-                            scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo);
+//                            console.log("확정 : " + data[arrCal].cal_memo);
+                            scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
                         }
                         else {
                             var res = str2.split(",");
                             str += res[0] + "~" + res[res.length - 1];
-                            console.log("투표 : " + data[arrCal].cal_memo);
+//                            console.log("투표 : " + data[arrCal].cal_memo);
                             for (var i = 0; i < res.length; i++) {
-                                voteSet.add(res[i] + "-" + data[arrCal].cal_memo);
+                                voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
                             }
                         }
                         str += '</div>';
@@ -1447,7 +1452,9 @@
                         str += '</div>';
                         str += '</div>'; // div-right
                         str += '</div>'; // div=middle
-                        if (str2.indexOf(',') == -1) {
+//                        if (str2.indexOf(',') == -1)
+                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+                        {
                             $(".schedule").append(str);
                             //                            document.getElementById("schedule").innerHTML += str;
                         }
@@ -1523,8 +1530,8 @@
                 }
                 , dataType: "json"
                 , success: function (data) {
-                    console.log("groupBirth");
-                    console.log(data);
+//                    console.log("groupBirth");
+//                    console.log(data);
                     //                    console.log("이런");
                     //                    $(data).find(Object).each(function()
                     //                    {
@@ -1671,7 +1678,7 @@
             // 확정되면 true값 아니면 false값 반환
             // 아이디는 6~12
 //            console.log(member_choice);
-            console.log(cal_date);
+//            console.log(cal_date);
             
             if(member_choice == "" || cal_date.indexOf(',') >= 0)
             {
@@ -1699,7 +1706,7 @@
                     {
                         if(memSplit[i].substr(0,8).match(cal_date))
                         {
-                            console.log(memSplit[i].substr(0,8) + " / " + cal_date);
+//                            console.log(memSplit[i].substr(0,8) + " / " + cal_date);
                             count++;
                         }
                     }
@@ -1866,7 +1873,10 @@
         <nav class="left_nav">
             <div id="userInfo">
                 <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-                    <li class="nav_li"> <img id="user_Img" src="/img/member/basis_photo.png" /> </li>
+                    <li class="nav_li">
+<!--                        <img id="user_Img" src="/img/member/basis_photo.png" />-->
+                        <img id="user_Img"/>
+                    </li>
                     <li class="nav_li">
                         <div id="user_Id"></div>
                     </li>

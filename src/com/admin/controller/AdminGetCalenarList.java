@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.admin.dao.AdminDAO;
+import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 
 @WebServlet("/adminGetCalenarList.do")
@@ -41,26 +42,29 @@ public class AdminGetCalenarList extends HttpServlet {
 		String val = request.getParameter("val");
 		
 		AdminDAO admDao = AdminDAO.getInstance();
-		ArrayList<CalgatherVO> groupInfo = admDao.getGroupList(page,val);
+		ArrayList<CalendarVO> groupInfo = admDao.getCalenarList(page,val);
 		
 			
 			if(groupInfo.size() > 0 ){
 				for (int i = 1; i < groupInfo.size(); i++) {
 					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("groupCount", groupInfo.get(0).getGroup_id());
-					jsonObj.put("group_id", groupInfo.get(i).getGroup_id());
-					jsonObj.put("group_name", groupInfo.get(i).getGroup_name());
-					jsonObj.put("create_date", groupInfo.get(i).getCreate_date());
-					jsonObj.put("group_master", groupInfo.get(i).getGroup_master());
-					jsonObj.put("group_master_name", groupInfo.get(i).getGroup_master_name());
-					jsonObj.put("group_img", groupInfo.get(i).getGroup_img());
-					jsonObj.put("group_count", groupInfo.get(i).getGroup_count());
+					jsonObj.put("COUNT", groupInfo.get(0).getGroup_id());
+					jsonObj.put("CAL_NUM", groupInfo.get(i).getCal_num());
+					jsonObj.put("CAL_TIME", groupInfo.get(i).getCal_time().toString());
+					jsonObj.put("CAL_DATE", groupInfo.get(i).getCal_date());
+					jsonObj.put("GROUP_ID", groupInfo.get(i).getGroup_id());
+					jsonObj.put("CAL_MEMO", groupInfo.get(i).getCal_memo());
+					jsonObj.put("CAL_WRITER", groupInfo.get(i).getCal_writer());
+					jsonObj.put("STATE_ICON", groupInfo.get(i).getState_icon());
+					jsonObj.put("MEMBER_CHOICE", groupInfo.get(i).getMember_choice());
+					jsonObj.put("CAL_REFERENCE", groupInfo.get(i).getCal_reference());
+					jsonObj.put("CAL_DEPTH", groupInfo.get(i).getCal_depth());
 					
 					jarr.add(jsonObj);
 				}
 			}else{
 				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("group_id","noGroup");
+				jsonObj.put("GROUP_ID","-1");
 				jarr.add(jsonObj);
 			}
 		

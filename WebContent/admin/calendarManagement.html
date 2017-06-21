@@ -139,19 +139,19 @@
         height: 60px;
     }
      .tdPp{
-        width: 150px;
+        width: 64px;
     }
     .tdId{
-        width: 130px;
+        width: 70px;
     }
     .tdNa{
         width: 100px;
     }
     .tdPh{
-        width: 150px;
+        width: 100px;
     }
     .tdGn{
-        width: 40px;
+        width: 100px;
     }
     .tdBi{
         width: 150px;
@@ -162,7 +162,13 @@
     .tdBt{
          width: 70px;
     }
-    
+    .tdCon{
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
 
     
     
@@ -184,12 +190,15 @@
         display: inline-block;
         vertical-align: middle;
     }
+    
     .memberInfoTable div span{
         display: inline-block;
         vertical-align: middle;
         text-align: center;
     }
-    
+    .countText{
+        display: none;
+    }
     .memberInfoTableTitle{
         width: 990px;
         margin: auto;
@@ -233,9 +242,7 @@
    input::-moz-placeholder { color: #3B3E42;  } 
    input::-moz-placeholder { color: #3B3E42;  } 
     
-    .countText{
-        display: none;
-    }
+  
     
     
     
@@ -288,9 +295,9 @@
             top : 31px;
             left: 20px;
         }
-        .tdId{
-            top : 104px;
-            left: 20px;
+        .tdCon{
+            top : 40px;
+            left: 90px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -312,25 +319,31 @@
             top: 60px;
             left: 90px;
         }
-        
-        .countText{
-            display: inline;
-        }
         .tdGn{
-            width: auto;
-            top: 40px;
-            left: 190px;
+            top: 100px;
+            left: 20px;
         }
         .tdBi{
             top: 60px;
             left: 190px;
         }
+        .tdId{
+            top: 20px;
+            left: 210px;
+        }
         .menuMedia{
             display: none;
         }
+        .countText{
+            position: absolute;
+            display: block;
+            left: 90px;
+            top: 20px;
+        }
+        
     }
     
-    
+
     
 </style>    
 
@@ -366,7 +379,7 @@
         var notfind = '0';
         $.ajax ({
             type : 'post',
-            url : '../adminGetGroupList.do',
+            url : '../adminGetCalenarList.do',
             dataType : "json",
             data: {page : page , val : notfind } ,
             success : function(data) {
@@ -381,24 +394,28 @@
                     }
                     
                     userInfos += '<span class="tdNum">'+num+'</span>';
-                    userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].group_img+'"/> </span>';
-                    userInfos += '<span class="tdId">'+ data[i].group_name +'</span>';
-                    userInfos += '<span class="tdNa">'+ data[i].group_master_name +'</span>';
-                    userInfos += '<span class="tdPh">'+ data[i].group_master +'</span>';
-                    userInfos += '<span class="tdGn">'+ data[i].group_count +'<p class="countText"> 명 참여중</p></span>';
-                    userInfos += '<span class="tdBi">'; 
-                    var bir = data[i].create_date;
-                    userInfos += bir.substr(0,2)+'년 ';
-                    userInfos += bir.substr(2,2)+'월 ';    
-                    userInfos += bir.substr(4,2)+'일';    
+                    userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].STATE_ICON+'"/> </span>';
+                    userInfos += '<span class="tdCon">'+data[i].CAL_MEMO+'</span>'
+                    userInfos += '<div class="countText">게시글 방번호 :</div><span class="tdId">'+ data[i].GROUP_ID +'</span>';
+                    userInfos += '<span class="tdPh">'+ data[i].CAL_WRITER +'</span>';
+                    userInfos += '<span class="tdGn"'; 
+                    var progress = data[i].CAL_DATE.split(',').length;
+                    if(progress >1){
+                        userInfos += 'style="color:yellow;" >투표 진행중';    
+                    }else{
+                        userInfos += 'style="color:green;" >확정된 일정';    
+                    }
                     userInfos += '</span>';
-                    userInfos += '<span class="tdBt"> <input type="button" value="게시글 삭제" id="'+data[i].group_id+'" onclick="getOutMember(this);"/> </span>';
+                    userInfos += '<span class="tdBi">'; 
+                    userInfos += data[i].CAL_TIME.substring(0,10);
+                    userInfos += '</span>';
+                    userInfos += '<span class="tdBt"> <input type="button" value="글 삭제" id="'+data[i].CAL_NUM+'" onclick="getOutMember(this);"/> </span>';
                     userInfos += '<span class="tdBt2"> <input type="button" value="상세보기" disabled="true"  onclick=""/> </span>';
                     userInfos += '</li>';
                 }
                 $('#inputMemberinfo').html(userInfos);
                 
-                var page_viewList = Paging(data[0].groupCount, 10, 10 ,nowPage, "PagingView");
+                var page_viewList = Paging(data[0].COUNT, 10, 10 ,nowPage, "PagingView");
                 $("#addPageCover").empty().html(page_viewList);
 
                 
@@ -482,14 +499,14 @@
         }
     $.ajax ({
         type : 'post',
-        url : '../adminGetGroupList.do',
+        url : '../adminGetCalenarList.do',
         dataType : "json",
         data: {page : pages ,val : $('#findMember').val()} ,
         success : function(data) {
             console.log(data);
             var userInfos = "";
                 for(var i=0; i< data.length;i++){
-                    var num = (pages*10+i+1)-10;
+                    var num = pages*10+i+1-10;
                     if(i%2 !=0){
                         userInfos += '<li style="background-color: #AFBACB;">';
                     }else{
@@ -497,24 +514,28 @@
                     }
                     
                     userInfos += '<span class="tdNum">'+num+'</span>';
-                    userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].group_img+'"/> </span>';
-                    userInfos += '<span class="tdId">'+ data[i].group_name +'</span>';
-                    userInfos += '<span class="tdNa">'+ data[i].group_master_name +'</span>';
-                    userInfos += '<span class="tdPh">'+ data[i].group_master +'</span>';
-                    userInfos += '<span class="tdGn">'+ data[i].group_count +'<p class="countText"> 명 참여중</p></span>';
-                    userInfos += '<span class="tdBi">'; 
-                    var bir = data[i].create_date;
-                    userInfos += bir.substr(0,2)+'년 ';
-                    userInfos += bir.substr(2,2)+'월 ';    
-                    userInfos += bir.substr(4,2)+'일';    
+                    userInfos += '<span class="tdPp"> <img class="memberImg" src="../'+data[i].STATE_ICON+'"/> </span>';
+                    userInfos += '<span class="tdCon">'+data[i].CAL_MEMO+'</span>'
+                    userInfos += '<span class="tdId">'+ data[i].GROUP_ID +'</span>';
+                    userInfos += '<span class="tdPh">'+ data[i].CAL_WRITER +'</span>';
+                    userInfos += '<span class="tdGn"'; 
+                    var progress = data[i].CAL_DATE.split(',').length;
+                    if(progress >1){
+                        userInfos += 'style="color:yellow;" >투표 진행중';    
+                    }else{
+                        userInfos += 'style="color:green;" >확정된 일정';    
+                    }
                     userInfos += '</span>';
-                    userInfos += '<span class="tdBt"> <input type="button" value="게시글 삭제" id="'+data[i].group_id+'" onclick="getOutMember(this);"/> </span>';
+                    userInfos += '<span class="tdBi">'; 
+                    userInfos += data[i].CAL_TIME.substring(0,10);
+                    userInfos += '</span>';
+                    userInfos += '<span class="tdBt"> <input type="button" value="글 삭제" id="'+data[i].CAL_NUM+'" onclick="getOutMember(this);"/> </span>';
                     userInfos += '<span class="tdBt2"> <input type="button" value="상세보기" disabled="true"  onclick=""/> </span>';
                     userInfos += '</li>';
                 }
-            $('#inputMemberinfo').html(userInfos);
+                $('#inputMemberinfo').html(userInfos);
 
-            var page_viewList2 = Paging2(data[0].groupCount, 10, 10 ,pages, "S");
+            var page_viewList2 = Paging2(data[0].COUNT, 10, 10 ,pages, "S");
             $("#addPageCover").empty().html(page_viewList2);
 
 
@@ -691,12 +712,12 @@
                     <div class="memberInfoTable memberInfoTableTitle">
                         <div id="titleCover">
                             <span style="width:80px;">No.</span>
-                            <span style="width:100px;">그룹 이름</span>
-                            <span style="width:150px;">그룹 이름</span>
-                            <span style="width:100px;">방장 이름</span>
-                            <span style="width:140px;">방장 아이디</span>
-                            <span style="width:40px;">참여인원</span>
-                            <span style="width:150px;">방 생성일</span>
+                            <span style="width:60px;">아이콘</span>
+                            <span style="width:200px;">내용</span>
+                            <span style="width:70px;">그룹 번호</span>
+                            <span style="width:90px;">작성자</span>
+                            <span style="width:100px;">확정 유무</span>
+                            <span style="width:100px;">방 생성일</span>
                         </div>
                     </div>
                     <ul class="memberInfoTable" id="inputMemberinfo">

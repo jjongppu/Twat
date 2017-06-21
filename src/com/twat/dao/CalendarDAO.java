@@ -47,29 +47,31 @@ public class CalendarDAO
 	// 각종 일정 받아오기 ===================================================================================================
 	public ArrayList<CalendarVO> getInfo(String groupId)
 	{
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
 		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
 		
 		try
 		{
 			con = getConnection();
 			String sql = "select * from CALENDAR where CAL_DEPTH=0 and GROUP_ID=?";
-			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, Integer.parseInt(groupId));
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(groupId));
 			
-			rs = psmt.executeQuery();
+			rSet = pstmt.executeQuery();
 				
-			while(rs.next())
+			while(rSet.next())
 			{
 				CalendarVO schedule = new CalendarVO();
-				schedule.setCal_num(rs.getInt(1));
-				schedule.setCal_date(rs.getString(3));
-				schedule.setGroup_id(rs.getInt(4));
-				schedule.setCal_memo(rs.getString(5));
-				schedule.setCal_writer(rs.getString(6));
-				schedule.setState_icon(rs.getString(7));
-				schedule.setMember_choice(rs.getString(8));
-				schedule.setCal_reference(rs.getInt(9));
-				schedule.setCal_depth(rs.getInt(10));
+				schedule.setCal_num(rSet.getInt(1));
+				schedule.setCal_date(rSet.getString(3));
+				schedule.setGroup_id(rSet.getInt(4));
+				schedule.setCal_memo(rSet.getString(5));
+				schedule.setCal_writer(rSet.getString(6));
+				schedule.setState_icon(rSet.getString(7));
+				schedule.setMember_choice(rSet.getString(8));
+				schedule.setCal_reference(rSet.getInt(9));
+				schedule.setCal_depth(rSet.getInt(10));
 				
 				arrList.add(schedule);
 			}
@@ -82,8 +84,8 @@ public class CalendarDAO
 		{
 			try
 			{
-				if(rs != null)rs.close();
-				if(psmt != null)psmt.close();
+				if(rSet != null)rSet.close();
+				if(pstmt != null)pstmt.close();
 				if(con != null)con.close();
 			}
 			catch (SQLException e)
@@ -98,31 +100,35 @@ public class CalendarDAO
 	// 각종일정 받아오기(그룹 아이디, 일정 아이디)
 	public ArrayList<CalendarVO> getInfo(String groupId, String calId)
 	{
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
 		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
 		
 		try
 		{
 			con = getConnection();
 			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? ORDER BY CAL_NUM";
-			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, Integer.parseInt(groupId));
-			psmt.setInt(2, Integer.parseInt(calId));
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(groupId));
+			pstmt.setInt(2, Integer.parseInt(calId));
+
 			
-			rs = psmt.executeQuery();
+			rSet = pstmt.executeQuery();
 				
-			while(rs.next())
+			while(rSet.next())
 			{
 				CalendarVO schedule = new CalendarVO();
 				
-				schedule.setCal_num(rs.getInt(1));
-				schedule.setCal_date(rs.getString(3));
-				schedule.setGroup_id(rs.getInt(4));
-				schedule.setCal_memo(rs.getString(5));
-				schedule.setCal_writer(rs.getString(6));
-				schedule.setState_icon(rs.getString(7));
-				schedule.setMember_choice(rs.getString(8));
-				schedule.setCal_reference(rs.getInt(9));
-				schedule.setCal_depth(rs.getInt(10));
+				schedule.setCal_num(rSet.getInt(1));
+				schedule.setCal_date(rSet.getString(3));
+				schedule.setGroup_id(rSet.getInt(4));
+				schedule.setCal_memo(rSet.getString(5));
+				schedule.setCal_writer(rSet.getString(6));
+				schedule.setState_icon(rSet.getString(7));
+				schedule.setMember_choice(rSet.getString(8));
+				schedule.setCal_reference(rSet.getInt(9));
+				schedule.setCal_depth(rSet.getInt(10));
 				
 				System.out.println(schedule.toString());
 				
@@ -137,8 +143,8 @@ public class CalendarDAO
 		{
 			try
 			{
-				if(rs != null)rs.close();
-				if(psmt != null)psmt.close();
+				if(rSet != null)rSet.close();
+				if(pstmt != null)pstmt.close();
 				if(con != null)con.close();
 			}
 			catch (SQLException e)
