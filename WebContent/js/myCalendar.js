@@ -23,20 +23,11 @@
 //  요일에 따른 숫자,   0 = 일요일 ~ 6 = 토요일 로 대응됩니다., 오류가 발생할 경우 -1이 Return됩니다.
 //
 //
-//
-
-
-
-        // 일정 잡기 저장용
-        var scheSet = new Set();
-        // 생일자 저장용
-        var birthSet = new Set();
-        // 일정(확정) 저장용
-        var scheduleSet = new Set();
-        // 일정(미확정) 저장용
-        var voteSet = new Set();
-        // 전체 일정 저장용
-        var groupScheduleSet = new Set();
+        var scheSet = new Set();  // 일정 잡기 저장용
+        var birthSet = new Set(); // 생일자 저장용
+        var scheduleSet = new Set(); // 일정(확정) 저장용
+        var voteSet = new Set(); // 일정(미확정) 저장용
+        var groupScheduleSet = new Set(); // 전체 일정 저장용
         var initDay = new Date();
         var cal_date = "";
         /*음력 알고리즘..시작*/
@@ -616,35 +607,13 @@
             var nYear;
             var aHoliday = new Array();
             if (gfnIsEmpty(nYear)) return aHoliday;
-            /////// 음력 체크
-            // 구정
-            //         aHoliday[0] = gfnLunar2Solar( "0" + (nYear-1) + "1230" ) + "설날";
-            ////        console.log(aHoliday[0].substr(0,4));
-            ////        console.log(aHoliday[0].substr(4, 2));
-            ////        console.log(aHoliday[0].substr(6, 2));
-            ////         aHoliday[1] = gfnAddDate(aHoliday[0], 1) + "설날";
-            //         aHoliday[1] = gfnLunar2Solar( "0" + (nYear-1) + "1232" ) + "설날";
-            ////         aHoliday[2] = gfnAddDate(aHoliday[1], 1) + "설날";
-            //         aHoliday[2] = gfnLunar2Solar( "0" + (nYear-1) + "1231" ) + "설날";
-            // 석가탄신일
             aHoliday[0] = gfnLunar2Solar("0" + nYear + "0408") + "석가탄신일";
-            // 추석
-            //         aHoliday[4] = gfnLunar2Solar( "0" + nYear + "0814" ) + "추석";
-            ////         aHoliday[5] = gfnAddDate(aHoliday[4], 1) + "추석";
-            //         aHoliday[5] = gfnLunar2Solar( "0" + nYear + "0816" ) + "추석";
-            ////         aHoliday[6] = gfnAddDate(aHoliday[5], 1) + "추석"; 
-            //         aHoliday[6] = gfnLunar2Solar( "0" + nYear + "0815" ) + "추석";
-            //         /////// 양력 체크
             aHoliday[1] = nYear + "0101" + "신정";
             aHoliday[2] = nYear + "0301" + "삼일절";
             aHoliday[3] = nYear + "0505" + "어린이날";
             aHoliday[4] = nYear + "0606" + "현충일";
             aHoliday[5] = nYear + "0815" + "광복절";
             aHoliday[6] = nYear + "1225" + "성탄절";
-            //        var nYear  = parseInt(date.substr(0, 4));
-            //            var nMonth = parseInt(date.substr(4, 2));
-            //            var nDate  = parseInt(date.substr(6, 2)) + nOffSet;
-            //            return gfnDatetime(nYear, nMonth, nDate);
             return aHoliday.sort();
         }
         /******************************************************************************
@@ -922,21 +891,12 @@
             /*
                 드레그앤 드롭
             */
-            /////////////////////////////    
-            // console.log("getGroupInfo");
             getGroupInfo();
-            // console.log("getGroupBirth");
             getGroupBrith();
-            // console.log("cal");
-            //            $('.saturday').css('color','blue');
             $('#yearSelect').change(function () {
                 initToday();
-                //                console.log(parseInt($("#yearSelect").val()));            
                 today = new Date(parseInt($("#yearSelect").val()), today.getMonth(), today.getDate());
-                //                console.log(today);   
-                //                initToday();
                 buildCalendar();
-                //                console.log($(this).val());
                 if ($(this).val() == "2030" && $("#monthSelect").val() == "12") {
                     $("#nextButton").css("display", "none");
                 }
@@ -949,11 +909,8 @@
                 }
             }); //연도 선택
             $('#monthSelect').change(function () {
-                initToday();
-                //                console.log(parseInt($("#monthSelect").val()));            
+                initToday();          
                 today = new Date(parseInt($("#yearSelect").val()), parseInt($("#monthSelect").val()) - 1, today.getDate());
-                //                console.log(today); 
-                //                initToday();
                 buildCalendar();
                 if ($("#yearSelect").val() == "2030" && $(this).val() == "12") {
                     $("#nextButton").css("display", "none");
@@ -968,7 +925,6 @@
             }); // 달 선택
             $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
             $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
-            //            initToday(); //  주석1
         });
 
         function update() {
@@ -987,7 +943,6 @@
                     initToday();
                 }
                 , error: function (req) {
-                    //                    alert('통신실패');
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
@@ -1015,8 +970,6 @@
         }
 
         function initToday() {
-            //            console.log(dateToFormat(initDay));
-            //			console.log("!");
             $('tr').children().each(function (i) {
                 if ($(this).text() == initDay.getDate() && $('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1) {
                     $(this).css("background-color", "yellow");
@@ -1025,7 +978,6 @@
                     if (item == dateToFormat(initDay)) {
                         if ($('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1) {
                             $('#date' + initDay.getDate()).css("backgroundColor", "green");
-                            //                            console.log(initDay.getDate());
                         }
                     }
                 }
@@ -1092,11 +1044,9 @@
                 else {
                     if ($(a).css("backgroundColor") == "rgb(98, 188, 250)") {
                         $(a).css("backgroundColor", "white");
-                        //                    scheArr[parseInt(dayInfo)] = false;
                         scheSet.delete(yearInfo + monthInfo + dayInfo);
                         for (let item of voteSet.keys()) {
                             if (item.split("-")[0] == (yearInfo + monthInfo + dayInfo)) {
-                                //                            console.log(yearInfo + monthInfo + dayInfo);
                                 $(a).css("backgroundColor", "#ff8080");
                             }
                         }
@@ -1116,7 +1066,6 @@
                     }
                     else {
                         $(a).css("backgroundColor", "#62bcfa");
-                        //                    scheArr[parseInt(dayInfo)] = dayInfo;
                         scheSet.add(yearInfo + monthInfo + dayInfo);
                         console.log(selectDate);
                     }
@@ -1124,11 +1073,8 @@
             }
         }
 
-
-
         //  날짜 선택하고 스케줄 추가 함수
         function addSchedule() {
-//            console.log(scheSet.size);
             if(scheSet.size == 0){
                 alert("일정이 선택 되지 않았습니다.");
                 return;
@@ -1139,9 +1085,7 @@
             $("#answerBox").css("display", "none");
             
             var a = "";
-            //            console.log(scheSet);
             for (let item of scheSet.keys()) console.log(item);
-//            scheSet = new Set();
         }
         
 
@@ -1156,15 +1100,6 @@
             var holiday = gfnGetHolidays(today.getFullYear());
             var t = 0;
             var countHoliday = 0;
-            //            var testTime = new Date(2017,04,01).getTime() - new Date(2017,03,31).getTime();
-            //            
-            //            console.log(new Date(2017,3,1).getTime());
-            //            console.log(new Date(2017,2,31).getTime());
-            ////            
-            //            for(var k = 0; k<holiday.length; k++){
-            //                console.log(holiday[k]);
-            //                
-            //            }
             while (tblCalendar.rows.length > 2) {
                 tblCalendar.deleteRow(tblCalendar.rows.length - 1);
             }
@@ -1176,7 +1111,6 @@
                 cell = row.insertCell();
                 cnt = cnt + 1;
             }
-            
             // =====================    달력 출력하는 코드!    ==============
             for (calDay = 1; calDay <= lastDate.getDate(); calDay++) { // 1일부터 마지막 일까지
                 cell = row.insertCell();
@@ -1206,15 +1140,12 @@
                         $('#date' + calDay).css("backgroundColor", "#62bcfa");   // 선택했을때 초록색으로 바꿔주는 부분!
                     }
                 } //선택한 날짜 초록색으로 표기
-                
                 var saveSolar = gfnSolar2Lunar(dateParam);
                 dateColor.setFullYear(today.getFullYear());
                 dateColor.setMonth(today.getMonth());
                 dateColor.setDate(calDay);
-                
                 if (dateColor.getDay() == 6) {
                     cell.innerHTML += "<div class='saturday' style='color:blue;'>" + calDay + "</div>";
-                    //                    $('.saturday').css('color','blue');
                 }
                 else if (dateColor.getDay() == 0) {
                     cell.innerHTML += "<div class='sunday'>" + calDay + "</div>";
@@ -1224,12 +1155,10 @@
                     cell.innerHTML += "<div>" + calDay + "</div>";
                 }
                 if (calDay % 9 == 0) cell.innerHTML += "<div style='font-size:1px;'>" + saveSolar.substr(5, 2) + "." + saveSolar.substr(7, 2) + "</div>";
-                
                 // 확정된 일정표시
                 for (let item of scheduleSet.keys()) {
                     if (item.split("-")[0] == dateParam) {
                         cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        //                        $('.votedSchedule').prevAll().css("background-color", "#ff8080");
                         console.log("#date" + parseInt(dateParam.substr(6)));
                         $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
                     }
@@ -1279,18 +1208,10 @@
 //  ================================ 달력 출력 끝! ================================
 
 
-
-
         // 일정들 전부 출력
         function getGroupInfo() {
             var para = document.location.href.split("?");
-            //            console.log("para : " + para);
-            //            console.log("para[1] : " + para[1]);
             para = para[1].split("=");
-            //            console.log("para2 : " + para);
-            //            
-            //            para = par[1];
-            //            console.log("click");
             $.ajax({
                 type: 'post'
                 , url: 'groupCal.do'
@@ -1300,15 +1221,6 @@
                 , dataType: "json"
                 , success: function (data) {
                     console.log(data);
-                    //                    data[0].group_id;
-                    //                    data[0].group_name;
-                    //                    data[0].group_date;
-                    //                    data[0].group_master;
-                    //                    data[0].group_master_name;
-                    //                    data[0].group_img;
-                    //                    data[0].group_count;
-                    //                    $("#icon").html = "<img src='" + data[0].group_img + "'>";
-                    //                    document.getElementById("schedule").innerHTML += "<img src='" + data[0].group_img + "'>";
                     document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
                     $("#title").html = "<span>" + data[0].group_name + "</span>";
                     document.getElementById("title").innerHTML += "<span>" + data[0].group_name + "</span>";
@@ -1317,26 +1229,9 @@
                     $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
                     document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
-                        //                        console.log(data[arrCal].cal_num);
-                        //                        console.log(data[arrCal].cal_date);
-                        //                        console.log(data[arrCal].cal_group);
-                        //                        console.log(data[arrCal].cal_memo);
-                        //                        console.log(data[arrCal].cal_writer);
-                        //                        console.log(data[arrCal].state_icon);
-                        //                        console.log(data[arrCal].member_choice);
                         var str = "";
                         var str2 = data[arrCal].cal_date;
-                        //                        str += "<div class='title'>";
-                        //                        if(str2.indexOf(',') == -1)
-                        //                        {
-                        //                            str += "<div id='secheduleName'>단체 일정</div>";
-                        //                        }
-                        //                        else
-                        //                        {
-                        //                            str += "";
-                        //                        }
                         str += '<div class="content">';
-                        //                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
                         str += '<div class="left">';
                         if (str2.indexOf(',') == -1) {
                             str += data[arrCal].cal_date;
@@ -1356,29 +1251,23 @@
                         str += '</div></div><div class="right"><div class="up"></div><div class="down"></div></div></div>';
                         if (str2.indexOf(',') == -1) {
                             $(".schedule").append(str);
-                            //                            document.getElementById("schedule").innerHTML += str;
                         }
                         else {
                             $(".vote").append(str);
-                            //                            document.getElementById("vote").innerHTML += str;
                         }
-                        //                        console.log(str);
                     }
-                    //                    console.log(data[1].member_choice);
                     var mem_choice = data[1].member_choice.split(",");
                     console.log(mem_choice);
                     buildCalendar();
-                    //                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
                     cal_date = data[1].cal_date.split(",");
                     voteMeeting(cal_date);
                 }
                 , error: function (req) {
-                    //                    alert('통신실패');
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             })
         }
-        // 모달 작업 부분
+//================== 모달 작업 부분    =====================================
         function getGroupBrith() {
             var para = document.location.href.split("?");
             para = para[1].split("=");
@@ -1426,14 +1315,11 @@
         }
         
         function selectYes(){
-//            console.log("!");
-//            console.log(scheSet.toString());
             var groupId = location.href.split("=")[1];
             console.log(groupId);
             var calDate = "";
             var groupId = location.href.split("=")[1];
             console.log(groupId);
-            
             for (let item of scheSet.keys())
                 calDate += item + ",";
             
@@ -1471,9 +1357,24 @@
             var heights = $('#contentsHeight').css('height');
             if($("#calTitle").val() != ""){
                 $('.modal').animate({
-                    
                     height : heights ,
-
                 }, 300);
             }
         }
+      //=============   모달 사라짐 ==============
+        function closeModal(){
+        	console.log("!");
+            $('#blindCover').css('display','none');
+            $('.modal').css('display','none');
+            $('.modal input').val("");
+        }
+
+        //모달 뜰떄 뒤에 까만화면 크기를....
+        $(document).ready(function(){
+            $('#blindCover').css("height",$(document).height());
+            $('#blindCover').css("width",$(document).width());
+            $(window).resize(function(){
+                $('#blindCover').css("height",$(document).height());
+                $('#blindCover').css("width",$(document).width());
+            });
+        });
