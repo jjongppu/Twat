@@ -193,33 +193,33 @@
     </style>
     <script>
         /////친구 목록 가져오기.
-//        $.ajax({
-//           type:"post",
-//            url:"friends.do",
-//            data:$('#personal').serialize(),
-//            dataType:"json",
-//            success:function(data){
-//                var result = data[0].result;
-//                var out = '';
-//                console.log(data);
-//                
-//                
-//                for(var i=0; i < data.length; i++){
-//                    
-//                    out += '<div id="userIn" onclick="detailUser();">';
-//                    out += '<div id="userImg"></div>';
-//                    out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
-//                    out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
-//                    out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
-//                    out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
-//                    out += '</div></div>';
-//                    out += '</div></div>';
-//                }
-//                document.getElementById('personal').innerHTML = out;
-//            }
-//            
-//            
-//        });
+        $.ajax({
+           type:"post",
+            url:"friends.do",
+            data:$('#personal').serialize(),
+            dataType:"json",
+            success:function(data){
+                var result = data[0].result;
+                var out = '';
+                console.log(data);
+                
+                
+                for(var i=0; i < data.length; i++){
+                    
+                    out += '<div id="userIn" onclick="detailUser();">';
+                    out += '<div id="userImg"></div>';
+                    out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
+                    out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
+                    out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
+                    out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
+                    out += '</div></div>';
+                    out += '</div></div>';
+                }
+                document.getElementById('personal').innerHTML = out;
+            }
+            
+            
+        });
 //           /////친구 추가하기.
 //        function addfriend(){
 //            $('#realFriend').css('display','inline-block');
@@ -251,7 +251,19 @@
 //                    
 //                });
 //            }
-       
+       function addfriend(){
+           $.ajax({
+                type: "post", 
+                url: "addFriendservlet.do",
+                data:$('#realFriend').serialize(),
+                dataType:"json",
+                success: function (data){
+                    console.log(data);
+                    
+                    
+                }
+           
+       })
     </script>
     <style>
 
@@ -311,6 +323,7 @@
         
     </div>
 <!--    모달창 만들어-->
+<!--
     <form id="realFriend" name="findPhoneNumber">
         <div id="modalAddFriend">
             <div id="findFriend">친구의 핸드폰번호를 입력하세요</div>
@@ -333,5 +346,6 @@
     
     </form>
         
+-->
 </body>
 </html>
