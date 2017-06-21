@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberVO;
+import com.twat.dto.QnaVO;
 
 	
 
@@ -289,7 +290,7 @@ public class AdminDAO {
 				
 				psmt = con.prepareStatement(selectAllgroupSql);
 				if(!val.equals("0")){
-					psmt.setString(1,val+"%");
+					psmt.setString(1,"%"+val+"%");
 				}
 				rs = psmt.executeQuery();
 					
@@ -323,5 +324,80 @@ public class AdminDAO {
 			return calArry;
 			
 		}
+		
+		
+		
+		
+		
+		// 문의글 싸그리 다뽑아옴 ㅋㅋ val이 0이면 select* 검색값이 있으면 방이름으로 라이크검색
+		public ArrayList<QnaVO> getQnaList(int page, String val){
+			PreparedStatement psmt= null;
+			ResultSet rs= null;
+			ArrayList<QnaVO> qnaArry = new ArrayList<QnaVO>();	
+			
+			
+			// 그릅수 얻어옴
+			String selectGroupCount = "SELECT COUNT(*) FROM QNA";
+			if(!val.equals("0")){
+				selectGroupCount+= " WHERE 	QNA_CONTENTS LIKE ?";
+			}
+			
+			//실질적인 내용
+			String selectAllgroupSql = "SELECT * FROM QNA";
+			if(!val.equals("0")){
+				selectAllgroupSql+= " WHERE QNA_CONTENTS LIKE ?";
+			}
+			selectAllgroupSql +=  " LIMIT "+ (page*10-10) +",10";
+			
+			try{
+				con = getConnection();
+				
+				psmt = con.prepareStatement(selectGroupCount);
+				if(!val.equals("0")){
+					psmt.setString(1, "%"+val+"%");
+				}
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					int count = rs.getInt("COUNT(*)");
+					QnaVO qv = new QnaVO();
+					qv.setQNA_ID(count);
+					qnaArry.add(qv);
+				}
+				
+				psmt = con.prepareStatement(selectAllgroupSql);
+				if(!val.equals("0")){
+					psmt.setString(1,"%"+val+"%");
+				}
+				rs = psmt.executeQuery();
+					
+				while(rs.next()){
+					QnaVO qv = new QnaVO();
+					qv.setQNA_ID(rs.getInt("QNA_ID"));
+					qv.setMEMBER_ID(rs.getTimestamp("MEMBER_ID"));
+					qv.setqnaC(rs.getString("QNA_CATEGORY"));
+					qv.setGroup_id(rs.getInt("QNA_PW"));
+					qv.setCal_memo(rs.getString("QNA_TITLE"));
+					qv.setCal_writer(rs.getString("QNA_CONTENTS"));
+					qv.setState_icon(rs.getString("QNA_DATE"));
+					qv.setMember_choice(rs.getString("QNA_REPLY"));
+					qnaArry.add(qv);
+				}
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs != null)rs.close();
+					if(psmt != null)psmt.close();
+					if(con != null)con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return qnaArry;
+			
+		}
+		
 		
 }
