@@ -25,6 +25,8 @@
         var groupScheduleSet = new Set();
         var initDay = new Date();
         var cal_date = "";
+        var group_master = "";
+        var login_userId = "";
         /*음력 알고리즘..시작*/
         function gfnRight(strString, nSize) {
             var nStart = String(strString).length;
@@ -916,6 +918,7 @@
                 , data: {                    
                     groupId : groupId
 
+
                 }
                 , dataType: "json"
                 , success: function (data) {
@@ -930,6 +933,8 @@
                         if(item.groupMaster == "no"){
                             $("#addschedule").css("display","none");
                         }
+                        
+                        login_userId = item.userId;
                         
                     });
                     
@@ -1154,7 +1159,7 @@
                         }
                         initToday();
                     }
-                    else {
+                    else if(group_master == login_userId){
                         $(a).css("backgroundColor", "green");
                         //                    scheArr[parseInt(dayInfo)] = dayInfo;
                         scheSet.add(yearInfo + monthInfo + dayInfo);
@@ -1202,6 +1207,8 @@
             var holiday = gfnGetHolidays(today.getFullYear());
             var t = 0;
             var countHoliday = 0;
+//            console.log(group_master);
+//            console.log(login_userId);
             //            var testTime = new Date(2017,04,01).getTime() - new Date(2017,03,31).getTime();
             //            
             //            console.log(new Date(2017,3,1).getTime());
@@ -1227,7 +1234,10 @@
                 cell = row.insertCell();
                 $(cell).attr("id", "date" + calDay);
                 $(cell).attr("onclick", "getDayInfo(this)");
-                $(cell).attr("style", "cursor:pointer");
+                if(login_userId == group_master)
+                    $(cell).attr("style", "cursor:pointer");
+                
+                
                 initToday();
                 if ((today.getMonth() + 1) / 10 < 1) {
                     if (calDay / 10 < 1) {
@@ -1367,7 +1377,7 @@
                     //                    data[0].group_id;
                     //                    data[0].group_name;
                     //                    data[0].group_date;
-                    //                    data[0].group_master;
+                    group_master = data[0].group_master;
                     //                    data[0].group_master_name;
                     //                    data[0].group_img;
                     //                    data[0].group_count;

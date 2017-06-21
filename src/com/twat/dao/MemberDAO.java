@@ -675,7 +675,7 @@ public class MemberDAO {
 			   
 		   }
 		  		   
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////이미지 변경은 시험보고 나서 하기.//////////////////////////////////////
 		public int changeImg(String MEMBER_ID, String MEMBER_IMG){
 			String changepwd = "update MEMBER set MEMBER_IMG = ? where MEMBER_ID = ?";
 			int result = 0;
@@ -703,6 +703,76 @@ public class MemberDAO {
 				return result;
 			
 		}
-	
-	
-}
+///////////////////친구목록에서 친구 추가하기/////////////////////////////////////////
+		public void addFriends(String userPhone){
+			//친구 전화번호를 가지고 친구를 가져온다.
+			String addFriend = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG from MEMBER where MEMBER_PHONE = ?";
+			
+			try {
+				con =getConnection();
+				psmt = con.prepareStatement(addFriend);
+				psmt.setString(1, "63046041");
+				rs = psmt.executeQuery();
+				
+				while(rs.next()){
+
+					System.out.println(rs.getString(1));
+					System.out.println(rs.getString(2));
+					System.out.println(rs.getString(3));
+					System.out.println(rs.getString(4));
+					System.out.println(rs.getString(5));
+			
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs != null)rs.close();
+	                if(psmt != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	             }
+	       }
+			
+			
+		}	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
