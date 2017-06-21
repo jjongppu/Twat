@@ -196,17 +196,22 @@ public class CalendarDAO
 		try {
 			con = getConnection();			
 			sql = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+			String[] dateStr = cal_date.split(",");
+			String writer_id = "";
+			for(int i = 0; i < dateStr.length; i++){
+				writer_id += dateStr[i] + cal_writer + ",";
+			}
+			
 			
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, cal_num);			
 			psmt.setString(2, cal_date);
 			psmt.setInt(3, group_id);
 			psmt.setString(4, cal_memo);
-			psmt.setString(5, cal_writer);
+			psmt.setString(5, cal_writer);	
 //			psmt.setString(5, "111");
 			psmt.setString(6, "");
-			psmt.setString(7, "");
+			psmt.setString(7, writer_id.substring(0, writer_id.length()-1));
 			psmt.setInt(8, cal_num);
 			psmt.setInt(9, 0);
 			
