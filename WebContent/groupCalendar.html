@@ -1447,7 +1447,9 @@
                         str += '</div>';
                         str += '</div>'; // div-right
                         str += '</div>'; // div=middle
-                        if (str2.indexOf(',') == -1) {
+//                        if (str2.indexOf(',') == -1)
+                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+                        {
                             $(".schedule").append(str);
                             //                            document.getElementById("schedule").innerHTML += str;
                         }
@@ -1680,7 +1682,7 @@
             }
             else
             {
-//                console.log(member_choice);
+                console.log(member_choice);
 //                var memSplit = member_choice.split(",");
                 var memSplit = new Array(member_choice.split(","));
                 var dateSplit;
@@ -1866,7 +1868,10 @@
         <nav class="left_nav">
             <div id="userInfo">
                 <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-                    <li class="nav_li"> <img id="user_Img" src="/img/member/basis_photo.png" /> </li>
+                    <li class="nav_li">
+<!--                        <img id="user_Img" src="/img/member/basis_photo.png" />-->
+                        <img id="user_Img"/>
+                    </li>
                     <li class="nav_li">
                         <div id="user_Id"></div>
                     </li>
