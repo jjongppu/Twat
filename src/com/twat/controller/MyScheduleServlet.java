@@ -8,13 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.twat.dao.MyCalendarDAO;
 
-@WebServlet("/MyScheduleServlet")
+@WebServlet("/mySchedule.do")
 public class MyScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,12 +32,33 @@ public class MyScheduleServlet extends HttpServlet {
 		response.setContentType("application/json;");
 		response.setHeader("Cache-Control", "no-cache");
 		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
 		
 		JSONArray jsonArr = new JSONArray();
 		JSONObject jsonObj = new JSONObject();
 		PrintWriter out = response.getWriter();
 		
 		MyCalendarDAO mycalendarDAO = MyCalendarDAO.getInstance();
+		
+		String member_id = (String) session.getAttribute("loginUserId");
+//		String member_id = request.getParameter("calDate");
+		String my_cal_contents = request.getParameter("title");
+		String my_cal_date = request.getParameter("calDate");
+		
+		
+		System.out.println(member_id);
+		System.out.println(my_cal_contents);
+		System.out.println(my_cal_date);
+		
+		mycalendarDAO.addMySchedule(member_id, my_cal_contents, my_cal_date);
+		
+				
+		
+//		jsonObj.put("result", "succesCalAdd");
+//		jsonArr.add(jsonObj);		
+
+		System.out.println(jsonArr);		
+		out.print(jsonArr);
 		
 	}
 

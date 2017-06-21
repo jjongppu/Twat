@@ -1056,7 +1056,7 @@
             //			console.log("!");
             $('tr').children().each(function (i) {
                 if ($(this).text() == initDay.getDate() && $('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1) {
-                    $(this).css("background-color", "yellow");
+                    $(this).children().eq(0).css("border", "2px solid red").css("border-radius","22px");
                 }
                 for (let item of scheSet.keys()) {
                     if (item == dateToFormat(initDay)) {
@@ -1107,10 +1107,14 @@
         //        
         //        var scheSet = new Set();
         function getDayInfo(a) { // 선택한 날짜 정보를 얻기 위한 함수
+            console.log(login_userId);
+            console.log(group_master);
+            
             if (a != null) {
                 var yearInfo = $("#yearSelect").val() + "";
                 var monthInfo = $("#monthSelect").val() + "";
-                var dayInfo = $(a).attr("id").substr(4, $(a).attr("id").length - 4) + "";
+//                console.log($(a).children().eq(0).attr("id"));
+                var dayInfo = $(a).children().eq(0).attr("id").substr(4, $(a).children().eq(0).attr("id").length - 4) + "";
                 if (monthInfo.length == 1) {
                     monthInfo = "0" + monthInfo;
                 }
@@ -1143,18 +1147,18 @@
                         for (let item of voteSet.keys()) {
                             if (item.split("-")[0] == (yearInfo + monthInfo + dayInfo)) {
                                 //                            console.log(yearInfo + monthInfo + dayInfo);
-                                $(a).css("backgroundColor", "#ff8080");
+//                                $(a).css("backgroundColor", "#ff8080");
                             }
                         }
                         for (let item of voteSet.keys()) {
                             if (item.split("-")[0] == (yearInfo + monthInfo + dayInfo)) {
-                                $(a).css("backgroundColor", "#00ff80");
+//                                $(a).css("backgroundColor", "#00ff80");
                             }
                         }
                         // 생일표시
                         for (let item of birthSet.keys()) {
                             if (item.split("-")[0].substr(2, 4) == (monthInfo + dayInfo)) {
-                                $(a).css("backgroundColor", "#0080ff");
+//                                $(a).css("backgroundColor", "#0080ff");
                                 console.log(monthInfo + dayInfo);
                             }
                         }
@@ -1233,7 +1237,7 @@
             // 달력 출력
             for (calDay = 1; calDay <= lastDate.getDate(); calDay++) { // 1일부터 마지막 일까지
                 cell = row.insertCell();
-                $(cell).attr("id", "date" + calDay);
+//                $(cell).children().eq(0).attr("id", "date" + calDay);
                 $(cell).attr("onclick", "getDayInfo(this)");
                 if(login_userId == group_master)
                     $(cell).attr("style", "cursor:pointer");
@@ -1276,7 +1280,10 @@
                 else {
                     cell.innerHTML += "<div>" + calDay + "</div>";
                 }
-                if (calDay % 9 == 0) cell.innerHTML += "<div style='font-size:1px;'>" + saveSolar.substr(5, 2) + "." + saveSolar.substr(7, 2) + "</div>";
+                
+                $(cell).children().eq(0).attr("id", "date" + calDay);
+//                $(cell).children().eq(0).attr("onclick", "getDayInfo(this)");
+                if (calDay % 9 == 0) cell.innerHTML += "<div class='lunar'>" + saveSolar.substr(5, 2) + "." + saveSolar.substr(7, 2) + "</div>";
                 //                if(countHoliday > 0)
                 //                {
                 //                    cell.innerHTML += "<div class='holi'></div>";
@@ -1937,10 +1944,18 @@
                 }
                 , error: function (req) {
                     
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
-//                        
+            
+//            for (let item of scheSet.keys()){
+//                
+//                
+//                
+//            }
+                
+            
+            
             location.reload();
             
         }
@@ -2226,36 +2241,7 @@
     
     </footer>
                     
-                    <script>
-                        // 모달창 인스턴트 생성
-                        var myModal = new Example.Modal({
-                            
-                            id: "modal" // 모달창 아이디 지정
-                        });
-
-                        // 모달 창 여는 버튼에 이벤트 걸기
-//                        $("#commentButton").click(function() {
-//                            console.log("mymodal");
-//                            myModal.show(); // 모달창 보여주기
-//                        });
-                        
-                        function showModal(){
-                            
-                            console.log("mymodal");
-                            myModal.show(); // 모달창 보여주기
-                            
-                            
-                        }
-
-                        // 모달 창 안에 있는 확인 버튼에 이벤트 걸기
-                        $("#confirm_button").click(function() {
-                            alert("나는 모달창이다.");
-                            myModal.hide(); // 모달창 감추기
-                        });
-                    
-                    
-                    </script>
-                    
+  
                     
                     <script>
                         //모달 사라짐
@@ -2379,144 +2365,164 @@
               <!-- 모달~ 모달~                                 ------------------------------>
                     
                     <style>
-.panel {
-    background-color: #444;
-    height: 34px;
-    padding: 10px;
-}
-.panel a#login_pop, .panel a#join_pop {
-    border: 2px solid #aaa;
-    color: #fff;
-    display: block;
-    float: left;
-    margin-left: 10px;
-    padding: 5px 10px;
-    text-decoration: none;
-    text-shadow: 1px 1px #000;
+                        .panel {
+                            background-color: #444;
+                            height: 34px;
+                            padding: 10px;
+                        }
+                        .panel a#login_pop, .panel a#join_pop {
+                            border: 2px solid #aaa;
+                            color: #fff;
+                            display: block;
+                            float: left;
+                            margin-left: 10px;
+                            padding: 5px 10px;
+                            text-decoration: none;
+                            text-shadow: 1px 1px #000;
 
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-    border-radius: 10px;
-	font-family:'dotum';
-}
-a#login_pop:hover, a#join_pop:hover {
-    border-color: #eee;
-}
-.overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    bottom: 0;
-    cursor: default;
-    left: 0;
-    opacity: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    visibility: hidden;
-    z-index: 1;
+                            -webkit-border-radius: 10px;
+                            -moz-border-radius: 10px;
+                            -ms-border-radius: 10px;
+                            -o-border-radius: 10px;
+                            border-radius: 10px;
+                            font-family:'dotum';
+                        }
+                        a#login_pop:hover, a#join_pop:hover {
+                            border-color: #eee;
+                        }
+                        .overlay {
+                            background-color: rgba(0, 0, 0, 0.6);
+                            bottom: 0;
+                            cursor: default;
+                            left: 0;
+                            opacity: 0;
+                            position: fixed;
+                            right: 0;
+                            top: 0;
+                            visibility: hidden;
+                            z-index: 1;
 
-    -webkit-transition: opacity .5s;
-    -moz-transition: opacity .5s;
-    -ms-transition: opacity .5s;
-    -o-transition: opacity .5s;
-    transition: opacity .5s;
-}
-.overlay:target {
-    visibility: visible;
-    opacity: 1;
-}
-.popup {
-    background-color: #fff;
-    border: 3px solid #fff;
-    display: inline-block;
-    left: 50%;
-    opacity: 0;
-    padding: 15px;
-    position: fixed;
-    text-align: justify;
-    top: 40%;
-    visibility: hidden;
-    z-index: 10;
+                            -webkit-transition: opacity .5s;
+                            -moz-transition: opacity .5s;
+                            -ms-transition: opacity .5s;
+                            -o-transition: opacity .5s;
+                            transition: opacity .5s;
+                        }
+                        .overlay:target {
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                        .popup {
+                            background-color: #fff;
+                            border: 3px solid #fff;
+                            display: inline-block;
+                            left: 50%;
+                            opacity: 0;
+                            padding: 15px;
+                            position: fixed;
+                            text-align: justify;
+                            top: 40%;
+                            visibility: hidden;
+                            z-index: 10;
 
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+                            -webkit-transform: translate(-50%, -50%);
+                            -moz-transform: translate(-50%, -50%);
+                            -ms-transform: translate(-50%, -50%);
+                            -o-transform: translate(-50%, -50%);
+                            transform: translate(-50%, -50%);
 
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-    border-radius: 10px;
+                            -webkit-border-radius: 10px;
+                            -moz-border-radius: 10px;
+                            -ms-border-radius: 10px;
+                            -o-border-radius: 10px;
+                            border-radius: 10px;
 
-    -webkit-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
-    -moz-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
-    -ms-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
-    -o-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
-    box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
+                            -webkit-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
+                            -moz-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
+                            -ms-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
+                            -o-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
+                            box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
 
-    -webkit-transition: opacity .5s, top .5s;
-    -moz-transition: opacity .5s, top .5s;
-    -ms-transition: opacity .5s, top .5s;
-    -o-transition: opacity .5s, top .5s;
-    transition: opacity .5s, top .5s;
-}
-.overlay:target+.popup {
-    top: 50%;
-    opacity: 1;
-    visibility: visible;
-}
-.close {
-    background-color: rgba(0, 0, 0, 0.8);
-    height: 30px;
-    line-height: 30px;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    text-decoration: none;
-    top: -15px;
-    width: 30px;
+                            -webkit-transition: opacity .5s, top .5s;
+                            -moz-transition: opacity .5s, top .5s;
+                            -ms-transition: opacity .5s, top .5s;
+                            -o-transition: opacity .5s, top .5s;
+                            transition: opacity .5s, top .5s;
+                        }
+                        .overlay:target+.popup {
+                            top: 50%;
+                            opacity: 1;
+                            visibility: visible;
+                        }
+                        .close {
+                            background-color: rgba(0, 0, 0, 0.8);
+                            height: 30px;
+                            line-height: 30px;
+                            position: absolute;
+                            right: 0;
+                            text-align: center;
+                            text-decoration: none;
+                            top: -15px;
+                            width: 30px;
 
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
-    border-radius: 15px;
-}
-.close:before {
-    color: rgba(255, 255, 255, 0.9);
-    content: "X";
-    font-size: 24px;
-    text-shadow: 0 -1px rgba(0, 0, 0, 0.9);
-}
-.close:hover {
-    background-color: rgba(64, 128, 128, 0.8);
-}
-.popup p, .popup div {
-    margin-bottom: 10px;
-}
-.popup label {
-    display: inline-block;
-    text-align: left;
-    width: 120px;
-}
-.popup input[type="text"], .popup input[type="password"] {
-    border: 1px solid;
-    border-color: #999 #ccc #ccc;
-    margin: 0;
-    padding: 2px;
+                            -webkit-border-radius: 15px;
+                            -moz-border-radius: 15px;
+                            -ms-border-radius: 15px;
+                            -o-border-radius: 15px;
+                            border-radius: 15px;
+                        }
+                        .close:before {
+                            color: rgba(255, 255, 255, 0.9);
+                            content: "X";
+                            font-size: 24px;
+                            text-shadow: 0 -1px rgba(0, 0, 0, 0.9);
+                        }
+                        .close:hover {
+                            background-color: rgba(64, 128, 128, 0.8);
+                        }
+                        .popup p, .popup div {
+                            margin-bottom: 10px;
+                        }
+                        .popup label {
+                            display: inline-block;
+                            text-align: left;
+                            width: 120px;
+                        }
+                        .popup input[type="text"], .popup input[type="password"] {
+                            border: 1px solid;
+                            border-color: #999 #ccc #ccc;
+                            margin: 0;
+                            padding: 2px;
 
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
-    border-radius: 2px;
-}
-.popup input[type="text"]:hover, .popup input[type="password"]:hover {
-    border-color: #555 #888 #888;
-}
+                            -webkit-border-radius: 2px;
+                            -moz-border-radius: 2px;
+                            -ms-border-radius: 2px;
+                            -o-border-radius: 2px;
+                            border-radius: 2px;
+                        }
+                        .popup input[type="text"]:hover, .popup input[type="password"]:hover {
+                            border-color: #555 #888 #888;
+                        }
+                        
+                        td{
+                            position: relative
+                            
+                        }
+                        td > div:first-child{
+                            position: absolute;
+                            top:0;
+                            left:0;
+                            width: 22px;
+                            height: 22px;
+                            text-align: center;                        
+                        }
+                        .lunar{
+                            position:absolute;
+                            font-size : 1px;
+                            top : 22px;
+                            left : 3px;
+                            
+                        }
 </style>
     </head>
     <body>

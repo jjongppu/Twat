@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.twat.dto.QnaVO;
 
 public class QnaDAO {
 	Connection con = null;
@@ -30,6 +33,41 @@ public class QnaDAO {
 	    DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
 	         
 	    return ds.getConnection();
+	}
+	
+	
+	// qna_number 최대값 받아오는 메서드 -------------------- 최승우----------------------------
+	public int getMaxNum() {
+		int result = -1;
+		int cal_num = 0;
+		
+		String selectSql = "SELECT * FROM `qna` ORDER BY QNA_ID DESC LIMIT 1";
+		
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(selectSql);
+			
+			rs = psmt.executeQuery();
+			while(rs.next()){
+				cal_num = rs.getInt("QNA_ID");
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	        try {
+	        	if(rs != null) rs.close();
+		        if(psmt != null) psmt.close();
+		        if(con != null) con.close();
+	        } catch (SQLException e) {
+	        	// TODO Auto-generated catch block
+		        e.printStackTrace();
+	        }
+	        return cal_num + 1;
+		}    
+		
 	}
 	
 	
@@ -70,41 +108,105 @@ public class QnaDAO {
 //	        System.out.println(result);
 	        return result;
 		}    
-		
 	}
 	
 	
-	// qna_number 최대값 받아오는 메서드 -------------------- 최승우----------------------------
-	public int getMaxNum() {
+	// 건의사항 제목으로 찾기 ----------------승우----------------------------
+	public int searchQnA(String searchCategory, String searchBox) {
 		int result = -1;
-		int cal_num = 0;
-		
-		String selectSql = "SELECT * FROM `qna` ORDER BY QNA_ID DESC LIMIT 1";
-		
-		try {
-			con = getConnection();
-			psmt = con.prepareStatement(selectSql);
+		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
+		// 1 = 제목 / 제목으로 검색하기
+		if(searchCategory == "1") {
+			String selectSql = "select * from qna where QNA_TITLE = ?";
 			
-			rs = psmt.executeQuery();
-			while(rs.next()){
-				cal_num = rs.getInt("QNA_ID");
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(selectSql);
 				
-			}
+				psmt.setString(1, searchBox);
+				
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					arList.add(arg0)
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		        try {
+		        	if(rs != null) rs.close();
+			        if(psmt != null) psmt.close();
+			        if(con != null) con.close();
+		        } catch (SQLException e) {
+		        	// TODO Auto-generated catch block
+			        e.printStackTrace();
+		        }
+//		        System.out.println(result);
+		        return result;
+			}   
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-	        try {
-	        	if(rs != null) rs.close();
-		        if(psmt != null) psmt.close();
-		        if(con != null) con.close();
-	        } catch (SQLException e) {
-	        	// TODO Auto-generated catch block
-		        e.printStackTrace();
-	        }
-	        return cal_num + 1;
-		}    
-		
+		// 2 = 글 내용 / 글 내용으로 검색하기
+		} else if(searchCategory == "2") {
+			String selectSql = "select * from qna where QNA_CONTENTS = ?";
+			
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(selectSql);
+				
+				psmt.setString(1, searchBox);
+				
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		        try {
+		        	if(rs != null) rs.close();
+			        if(psmt != null) psmt.close();
+			        if(con != null) con.close();
+		        } catch (SQLException e) {
+		        	// TODO Auto-generated catch block
+			        e.printStackTrace();
+		        }
+//		        System.out.println(result);
+		        return result;
+			} 
+			
+		// 3 = 글 작성자 / 글 작성자로 검색하기
+		} else {
+			String selectSql = "select * from qna where MEMBER_ID = ?";
+			
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(selectSql);
+				
+				psmt.setString(1, searchBox);
+				
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		        try {
+		        	if(rs != null) rs.close();
+			        if(psmt != null) psmt.close();
+			        if(con != null) con.close();
+		        } catch (SQLException e) {
+		        	// TODO Auto-generated catch block
+			        e.printStackTrace();
+		        }
+//		        System.out.println(result);
+		        return result;
+			} 
+		}
 	}
 }
