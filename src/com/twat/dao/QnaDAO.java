@@ -37,23 +37,23 @@ public class QnaDAO {
 	public int insertQnA(String qnaId, String qnaCategory, int qnaPW, String qnaTitle, String qnaContents) {
 		int result = -1;
 //		int qna_number = 0;
-		
+		PreparedStatement psmt2= null;
 		
 		String insertSql = "insert into qna values(?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
 		
 		try {
 			con = getConnection();
-			psmt = con.prepareStatement(insertSql);
+			psmt2 = con.prepareStatement(insertSql);
 			
-			psmt.setInt(1, getMaxNum());
-			psmt.setString(2, qnaId);
-			psmt.setString(3, qnaCategory);
-			psmt.setInt(4, qnaPW);
-			psmt.setString(5, qnaTitle);
-			psmt.setString(6, qnaContents);
-			psmt.setString(7, null);
+			psmt2.setInt(1, getMaxNum());
+			psmt2.setString(2, qnaId);
+			psmt2.setString(3, qnaCategory);
+			psmt2.setInt(4, qnaPW);
+			psmt2.setString(5, qnaTitle);
+			psmt2.setString(6, qnaContents);
+			psmt2.setString(7, null);
 			
-			result = psmt.executeUpdate();			
+			result = psmt2.executeUpdate();		
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -79,7 +79,7 @@ public class QnaDAO {
 		int result = -1;
 		int cal_num = 0;
 		
-		String selectSql = "select * from calendar order by QNA_ID desc limit 1";
+		String selectSql = "SELECT * FROM `qna` ORDER BY QNA_ID DESC LIMIT 1";
 		
 		try {
 			con = getConnection();
