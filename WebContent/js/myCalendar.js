@@ -1082,7 +1082,7 @@
             
             $("#modal").css("display", "block");
             $("#titleAdd").css("display", "block");
-            $("#answerBox").css("display", "none");
+            $("#blindCover").css("display", "block");
             
             var a = "";
             for (let item of scheSet.keys()) console.log(item);
@@ -1356,7 +1356,7 @@
             $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
             var heights = $('#contentsHeight').css('height');
             if($("#calTitle").val() != ""){
-                $('.modal').animate({
+                $('#modal').animate({
                     height : heights ,
                 }, 300);
             }
@@ -1365,8 +1365,8 @@
         function closeModal(){
         	console.log("!");
             $('#blindCover').css('display','none');
-            $('.modal').css('display','none');
-            $('.modal input').val("");
+            $('#modal').css('display','none');
+            $('#modal input').val("");
         }
 
         //모달 뜰떄 뒤에 까만화면 크기를....

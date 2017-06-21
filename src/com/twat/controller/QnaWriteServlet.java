@@ -63,8 +63,11 @@ public class QnaWriteServlet extends HttpServlet {
 		if(result == 1) {
 			jsonOb.put("result", "success");
 		} else {
-			
+			jsonOb.put("result", "fail");
 		}
+		
+		jsonList.add(jsonOb);
+	    writer.println(jsonList.toJSONString());
 	}
 
 }
