@@ -209,28 +209,30 @@ public class CalgatherDAO {
 	
 	
 	// 諛� �엯�옣�떆 肉뚮젮以� 諛⑹젙蹂� �뼸�뼱�삤湲� ===============================================================
-	   public CalgatherVO getGroupInfo(String grouId)
+	   public CalgatherVO getGroupInfo(String groupId)
 	   {
+		   PreparedStatement pstmt = null;
+		   ResultSet rSet = null;
 	      CalgatherVO cv = new CalgatherVO();
 	      
 	      try
 	      {
 	         con = getConnection();
 	         String sql = "select * from CALGATHER where GROUP_ID=?";
-	         psmt = con.prepareStatement(sql);
-	         psmt.setInt(1, Integer.parseInt(grouId));
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, Integer.parseInt(groupId));
 	         
-	         rs = psmt.executeQuery();
+	         rSet = pstmt.executeQuery();
 	            
-	         while(rs.next()){
+	         while(rSet.next()){
 	            cv = new CalgatherVO();
-	            cv.setGroup_id(rs.getInt("GROUP_ID"));
-	            cv.setGroup_name(rs.getString("GROUP_NAME"));
-	            cv.setCreate_date(rs.getString("CREATE_DATE"));
-	            cv.setGroup_master(rs.getString("GROUP_MASTER"));
-	            cv.setGroup_master_name(rs.getString("GROUP_MASTER_NAME"));
-	            cv.setGroup_img(rs.getString("GROUP_IMG"));
-	            cv.setGroup_count(rs.getInt("GROUP_COUNT"));
+	            cv.setGroup_id(rSet.getInt("GROUP_ID"));
+	            cv.setGroup_name(rSet.getString("GROUP_NAME"));
+	            cv.setCreate_date(rSet.getString("CREATE_DATE"));
+	            cv.setGroup_master(rSet.getString("GROUP_MASTER"));
+	            cv.setGroup_master_name(rSet.getString("GROUP_MASTER_NAME"));
+	            cv.setGroup_img(rSet.getString("GROUP_IMG"));
+	            cv.setGroup_count(rSet.getInt("GROUP_COUNT"));
 	         }
 	      }
 	      catch (Exception e)
@@ -241,8 +243,8 @@ public class CalgatherDAO {
 	      {
 	         try
 	         {
-	            if(rs != null)rs.close();
-	            if(psmt != null)psmt.close();
+	            if(rSet != null)rSet.close();
+	            if(pstmt != null)pstmt.close();
 	            if(con != null)con.close();
 	         }
 	         catch (SQLException e)

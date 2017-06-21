@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -33,22 +34,18 @@ public class MyCalendarDAO {
 		return ds.getConnection();
 	}
 	
-	public void addGroupCal(int cal_num, String cal_date, int group_id, String cal_memo, String cal_writer ) {
+	public void addMySchedule(int myCalIndex, String member_id, String my_cal_contents, String my_cal_date ) {
 		String sql ="";
 		try {
 			con = getConnection();			
-			sql = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
+			sql = "insert into my_calendar VALUES(?, ?, CURRENT_TIMESTAMP, ?, ?)";
+			String[] dateStr = my_cal_date.split(",");
 			
 			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, cal_num);			
-			psmt.setString(2, cal_date);
-			psmt.setInt(3, group_id);
-			psmt.setString(4, cal_memo);
-			psmt.setString(5, cal_writer);
-			psmt.setString(6, "");
-			psmt.setString(7, "");
-			psmt.setInt(8, cal_num);
-			psmt.setInt(9, 0);
+			psmt.setInt(1, myCalIndex);			
+			psmt.setString(2, member_id);
+			psmt.setString(3, my_cal_contents);
+			psmt.setString(4, my_cal_date);
 			
 			psmt.executeUpdate();
 //			psmt.executeQuery();

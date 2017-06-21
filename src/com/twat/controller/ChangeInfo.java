@@ -48,7 +48,7 @@ public class ChangeInfo extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 	    PrintWriter out = response.getWriter();
-	    
+	     
 	    HttpSession session = request.getSession();
 	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
 	    String MEMBER_NAME = request.getParameter("userName");
