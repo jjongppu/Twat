@@ -1128,11 +1128,30 @@
                 if($(a).css("backgroundColor") == "rgb(255, 0, 0)"){
                     alert("현재 투표중인 날짜입니다!");
                     return;                    
-                }else if($(a).css("backgroundColor") == "rgb(255, 128, 128)"){
-                    alert("이미 확정된 날짜 입니다!");
-                    return;   
                 }
+//                else if($(a).css("backgroundColor") == "rgb(255, 128, 128)"){
+//                    alert("이미 확정된 날짜 입니다!");
+//                    return;   
+//                }
                 
+                for (let item of scheduleSet.keys())
+                {
+                    if(selectDate == item.split("-")[0])
+                    {
+                        alert("이미 확정된 날짜 입니다!");
+                        return; 
+                    }
+                }
+                console.log(scheduleSet);
+                for (let item of voteSet.keys())
+                {
+                    if(selectDate == item.split("-")[0])
+                    {
+                        alert("투표중인 날짜 입니다!");
+                        return; 
+                    }
+                }
+                console.log(voteSet);
                 
                
                 if (selectDate < dateToFormat(initDay)) {
