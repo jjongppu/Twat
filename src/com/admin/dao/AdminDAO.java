@@ -10,6 +10,7 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberVO;
 
@@ -244,5 +245,73 @@ public class AdminDAO {
 		}
 		
 		
+		
+		// 게시글 싸그리 다뽑아옴 ㅋㅋ val이 0이면 select* 검색값이 있으면 방이름으로 라이크검색
+		public ArrayList<CalendarVO> getCalenarList(int page, String val){
+			ArrayList<CalendarVO> calArry = new ArrayList<CalendarVO>();	
+			
+			
+			// 그릅수 얻어옴
+			String selectGroupCount = "SELECT COUNT(*) FROM CALENDAR";
+			if(!val.equals("0")){
+				selectGroupCount+= " WHERE CAL_MEMO LIKE ?";
+			}
+			
+			String selectAllgroupSql = "SELECT * FROM CALENDAR";
+			if(!val.equals("0")){
+				selectAllgroupSql+= " WHERE CAL_MEMO LIKE ?";
+			}
+			selectAllgroupSql +=  " LIMIT "+ (page*10-10) +",10";
+			
+			try{
+				con = getConnection();
+				
+				psmt = con.prepareStatement(selectGroupCount);
+				if(!val.equals("0")){
+					psmt.setString(1, "%"+val+"%");
+				}
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					int count = rs.getInt("COUNT(*)");
+					CalendarVO cv = new CalendarVO();
+					cv.setCal_num(count);
+					calArry.add(cv);
+				}
+				
+				psmt = con.prepareStatement(selectAllgroupSql);
+				if(!val.equals("0")){
+					psmt.setString(1,val+"%");
+				}
+				rs = psmt.executeQuery();
+					
+				while(rs.next()){
+					CalendarVO cv = new CalendarVO();
+					cv.setCal_num(rs.getInt("CAL_NUM"));
+					cv.setGroup_name(rs.getString("CAL_TIME"));
+					cv.setCreate_date(rs.getString("CAL_DATE"));
+					cv.setCal_group(rs.getString("GROUP_ID"));
+					cv.setCal_memo(rs.getString("CAL_MEMO"));
+					cv.setCal_writer(rs.getString("CAL_WRITER"));
+					cv.setStat_icon(rs.getString("STATE_ICON"));
+					cv.setMember_choice("MEMBER_CHOICE");
+					
+					calArry.add(cv);
+				}
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if(rs != null)rs.close();
+					if(psmt != null)psmt.close();
+					if(con != null)con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			return calArry;
+			
+		}
 		
 }

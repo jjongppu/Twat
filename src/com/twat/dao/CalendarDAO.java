@@ -63,10 +63,10 @@ public class CalendarDAO
 				CalendarVO schedule = new CalendarVO();
 				schedule.setCal_num(rs.getInt(1));
 				schedule.setCal_date(rs.getString(3));
-				schedule.setCal_group(rs.getInt(4));
+				schedule.setGroup_id(rs.getInt(4));
 				schedule.setCal_memo(rs.getString(5));
 				schedule.setCal_writer(rs.getString(6));
-				schedule.setStat_icon(rs.getString(7));
+				schedule.setState_icon(rs.getString(7));
 				schedule.setMember_choice(rs.getString(8));
 				schedule.setCal_reference(rs.getInt(9));
 				schedule.setCal_depth(rs.getInt(10));
@@ -116,10 +116,10 @@ public class CalendarDAO
 				
 				schedule.setCal_num(rs.getInt(1));
 				schedule.setCal_date(rs.getString(3));
-				schedule.setCal_group(rs.getInt(4));
+				schedule.setGroup_id(rs.getInt(4));
 				schedule.setCal_memo(rs.getString(5));
 				schedule.setCal_writer(rs.getString(6));
-				schedule.setStat_icon(rs.getString(7));
+				schedule.setState_icon(rs.getString(7));
 				schedule.setMember_choice(rs.getString(8));
 				schedule.setCal_reference(rs.getInt(9));
 				schedule.setCal_depth(rs.getInt(10));
