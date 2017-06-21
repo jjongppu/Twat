@@ -1402,7 +1402,7 @@
                     document.getElementById("title").innerHTML += "<span>" + data[0].group_name + "</span>";
                     $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
                     document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
-                    $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
+                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
                     document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
                     
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
@@ -1414,7 +1414,7 @@
                         strA += '<div class="middle-bottom">';
                         strA += '<span>' + data[arrCal].cal_writer + '님</span>';
 //                        strA += '<span>외 ' + data[0].group_count + '명 참여</span>';
-                        strA += '<span>외 ' + getMemberCount(data[arrCal].member_choice) + '명 참여</span>';
+                        strA += '<span> 외 ' + getMemberCount(data[arrCal].member_choice) + '명 참여</span>';
                         strA += '</div>'; // div-down
                         strA += '</div>'; // div-up
                         strA += '<div class="right">';
@@ -1618,6 +1618,19 @@
                         birthSet.add(memBirth);
                         //                        console.log(memBirth);
                         //                        console.log(birthSet[i]);
+                        // 생일자 작업중임
+//                        var today = new Date('YYYYMMDD');
+//                        console.log(today.getFullYear());
+                        if(data[i].memberBirth > 0)
+                        {
+                            var str = "<div class='content'><div class='left birth'>" + data[i].memberBirth + "</div>";
+                            str += "<div class='middle birth'>" + data[i].memberName + "님(" + data[i].memberId + ")의 생일</div>";
+                            str += "<div class='right birth'></div></div>"
+                            $('.event .contentBox').append(str);
+//                            console.log(today.getFullYear() + "" + (today.getMonth('MM') + 1) + "" + today.getDay());
+//                            console.log(today);
+                        }
+                        
                     }
                     console.log("birthSet");
                     for (let item of birthSet.keys()) {
