@@ -51,7 +51,7 @@ public class AddFriendservlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
-	    String userPhone = request.getParameter("fPhone");
+	    String userPhone = request.getParameter("findPhoneNumber");
 		
 		
 	    MemberDAO mdo = MemberDAO.getInstance();

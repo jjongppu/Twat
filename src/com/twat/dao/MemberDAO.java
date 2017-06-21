@@ -711,7 +711,8 @@ public class MemberDAO {
 			try {
 				con =getConnection();
 				psmt = con.prepareStatement(addFriend);
-				psmt.setString(1, "63046041");
+				psmt.setString(1, userPhone);
+				
 				rs = psmt.executeQuery();
 				
 				while(rs.next()){
