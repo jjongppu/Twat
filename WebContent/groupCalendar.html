@@ -1125,10 +1125,10 @@
                 var selectDate = yearInfo + monthInfo + dayInfo;
 
 //                console.log($(a).css("backgroundColor"));
-                if($(a).css("backgroundColor") == "rgb(255, 0, 0)"){
-                    alert("현재 투표중인 날짜입니다!");
-                    return;                    
-                }
+//                if($(a).css("backgroundColor") == "rgb(255, 0, 0)"){
+//                    alert("현재 투표중인 날짜입니다!");
+//                    return;                    
+//                }
 //                else if($(a).css("backgroundColor") == "rgb(255, 128, 128)"){
 //                    alert("이미 확정된 날짜 입니다!");
 //                    return;   
@@ -1138,7 +1138,8 @@
                 {
                     if(selectDate == item.split("-")[0])
                     {
-                        alert("이미 확정된 날짜 입니다!");
+//                        alert("이미 확정된 날짜 입니다!");
+                        getScheduleInfo(item.split("-")[2]);
                         return; 
                     }
                 }
@@ -1147,7 +1148,8 @@
                 {
                     if(selectDate == item.split("-")[0])
                     {
-                        alert("투표중인 날짜 입니다!");
+//                        alert("투표중인 날짜 입니다!");
+                        getVoteInfo(item.split("-")[2]);
                         return; 
                     }
                 }
@@ -1321,7 +1323,7 @@
 //                        console.log(item);
 //                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
                         // 클릭 시 모달창 추가
-                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getScheduleInfo(' + item.split("-")[2] + ')');
+//                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getScheduleInfo(' + item.split("-")[2] + ')');
                     }
                 }
                 // 미확정된 일정표시
@@ -1332,7 +1334,7 @@
 //                        console.log("#date" + parseInt(dateParam.substr(6)));
 //                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
                          // 클릭 시 모달창 추가, 투표할 일정 눌러도 체크 안되게 onclick 덮음
-                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getVoteInfo(' + item.split("-")[2] + ')');
+//                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getVoteInfo(' + item.split("-")[2] + ')');
                     }
                 }
                 // 생일표시
@@ -1716,7 +1718,7 @@
 //                            console.log("확인!");
                             
                             commentsString += "<div id='commentWriter'>" + findMemberName(data[i].cal_writer) + "</div>";
-                            commentsString += "<div id='commentMemo'>" + data[i].cal_memo + "</div>";
+                            commentsString += "<div id='commentMemo'>\t" + data[i].cal_memo + "</div>";
 //                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
                         }
                         
@@ -2059,7 +2061,7 @@
 <body>
     <div id="wrap">
         <!--        네브바 입니다 ```````````````````````````````````````````````` -->
-        <nav class="left_nav">
+        <nav class="left_nav" style="z-index:15">
             <div id="userInfo">
                 <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                     <li class="nav_li">
