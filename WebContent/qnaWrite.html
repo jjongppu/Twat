@@ -38,26 +38,26 @@
 	<div id="wrap">
 		<div id="wrap_Cate" class="container">
 			<span>카테고리</span>
-			<select>
+			<select name="qnaCategory">
 				<option>--</option>
 				<option>서비스 문의</option>
 				<option>아이디 관련</option>
 				<option>해킹신고 및 예방</option>
 				<option>신고하기</option>
-				<option>불만사항</option>
+				<option>개선/불만사항</option>
 			</select>
-		</div>
-		<div id="wrap_Title" class="container">
-			<span>제목</span>
-			<input type="text" name="title"/>
 		</div>
 		<div id="wrap_Pw" class="container">
 			<span>비밀번호</span>
-			<input type="text" name="pw"/>
+			<input type="text" name="qnaPw"/>
+		</div>
+		<div id="wrap_Title" class="container">
+			<span>제목</span>
+			<input type="text" name="qnaTitle"/>
 		</div>
 		<div id="wrap_Content" class="container">
-			<span>내용</span>
-			<textarea></textarea>
+			<span>문의하실 내용</span>
+			<textarea name="qnaContents"></textarea>
 		</div>
 	</div>
 	<div id="btnWrap">

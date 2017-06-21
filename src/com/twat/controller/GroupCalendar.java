@@ -103,7 +103,7 @@ public class GroupCalendar extends HttpServlet
 				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
 				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
 //				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
-				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
+				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
 				//getCal_group
 				groupSchedule.put("cal_memo", arrList.get(i).getCal_memo());
 				groupSchedule.put("cal_writer", arrList.get(i).getCal_writer());

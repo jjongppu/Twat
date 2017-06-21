@@ -56,6 +56,9 @@ public class groupMasterServlet extends HttpServlet {
 	    	
 	    }
 	    
+	    jsonObj.put("userId", session.getAttribute("loginUserId"));
+	    jsonArr.add(jsonObj);
+	    
 	    out.print(jsonArr);
 	    
 	    

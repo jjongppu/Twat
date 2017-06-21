@@ -176,7 +176,7 @@
                 data: $('#changeInfo').serialize(),
                 success: function(data){
                     var result = data[0].result;
-                        if(result == 'success'){
+                        if(result != 'success'){
                         	alert("정보가 변경되었습니다.");
                             $("#uImg").val(data[0].MEMBER_IMG);
                             $('#userName').val(data[0].MEMBER_NAME);
