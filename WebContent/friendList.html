@@ -109,6 +109,78 @@
             cursor: pointer;
             margin: auto;
         }
+/*        ///////////////////////////////////////////////////////////////////////////////////////////////*/
+        /*        모달창 css 매긴곳.*/
+        #realFriend{
+            display: none;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            top: 40%;
+            left: 30%;
+            opacity: 0.5;
+            box-shadow: 0px 10px 14px 0px rgba(0, 0, 0, 0.2);
+            border: 5px solid red;
+            width: 450px;
+            height: 300px;
+        }
+        #findUserImg{
+            border: 1px solid aqua;
+            width: 110px;
+            height: 100px;
+            margin-left: 5px;
+            margin-top: 5px;
+            display: inline-block;
+            position: absolute;
+        }
+        #findUserName{
+            border: 1px solid black;
+            width: 230px;
+            height: 45px;
+            display: inline-block;
+            margin-left: 120px;
+            margin-top: 5px;
+        }
+        #findUserBirth{
+            border: 1px solid gray;
+            width: 100px;
+            height: 45px;
+            margin-left: 120px;
+            margin-top: 5px;
+            display: inline-block;
+            text-align: center;
+        }
+        #findUserPhone{
+            border: 1px solid gray;
+            width: 120px;
+            height: 45px;
+            text-align: center;
+            display: inline-block;
+        }
+        #modalAddFriend{
+            width: 500px;   
+            height: 500px;
+        }
+        #findFriend{
+            text-align: center;
+            margin-top: 20px;
+            font-size: 30px;
+            width: 450px;
+            margin-left: 25px;
+        }
+        #findPhoneNumber{
+            width: 300px;
+            height: 40px;
+            margin-left: 25px;
+            margin-top: 20px;
+        }
+        #findButton{
+            width: 70px;
+            height: 40px;
+        }
+        #findUserIn{
+            margin-top: 20px;
+            margin-left: 25px;
+        }
         
     </style>
     <script>
@@ -140,22 +212,35 @@
         });
            
         function addFriend(){
-        	$.ajax({
-        		type:"post",
-        		url:"AddFriendservlet.do",
-        		data:$("#addFriend").serialize(),
-        		dataType:"json",
-        		success:function(data){
-        			console.log(data);
-        		}
-        		
-        	});
+            $('#realFriend').css('display','inline-block');
+            $('body').append('<div id="modalAddFriend"><div id="findFriend">친구의 핸드폰번호를 입력하세요</div><input type="text" placeholder="핸드폰번호를 입력해주세요"id="findPhoneNumber" name="findPhoneNumber"><input type="submit" value="찾기" onclick="findUserFriend()" id="findButton"></div>');
+            
+            $.ajax({
+            type: "post", 
+            url: "friends.do",
+            dataType: "json",
+            success: function (data){
+                console.log(data);
+                var output = "";
+                if(data[0].MEMBER_ID != ""){
+                    if(data.length > 5){
+                         document.getElementById('friend_choice').style.overflowY = 'scroll' ;
+                    }else{
+                        document.getElementById('friend_choice').style.overflowY = 'hidden' ;
+                    }
+                    
+                }
+            }
+            });
+            
+        	
         }
-        
-        
-        
+
        
     </script>
+    <style>
+
+    </style>
 <body>
     
    
@@ -183,23 +268,26 @@
             <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
         </ul>
     </nav>
-        
         <div id="main_container">
+            
+            
+            
              <div id="cont1">
                 <div id="cont2">
                     <div id="cont3">
                         <form id="personal" method="post">
-                            
+                               
+ 
                          </form> 
                          <div class="center_cover">
                             <div class="group_Cover">
                                 <div id="addGroup">
                                     
-                                    <span id="addFriendBtn" onclick="addfriend();">
-                                    <img id="plusImg" src="img/etcIcon/plus.png"/>
-                                    </span>
+                                    
                             	<form id="addFriend" method="post">
-                            	
+                            	    <div id="addFriendBtn" onclick="addfriend()">
+                                        <img id="plusImg" src="img/etcIcon/plus.png"/>
+                                    </div>
                             	</form>
                                 </div>
                             </div>
@@ -210,15 +298,18 @@
         </div>
         
     </div>
-<!--
-    href는 온클릭으
-    <a href="#modalLayer" class="modalLink">간단한 모달 창 만들기</a>
-        <div id="modalLayer">
-          <div class="modalContent">
-            <a href="#">모달창 테스트</a> 
-            <button type="button">닫기</button>
-          </div>
-        </div>
--->
+<!--    모달창 만들어-->
+    <div id="realFriend">
+                
+                    <div id="findUserIn">
+                        <div id="findedFriend">
+                            <img src="img/member/basis_photo.png" id="findUserImg">
+                            <div id="findUserName"> 정 현우</div>
+                            <div id="findUserBirth">3월 15일</div>
+                            <div id="findUserPhone">010-6304-6041</div>
+                    </div>    
+                    </div>
+                
+            </div>
 </body>
 </html>
