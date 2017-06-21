@@ -43,6 +43,7 @@
        
         <div id="main_container">
             <div id="container">
+            <div id="blindCover" onclick="closeModal();"></div> 
 <!--
                 <div class="typeText">  이쁘게 호버호버 
                     <div>
@@ -145,12 +146,12 @@
                         
                     <!-- ============ 텍스트 입력 모달창 ============ -->
                         <div>
-                           <div id="blindCover" onclick="closeModal();"></div>      
+                                
                             <span class='modal' style="border:1px solid black;">
                                 <div id="contentsHeight">
                                     <div id="titleAdd">
-                                        <input type="text" placeholder="일정 제목을 입력하세요" id="calTitle" maxlength="20"/> 
-                                        <div id="groupAddBtn" onclick="clickAddCal()">추가하기</div>
+                                        <input type="text" placeholder="자신의 일정을 한줄로 써보세요." id="calTitle" maxlength="20"/> 
+                                        <div id="groupAddBtn" onclick="clickAddCal()">작성하기</div>
                                     </div>
 
                                     <div id="answerBox">
