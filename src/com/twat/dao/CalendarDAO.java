@@ -25,7 +25,7 @@ public class CalendarDAO
 	Statement stmt;
 
 	
-	// CalendarDAO ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ ================================================================================================
+	// CalendarDAO ÀÇ ½Ì±ÛÅæ ================================================================================================
 	private static CalendarDAO instance = new CalendarDAO();
 	
 	private CalendarDAO() {	}
@@ -35,7 +35,7 @@ public class CalendarDAO
 		return instance;
 	}
 	
-	// DBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ conï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ==================================================================================
+	// DB¿¬°áÀ» À§ÇØ conÀ» ¹ÝÈ¯ÇÏ´Â ¸Þ¼­µå ==================================================================================
 	public Connection getConnection() throws Exception
 	{
 		Context initCtx = new InitialContext();
@@ -44,7 +44,7 @@ public class CalendarDAO
 		return ds.getConnection();
 	}
 
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ===================================================================================================
+	// °¢Á¾ ÀÏÁ¤ ¹Þ¾Æ¿À±â ===================================================================================================
 	public ArrayList<CalendarVO> getInfo(String groupId)
 	{
 		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
@@ -95,7 +95,7 @@ public class CalendarDAO
 		return arrList;
 	}
 	
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½(ï¿½×·ï¿½ ï¿½ï¿½ï¿½Ìµï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½)
+	// °¢Á¾ÀÏÁ¤ ¹Þ¾Æ¿À±â(±×·ì ¾ÆÀÌµð, ÀÏÁ¤ ¾ÆÀÌµð)
 	public ArrayList<CalendarVO> getInfo(String groupId, String calId)
 	{
 		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
@@ -103,7 +103,7 @@ public class CalendarDAO
 		try
 		{
 			con = getConnection();
-			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? ORDER BY CAL_REFERENCE, CAL_DEPTH";
+			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? CAL_NUM";
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, Integer.parseInt(groupId));
 			psmt.setInt(2, Integer.parseInt(calId));
@@ -204,6 +204,7 @@ public class CalendarDAO
 			psmt.setInt(3, group_id);
 			psmt.setString(4, cal_memo);
 			psmt.setString(5, cal_writer);
+//			psmt.setString(5, "111");
 			psmt.setString(6, "");
 			psmt.setString(7, "");
 			psmt.setInt(8, cal_num);
@@ -211,6 +212,8 @@ public class CalendarDAO
 			
 			psmt.executeUpdate();
 //			psmt.executeQuery();
+			
+			
 			
 			
 			
@@ -249,7 +252,7 @@ public class CalendarDAO
 			rs = psmt.executeQuery();
 			while(rs.next()){
 				cal_depth = rs.getInt("CAL_DEPTH"); 
-				System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + cal_depth);
+				System.out.println("±íÀÌ : " + cal_depth);
 			}
 			
 		} catch (Exception e) {
@@ -309,7 +312,7 @@ public class CalendarDAO
 			System.out.println(psmt2.isClosed());
 			psmt2.setInt(3, group_id);
 			psmt2.setString(4, new_memo);
-			psmt2.setString(5," ");
+			psmt2.setString(5,cal_writer);
 			psmt2.setString(6, " ");
 			psmt2.setString(7, " ");
 			psmt2.setInt(8, cal_num);
