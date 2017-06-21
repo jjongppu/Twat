@@ -11,6 +11,7 @@
     <!--    네브바 js, 세션검사 -->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/nav.js"></script>
+    <script type="text/javascript" src="js/Example.Modal.js"></script>
     <script language="javascript" type="text/javascript">
         // 일정 잡기 저장용
         var scheSet = new Set();
@@ -24,6 +25,8 @@
         var groupScheduleSet = new Set();
         var initDay = new Date();
         var cal_date = "";
+        var group_master = "";
+        var login_userId = "";
         /*음력 알고리즘..시작*/
         function gfnRight(strString, nSize) {
             var nStart = String(strString).length;
@@ -915,6 +918,7 @@
                 , data: {                    
                     groupId : groupId
 
+
                 }
                 , dataType: "json"
                 , success: function (data) {
@@ -929,6 +933,8 @@
                         if(item.groupMaster == "no"){
                             $("#addschedule").css("display","none");
                         }
+                        
+                        login_userId = item.userId;
                         
                     });
                     
@@ -1153,7 +1159,7 @@
                         }
                         initToday();
                     }
-                    else {
+                    else if(group_master == login_userId){
                         $(a).css("backgroundColor", "green");
                         //                    scheArr[parseInt(dayInfo)] = dayInfo;
                         scheSet.add(yearInfo + monthInfo + dayInfo);
@@ -1201,6 +1207,8 @@
             var holiday = gfnGetHolidays(today.getFullYear());
             var t = 0;
             var countHoliday = 0;
+//            console.log(group_master);
+//            console.log(login_userId);
             //            var testTime = new Date(2017,04,01).getTime() - new Date(2017,03,31).getTime();
             //            
             //            console.log(new Date(2017,3,1).getTime());
@@ -1226,7 +1234,10 @@
                 cell = row.insertCell();
                 $(cell).attr("id", "date" + calDay);
                 $(cell).attr("onclick", "getDayInfo(this)");
-                $(cell).attr("style", "cursor:pointer");
+                if(login_userId == group_master)
+                    $(cell).attr("style", "cursor:pointer");
+                
+                
                 initToday();
                 if ((today.getMonth() + 1) / 10 < 1) {
                     if (calDay / 10 < 1) {
@@ -1366,7 +1377,7 @@
                     //                    data[0].group_id;
                     //                    data[0].group_name;
                     //                    data[0].group_date;
-                    //                    data[0].group_master;
+                    group_master = data[0].group_master;
                     //                    data[0].group_master_name;
                     //                    data[0].group_img;
                     //                    data[0].group_count;
@@ -1379,6 +1390,7 @@
                     document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
                     $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
                     document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
+                    
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
                         //                        console.log(data[arrCal].cal_num);
                         //                        console.log(data[arrCal].cal_date);
@@ -1389,19 +1401,13 @@
                         //                        console.log(data[arrCal].member_choice);
                         var str = "";
                         var str2 = data[arrCal].cal_date;
-                        //                        str += "<div class='title'>";
-                        //                        if(str2.indexOf(',') == -1)
-                        //                        {
-                        //                            str += "<div id='secheduleName'>단체 일정</div>";
-                        //                        }
-                        //                        else
-                        //                        {
-                        //                            str += "";
-                        //                        }
+                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
                         str += '<div class="content">';
-                        //                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
+//                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
                         str += '<div class="left">';
-                        if (str2.indexOf(',') == -1) {
+//                        if (str2.indexOf(',') == -1)
+                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+                        {
                             str += data[arrCal].cal_date;
                             console.log("확정 : " + data[arrCal].cal_memo);
                             scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo);
@@ -1426,7 +1432,8 @@
                         str += '<div class="right-top"></div>';
                         str += '<div class="right-bottom">';
                         
-                        if (str2.indexOf(',') == -1)
+//                        if (str2.indexOf(',') == -1)
+                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
                         {
                             // 전체 일정(확정)
                             str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
@@ -1532,8 +1539,8 @@
                     }
                     console.log("birthSet");
                     for (let item of birthSet.keys()) {
-                        console.log(item.split("-"));
-                        console.log("split : " + item.split("-")[0].substr(2, 4));
+//                        console.log(item.split("-"));
+//                        console.log("split : " + item.split("-")[0].substr(2, 4));
                     }
                 }
                 , error: function (req) {
@@ -1578,7 +1585,8 @@
                             for(var j = 0; j < memberList.length; j++)
                             {
         //                        console.log(memberList[i].substr(8));
-                                scheduleString += findMemberName(memberList[j].substr(8));
+//                                scheduleString += findMemberName(memberList[j].substr(8));
+                                scheduleString += findMemberName(memberList[j]);
 
                                 if((j+1) < memberList.length)
                                 {
@@ -1655,6 +1663,54 @@
                 }
             }
             return '(방에서 나간 사용자)';
+        }
+        // member_choice로 확정/투표 구분
+        function scheduleCheck(member_choice, cal_date)
+        {
+            // member_birth?
+            // 확정되면 true값 아니면 false값 반환
+            // 아이디는 6~12
+//            console.log(member_choice);
+            console.log(cal_date);
+            
+            if(member_choice == "" || cal_date.indexOf(',') >= 0)
+            {
+//                console.log("false");
+                return false;
+            }
+            else
+            {
+//                console.log(member_choice);
+//                var memSplit = member_choice.split(",");
+                var memSplit = new Array(member_choice.split(","));
+                var dateSplit;
+                var count = 0;
+                
+                // str2.indexOf(',') == -1
+                if(cal_date.indexOf(',') >= 0)
+                {
+                    dateSplit = new Array(cal_date.split(","));
+                }
+//                console.log(memSplit);
+                
+                for(var i = 0; i < memSplit.length; i++)
+                {
+                    if(memSplit[i].length > 8)
+                    {
+                        if(memSplit[i].substr(0,8).match(cal_date))
+                        {
+                            console.log(memSplit[i].substr(0,8) + " / " + cal_date);
+                            count++;
+                        }
+                    }
+                    else if(count > 1)
+                    {
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
         }
 
         function voteMeeting(cal_date) {
@@ -1785,7 +1841,8 @@
 
 
                     
-                    $.each(data, function (index, item) {                   
+                    $.each(data, function (index, item) {     
+                    	console.log(item.userId);
                     });
                     
                 }
@@ -1988,15 +2045,49 @@
             </div>
         </span>
         
-        
+        <input type="button" value="댓글달기" id="commentButton" onclick="showModal()"/>
         <div id='modal2'>
-            <input type='text' id='commentCal'/>
-            <input type='button' value="댓글달기" />
+            <h3>Test Modal</h3>
+            <p>이 창은 모달창입니다.</p>
+            <button id="confirm_button">확인</button>
+            <button class="js_close">닫기</button>
             
              
         </div>
     
     </footer>
+                    
+                    <script>
+                        // 모달창 인스턴트 생성
+                        var myModal = new Example.Modal({
+                            
+                            id: "modal" // 모달창 아이디 지정
+                        });
+
+                        // 모달 창 여는 버튼에 이벤트 걸기
+//                        $("#commentButton").click(function() {
+//                            console.log("mymodal");
+//                            myModal.show(); // 모달창 보여주기
+//                        });
+                        
+                        function showModal(){
+                            
+                            console.log("mymodal");
+                            myModal.show(); // 모달창 보여주기
+                            
+                            
+                        }
+
+                        // 모달 창 안에 있는 확인 버튼에 이벤트 걸기
+                        $("#confirm_button").click(function() {
+                            alert("나는 모달창이다.");
+                            myModal.hide(); // 모달창 감추기
+                        });
+                    
+                    
+                    </script>
+                    
+                    
                     <script>
                         //모달 사라짐
                         function closeModal(){
@@ -2087,6 +2178,18 @@
                             line-height: 50px;
                             cursor:pointer;
                             margin: none;
+                        }
+                        
+                        #modal2{
+                            display:none;
+                            background-color:#FFFFFF;
+                            position:absolute;
+                            top:300px;
+                            left:200px;
+                            padding:10px;
+                            border:2px solid #E2E2E2;
+                            z-Index:9999
+                        
                         }
                     </style>
                     

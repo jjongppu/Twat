@@ -8,7 +8,7 @@ public class CalendarVO
 	private int cal_num;
 	private Timestamp cal_time;
 	private String cal_date;
-	private int cal_group;
+	private int group_id;
 	private String cal_memo;
 	private String cal_writer;
 	private String state_icon;
@@ -27,7 +27,7 @@ public class CalendarVO
 		this.cal_num = cal_num;
 		this.cal_time = cal_time;
 		this.cal_date = cal_date;
-		this.cal_group = cal_group;
+		this.group_id = cal_group;
 		this.cal_memo = cal_memo;
 		this.cal_writer = cal_writer;
 		this.state_icon = state_icon;
@@ -38,6 +38,8 @@ public class CalendarVO
 	}
 
 	// getter & setter ==============================================================================================================
+
+
 	public int getCal_num() {
 		return cal_num;
 	}
@@ -61,13 +63,13 @@ public class CalendarVO
 	public void setCal_date(String cal_date) {
 		this.cal_date = cal_date;
 	}
-	
-	public int getCal_group() {
-		return cal_group;
+
+	public int getGroup_id() {
+		return group_id;
 	}
-	
-	public void setCal_group(int cal_group) {
-		this.cal_group = cal_group;
+
+	public void setGroup_id(int group_id) {
+		this.group_id = group_id;
 	}
 
 	public String getCal_memo() {
@@ -90,7 +92,7 @@ public class CalendarVO
 		return state_icon;
 	}
 
-	public void setStat_icon(String state_icon) {
+	public void setState_icon(String state_icon) {
 		this.state_icon = state_icon;
 	}
 
@@ -125,12 +127,12 @@ public class CalendarVO
 	public void setCal_depth(int cal_depth) {
 		this.cal_depth = cal_depth;
 	}
-
+	
 	@Override
 	public String toString()
 	{
 		return "CalendarVO [cal_num=" + cal_num + ", cal_time=" + cal_time + ", cal_date=" + cal_date + ", cal_group="
-				+ cal_group + ", cal_memo=" + cal_memo + ", cal_writer=" + cal_writer + ", state_icon=" + state_icon
+				+ group_id + ", cal_memo=" + cal_memo + ", cal_writer=" + cal_writer + ", state_icon=" + state_icon
 				+ ", member_choice=" + member_choice + ", decide_date=" + decide_date + ", cal_reference="
 				+ cal_reference + ", cal_depth=" + cal_depth + "]";
 	}
