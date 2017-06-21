@@ -205,7 +205,7 @@ public class CalendarDAO
 			String[] dateStr = cal_date.split(",");
 			String writer_id = "";
 			for(int i = 0; i < dateStr.length; i++){
-				writer_id += dateStr[i] + cal_writer + ",";
+				writer_id += dateStr[i] + "-" + cal_writer + ",";
 			}
 			
 			
