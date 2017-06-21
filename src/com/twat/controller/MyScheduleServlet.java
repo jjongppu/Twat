@@ -30,6 +30,7 @@ public class MyScheduleServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json;");
 		response.setHeader("Cache-Control", "no-cache");
+		request.setCharacterEncoding("UTF-8");
 		
 		JSONArray jsonArr = new JSONArray();
 		JSONObject jsonObj = new JSONObject();
