@@ -264,6 +264,48 @@ public class QnaDAO {
 		
 		// 1 = 제목 / 제목으로 검색하기
 		if(searchCategory == 1) {
+			String AllSql = "SELECT * FROM QNA";
+			if(!val.equals("0")) {
+				AllSql += "WHERE QNA_TITLE LIKE ?";
+			}
+			AllSql += "ORDER BY QNA_ID asc LIMIT " + (page*10-10) + " ,10";
+			
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(AllSql);
+				
+				if(!val.equals("0")) {
+					psmt.setString(1, "%" + val + "%");
+				}
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					QnaVO qv = new QnaVO();
+					qv.setQNA_ID(rs.getInt("QNA_ID"));
+					qv.setQNA_CATEGORY(rs.getString("QNA_CATEGORY"));
+					qv.setQNA_TITLE(rs.getString("QNA_TITLE"));
+					qv.setMEMBER_ID(rs.getString("MEMBER_ID"));
+					qv.setQNA_DATE(rs.getTimestamp("QNA_DATE"));
+					// 조회수 어떻게 처리할지 생각해야되
+					
+					arList.add(qv);
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		        try {
+		        	if(rs != null) rs.close();
+			        if(psmt != null) psmt.close();
+			        if(con != null) con.close();
+		        } catch (SQLException e) {
+		        	// TODO Auto-generated catch block
+			        e.printStackTrace();
+		        }
+//		        System.out.println(result);
+		        return arList;
+			} 
 			
 		}
 		
