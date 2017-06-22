@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.twat.dto.QnaVO;
 
 public class QnaDAO {
 	Connection con = null;
@@ -30,6 +34,41 @@ public class QnaDAO {
 	    DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
 	         
 	    return ds.getConnection();
+	}
+	
+	
+	// qna_number 최대값 받아오는 메서드 -------------------- 최승우----------------------------
+	public int getMaxNum() {
+		int result = -1;
+		int cal_num = 0;
+		
+		String selectSql = "SELECT * FROM `qna` ORDER BY QNA_ID DESC LIMIT 1";
+		
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(selectSql);
+			
+			rs = psmt.executeQuery();
+			while(rs.next()){
+				cal_num = rs.getInt("QNA_ID");
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	        try {
+	        	if(rs != null) rs.close();
+		        if(psmt != null) psmt.close();
+		        if(con != null) con.close();
+	        } catch (SQLException e) {
+	        	// TODO Auto-generated catch block
+		        e.printStackTrace();
+	        }
+	        return cal_num + 1;
+		}    
+		
 	}
 	
 	
@@ -70,41 +109,138 @@ public class QnaDAO {
 //	        System.out.println(result);
 	        return result;
 		}    
-		
 	}
 	
 	
-	// qna_number 최대값 받아오는 메서드 -------------------- 최승우----------------------------
-	public int getMaxNum() {
-		int result = -1;
-		int cal_num = 0;
+	// 건의사항 제목으로 찾기 ----------------승우----------------------------
+	public ArrayList<QnaVO> searchQnA(int searchCategory, String searchBox) {
 		
-		String selectSql = "SELECT * FROM `qna` ORDER BY QNA_ID DESC LIMIT 1";
-		
-		try {
-			con = getConnection();
-			psmt = con.prepareStatement(selectSql);
-			
-			rs = psmt.executeQuery();
-			while(rs.next()){
-				cal_num = rs.getInt("QNA_ID");
+		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
+		QnaVO qnaVo = new QnaVO();
+		// 1 = 제목 / 제목으로 검색하기
+		System.out.println("1");
+		if(searchCategory == 1) {
+			String selectSql = "select * from qna where QNA_TITLE = ?";
+			// LIKE 수정중 쿼리문 맞는데 슈발
+//			String selectSql = "select * from qna where QNA_TITLE LIKE '%?%'";
+			System.out.println("2");
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(selectSql);
 				
-			}
+				psmt.setString(1, searchBox);
+				
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+
+					// 여기 수정
+					qnaVo.setQNA_ID(rs.getInt(1));
+					qnaVo.setMEMBER_ID(rs.getString(2));
+					qnaVo.setQNA_CATEGORY(rs.getString(3));
+					qnaVo.setQNA_PW(rs.getInt(4));
+					qnaVo.setQNA_TITLE(rs.getString(5));
+					qnaVo.setQNA_CONTENTS(rs.getString(6));
+					qnaVo.setQNA_DATE(rs.getTimestamp(7));
+					qnaVo.setQNA_REPLY(rs.getString(8));
+					
+					arList.add(qnaVo);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		        try {
+		        	if(rs != null) rs.close();
+			        if(psmt != null) psmt.close();
+			        if(con != null) con.close();
+		        } catch (SQLException e) {
+		        	// TODO Auto-generated catch block
+			        e.printStackTrace();
+		        }
+//		        System.out.println(result);
+		        return arList;
+			}   
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-	        try {
-	        	if(rs != null) rs.close();
-		        if(psmt != null) psmt.close();
-		        if(con != null) con.close();
-	        } catch (SQLException e) {
-	        	// TODO Auto-generated catch block
-		        e.printStackTrace();
-	        }
-	        return cal_num + 1;
-		}    
-		
+		// 2 = 글 내용 / 글 내용으로 검색하기
+		} else if(searchCategory == 2) {
+			String selectSql = "select * from qna where QNA_CONTENTS = ?";
+			
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(selectSql);
+				
+				psmt.setString(1, searchBox);
+				
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					qnaVo.setQNA_ID(rs.getInt(1));
+					qnaVo.setMEMBER_ID(rs.getString(2));
+					qnaVo.setQNA_CATEGORY(rs.getString(3));
+					qnaVo.setQNA_PW(rs.getInt(4));
+					qnaVo.setQNA_TITLE(rs.getString(5));
+					qnaVo.setQNA_CONTENTS(rs.getString(6));
+					qnaVo.setQNA_DATE(rs.getTimestamp(7));
+					qnaVo.setQNA_REPLY(rs.getString(8));
+					
+					arList.add(qnaVo);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		        try {
+		        	if(rs != null) rs.close();
+			        if(psmt != null) psmt.close();
+			        if(con != null) con.close();
+		        } catch (SQLException e) {
+		        	// TODO Auto-generated catch block
+			        e.printStackTrace();
+		        }
+//		        System.out.println(result);
+		        return arList;
+			} 
+			
+		// 3 = 글 작성자 / 글 작성자로 검색하기
+		} else {
+			String selectSql = "select * from qna where MEMBER_ID = ?";
+			
+			try {
+				con = getConnection();
+				psmt = con.prepareStatement(selectSql);
+				
+				psmt.setString(1, searchBox);
+				
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					qnaVo.setQNA_ID(rs.getInt(1));
+					qnaVo.setMEMBER_ID(rs.getString(2));
+					qnaVo.setQNA_CATEGORY(rs.getString(3));
+					qnaVo.setQNA_PW(rs.getInt(4));
+					qnaVo.setQNA_TITLE(rs.getString(5));
+					qnaVo.setQNA_CONTENTS(rs.getString(6));
+					qnaVo.setQNA_DATE(rs.getTimestamp(7));
+					qnaVo.setQNA_REPLY(rs.getString(8));
+					
+					arList.add(qnaVo);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		        try {
+		        	if(rs != null) rs.close();
+			        if(psmt != null) psmt.close();
+			        if(con != null) con.close();
+		        } catch (SQLException e) {
+		        	// TODO Auto-generated catch block
+			        e.printStackTrace();
+		        }
+//		        System.out.println(result);
+		        return arList;
+			} 
+		}
 	}
 }

@@ -3,46 +3,72 @@ package com.twat.dto;
 import java.sql.Timestamp;
 
 public class MyCalendarVO {
-	private int myCalIndex;
-	private String memberId;
-	private Timestamp myCalDate;
-	private String myCalContents;
-	public MyCalendarVO(int myCalIndex, String memberId, Timestamp myCalDate, String myCalContents) {
+	private int my_cal_index;
+	private String member_id;
+	private Timestamp my_write_time;
+	private String my_cal_contents;
+	private String my_cal_date;
+	
+	public MyCalendarVO(int my_cal_index, String member_id, Timestamp my_write_time, String my_cal_contents,
+			String my_cal_date) {
 		super();
-		this.myCalIndex = myCalIndex;
-		this.memberId = memberId;
-		this.myCalDate = myCalDate;
-		this.myCalContents = myCalContents;
+		this.my_cal_index = my_cal_index;
+		this.member_id = member_id;
+		this.my_write_time = my_write_time;
+		this.my_cal_contents = my_cal_contents;
+		this.my_cal_date = my_cal_date;
 	}
-	public int getMyCalIndex() {
-		return myCalIndex;
+
+	public MyCalendarVO() {
+		// TODO Auto-generated constructor stub
 	}
-	public void setMyCalIndex(int myCalIndex) {
-		this.myCalIndex = myCalIndex;
+
+	public int getMy_cal_index() {
+		return my_cal_index;
 	}
-	public String getMemberId() {
-		return memberId;
+
+	public void setMy_cal_index(int my_cal_index) {
+		this.my_cal_index = my_cal_index;
 	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+
+	public String getMember_id() {
+		return member_id;
 	}
-	public Timestamp getMyCalDate() {
-		return myCalDate;
+
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
 	}
-	public void setMyCalDate(Timestamp myCalDate) {
-		this.myCalDate = myCalDate;
+
+	public Timestamp getMy_write_time() {
+		return my_write_time;
 	}
-	public String getMyCalContents() {
-		return myCalContents;
+
+	public void setMy_write_time(Timestamp my_write_time) {
+		this.my_write_time = my_write_time;
 	}
-	public void setMyCalContents(String myCalContents) {
-		this.myCalContents = myCalContents;
+
+	public String getMy_cal_contents() {
+		return my_cal_contents;
 	}
+
+	public void setMy_cal_contents(String my_cal_contents) {
+		this.my_cal_contents = my_cal_contents;
+	}
+
+	public String getMy_cal_date() {
+		return my_cal_date;
+	}
+
+	public void setMy_cal_date(String my_cal_date) {
+		this.my_cal_date = my_cal_date;
+	}
+
 	@Override
 	public String toString() {
-		return "MyCalendar [myCalIndex=" + myCalIndex + ", memberId=" + memberId + ", myCalDate=" + myCalDate
-				+ ", myCalContents=" + myCalContents + "]";
+		return "MyCalendarVO [my_cal_index=" + my_cal_index + ", member_id=" + member_id + ", my_write_time="
+				+ my_write_time + ", my_cal_contents=" + my_cal_contents + ", my_cal_date=" + my_cal_date + "]";
 	}
+	
 	
 	
 }

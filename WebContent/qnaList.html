@@ -46,6 +46,28 @@
 			width: 70px;
 		}
 	</style>
+	
+	<script>
+		function qnaSearchEnter() {
+			$.ajax ({
+                type : 'post',
+                url : 'SearchQna.do',
+                data : $('#qnaListForm').serialize(),
+                dataType : "json",
+                success : function(data) {
+                    console.log(data);
+                    var result = data[0].result;
+
+                    console.log(result);
+					
+                },
+                error: function(req) {
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+                }
+            });  
+		}
+		
+	</script>
 </head>
 <body>
 	<div>
@@ -82,20 +104,23 @@
 			</div>
 		<div id="contentBottomWrap">
 			<span class="pageBtn" id="prePre_">처음</sapn>
-            <span class="pageBtn" id="pre_"> &lt; </sapn>
-    		<span class="pageBtn pageNum" id="page_1" onclick=""> 1 </span>
-            <span class="pageBtn" id="next_"> &gt; </sapn>
-            <span class="pageBtn" id="nextnext_">끝</sapn>
+			<span class="pageBtn" id="pre_"> &lt; </sapn>
+			<span class="pageBtn pageNum" id="page_1" onclick=""> 1 </span>
+			<span class="pageBtn" id="next_"> &gt; </sapn>
+			<span class="pageBtn" id="nextnext_">끝</sapn>
 		</div>
-		<div>
-			<select>
-				<option>제목</option>
-				<option>작성자</option>
-				<option>날짜</option>
-			</select>
-			<input type="text" name="searchBox" />
-			<input type="button" value="검색" name="searchVal "/>
-		</div>
+		<form id="qnaListForm" action="SearchQna.do" method="post">	
+			<div>
+				<select name="searchCategory">
+					<option value="1">제목</option>
+					<option value="2">글 내용</option>
+					<option value="3">글 작성자</option>
+				</select>
+				<input type="text" name="searchBox" />
+				<input type="button" value="검색" onclick="qnaSearchEnter()"/>
+			</div>
+		</form>
 	</div>
+	
 </body>
 </html>

@@ -34,9 +34,6 @@ public class MyScheduleServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		
-				
-		
-		
 		JSONArray jsonArr = new JSONArray();
 		JSONObject jsonObj = new JSONObject();
 		PrintWriter out = response.getWriter();
@@ -44,13 +41,14 @@ public class MyScheduleServlet extends HttpServlet {
 		MyCalendarDAO mycalendarDAO = MyCalendarDAO.getInstance();
 		
 		String member_id = (String) session.getAttribute("loginUserId");
-//		String member_id = request.getParameter("calDate");
-		String my_cal_contents = request.getParameter("title");
-		String my_cal_date = request.getParameter("calDate");
+		String my_cal_contents = (String) request.getParameter("title");
+		String my_cal_date = (String) request.getParameter("calDate");		
+		
+//		System.out.println(member_id);
+//		System.out.println(my_cal_contents);
+//		System.out.println(my_cal_date);
 		
 		mycalendarDAO.addMySchedule(member_id, my_cal_contents, my_cal_date);
-		
-				
 		
 		jsonObj.put("result", "succesCalAdd");
 		jsonArr.add(jsonObj);		

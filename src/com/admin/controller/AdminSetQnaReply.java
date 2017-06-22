@@ -8,30 +8,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.twat.dao.MemberDAO;
-// ï¿½Ð±â¸® ï¿½ï¿½Ç°
-@WebServlet("/memberout.do")
-public class AdminMemberOut extends HttpServlet {
+import com.admin.dao.AdminDAO;
+
+@WebServlet("/adminSetQnaReply.do")
+public class AdminSetQnaReply extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AdminMemberOut() {
+    public AdminSetQnaReply() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
@@ -39,19 +32,21 @@ public class AdminMemberOut extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 		PrintWriter out = response.getWriter();
-	    String MEMBER_ID = request.getParameter("out");
+		// ´ñ±ÛÀÌ´Þ¸± ±Û ¹øÈ£
+	    String qna_id = request.getParameter("id");
+	    String textval = request.getParameter("textVal");
 	    
-	    MemberDAO mdo = MemberDAO.getInstance();
+	    AdminDAO ado = AdminDAO.getInstance();
 		
 	    JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 	    
-		int result = mdo.outUser(MEMBER_ID);
-	    if(result ==1){
-	    	
-	    	jsonOb.put("result", "success");
+		int result = ado.setQnaReply(qna_id,textval);
+		
+	    if(result != 0){
+	    	jsonOb.put("result", "1");
 	    }else{
-	    	jsonOb.put("result", "fail");
+	    	jsonOb.put("result", "0");
 	    }
 		
 		jsonList.add(jsonOb);

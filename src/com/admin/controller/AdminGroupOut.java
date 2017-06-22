@@ -32,7 +32,38 @@ public class AdminGroupOut extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		response.setCharacterEncoding("UTF-8");
+	    response.setContentType("application/json;");
+	    response.setHeader("Cache-Control", "no-cache");
+	    request.setCharacterEncoding("UTF-8");
+	    
+		PrintWriter out = response.getWriter();
+		// 삭제될 그룹 번호
+	    String Group_Id = request.getParameter("out");
+	    // 삭제할 종류 1=그룹 게시글 댓글 삭제  2=게시글 댓글 삭제
+	    int kind = Integer.parseInt(request.getParameter("kind"));
+	    
+	    AdminDAO ado = AdminDAO.getInstance();
+		
+	    JSONArray jsonList = new JSONArray();
+		JSONObject jsonOb = new JSONObject();
+	    
+		int result = ado.outGroup(Group_Id,kind);
+		
+	    if(result ==1){
+	    	jsonOb.put("result", "1");
+	    }else if(result ==2){
+	    	jsonOb.put("result", "2");
+	    }else if(result ==3){
+	    	jsonOb.put("result", "3");
+	    }else{
+	    	jsonOb.put("result", "0");
+	    }
+		
+		jsonList.add(jsonOb);
+		
+		out.println(jsonList);
+		
 	}
 
 }
