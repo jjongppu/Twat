@@ -684,7 +684,7 @@ public class MemberDAO {
 					con = getConnection();
 					
 					psmt = con.prepareStatement(changepwd);
-					psmt.setString(1, "img/" + MEMBER_IMG);
+					psmt.setString(1, "img/member/" + MEMBER_IMG);
 					psmt.setString(2, MEMBER_ID);
 					result = psmt.executeUpdate();
 						

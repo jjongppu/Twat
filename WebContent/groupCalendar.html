@@ -31,6 +31,7 @@
         var group_master = "";
         // 현재 로그인한 유저의 아이디
         var login_userId = "";
+        var nowCalNum = "";
         /*음력 알고리즘..시작*/
         function gfnRight(strString, nSize) {
             var nStart = String(strString).length;
@@ -1801,7 +1802,7 @@
                 , dataType: "json"
                 , success: function (data) {
                     console.log(data);
-                    
+                    nowCalNum = cal_num;
                     var voteString = "";
 //                    var commentsString = "<div id='CommentBox'>";
                     var commentsString = "";
@@ -2276,8 +2277,9 @@
                 }
                  
             });
-            
             location.reload();
+//            setTimeout(3000);
+//            getVoteInfo(nowCalNum);
 
         }
         
