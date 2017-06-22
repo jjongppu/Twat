@@ -52,7 +52,7 @@ public class AddFriendservlet extends HttpServlet {
 	    
 		PrintWriter out = response.getWriter();
 		
-	    
+	    String friendId = request.getParameter("");
 	    String userPhone = request.getParameter("findPhoneNumber");
 	    System.out.print(userPhone);
 	    MemberDAO mdo = MemberDAO.getInstance();
