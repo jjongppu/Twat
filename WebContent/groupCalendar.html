@@ -2295,6 +2295,8 @@
         
         function inviteFriends(){
             document.getElementById("inviteModal").innerHTML = "";
+            $('#inviteModal').css('display','block').css('height','auto').css('border','1px solid black');
+            $('#blindCover').css('display','block');
             $.ajax({
                 type: 'post'
                 , url: 'inviteFriends.do'                
@@ -2591,6 +2593,7 @@
                         function closeModal(){
                             $('#blindCover').css('display','none');
                             $('.modal').css('display','none');
+                            $('#inviteModal').css('display','none');
                             $('.modal input').val("");
                         }
                         
@@ -2627,7 +2630,7 @@
                             display: none;
                             z-index: 10;
                         }
-                        .modal{
+                        .modal,#inviteModal{
                             position: fixed;
                             display: none;
                             top: 50%;
