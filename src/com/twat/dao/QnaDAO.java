@@ -15,8 +15,7 @@ import com.twat.dto.QnaVO;
 
 public class QnaDAO {
 	Connection con = null;
-	PreparedStatement psmt= null;
-	ResultSet rs= null;
+	
 	
 	// MemberDAO 의 싱글톤 -----------------------------------
 	private static QnaDAO instance = new QnaDAO();
@@ -39,6 +38,8 @@ public class QnaDAO {
 	
 	// qna_number 최대값 받아오는 메서드 -------------------- 최승우----------------------------
 	public int getMaxNum() {
+		PreparedStatement psmt= null;
+		ResultSet rs= null;
 		int result = -1;
 		int cal_num = 0;
 		
@@ -74,6 +75,8 @@ public class QnaDAO {
 	
 	// 건의사항 글쓰기 --------------------------최승우-------------------
 	public int insertQnA(String qnaId, String qnaCategory, int qnaPW, String qnaTitle, String qnaContents) {
+		PreparedStatement psmt= null;
+		ResultSet rs= null;
 		int result = -1;
 //		int qna_number = 0;
 		PreparedStatement psmt2= null;
@@ -114,6 +117,8 @@ public class QnaDAO {
 	
 	// 건의사항 제목으로 찾기 ----------------승우----------------------------
 	public ArrayList<QnaVO> searchQnA(int searchCategory, String searchBox) {
+		PreparedStatement psmt= null;
+		ResultSet rs= null;
 		
 		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
 		QnaVO qnaVo = new QnaVO();
@@ -243,4 +248,33 @@ public class QnaDAO {
 			} 
 		}
 	}
+	
+	
+	
+	// 문의사항 리스트 불러오기 -----------최승우-----------------------
+	public ArrayList<QnaVO> getList(int searchCategory, int page, String val) {
+		PreparedStatement psmt= null;
+		ResultSet rs= null;
+		
+		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
+		QnaVO qnaVo = new QnaVO();
+		// searchCategry = 문의사항 종류(카테고리)
+		// val = 검색어
+		
+		
+		// 1 = 제목 / 제목으로 검색하기
+		if(searchCategory == 1) {
+			
+		}
+		
+		
+		
+		
+		return arList;
+	}
+	
+	
+	
+	
+	
 }
