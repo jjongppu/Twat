@@ -44,6 +44,11 @@ public class MyCalendarServlet extends HttpServlet {
 		
 		JSONArray group = new JSONArray();
 
+		String member_id = (String) session.getAttribute("loginUserId");
+		
+		
+		
+		
 		CalgatherDAO calgDao = CalgatherDAO.getInstance();
 		CalgatherVO groupTitle = calgDao.getGroupInfo(request.getParameter("group"));
 		
