@@ -388,7 +388,7 @@
                         userInfos += reply;    
                     }
                     userInfos += '</textarea></span>';
-                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick=""/> </span>';
+                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick="replyBtn(this)"/> </span>';
                     userInfos += '</li>';
                 }
                 $('#inputMemberinfo').html(userInfos);
@@ -506,7 +506,7 @@
                         userInfos += reply;    
                     }
                     userInfos += '</textarea></span>';
-                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick=""/> </span>';
+                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick="replyBtn(this)"/> </span>';
                     userInfos += '</li>';
                 }
                 $('#inputMemberinfo').html(userInfos);
@@ -631,21 +631,26 @@
 //            
 //            
 //        }
-    // 선택한 멤버 추방
-    function getOutMember(user){
-        // 탈퇴시킬 유저 이름
-        var userId = $(user).attr('id');
+    
+    // 답변등록
+    function replyBtn(id){
+        // 답변달 qna id
+        var qnaid = $(id).attr('id');
+        var text = $('#'+qnaid).parent().parent().find('.tdan').find('textarea').val();
+        
+        console.log("id : "+qnaid+"text : "+text);
         $.ajax({
             type:"post",
-            url: "../memberout.do",
-            data: {out : userId},
+            url: "../adminSetQnaReply.do",
+            data: {id:qnaid, textVal:text},
+            dataType:'json',
             success: function(data){
             var result = data[0].result;
-                if(result != 'success'){
-                    alert("오류");
+                if(result != '0'){
+                    alert("답변을 등록 하였습니다.");
+                    location.href='qnaManagement.html';
                 }else{
-                    alert("회원 탈퇴가 완료되었습니다. 7일후에 자동으로 삭제됩니다.");
-                    location.href='groupManagement.html';
+                    alert("오류");
                 }
             }
         });
