@@ -20,7 +20,7 @@ public class MemberDAO {
 	ResultSet rs= null;
 	
 	
-	// MemberDAO �� �̱��� -----------------------------------
+	// MemberDAO 占쏙옙 占싱깍옙占쏙옙 -----------------------------------
 	private static MemberDAO instance = new MemberDAO();
 	
 	private MemberDAO(){}
@@ -33,7 +33,7 @@ public class MemberDAO {
 	
 	
 	
-	   // DB������ ���� con�� ��ȯ�ϴ� �޼��� --------------------------------------------
+	   // DB占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 con占쏙옙 占쏙옙환占싹댐옙 占쌨쇽옙占쏙옙 --------------------------------------------
 	   public Connection getConnection() throws Exception {
 	         Context initCtx = new InitialContext();
 	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
@@ -43,7 +43,7 @@ public class MemberDAO {
 
 	
 	
-	  // ���̵� ã�� �޼��� (�̸�,��ȭ��ȣ�� ã��)-----�¿�-------------------------
+	  // 占쏙옙占싱듸옙 찾占쏙옙 占쌨쇽옙占쏙옙 (占싱몌옙,占쏙옙화占쏙옙호占쏙옙 찾占쏙옙)-----占승울옙-------------------------
 	   public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
 	      
 	      String selectSql = "select MEMBER_ID from MEMBER where MEMBER_NAME=? and MEMBER_PHONE=?";
@@ -80,7 +80,7 @@ public class MemberDAO {
 	   
 	   
 	   
-// ��й�ȣ ã�� �޼��� ---------�¿�-------------------------------
+// 占쏙옙橘占싫� 찾占쏙옙 占쌨쇽옙占쏙옙 ---------占승울옙-------------------------------
 	   public String searchPW(String MEMBER_ID, String MEMBER_NAME, String MEMBER_PHONE) {
 		   String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
 		   String getPW = "";
@@ -115,7 +115,7 @@ public class MemberDAO {
 	   }	   
 	   
 
-		// ȸ�� �α����� ���� �޼��� ----------------------------------
+		// 회占쏙옙 占싸깍옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 ----------------------------------
 		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
 			int result = -1;
 			
@@ -135,9 +135,9 @@ public class MemberDAO {
 				rs = psmt.executeQuery();
 				
 //				if(rs.next()) {
-//					// out_time�� 0�̸� �α��� ���� result�� 1�־���
+//					// out_time占쏙옙 0占싱몌옙 占싸깍옙占쏙옙 占쏙옙占쏙옙 result占쏙옙 1占쌍억옙占쏙옙
 //					if(rs.getInt(1) == 0) {
-//						// �α��� ����
+//						// 占싸깍옙占쏙옙 占쏙옙占쏙옙
 //						result = 1;
 //					} else {
 //						result = rs.getInt(1);
@@ -146,21 +146,21 @@ public class MemberDAO {
 //				}
 				
 				if(rs.next()) {
-					// out_time�� 0�̸� �α��� ���� result�� 1�־���
+					// out_time占쏙옙 0占싱몌옙 占싸깍옙占쏙옙 占쏙옙占쏙옙 result占쏙옙 1占쌍억옙占쏙옙
 					if(rs.getLong(1) == 0) {
-						// �α��� ����
+						// 占싸깍옙占쏙옙 占쏙옙占쏙옙
 						result = 1;
-					} else if(rs.getLong(1) > currentTime) { // Ż�� �������� ȸ��
+					} else if(rs.getLong(1) > currentTime) { // 탈占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 회占쏙옙
 						result = -1;
 //						System.out.println(result);
-					} else if(rs.getLong(1) < currentTime) { // Ż��� ȸ��
+					} else if(rs.getLong(1) < currentTime) { // 탈占쏙옙占� 회占쏙옙
 						result = -2;
-					} else { // ���̵�, ��� Ʋ���� ����
+					} else { // 占쏙옙占싱듸옙, 占쏙옙占� 틀占쏙옙占쏙옙 占쏙옙占쏙옙
 						result = 0;
 					}
 				}
 			} catch (Exception e) {
-				System.out.print("���� ����");
+				System.out.print("占쏙옙占쏙옙 占쏙옙占쏙옙");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
@@ -179,7 +179,7 @@ public class MemberDAO {
 	   
 	   
 	   
-	// �α��� �ѻ���� �׷� ������ �б⸮
+	// 占싸깍옙占쏙옙 占싼삼옙占쏙옙占� 占쌓뤄옙 占쏙옙占쏙옙占쏙옙 占싻기리
 			public ArrayList<Integer> getMyGroupList(String MEMBER_ID) {
 				ArrayList<Integer> glList = new ArrayList<Integer>();
 				
@@ -187,7 +187,7 @@ public class MemberDAO {
 				try {
 					con = getConnection();
 					
-					// ���̵�� �׷��� �ҷ�����
+					// 占쏙옙占싱듸옙占� 占쌓뤄옙占쏙옙 占쌀뤄옙占쏙옙占쏙옙
 					String sql = "select GROUP_ID from MEMBER_JOIN_GROUP where MEMBER_ID =?";
 					
 					psmt = con.prepareStatement(sql);
@@ -219,7 +219,7 @@ public class MemberDAO {
 
 	   
 	   
-// ȸ�� ������ ���� �޼��� ------�¿�----------------------------
+// 회占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 ------占승울옙----------------------------
 
 	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, 
 			   String MEMBER_GENDER, String MEMBER_BIRTH, int OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
@@ -279,7 +279,7 @@ public class MemberDAO {
 
 	   
 	   
-// ȸ�����Խ� ���̵� �ǽð� �˻�...---------�¿�------------------------------
+// 회占쏙옙占쏙옙占쌉쏙옙 占쏙옙占싱듸옙 占실시곤옙 占싯삼옙...---------占승울옙------------------------------
 	   public int checkID(String idCheck) {
 		   int result = -1;
 		   
@@ -316,12 +316,12 @@ public class MemberDAO {
 	   
 
 	
-	// ģ�� ����� �̾ƿ���;��ϴ� �޼��� -----���� ---------------------
+	// 친占쏙옙 占쏙옙占쏙옙占� 占싱아울옙占쏙옙槁占쏙옙求占� 占쌨쇽옙占쏙옙 -----占쏙옙占쏙옙 ---------------------
 	public ArrayList printFriendList(String MEMBER_ID, String MEMBER_NAME, String MEMBER_BIRTH, String MEMBER_PHONE, String MEMBER_IMG){
 		 
 
 		String sql = "SELECT MEMBER_IMG, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = 'asdfasdf'";
-		//�α��μ��� ���̵� �޾ƿͼ� �ֱ�.
+		//占싸깍옙占싸쇽옙占쏙옙 占쏙옙占싱듸옙 占쌨아와쇽옙 占쌍깍옙.
 		ArrayList arList = new ArrayList();
 		
 		HttpSession session = null;
@@ -332,19 +332,19 @@ public class MemberDAO {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
-				// ģ������Ʈ�� �ɰ��� str�� ����ְ�
+				// 친占쏙옙占쏙옙占쏙옙트占쏙옙 占심곤옙占쏙옙 str占쏙옙 占쏙옙占쏙옙斂占�
 				String[] str = rs.getString(9).split(",");
 				System.out.println(str);
 				
-				// str���� b�� �ִ��� �˾ƺ���
+				// str占쏙옙占쏙옙 b占쏙옙 占쌍댐옙占쏙옙 占싯아븝옙占쏙옙
 				for(int i=0; i<arList.size(); i++){
-					// ���� b�� �ִٸ� memberVO��ü�� ���� rs���� ������ arList�� add
+					// 占쏙옙占쏙옙 b占쏙옙 占쌍다몌옙 memberVO占쏙옙체占쏙옙 占쏙옙占쏙옙底� rs占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 arList占쏙옙 add
 					if(str[i] == MEMBER_ID) {	
 						MemberVO mdo = new MemberVO();
 					arList.add(mdo.getMEMBER_NAME());					
 					
 				}else{
-					System.out.println("ģ���� �����ϴ�.");
+					System.out.println("친占쏙옙占쏙옙 占쏙옙占쏙옙占싹댐옙.");
 				}	
 			}								
 		}
@@ -358,7 +358,7 @@ public class MemberDAO {
 		return arList;	
 	}
 	
-	   // ģ����� ���ͼ� ģ�������� �Ѱ��ֱ� ����ver....
+	   // 친占쏙옙占쏙옙占� 占쏙옙占싶쇽옙 친占쏙옙占쏙옙占쏙옙占쏙옙 占싼곤옙占쌍깍옙 占쏙옙占쏙옙ver....
 	   public ArrayList<MemberVO> getFriendList(String MEMBER_ID){
 	       
 	      String myFrinds ="";
@@ -377,7 +377,7 @@ public class MemberDAO {
 	               
 	               myFrinds = rs.getString("FRIENDS_LIST");
 	               
-	               // ģ����� ����� �����ۼ��ϴ°� ������ db�� ���� ����������� �����Ƿ�,,,�ݾƹ���.,,
+	               // 친占쏙옙占쏙옙占� 占쏙옙占쏙옙占� 占쏙옙占쏙옙占쌜쇽옙占싹는곤옙 占쏙옙占쏙옙占쏙옙 db占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙占실뤄옙,,,占쌥아뱄옙占쏙옙.,,
 //	               try {
 //	                  if(rs != null)
 //	                  if(psmt != null) psmt.close();
@@ -385,7 +385,7 @@ public class MemberDAO {
 //	               } catch (SQLException e) {
 //	                  e.printStackTrace();
 //	               }
-	               //ģ�� �������� ������ �÷�������..
+	               //친占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占시뤄옙占쏙옙占쏙옙占쏙옙..
 	               String[] str = myFrinds.split(",");
 	               for(int i = 1; i < str.length; i++){
 	                  getMyFriendsSql+= "or MEMBER_ID=?";
@@ -423,7 +423,7 @@ public class MemberDAO {
 	      return myfriendsList;   
 	   }
 	   
-	 //ȸ�������� ��������;���---------------����--------------------------------
+	 //회占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙槁占쏙옙占�---------------占쏙옙占쏙옙--------------------------------
 	   public ArrayList<MemberVO> myInfo(String MEMBER_ID){
 	      String sql = "select MEMBER_IMG, MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH from MEMBER where MEMBER_ID = ? ";
 	      
@@ -435,7 +435,7 @@ public class MemberDAO {
 	            psmt.setString(1, MEMBER_ID);
 	            rs = psmt.executeQuery();
 	            
-	            //�̷����ϸ��� rs.getstring(1)�� �̹��� 2�� �̸� 3�� ��ȭ��ȣ 4�� ������ ���´�.
+	            //占싱뤄옙占쏙옙占싹몌옙占쏙옙 rs.getstring(1)占쏙옙 占싱뱄옙占쏙옙 2占쏙옙 占싱몌옙 3占쏙옙 占쏙옙화占쏙옙호 4占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占승댐옙.
 	            while(rs.next()){
 	               MemberVO mvo = new MemberVO();
 	               mvo.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
@@ -444,7 +444,7 @@ public class MemberDAO {
 	               mvo.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
 	                 arList.add(mvo);
 	            }
-	            //arList�� �̹��� �̸� ����ȣ ������ ���´�.
+	            //arList占쏙옙 占싱뱄옙占쏙옙 占싱몌옙 占쏙옙占쏙옙호 占쏙옙占쏙옙占쏙옙 占쏙옙占승댐옙.
 	         
 	      } catch (Exception e) {
 	      }finally {
@@ -492,7 +492,7 @@ public class MemberDAO {
 		      return str;
 		   }
 
-// ȸ������ �迭�� ���� ȸ���� ���� ��ȯ�ϴ� �Լ�, �迭�� ��ȯ�ϸ� ���´� ����+�̸����� ����
+// 회占쏙옙占쏙옙占쏙옙 占썼열占쏙옙 占쏙옙占쏙옙 회占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙환占싹댐옙 占쌉쇽옙, 占썼열占쏙옙 占쏙옙환占싹몌옙 占쏙옙占승댐옙 占쏙옙占쏙옙+占싱몌옙占쏙옙占쏙옙 占쏙옙占쏙옙
 	   public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList)
 	   {
 		   ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
@@ -508,7 +508,7 @@ public class MemberDAO {
 			   {
 				   for(int i = 0; i < memberList.size(); i++)
 				   {
-					   // memberList�� ID�� member_id���� ���ٸ� member ��ü �����ؼ� arrList�� �߰�
+					   // memberList占쏙옙 ID占쏙옙 member_id占쏙옙占쏙옙 占쏙옙占쌕몌옙 member 占쏙옙체 占쏙옙占쏙옙占쌔쇽옙 arrList占쏙옙 占쌩곤옙
 					   if(rs.getString(1).equals(memberList.get(i)))
 					   {
 						   MemberVO member = new MemberVO();
@@ -543,16 +543,16 @@ public class MemberDAO {
 		   return arrList;
 	   }
 
-///////////////////////////////////////////////////////////////////���� ��й�ȣ ����.
+///////////////////////////////////////////////////////////////////占쏙옙占쏙옙 占쏙옙橘占싫� 占쏙옙占쏙옙.
 	   
 	   public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String chkpwd){
 		   
 		   
 		   
 		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
-		   // ?���� �������� �޾ƿ� ���̵� �ְ� ��й�ȣ�� �޾ƿ´����� �޾ƿ� ��й�ȣ�� �����й�ȣ �Է¶��̶� ���ؼ� ������ �ι��� ���������� �Ѿ�� ��й�ȣ�� �ٲ��ش�.
+		   // ?占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙占싱듸옙 占쌍곤옙 占쏙옙橘占싫ｏ옙占� 占쌨아온댐옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙占싻뱄옙호 占쌉력띰옙占싱띰옙 占쏙옙占쌔쇽옙 占쏙옙占쏙옙占쏙옙 占싸뱄옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占싼어가占쏙옙 占쏙옙橘占싫ｏ옙占� 占쌕뀐옙占쌔댐옙.
 		   String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
-		   //1���� ?���� �ٲ� ��й�ȣ�� �ְ�  2���� ? ���� ���̵� �������� �޾Ƴִ´�.
+		   //1占쏙옙占쏙옙 ?占쏙옙占쏙옙 占쌕뀐옙 占쏙옙橘占싫ｏ옙占� 占쌍곤옙  2占쏙옙占쏙옙 ? 占쏙옙占쏙옙 占쏙옙占싱듸옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아넣는댐옙.
 		   int result = 0;
 		   
 		   try {
@@ -576,18 +576,18 @@ public class MemberDAO {
 				result = psmt.executeUpdate();
 				
 				if(result ==1 ){
-					System.out.println("��й�ȣ�� ��ġ�մϴ�");
+					System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙치占쌌니댐옙");
 				}else{
-					System.out.println("��й�ȣ�� ��ġ���� �ʽ��ϴ�.");
+					System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙치占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
 				}
 				
 			
 		}else{
-			System.out.println("��й�ȣ�� ���� ���� �ʽ��ϴ�.");
+			System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
 		}
-		}//while ������ ��.
+		}//while 占쏙옙占쏙옙占쏙옙 占쏙옙.
 		}else{
-			System.out.println("������ ��й�ȣ�� ���� ���� �ʽ��ϴ�.");
+			System.out.println("占쏙옙占쏙옙占쏙옙 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
 		}
 
 		} catch (Exception e) {
@@ -602,10 +602,10 @@ public class MemberDAO {
        }
 		return result;
  }
-///////////////////////////���� ȸ��Ż��.////////////////////////
+///////////////////////////占쏙옙占쏙옙 회占쏙옙탈占쏙옙.////////////////////////
 		   public int outUser(String MEMBER_ID){
 			   
-//			   SimpleDateFormat outDate = new SimpleDateFormat("yyyy�� MM��dd�� HH��mm��");
+//			   SimpleDateFormat outDate = new SimpleDateFormat("yyyy占쏙옙 MM占쏙옙dd占쏙옙 HH占쏙옙mm占쏙옙");
 //			   Date date = new Date();
 //			   String today = outDate.format(date);
 			   
@@ -637,7 +637,7 @@ public class MemberDAO {
 			   
 			   return result;
 		   }
-/////////////////////////////////ȸ������ �� ��////////////////////////////////////////
+/////////////////////////////////회占쏙옙占쏙옙占쏙옙 占쏙옙 占쏙옙////////////////////////////////////////
 		   public int changeInfo(String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_BIRTH, String MEMBER_ID){
 			   String changeInfo = "UPDATE MEMBER set MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? where MEMBER_ID =?";
 			   int result = 0;
@@ -652,11 +652,11 @@ public class MemberDAO {
 				result = psmt.executeUpdate();
 				
 				if(result != 1){
-					System.out.println("ȸ�� �����Ǿ���.");
-					System.out.println("��");
+					System.out.println("회占쏙옙 占쏙옙占쏙옙占실억옙占쏙옙.");
+					System.out.println("占쏙옙");
 				}else{
-					System.out.println("ȸ�� �����ȵǾ���.");
-					System.out.println("��2");
+					System.out.println("회占쏙옙 占쏙옙占쏙옙占싫되억옙占쏙옙.");
+					System.out.println("占쏙옙2");
 				}
 				
 			} catch (Exception e) {
@@ -675,7 +675,7 @@ public class MemberDAO {
 			   
 		   }
 		  		   
-////////////////////////////////�̹��� ������ ���躸�� ���� �ϱ�.//////////////////////////////////////
+////////////////////////////////占싱뱄옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占썼보占쏙옙 占쏙옙占쏙옙 占싹깍옙.//////////////////////////////////////
 		public int changeImg(String MEMBER_ID, String MEMBER_IMG){
 			String changepwd = "update MEMBER set MEMBER_IMG = ? where MEMBER_ID = ?";
 			int result = 0;
@@ -703,9 +703,11 @@ public class MemberDAO {
 				return result;
 			
 		}
-///////////////////ģ����Ͽ��� ģ�� �߰��ϱ�/////////////////////////////////////////
-		public ArrayList<MemberVO> addFriends(String userPhone){
-			//ģ�� ��ȭ��ȣ�� ������ ģ���� �����´�.
+
+///////////////////친구목록에서 친구찾기/////////////////////////////////////////
+		public ArrayList<MemberVO> findFriends(String userPhone){
+			//친구 전화번호를 가지고 친구를 가져온다.
+
 			String addFriend = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG from MEMBER where MEMBER_PHONE = ?";
 			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 			try {
@@ -723,11 +725,8 @@ public class MemberDAO {
 					member.setMEMBER_ID(rs.getString(1));
 					
 					arList.add(member);
-					System.out.println(rs.getString(1));
-					System.out.println(rs.getString(2));
-					System.out.println(rs.getString(3));
-					System.out.println(rs.getString(4));
-					System.out.println(rs.getString(5));
+					
+				
 			
 				}
 			} catch (Exception e) {
@@ -744,20 +743,83 @@ public class MemberDAO {
 			
 			return arList;
 		}	
+		/////////////////////////////친구를 추가하기./////////////////////////////
+		public ArrayList<MemberVO> plusFriend(String userPhone, String MEMBER_ID){
+			int result = 0;
+			String findMyFriend = "select FRIENDS_LIST from MEMBER where MEMBER_ID=?";
+			String searchUserId = "select MEMBER_ID from MEMBER where MEMBER_PHONE=?";
+			String plusUser = "update MEMBER set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			   //1번쨰 ?에는 친구아이디를 넣는다 ','해서 넣어야함. 두번째 ? 에는 세션받아온 아이디를 넣는다.
+			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(findMyFriend);
+			psmt.setString(1, MEMBER_ID);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				//이게 나의 친구목록이 쭉나온다.
+//				MemberVO mvo = new MemberVO();
+//				for(int i=0; i < arList.size(); i++){
+//					mvo.setMEMBER_ID(rs.getString(i));
+//				}
+				
+				
+				String myList = rs.getString(1);
+				psmt = con.prepareStatement(searchUserId);
+				psmt.setString(1, userPhone);
+				rs = psmt.executeQuery();
+			while(rs.next()){
+			//세션을 받아서 아이디넣고 그 친구 목록을 뽑아온다음에 그 친구목록 에 , 추가해서 
+				if(findMyFriend != rs.getString(1)){
+				psmt = con.prepareStatement(plusUser);
+				psmt.setString(1, myList + ',' + rs.getString(1));
+				psmt.setString(2, MEMBER_ID);
+				result = psmt.executeUpdate();
+				
+				while(rs.next()){
+					MemberVO member = new MemberVO();
+					member.setMEMBER_IMG(rs.getString(5));
+					member.setMEMBER_NAME(rs.getString(2));
+					member.setMEMBER_BIRTH(rs.getString(3));
+					member.setMEMBER_PHONE(rs.getString(4));
+					member.setMEMBER_ID(rs.getString(1));
+					
+					arList.add(member);
+				}
+				
+				}else{
+					System.out.println("이미 친구가 있습니다.");
+					
+				}
+				
+			
+			}
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+            try {
+                if(rs != null)rs.close();
+                if(psmt != null) psmt.close();
+                if(con != null) con.close();
+             } catch (SQLException e) {
+             }
+       }
 		
 		
 		
+			return arList;
+		}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		public void deleteFriend(){
+			String deleteFriend = "";
+			
+			
+		}
 	}
 
 		
