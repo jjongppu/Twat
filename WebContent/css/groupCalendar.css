@@ -256,7 +256,8 @@
        width: 30%;
        height: 100%;
        float: left;
-       background-color: gray;
+/*       background-color: gray;*/
+       background-color: white;
    }
 
     .right-top
@@ -264,6 +265,25 @@
         width: 100%;
         height: 50%;
         line-height: 45px;
+    }
+
+    .stateOK
+    {
+        color: limegreen;
+        font-weight: bold;
+    }
+
+    .stateNO
+    {
+        color: crimson;
+        font-weight: bold;
+    }
+
+    .stateYET
+    {
+/*        color: #dddd55;*/
+        color: dimgray;
+        font-weight: bold;
     }
 
     .right-bottom
@@ -355,4 +375,20 @@
         display: inline-block;
         border: 1px solid black;
 /*        box-shadow: 5px 5px 5px;*/
+    }
+
+    .commentBox
+    {
+        border: 1px solid gray;
+    }
+
+    .commentWriter
+    {
+        display: inline-block;
+        font-weight: bold;
+    }
+
+    .commentMemo
+    {
+        display: inline-block;
     }

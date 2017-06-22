@@ -1,11 +1,15 @@
 package com.twat.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.twat.dao.MemberDAO;
 
 /**
  * Servlet implementation class DeleteFriend
@@ -34,8 +38,39 @@ public class DeleteFriend extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
+		response.setCharacterEncoding("UTF-8");
+	    response.setContentType("application/json;");
+	    response.setHeader("Cache-Control", "no-cache");
+	    request.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+	    
+	    String userPhone = request.getParameter("findPhoneNumber");
+	    
+	    
+	    MemberDAO mdo = MemberDAO.getInstance();
+	    //친구목록 배열에있는걸 ,스플릿으로 나눠서 맞는거를 삭제 
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	}
 
 }
