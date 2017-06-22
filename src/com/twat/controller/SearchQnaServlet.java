@@ -51,7 +51,7 @@ public class SearchQnaServlet extends HttpServlet {
 	    
 	    HttpSession session = request.getSession();
 	    String qnaId = (String)session.getAttribute("loginUserId");
-	    String searchCategory = request.getParameter("searchCategory");
+	    int searchCategory = Integer.parseInt(request.getParameter("searchCategory"));
 	    String searchBox = request.getParameter("searchBox");
 	    
 	    QnaDAO qnaDao = QnaDAO.getInstance();
@@ -60,7 +60,7 @@ public class SearchQnaServlet extends HttpServlet {
 	    PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
-		
+		System.out.println(arList.size());
 		if(arList.size() > 0) {
 			for(int i = 0; i < arList.size(); i++) {
 				QnaVO qvo = arList.get(i);
