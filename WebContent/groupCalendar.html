@@ -1450,7 +1450,8 @@
                         // 0 / 0 / 0 처리
                         if(data[arrCal].member_choice.indexOf(",") == -1)
                         {
-                            strA += "<span class='stateOK'>참석: 1</span> / <span class='stateNO'>불참: 0</span> / <span class='stateYET'>" + (groupMemberCount - 1) +"</span>";
+//                            strA += "<span class='stateOK'>참석: 1</span> / <span class='stateNO'>불참: 0</span> / <span class='stateYET'>" + (groupMemberCount - 1) +"</span>";
+                            strA += "<span class='stateOK'>가능 : 1</span> / <span class='stateNO'>불가능 : -</span>";
                         }
                         else
                         {
@@ -1473,7 +1474,8 @@
                                     countStateOK.add(stateCount[i].split("-")[1]);
                                 }
                             }
-                            strA += "<span class='stateOK'>가능: " + (countStateOK.size - countStateNO) + "</span> / <span class='stateNO'>불가능: " + countStateNO + "</span> / <span class='stateYET'>" + (groupMemberCount - countStateOK.size) + "</span>";
+//                            strA += "<span class='stateOK'>가능: " + (countStateOK.size - countStateNO) + "</span> / <span class='stateNO'>불가능: " + countStateNO + "</span> / <span class='stateYET'>" + (groupMemberCount - countStateOK.size) + "</span>";
+                            strA += "<span class='stateOK'>가능 : " + (countStateOK.size - countStateNO) + "</span> / <span class='stateNO'>불가능 : " + countStateNO + "</span>";
                         }
                         strA += '</div>';
                         strA += '<div class="right-bottom">';
@@ -1843,7 +1845,71 @@
                         if(data[i].cal_depth == 0)
                         {
                             voteString += "<div id='voteListBox'>";
-                            if(voteDateCount == 1)
+                            if(login_userId.match(group_master))
+                            {
+//                                var groupMemberSet = new Set();
+//                                console.log(memberList);
+                                var ImpossibleCount = 0;
+                                var possibleCount = 0;
+                                
+                                if(voteDateCount == 1)
+                                {
+                                    for(var i = 0; i < memberList.length; i++)
+                                    {
+                                        if(memberList[i].split("-")[0].match("00000000"))
+                                        {
+                                            ImpossibleCount++;
+                                        }
+                                        else if(memberList[i].split("-")[0].match(voteObject.cal_date))
+                                        {
+                                            possibleCount++;
+                                        }
+                                    }
+                                    
+                                    voteString += "<input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0,4) + "년 " + voteObject.cal_date.substr(4,2) + "월 " + voteObject.cal_date.substr(6,2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
+                                    if(ImpossibleCount == 0)
+                                    {
+                                        voteString += "-명";
+                                    }
+                                    else
+                                    {
+                                        voteString += ImpossibleCount + "명";
+                                    }
+                                    voteString += " </span>]<br>";
+                                }
+                                else
+                                {
+                                    for (let item of voteDateSet.keys())
+                                    {
+                                        ImpossibleCount = 0;
+                                        possibleCount = 0;
+                                        
+                                        for(var i = 0; i < memberList.length; i++)
+                                        {
+                                            if(memberList[i].split("-")[0].match("00000000"))
+                                            {
+                                                ImpossibleCount++;
+                                            }
+                                            else if(memberList[i].split("-")[0].match(item))
+                                            {
+                                                possibleCount++;
+                                            }
+                                        }
+                                        
+                                        voteString += "<input type='radio' id='' name='masterSelected' value='" + item + "'> " + item.substr(0,4) + "년 " + item.substr(4,2) + "월 " + item.substr(6,2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
+                                        if(ImpossibleCount == 0)
+                                        {
+                                            voteString += "-명";
+                                        }
+                                        else
+                                        {
+                                            voteString += ImpossibleCount + "명";
+                                        }
+                                        voteString += " </span>]<br>";
+                                    }
+                                }
+                            }
+                            else if(voteDateCount == 1)
                             {
                                 voteString += "<div class='voteList' id='voteList" + voteObject.cal_date + "' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(0,4) + "년 " + voteObject.cal_date.substr(4,2) + "월 " + voteObject.cal_date.substr(6,2) + "일</div>";
                             }
@@ -1896,7 +1962,10 @@
                                 if(memberList[j].split("-")[1].match(login_userId) && !memberList[j].split("-")[0].match("00000000"))
                                 {
 //                                    console.log(memberList[j]);
-                                    addMemberVoteList(parseInt(memberList[j].split("-")[0]));
+                                    if(!login_userId.match(group_master))
+                                    {
+                                        addMemberVoteList(parseInt(memberList[j].split("-")[0]));
+                                    }
                                 }
         //                        console.log(memberList[i].substr(8));
 //                                scheduleString += findMemberName(memberList[j].substr(8));
@@ -1909,7 +1978,7 @@
 //                                    voteString += ", ";
 //                                }
                             }
-                            console.log(voteMemberSet);
+//                            console.log(voteMemberSet);
                             if(voteDateCount > 1)
                             {
 //                                voteString += "님 외 " + voteMemberSet.size + "명</div>";
@@ -1944,21 +2013,22 @@
                     if(login_userId.match(group_master))
                     {
                         // 방장전용
-                        voteBox ="<input type='button' value='투표하기' onclick='selectVoteList(" + cal_num + ")'/>";
+                        voteBox ="<input type='button' value='결정하기' onclick='selectVoteList(" + cal_num + ")'/>";
                     }
                     else
                     {
                         // 일반유저
                         voteBox ="<input type='button' value='투표하기' onclick='addVoteList(" + cal_num + ")'/>";
-                    }
-                    
-                    for (let item of voteMemberSet.keys())
-                    {
-                        if(item.match(login_userId))
+                        
+                        for (let item of voteMemberSet.keys())
                         {
-                            voteBox ="<input type='button' value='수정하기' onclick='addVoteList(" + cal_num + ")'/>";
+                            if(item.match(login_userId))
+                            {
+                                voteBox ="<input type='button' value='수정하기' onclick='addVoteList(" + cal_num + ")'/>";
+                            }
                         }
                     }
+                    
                     
                     $(".modalSchduleInfo").html(voteString);
                     $("#voteButtonBox").html(voteBox);
@@ -2017,7 +2087,7 @@
         {
             if(login_userId.match(group_master))
             {
-                alert("아직 방장은 투표 몬함!!!");
+                alert("방장은 투표하면 안됩니다!!!");
                 return;
             }
             
@@ -2058,7 +2128,48 @@
                     console.log(data);
                     alert("투표가 반영되었습니다!");
                     $("#modal2").css("display", "none");
-                   
+//                    getGroupInfo();
+                    window.location.reload(true);
+                }
+                , error: function (req) {
+                    //                    alert('통신실패');
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            })
+        }
+        // 방장 투표날짜 정하기
+        function selectVoteList(cal_num)
+        {
+            if(!login_userId.match(group_master))
+            {
+                alert("방장아니면 결정 못합니다!!!");
+                return;
+            }
+//            else if(memberVoteListSet.size != 1)
+//            {
+//                alert("1개의 날짜만 선택하세요!!!");
+//            }
+            var masterCheck = $(':radio[name="masterSelected"]:checked').val();
+            
+            if(masterCheck == null)
+            {
+                alert("날짜를 선택하세요!!!");
+                return;
+            }
+//            console.log(masterCheck);
+            
+            $.ajax({
+                type: 'post'
+                , url: 'scheduleSelected.do'
+                , data: {
+                    calNum : cal_num,
+                    calDate : masterCheck
+                }
+                , dataType: "json"
+                , success: function (data) {
+                    console.log(data);
+                    
+                    window.location.reload(true);
                 }
                 , error: function (req) {
                     //                    alert('통신실패');
@@ -2085,15 +2196,25 @@
 //                console.log(member_choice);
                 var memSplit = member_choice.split(",");
 //                var memSplit = new Array(member_choice.split(","));
-//                console.log(memSplit);
+                console.log(memSplit);
+                var matchCount = 0;
                 
                 for(var i = 0; i < memSplit.length; i++)
                 {
-                    if(memSplit[i].indexOf('-') >= 0)
+                    if(memSplit[i].indexOf('-') >= 0 && !memSplit[i].split("-")[0].match("00000000"))
+//                    if(memSplit[i].indexOf('-') >= 0)
                     {
                         return false;
                     }
-                        
+                    else if(memSplit[i].indexOf('-') >= 0 && memSplit[i].split("-")[0].match("00000000"))
+                    {
+                        matchCount++;
+                    }
+                }
+                
+                if(memSplit.length == matchCount)
+                {
+                    return false;
                 }
 //                var dateSplit;
 //                var count = 0;
