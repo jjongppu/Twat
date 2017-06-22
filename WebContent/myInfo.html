@@ -47,15 +47,17 @@
             height: 460px;
         }
         #userImg{
-            width: 160px;
-            height: 160px;
+            width: 180px;
+            height: 180px;
             margin: auto;
             display: block; 
+            border-radius: 180px;
             border: 1px solid black;
+            overflow: hidden;
         }
         #uImg{
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             margin: auto;
             cursor: pointer;
             border: 1px solid black;
@@ -161,48 +163,54 @@
                 url:"PersonalServlet.do",
                 datatype:"json",
                 success: function(data){
-                        $("#uImg").val(data[0].MEMBER_IMG);
-                        $('#userName').val(data[0].MEMBER_NAME);
-                        $('#userPhone').val(data[0].MEMBER_PHONE);
-                        $('#userBirth').val(data[0].MEMBER_BIRTH);                  
+                    console.log(data);
+                    $("#uImg").attr("src",data[0].MEMBER_IMG);
+                    $('#userName').val(data[0].MEMBER_NAME);
+                    $('#userPhone').val(data[0].MEMBER_PHONE);
+                    $('#userBirth').val(data[0].MEMBER_BIRTH);                  
                 }
             });
         //////////////////////////정보변경/////////////////////////////////////////        
             function changeInfo(){
-                 $.ajax({
-                type:"post",
-                url:"ChangeInfo.do",
-                datatype:"json",
-                data: $('#changeInfo').serialize(),
-                success: function(data){
-                    var result = data[0].result;
-                        if(result != 'success'){
-                        	alert("정보가 변경되었습니다.");
-                            $("#uImg").val(data[0].MEMBER_IMG);
-                            $('#userName').val(data[0].MEMBER_NAME);
-                            $('#userPhone').val(data[0].MEMBER_PHONE);
-                            $('#userBirth').val(data[0].MEMBER_BIRTH);
-                            location.href='myInfo.html';
+//                 $.ajax({
+//                type:"post",
+//                url:"ChangeInfo.do",
+//                datatype:"json",
+//                data: $('#changeInfo').serialize(),
+//                success: function(data){
+//                    var result = data[0].result;
+//                        if(result != 'success'){
                             
-                        }else{
-                            alert("정보변경 실패");
-                        }
+             
+
+
+                            
+                            
+                            
+                            
+//                            alert("정보가 변경되었습니다.");
+//                            $("#uImg").attr("src",data[0].MEMBER_IMG);
+//                            $('#userName').val(data[0].MEMBER_NAME);
+//                            $('#userPhone').val(data[0].MEMBER_PHONE);
+//                            $('#userBirth').val(data[0].MEMBER_BIRTH);
+                            
+                            
+                            
+                            
+                                    //////////////////////////사진 변경/////////////////////
+                            
+//                            location.href='myInfo.html';
+                            
+                            
+//                        }else{
+//                            alert("정보변경 실패");
+//                        }
                 }
-            });
-                $.ajax({
-                type:"post",
-                url:"PersonalServlet.do",
-                datatype:"json",
-                data: $('#changeInfo').serialize(),
-                
-                success: function(data){
-                        $("#uImg").val(data[0].MEMBER_IMG);
-                        $('#userName').val(data[0].MEMBER_NAME);
-                        $('#userPhone').val(data[0].MEMBER_PHONE);
-                        $('#userBirth').val(data[0].MEMBER_BIRTH);                  
-                }
-            });
-        }
+//            });
+               
+//            }
+                     
+                     
         
         ////////////////비밀번호 변경///////////////////////////////////////////////////
 //                var nowPwd = document.getElementById('nowPwd').value;
@@ -249,52 +257,8 @@
                     }
                 })
             }
-        //////////////////////////사진 변경/////////////////////
-//         function changeImg(){
-//            $.ajax({
-//                type:"post",
-//                url:"changeImg.do",
-//                data:$('#chImg').serialize(),
-//                success:function(data){
-//                    var result = data[0].result;
-//                    if(result == 'success'){
-//                        alert("사진변경이 완료되었습니다.");
-//                    }else{
-//                        alert("사진 변경이 실패하였습니다");
-//                    }
-//            });
-//        } 
-//         function changeImg(){
-//             var myImg = document.getElementById('upLoad');
-//             var fileName = myImg.value;
-//             var fileNameLen = fileName.length;
-//             var dotPositiion = fileName.split('.');
-//             var extension = fileName.substring(12, fileNameLen);
-//             console.log(extension);
-//             if(fileName != ''){
-//                 alert('사진 형식이 맞습니다.');
-//                $.ajax({
-//                    type:"post",
-//                    url:"changeImg.do",
-//                    data: $('#chImg').serialize(),
-//                    success: function(data){
-//                        var result = data[0].result;
-//                        console.log(extension);
-//                        var out = '';
-//                        out += '<img src="img/member/"'+extension+'"" id="uImg" name="uImg"/>';
-//                        out += '<input type="file" id="upLoad" name="upLoad"/>';
-//                        out += '<input id="uploadfile" type="button" value="사진변경" onclick="changeImg();"/>';
-//                    }
-//                })    
-////                 if(extension == 'jpg' || extension =='jpeg' || extension == 'png' || extension =='gif'){
-////                     console.log("2");
-//             }else{
-//                     alert('사진 형식이 아닙니다.');
-//                 }
-//              
-//         }
 
-        
+
 
 
 
@@ -335,13 +299,11 @@
             <div class="userInfo"> 
                 <div class="userInfo2">
                     <div id="userImg">
-                        <form method="post" id="chImg" action="changeImg.do">
-                            <img src="" id="uImg" name="uImg"/>
-<!--
+                            <img src="" id="uImg"/>
+
                             <input type="file" id="upLoad" name="upLoad"/>
                             <input id="uploadfile" type="button" value="사진변경" onclick="changeImg();"/>
 -->
-                        </form>
                     </div>
                     <input type="text" id="userName" name="userName">
                     <input type="text" id="userPhone" name="userPhone">
@@ -372,5 +334,94 @@
         </div>
             </div>
             </div>
+    
+    
+    
+    
+    	<form id="formTag" enctype="multipart/form-data">
+		  <input type="file"  id="attachFile" name="attachFile"/>
+		
+		  <div onclick="test()" id="submitBtn">text</div>
+		
+	
+	   </form>
+    
+    
+    <script>
+    
+//        var option = {
+//            type : 'POST',
+//            url : '/uploadImage.json',
+//            dataType : 'json',
+//            success : function(data) {
+//            // 적절한 callback 함수 정의
+//            }
+//        };
+//        $('#formTag').ajaxSubmit(option);
+//        
+//        
+//        
+        
+        
+//        function test(){
+//                           
+////        var formData = new FormData();
+////        formData.append("uploadfile",$("input[name=uploadfile]")[0].files[0]);
+//         var form = $('#formTag')[0];
+//         var formData = new FormData(form);
+//
+//             $.ajax({
+//                url: 'changMemberImg.do',
+//                processData: false,
+//                contentType: false,
+//                data: formData,
+//                type: 'POST',
+//                success: function(result){
+//                    console.log(result);
+//                }
+//            });
+//        }
+
+         function test(){
+//            var data = new FormData();
+//            $.each($('#attachFile')[0].files, function(i, file) {          
+//                data.append('file-' + i, file);
+//            });
+//             
+//            $.ajax({
+//                url: '/upload.action',
+//                type: "post",
+//                dataType: "text",
+//                data: data,
+//                // cache: false,
+//                processData: false,
+//                contentType: false,
+//                success: function(data, textStatus, jqXHR) {
+//                    alert(data);
+//                }, error: function(jqXHR, textStatus, errorThrown) {}
+//            });
+             
+             var formdata = new FormData();
+             var form = $('#formTag')[0];
+            formdata.append("img", form);
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("POST", "changMemberImg.do");  
+            xhr.send(formdata);
+             
+             
+             
+             
+        }
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </body>
 </html>

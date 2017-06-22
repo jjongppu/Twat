@@ -48,7 +48,7 @@ public class DeleteFriend extends HttpServlet {
 	    
 	    
 	    MemberDAO mdo = MemberDAO.getInstance();
-	    
+	    //친구목록 배열에있는걸 ,스플릿으로 나눠서 맞는거를 삭제 
 	    
 	    
 	    
