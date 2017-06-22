@@ -113,14 +113,17 @@ public class QnaDAO {
 	
 	
 	// 건의사항 제목으로 찾기 ----------------승우----------------------------
-	public ArrayList<QnaVO> searchQnA(String searchCategory, String searchBox) {
+	public ArrayList<QnaVO> searchQnA(int searchCategory, String searchBox) {
 		
 		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
 		QnaVO qnaVo = new QnaVO();
 		// 1 = 제목 / 제목으로 검색하기
-		if(searchCategory == "1") {
+		System.out.println("1");
+		if(searchCategory == 1) {
 			String selectSql = "select * from qna where QNA_TITLE = ?";
-			
+			// LIKE 수정중 쿼리문 맞는데 슈발
+//			String selectSql = "select * from qna where QNA_TITLE LIKE '%?%'";
+			System.out.println("2");
 			try {
 				con = getConnection();
 				psmt = con.prepareStatement(selectSql);
@@ -133,7 +136,6 @@ public class QnaDAO {
 
 					// 여기 수정
 					qnaVo.setQNA_ID(rs.getInt(1));
-//					System.out.println(rs.getInt(1));
 					qnaVo.setMEMBER_ID(rs.getString(2));
 					qnaVo.setQNA_CATEGORY(rs.getString(3));
 					qnaVo.setQNA_PW(rs.getInt(4));
@@ -143,8 +145,6 @@ public class QnaDAO {
 					qnaVo.setQNA_REPLY(rs.getString(8));
 					
 					arList.add(qnaVo);
-
-
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -163,7 +163,7 @@ public class QnaDAO {
 			}   
 			
 		// 2 = 글 내용 / 글 내용으로 검색하기
-		} else if(searchCategory == "2") {
+		} else if(searchCategory == 2) {
 			String selectSql = "select * from qna where QNA_CONTENTS = ?";
 			
 			try {
@@ -175,7 +175,16 @@ public class QnaDAO {
 				rs = psmt.executeQuery();
 				
 				while(rs.next()) {
+					qnaVo.setQNA_ID(rs.getInt(1));
+					qnaVo.setMEMBER_ID(rs.getString(2));
+					qnaVo.setQNA_CATEGORY(rs.getString(3));
+					qnaVo.setQNA_PW(rs.getInt(4));
+					qnaVo.setQNA_TITLE(rs.getString(5));
+					qnaVo.setQNA_CONTENTS(rs.getString(6));
+					qnaVo.setQNA_DATE(rs.getTimestamp(7));
+					qnaVo.setQNA_REPLY(rs.getString(8));
 					
+					arList.add(qnaVo);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -206,7 +215,16 @@ public class QnaDAO {
 				rs = psmt.executeQuery();
 				
 				while(rs.next()) {
+					qnaVo.setQNA_ID(rs.getInt(1));
+					qnaVo.setMEMBER_ID(rs.getString(2));
+					qnaVo.setQNA_CATEGORY(rs.getString(3));
+					qnaVo.setQNA_PW(rs.getInt(4));
+					qnaVo.setQNA_TITLE(rs.getString(5));
+					qnaVo.setQNA_CONTENTS(rs.getString(6));
+					qnaVo.setQNA_DATE(rs.getTimestamp(7));
+					qnaVo.setQNA_REPLY(rs.getString(8));
 					
+					arList.add(qnaVo);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
