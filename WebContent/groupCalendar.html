@@ -1112,8 +1112,8 @@
         //        
         //        var scheSet = new Set();
         function getDayInfo(a) { // 선택한 날짜 정보를 얻기 위한 함수
-            console.log(login_userId);
-            console.log(group_master);
+//            console.log(login_userId);
+//            console.log(group_master);
             
             if (a != null) {
                 var yearInfo = $("#yearSelect").val() + "";
@@ -1419,7 +1419,7 @@
                     //                    data[0].group_name;
                     //                    data[0].group_date;
                     group_master = data[0].group_master;
-                    console.log(group_master);
+//                    console.log(group_master);
                     //                    data[0].group_master_name;
                     //                    data[0].group_img;
                     //                    data[0].group_count;
@@ -1689,7 +1689,7 @@
                         }
                         
                     }
-                    console.log("birthSet");
+//                    console.log("birthSet");
                     for (let item of birthSet.keys()) {
 //                        console.log(item.split("-"));
 //                        console.log("split : " + item.split("-")[0].substr(2, 4));
@@ -1761,7 +1761,7 @@
                         // 댓글창
 //                        scheduleString += "<div id='CommentBox'>";
                         
-                        console.log(data[i].cal_depth);
+//                        console.log(data[i].cal_depth);
     //                    console.log(scheduleString);
     //                    console.log(memberList);
                     }
@@ -1836,7 +1836,7 @@
 //                        console.log(voteDateList);
                         
                     }
-                    console.log(voteDateCount);
+//                    console.log(voteDateCount);
                     
                     for(var i = 0; i < data.length; i++)
                     {
@@ -1993,7 +1993,7 @@
             {
                 memberVoteListSet.add(date);
                 $("#voteList" + date).css("backgroundColor", "antiquewhite");
-                console.log("등록 : " + date);
+//                console.log("등록 : " + date);
             }
             console.log(memberVoteListSet);
         }
