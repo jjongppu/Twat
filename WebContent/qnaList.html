@@ -48,23 +48,96 @@
 	</style>
 	
 	<script>
-		function qnaSearchEnter() {
-			$.ajax ({
-                type : 'post',
-                url : 'SearchQna.do',
-                data : $('#qnaListForm').serialize(),
-                dataType : "json",
-                success : function(data) {
-                    console.log(data);
-                    var result = data[0].result;
-
-                    console.log(result);
-					
-                },
-                error: function(req) {
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+		// 건의사항 첫 페이지 리스트 뽑기
+		function getList(page) {
+        nowPage = page;
+        var notfind = '0';
+        $.ajax ({
+            type : 'post',
+            url : 'QnaGetList.do',
+            dataType : "json",
+            data: {page : page , val : notfind } ,
+            success : function(data) {
+                console.log(data);
+                var userInfos = "";
+                for(var i=0; i< data.length;i++){
+                    var num = page*10+i+1-10;
+                    if(i%2 !=0){
+                        userInfos += '<li>';
+                    }else{
+                        userInfos += '<li>';    
+                    }
+                    
+                    userInfos += '<span>'+num+'</span>';
+                    userInfos += '<span>'+ data[i].QNA_CATEGORY +'</span>';
+                    userInfos += '<span>'+ data[i].QNA_TITLE +'</span>';
+                    userInfos += '<span>'+ data[i].MEMBER_ID +'</span>';
+                    userInfos += '<span>'; 
+                    userInfos += data[i].QNA_DATE.substring(0,10);
+                    userInfos += '</span>';
+					// 조회수 추가 해야함
+                    userInfos += '</li>';
                 }
-            });  
+                $('#contentListWrapUl').html(userInfos);
+                
+//				페이지 수 생기는 부분 추후 수정
+//                var page_viewList = Paging(data[0].QNA_ID, 10, 10 ,nowPage, "PagingView");
+//                $("#addPageCover").empty().html(page_viewList);
+
+                
+            }, error: function (req) {
+                
+                console.log(req);
+            }
+        });
+    }
+		
+		
+		// 건의사항 검색 후 결과 .... 연결만 해놓음
+		function qnaSearchEnter(page) {
+			nowPage = page;
+        var pages =1;
+        if(page >pages){
+            pages = page;
+        }
+		$.ajax ({
+			type : 'post',
+			url : 'QnaGetList.do',
+			dataType : "json",
+			data: {searchCategory : $('#searchCategory').val(), page : pages ,val : $('#searchText').val()} ,
+			success : function(data) {
+				console.log(data);
+				var userInfos = "";
+					for(var i=0; i< data.length;i++){
+						var num = pages*10+i+1-10;
+						if(i%2 !=0){
+							userInfos += '<li>';
+						}else{
+							userInfos += '<li>';    
+						}
+
+						userInfos += '<span>'+num+'</span>'; // 글번호
+						userInfos += '<span>'+ data[i].QNA_CATEGORY +'</span>'; // 카테고리
+						userInfos += '<span>'+ data[i].QNA_TITLE +'</span>'; // 제목
+						userInfos += '<span>'+ data[i].MEMBER_ID +'</span>'; // 작성자
+						userInfos += '<span>'; 
+						userInfos += data[i].QNA_DATE.substring(0,10); // 날짜
+						userInfos += '</span>';
+						// 조회수 추가 해야함
+						userInfos += '</li>';
+					}
+					$('#inputMemberinfo').html(userInfos);
+				
+//				페이지 수 생기는 부분 추후 수정
+//				var page_viewList2 = Paging2(data[0].QNA_ID, 10, 10 ,pages, "S");
+//				$("#addPageCover").empty().html(page_viewList2);
+
+
+			}, error: function (req) {
+
+				console.log(req);
+			}
+		});
 		}
 		
 	</script>
@@ -89,6 +162,7 @@
 		<div id="contentListWrap">
 <!--		글 목록 예시			-->
 			<ul id="contentListWrapUl">
+<!--	여기에다가 추가 할거야
 				<li>
 					<span class="listNum">1</span>
 					<span class="listCate">불만사항</span>
@@ -97,6 +171,7 @@
 					<span class="listDate">06-18</span>
 					<span class="listViewNum">0</span>
 				</li>
+-->
 			</ul>
 		</div>
 		<div>
@@ -116,7 +191,7 @@
 					<option value="2">글 내용</option>
 					<option value="3">글 작성자</option>
 				</select>
-				<input type="text" name="searchBox" />
+				<input type="text" name="searchBox" id="searchText"/>
 				<input type="button" value="검색" onclick="qnaSearchEnter()"/>
 			</div>
 		</form>
