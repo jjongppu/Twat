@@ -1893,6 +1893,11 @@
                             
                             for(var j = 0; j < memberList.length; j++)
                             {
+                                if(memberList[j].split("-")[1].match(login_userId) && !memberList[j].split("-")[0].match("00000000"))
+                                {
+//                                    console.log(memberList[j]);
+                                    addMemberVoteList(parseInt(memberList[j].split("-")[0]));
+                                }
         //                        console.log(memberList[i].substr(8));
 //                                scheduleString += findMemberName(memberList[j].substr(8));
 //                                voteString += findMemberName(memberList[j]);
@@ -1935,7 +1940,25 @@
 //                    voteString += "</div>"; // CommentBox
                     
                     // 상황에 따라 다르게 보여줌
-                    var voteBox ="<input type='button' value='투표하기' onclick='addVoteList(" + cal_num + ")'/>";
+                    var voteBox = "";
+                    if(login_userId.match(group_master))
+                    {
+                        // 방장전용
+                        voteBox ="<input type='button' value='투표하기' onclick='selectVoteList(" + cal_num + ")'/>";
+                    }
+                    else
+                    {
+                        // 일반유저
+                        voteBox ="<input type='button' value='투표하기' onclick='addVoteList(" + cal_num + ")'/>";
+                    }
+                    
+                    for (let item of voteMemberSet.keys())
+                    {
+                        if(item.match(login_userId))
+                        {
+                            voteBox ="<input type='button' value='수정하기' onclick='addVoteList(" + cal_num + ")'/>";
+                        }
+                    }
                     
                     $(".modalSchduleInfo").html(voteString);
                     $("#voteButtonBox").html(voteBox);
@@ -1947,6 +1970,14 @@
                 , error: function (req) {
                     //                    alert('통신실패');
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+                , complete: function ()
+                {
+                    for (let item of memberVoteListSet.keys())
+                    {
+//                        addMemberVoteList(item);
+                        $("#voteList" + item).css("backgroundColor", "antiquewhite");
+                    }
                 }
             })
         }
@@ -1962,6 +1993,7 @@
             {
                 memberVoteListSet.add(date);
                 $("#voteList" + date).css("backgroundColor", "antiquewhite");
+                console.log("등록 : " + date);
             }
             console.log(memberVoteListSet);
         }
@@ -2024,6 +2056,8 @@
                 , dataType: "json"
                 , success: function (data) {
                     console.log(data);
+                    alert("투표가 반영되었습니다!");
+                    $("#modal2").css("display", "none");
                    
                 }
                 , error: function (req) {
