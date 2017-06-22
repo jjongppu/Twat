@@ -37,14 +37,14 @@
             border: 1px solid pink;
             margin: auto;
             margin-top: 20px;
-            width: 380px;
+            width: 500px;
             height: 460px;
         }
         #userIn{
             border: 1px solid red;
-            margin: auto;
+            
             margin-top: 20px;
-            width: 360px;
+            width: 450px;
             height: 110px;
             cursor: pointer;
         }
@@ -64,22 +64,26 @@
             display: inline-block;
             margin-left: 120px;
             margin-top: 5px;
+            padding-top: 10px;
+            padding-left: 10px;
         }
         #userBirth{
             border: 1px solid gray;
             width: 100px;
             height: 45px;
             margin-left: 120px;
-            margin-top: 5px;
+            
             display: inline-block;
             text-align: center;
+            padding-top: 3px;
         }
         #userPhone{
             border: 1px solid gray;
-            width: 120px;
+            width: 140px;
             height: 45px;
             text-align: center;
             display: inline-block;
+            
         }
         .center_cover{
             width: 505px;
@@ -158,7 +162,7 @@
         }
         #findUserPhone{
             border: 1px solid gray;
-            width: 120px;
+            width: 130px;
             height: 45px;
             text-align: center;
             display: inline-block;
@@ -205,7 +209,66 @@
             height: 150px;
             
         }
-        
+        #delFriend{
+            width: 50px;
+            height: 50px;
+            
+        }
+        #dUser{
+/*            width: 500px;*/
+/*            height: 500px;*/
+/*            border: 1px solid red;*/
+            position: absolute;
+            top: 100px;
+            left: 450px;
+        }
+        .user1{
+            width: 300px;
+            height: 450px;
+            border: 5px solid aqua;
+        }
+        #user3{
+            width: 150px;
+            height: 150px;
+            border: 5px solid yellow;
+            margin: auto;
+            margin-top: 30px;
+        }
+        #ch{
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+        #uName{
+            width: 150px;
+            height: 30px;
+            border: 1px solid red;
+            text-align: center;
+            margin: auto;
+            margin-top: 20px;
+        }
+        #uPhone{
+            width: 150px;
+            height: 30px;
+            border: 1px solid red;
+            text-align: center;
+            margin: auto;
+            margin-top: 20px;
+        }
+        #uBirth{
+            width: 150px;
+            height: 30px;
+            border: 1px solid red;
+            text-align: center;
+            margin: auto;
+            margin-top: 20px;
+        }
+        #btndelFriend{
+            width: 150px;
+            height: 30px;
+            text-align: center;
+            margin-left: 75px;
+            margin-top: 20px;
+        }
     </style>
     <script>
         /////친구 목록 가져오기.
@@ -220,15 +283,14 @@
                 
                 
                 for(var i=0; i < data.length; i++){
-                    
                     out += '<div id="userIn" onclick="detailUser();">';
                     out += '<div id="userImg"></div>';
                     out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
                     out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
                     out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
                     out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
-                    out += '</div></div>';
-                    out += '</div></div>';
+                    out += '<input type="button" onclick="deleteFriend()" id="delFriend" value="삭제"></div>';
+                    
                 }
                 document.getElementById('personal').innerHTML = out;
             }
@@ -279,7 +341,27 @@
 //                        }else{
 //                            alert("정보변경 실패");
 //                        }
-                    
+                    $(document).keyup(function(e) {
+                if (e.keyCode == 27) {
+                }
+            });
+                }
+            });
+            
+        }
+        function detailUser(){
+            
+             $.ajax({
+                type: "post", 
+                url: "FindFriendservlet.do",
+                data:
+                    { findPhoneNumber:$('#findPhoneNumber').val()},
+                dataType:"json",
+                success: function (data){
+                    console.log(data);
+                    $('#uName').html(data[0].MEMBER_NAME);
+                    $('#uPhone').html(data[0].MEMBER_PHONE);
+                    $('#uBirth').html(data[0].MEMBER_BIRTH);
                 }
             });
         }
@@ -355,8 +437,24 @@
             </div>
             
 <!--        </div>-->
-     </form>      
+     </form>  
     
+        <div id="dUser">
+            <div class="user1"> 
+                <div class="user2">
+                    <div id="user3">
+                        <form method="post" id="ch" action="">
+                            <img src="img/member/basis_photo.png" id="uI" name="uI"/>
+                        </form>
+                    </div>
+                        <div id="uName" name="userName"></div>
+                        <div id="uPhone" name="userPhone"></div>
+                        <div id="uBirth" name="userBirth"></div>
+                    <input type="button" value="친구 삭제" id="btndelFriend">
+                    
+                </div>
+            </div>
+        </div>
     
 </body>
 </html>

@@ -354,7 +354,7 @@ public class AdminDAO {
 				con = getConnection();
 				
 				psmt = con.prepareStatement(selectGroupCount);
-				if(!val.equals("0")){
+				if(!val.equals("0")) {
 					psmt.setString(1, "%"+val+"%");
 				}
 				rs = psmt.executeQuery();

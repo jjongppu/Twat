@@ -708,6 +708,7 @@ public class MemberDAO {
 		public ArrayList<MemberVO> findFriends(String userPhone){
 			//친구 전화번호를 가지고 친구를 가져온다.
 
+
 			String addFriend = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG from MEMBER where MEMBER_PHONE = ?";
 			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 			try {
@@ -808,18 +809,14 @@ public class MemberDAO {
              }
        }
 		
-		
+	
 		
 			return arList;
 		}
 		
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
-		public void deleteFriend(){
-			String deleteFriend = "";
-			
-			
-		}
+		
 	}
 
 		
