@@ -304,7 +304,7 @@ public class CalendarDAO
 			con = getConnection();
 			String sql = "SELECT CAL_NUM FROM calendar where CAL_DATE LIKE ? AND GROUP_ID = ? AND CAL_MEMO = ?";
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, first_cal + "%");
+			psmt.setString(1, "%" + first_cal + "%");
 			psmt.setInt(2, group_id);
 			psmt.setString(3, cal_memo);
 			
