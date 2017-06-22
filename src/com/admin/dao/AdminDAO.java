@@ -400,5 +400,59 @@ public class AdminDAO {
 			
 		}
 		
+		// kind 가 1이면 게시글,댓글,그룹 삭제 2면 댓글,게시글 삭제,
+		   public int outGroup(String group_ID, int kind){
+				PreparedStatement psmt= null;
+				ResultSet rs= null;
+				//그룸삭제 쿼리
+			   String deleteGroupSql = "DELETE FROM CALGATHER WHERE GROUP_ID =?";
+			   //게시글 댓글 삭제 쿼리
+			   String deleteContentSql = "DELETE FROM CALENDAR WHERE GROUP_ID =?";
+			   // 정규화테이블 삭제 쿼리
+			   String deleteJoinMemSql = "DELETE FROM MEMBER_JOIN_GROUP WHERE GROUP_ID =?";
+			   int result = 0;
+			   
+			   try {
+				con = getConnection();
+				//게시글 댓글 삭제
+				psmt = con.prepareStatement(deleteContentSql);
+				psmt.setString(1, group_ID);
+				int res = psmt.executeUpdate();
+				
+				//정규화 테이블 삭제
+				result = 1;
+				if( kind ==1){
+					psmt = con.prepareStatement(deleteJoinMemSql);
+					psmt.setString(1, group_ID);
+					int res2 = psmt.executeUpdate();
+					
+				// 그룹도 삭제 하기
+					result = 2;
+					psmt = con.prepareStatement(deleteGroupSql);
+					psmt.setString(1, group_ID);
+					int res3 = psmt.executeUpdate();
+					
+					if(res3 == 1){
+						result = 3;
+					}
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs != null)
+	                if(psmt != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	            	 e.printStackTrace();
+	             }
+	       }
+			   
+			   return result;
+		   }
+		
+		
 		
 }
