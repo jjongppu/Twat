@@ -1214,7 +1214,7 @@
             para = para[1].split("=");
             $.ajax({
                 type: 'post'
-                , url: 'groupCal.do'
+                , url: 'myCal.do'
                 , data: {
                     group: para[1]
                 }
@@ -1228,6 +1228,7 @@
                     document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
                     $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
                     document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
+                    
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
                         var str = "";
                         var str2 = data[arrCal].cal_date;
@@ -1247,8 +1248,16 @@
                             }
                         }
                         str += '</div>';
-                        str += '<div class="middle"><div class="up">' + data[arrCal].cal_memo + '</div><div class="down"><span>' + data[arrCal].cal_writer + '님</span><span>외 ' + data[0].group_count + '명 참여</span>';
-                        str += '</div></div><div class="right"><div class="up"></div><div class="down"></div></div></div>';
+                        str += '<div class="middle"><div class="up">' + data[arrCal].cal_memo + '</div>'; 
+                        str += '<div class="down"><span>' + data[arrCal].cal_writer + '님</span>';
+                        str += '<span>외 ' + data[0].group_count + '명 참여</span>';
+                        str += '</div>';
+                        str += '</div>';
+                        str += '<div class="right">';
+                        str += '<div class="up"></div>';
+                        str += '<div class="down"></div>';
+                        str += '</div>';
+                        str += '</div>';
                         if (str2.indexOf(',') == -1) {
                             $(".schedule").append(str);
                         }
