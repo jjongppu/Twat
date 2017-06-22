@@ -113,7 +113,7 @@
 /*        ///////////////////////////////////////////////////////////////////////////////////////////////*/
         /*        모달창 css 매긴곳.*/
         #realFriend{
-/*            display: none;*/
+            display: none;
             position: fixed;
             transform: translate(-50%, -50%);
             top: 40%;
@@ -166,8 +166,7 @@
         }
         #modalAddFriend{
             width: 500px;   
-            height: 500px;
-            border: 1px solid red;
+            
         }
         #findFriend{
             text-align: center;
@@ -179,7 +178,7 @@
             
         }
         #findPhoneNumber{
-            width: 300px;
+            width: 350px;
             height: 40px;
             margin-left: 25px;
             margin-top: 20px;
@@ -191,6 +190,20 @@
         #findUserIn{
             margin-top: 20px;
             margin-left: 25px;
+            
+        }
+        #btnAddFriend{
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            position: absolute;
+            top: 150px;
+            
+        }
+        #findedFriend{
+            width: 470px;
+            height: 150px;
+            
         }
         
     </style>
@@ -223,59 +236,58 @@
             
         });
 //           /////친구 추가하기.
-//        function addfriend(){
-//            $('#realFriend').css('display','inline-block');
+//        function addFriend(){
+//            $('#realFriend').css('display','none');
 //            $('#realFriend').append('<div id="modalAddFriend"><div id="findFriend">친구의 핸드폰번호를 입력하세요</div><input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber"><input type="submit" value="검색" onclick="findUserFriend()" id="findButton"></div>');
 //        }
-//        
-//        function findUserFriend(){
-//            
-//                $.ajax({
-//                type: "post", 
-//                url: "addFriendservlet.do",
-//                data:$('#realFriend').serialize(),
-//                dataType:"json",
-//                success: function (data){
-//                    
-//                    var out = "";
-////                        out += '<form method="post" id="findUser">';
-//                        out += '<div id="findUserIn">';
-//                        out += '<div id="findedFriend">';
-//                        out += '<img src="'+ data[0].MEMBER_IMG +'" id="findUserImg">';
-//                        out += '<div id="findUserName">"'+ data[0].MEMBER_NAME +'"</div>';
-//                        out += '<div id="findUserBirth">"'+ data[0].MEMBER_BIRTH +'"</div>';
-//                        out += '<div id="findUserPhone">"'+ data[0].MEMBER_PHONE +'"</div>';
-//                        out += '</div></div>';
-////                        out += '</form>';
-//                    console.log(out);
-//                   $('#findUser1').html(out);
-//                    }
-//                    
-//                });
-//            }
+        function addFriend(){
+            $('#realFriend').css('display','inline-block');
+//            $('#modalAddFriend').append('<div id="modalAddFriend"><div id="findFriend">친구의 핸드폰번호를 입력하세요</div><input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber"><input type="button" value="검색" onclick="findUserFriend()" id="findButton"></div>');
+        }
+        
+
        function findUserFriend(){
            $.ajax({
                 type: "post", 
-                url: "addFriendservlet.do",
-//                data:$('#realFriend').serialize(),
+                url: "FindFriendservlet.do",
                 data:
                     { findPhoneNumber:$('#findPhoneNumber').val()},
                 dataType:"json",
                 success: function (data){
                     console.log(data);
                     $('#findUserName').html(data[0].MEMBER_NAME);
-//                    $('#findUserName').html(d)
                     $('#findUserPhone').html(data[0].MEMBER_PHONE);
                     $('#findUserBirth').html(data[0].MEMBER_BIRTH);
-                    
-                },error: function(req){
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
        }
+        //////////////////////////////////////////////////
+        function plusFriend(){
+            $.ajax({
+                type: "post", 
+                url: "PlusUserServlet.do",
+                data:$('#findPhoneNumber').serialize(),
+//                data:
+//                    { findPhoneNumber:$('#findPhoneNumber').val()},
+                dataType:"json",
+                success: function (data){
+                    console.log(data);
+//                    if(result != 'success'){
+                        	alert("친구가 추가되었습니다.");
+//                            location.href='friends.html';
+                    window.location.reload();
+//                        }else{
+//                            alert("정보변경 실패");
+//                        }
+                    
+                }
+            });
+        }
+        
     </script>
     
 <body>
+    
     <div id="wrap">
     <nav class="left_nav">
         <div id="userInfo">
@@ -304,16 +316,15 @@
                 <div id="cont2">
                     <div id="cont3">
                         <form id="personal" method="post">
-                               
- 
-                         </form> 
-                         <div class="center_cover">
+
+                        </form> 
+                        <div class="center_cover">
                             <div class="group_Cover">
                                 <div id="addGroup">
                                     
                                     
                             	<form id="addFriend" method="post">
-                            	    <div id="addFriendBtn" onclick="addfriend()">
+                            	    <div id="addFriendBtn" onclick="addFriend()">
                                         <img id="plusImg" src="img/etcIcon/plus.png"/>
                                     </div>
                             	</form>
@@ -330,20 +341,20 @@
     <form id="realFriend" name="findPhoneNumber" method="post">
         <div id="modalAddFriend">
             <div id="findFriend">친구의 핸드폰번호를 입력하세요</div>
-            
-                <input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber">
-                <input type="button" value="검색" onclick="findUserFriend()" id="findButton">
-            
+            <input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber">
+            <input type="button" value="검색" onclick="findUserFriend()" id="findButton">
+        </div>
             <div id="findUserIn">
                 <div id="findedFriend">
                     <img src="img/member/basis_photo.png" id="findUserImg">
                     <div id="findUserName"></div>
                     <div id="findUserBirth"></div>
                     <div id="findUserPhone"></div>
+                    <input type="button" value="친구추가" onclick="plusFriend()" id="btnAddFriend">
                 </div>
             </div>
             
-        </div>
+<!--        </div>-->
      </form>      
     
     
