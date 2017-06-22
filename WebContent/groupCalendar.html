@@ -1414,6 +1414,7 @@
                 , dataType: "json"
                 , success: function (data) {
                     console.log(data);
+                    var groupMemberCount = data[0].group_count + 1;
                     //                    data[0].group_id;
                     //                    data[0].group_name;
                     //                    data[0].group_date;
@@ -1445,7 +1446,36 @@
                         strA += '</div>'; // div-down
                         strA += '</div>'; // div-up
                         strA += '<div class="right">';
-                        strA += '<div class="right-top"></div>';
+                        strA += '<div class="right-top">';
+                        // 0 / 0 / 0 처리
+                        if(data[arrCal].member_choice.indexOf(",") == -1)
+                        {
+                            strA += "<span class='stateOK'>참석: 1</span> / <span class='stateNO'>불참: 0</span> / <span class='stateYET'>" + (groupMemberCount - 1) +"</span>";
+                        }
+                        else
+                        {
+                            var stateCount = data[arrCal].member_choice.split(",");
+                            var countStateNO = 0;
+                            var countStateOK = new Set();
+                            
+                            for(var i = 0; i < stateCount.length; i++)
+                            {
+                                if(stateCount[i].indexOf("-") == -1)
+                                {
+                                    countStateOK.add(stateCount[i]);
+                                }
+                                else
+                                {
+                                    if(stateCount[i].split("-")[0].match("00000000"))
+                                    {
+                                        countStateNO++;
+                                    }
+                                    countStateOK.add(stateCount[i].split("-")[1]);
+                                }
+                            }
+                            strA += "<span class='stateOK'>가능: " + (countStateOK.size - countStateNO) + "</span> / <span class='stateNO'>불가능: " + countStateNO + "</span> / <span class='stateYET'>" + (groupMemberCount - countStateOK.size) + "</span>";
+                        }
+                        strA += '</div>';
                         strA += '<div class="right-bottom">';
                         var strB = "";
                         strB += '</div>';
