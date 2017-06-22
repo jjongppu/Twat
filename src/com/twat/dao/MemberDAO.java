@@ -703,9 +703,12 @@ public class MemberDAO {
 				return result;
 			
 		}
-///////////////////친占쏙옙占쏙옙臼占쏙옙占� 친占쏙옙 占쌩곤옙占싹깍옙/////////////////////////////////////////
-		public ArrayList<MemberVO> addFriends(String userPhone){
-			//친占쏙옙 占쏙옙화占쏙옙호占쏙옙 占쏙옙占쏙옙占쏙옙 친占쏙옙占쏙옙 占쏙옙占쏙옙占승댐옙.
+
+///////////////////친구목록에서 친구찾기/////////////////////////////////////////
+		public ArrayList<MemberVO> findFriends(String userPhone){
+			//친구 전화번호를 가지고 친구를 가져온다.
+
+
 			String addFriend = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG from MEMBER where MEMBER_PHONE = ?";
 			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 			try {
@@ -723,11 +726,8 @@ public class MemberDAO {
 					member.setMEMBER_ID(rs.getString(1));
 					
 					arList.add(member);
-					System.out.println(rs.getString(1));
-					System.out.println(rs.getString(2));
-					System.out.println(rs.getString(3));
-					System.out.println(rs.getString(4));
-					System.out.println(rs.getString(5));
+					
+				
 			
 				}
 			} catch (Exception e) {
@@ -744,19 +744,78 @@ public class MemberDAO {
 			
 			return arList;
 		}	
+		/////////////////////////////친구를 추가하기./////////////////////////////
+		public ArrayList<MemberVO> plusFriend(String userPhone, String MEMBER_ID){
+			int result = 0;
+			String findMyFriend = "select FRIENDS_LIST from MEMBER where MEMBER_ID=?";
+			String searchUserId = "select MEMBER_ID from MEMBER where MEMBER_PHONE=?";
+			String plusUser = "update MEMBER set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			   //1번쨰 ?에는 친구아이디를 넣는다 ','해서 넣어야함. 두번째 ? 에는 세션받아온 아이디를 넣는다.
+			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(findMyFriend);
+			psmt.setString(1, MEMBER_ID);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				//이게 나의 친구목록이 쭉나온다.
+//				MemberVO mvo = new MemberVO();
+//				for(int i=0; i < arList.size(); i++){
+//					mvo.setMEMBER_ID(rs.getString(i));
+//				}
+				
+				
+				String myList = rs.getString(1);
+				psmt = con.prepareStatement(searchUserId);
+				psmt.setString(1, userPhone);
+				rs = psmt.executeQuery();
+			while(rs.next()){
+			//세션을 받아서 아이디넣고 그 친구 목록을 뽑아온다음에 그 친구목록 에 , 추가해서 
+				if(findMyFriend != rs.getString(1)){
+				psmt = con.prepareStatement(plusUser);
+				psmt.setString(1, myList + ',' + rs.getString(1));
+				psmt.setString(2, MEMBER_ID);
+				result = psmt.executeUpdate();
+				
+				while(rs.next()){
+					MemberVO member = new MemberVO();
+					member.setMEMBER_IMG(rs.getString(5));
+					member.setMEMBER_NAME(rs.getString(2));
+					member.setMEMBER_BIRTH(rs.getString(3));
+					member.setMEMBER_PHONE(rs.getString(4));
+					member.setMEMBER_ID(rs.getString(1));
+					
+					arList.add(member);
+				}
+				
+				}else{
+					System.out.println("이미 친구가 있습니다.");
+					
+				}
+				
+			
+			}
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+            try {
+                if(rs != null)rs.close();
+                if(psmt != null) psmt.close();
+                if(con != null) con.close();
+             } catch (SQLException e) {
+             }
+       }
 		
 	
 		
+			return arList;
+		}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		
 	}
 

@@ -60,7 +60,6 @@ public class PersonalServlet extends HttpServlet {
 	    		jsonArr.add(jsonOb);
 	    		
 	    	}
-	    	jsonArr.add(new JSONObject().put("a", "a"));
 	    }else{
 	    	JSONObject jsonob = new JSONObject();
 	    	jsonob.put("MEMBER_ID", "");
