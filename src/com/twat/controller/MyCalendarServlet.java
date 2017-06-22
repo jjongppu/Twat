@@ -17,8 +17,10 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.CalendarDAO;
 import com.twat.dao.CalgatherDAO;
+import com.twat.dao.MyCalendarDAO;
 import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
+import com.twat.dto.MyCalendarVO;
 
 @WebServlet("/myCal.do")
 public class MyCalendarServlet extends HttpServlet {
@@ -31,7 +33,7 @@ public class MyCalendarServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		RequestDispatcher dispatcher = request.getRequestDispatcher("groupCalendar.html");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("myCalendar.html");
 		dispatcher.forward(request, response);
 	}
 
@@ -46,30 +48,24 @@ public class MyCalendarServlet extends HttpServlet {
 
 		String member_id = (String) session.getAttribute("loginUserId");
 		
+		MyCalendarDAO myCalDao = MyCalendarDAO.getInstance();
+//		MyCalendarVO groupTitle = calgDao.getGroupInfo(request.getParameter("group"));
 		
-		
-		
-		CalgatherDAO calgDao = CalgatherDAO.getInstance();
-		CalgatherVO groupTitle = calgDao.getGroupInfo(request.getParameter("group"));
-		
-		if(groupTitle.getGroup_name() != null){
-			JSONObject groupInfo = new JSONObject();
+		if(member_id != null){
+			JSONObject mycalInfo = new JSONObject();
 			
-			groupInfo.put("group_id", groupTitle.getGroup_id());
-			groupInfo.put("group_name", groupTitle.getGroup_name());
-			groupInfo.put("group_date", groupTitle.getCreate_date());
-			groupInfo.put("group_master", groupTitle.getGroup_master());
-			groupInfo.put("group_master_name", groupTitle.getGroup_master_name());
-			groupInfo.put("group_img", groupTitle.getGroup_img());
-			groupInfo.put("group_count", groupTitle.getGroup_count());
-
-			group.add(groupInfo);
+//			groupInfo.put("group_id", groupTitle.getMy_cal_index());
+//			groupInfo.put("group_name", groupTitle.getGroup_name());
+//			groupInfo.put("group_date", groupTitle.getCreate_date());
+//			groupInfo.put("group_master", groupTitle.getGroup_master());
+//			groupInfo.put("group_master_name", groupTitle.getGroup_master_name());
+//			groupInfo.put("group_img", groupTitle.getGroup_img());
+//			groupInfo.put("group_count", groupTitle.getGroup_count());
+//
+//			group.add(groupInfo);
 		}
 		
-		
-		CalendarDAO calDao = CalendarDAO.getInstance();
-		
-		ArrayList<CalendarVO> arrList = calDao.getInfo(request.getParameter("group"));
+		ArrayList<MyCalendarVO> arrList = myCalDao.getInfo(request.getParameter("group"));
 //		ArrayList<CalendarVO> arrList = calDao.getInfo((String)session.getAttribute("loginUserId"));
 //		ArrayList<CalendarVO> arrList = calDao.getInfo("2");
 		
@@ -77,16 +73,16 @@ public class MyCalendarServlet extends HttpServlet {
 			for(int i = 0; i < arrList.size(); i++){
 				JSONObject groupSchedule = new JSONObject();
 				
-				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
-				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
-				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
-				//getCal_group
-				groupSchedule.put("cal_memo", arrList.get(i).getCal_memo());
-				groupSchedule.put("cal_writer", arrList.get(i).getCal_writer());
-				groupSchedule.put("state_icon", arrList.get(i).getState_icon());
-				groupSchedule.put("member_choice", arrList.get(i).getMember_choice());
-				groupSchedule.put("cal_reference", arrList.get(i).getCal_reference());
-				groupSchedule.put("cal_depth", arrList.get(i).getCal_depth());
+//				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
+//				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
+//				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
+//				//getCal_group
+//				groupSchedule.put("cal_memo", arrList.get(i).getCal_memo());
+//				groupSchedule.put("cal_writer", arrList.get(i).getCal_writer());
+//				groupSchedule.put("state_icon", arrList.get(i).getState_icon());
+//				groupSchedule.put("member_choice", arrList.get(i).getMember_choice());
+//				groupSchedule.put("cal_reference", arrList.get(i).getCal_reference());
+//				groupSchedule.put("cal_depth", arrList.get(i).getCal_depth());
 				
 				group.add(groupSchedule);
 			}
