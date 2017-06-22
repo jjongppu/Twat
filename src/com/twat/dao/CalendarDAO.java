@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -132,7 +133,7 @@ public class CalendarDAO
 				schedule.setCal_reference(rSet.getInt(9));
 				schedule.setCal_depth(rSet.getInt(10));
 				
-				System.out.println(schedule.toString());
+//				System.out.println(schedule.toString());
 				
 				arrList.add(schedule);
 			}
@@ -265,7 +266,7 @@ public class CalendarDAO
 			rs = psmt.executeQuery();
 			while(rs.next()){
 				cal_depth = rs.getInt("CAL_DEPTH"); 
-				System.out.println("깊이 : " + cal_depth);
+//				System.out.println("깊이 : " + cal_depth);
 			}
 			
 		} catch (Exception e) {
@@ -320,9 +321,9 @@ public class CalendarDAO
 			
 						
 			psmt2.setInt(1, getLastCalNum());	
-			System.out.println(psmt2.isClosed());
+//			System.out.println(psmt2.isClosed());
 			psmt2.setString(2, "");
-			System.out.println(psmt2.isClosed());
+//			System.out.println(psmt2.isClosed());
 			psmt2.setInt(3, group_id);
 			psmt2.setString(4, new_memo);
 			psmt2.setString(5,cal_writer);
@@ -415,6 +416,104 @@ public class CalendarDAO
 //		
 //	}
 //	
+	// 투표 일정 업데이트
+	public void updateMemberChoice(String calNum, String voteList, String user)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
+		
+		try
+		{
+			con = getConnection();
+			String sql = "select MEMBER_CHOICE from CALENDAR where CAL_NUM=?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(calNum));
+			
+			rSet = pstmt.executeQuery();
+			
+			String memberChoice = "";
+				
+			while(rSet.next())
+			{
+//				System.out.println(rSet.getString(1));
+				memberChoice = rSet.getString(1);
+			}
+			
+			TreeSet<String> memberSet = new TreeSet<String>();
+			
+			if(memberChoice.contains(","))
+			{
+				String[] result = memberChoice.split(",");
+				for (String string : result)
+				{
+//					System.out.println(string);
+					if(string.split("-")[1].equals(user))
+					{
+						System.out.println("string : " + string + ", user : " + user);
+//						memberSet.add(string);
+					}
+					else
+					{
+						memberSet.add(string);
+					}
+				}
+			}
+			else
+			{
+				memberSet.add(memberChoice);
+//				System.out.println(memberChoice);
+			}
+			
+			String[] result = voteList.split(",");
+			for (String string : result)
+			{
+//				System.out.println(string);
+				memberSet.add(string);
+			}
+			
+			String updateList = "";
+			
+			for (String string : memberSet)
+			{
+//				System.out.println(string);
+				updateList += string + ",";
+			}
+			
+			updateList = updateList.substring(0, updateList.length() - 1);
+//			System.out.println(updateList);
+			
+			String updateSql = "UPDATE CALENDAR SET MEMBER_CHOICE=? WHERE CAL_NUM=?";
+			// UPDATE calendar SET MEMBER_CHOICE='hi' WHERE CAL_NUM=5
+
+			pstmt = con.prepareStatement(updateSql);
+			pstmt.setString(1, updateList);
+			pstmt.setInt(2, Integer.parseInt(calNum));
+			
+			if(pstmt.executeUpdate() == 1)
+			{
+				System.out.println("성공 : " + updateList);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(rSet != null)rSet.close();
+				if(pstmt != null)pstmt.close();
+				if(con != null)con.close();
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	
 	

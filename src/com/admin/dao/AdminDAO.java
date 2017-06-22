@@ -453,6 +453,33 @@ public class AdminDAO {
 			   return result;
 		   }
 		
-		
+			// 관리자 답변달아주기 위한 메서드 ----------------------------------쫑길빵길
+			public int setQnaReply(String qna_id, String reply) {
+				PreparedStatement psmt= null;
+				String updateReplySql = "UPDATE QNA SET QNA_REPLY=? WHERE QNA_ID=?";
+				int result =0;
+				try {
+					con = getConnection();
+					psmt = con.prepareStatement(updateReplySql);
+					psmt.setString(1, reply);
+					psmt.setString(2, qna_id);
+					int res = psmt.executeUpdate();
+					
+					if(res == 1) {
+						result = 1;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+						try {
+							if(psmt != null) psmt.close();
+							if(con != null) con.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					
+				}
+				return result;
+			}
 		
 }

@@ -18,16 +18,16 @@ import com.twat.dao.MemberDAO;
 import com.twat.dto.MemberVO;
 
 /**
- * Servlet implementation class AddFriendservlet
+ * Servlet implementation class PlusUserServlet
  */
-@WebServlet("/FindFriendservlet.do")
-public class AddFriendservlet extends HttpServlet {
+@WebServlet("/PlusUserServlet.do")
+public class PlusUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddFriendservlet() {
+    public PlusUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,35 +50,39 @@ public class AddFriendservlet extends HttpServlet {
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
 	    
+	    
 		PrintWriter out = response.getWriter();
-		
-	    String friendId = request.getParameter("");
+		HttpSession session = request.getSession();
+	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
 	    String userPhone = request.getParameter("findPhoneNumber");
-	    System.out.print(userPhone);
+	    
 	    MemberDAO mdo = MemberDAO.getInstance();
-	    
-	    ArrayList<MemberVO> arList = mdo.findFriends(userPhone);
-	    
+	    ArrayList<MemberVO> arList = mdo.plusFriend(userPhone, MEMBER_ID);
+
 	    JSONArray jsonList = new JSONArray();
 	    if(arList.size() > 0){
 	    	for(int i = 0 ; i < arList.size(); i++){
 	    		JSONObject jsonOb = new JSONObject();
 	    		MemberVO mvo = arList.get(i);
+	    		
 	    		jsonOb.put("MEMBER_ID",mvo.getMEMBER_ID());
 	    		jsonOb.put("MEMBER_IMG", mvo.getMEMBER_IMG());
 	    		jsonOb.put("MEMBER_NAME", mvo.getMEMBER_NAME());
 	    		jsonOb.put("MEMBER_PHONE", mvo.getMEMBER_PHONE());
 	    		jsonOb.put("MEMBER_BIRTH", mvo.getMEMBER_BIRTH());
+	    		
 	    		jsonList.add(jsonOb);
+	    		
 	    	}
+	    	
 	    }else{
+	    	
 	    	JSONObject jsonob = new JSONObject();
 	    	jsonob.put("MEMBER_ID", "");
 	    	jsonList.add(jsonob);
 	    }
 	    
 	    out.print(jsonList.toJSONString());
-		
 	    
 	}
 
