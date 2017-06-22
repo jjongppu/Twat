@@ -1953,6 +1953,12 @@
         // 투표 등록!
         function addVoteList(cal_num)
         {
+            if(login_userId.match(group_master))
+            {
+                alert("아직 방장은 투표 몬함!!!");
+                return;
+            }
+            
 //            console.log(Array.from(memberVoteListSet).sort());
             var addVoteListSort = Array.from(memberVoteListSet).sort();
             var str = "";
