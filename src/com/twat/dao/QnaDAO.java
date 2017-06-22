@@ -262,6 +262,11 @@ public class QnaDAO {
 		// val = 검색어
 		
 		
+		// 1 = 제목 / 제목으로 검색하기
+		if(searchCategory == 1) {
+			
+		}
+		
 		
 		
 		
