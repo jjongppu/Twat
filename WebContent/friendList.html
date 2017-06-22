@@ -143,6 +143,7 @@
             display: inline-block;
             margin-left: 120px;
             margin-top: 5px;
+            color: white;
             
         }
         #findUserBirth{
@@ -153,6 +154,7 @@
             margin-top: 5px;
             display: inline-block;
             text-align: center;
+            color: white;
         }
         #findUserPhone{
             border: 1px solid gray;
@@ -160,6 +162,7 @@
             height: 45px;
             text-align: center;
             display: inline-block;
+            color: white;
         }
         #modalAddFriend{
             width: 500px;   
@@ -201,7 +204,6 @@
             success:function(data){
                 var result = data[0].result;
                 var out = '';
-                console.log(data);
                 
                 
                 for(var i=0; i < data.length; i++){
@@ -251,23 +253,28 @@
 //                    
 //                });
 //            }
-       function addfriend(){
+       function findUserFriend(){
            $.ajax({
                 type: "post", 
                 url: "addFriendservlet.do",
-                data:$('#realFriend').serialize(),
+//                data:$('#realFriend').serialize(),
+                data:
+                    { findPhoneNumber:$('#findPhoneNumber').val()},
                 dataType:"json",
                 success: function (data){
                     console.log(data);
+                    $('#findUserName').html(data[0].MEMBER_NAME);
+//                    $('#findUserName').html(d)
+                    $('#findUserPhone').html(data[0].MEMBER_PHONE);
+                    $('#findUserBirth').html(data[0].MEMBER_BIRTH);
                     
-                    
+                },error: function(req){
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
-           
-       })
+            });
+       }
     </script>
-    <style>
-
-    </style>
+    
 <body>
     <div id="wrap">
     <nav class="left_nav">
@@ -293,9 +300,6 @@
         </ul>
     </nav>
         <div id="main_container">
-            
-            
-            
              <div id="cont1">
                 <div id="cont2">
                     <div id="cont3">
@@ -320,15 +324,16 @@
                 </div>
             </div>
         </div>
-        
     </div>
 <!--    모달창 만들어-->
-<!--
-    <form id="realFriend" name="findPhoneNumber">
+
+    <form id="realFriend" name="findPhoneNumber" method="post">
         <div id="modalAddFriend">
             <div id="findFriend">친구의 핸드폰번호를 입력하세요</div>
-            <input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber">
-            <input type="submit" value="검색" onclick="findUserFriend()" id="findButton">
+            
+                <input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber">
+                <input type="button" value="검색" onclick="findUserFriend()" id="findButton">
+            
             <div id="findUserIn">
                 <div id="findedFriend">
                     <img src="img/member/basis_photo.png" id="findUserImg">
@@ -339,13 +344,8 @@
             </div>
             
         </div>
-           
-    </form>
-    <form id="findaddfriend">
+     </form>      
     
     
-    </form>
-        
--->
 </body>
 </html>

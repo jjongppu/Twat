@@ -51,10 +51,10 @@ public class AddFriendservlet extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession();
-	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
-	    String userPhone = request.getParameter("findPhoneNumber");
+		
 	    
+	    String userPhone = request.getParameter("findPhoneNumber");
+	    System.out.print(userPhone);
 	    MemberDAO mdo = MemberDAO.getInstance();
 	    
 	    ArrayList<MemberVO> arList = mdo.addFriends(userPhone);
@@ -64,21 +64,26 @@ public class AddFriendservlet extends HttpServlet {
 	    	for(int i = 0 ; i < arList.size(); i++){
 	    		JSONObject jsonOb = new JSONObject();
 	    		MemberVO mvo = arList.get(i);
-	    		jsonOb.put("MEMBER_ID",MEMBER_ID);
-	    		jsonOb.put("MEMBER_IMG", mvo.getMEMBER_IMG());
+	    		
+	    		jsonOb.put("MEMBER_ID",mvo.getMEMBER_ID());
+//	    		jsonOb.put("MEMBER_IMG", mvo.getMEMBER_IMG());
 	    		jsonOb.put("MEMBER_NAME", mvo.getMEMBER_NAME());
 	    		jsonOb.put("MEMBER_PHONE", mvo.getMEMBER_PHONE());
 	    		jsonOb.put("MEMBER_BIRTH", mvo.getMEMBER_BIRTH());
+	    		
 	    		jsonList.add(jsonOb);
 	    		
 	    	}
 	    	
 	    }else{
+	    	
 	    	JSONObject jsonob = new JSONObject();
 	    	jsonob.put("MEMBER_ID", "");
 	    	jsonList.add(jsonob);
 	    }
-	    out.print(jsonList);
+	    
+	    System.out.println(jsonList);
+	    out.print(jsonList.toJSONString());
 		
 	    
 	}

@@ -723,6 +723,7 @@ public class MemberDAO {
 					member.setMEMBER_ID(rs.getString(1));
 					
 					arList.add(member);
+					
 					System.out.println(rs.getString(1));
 					System.out.println(rs.getString(2));
 					System.out.println(rs.getString(3));
