@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
+import com.twat.dto.MyCalendarVO;
 
 public class MyCalendarDAO{
 	Connection con = null;
@@ -66,6 +67,45 @@ public class MyCalendarDAO{
 		}		
 	}
 	
+	
+	public ArrayList<MyCalendarVO> getInfo(String member_id){
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		ArrayList<MyCalendarVO> arrList = new ArrayList<MyCalendarVO>();
+		
+		try{
+			con = getConnection();
+//			String sql = "select * from CALENDAR where CAL_DEPTH=0 and GROUP_ID=?";
+			String sql = "select * from MY_CALENDAR where MEMBER_ID=?";
+			pstmt = con.prepareStatement(sql);
+//			pstmt.setInt(1, Integer.parseInt(member_id));
+			
+			rSet = pstmt.executeQuery();
+				
+			while(rSet.next()){
+				MyCalendarVO schedule = new MyCalendarVO();
+				schedule.setMy_cal_index(rSet.getInt(1));
+				schedule.setMember_id(rSet.getString(2));
+				schedule.setMy_write_time(rSet.getTimestamp(3));
+				schedule.setMy_cal_contents(rSet.getString(4));
+				schedule.setMy_cal_date(rSet.getString(5));
+				
+				arrList.add(schedule);
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		} finally {
+			try{
+				if(rSet != null)rSet.close();
+				if(pstmt != null)pstmt.close();
+				if(con != null)con.close();
+			}	catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return arrList;
+	}
 	
 	
 	

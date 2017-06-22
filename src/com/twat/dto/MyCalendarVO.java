@@ -19,6 +19,10 @@ public class MyCalendarVO {
 		this.my_cal_date = my_cal_date;
 	}
 
+	public MyCalendarVO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getMy_cal_index() {
 		return my_cal_index;
 	}

@@ -1068,6 +1068,7 @@
                         }
                     }
                 }
+                
             });
             voteMeeting(cal_date);
         }
@@ -1218,10 +1219,10 @@
             
 
             
-            
+            console.log(Array.from(scheSet).sort());
             
             var a = "";
-            //            console.log(scheSet);
+//                        console.log(scheSet.sort);
             for (let item of scheSet.keys()) console.log(item);
 //            scheSet = new Set();
         }
@@ -1433,7 +1434,7 @@
                         var str = "";
                         var strA = "";
                         strA += '</div>';
-                        strA += '<div class="middle" onclick="addComment(this)">';
+                        strA += '<div class="middle">';
                         strA += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
                         strA += '<div class="middle-bottom">';
                         strA += '<span>' + data[arrCal].cal_writer + '님</span>';
@@ -1793,11 +1794,15 @@
                     else
                     {
                         voteDateList = voteObject.cal_date.split(",");
+                        voteDateList = Array.from(voteDateList).sort();
                         for(var i = 0; i < voteDateList.length; i++)
                         {
                             voteDateSet.add(voteDateList[i]);
                         }
                         voteDateCount = voteDateSet.size;
+//                        voteDateList = Array.from(voteDateSet).sort();
+//                        console.log(voteDateList);
+                        
                     }
                     console.log(voteDateCount);
                     
@@ -1813,7 +1818,9 @@
                             else
                             {
                                 var yearTemp = voteObject.cal_date.substr(0,4);
+//                                var yearTemp = 
                                 var monthTEmp = voteObject.cal_date.substr(4,2);
+//                                var monthTEmp = voteObject.cal_date.substr(4,2);
                                 
 //                                console.log(yearTemp);
                                 voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
@@ -1827,12 +1834,14 @@
                                         monthTEmp = item.substr(4,2);
                                         voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
                                         voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
+                                        voteString += "<div class='voteList' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
                                     }
                                     else if(monthTEmp < item.substr(4,2))
                                     {
                                         voteString += "</div>";
                                         monthTEmp = item.substr(4,2);
                                         voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
+                                        voteString += "<div class='voteList' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
                                     }
                                     else
                                     {
@@ -1846,7 +1855,7 @@
                             voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div>";
                             voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div>";
                             voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0,4) + "년 " + voteObject.cal_date.substr(4,2) + "월 " + voteObject.cal_date.substr(6,2) + "일</div>";
-                            voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer + "님 외 ";
+                            voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer;
                             // 참가자 출력
                             var voteMemberSet = new Set();
                             
@@ -1864,7 +1873,12 @@
 //                                }
                             }
                             console.log(voteMemberSet);
-                            voteString += voteMemberSet.size + "명</div>";
+                            if(voteDateCount > 1)
+                            {
+//                                voteString += "님 외 " + voteMemberSet.size + "명</div>";
+                                voteString += "님 외 " + (voteMemberSet.size - 1) + "명";
+                            }
+                            voteString += "</div>";
                         }
                         else if(data[i].cal_depth > 0)
                         {
@@ -2102,10 +2116,14 @@
         function addComment(comment){
          
             console.log($(comment).children().eq(0).text());
-            var cal_memo = $(comment).children().eq(0).text();
+            //내용 : ㅁㅁㅁ
+            //5~
+            var cal_memo = $("#voteMemo").text().substr(5,$("#voteMemo").text().length-5);
             var group_id = location.href.split("=")[1];
-            var first_cal = $(comment).prev().text().split("~")[0];
-            var new_memo = "똥매려";
+            //일정 : 2017년 06월 27일
+            //      5 11 15
+            var first_cal = $("#voteDate").text().substr(5,4) + $("#voteDate").text().substr(11,2) + $("#voteDate").text().substr(15,2);
+            var new_memo = $("#commentContents").val();
             console.log(first_cal);
             
             $.ajax({
@@ -2135,7 +2153,7 @@
                  
             });
             
-            
+            location.reload();
 
         }
         
@@ -2353,7 +2371,8 @@
                     <div id="myComment"></div>
                 </div>
             </div>
-            <button id="confirm_button">확인</button>
+            <input type="text" placeholder="댓글을 입력하세요" id="commentContents"/>
+            <button id="confirm_button" onclick="addComment(this)">확인</button>
             <button class="js_close" onclick="closeModal2();">닫기</button> 
         </div>
     
