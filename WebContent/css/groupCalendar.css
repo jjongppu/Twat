@@ -356,3 +356,19 @@
         border: 1px solid black;
 /*        box-shadow: 5px 5px 5px;*/
     }
+
+    .commentBox
+    {
+        border: 1px solid gray;
+    }
+
+    .commentWriter
+    {
+        display: inline-block;
+        font-weight: bold;
+    }
+
+    .commentMemo
+    {
+        display: inline-block;
+    }

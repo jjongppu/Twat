@@ -27,7 +27,9 @@
         var memberVoteListSet = new Set();
         var initDay = new Date();
         var cal_date = "";
+        // 해당 방의 방장
         var group_master = "";
+        // 현재 로그인한 유저의 아이디
         var login_userId = "";
         /*음력 알고리즘..시작*/
         function gfnRight(strString, nSize) {
@@ -1721,8 +1723,8 @@
                         {
 //                            console.log("확인!");
                             
-                            commentsString += "<div id='commentWriter'>" + findMemberName(data[i].cal_writer) + "</div>";
-                            commentsString += "<div id='commentMemo'>\t" + data[i].cal_memo + "</div>";
+                            commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
+                            commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div></div>";
 //                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
                         }
                         
@@ -1813,7 +1815,7 @@
                             voteString += "<div id='voteListBox'>";
                             if(voteDateCount == 1)
                             {
-                                voteString += "<div class='voteList' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(0,4) + "년 " + voteObject.cal_date.substr(4,2) + "월 " + voteObject.cal_date.substr(6,2) + "일</div>";
+                                voteString += "<div class='voteList' id='voteList" + voteObject.cal_date + "' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(0,4) + "년 " + voteObject.cal_date.substr(4,2) + "월 " + voteObject.cal_date.substr(6,2) + "일</div>";
                             }
                             else
                             {
@@ -1834,18 +1836,18 @@
                                         monthTEmp = item.substr(4,2);
                                         voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
                                         voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
-                                        voteString += "<div class='voteList' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
+                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
                                     }
                                     else if(monthTEmp < item.substr(4,2))
                                     {
                                         voteString += "</div>";
                                         monthTEmp = item.substr(4,2);
                                         voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
-                                        voteString += "<div class='voteList' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
+                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
                                     }
                                     else
                                     {
-                                        voteString += "<div class='voteList' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
+                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
                                     }
                                 }
                                 voteString += "</div>";
@@ -1884,8 +1886,8 @@
                         {
 //                            console.log("확인!");
                             
-                            commentsString += "<div id='commentWriter'>" + findMemberName(data[i].cal_writer) + "</div>";
-                            commentsString += "<div id='commentMemo'>" + data[i].cal_memo + "</div>";
+                            commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
+                            commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
 //                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
                         }
                         
@@ -1902,7 +1904,11 @@
 //                    voteString += "</div>"; // Comment
 //                    voteString += "</div>"; // CommentBox
                     
+                    // 상황에 따라 다르게 보여줌
+                    var voteBox ="<input type='button' value='투표하기' onclick='addVoteList(" + cal_num + ")'/>";
+                    
                     $(".modalSchduleInfo").html(voteString);
+                    $("#voteButtonBox").html(voteBox);
                     $("#commentList").html(commentsString);
                     $("#modal2").css('display', 'inline-block');
 
@@ -1920,10 +1926,12 @@
             if(memberVoteListSet.has(date))
             {
                 memberVoteListSet.delete(date);
+                $("#voteList" + date).css("backgroundColor", "white");
             }
             else
             {
                 memberVoteListSet.add(date);
+                $("#voteList" + date).css("backgroundColor", "antiquewhite");
             }
             console.log(memberVoteListSet);
         }
@@ -1941,6 +1949,52 @@
                 }
             }
             return '(방에서 나간 사용자)';
+        }
+        // 투표 등록!
+        function addVoteList(cal_num)
+        {
+//            console.log(Array.from(memberVoteListSet).sort());
+            var addVoteListSort = Array.from(memberVoteListSet).sort();
+            var str = "";
+                
+            if(memberVoteListSet.size > 0)
+            {
+
+                for(var i = 0; i < addVoteListSort.length; i++)
+                {
+                    str += addVoteListSort[i] + "-" + login_userId;
+
+                    if((i+1) < addVoteListSort.length)
+                    {
+                        str += ",";
+                    }
+                }
+            }
+            else
+            {
+                str = "00000000-" + login_userId;
+            }
+            
+            console.log(str);
+            
+            $.ajax({
+                type: 'post'
+                , url: 'addVote.do'
+                , data: {
+                    cal_num : cal_num,
+                    voteList : str,
+                    loginUser : login_userId
+                }
+                , dataType: "json"
+                , success: function (data) {
+                    console.log(data);
+                   
+                }
+                , error: function (req) {
+                    //                    alert('통신실패');
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            })
         }
         // member_choice로 확정/투표 구분
         function scheduleCheck(member_choice, cal_date)
@@ -2366,14 +2420,28 @@
 -->
             <div>
                 <div class="modalSchduleInfo"></div>
+                <div id="voteButtonBox">
+                    <input type="button" value="투표하기" onclick="addVoteList()"/>
+                </div>
                 <div class="modalComment">
                     <div id="commentList"></div>
-                    <div id="myComment"></div>
+                    <div id="myComment">
+                        <input type="text" placeholder="댓글을 입력하세요" id="commentContents"/>
+                        <button id="confirm_button" onclick="addComment(this)">확인</button>
+                        <button class="js_close" onclick="closeModal2();">닫기</button>
+                    </div>
                 </div>
             </div>
+<!--
             <input type="text" placeholder="댓글을 입력하세요" id="commentContents"/>
             <button id="confirm_button" onclick="addComment(this)">확인</button>
-            <button class="js_close" onclick="closeModal2();">닫기</button> 
+            <button class="js_close" onclick="closeModal2();">닫기</button>
+-->
+<!--
+            <div id="voteButtonBox">
+                <input type="button" value="투표하기" onclick="addVoteList()"/>
+            </div>
+-->
         </div>
     
     </footer>
