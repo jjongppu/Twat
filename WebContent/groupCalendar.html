@@ -1794,11 +1794,15 @@
                     else
                     {
                         voteDateList = voteObject.cal_date.split(",");
+                        voteDateList = Array.from(voteDateList).sort();
                         for(var i = 0; i < voteDateList.length; i++)
                         {
                             voteDateSet.add(voteDateList[i]);
                         }
                         voteDateCount = voteDateSet.size;
+//                        voteDateList = Array.from(voteDateSet).sort();
+//                        console.log(voteDateList);
+                        
                     }
                     console.log(voteDateCount);
                     
@@ -1814,7 +1818,9 @@
                             else
                             {
                                 var yearTemp = voteObject.cal_date.substr(0,4);
+//                                var yearTemp = 
                                 var monthTEmp = voteObject.cal_date.substr(4,2);
+//                                var monthTEmp = voteObject.cal_date.substr(4,2);
                                 
 //                                console.log(yearTemp);
                                 voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
@@ -1828,12 +1834,14 @@
                                         monthTEmp = item.substr(4,2);
                                         voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
                                         voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
+                                        voteString += "<div class='voteList' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
                                     }
                                     else if(monthTEmp < item.substr(4,2))
                                     {
                                         voteString += "</div>";
                                         monthTEmp = item.substr(4,2);
                                         voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
+                                        voteString += "<div class='voteList' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6,2) + "일</div>";
                                     }
                                     else
                                     {
@@ -1847,7 +1855,7 @@
                             voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div>";
                             voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div>";
                             voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0,4) + "년 " + voteObject.cal_date.substr(4,2) + "월 " + voteObject.cal_date.substr(6,2) + "일</div>";
-                            voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer + "님 외 ";
+                            voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer;
                             // 참가자 출력
                             var voteMemberSet = new Set();
                             
@@ -1865,7 +1873,12 @@
 //                                }
                             }
                             console.log(voteMemberSet);
-                            voteString += voteMemberSet.size + "명</div>";
+                            if(voteDateCount > 1)
+                            {
+//                                voteString += "님 외 " + voteMemberSet.size + "명</div>";
+                                voteString += "님 외 " + (voteMemberSet.size - 1) + "명";
+                            }
+                            voteString += "</div>";
                         }
                         else if(data[i].cal_depth > 0)
                         {
