@@ -6,10 +6,14 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 	<script src="js/jquery-3.2.1.min.js"></script>
+<!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
+	
 	<style>
+        #wrap{
+            margin: 0 0 0 125px;
+        }
 		ul {
 			list-style: none;
-/*			background: yellow;*/
 		}
 		#contentListWrap {
 			background-color: bisque;
@@ -46,6 +50,79 @@
 			width: 70px;
 		}
 	</style>
+	<style>
+     html, body {
+       margin: 0;
+       padding: 0;
+   }
+   
+   #wrap {
+       display: block;
+   }
+   
+   .left_nav {
+       position: fixed;
+       top: 0;
+       left: 0;
+       display: inline-block;
+       width: 120px;
+       background-color: #6534ff;
+       height: 100%;
+   }
+   
+   .nav_ul {
+       margin: 0;
+       padding: 0px;
+       list-style: none;
+       text-align: center;
+   }
+   
+   .nav_li {
+       cursor: pointer;
+   }
+   
+   #logout > li:hover,
+   #nav_menu > li:hover {
+       background-color: #62bcfa;
+   }
+   
+   #user_Id {
+       color: #FFFFFF;
+   }
+   
+   .nav_text {
+       text-decoration: none;
+       color: #FFFFFF;
+       font-family: sans-serif;
+       font-size: 20px;
+       display: block;
+       padding: 14px 0;
+   }
+   
+   #userInfo {
+       display: block;
+       height: 120px;
+   }
+   
+   #user_Img {
+       width: 60px;
+       height: 60px;
+       border-radius: 60px;
+   }
+   
+   #user_Img_Cover {
+       display: block;
+       width: 60px;
+       margin: 30px auto 0 auto;
+   }
+   
+   #logout {
+       position: absolute;
+       bottom: 10px;
+       width: 100%;
+   }
+   
+    </style>
 	
 	<script>
 		function qnaSearchEnter() {
@@ -70,10 +147,35 @@
 	</script>
 </head>
 <body>
-	<div>
-		<h4>문의사항 페이지</h4>
-	</div>
+    <div>
+    <!--  네브바 입니다  -->
+        <nav class="left_nav">
+            <div id="userInfo">
+                <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                    <li class="nav_li"> <img id="user_Img" src="/img/member/basis_photo.png" /> </li>
+                    <li class="nav_li">
+                        <div id="user_Id"></div>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav_ul" id="nav_menu">
+                <li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
+                <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
+                <li class="nav_li"><a class="nav_text"  href="groupList.html">단체 캘린더</a></li>
+                <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
+                <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+            </ul>
+            <ul id="logout" class="nav_ul" onclick="logout()">
+                <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+            </ul>
+        </nav>
+
+
+	
 	<div id="wrap">
+        <div>
+            <h4>문의사항 페이지</h4>
+        </div>
 		<div id="contentTitleWrap">
 			<ul id="contentTitleWrapUl">
 				<li>
@@ -87,7 +189,7 @@
 			</ul>
 		</div>
 		<div id="contentListWrap">
-<!--		글 목록 예시			-->
+		글 목록 예시			
 			<ul id="contentListWrapUl">
 				<li>
 					<span class="listNum">1</span>
@@ -120,7 +222,8 @@
 				<input type="button" value="검색" onclick="qnaSearchEnter()"/>
 			</div>
 		</form>
+    	</div>
 	</div>
-	
+
 </body>
 </html>

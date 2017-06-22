@@ -1208,13 +1208,12 @@
 //  ================================ 달력 출력 끝! ================================
 
 
-        // 일정들 전부 출력
         function getGroupInfo() {
             var para = document.location.href.split("?");
             para = para[1].split("=");
             $.ajax({
                 type: 'post'
-                , url: 'groupCal.do'
+                , url: 'myCal.do'
                 , data: {
                     group: para[1]
                 }
@@ -1228,12 +1227,22 @@
                     document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
                     $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
                     document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
+                    
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
+                        //                        console.log(data[arrCal].cal_num);
+                        //                        console.log(data[arrCal].cal_date);
+                        //                        console.log(data[arrCal].cal_group);
+                        //                        console.log(data[arrCal].cal_memo);
+                        //                        console.log(data[arrCal].cal_writer);
+                        //                        console.log(data[arrCal].state_icon);
+                        //                        console.log(data[arrCal].member_choice);
                         var str = "";
                         var str2 = data[arrCal].cal_date;
+                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
                         str += '<div class="content">';
                         str += '<div class="left">';
-                        if (str2.indexOf(',') == -1) {
+                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+                        {
                             str += data[arrCal].cal_date;
                             console.log("확정 : " + data[arrCal].cal_memo);
                             scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo);
@@ -1247,8 +1256,28 @@
                             }
                         }
                         str += '</div>';
-                        str += '<div class="middle"><div class="up">' + data[arrCal].cal_memo + '</div><div class="down"><span>' + data[arrCal].cal_writer + '님</span><span>외 ' + data[0].group_count + '명 참여</span>';
-                        str += '</div></div><div class="right"><div class="up"></div><div class="down"></div></div></div>';
+                        str += '<div class="middle" onclick="addComment(this)">';
+                        str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
+                        str += '<div class="middle-bottom">';
+                        str += '<span>' + data[arrCal].cal_writer + '님</span>';
+                        str += '<span>외 ' + data[0].group_count + '명 참여</span>';
+                        str += '</div>'; 
+                        str += '</div>'; 
+                        str += '<div class="right">';
+                        str += '<div class="right-top"></div>';
+                        str += '<div class="right-bottom">';
+                        
+                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)){
+                            // 전체 일정(확정)
+                            str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+                        } else {
+                            // 투표(미확정)
+                            str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+                        }
+                        
+                        str += '</div>';
+                        str += '</div>'; // div-right
+                        str += '</div>'; // div=middle
                         if (str2.indexOf(',') == -1) {
                             $(".schedule").append(str);
                         }
@@ -1256,16 +1285,13 @@
                             $(".vote").append(str);
                         }
                     }
-                    var mem_choice = data[1].member_choice.split(",");
-                    console.log(mem_choice);
                     buildCalendar();
-                    cal_date = data[1].cal_date.split(",");
-                    voteMeeting(cal_date);
                 }
                 , error: function (req) {
+                    //                    alert('통신실패');
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
-            })
+            });
         }
 //================== 모달 작업 부분    =====================================
         function getGroupBrith() {
@@ -1335,7 +1361,7 @@
                     console.log(data);
                 }
                 , error: function (req) {
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
             location.reload();
