@@ -42,7 +42,6 @@ public class AdminMemberOut extends HttpServlet {
 	    String MEMBER_ID = request.getParameter("out");
 	    
 	    MemberDAO mdo = MemberDAO.getInstance();
-	    mdo.outUser(MEMBER_ID);
 		
 	    JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();

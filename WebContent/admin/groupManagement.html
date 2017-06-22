@@ -360,7 +360,7 @@
         });
         
     
-    //친구들 호출 무식하게 호출
+    //그룹목록을 뿌려쥼
     function getGroupList(page) {
         nowPage = page;
         var notfind = '0';
@@ -614,42 +614,30 @@
     
     }
            
-    //인풋에서 검색시 맴버를 찾아와줘용
-//        function findMember(){
-//            if($('#findMember').val().length>5 && $('#findMember').val().length<13 ){
-//                console.log("!");
-//            $.ajax ({
-//                type : 'post',
-//                url : '../Logout.do',
-//                dataType : "json",
-//                success : function(data) {
-//                    var result = data[0].result;
-//                    if(result != 'success') {
-//                        alert("권한이 없습니다.");
-//                        location.href="admin.html";
-//                    }
-//                }
-//            });
-//            }
-//            
-//            
-//        }
-    // 선택한 멤버 추방
-    function getOutMember(user){
-        // 탈퇴시킬 유저 이름
-        var userId = $(user).attr('id');
+    
+    // 선택한 그룹 ,게시글 , 댓글 삭제
+    function getOutMember(group){
+        // 탈퇴시킬 그룹 넘버
+        var group = $(group).attr('id');
+        console.log(group);
         $.ajax({
             type:"post",
-            url: "../memberout.do",
-            data: {out : userId},
+            url: "../adminGroupOut.do",
+            data: {out : group , kind : '1'},
             success: function(data){
             var result = data[0].result;
-                if(result != 'success'){
-                    alert("오류");
+                
+                if(result ==1){
+                    alert("그룹 참여자 목록을 삭제하던중 오류가 발생 하였습니다.");
+                }else if(result ==2){
+                    alert("그룹을 삭제하던중 오류가 발생 하였습니다.");
+                }else if(result ==3){
+                    alert("정상적으로 처리 되었습니다.");
                 }else{
-                    alert("회원 탈퇴가 완료되었습니다. 7일후에 자동으로 삭제됩니다.");
-                    location.href='groupManagement.html';
+                    alert("그룹안의 게시글을 삭제하던중 오류가 발생 하였습니다.");
                 }
+                
+                location.href="groupManagement.html";
             }
         });
     }
