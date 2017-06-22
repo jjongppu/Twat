@@ -933,7 +933,7 @@
 //                        console.log(item.groupMaster);
 
                         if(item.groupMaster == "no"){
-                            $("#addschedule").css("display","none");
+                            $(".addschedule").css("display","none");
                         }
                         
                         login_userId = item.userId;
@@ -2144,6 +2144,68 @@
 
         }
         
+        function inviteFriends2(){
+            for (let item of birthSet.keys()) {
+                            
+                console.log(item);
+                
+                
+                
+            }
+            
+            
+        }
+        
+        function inviteFriends(){
+            document.getElementById("inviteModal").innerHTML = "";
+            $.ajax({
+                type: 'post'
+                , url: 'inviteFriends.do'                
+                , dataType: "json"
+                , success: function (data) {
+//                    console.log(data);
+                    $.each(data, function (index, item) { 
+                        var flag = false;
+                        
+                        for (var setIndex = 0; setIndex < birthSet.size; setIndex++) {   
+//                            if(item.friendId != .split("-")[1]){
+////                                if(item2.ind)
+//                            }
+//                            
+                            
+                        }
+                        
+//                      if(flag){
+                          document.getElementById("inviteModal").innerHTML += "<div id='friend" + index + "' style='border:3px solid black; margin:20px;'><div class='friendId' onclick='inviteFriends2()'> 아이디 : "
+                        + item.friendId + "</div><div class='friendName'> 이름 : "
+                        + item.friendName + "</div></div>";                                
+                          
+//                      }  
+                      
+                                
+
+                        
+                        
+                  
+//                        document.getElementById("inviteModal").innerHTML += "<div class='friendId'> 아이디 : "
+//                            + item.friendId + "</div>";
+//                        document.getElementById("inviteModal").innerHTML += "<div class='friendName'> 이름 : "
+//                            + item.friendName + "</div>";
+//                        document.getElementById("inviteModal").innerHTML += "</div>";
+                        
+                    });
+                    
+                }
+                , error: function (req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+                 
+            });
+            
+            
+        }
+        
     </script>
 </head>
 
@@ -2321,7 +2383,8 @@
                             //                            buildCalendar();
                         </script>
                     </div>
-                    <input type="button" value="일정추가하기" onclick="addSchedule()" id="addschedule" />
+                    <input type="button" value="일정추가하기" onclick="addSchedule()" class="addschedule" />
+                    <input type="button" value="친구초대하기" onclick="inviteFriends()" class="addschedule" />
                     <div class="admin">
                         <div class="title"></div>
                         <div class="content"></div>
@@ -2362,6 +2425,11 @@
             <button id="confirm_button" onclick="addComment(this)">확인</button>
             <button class="js_close" onclick="closeModal2();">닫기</button> 
         </div>
+                           
+        <div id="inviteModal">
+            
+                           
+        </div>                   
     
     </footer>
                     
@@ -2396,6 +2464,8 @@
                         });
                     </script>
                     <style>
+                        
+                        
                     
                         #blindCover{
                             position: absolute;
