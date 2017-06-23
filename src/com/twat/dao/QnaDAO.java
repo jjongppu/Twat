@@ -261,19 +261,36 @@ public class QnaDAO {
 		// searchCategry = 문의사항 종류(카테고리)
 		// val = 검색어
 		
+		String countSql = "SELECT COUNT(*) FROM QNA";
+		if(!val.equals("0")) {
+			countSql += "WHERE QNA_TITLE LIKE ?";
+		}
+		countSql += "ORDER BY QNA_ID asc";
+		
+		String AllSql = "SELECT * FROM QNA";
+		if(!val.equals("0")) {
+			AllSql += "WHERE QNA_TITLE LIKE ?";
+		}
+		AllSql += "ORDER BY QNA_ID asc LIMIT " + (page*10-10) + " ,10";
 		
 		// 1 = 제목 / 제목으로 검색하기
 		if(searchCategory == 1) {
-			String AllSql = "SELECT * FROM QNA";
-			if(!val.equals("0")) {
-				AllSql += "WHERE QNA_TITLE LIKE ?";
-			}
-			AllSql += "ORDER BY QNA_ID asc LIMIT " + (page*10-10) + " ,10";
-			
 			try {
 				con = getConnection();
-				psmt = con.prepareStatement(AllSql);
 				
+				psmt = con.prepareStatement(countSql);
+				if(!val.equals("0")) {
+					psmt.setString(1, "%"+val+"%");
+				}
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					int count = rs.getInt("COUNT(*)");
+					QnaVO qv = new QnaVO();
+					qv.setQNA_ID(count);
+					arList.add(qv);
+				}
+				
+				psmt = con.prepareStatement(AllSql);
 				if(!val.equals("0")) {
 					psmt.setString(1, "%" + val + "%");
 				}
@@ -305,7 +322,13 @@ public class QnaDAO {
 		        }
 //		        System.out.println(result);
 		        return arList;
-			} 
+			}
+		
+		// 2 = 글 내용 / 글 내용으로 검색하기
+		} else if(searchCategory == 2) {
+			
+			
+			
 			
 		}
 		
