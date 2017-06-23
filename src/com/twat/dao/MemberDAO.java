@@ -545,65 +545,79 @@ public class MemberDAO {
 
 ///////////////////////////////////////////////////////////////////占쏙옙占쏙옙 占쏙옙橘占싫� 占쏙옙占쏙옙.
 	   
-	   public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String chkpwd){
-		   
-		   
-		   
+//	   public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String chkpwd){
+//		   
+//		   
+//		   
 //		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
-		   String chkpw = "select AES_DECRYPT(UNHEX(MEMBER_PW) from MEMBER where MEMBER_ID = ?";
+////		   String chkpw = "select AES_DECRYPT(UNHEX(MEMBER_PW) from MEMBER where MEMBER_ID = ?";
+//		   
+//		   // ?占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙占싱듸옙 占쌍곤옙 占쏙옙橘占싫ｏ옙占� 占쌨아온댐옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙占싻뱄옙호 占쌉력띰옙占싱띰옙 占쏙옙占쌔쇽옙 占쏙옙占쏙옙占쏙옙 占싸뱄옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占싼어가占쏙옙 占쏙옙橘占싫ｏ옙占� 占쌕뀐옙占쌔댐옙.
+//		   String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
+//		   //1占쏙옙占쏙옙 ?占쏙옙占쏙옙 占쌕뀐옙 占쏙옙橘占싫ｏ옙占� 占쌍곤옙  2占쏙옙占쏙옙 ? 占쏙옙占쏙옙 占쏙옙占싱듸옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아넣는댐옙.
+//		   int result = 0;
+//		   
+//		   try {
+//			   
+//			con = getConnection();
+//			
+//			psmt = con.prepareStatement(chkpw);
+//			psmt.setString(1, MEMBER_ID);
+//			rs = psmt.executeQuery();
+//			
+//			if(chpwd.equals(chkpwd)){
+//				
+//			while(rs.next()){
+//				
+//			if(rs.getString("MEMBER_PW").equals(nowpwd)){
+//				
+//				
+//				psmt = con.prepareStatement(changepwd);
+//				psmt.setString(1, chpwd);
+//				psmt.setString(2, MEMBER_ID);
+//				result = psmt.executeUpdate();
+//				
+//				if(result ==1 ){
+//					System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙치占쌌니댐옙");
+//				}else{
+//					System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙치占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
+//				}
+//				
+//			
+//		}else{
+//			System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
+//		}
+//		}//while 占쏙옙占쏙옙占쏙옙 占쏙옙.
+//		}else{
+//			System.out.println("占쏙옙占쏙옙占쏙옙 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
+//		}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}finally {
+//            try {
+//                if(rs != null)rs.close();
+//                if(psmt != null) psmt.close();
+//                if(con != null) con.close();
+//             } catch (SQLException e) {
+//             }
+//       }
+//		return result;
+// }
+	   
+	   
+	   public int changePw(String MEMBER_ID, String nowpwd){
+		   con = getConnection();
+		   String sql = "select "
+		   PreparedStatement psmt2 = con.prepareStatement(sql);
 		   
-		   // ?占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙占싱듸옙 占쌍곤옙 占쏙옙橘占싫ｏ옙占� 占쌨아온댐옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙占싻뱄옙호 占쌉력띰옙占싱띰옙 占쏙옙占쌔쇽옙 占쏙옙占쏙옙占쏙옙 占싸뱄옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占싼어가占쏙옙 占쏙옙橘占싫ｏ옙占� 占쌕뀐옙占쌔댐옙.
-		   String changepwd = "update MEMBER set MEMBER_PW = (HEX(AES_ENCRYPT(?, 'memPw')) where MEMBER_ID = ?";
-		   //1占쏙옙占쏙옙 ?占쏙옙占쏙옙 占쌕뀐옙 占쏙옙橘占싫ｏ옙占� 占쌍곤옙  2占쏙옙占쏙옙 ? 占쏙옙占쏙옙 占쏙옙占싱듸옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아넣는댐옙.
-		   int result = 0;
-		   
-		   try {
-			   
-			con = getConnection();
-			
-			psmt = con.prepareStatement(chkpw);
-			psmt.setString(1, MEMBER_ID);
-			rs = psmt.executeQuery();
-			
-			if(chpwd.equals(chkpwd)){
-				
-			while(rs.next()){
-				
-			if(rs.getString("AES_DECRYPT(UNHEX(MEMBER_PW), 'memPw')").equals(nowpwd)){
-				
-				
-				psmt = con.prepareStatement(changepwd);
-				psmt.setString(1, chpwd);
-				psmt.setString(2, MEMBER_ID);
-				result = psmt.executeUpdate();
-				
-				if(result ==1 ){
-					System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙치占쌌니댐옙");
-				}else{
-					System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙치占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
-				}
-				
-			
-		}else{
-			System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
-		}
-		}//while 占쏙옙占쏙옙占쏙옙 占쏙옙.
-		}else{
-			System.out.println("占쏙옙占쏙옙占쏙옙 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
-		}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-            try {
-                if(rs != null)rs.close();
-                if(psmt != null) psmt.close();
-                if(con != null) con.close();
-             } catch (SQLException e) {
-             }
-       }
-		return result;
- }
+
+		   
+	   }
+	   
+	   
+	   
 ///////////////////////////占쏙옙占쏙옙 회占쏙옙탈占쏙옙.////////////////////////
 		   public int outUser(String MEMBER_ID){
 			   
