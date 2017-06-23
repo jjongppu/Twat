@@ -116,8 +116,8 @@ public class MemberDAO {
 	   
 
 		// 회占쏙옙 占싸깍옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 ----------------------------------
-		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
-			int result = -1;
+		public long loginMember(String MEMBER_ID, String MEMBER_PW) {
+			long result = -1;
 			
 			long currentTime = System.currentTimeMillis();
 			   
@@ -131,37 +131,12 @@ public class MemberDAO {
 				psmt = con.prepareStatement(selectSql);
 				psmt.setString(1, MEMBER_ID);
 				psmt.setString(2, MEMBER_PW);
-//				System.out.println("!");
 				rs = psmt.executeQuery();
-				
-//				if(rs.next()) {
-//					// out_time占쏙옙 0占싱몌옙 占싸깍옙占쏙옙 占쏙옙占쏙옙 result占쏙옙 1占쌍억옙占쏙옙
-//					if(rs.getInt(1) == 0) {
-//						// 占싸깍옙占쏙옙 占쏙옙占쏙옙
-//						result = 1;
-//					} else {
-//						result = rs.getInt(1);
-//						System.out.println(result);
-//					}
-//				}
-				
 				if(rs.next()) {
-					// out_time占쏙옙 0占싱몌옙 占싸깍옙占쏙옙 占쏙옙占쏙옙 result占쏙옙 1占쌍억옙占쏙옙
-					if(rs.getLong(1) == 0) {
-						// 占싸깍옙占쏙옙 占쏙옙占쏙옙
-						result = 1;
-					} else if(rs.getLong(1) > currentTime) { // 탈占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 회占쏙옙
-						result = -1;
-//						System.out.println(result);
-					} else if(rs.getLong(1) < currentTime) { // 탈占쏙옙占� 회占쏙옙
-						result = -2;
-					} else { // 占쏙옙占싱듸옙, 占쏙옙占� 틀占쏙옙占쏙옙 占쏙옙占쏙옙
-						result = 0;
-					}
+						result = rs.getLong(1);
 				}
 			} catch (Exception e) {
 				System.out.print("占쏙옙占쏙옙 占쏙옙占쏙옙");
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 					try {
@@ -169,7 +144,6 @@ public class MemberDAO {
 						if(psmt != null) psmt.close();
 						if(con != null) con.close();
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				
