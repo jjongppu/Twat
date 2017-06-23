@@ -123,8 +123,8 @@ public class MemberDAO {
 			   
 			System.out.println(currentTime);
 			
-			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
-			
+//			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
+			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and AES_DECRYPT(UNHEX(MEMBER_PW), 'memPW') = ?";
 			
 			try {
 				con = getConnection();
@@ -230,15 +230,15 @@ public class MemberDAO {
 	      
 //	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
 
-	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
-
+//	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
+	      String insertSql = "insert into MEMBER values(?,HEX(AES_ENCRYPT(?, 'memPW')),?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 	      
 	      try {
 	         con = getConnection();
 	         psmt = con.prepareStatement(insertSql);
 	      
 	         psmt.setString(1, MEMBER_ID);
-	         psmt.setString(2, MEMBER_PW);
+	         psmt.setString(2,MEMBER_PW);
 	         psmt.setString(3, MEMBER_NAME);
 	         psmt.setString(4, MEMBER_PHONE);
 	         psmt.setString(5, "img/member/basis_photo.png");
@@ -549,9 +549,11 @@ public class MemberDAO {
 		   
 		   
 		   
-		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
+//		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
+		   String chkpw = "select AES_DECRYPT(UNHEX(MEMBER_PW) from MEMBER where MEMBER_ID = ?";
+		   
 		   // ?占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙占싱듸옙 占쌍곤옙 占쏙옙橘占싫ｏ옙占� 占쌨아온댐옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙占싻뱄옙호 占쌉력띰옙占싱띰옙 占쏙옙占쌔쇽옙 占쏙옙占쏙옙占쏙옙 占싸뱄옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占싼어가占쏙옙 占쏙옙橘占싫ｏ옙占� 占쌕뀐옙占쌔댐옙.
-		   String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
+		   String changepwd = "update MEMBER set MEMBER_PW = (HEX(AES_ENCRYPT(?, 'memPw')) where MEMBER_ID = ?";
 		   //1占쏙옙占쏙옙 ?占쏙옙占쏙옙 占쌕뀐옙 占쏙옙橘占싫ｏ옙占� 占쌍곤옙  2占쏙옙占쏙옙 ? 占쏙옙占쏙옙 占쏙옙占싱듸옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아넣는댐옙.
 		   int result = 0;
 		   
@@ -567,7 +569,7 @@ public class MemberDAO {
 				
 			while(rs.next()){
 				
-			if(rs.getString("MEMBER_PW").equals(nowpwd)){
+			if(rs.getString("AES_DECRYPT(UNHEX(MEMBER_PW), 'memPw')").equals(nowpwd)){
 				
 				
 				psmt = con.prepareStatement(changepwd);

@@ -462,6 +462,16 @@ public class CalendarDAO
 			}
 			else
 			{
+//				System.out.println(memberChoice);
+//				if(memberChoice.contains("-"))
+//				{
+//					memberSet.add(memberChoice.split("-")[1]);
+//				}
+//				else if(memberChoice.contains("-") && memberChoice.split("-")[0].equals("00000000"))
+//				{
+//					System.out.println(memberChoice);
+//					memberSet.add(memberChoice);
+//				}
 				memberSet.add(memberChoice);
 //				System.out.println(memberChoice);
 			}
