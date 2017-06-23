@@ -6,12 +6,12 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/jquery-3.2.1.min.js"></script>
     <!--    네브바 css-->
     <link rel= "stylesheet" type="text/css" href="css/nav.css">
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <script src="js/nav.js"></script>
+    <script src="js/jquery.form.js"></script>
 </head>
     <style>
         div{
@@ -338,16 +338,18 @@
     
     
     
-    	<form id="formTag" enctype="multipart/form-data">
-		  <input type="file"  id="attachFile" name="attachFile"/>
+    	<form id="formTag" enctype="multipart/form-data" method="post" action="imageFileUpload.do">
+		  <input type="file"  id="attachFile" name="attachFile" size="5"/>
 		
-		  <div onclick="test()" id="submitBtn">text</div>
+<!--		  <div onclick="test()" id="submitBtn">text</div>-->
 		
-	
+            <input type="submit" value="사진 변경">
 	   </form>
     
     
     <script>
+        
+    
     
 //        var option = {
 //            type : 'POST',
@@ -382,36 +384,44 @@
 //            });
 //        }
 
-         function test(){
-//            var data = new FormData();
-//            $.each($('#attachFile')[0].files, function(i, file) {          
-//                data.append('file-' + i, file);
-//            });
+//         function test(){
+////            var data = new FormData();
+////            $.each($('#attachFile')[0].files, function(i, file) {          
+////                data.append('file-' + i, file);
+////            });
+////             
+////            $.ajax({
+////                url: '/upload.action',
+////                type: "post",
+////                dataType: "text",
+////                data: data,
+////                // cache: false,
+////                processData: false,
+////                contentType: false,
+////                success: function(data, textStatus, jqXHR) {
+////                    alert(data);
+////                }, error: function(jqXHR, textStatus, errorThrown) {}
+////            });
 //             
-//            $.ajax({
-//                url: '/upload.action',
-//                type: "post",
-//                dataType: "text",
-//                data: data,
-//                // cache: false,
-//                processData: false,
-//                contentType: false,
-//                success: function(data, textStatus, jqXHR) {
-//                    alert(data);
-//                }, error: function(jqXHR, textStatus, errorThrown) {}
-//            });
-             
-             var formdata = new FormData();
-             var form = $('#formTag')[0];
-            formdata.append("img", form);
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("POST", "changMemberImg.do");  
-            xhr.send(formdata);
-             
-             
-             
-             
+//             var formdata = new FormData();
+//             var form = $('#formTag')[0];
+//            formdata.append("img", form);
+//            var xhr = new XMLHttpRequest();
+//
+//            xhr.open("POST", "changMemberImg.do");  
+//            xhr.send(formdata);
+//             
+//             
+//             
+//             
+//        }
+        
+        function test(){
+            
+            
+            
+            
+            
         }
     </script>
     
