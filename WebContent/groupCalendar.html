@@ -25,6 +25,8 @@
         var groupScheduleSet = new Set();
         // 투표한 날짜 저장용
         var memberVoteListSet = new Set();
+        // 임시 저장
+        var memTempList = new Set();
         var initDay = new Date();
         var cal_date = "";
         // 해당 방의 방장
@@ -1813,7 +1815,9 @@
                     var memberList;
                     if(voteObject.member_choice.indexOf(",") == -1)
                     {
-                        memberList = voteObject.member_choice;
+                        memberList = new Array();
+                        memberList.push(voteObject.member_choice);
+//                        console.log(memberList);
                     }
                     else
                     {
@@ -1849,12 +1853,12 @@
                             if(login_userId.match(group_master))
                             {
 //                                var groupMemberSet = new Set();
-//                                console.log(memberList);
                                 var ImpossibleCount = 0;
                                 var possibleCount = 0;
                                 
                                 if(voteDateCount == 1)
                                 {
+                                    console.log(memberList);
                                     for(var i = 0; i < memberList.length; i++)
                                     {
                                         if(memberList[i].split("-")[0].match("00000000"))
@@ -1960,6 +1964,12 @@
                             
                             for(var j = 0; j < memberList.length; j++)
                             {
+//                                console.log(memberList[j]);
+//                                console.log(memberList[j].split("-")[1]);
+//                                if(memberList.indexOf(",") == -1 && memberList.split("-")[1].match(login_userId))
+//                                {
+//                                    a
+//                                }
                                 if(memberList[j].split("-")[1].match(login_userId) && !memberList[j].split("-")[0].match("00000000"))
                                 {
 //                                    console.log(memberList[j]);
@@ -1980,10 +1990,15 @@
 //                                }
                             }
 //                            console.log(voteMemberSet);
-                            if(voteDateCount > 1)
+                            if(voteDateCount > 1 && voteMemberSet.size > 1)
                             {
+//                                console.log(voteMemberSet.size);
 //                                voteString += "님 외 " + voteMemberSet.size + "명</div>";
                                 voteString += "님 외 " + (voteMemberSet.size - 1) + "명";
+                            }
+                            else
+                            {
+                                voteString += "님 외 투표한 사람이 없습니다";
                             }
                             voteString += "</div>";
                         }
@@ -2008,6 +2023,14 @@
 //                    voteString += commentsString;
 //                    voteString += "</div>"; // Comment
 //                    voteString += "</div>"; // CommentBox
+                    
+                    var strMemberSet = "";
+                    for(let item of voteMemberSet.keys())
+                    {
+                        memTempList.add(item)
+                    }
+                    strMemberSet = strMemberSet.substr(0, strMemberSet.length - 1);
+//                    console.log(strMemberSet);
                     
                     // 상황에 따라 다르게 보여줌
                     var voteBox = "";
@@ -2141,9 +2164,18 @@
         // 방장 투표날짜 정하기
         function selectVoteList(cal_num)
         {
+//            var svlSet = new Set();
+//            svlSet = voteMemberSet;
+//            
+            console.log(memTempList);
             if(!login_userId.match(group_master))
             {
                 alert("방장아니면 결정 못합니다!!!");
+                return;
+            }
+            else if(memTempList.size < 2)
+            {
+                alert("아직 투표한 사람이 없습니다!!!");
                 return;
             }
 //            else if(memberVoteListSet.size != 1)
@@ -2428,6 +2460,7 @@
 //                    console.log(data);
                     $.each(data, function (index, item) { 
                         var flag = false;
+                        
                         
                         for (var setIndex = 0; setIndex < birthSet.size; setIndex++) {   
 //                            if(item.friendId != .split("-")[1]){
