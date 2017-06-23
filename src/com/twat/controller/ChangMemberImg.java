@@ -48,7 +48,6 @@ public class ChangMemberImg extends HttpServlet {
     		String uploadFilePath = context.getRealPath(savePath); // 서블릿 서버에 실제 저장경로를 얻어옴
     		
     		
-    		
     		MultipartRequest multi = new MultipartRequest(request, uploadFilePath, uploadFileSize, encType , new DefaultFileRenamePolicy());
     		
     		Enumeration em = multi.getFileNames();

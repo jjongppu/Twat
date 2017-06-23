@@ -54,6 +54,7 @@ public class imageFileUpload extends HttpServlet {
                 encType, new DefaultFileRenamePolicy());        
 
         File file = mr.getFile("attachFile");
+        
         Enumeration<String> formNames=mr.getFileNames();
         
         String formName=(String)formNames.nextElement(); 
@@ -71,9 +72,10 @@ public class imageFileUpload extends HttpServlet {
         MemberDAO memberDao = MemberDAO.getInstance();
         memberDao.changeImg(userId, fileName);
         
+        System.out.println(file); // 첨부된 파일의 전체경로
         response.sendRedirect("myInfo.html");
         
-//        System.out.println(file); // 첨부된 파일의 전체경로
+        
         
 
         
