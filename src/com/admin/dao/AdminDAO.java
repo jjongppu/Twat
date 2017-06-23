@@ -481,5 +481,47 @@ public class AdminDAO {
 				}
 				return result;
 			}
+			
+			
+			// 방문자 수 얻어오기 업데이트 한방에 해결 ----------------------------------쫑길빵길
+						public int setGetVisit(int count, String state) {
+							PreparedStatement psmt= null;
+							ResultSet rs= null;
+							
+							String updateVisit = "UPDATE VISIT SET VISIT_COUNT=?";
+							String selectVisit = "SELECT * FROM VISIT";
+							int result =0;
+							try {
+								con = getConnection();
+								if(state.equals("end")){
+									psmt = con.prepareStatement(updateVisit);
+									psmt.setInt(1, count);
+									psmt.executeUpdate();
+								}else{
+									psmt = con.prepareStatement(selectVisit);
+									rs = psmt.executeQuery();
+									if(rs.next()){
+										result = rs.getInt("VISIT_COUNT");
+									}
+								}
+								
+							} catch (Exception e) {
+								e.printStackTrace();
+							} finally {
+									try {
+										if(psmt != null) psmt.close();
+										if(con != null) con.close();
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}
+								
+							}
+							return result;
+						}
+			
+			
+			
+			
+			
 		
 }
