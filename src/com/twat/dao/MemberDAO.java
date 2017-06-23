@@ -593,28 +593,35 @@ public class MemberDAO {
 	   
 	   
 ///////////////////////////占쏙옙占쏙옙 회占쏙옙탈占쏙옙.////////////////////////
-		   public int outUser(String MEMBER_ID){
+		   public int outUser(String MEMBER_ID,String state){
 			   
 //			   SimpleDateFormat outDate = new SimpleDateFormat("yyyy占쏙옙 MM占쏙옙dd占쏙옙 HH占쏙옙mm占쏙옙");
 //			   Date date = new Date();
 //			   String today = outDate.format(date);
 			   
 			   long outTime = System.currentTimeMillis()+60*60*24*1000*7;
+			   long resetTime = 0;
 			   
-			   System.out.println(outTime * 60*60*24*1000*7);
 			   
 			   
 			   String delUser = "UPDATE member SET OUT_TIME=? WHERE MEMBER_ID =?";
+				   
+			   
 			   int result = 0;
 			   try {
 				con = getConnection();
 				psmt = con.prepareStatement(delUser);
-				psmt.setLong(1, outTime);
+				if(state.equals("out")){
+					psmt.setLong(1, outTime);
+					System.out.println("1");
+				}else{
+					psmt.setLong(1, resetTime);
+					System.out.println("2");
+				}
 				psmt.setString(2, MEMBER_ID);
 				result = psmt.executeUpdate();
 				
 			} catch (Exception e) {
-				
 				e.printStackTrace();
 			}finally {
 	            try {
@@ -622,6 +629,7 @@ public class MemberDAO {
 	                if(psmt != null) psmt.close();
 	                if(con != null) con.close();
 	             } catch (SQLException e) {
+	            	 
 	             }
 	       }
 			   

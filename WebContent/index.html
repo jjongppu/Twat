@@ -35,7 +35,7 @@
         font-size: 40px;
     }
     .idpwBox{
-        width: 60%;
+        width: 80%;
         height: 38px;
         margin: 6px 0;
         padding-left: 18px;
@@ -51,6 +51,12 @@
         background-color:transparent;
         cursor: pointer;
     }
+    .smallBtn{
+        display: inline-block;
+        width: 100px;
+        margin: 20px 0;
+        float: right;
+    }
 
     #idpwSearchBox {
         margin-top: 22px;
@@ -59,7 +65,7 @@
     #userLoginCover{
         
 /*        transform: translate(-50%,-50%);*/
-        width: 450px;
+        width: 350px;
         margin: auto;
         height: 500px;
     }
@@ -110,6 +116,13 @@
         textarea:focus, input:focus{
         outline: none;
     }
+    
+    #modal{
+        font-size: 12px;
+        padding-top: 20px;
+        overflow: hidden;
+        height: 0;
+    }
 </style>    
 
 
@@ -151,7 +164,12 @@
 					if(result == 'success') {
 						location.href='home.html';
 					} else if(result == 'outIng'){
-						alert("회원탈퇴가 진행중인 회원입니다.");
+                        $('#noBtn').attr('onclick','hideModal()');
+                        $('#yesBtn').attr('onclick','returnAccount()');
+						$('#modal').animate({
+                            height: 100,
+                        }, 500);
+
 					} else if(result == 'out') {
 						alert("탈퇴 처리된 회원입니다.");
 						$('#idBox').val("");
@@ -188,7 +206,38 @@
             loginEnter();
         }
     }
-                       
+         
+    
+    function hideModal(){
+        
+        $('#modal').animate({
+
+            height: 0,
+
+        }, 500);
+        $('#noBtn').attr('onclick','');
+        $('#yesBtn').attr('onclick','');
+    }
+         
+    function returnAccount(){ 
+                $.ajax({
+                    type:"post",
+                    url: "outUser.do",
+                    data: {state: 'return',userid : $("#idBox").val()},
+                    success: function(data){
+                    var result = data[0].result;
+                        if(result != 'success'){
+                        	alert("회원 정보를 복구하던도중 오류가 발생하였습니다.");
+                        }else{
+                        	alert("회원 복구가 완료 되었습니다.");
+                        	location.href='index.html'
+                        }
+                    }
+                });
+        
+    }
+         
+    
     
 </script>
 
@@ -212,9 +261,16 @@
                             <input type="password" id="pwBox" name="userpw" class="idpwBox" placeholder='비밀번호' onkeypress="enterLog()"/>
                         </div>
                     </div>
-
+                    <div id="modal" >
+                        <div><b>회원탈퇴</b>가 진행중인 회원입니다.</div>
+                        <div>계정을 <strong>복구</strong> 하시겠습니까?</div>
+                    
+                        <input type="button"  id='noBtn' class='btn smallBtn' value="아니오" onclick=""/>
+                        <input type="button"  id='yesBtn' class='btn smallBtn' value="네" onclick=""/>
+                    </div>
                     <div>
                         <div>
+                            
                             <input type="button"  id='loginBtn' class='btn' value="로그인" onclick="loginEnter()"/>
                             <input type="hidden" id="date" name="date" value=""/>
                         </div>
@@ -237,5 +293,6 @@
             <!-- ㄴ어리ㅏㅓ라ㅣ -->
         </form>
     </div>
+    
 </body>
 </html>

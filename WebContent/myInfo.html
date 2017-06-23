@@ -238,14 +238,14 @@
                             }
                         
                         }
-                       })
+                       });
                   }
         ///////////////////////////회원탈퇴/////////////////////////////////////
             function outclick(){
                 $.ajax({
                     type:"post",
-                    url: "OutUser.do",
-                    data: $('#outout').serialize(),
+                    url: "outUser.do",
+                    data: {state: 'out'},
                     success: function(data){
                     var result = data[0].result;
                         if(result != 'success'){
@@ -255,7 +255,7 @@
                         	location.href='index.html'
                         }
                     }
-                })
+                });
             }
 
 
