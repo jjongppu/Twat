@@ -1,3 +1,4 @@
+
 //  gfnToday() : 해당 PC의 오늘 날짜를 가져온다. String.
 //  gfnTodayTime() : 해당 PC의 오늘 날짜+시간를 가져온다. String.
 //  gfnCurrentTime() : 해당 PC의 현재시간를 가져온다. String.
@@ -23,6 +24,19 @@
 //  요일에 따른 숫자,   0 = 일요일 ~ 6 = 토요일 로 대응됩니다., 오류가 발생할 경우 -1이 Return됩니다.
 //
 //
+
+
+    var oScript = document.createElement("script");
+    oScript.type = "text/javascript";
+    oScript.charset = "utf-8";		  
+//    oScript.src = "http://code.jquery.com/jquery-1.6.2.min.js";	
+    oScript.src = "WebContent/js/jquery-3.2.1.min.js";	
+    oScript.src = "/js/jquery-3.2.1.min.js";	
+    document.getElementsByTagName("head")[0].appendChild(oScript);
+
+document.head.innerHTML += "<script src=\"WebContent/js/jquery-3.2.1.min.js\"></script>";
+
+
 var scheSet = new Set(); // 일정 잡기 저장용
 var birthSet = new Set(); // 생일자 저장용
 var scheduleSet = new Set(); // 일정(확정) 저장용
@@ -1295,6 +1309,33 @@ function getGroupBrith() {
         }
     })
 }
+
+//function inviteFriends() {
+//    document.getElementById("inviteModal").innerHTML = "";
+//    $('#inviteModal').css('display', 'block').css('height', 'auto').css('border', '1px solid black');
+//    $('#blindCover').css('display', 'block');
+window.onload = function() {
+
+         $.ajax({
+            type: 'post',
+            url: 'inviteFriends.do',
+            dataType: "json",
+            success: function (data) {
+                    console.log(data);                
+                $.each(data, function (index, item) {
+
+                });
+
+            },
+            error: function (req) {
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+            }
+
+        });
+
+}
+
+//}
 // 확정된 일정 정보 출력
 function getScheduleInfo() {}
 // 미확정된 일정 정보 출력
