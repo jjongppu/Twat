@@ -65,7 +65,7 @@ public class SearchQnaServlet extends HttpServlet {
 				}
 			}else{
 				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("group_id","noGroup");
+				jsonObj.put("COUNT","noGroup");
 				jarr.add(jsonObj);
 			}
 		out.print(jarr);

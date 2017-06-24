@@ -124,7 +124,7 @@ public class QnaDAO {
 		
 		
 		// ±×¸¨¼ö ¾ò¾î¿È
-		String selectQnaCount = "SELECT COUNT(*) FROM QNA WHERE";
+		String selectQnaCount = "SELECT COUNT(*) FROM QNA WHERE ";
 		if(kind ==1){
 			selectQnaCount += "QNA_TITLE";
 		}else if(kind ==2){
