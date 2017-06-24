@@ -606,15 +606,15 @@ public class MemberDAO {
 // }
 	   
 	   
-	   public int changePw(String MEMBER_ID, String nowpwd){
-		   con = getConnection();
-		   String sql = "select "
-		   PreparedStatement psmt2 = con.prepareStatement(sql);
+//	   public int changePw(String MEMBER_ID, String nowpwd){
+//		   con = getConnection();
+//		   String sql = "select "
+//		   PreparedStatement psmt2 = con.prepareStatement(sql);
 		   
 
 
 		   
-	   }
+//	   }
 	   
 	   
 	   
