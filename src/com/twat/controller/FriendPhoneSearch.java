@@ -52,12 +52,19 @@ public class FriendPhoneSearch extends HttpServlet {
 //	    	System.out.println(memArr.get(i));
 //	    	
 //	    }
-	    jsonObj.put("friendId", memArr.get(0));
-	    jsonObj.put("friendName", memArr.get(1));
-	    jsonObj.put("friendPhone", memArr.get(2));
-	    jsonObj.put("friendImg", memArr.get(3));
-	    jsonObj.put("friendGender", memArr.get(4));
-	    jsonObj.put("friendBirth", memArr.get(5));
+	    if(memArr.size()!=0){
+	    	jsonObj.put("friendId", memArr.get(0));
+		    jsonObj.put("friendName", memArr.get(1));
+		    jsonObj.put("friendPhone", memArr.get(2));
+		    jsonObj.put("friendImg", memArr.get(3));
+		    jsonObj.put("friendGender", memArr.get(4));
+		    jsonObj.put("friendBirth", memArr.get(5));
+		    jsonObj.put("userExist", "Exist");
+	    }else{
+	    	jsonObj.put("userExist", "notExist");
+	    }
+	    
+	    
 	    
 	    jsonArr.add(jsonObj);
 	    
