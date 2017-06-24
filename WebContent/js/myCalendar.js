@@ -1342,7 +1342,18 @@ $(document).ready(function () {
                 console.log(item.friendId);
                 console.log(item.friendName);
                 console.log(item.friendBirth);
-                document.getElementById("fBirth").innerHTML="<div>"+item.friendBirth+"</div>";
+                for(var i = 0; i < data.length; i++){
+                    document.getElementById("fName").innerHTML="<div>"+data[i].friendName+"</div>";
+                    document.getElementById("fBirth").innerHTML="<div>"+data[i].friendBirth+"</div>";
+                }
+                
+//                for (var i = 0; i < data.length; i++) {
+//                    var str = "<div class='content'><div class='left birth'>" + data[i].memberBirth + "</div>";
+//                    str += "<div class='middle birth'>" + data[i].memberName + "님(" + data[i].memberId + ")의 생일</div>";
+//                    str += "<div class='right birth'></div></div>"
+//                    $('.event .contentBox').append(str);
+//                }
+                
 //                document.getElementById("fBirth").innerHTML += "<div id='fBirth" + index + "' style='border:3px solid black; margin:20px;'><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
 //                            item.friendId + "</div><div class='friendName'> 이름 : " +
 //                            item.friendName + "</div></div>";
