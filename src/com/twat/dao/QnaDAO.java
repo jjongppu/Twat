@@ -132,7 +132,7 @@ public class QnaDAO {
 		}else{
 			selectQnaCount +="MEMBER_ID";
 		}
-		selectQnaCount+= " LIKE ?";
+		selectQnaCount+= " LIKE ? ORDER BY QNA_DATE DESC";
 		
 		//실질적인 내용
 		//제목순
@@ -145,7 +145,7 @@ public class QnaDAO {
 		}else{
 			selectKindQnaSql +="MEMBER_ID";
 		}
-		selectKindQnaSql += " LIKE ? LIMIT "+ (page*10-10) +",10";
+		selectKindQnaSql += " LIKE ? ORDER BY QNA_DATE DESC LIMIT "+ (page*10-10) +",10";
 		
 		try{
 			con = getConnection();
