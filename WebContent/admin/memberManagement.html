@@ -618,17 +618,8 @@
     }
 
     var goPaging_S = function(cPage){
-//        var vals = $('#findMember').val();
-//        console.log(vals);
         getNextFriends2(cPage);
     };
-    
-    
-    
-    
-
-
-    
     
     function logout(){
         $.ajax ({
@@ -646,26 +637,6 @@
     
     }
            
-    //인풋에서 검색시 맴버를 찾아와줘용
-//        function findMember(){
-//            if($('#findMember').val().length>5 && $('#findMember').val().length<13 ){
-//                console.log("!");
-//            $.ajax ({
-//                type : 'post',
-//                url : '../Logout.do',
-//                dataType : "json",
-//                success : function(data) {
-//                    var result = data[0].result;
-//                    if(result != 'success') {
-//                        alert("권한이 없습니다.");
-//                        location.href="admin.html";
-//                    }
-//                }
-//            });
-//            }
-//            
-//            
-//        }
     // 선택한 멤버 추방
     function getOutMember(user){
         // 탈퇴시킬 유저 이름
@@ -685,20 +656,9 @@
                 }
             }
         });
-
-                    
-        
-        
-        
     }
-    
-    
-    function changePage(pagenum){
-        
-    }    
         
 </script>
-
 
 <body>
         <nav>
@@ -743,14 +703,9 @@
                             <span class="tdBt">정지</span>
                         </div>
                     </div>
-                    
-
-                    
                     <ul class="memberInfoTable" id="inputMemberinfo">
                     </ul>
 
-                    
-                    
                     <div id="pageChoiceCover">
                         <span id="addPageCover">
                         </span>
@@ -758,12 +713,6 @@
                 </div>
             
             </div>
-            
-            
-            
-          
-            
-            
         </div>
     </div>
 </body>

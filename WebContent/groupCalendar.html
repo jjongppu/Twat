@@ -1811,6 +1811,7 @@
                     //                    console.log(voteDateCount);
 
                     for (var i = 0; i < data.length; i++) {
+                        console.log(data[i].cal_depth);
                         if (data[i].cal_depth == 0) {
                             voteString += "<div id='voteListBox'>";
                             if (login_userId.match(group_master)) {
@@ -1820,10 +1821,10 @@
 
                                 if (voteDateCount == 1) {
                                     console.log(memberList);
-                                    for (var i = 0; i < memberList.length; i++) {
-                                        if (memberList[i].split("-")[0].match("00000000")) {
+                                    for (var j = 0; j < memberList.length; j++) {
+                                        if (memberList[j].split("-")[0].match("00000000")) {
                                             ImpossibleCount++;
-                                        } else if (memberList[i].split("-")[0].match(voteObject.cal_date)) {
+                                        } else if (memberList[j].split("-")[0].match(voteObject.cal_date)) {
                                             possibleCount++;
                                         }
                                     }
@@ -1840,10 +1841,10 @@
                                         ImpossibleCount = 0;
                                         possibleCount = 0;
 
-                                        for (var i = 0; i < memberList.length; i++) {
-                                            if (memberList[i].split("-")[0].match("00000000")) {
+                                        for (var j = 0; j < memberList.length; j++) {
+                                            if (memberList[j].split("-")[0].match("00000000")) {
                                                 ImpossibleCount++;
-                                            } else if (memberList[i].split("-")[0].match(item)) {
+                                            } else if (memberList[j].split("-")[0].match(item)) {
                                                 possibleCount++;
                                             }
                                         }
@@ -1930,10 +1931,11 @@
                             }
                             voteString += "</div>";
                         } else if (data[i].cal_depth > 0) {
-                            //                            console.log("확인!");
+                            console.log(data[i]);
 
                             commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
                             commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
+                            console.log(commentsString);
                             //                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
                         }
 
@@ -2114,8 +2116,8 @@
             // member_birth?
             // 확정되면 true값 아니면 false값 반환
             // 아이디는 6~12
-            console.log(member_choice);
-            console.log(cal_date);
+//            console.log(member_choice);
+//            console.log(cal_date);
 
             if (member_choice == "" || cal_date.indexOf(',') >= 0) {
                 console.log("false : " + member_choice);
