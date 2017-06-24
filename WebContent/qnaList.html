@@ -6,124 +6,64 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 	<script src="js/jquery-3.2.1.min.js"></script>
-<!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
+    <link rel="stylesheet" type="text/css" href="css/nav.css">
 	    <script src="js/nav.js"></script>
     <script src="js/jquery.form.js"></script>
+    </head>
 	<style>
-        #wrap{
-            margin: 0 0 0 125px;
-        }
 		ul {
 			list-style: none;
 		}
-		#contentListWrap {
-			background-color: bisque;
-			height: 330px;
-		}
-		#contentTitleWrapUl li span, #contentListWrapUl li span {
-			display: inline-block;
-		}
-		#contentTitleWrapUl {
-			background-color: aliceblue;
-		}
-		#contentListWrapUl {
-			border: 1px solid black;
-		}
+         .container{
+            
+            margin-left: 120px;
+        }
+        #qnaCover{
+            width: 800px;
+            margin: 100px auto 0 auto;
+        }
+        
 		span {
+            display: inline-block;
 			border: 1px solid red;
 		}
 		.listNum {
 			width: 60px;
 		}
 		.listCate {
-			width: 100px;
+			width: 150px;
 		}
 		.listTitle {
 			width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 		}
 		.listWriter {
-			width: 80px;
+			width: 100px;
 		}
 		.listDate {
-			width: 50px;
+			width: 150px;
 		}
 		.listViewNum {
 			width: 70px;
 		}
+        #contentTitleWrapUl li{
+            background-color: #AFBACB;
+            text-align: center;
+        }
+        #contentListWrapUl li{
+            cursor: pointer;
+            text-align: center;
+        }
+        #contentListWrapUl{
+            height: 300px;
+            margin: 0;
+        }
+        ul{
+            padding: 0;
+        }
 	</style>
-	<style>
-     html, body {
-       margin: 0;
-       padding: 0;
-   }
-   
-   #wrap {
-       display: block;
-   }
-   
-   .left_nav {
-       position: fixed;
-       top: 0;
-       left: 0;
-       display: inline-block;
-       width: 120px;
-       background-color: #6534ff;
-       height: 100%;
-   }
-   
-   .nav_ul {
-       margin: 0;
-       padding: 0px;
-       list-style: none;
-       text-align: center;
-   }
-   
-   .nav_li {
-       cursor: pointer;
-   }
-   
-   #logout > li:hover,
-   #nav_menu > li:hover {
-       background-color: #62bcfa;
-   }
-   
-   #user_Id {
-       color: #FFFFFF;
-   }
-   
-   .nav_text {
-       text-decoration: none;
-       color: #FFFFFF;
-       font-family: sans-serif;
-       font-size: 20px;
-       display: block;
-       padding: 14px 0;
-   }
-   
-   #userInfo {
-       display: block;
-       height: 120px;
-   }
-   
-   #user_Img {
-       width: 60px;
-       height: 60px;
-       border-radius: 60px;
-   }
-   
-   #user_Img_Cover {
-       display: block;
-       width: 60px;
-       margin: 30px auto 0 auto;
-   }
-   
-   #logout {
-       position: absolute;
-       bottom: 10px;
-       width: 100%;
-   }
-   
-    </style>
 	
 	<script>
 
@@ -140,7 +80,7 @@
         var notfind = '0';
         $.ajax ({
             type : 'post',
-            url : 'admingGetQnaList.do',
+            url : 'getQnaList.do',
             dataType : "json",
             data: {page : page , val : notfind } ,
             success : function(data) {
@@ -148,11 +88,11 @@
                 var userInfos = "";
               for(var i=0; i< data.length;i++){
                     var num = page*10+i+1-10;
+                   userInfos += '<li class="listLi" ';
                     if(i%2 !=0){
-                        userInfos += '<li style="background-color: #AFBACB;">';
-                    }else{
-                        userInfos += '<li>';    
+                        userInfos += ' style="background-color: #AFBACB;" ';
                     }
+                        userInfos += 'id="'+data[i].QNA_ID+'" onclick="qnaDetailPage(this)">';    
                     
                     userInfos += '<span class="listNum">'+num+'</span>';
                     userInfos += '<span class="listCate">'+ data[i].QNA_CATEGORY +'</span>';
@@ -174,7 +114,7 @@
                 }
                 $('#contentListWrapUl').html(userInfos);
                 
-                var page_viewList = Paging(data[0].memberCount, 10, 10 ,nowPage, "PagingView");
+                var page_viewList = Paging(data[0].COUNT, 10, 10 ,nowPage, "PagingView");
                 $("#addPageCover").empty().html(page_viewList);
 
                 
@@ -292,7 +232,7 @@
                 }
                 $('#contentListWrapUl').html(userInfos);
 
-                var page_viewList2 = Paging2(data[0].memberCount, 10, 10 ,pages, "S");
+                var page_viewList2 = Paging2(data[0].QNA_ID, 10, 10 ,pages, "S");
                 $("#addPageCover").empty().html(page_viewList2);
 
 
@@ -368,117 +308,11 @@
     };
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-		// 건의사항 첫 페이지 리스트 뽑기
-		function getList(page) {
-        nowPage = page;
-        var notfind = '0';
-        $.ajax ({
-            type : 'post',
-            url : 'QnaGetList.do',
-            dataType : "json",
-            data: {page : page , val : notfind } ,
-            success : function(data) {
-                console.log(data);
-                var userInfos = "";
-                for(var i=0; i< data.length;i++){
-                    var num = page*10+i+1-10;
-                    if(i%2 !=0){
-                        userInfos += '<li>';
-                    }else{
-                        userInfos += '<li>';    
-                    }
-                    
-                    userInfos += '<span>'+num+'</span>';
-                    userInfos += '<span>'+ data[i].QNA_CATEGORY +'</span>';
-                    userInfos += '<span>'+ data[i].QNA_TITLE +'</span>';
-                    userInfos += '<span>'+ data[i].MEMBER_ID +'</span>';
-                    userInfos += '<span>'; 
-                    userInfos += data[i].QNA_DATE.substring(0,10);
-                    userInfos += '</span>';
-					// 조회수 추가 해야함
-                    userInfos += '</li>';
-                }
-                $('#contentListWrapUl').html(userInfos);
-                
-//				페이지 수 생기는 부분 추후 수정
-//                var page_viewList = Paging(data[0].QNA_ID, 10, 10 ,nowPage, "PagingView");
-//                $("#addPageCover").empty().html(page_viewList);
-
-                
-            }, error: function (req) {
-                
-                console.log(req);
-            }
-        });
-    }
-		
-		
-		// 건의사항 검색 후 결과 .... 연결만 해놓음
-		function qnaSearchEnter(page) {
-			nowPage = page;
-        var pages =1;
-        if(page >pages){
-            pages = page;
+        function qnaDetailPage(id){
+            location.href="test.html?qna="+$(id).attr('id');
         }
-		$.ajax ({
-			type : 'post',
-			url : 'QnaGetList.do',
-			dataType : "json",
-			data: {searchCategory : $('#searchCategory').val(), page : pages ,val : $('#searchText').val()} ,
-			success : function(data) {
-				console.log(data);
-				var userInfos = "";
-					for(var i=0; i< data.length;i++){
-						var num = pages*10+i+1-10;
-						if(i%2 !=0){
-							userInfos += '<li>';
-						}else{
-							userInfos += '<li>';    
-						}
-
-						userInfos += '<span>'+num+'</span>'; // 글번호
-						userInfos += '<span>'+ data[i].QNA_CATEGORY +'</span>'; // 카테고리
-						userInfos += '<span>'+ data[i].QNA_TITLE +'</span>'; // 제목
-						userInfos += '<span>'+ data[i].MEMBER_ID +'</span>'; // 작성자
-						userInfos += '<span>'; 
-						userInfos += data[i].QNA_DATE.substring(0,10); // 날짜
-						userInfos += '</span>';
-						// 조회수 추가 해야함
-						userInfos += '</li>';
-					}
-					$('#inputMemberinfo').html(userInfos);
-				
-//				페이지 수 생기는 부분 추후 수정
-//				var page_viewList2 = Paging2(data[0].QNA_ID, 10, 10 ,pages, "S");
-//				$("#addPageCover").empty().html(page_viewList2);
-
-
-			}, error: function (req) {
-
-				console.log(req);
-			}
-		});
-		}
-		
+        
 	</script>
-</head>
 <body>
     <div>
     <!--  네브바 입니다  -->
@@ -509,23 +343,21 @@
 	
 	<div id="wrap">
         <div class="container">
-        <div>
-            <h4>문의사항 페이지</h4>
-        </div>
+            
+            <div id="qnaCover">
 		<div id="contentTitleWrap">
 			<ul id="contentTitleWrapUl">
 				<li>
-					<span class="listNum">글번호</span>
-					<span class="listCate">카테고리</span>
-					<span class="listTitle">제목</span>
-					<span class="listWriter">작성자</span>
-					<span class="listDate">날짜</span>
-					<span class="listViewNum">조회수</span>
+					<span class="listNum" style="width:60">글번호</span>
+					<span class="listCate" style="width:100">카테고리</span>
+					<span class="listTitle" style="width:60">제목</span>
+					<span class="listWriter" style="width:100">작성자</span>
+					<span class="listDate" style="width:100">날짜</span>
+					<span class="listViewNum" style="width:60">조회수</span>
 				</li>
 			</ul>
 		</div>
 		<div id="contentListWrap">
-		글 목록 예시			
 			<ul id="contentListWrapUl">
 <!--
 	여기에다가 추가 할거야
@@ -569,6 +401,6 @@
     	</div>
 	</div>
 	</div>
-
+</div>
 </body>
 </html>

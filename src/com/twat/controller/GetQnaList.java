@@ -1,4 +1,4 @@
-package com.admin.controller;
+package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,19 +14,18 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.admin.dao.AdminDAO;
-import com.twat.dao.QnaDAO;
-import com.twat.dto.CalgatherVO;
 import com.twat.dto.QnaVO;
 
-@WebServlet("/admingGetQnaList.do")
-public class AdmingGetQnaList extends HttpServlet {
+@WebServlet("/getQnaList.do")
+public class GetQnaList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AdmingGetQnaList() {
+    public GetQnaList() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
