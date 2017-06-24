@@ -4,6 +4,7 @@ public class MemberJoinGroupVO
 {
 	private String MEMBER_ID;
 	private String GROUP_ID;
+	private int CALENDAR_VIEW;
 	
 	public MemberJoinGroupVO() { }
 	
@@ -11,6 +12,17 @@ public class MemberJoinGroupVO
 	{
 		this.MEMBER_ID = MEMBER_ID;
 		this.GROUP_ID = GROUP_ID;
+		this.CALENDAR_VIEW = CALENDAR_VIEW;
+	}
+	
+	public int getCALENDAR_VIEW()
+	{
+		return CALENDAR_VIEW;
+	}
+
+	public void setMEMBER_ID(int CALENDAR_VIEW)
+	{
+		this.CALENDAR_VIEW = CALENDAR_VIEW;
 	}
 
 	public String getMEMBER_ID()
