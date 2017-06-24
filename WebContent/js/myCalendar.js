@@ -1334,13 +1334,18 @@ function getGroupBrith() {
 $(document).ready(function () {
     $.ajax({
         type: 'post',
-        url: 'inviteFriends.do',
+        url: 'myCalBirth.do',
         dataType: "json",
         success: function (data) {
             console.log(data);
             $.each(data, function (index, item) {
                 console.log(item.friendId);
                 console.log(item.friendName);
+                console.log(item.friendBirth);
+                document.getElementById("fBirth").innerHTML="<div>"+item.friendBirth+"</div>";
+//                document.getElementById("fBirth").innerHTML += "<div id='fBirth" + index + "' style='border:3px solid black; margin:20px;'><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
+//                            item.friendId + "</div><div class='friendName'> 이름 : " +
+//                            item.friendName + "</div></div>";
             });
         },
         error: function (req) {

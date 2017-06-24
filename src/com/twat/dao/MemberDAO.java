@@ -116,8 +116,8 @@ public class MemberDAO {
 	   
 
 		// 회占쏙옙 占싸깍옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 ----------------------------------
-		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
-			int result = -1;
+		public long loginMember(String MEMBER_ID, String MEMBER_PW) {
+			long result = -1;
 			
 			long currentTime = System.currentTimeMillis();
 			   
@@ -131,37 +131,12 @@ public class MemberDAO {
 				psmt = con.prepareStatement(selectSql);
 				psmt.setString(1, MEMBER_ID);
 				psmt.setString(2, MEMBER_PW);
-//				System.out.println("!");
 				rs = psmt.executeQuery();
-				
-//				if(rs.next()) {
-//					// out_time占쏙옙 0占싱몌옙 占싸깍옙占쏙옙 占쏙옙占쏙옙 result占쏙옙 1占쌍억옙占쏙옙
-//					if(rs.getInt(1) == 0) {
-//						// 占싸깍옙占쏙옙 占쏙옙占쏙옙
-//						result = 1;
-//					} else {
-//						result = rs.getInt(1);
-//						System.out.println(result);
-//					}
-//				}
-				
 				if(rs.next()) {
-					// out_time占쏙옙 0占싱몌옙 占싸깍옙占쏙옙 占쏙옙占쏙옙 result占쏙옙 1占쌍억옙占쏙옙
-					if(rs.getLong(1) == 0) {
-						// 占싸깍옙占쏙옙 占쏙옙占쏙옙
-						result = 1;
-					} else if(rs.getLong(1) > currentTime) { // 탈占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 회占쏙옙
-						result = -1;
-//						System.out.println(result);
-					} else if(rs.getLong(1) < currentTime) { // 탈占쏙옙占� 회占쏙옙
-						result = -2;
-					} else { // 占쏙옙占싱듸옙, 占쏙옙占� 틀占쏙옙占쏙옙 占쏙옙占쏙옙
-						result = 0;
-					}
+						result = rs.getLong(1);
 				}
 			} catch (Exception e) {
 				System.out.print("占쏙옙占쏙옙 占쏙옙占쏙옙");
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 					try {
@@ -169,7 +144,6 @@ public class MemberDAO {
 						if(psmt != null) psmt.close();
 						if(con != null) con.close();
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				
@@ -605,42 +579,45 @@ public class MemberDAO {
 //		return result;
 // }
 	   
-//	   
+
 //	   public int changePw(String MEMBER_ID, String nowpwd){
 //		   con = getConnection();
 //		   String sql = "select "
 //		   PreparedStatement psmt2 = con.prepareStatement(sql);
-//		   
-//
-//
-//		   
 //	   }
 	   
 	   
 	   
 ///////////////////////////占쏙옙占쏙옙 회占쏙옙탈占쏙옙.////////////////////////
-		   public int outUser(String MEMBER_ID){
+		   public int outUser(String MEMBER_ID,String state){
 			   
 //			   SimpleDateFormat outDate = new SimpleDateFormat("yyyy占쏙옙 MM占쏙옙dd占쏙옙 HH占쏙옙mm占쏙옙");
 //			   Date date = new Date();
 //			   String today = outDate.format(date);
 			   
 			   long outTime = System.currentTimeMillis()+60*60*24*1000*7;
+			   long resetTime = 0;
 			   
-			   System.out.println(outTime * 60*60*24*1000*7);
 			   
 			   
 			   String delUser = "UPDATE member SET OUT_TIME=? WHERE MEMBER_ID =?";
+				   
+			   
 			   int result = 0;
 			   try {
 				con = getConnection();
 				psmt = con.prepareStatement(delUser);
-				psmt.setLong(1, outTime);
+				if(state.equals("out")){
+					psmt.setLong(1, outTime);
+					System.out.println("1");
+				}else{
+					psmt.setLong(1, resetTime);
+					System.out.println("2");
+				}
 				psmt.setString(2, MEMBER_ID);
 				result = psmt.executeUpdate();
 				
 			} catch (Exception e) {
-				
 				e.printStackTrace();
 			}finally {
 	            try {
@@ -648,6 +625,7 @@ public class MemberDAO {
 	                if(psmt != null) psmt.close();
 	                if(con != null) con.close();
 	             } catch (SQLException e) {
+	            	 
 	             }
 	       }
 			   
