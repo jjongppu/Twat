@@ -289,8 +289,95 @@
             margin-top: 20px;
             opacity: 0
         }
+        .eachFriendRequest{
+            border: 1px solid black;
+            margin: 20px;
+        }
+        
+        .requestFriendImg{
+            width: 100px;
+            height: 100px;
+        }
+        
+        
+        
     </style>
     <script>
+         $(document).ready(function(){
+            
+              $.ajax({
+                type: "post", 
+                url: "RequestingFriend.do",                
+                dataType:"json",
+                success: function (data){
+                    
+//                    console.log(data);
+                    
+//                    console.log(data.length);
+                    if(data.length != 0){
+//                        console.log("!");
+                        for(var index = 0; index < data.length; index ++){
+                        document.getElementById("requestExist").innerHTML += "<div class='eachFriendRequest'>"
+                            + "<img src ='" + data[index].friendImg + "' class='requestFriendImg' />"
+                            + "<div class='requestFriendName'>" + data[index].friendId + "님에게 친구요청이 왔습니다.</div>"
+                            + "<div> 이름 : " + data[index].friendName + "</div>"
+                            + "<div> 전화번호 : " + data[index].friendPhone + "</div>"
+                            + "<input type=button value='수락' onclick='acceptRequest(this)'/><input type=button value='거절' onclick=refuseRequest(this)/></div>";
+                        
+                        
+                        }
+                        
+                        
+                    }
+                    
+                        
+                        
+                    
+                    
+                    
+        
+                }, error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            });
+            
+            
+            
+            
+        });
+        
+        
+        
+        function acceptRequest(a){//친구요청 수락
+            var acceptFriendId = $(a).prev().prev().prev().text().split("님")[0]; //요청 수락할 친구 ID
+            
+             $.ajax({
+                type: "post",                  
+                url: "AcceptRequest.do",                
+                data:{
+                    acceptFriendId : acceptFriendId
+                },
+                dataType:"json",
+                success: function (data){
+                        
+                        
+                    
+                    
+                    
+        
+                }, error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            });
+            
+            
+            
+        }
+        
+        
+        
         /////친구 목록 가져오기.
         $.ajax({
            type:"post",
@@ -499,30 +586,7 @@
     
     <script>
         
-        $(document).ready(function(){
-            
-              $.ajax({
-                type: "post", 
-                url: "RequestFriend.do",
-                data:{
-                    friendId: friendId
-                    
-                },
-                dataType:"json",
-                success: function (data){
-                    
-                    
-        
-                }, error: function(req) {
-
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-                }
-            });
-            
-            
-            
-            
-        });
+       
         
 
 
