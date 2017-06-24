@@ -104,11 +104,11 @@ public class CalgatherDAO {
 		String selectMakeGroupSql = "INSERT INTO CALGATHER VALUES(?,?,?,?,?,?,?)";
 		
 		String selectaddGMSql = "INSERT INTO MEMBER_JOIN_GROUP VALUES";
-		selectaddGMSql += "('" + masterId + "','" + GroupPk + "')," ;
+		selectaddGMSql += "('" + masterId + "','" + GroupPk + "',0)," ;
 				
 				
 		for (int i = 0; i < members.length; i++) {
-			selectaddGMSql += "('" + members[i]  + "','" +GroupPk + "')" ;
+			selectaddGMSql += "('" + members[i]  + "','" +GroupPk + "',0)" ;
 			
 			if(i != members.length-1){
 				selectaddGMSql +=",";
