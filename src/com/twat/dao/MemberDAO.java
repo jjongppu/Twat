@@ -286,51 +286,7 @@ public class MemberDAO {
 		  
 	   }	   
 	   
-	   
-	   
 
-	
-	// 친占쏙옙 占쏙옙占쏙옙占� 占싱아울옙占쏙옙槁占쏙옙求占� 占쌨쇽옙占쏙옙 -----占쏙옙占쏙옙 ---------------------
-	public ArrayList printFriendList(String MEMBER_ID, String MEMBER_NAME, String MEMBER_BIRTH, String MEMBER_PHONE, String MEMBER_IMG){
-		 
-
-		String sql = "SELECT MEMBER_IMG, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = 'asdfasdf'";
-		//占싸깍옙占싸쇽옙占쏙옙 占쏙옙占싱듸옙 占쌨아와쇽옙 占쌍깍옙.
-		ArrayList arList = new ArrayList();
-		
-		HttpSession session = null;
-	    session.getAttribute(MEMBER_ID);
-		
-		try {
-			con = getConnection();
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				// 친占쏙옙占쏙옙占쏙옙트占쏙옙 占심곤옙占쏙옙 str占쏙옙 占쏙옙占쏙옙斂占�
-				String[] str = rs.getString(9).split(",");
-				System.out.println(str);
-				
-				// str占쏙옙占쏙옙 b占쏙옙 占쌍댐옙占쏙옙 占싯아븝옙占쏙옙
-				for(int i=0; i<arList.size(); i++){
-					// 占쏙옙占쏙옙 b占쏙옙 占쌍다몌옙 memberVO占쏙옙체占쏙옙 占쏙옙占쏙옙底� rs占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 arList占쏙옙 add
-					if(str[i] == MEMBER_ID) {	
-						MemberVO mdo = new MemberVO();
-					arList.add(mdo.getMEMBER_NAME());					
-					
-				}else{
-					System.out.println("친占쏙옙占쏙옙 占쏙옙占쏙옙占싹댐옙.");
-				}	
-			}								
-		}
-			
-			rs.close();
-			stmt.close();
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		return arList;	
-	}
 	
 	   // 친占쏙옙占쏙옙占� 占쏙옙占싶쇽옙 친占쏙옙占쏙옙占쏙옙占쏙옙 占싼곤옙占쌍깍옙 占쏙옙占쏙옙ver....
 	   public ArrayList<MemberVO> getFriendList(String MEMBER_ID){
@@ -871,8 +827,10 @@ public class MemberDAO {
 				
 				psmt2.setString(1, friendId);				
 				rs3 = psmt2.executeQuery();
+				
 				while(rs3.next())
 					friendFriendsList = rs3.getString("FRIENDS_LIST"); // 친구의 친구 리스트
+				
 				
 				
 				
@@ -953,6 +911,180 @@ public class MemberDAO {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+			}
+			
+			
+			
+		}
+		
+		public MemberVO friendInfo(String friendId){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			MemberVO member = new MemberVO();
+			try {
+				con = getConnection();
+				String sql = "select * from member where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, friendId);
+				rs2 = psmt2.executeQuery();
+				while(rs2.next()){
+					member.setMEMBER_ID(rs2.getString("MEMBER_ID"));
+					member.setMEMBER_NAME(rs2.getString("MEMBER_NAME"));
+					member.setMEMBER_IMG(rs2.getString("MEMBER_IMG"));
+					member.setMEMBER_PHONE(rs2.getString("MEMBER_PHONE"));
+					
+				}
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				
+					try {
+						if(rs2 != null)
+							rs2.close();
+						if(psmt2 !=null)
+							psmt2.close();
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
+			
+			return member;
+			
+		}
+		
+		
+		public ArrayList<MemberVO> requestingFriendList(String userId){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			String friendsList = null;
+			ArrayList<MemberVO> memberArr = new ArrayList<MemberVO>();
+			try {
+				con = getConnection();
+				String sql ="select FRIENDS_LIST from member where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				rs2 = psmt2.executeQuery();
+//				System.out.println(rs2);
+				
+				
+				while(rs2.next())
+					friendsList = rs2.getString("FRIENDS_LIST");
+				
+//				System.out.println("내아이디 : " +userId);
+//				System.out.println("친구리스트 : " + friendsList);
+				if(friendsList.equals("") || friendsList.equals(",")){
+					return null;
+				}else{
+					String[] eachFriend = friendsList.split(",");
+					for(int i = 0; i < eachFriend.length; i++){
+						
+						if(eachFriend[i].length() != 0){
+							if(eachFriend[i].substring(0, 1).equals("!") ){
+								
+//								System.out.println(friendInfo(eachFriend[i].substring(1, eachFriend[i].length())).getMEMBER_NAME());
+								memberArr.add(friendInfo(eachFriend[i].substring(1, eachFriend[i].length())));
+								
+							}
+							
+							
+						}
+						
+					
+						
+					}
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally{
+				
+				try {
+					if(rs2 != null)
+						rs2.close();					
+					if(psmt2 != null)
+						psmt2.close();
+					if(con != null)
+						con.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+			return memberArr;
+			
+			
+			
+			
+		}
+		public String getfriendListForString(String userId){
+			
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			String friendList = "";
+			String sql = "select FRIEND_LIST FROM member where MEMBER_ID = ?";
+			try {
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				rs2 = psmt2.executeQuery();
+				if(rs2.next());
+					friendList = rs2.getString("FRIEND_LIST");
+					
+					
+				
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				
+					try {
+						if(rs2 != null)
+							rs2.close();
+						if(psmt2 != null)
+							psmt2.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
+			return friendList;
+			
+		}
+		
+		
+		
+		
+		public void acceptFriend(String userId, String friendId){//친구요청 수락
+			
+			PreparedStatement psmt2 = null;
+			
+			try {
+				con = getConnection();
+//				String sql = "select "
+//				psmt2 = con.prepareStatement(sql);
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			
