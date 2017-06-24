@@ -579,15 +579,11 @@ public class MemberDAO {
 //		return result;
 // }
 	   
-	   
+
 //	   public int changePw(String MEMBER_ID, String nowpwd){
 //		   con = getConnection();
 //		   String sql = "select "
 //		   PreparedStatement psmt2 = con.prepareStatement(sql);
-		   
-
-
-		   
 //	   }
 	   
 	   
@@ -813,9 +809,150 @@ public class MemberDAO {
 		}
 		
 		
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		
-	}
+		public ArrayList<String> friendPhoneSearch(String phoneNum){
+			ArrayList<String> memArr = new ArrayList<String>();
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			try {
+				con = getConnection();
+								 
+				String Sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_PHONE = ?";
+				psmt2 = con.prepareStatement(Sql);
+				psmt2.setString(1, phoneNum);
+				rs2 = psmt2.executeQuery();
+				
+				while(rs2.next()){
+					memArr.add(rs2.getString("MEMBER_ID"));
+					memArr.add(rs2.getString("MEMBER_NAME"));					
+					memArr.add(rs2.getString("MEMBER_PHONE"));
+					memArr.add(rs2.getString("MEMBER_IMG"));
+					memArr.add(rs2.getString("MEMBER_GENDER"));
+					memArr.add(rs2.getString("MEMBER_BIRTH"));
+					
+				}
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs2 != null)rs.close();
+	                if(psmt2 != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	             }
+	       }
+			
+		
+			return memArr;
+			
+		}
+		
+		
+		public int requestFriend(String userId, String friendId){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			ResultSet rs3 = null;
+			String myFriendList = null;
+			String friendFriendsList = null;
+			int result = 0;
+			
+			try {
+				con = getConnection();
+				String sql ="select FRIENDS_LIST from member where MEMBER_ID = ?"; 
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				rs2 = psmt2.executeQuery();
+				while(rs2.next())
+					myFriendList = rs2.getString("FRIENDS_LIST"); //로그인한 유저의 친구 리스트
+				
+				
+				psmt2.setString(1, friendId);				
+				rs3 = psmt2.executeQuery();
+				while(rs3.next())
+					friendFriendsList = rs3.getString("FRIENDS_LIST"); // 친구의 친구 리스트
+				
+				System.out.println(myFriendList);
+				System.out.println(friendFriendsList);
+				
+				for(int i=0; i<myFriendList.split(",").length; i++){
+					if(myFriendList.split(",")[i].equals(friendId))
+						result = -1; // 이미 친구
+					else if(myFriendList.split(",")[i].equals("*" + friendId)){
+						result = 1; // 상대방에게 요청했을때
+					}else if(myFriendList.split(",")[i].equals("!" + friendId)){
+						result = 2; // 나에게 온 친구요청이 있을때
+					}else{
+						requestFriendsUpdate(userId, friendId, myFriendList, friendFriendsList);
+						
+					}
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs2 != null)rs.close();
+	                if(rs3 != null)rs.close();
+	                if(psmt2 != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	             }
+	       }
+			
+			return result;
+			
+			
+		}
+		
+		public void requestFriendsUpdate(String userId, String friendId, String myFriendList, String friendFriendsList){
+			PreparedStatement psmt2 = null;			
+			
+			System.out.println(myFriendList);
+			
+			
+			try {
+				String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, myFriendList + "," + "*" + friendId);
+				psmt2.setString(2, userId);
+				psmt2.executeUpdate();
+				
+				String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2.setString(1, friendFriendsList + "," + "!" + userId);
+				psmt2.setString(2, friendId);
+				psmt2.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				
+					try {
+						if(psmt2 != null)
+							psmt2.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
+			
+			
+		}
+		
+		
+}
 
 		
 		
