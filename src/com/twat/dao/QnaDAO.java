@@ -124,34 +124,38 @@ public class QnaDAO {
 		
 		
 		// 그릅수 얻어옴
-		String selectQnaCount = "SELECT COUNT(*) FROM QNA WHERE ";
+		String selectQnaCount = "SELECT COUNT(*) FROM QNA ";
 		if(kind ==1){
-			selectQnaCount += "QNA_TITLE";
+			selectQnaCount += " WHERE QNA_TITLE LIKE ?";
 		}else if(kind ==2){
-			selectQnaCount += "QNA_CONTENTS";
+			selectQnaCount += " WHERE QNA_CONTENTS LIKE ?";
+		}else if(kind ==3){
+			selectQnaCount +=" WHERE MEMBER_ID LIKE ?";
 		}else{
-			selectQnaCount +="MEMBER_ID";
+			
 		}
-		selectQnaCount+= " LIKE ? ORDER BY QNA_DATE DESC";
+		selectQnaCount+= "  ORDER BY QNA_DATE DESC";
 		
 		//실질적인 내용
 		//제목순
-		String selectKindQnaSql = "SELECT * FROM QNA WHERE ";
+		String selectKindQnaSql = "SELECT * FROM QNA";
 		
 		if(kind ==1){
-			selectKindQnaSql += "QNA_TITLE";
+			selectQnaCount += " WHERE QNA_TITLE LIKE ?";
 		}else if(kind ==2){
-			selectKindQnaSql += "QNA_CONTENTS";
+			selectQnaCount += " WHERE QNA_CONTENTS LIKE ?";
+		}else if(kind ==3){
+			selectQnaCount +=" WHERE MEMBER_ID LIKE ?";
 		}else{
-			selectKindQnaSql +="MEMBER_ID";
+			
 		}
-		selectKindQnaSql += " LIKE ? ORDER BY QNA_DATE DESC LIMIT "+ (page*10-10) +",10";
+		selectKindQnaSql += " ORDER BY QNA_DATE DESC LIMIT "+ (page*10-10) +",10";
 		
 		try{
 			con = getConnection();
 			
 			psmt = con.prepareStatement(selectQnaCount);
-			if(!val.equals("0")) {
+			if(kind != 4) {
 				psmt.setString(1, "%"+val+"%");
 			}
 			rs = psmt.executeQuery();
@@ -163,7 +167,9 @@ public class QnaDAO {
 			}
 			
 			psmt = con.prepareStatement(selectKindQnaSql);
-			psmt.setString(1,"%"+val+"%");
+			if(kind != 4) {
+				psmt.setString(1,"%"+val+"%");
+			}
 			rs = psmt.executeQuery();
 				
 			while(rs.next()){

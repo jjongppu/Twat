@@ -138,9 +138,9 @@
         var notfind = '0';
         $.ajax ({
             type : 'post',
-            url : 'getQnaList.do',
+            url : 'SearchQna.do',
             dataType : "json",
-            data: {page : page , val : notfind } ,
+            data: {page : page ,val : 'get', kind : 4 } ,
             success : function(data) {
                 console.log(data);
                 var userInfos = "";
