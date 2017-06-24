@@ -219,7 +219,7 @@ public class MemberDAO {
 	         psmt.setString(6, MEMBER_GENDER);
 	         psmt.setString(7, MEMBER_BIRTH);
 	         psmt.setString(8, null);
-	         psmt.setString(9, null);
+	         psmt.setString(9, "");
 //	         psmt.setTimestamp(10, null);
 	         psmt.setInt(10, OUT_TIME);
 
