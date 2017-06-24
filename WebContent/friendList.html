@@ -499,6 +499,31 @@
     
     <script>
         
+        $(document).ready(function(){
+            
+              $.ajax({
+                type: "post", 
+                url: "RequestFriend.do",
+                data:{
+                    friendId: friendId
+                    
+                },
+                dataType:"json",
+                success: function (data){
+                    
+                    
+        
+                }, error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            });
+            
+            
+            
+            
+        });
+        
 
 
         
@@ -536,13 +561,17 @@
                     friendGender = data[0].friendGender;
                     friendBirth = data[0].friendBirth;
                     
-                    document.getElementById("phoneSearchList").innerHTML = "<img src='" + friendImg + "' id='friendImg'/>";
-                    document.getElementById("phoneSearchList").innerHTML += "<div id='friendId'> 아이디 : " + friendId + "</div>";
-                    document.getElementById("phoneSearchList").innerHTML += "<div id='friendName'> 이름 : " + friendName + "</div>";
-                    document.getElementById("phoneSearchList").innerHTML += "<div id='friendPhone'> 전화번호 : " + friendPhoneNum + "</div>";
-                    document.getElementById("phoneSearchList").innerHTML += "<div id='friendBirth'> 생년월일 : " + friendBirth + "</div>";
-                    document.getElementById("phoneSearchList").innerHTML += "<input type='button' value='친구요청하기' onclick='requestFriend()'/>";
-                
+                    if(data[0].userExist == "Exist"){
+                        document.getElementById("phoneSearchList").innerHTML = "<img src='" + friendImg + "' id='friendImg'/>";
+                        document.getElementById("phoneSearchList").innerHTML += "<div id='friendId'> 아이디 : " + friendId + "</div>";
+                        document.getElementById("phoneSearchList").innerHTML += "<div id='friendName'> 이름 : " + friendName + "</div>";
+                        document.getElementById("phoneSearchList").innerHTML += "<div id='friendPhone'> 전화번호 : " + friendPhoneNum + "</div>";
+                        document.getElementById("phoneSearchList").innerHTML += "<div id='friendBirth'> 생년월일 : " + friendBirth + "</div>";
+                        document.getElementById("phoneSearchList").innerHTML += "<input type='button' value='친구요청하기' onclick='requestFriend()'/>";
+                    }else if(data[0].userExist == "notExist"){
+                        
+                        document.getElementById("phoneSearchList").innerHTML = "<div>없는 사용자입니다.</div>";
+                    }
                 }, error: function(req) {
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
@@ -569,19 +598,22 @@
                     
                     console.log(data);
                     if(data[0].friendExist == "Exist")
-                        document.getElementById("phoneSearchList").innerHTML = "<div id='requestMsg'> 이미 친구입니다. </div>";
+                        document.getElementById("phoneSearchList").innerHTML = "<div class='requestMsg'> 이미 친구입니다. </div>";
                     else if(data[0].friendExist == "notExist")
-                        document.getElementById("phoneSearchList").innerHTML = "<div id='requestMsg'> 친구요청을 보냈습니다. </div>";    
+                        document.getElementById("phoneSearchList").innerHTML = "<div class='requestMsg'> 친구요청을 보냈습니다. </div>";    
                     else if(data[0].friendExist == "requestExist")
-                        document.getElementById("phoneSearchList").innerHTML = "<div id='requestMsg'> 이미 친구요청을 하였습니다. </div>";    
+                        document.getElementById("phoneSearchList").innerHTML = "<div class='requestMsg'> 이미 친구요청을 하였습니다. </div>";    
                     else if(data[0].friendExist == "responseExist")
-                        document.getElementById("phoneSearchList").innerHTML = "<div id='requestMsg'> 상대방이 나에게 친구 요청을 하였습니다. </div>";    
+                        document.getElementById("phoneSearchList").innerHTML = "<div class='requestMsg'> 상대방이 나에게 친구 요청을 하였습니다. </div>"; 
+                    else if(data[0].friendExist == "me")
+                        document.getElementById("phoneSearchList").innerHTML = "<div class='requestMsg'> 자기 자신한테는 요청할수 없습니다. </div>";    
                 
                 }, error: function(req) {
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
+            
             
             
             
@@ -609,6 +641,10 @@
                 <div id='idSearch'>
                     <input type='text' placeholder='친구 아이디를 입력하세요' onkeyup='if(event.keyCode==13) {idSearch(this);}'/>
                 </div>    
+                
+                <div id="requestExist">
+                
+                </div>
             </div>
         
         

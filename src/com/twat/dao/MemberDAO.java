@@ -874,21 +874,29 @@ public class MemberDAO {
 				while(rs3.next())
 					friendFriendsList = rs3.getString("FRIENDS_LIST"); // 친구의 친구 리스트
 				
+				
+				
 				System.out.println(myFriendList);
 				System.out.println(friendFriendsList);
 				
 				for(int i=0; i<myFriendList.split(",").length; i++){
-					if(myFriendList.split(",")[i].equals(friendId))
+					if(myFriendList.split(",")[i].equals(friendId)){
 						result = -1; // 이미 친구
-					else if(myFriendList.split(",")[i].equals("*" + friendId)){
+						return result;
+					}else if(myFriendList.split(",")[i].equals("*" + friendId)){
 						result = 1; // 상대방에게 요청했을때
+						return result;
 					}else if(myFriendList.split(",")[i].equals("!" + friendId)){
 						result = 2; // 나에게 온 친구요청이 있을때
-					}else{
-						requestFriendsUpdate(userId, friendId, myFriendList, friendFriendsList);
-						
-					}
+						return result;
+					}else if(userId.equals(friendId)){
+						result = 3; // 본인 일때
+						return result;
+					}						
+					
 				}
+				
+				requestFriendsUpdate(userId, friendId, myFriendList, friendFriendsList);
 				
 				
 				
