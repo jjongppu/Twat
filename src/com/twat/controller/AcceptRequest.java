@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.twat.dao.MemberDAO;
+
 /**
  * Servlet implementation class AcceptRequest
  */
@@ -46,9 +48,18 @@ public class AcceptRequest extends HttpServlet {
 	    String loginUserId = (String) session.getAttribute("loginUserId");
 	    String requestFriendId = request.getParameter("acceptFriendId");
 	    
+	    MemberDAO memberDAO = MemberDAO.getInstance();
+	    
+	    memberDAO.acceptFriend(loginUserId, requestFriendId);
 //	    System.out.println(loginUserId);
 //	    System.out.println(requestFriendId);
 	    
+	    
+	    jsonObj.put("myId", loginUserId);
+	    jsonObj.put("friendId", requestFriendId);
+	    jsonArr.add(jsonObj);
+	    System.out.println(jsonArr);
+	    out.println(jsonArr);
 	    
 	    
 		
