@@ -14,24 +14,25 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.mysql.fabric.xmlrpc.base.Member;
 import com.twat.dao.MemberDAO;
 import com.twat.dto.MemberVO;
 
 /**
- * Servlet implementation class inviteFriends
+ * Servlet implementation class RequestingFriend
  */
-@WebServlet("/inviteFriends.do")
-public class inviteFriends extends HttpServlet {
+@WebServlet("/RequestingFriend.do")
+public class RequestingFriend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public inviteFriends() {
+    public RequestingFriend() {
         super();
         // TODO Auto-generated constructor stub
     }
+
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,35 +41,40 @@ public class inviteFriends extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
-	    request.setCharacterEncoding("UTF-8");		
-	    
-	    HttpSession session = request.getSession();
-	    String userId = (String) session.getAttribute("loginUserId");	    
+	    request.setCharacterEncoding("UTF-8");
 	    
 	    JSONArray jsonArr = new JSONArray();
+	    
 	    PrintWriter out = response.getWriter();
+	    HttpSession session = request.getSession(); 
+	    String loginUserId = (String) session.getAttribute("loginUserId");
 	    
 	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
-	    ArrayList<MemberVO> memArr = memberDAO.getFriendList(userId);
+	    ArrayList<MemberVO> member = memberDAO.requestingFriendList(loginUserId);
+//	    System.out.println(member.size());
 	    
-	    for(int i = 0; i < memArr.size(); i++){
-	    	JSONObject jsonObj = new JSONObject();
-	    	jsonObj.put("friendId", memArr.get(i).getMEMBER_ID());
-	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());	    	
-	    	jsonArr.add(jsonObj);
-	    	System.out.println(getServletName());
+	    if(member != null){
+	    	for(int i = 0; i < member.size(); i++){
+	    		JSONObject jsonObj = new JSONObject();
+		    	jsonObj.put("friendImg", member.get(i).getMEMBER_IMG());
+		    	jsonObj.put("friendId", member.get(i).getMEMBER_ID());
+		    	jsonObj.put("friendName", member.get(i).getMEMBER_NAME());
+		    	jsonObj.put("friendPhone", member.get(i).getMEMBER_PHONE());		    	
+		    	jsonArr.add(jsonObj);	    	
+		    	
+		    }
+	    	
 	    }
 	    
-	    System.out.println(jsonArr.toJSONString());
-	    out.print(jsonArr);
+	    
+	    
+//	    System.out.println(jsonArr);
+	    out.println(jsonArr);
 	    
 	    
 	    
 	    
-	    
-	    
-		
 	}
 
 }

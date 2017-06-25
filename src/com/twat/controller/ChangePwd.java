@@ -59,8 +59,8 @@ public class ChangePwd extends HttpServlet {
 		
 		
 	    MemberDAO mdo = MemberDAO.getInstance();
-//	    int result = mdo.changePw(MEMBER_ID, nowpwd, chpwd , chkpwd);
-	    int result = mdo.ch
+	    int result = mdo.changePw(MEMBER_ID, nowpwd, chpwd , chkpwd);
+//	    int result = mdo.ch
 	    
 	    JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();

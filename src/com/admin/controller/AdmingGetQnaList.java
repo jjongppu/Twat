@@ -49,7 +49,7 @@ public class AdmingGetQnaList extends HttpServlet {
 			if(groupInfo.size() > 0 ){
 				for (int i = 1; i < groupInfo.size(); i++) {
 					JSONObject jsonObj = new JSONObject();
-					jsonObj.put("QNA_ID", groupInfo.get(0).getQNA_ID());
+					jsonObj.put("COUNT", groupInfo.get(0).getQNA_ID());
 					jsonObj.put("QNA_ID", groupInfo.get(i).getQNA_ID());
 					jsonObj.put("MEMBER_ID", groupInfo.get(i).getMEMBER_ID());
 					jsonObj.put("QNA_CATEGORY", groupInfo.get(i).getQNA_CATEGORY());

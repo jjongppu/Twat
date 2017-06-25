@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,28 +15,24 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.mysql.fabric.xmlrpc.base.Member;
 import com.twat.dao.MemberDAO;
 import com.twat.dto.MemberVO;
 
-/**
- * Servlet implementation class inviteFriends
- */
-@WebServlet("/inviteFriends.do")
-public class inviteFriends extends HttpServlet {
+@WebServlet("/myCalBirth.do")
+public class MyCalBirthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public inviteFriends() {
+    public MyCalBirthServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("groupCalendar.html");
+		dispatcher.forward(request, response);
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
@@ -56,19 +53,12 @@ public class inviteFriends extends HttpServlet {
 	    	JSONObject jsonObj = new JSONObject();
 	    	jsonObj.put("friendId", memArr.get(i).getMEMBER_ID());
 	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());	    	
+	    	jsonObj.put("friendBirth", memArr.get(i).getMEMBER_BIRTH());	    	
 	    	jsonArr.add(jsonObj);
 	    	System.out.println(getServletName());
 	    }
 	    
 	    System.out.println(jsonArr.toJSONString());
-	    out.print(jsonArr);
-	    
-	    
-	    
-	    
-	    
-	    
-		
-	}
+	    out.print(jsonArr);	}
 
 }

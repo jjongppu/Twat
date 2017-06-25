@@ -1,4 +1,3 @@
-
 //  gfnToday() : 해당 PC의 오늘 날짜를 가져온다. String.
 //  gfnTodayTime() : 해당 PC의 오늘 날짜+시간를 가져온다. String.
 //  gfnCurrentTime() : 해당 PC의 현재시간를 가져온다. String.
@@ -22,20 +21,15 @@
 //  gfnGetDay(sDate) : 입력된 날자로부터 요일을 구함
 //      sDate  8자리 형식으로된 날짜. yyyyMMdd의 형식으로 입력됩니다.
 //  요일에 따른 숫자,   0 = 일요일 ~ 6 = 토요일 로 대응됩니다., 오류가 발생할 경우 -1이 Return됩니다.
-//
-//
 
 
-    var oScript = document.createElement("script");
-    oScript.type = "text/javascript";
-    oScript.charset = "utf-8";		  
-//    oScript.src = "http://code.jquery.com/jquery-1.6.2.min.js";	
-    oScript.src = "WebContent/js/jquery-3.2.1.min.js";	
-    oScript.src = "/js/jquery-3.2.1.min.js";	
-    document.getElementsByTagName("head")[0].appendChild(oScript);
-
-document.head.innerHTML += "<script src=\"WebContent/js/jquery-3.2.1.min.js\"></script>";
-
+var oScript = document.createElement("script");
+oScript.type = "text/javascript";
+oScript.charset = "utf-8";
+oScript.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js";
+//oScript.src = "WebContent/js/jquery-3.2.1.min.js";
+//oScript.src = "/js/jquery-3.2.1.min.js";
+document.getElementsByTagName("head")[0].appendChild(oScript);
 
 var scheSet = new Set(); // 일정 잡기 저장용
 var birthSet = new Set(); // 생일자 저장용
@@ -891,41 +885,66 @@ function gfnTodayDiv(strDel) {
 }
 /*음력 알고리즘..끝*/
 var today = new Date(); // 오늘 날짜
-$(document).ready(function () {
-    /*
-        드레그앤 드롭
-    */
-    getGroupInfo();
-    getGroupBrith();
-    $('#yearSelect').change(function () {
-        initToday();
-        today = new Date(parseInt($("#yearSelect").val()), today.getMonth(), today.getDate());
-        buildCalendar();
-        if ($(this).val() == "2030" && $("#monthSelect").val() == "12") {
-            $("#nextButton").css("display", "none");
-        } else if ($(this).val() == "2017" && $("#monthSelect").val() == "1") {
-            $("#preButton").css("display", "none");
-        } else {
-            $("#preButton").css("display", "block");
-            $("#nextButton").css("display", "block");
-        }
-    }); //연도 선택
-    $('#monthSelect').change(function () {
-        initToday();
-        today = new Date(parseInt($("#yearSelect").val()), parseInt($("#monthSelect").val()) - 1, today.getDate());
-        buildCalendar();
-        if ($("#yearSelect").val() == "2030" && $(this).val() == "12") {
-            $("#nextButton").css("display", "none");
-        } else if ($("#yearSelect").val() == "2017" && $(this).val() == "1") {
-            $("#preButton").css("display", "none");
-        } else {
-            $("#preButton").css("display", "block");
-            $("#nextButton").css("display", "block");
-        }
-    }); // 달 선택
-    $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
-    $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
-});
+//$(document).ready(function () {
+//    var groupId = location.href.split("=")[1];
+//    $.ajax({
+//        type: 'post',
+//        url: 'groupMaster.do',
+//        data: {
+//            groupId: groupId
+//        },
+//        dataType: "json",
+//        success: function (data) {
+//            $.each(data, function (index, item) {
+//                //                        console.log(item.groupMaster);
+//                if (item.groupMaster == "no") {
+//                    $(".addschedule").css("display", "none");
+//                }
+//
+//                login_userId = item.userId;
+//
+//            });
+//
+//            getGroupInfo();
+//        },
+//        error: function (req) {
+//
+//            alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//        }
+//    });
+//    /*
+//        드레그앤 드롭
+//    */
+//    getGroupBrith();
+//    $('#yearSelect').change(function () {
+//        initToday();
+//        today = new Date(parseInt($("#yearSelect").val()), today.getMonth(), today.getDate());
+//        buildCalendar();
+//        if ($(this).val() == "2030" && $("#monthSelect").val() == "12") {
+//            $("#nextButton").css("display", "none");
+//        } else if ($(this).val() == "2017" && $("#monthSelect").val() == "1") {
+//            $("#preButton").css("display", "none");
+//        } else {
+//            $("#preButton").css("display", "block");
+//            $("#nextButton").css("display", "block");
+//        }
+//    }); //연도 선택
+//    $('#monthSelect').change(function () {
+//        initToday();
+//        today = new Date(parseInt($("#yearSelect").val()), parseInt($("#monthSelect").val()) - 1, today.getDate());
+//        buildCalendar();
+//        if ($("#yearSelect").val() == "2030" && $(this).val() == "12") {
+//            $("#nextButton").css("display", "none");
+//        } else if ($("#yearSelect").val() == "2017" && $(this).val() == "1") {
+//            $("#preButton").css("display", "none");
+//        } else {
+//            $("#preButton").css("display", "block");
+//            $("#nextButton").css("display", "block");
+//        }
+//    }); // 달 선택
+//    $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
+//    $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
+//});
 
 function update() {
     $.ajax({
@@ -1310,30 +1329,43 @@ function getGroupBrith() {
     })
 }
 
-//function inviteFriends() {
-//    document.getElementById("inviteModal").innerHTML = "";
-//    $('#inviteModal').css('display', 'block').css('height', 'auto').css('border', '1px solid black');
-//    $('#blindCover').css('display', 'block');
-window.onload = function() {
 
-         $.ajax({
-            type: 'post',
-            url: 'inviteFriends.do',
-            dataType: "json",
-            success: function (data) {
-                    console.log(data);                
-                $.each(data, function (index, item) {
 
-                });
+$(document).ready(function () {
+    $.ajax({
+        type: 'post',
+        url: 'myCalBirth.do',
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            $.each(data, function (index, item) {
+                console.log(item.friendId);
+                console.log(item.friendName);
+                console.log(item.friendBirth);
+                for(var i = 0; i < data.length; i++){
+                    document.getElementById("fName").innerHTML="<div>"+data[i].friendName+"</div>";
+                    document.getElementById("fBirth").innerHTML="<div>"+data[i].friendBirth+"</div>";
+                }
+                
+//                for (var i = 0; i < data.length; i++) {
+//                    var str = "<div class='content'><div class='left birth'>" + data[i].memberBirth + "</div>";
+//                    str += "<div class='middle birth'>" + data[i].memberName + "님(" + data[i].memberId + ")의 생일</div>";
+//                    str += "<div class='right birth'></div></div>"
+//                    $('.event .contentBox').append(str);
+//                }
+                
+//                document.getElementById("fBirth").innerHTML += "<div id='fBirth" + index + "' style='border:3px solid black; margin:20px;'><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
+//                            item.friendId + "</div><div class='friendName'> 이름 : " +
+//                            item.friendName + "</div></div>";
+            });
+        },
+        error: function (req) {
+            alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+        }
 
-            },
-            error: function (req) {
-                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }
+    });
+});
 
-        });
-
-}
 
 //}
 // 확정된 일정 정보 출력

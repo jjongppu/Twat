@@ -14,24 +14,23 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.mysql.fabric.xmlrpc.base.Member;
 import com.twat.dao.MemberDAO;
-import com.twat.dto.MemberVO;
 
 /**
- * Servlet implementation class inviteFriends
+ * Servlet implementation class friendPhoneSearch
  */
-@WebServlet("/inviteFriends.do")
-public class inviteFriends extends HttpServlet {
+@WebServlet("/friendPhoneSearch.do")
+public class FriendPhoneSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public inviteFriends() {
+    public FriendPhoneSearch() {
         super();
         // TODO Auto-generated constructor stub
     }
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,35 +39,42 @@ public class inviteFriends extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
-	    request.setCharacterEncoding("UTF-8");		
-	    
-	    HttpSession session = request.getSession();
-	    String userId = (String) session.getAttribute("loginUserId");	    
+	    request.setCharacterEncoding("UTF-8");
 	    
 	    JSONArray jsonArr = new JSONArray();
+	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
-	    
+	    String friendPhone = request.getParameter("friendPhone");
 	    MemberDAO memberDAO = MemberDAO.getInstance();
+	    ArrayList<String> memArr = memberDAO.friendPhoneSearch(friendPhone);
 	    
-	    ArrayList<MemberVO> memArr = memberDAO.getFriendList(userId);
-	    
-	    for(int i = 0; i < memArr.size(); i++){
-	    	JSONObject jsonObj = new JSONObject();
-	    	jsonObj.put("friendId", memArr.get(i).getMEMBER_ID());
-	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());	    	
-	    	jsonArr.add(jsonObj);
-	    	System.out.println(getServletName());
+//	    for(int i = 0; i < memArr.size(); i++){
+//	    	System.out.println(memArr.get(i));
+//	    	
+//	    }
+	    if(memArr.size()!=0){
+	    	jsonObj.put("friendId", memArr.get(0));
+		    jsonObj.put("friendName", memArr.get(1));
+		    jsonObj.put("friendPhone", memArr.get(2));
+		    jsonObj.put("friendImg", memArr.get(3));
+		    jsonObj.put("friendGender", memArr.get(4));
+		    jsonObj.put("friendBirth", memArr.get(5));
+		    jsonObj.put("userExist", "Exist");
+	    }else{
+	    	jsonObj.put("userExist", "notExist");
 	    }
 	    
-	    System.out.println(jsonArr.toJSONString());
+	    
+	    
+	    jsonArr.add(jsonObj);
+	    
+	    
+	    
+	    
+//	    System.out.println(jsonArr);
 	    out.print(jsonArr);
 	    
-	    
-	    
-	    
-	    
-	    
-		
+
 	}
 
 }

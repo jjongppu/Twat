@@ -1,4 +1,4 @@
-package com.admin.controller;
+package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,21 +14,23 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.twat.dao.MemberDAO;
-// �б⸮ ��ǰ
-@WebServlet("/memberout.do")
-public class AdminMemberOut extends HttpServlet {
+
+/**
+ * Servlet implementation class AcceptRequest
+ */
+@WebServlet("/AcceptRequest.do")
+public class AcceptRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AdminMemberOut() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AcceptRequest() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -37,30 +39,29 @@ public class AdminMemberOut extends HttpServlet {
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
+		
+	    
+	    JSONArray jsonArr = new JSONArray();
+	    JSONObject jsonObj = new JSONObject();
+	    PrintWriter out = response.getWriter();
 	    HttpSession session = request.getSession();
+	    String loginUserId = (String) session.getAttribute("loginUserId");
+	    String requestFriendId = request.getParameter("acceptFriendId");
 	    
-		PrintWriter out = response.getWriter();
-		String MEMBER_ID="";
-    	MEMBER_ID = request.getParameter("out");
+	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
-	    MemberDAO mdo = MemberDAO.getInstance();
+	    memberDAO.acceptFriend(loginUserId, requestFriendId);
+//	    System.out.println(loginUserId);
+//	    System.out.println(requestFriendId);
 	    
-	    JSONArray jsonList = new JSONArray();
-		JSONObject jsonOb = new JSONObject();
 	    
-		int result = mdo.outUser(MEMBER_ID,"out");
-		
-		session.invalidate();
-	    if(result ==1){
-	    	
-	    	jsonOb.put("result", "success");
-	    }else{
-	    	jsonOb.put("result", "fail");
-	    }
-		
-		jsonList.add(jsonOb);
-		
-		out.println(jsonList);
+	    jsonObj.put("myId", loginUserId);
+	    jsonObj.put("friendId", requestFriendId);
+	    jsonArr.add(jsonObj);
+	    System.out.println(jsonArr);
+	    out.println(jsonArr);
+	    
+	    
 		
 	}
 
