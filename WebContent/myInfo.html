@@ -299,6 +299,11 @@ $(document).ready(function() {
   });
 
 });
+        
+        function pageload(){
+            location.reload();
+            
+        }
 
 
 
@@ -322,7 +327,7 @@ $(document).ready(function() {
             <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="home.html">홈</a></li>
             <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
             <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html" onclick='pageload()'>친구 목록</a></li>
             <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
