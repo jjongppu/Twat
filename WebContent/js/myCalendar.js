@@ -1360,7 +1360,7 @@ $(document).ready(function () {
             });
         },
         error: function (req) {
-            alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//            alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
         }
 
     });
