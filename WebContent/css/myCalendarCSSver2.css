@@ -157,7 +157,6 @@
     width: 200px;
     height: 10px;
     background: linear-gradient( 45deg, pink, #6534ff);
-
 }
 
 .schedule{
@@ -191,10 +190,6 @@
     width: 600px;
     height: 350px;
 }
-
-
-
-
 
 
 
@@ -330,10 +325,12 @@ textarea:focus, input:focus{
 /*   ================   footer    ============  */
 .footer{
     background: linear-gradient( 45deg, white, pink, white, #6534ff);
+    height: 100%;
 }
 
 .events{
     background-color: white;
+    height: 100%;
     position: relative;
     display: inline-block;    
     margin: auto;
@@ -343,14 +340,14 @@ textarea:focus, input:focus{
 
 .eveLeft{
     width:500px;
-    height: 170px;
+    height: 100%;
     display: inline-block;
     background-color: white;
 }
 
 .eveRight{
     width:500px;
-    height: 170px;
+    height: 100%;
     display: inline-block;
     background-color: white;
 }
@@ -379,16 +376,36 @@ textarea:focus, input:focus{
 }
 .closeSub{
     display:table;
+    padding: 0;
+    margin: 0;
 }
 .closeSub div {
     display: inline-block;
     display:table-cell; 
     text-align:center; 
     vertical-align:middle;
-    padding: 10px 10px;
+    padding: 2px 10px;
 }
-
-
+.closeName{
+    padding: 0;
+    margin: 0;
+}
+.closeContent{
+    padding: 0;
+    margin: 0;
+}
+.fname{
+    padding: 0;
+    margin: 0;
+}
+.fbirth{
+    padding: 0;
+    margin: 0;
+}
+#fName{
+    padding: 0;
+    margin: 0;
+}
 
 
 
