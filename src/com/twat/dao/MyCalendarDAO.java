@@ -68,43 +68,43 @@ public class MyCalendarDAO{
 	}
 	
 	
-	public ArrayList<MyCalendarVO> getInfo(String member_id){
+	public ArrayList<MyCalendarVO> getInfo(String MEMBER_ID){
 		PreparedStatement pstmt = null;
-		ResultSet rSet = null;
-		ArrayList<MyCalendarVO> arrList = new ArrayList<MyCalendarVO>();
-		
+		ResultSet rs = null;
+		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
+		String sql = "SELECT * FROM MY_CALENDAR";
+
 		try{
 			con = getConnection();
-//			String sql = "select * from CALENDAR where CAL_DEPTH=0 and GROUP_ID=?";
-			String sql = "select * from MY_CALENDAR where MEMBER_ID=?";
-			pstmt = con.prepareStatement(sql);
-//			pstmt.setInt(1, Integer.parseInt(member_id));
+			pstmt = con.prepareCall(sql);
+			rs = pstmt.executeQuery();
 			
-			rSet = pstmt.executeQuery();
-				
-			while(rSet.next()){
-				MyCalendarVO schedule = new MyCalendarVO();
-				schedule.setMy_cal_index(rSet.getInt(1));
-				schedule.setMember_id(rSet.getString(2));
-				schedule.setMy_write_time(rSet.getTimestamp(3));
-				schedule.setMy_cal_contents(rSet.getString(4));
-				schedule.setMy_cal_date(rSet.getString(5));
-				
-				arrList.add(schedule);
+			while(rs.next()){
+				myCalList.add(new MyCalendarVO(rs.getInt(1), rs.getString(2), rs.getTimestamp(3), rs.getString(4), rs.getString(5)));
 			}
+//			while(rSet.next()){
+//				MyCalendarVO myCalInfo = new MyCalendarVO();
+//				myCalInfo.setMy_cal_index(rSet.getInt(1));
+//				myCalInfo.setMember_id(rSet.getString(2));
+//				myCalInfo.setMy_write_time(rSet.getTimestamp(3));
+//				myCalInfo.setMy_cal_contents(rSet.getString(4));
+//				myCalInfo.setMy_cal_date(rSet.getString(5));
+//				
+//				arrList.add(myCalInfo);
+//			}
 		}
 		catch (Exception e){
 			e.printStackTrace();
 		} finally {
 			try{
-				if(rSet != null)rSet.close();
+				if(rs != null)rs.close();
 				if(pstmt != null)pstmt.close();
 				if(con != null)con.close();
 			}	catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
-		return arrList;
+		return myCalList;
 	}
 	
 	

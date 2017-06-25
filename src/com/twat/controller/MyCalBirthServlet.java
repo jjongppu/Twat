@@ -55,10 +55,10 @@ public class MyCalBirthServlet extends HttpServlet {
 	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());	    	
 	    	jsonObj.put("friendBirth", memArr.get(i).getMEMBER_BIRTH());	    	
 	    	jsonArr.add(jsonObj);
-	    	System.out.println(getServletName());
+//	    	System.out.println(getServletName());
 	    }
 	    
 	    System.out.println(jsonArr.toJSONString());
-	    out.print(jsonArr);	}
-
+	    out.print(jsonArr);	
+	}
 }

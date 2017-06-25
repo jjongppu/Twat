@@ -1369,12 +1369,39 @@
                 });
             },
             error: function(req) {
-                //            alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }
 
         });
     });
 
+    $(document).ready(function(){
+       document.getElementById("myCalDate").innerHTML=""; 
+       document.getElementById("myCalContents").innerHTML=""; 
+       document.getElementById("myWriteTime").innerHTML=""; 
+        $.ajax({
+             type:'post'
+            ,url:'myCal.do'
+            ,dataType : "json"
+//            ,dataType : "text"
+            ,success : function(data){
+                console.log(data);
+              $.each(data, function(index, item){
+                  console.log(item.myCalIndex);
+                  console.log(item.myCalContents);
+                  console.log(item.myWriteTime);
+                  document.getElementById("myCalDate").innerHTML+="<div>"+item.myCalDate+"</div></br>";
+                  document.getElementById("myCalContents").innerHTML+="<div>"+item.myCalContents+"</div></br>";
+//                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
+              });
+            },
+            error:function(req){
+//             alert("!");   
+             alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+            }
+        });
+    });
+    
     //}
     // 확정된 일정 정보 출력
     function getScheduleInfo() {}
@@ -1508,10 +1535,10 @@
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">
-                            <div class="schCont scheDate txt">6월 14일</div>
-                            <div class="schCont scheText txt">가까운 개인일정들 뽑아버려</div>
+                            <div class="schCont scheDate txt"><div id="myCalDate"></div></div>
+                            <div class="schCont scheText txt"><div id="myCalContents"></div></div>
                             <div class="schCont dayTime">
-                                <div class="schCont scheTime txt">오전 08시 00분</div>
+                                <div class="schCont scheTime txt"><div id="myWriteTime"></div></div>
                                 <div class="scheDetail txt"></div>
                             </div>
                         </div>
