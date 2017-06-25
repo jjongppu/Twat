@@ -269,7 +269,8 @@
                         userInfos += '<span class="listTitle">'+ data[i].QNA_TITLE +'</span>'
                         userInfos += '<span class="listWriter">'+ data[i].MEMBER_ID +'</span>';
                         userInfos += '<span class="listDate">'; 
-                        userInfos += data[i].QNA_DATE.substring(0,10);
+//                        userInfos += data[i].QNA_DATE.substring(0,10);
+                        userInfos += data[i].QNA_DATE.substr(0,10);
                         userInfos += '</span>';
                         userInfos += '</li>';
                     }

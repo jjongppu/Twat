@@ -141,11 +141,11 @@ public class QnaDAO {
 		String selectKindQnaSql = "SELECT * FROM QNA";
 		
 		if(kind ==1){
-			selectQnaCount += " WHERE QNA_TITLE LIKE ?";
+			selectKindQnaSql += " WHERE QNA_TITLE LIKE ?";
 		}else if(kind ==2){
-			selectQnaCount += " WHERE QNA_CONTENTS LIKE ?";
+			selectKindQnaSql += " WHERE QNA_CONTENTS LIKE ?";
 		}else if(kind ==3){
-			selectQnaCount +=" WHERE MEMBER_ID LIKE ?";
+			selectKindQnaSql +=" WHERE MEMBER_ID LIKE ?";
 		}else{
 			
 		}

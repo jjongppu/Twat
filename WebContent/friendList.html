@@ -12,33 +12,12 @@
     <script src="js/nav.js"></script>
 </head>
     <style>
-        #bigcont{
-            
-        }
         
         body{
             width: 1200px;
             height: auto;
             margin: auto;
             background-color: white;
-        }
-        #cont1{
-            
-            width: auto;
-        }
-        #cont2{
-            
-            width: 440px;
-            height: auto;
-            margin-top: 90px;
-            margin-left: 90px;
-        }
-        #cont3{
-            
-            margin: auto;
-            margin-top: 20px;
-            width: 500px;
-            height: 460px;
         }
         #userIn{
             border: 3px solid gray;
@@ -93,37 +72,6 @@
             display: inline-block;
             border-radius: 10px;
             font-size: 15px;
-        }
-        .center_cover{
-            width: 505px;
-            margin: 25px 0;
-        }
-        .group_Cover{
-            display: block;
-            height: 100px;
-            width: 350px;
-            margin: auto;
-            padding-left: 175px;
-        }
-        #addGroup{
-            margin-left: 175px;
-            margin-top: 25px;
-            margin: auto;
-            text-align: center;
-            font-size: 20px;
-        }
-        #addGroupBtn{
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-        }
-        #plusImg{
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            margin: auto;
         }
 /*        ///////////////////////////////////////////////////////////////////////////////////////////////*/
         /*        모달창 css 매긴곳.*/
@@ -231,63 +179,9 @@
             height: 50px;
             
         }
-        #dUser{
-/*            width: 500px;*/
-/*            height: 500px;*/
-/*            border: 1px solid red;*/
-            position: absolute;
-            top: 100px;
-            left: 450px;
-            display: none;
-        }
-        .user1{
-            width: 300px;
-            height: 450px;
-            border: 5px solid aqua;
-            display: none;
-        }
-        #user3{
-            width: 150px;
-            height: 150px;
-            border: 5px solid yellow;
-            margin: auto;
-            margin-top: 30px;
-        }
         #ch{
             margin-left: 10px;
             margin-top: 10px;
-        }
-        #uName{
-            width: 150px;
-            height: 30px;
-            border: 1px solid red;
-            text-align: center;
-            margin: auto;
-            margin-top: 20px;
-        }
-        #uPhone{
-            width: 150px;
-            height: 30px;
-            border: 1px solid red;
-            text-align: center;
-            margin: auto;
-            margin-top: 20px;
-        }
-        #uBirth{
-            width: 150px;
-            height: 30px;
-            border: 1px solid red;
-            text-align: center;
-            margin: auto;
-            margin-top: 20px;
-        }
-        #btndelFriend{
-            width: 150px;
-            height: 30px;
-            text-align: center;
-            margin-left: 75px;
-            margin-top: 20px;
-            opacity: 0
         }
         .eachFriendRequest{
             border: 1px solid black;
@@ -300,10 +194,108 @@
         }
         
         
+    #blindCover{
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0.7;
+        display: none;
+    }
+/*        친구 검색 모달*/
+        
+        #modal{
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            background-color: white;
+            transform: translate(-50%,-50%);
+            width: 300px;
+            height: 150px;
+            z-index: 1000;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .searchTab{
+            width: 49%;
+            text-align: center;
+            height: 60px;
+            line-height: 60px;
+            font-size: 13px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        #idSearch{
+            display: none;
+        }
+        .inputText{
+            display: inline-block;
+            width: 200px;
+            height: 24px;
+            margin: auto;
+            padding-left: 20px;
+            margin-left: 10px;
+            border: none;
+            border-bottom: 1px solid gray;
+            background-color: transparent;
+        }
+        .btn{
+            display: inline-block;
+            cursor: pointer;
+            font-size: 13px;
+            width: 50px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+        }
+        .searchCover{
+            border-top: 1px solid black;
+            padding: 30px 0 30px 0;
+        }
+        #infoCover{
+            display: inline-block;
+            width: 190px;
+            height: 100px;
+        }
+        #imgCover,#friendImg{
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+        }
+        .addfriendBtn{
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 13px;
+            cursor: pointer;
+            margin: 0 auto 20px auto;
+        }
+        .requestMsg{
+            text-align: center;
+        }
+        #contents{
+            margin-left: 120px;
+        }
+        
+        #topCover{
+            border-bottom: 1px solid gray;
+        }
+        
+        .topListbtn{
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 13px;
+            cursor: pointer;
+        }
         
     </style>
     <script>
-         $(document).ready(function(){
+         function requestFriendMe(){
             
               $.ajax({
                 type: "post", 
@@ -316,6 +308,7 @@
 //                    console.log(data.length);
                     if(data.length != 0){
 //                        console.log("!");
+                        $('#requestExist').html('');
                         for(var index = 0; index < data.length; index ++){
                         document.getElementById("requestExist").innerHTML += "<div class='eachFriendRequest'>"
                             + "<img src ='" + data[index].friendImg + "' class='requestFriendImg' />"
@@ -326,16 +319,7 @@
                         
                         
                         }
-                        
-                        
                     }
-                    
-                        
-                        
-                    
-                    
-                    
-        
                 }, error: function(req) {
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
@@ -345,7 +329,7 @@
             
             
             
-        });
+        }
         
         
         
@@ -361,22 +345,11 @@
                 dataType:"json",
                 success: function (data){
                     console.log(data);
-                        
-                        
-                    
-                    
-                    
-        
                 }, error: function(req) {
-
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
             });
-            
             location.reload();
-            
-            
-            
         }
         
         
@@ -385,7 +358,7 @@
         $.ajax({
            type:"post",
             url:"friends.do",
-            data:$('#personal').serialize(),
+            data:$('#allFriends').serialize(),
             dataType:"json",
             success:function(data){
                 var result = data[0].result;
@@ -403,20 +376,14 @@
                     out += '</div>';
                     
                 }
-                document.getElementById('personal').innerHTML = out;
+                document.getElementById('allFriends').innerHTML = out;
             }
             
             
         });
-//           /////친구 추가하기.
-//        function addFriend(){
-//            $('#realFriend').css('display','none');
-//            $('#realFriend').append('<div id="modalAddFriend"><div id="findFriend">친구의 핸드폰번호를 입력하세요</div><input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber"><input type="submit" value="검색" onclick="findUserFriend()" id="findButton"></div>');
-//        }
         function addFriend(){
             $('#realFriend').css('display','inline-block');
             $('cont1').css('opacity','1');
-//            $('#modalAddFriend').append('<div id="modalAddFriend"><div id="findFriend">친구의 핸드폰번호를 입력하세요</div><input type="text" placeholder="ex)010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber"><input type="button" value="검색" onclick="findUserFriend()" id="findButton"></div>');
         }
         
 
@@ -436,47 +403,7 @@
             });
        }
         //////////////////////////////////////////////////
-        function plusFriend(){
-            $.ajax({
-                type: "post", 
-                url: "PlusUserServlet.do",
-                data:$('#findPhoneNumber').serialize(),
-//                data:
-//                    { findPhoneNumber:$('#findPhoneNumber').val()},
-                dataType:"json",
-                success: function (data){
-                    console.log(data);
-//                    if(result != 'success'){
-                        	alert("친구가 추가되었습니다.");
-//                            location.href='friends.html';
-                    window.location.reload();
-//                        }else{
-//                            alert("정보변경 실패");
-//                        }
-                    $(document).keyup(function(e) {
-                if (e.keyCode == 27) {
-                }
-            });
-                }
-            });
-            
-        }
-        function detailUser(){
-            
-             $.ajax({
-                type: "post", 
-                url: "FindFriendservlet.do",
-                data:$('#personal').serialize(),
-                dataType:"json",
-                success: function (data){
-                    console.log(data);
-                    $('#uName').html(data[0].MEMBER_NAME);
-                    $('#uPhone').html(data[0].MEMBER_PHONE);
-                    $('#uBirth').html(data[0].MEMBER_BIRTH);
-                }
-            });
-        }
-        
+
     </script>
     
 <body>
@@ -504,100 +431,65 @@
             <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
         </ul>
     </nav>
-             <div id="cont1">
-                <div id="cont2">
-                    <div id="cont3">
-                        <form id="personal" method="post">
+        
+    <div id="contents">
+                       
+        <div id="topCover">
+            <div class="topListbtn" id="allFriend" onclick="tabCange(this)"> 전체 </div>
+            <div class="topListbtn" id="getFriends" onclick="tabCange(this)"> 받은 친구 요청 </div>
+            <div class="topListbtn" id="sendFriends" onclick="tabCange(this)"> 보낸 친구 요청 </div>
+            <div class="topListbtn" id="searchFriends" onclick="viewSearch()"> 검색 </div>
+        
+        </div>
+             
+        
+    <!-- 친구 목록 띄워줌-->
+        <div id="allFriends">
 
-                        </form> 
-                        <div class="center_cover">
-                            <div class="group_Cover">
-                                <div id="addGroup">
-                                    
-                                    
-                            	<form id="addFriend" method="post">
-                            	    <div id="addFriendBtn" onclick="addFriend()">
-                                        <img id="plusImg" src="img/etcIcon/plus.png"/>
-                                    </div>
-                            	</form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div> 
+        
+    <!--        요청 온 친구 목록-->
+    <div id="requestExist">
     </div>
-<!--    모달창 만들어-->
 
-    <form id="realFriend" name="findPhoneNumber" method="post">
-        <div id="modalAddFriend">
-            <div id="findFriend">친구의 핸드폰번호를 입력하세요</div>
-            <input type="text" placeholder="ex) 010-0000-0000와 같은 형식으로 입력해주세요" id="findPhoneNumber" name="findPhoneNumber">
-            <input type="button" value="검색" onclick="findUserFriend()" id="findButton">
+<!--        보낸 친구 목록-->
+        <div id="responseExist">
         </div>
         
-            <div id="findUserIn">
-                <div id="findedFriend">
-                    <img src="img/member/basis_photo.png" id="findUserImg">
-                    <div id="findUserName"></div>
-                    <div id="findUserBirth"></div>
-                    <div id="findUserPhone"></div>
-                    <input type="button" value="친구추가" onclick="plusFriend()" id="btnAddFriend">
-                    
-                </div>
-            </div>
+        </div>                
+    </div>
+    
             
-<!--        </div>-->
-     </form>  
-    
-        <div id="dUser">
-            <div class="user1"> 
-                <div class="user2">
-                    <div id="user3">
-                        <form method="post" id="ch" action="">
-                            <img src="img/member/basis_photo.png" id="uI" name="uI"/>
-                        </form>
-                    </div>
-                        <div id="uName" name="userName"></div>
-                        <div id="uPhone" name="userPhone"></div>
-                        <div id="uBirth" name="userBirth"></div>
-                    성별, 아이디, 회원가입한 날자.
-                    <input type="button" value="친구 삭제" id="btndelFriend">
-                    
-                    
-                </div>
-            </div>
-        </div>
-    <style>
-
-/*
-        #phoneSearch{
-            display: none;
-        }
-        #idSearch{
-            display: none;
-        }
-    
-*/
-        
-        #friendImg{
-            width: 100px;
-            height: 100px;
-            
-        }
-    </style>
-    
     <script>
         
-       
+    function tabCange(id){
+        var ids = $(id).attr('id');
+        $('#allFriends').css('display','none');
+        $('#requestExist').css('display','none');
+        $('#responseExist').css('display','none');
+        if(ids == 'allFriend'){
+            $('#allFriends').css('display','inline-block');
+        }else if(ids == 'getFriends'){
+            $('#requestExist').css('display','inline-block');
+            requestFriendMe();
+        }else if(ids == 'sendFriends'){
+            $('#responseExist').css('display','inline-block');
+        }
+    }    
+        
+    function viewSearch(){
+        $('#modal').css('display','block');
+        $('#blindCover').css('display','block');
+        
+    }
         
 
 
         
         var friendId = "";
         
-        function phoneSearch(a){// 전화번호로 친구 찾기
-            var friendPhone = $(a).val();
+        function phoneSearch(){// 전화번호로 친구 찾기
+            var friendPhone = $('#phoneSearchInput').val();
             var friendImg = "";
             
             var friendName = "";
@@ -629,15 +521,19 @@
                     friendBirth = data[0].friendBirth;
                     
                     if(data[0].userExist == "Exist"){
-                        document.getElementById("phoneSearchList").innerHTML = "<img src='" + friendImg + "' id='friendImg'/>";
-                        document.getElementById("phoneSearchList").innerHTML += "<div id='friendId'> 아이디 : " + friendId + "</div>";
-                        document.getElementById("phoneSearchList").innerHTML += "<div id='friendName'> 이름 : " + friendName + "</div>";
-                        document.getElementById("phoneSearchList").innerHTML += "<div id='friendPhone'> 전화번호 : " + friendPhoneNum + "</div>";
-                        document.getElementById("phoneSearchList").innerHTML += "<div id='friendBirth'> 생년월일 : " + friendBirth + "</div>";
-                        document.getElementById("phoneSearchList").innerHTML += "<input type='button' value='친구요청하기' onclick='requestFriend()'/>";
+                        var out = "";
+                        out = "<div><div id='imgCover'><img src='" + friendImg + "' id='friendImg'/></div>";
+                        out += "<div id='infoCover'><div id='friendId'> 아이디 : " + friendId + "</div>";
+                        out += "<div id='friendName'> 이름 : " + friendName + "</div>";
+                        out += "<div id='friendPhone'> 전화번호 : " + friendPhoneNum + "</div>";
+                        out += "<div id='friendBirth'> 생년월일 : " + friendBirth + "</div></div></div>";
+                        out += "<div class='addfriendBtn' onclick='requestFriend()'>친구요청하기</div>";
+                        $('#phoneSearchList').html(out);
+                        heightAnimation('modal',300 , 500 );
                     }else if(data[0].userExist == "notExist"){
                         
-                        document.getElementById("phoneSearchList").innerHTML = "<div>없는 사용자입니다.</div>";
+                        $('#phoneSearchList').html("<div class='requestMsg'>없는 사용자입니다.</div>");
+                        heightAnimation('modal',180 , 500 );
                     }
                 }, error: function(req) {
 
@@ -645,9 +541,15 @@
                 }
             });
             
-            
         }
         
+        function heightAnimation(tagId,height,time){
+             $('#'+tagId).animate({
+
+                height:height,
+
+            }, time);        
+        }
         
         function requestFriend(){
 
@@ -675,6 +577,7 @@
                     else if(data[0].friendExist == "me")
                         document.getElementById("phoneSearchList").innerHTML = "<div class='requestMsg'> 자기 자신한테는 요청할수 없습니다. </div>";    
                 
+                    heightAnimation('modal',180 , 500 );
                 }, error: function(req) {
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
@@ -687,35 +590,84 @@
             
         }
         
+    function closeModal(){
+        $('#blindCover').css('display','none');
+        $('#messagMeodal').remove();
+        $('#modal').css('display','none');
         
+    }
+            
+    $(document).ready(function(){
+        
+        $('#blindCover').css("height",$(window).height());
+        $('#blindCover').css("width",$(window).width());
+        
+        $(window).resize(function(){
+        
+            $('#blindCover').css("height",$(window).height());
+            $('#blindCover').css("width",$(window).width());
+            
+        });
+        
+    });
+        function changeTab(id){
+            $('#phoneSearchList').html("");
+            var ids = $(id).attr('id');
+            if(ids == 'phoneTab'){
+                $('#phoneSearch').css('display','block');
+                $('#idSearch').css('display','none');
+                
+                $('#phoneTab').css('background-color','gray');
+                $('#idTab').css('background-color','white');
+            }else {
+                $('#idSearch').css('display','block');
+                $('#phoneSearch').css('display','none');
+                
+                $('#phoneTab').css('background-color','white'); 
+                $('#idTab').css('background-color','gray'); 
+            }
+                heightAnimation('modal',150 , 500 );
+        }
     
-    
+        
+        
     </script>
     
     <div id = "addFriends" style="margin-left:120px">
        
        
-            <div id = 'modal'>                
-                <div id='phoneSearch'>
+            <div id = 'modal'> 
+                <div class="searchTab" id="phoneTab" onclick="changeTab(this)"> 연락처로 친구 찾기 </div>
+                <div class="searchTab" id="idTab" onclick="changeTab(this)"> 아이디로 친구 찾기 </div>
+                
+                
+                <div id="heightGet">
+                    
+                <div id='phoneSearch' class="searchCover">
                     <div id="inputPhone">
-                        <input type='text' placeholder='친구 전화번호를 입력하세요' onkeyup='if(event.keyCode==13) {phoneSearch(this);}'/>
+                        <input type='text' id="phoneSearchInput" class="inputText" placeholder='전화번호를 입력하세요' onkeyup='if(event.keyCode==13) {phoneSearch();}'/>
+                    <div class="btn" onclick='phoneSearch();' >검색</div>
                     </div>
+                </div>
+                
+                <div id='idSearch' class="searchCover">
+                    <input type='text' id="idSearchInput" class="inputText" placeholder='아이디를 입력하세요' onkeyup='if(event.keyCode==13) {idSearch();}'/>
+                    <div class="btn" onclick='idSearch();' >검색</div>
+                </div>    
+<!--                검색 결과-->
                     <div id="phoneSearchList">
                     
+                        
                     </div>
                 </div>
-                
-                <div id='idSearch'>
-                    <input type='text' placeholder='친구 아이디를 입력하세요' onkeyup='if(event.keyCode==13) {idSearch(this);}'/>
-                </div>    
-                
-                <div id="requestExist">
-                
-                </div>
+            </div>
+                    <div id="blindCover" onclick="closeModal();">
             </div>
         
         
         
+
+
         
     
     </div>
