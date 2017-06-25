@@ -15,22 +15,24 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.twat.dao.MemberDAO;
+import com.twat.dto.MemberVO;
 
 /**
- * Servlet implementation class friendPhoneSearch
+ * Servlet implementation class RequestingFriend
  */
-@WebServlet("/friendPhoneSearch.do")
-public class FriendPhoneSearch extends HttpServlet {
+@WebServlet("/RequestingFriend.do")
+public class RequestingFriend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FriendPhoneSearch() {
+    public RequestingFriend() {
         super();
         // TODO Auto-generated constructor stub
     }
 
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -42,39 +44,37 @@ public class FriendPhoneSearch extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 	    JSONArray jsonArr = new JSONArray();
-	    JSONObject jsonObj = new JSONObject();
-	    PrintWriter out = response.getWriter();
-	    String friendPhone = request.getParameter("friendPhone");
-	    MemberDAO memberDAO = MemberDAO.getInstance();
-	    ArrayList<String> memArr = memberDAO.friendPhoneSearch(friendPhone);
 	    
-//	    for(int i = 0; i < memArr.size(); i++){
-//	    	System.out.println(memArr.get(i));
-//	    	
-//	    }
-	    if(memArr.size()!=0){
-	    	jsonObj.put("friendId", memArr.get(0));
-		    jsonObj.put("friendName", memArr.get(1));
-		    jsonObj.put("friendPhone", memArr.get(2));
-		    jsonObj.put("friendImg", memArr.get(3));
-		    jsonObj.put("friendGender", memArr.get(4));
-		    jsonObj.put("friendBirth", memArr.get(5));
-		    jsonObj.put("userExist", "Exist");
-	    }else{
-	    	jsonObj.put("userExist", "notExist");
+	    PrintWriter out = response.getWriter();
+	    HttpSession session = request.getSession(); 
+	    String loginUserId = (String) session.getAttribute("loginUserId");
+	    
+	    MemberDAO memberDAO = MemberDAO.getInstance();
+	    
+	    ArrayList<MemberVO> member = memberDAO.requestingFriendList(loginUserId);
+//	    System.out.println(member.size());
+	    
+	    if(member != null){
+	    	for(int i = 0; i < member.size(); i++){
+	    		JSONObject jsonObj = new JSONObject();
+		    	jsonObj.put("friendImg", member.get(i).getMEMBER_IMG());
+		    	jsonObj.put("friendId", member.get(i).getMEMBER_ID());
+		    	jsonObj.put("friendName", member.get(i).getMEMBER_NAME());
+		    	jsonObj.put("friendPhone", member.get(i).getMEMBER_PHONE());		    	
+		    	jsonArr.add(jsonObj);	    	
+		    	
+		    }
+	    	
 	    }
 	    
 	    
 	    
-	    jsonArr.add(jsonObj);
-	    
-	    
-	    
-	    
 //	    System.out.println(jsonArr);
-	    out.print(jsonArr);
+	    out.println(jsonArr);
 	    
-
+	    
+	    
+	    
 	}
 
 }

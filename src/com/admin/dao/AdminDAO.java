@@ -442,7 +442,7 @@ public class AdminDAO {
 				e.printStackTrace();
 			}finally {
 	            try {
-	                if(rs != null)
+	                if(rs != null) rs.close();
 	                if(psmt != null) psmt.close();
 	                if(con != null) con.close();
 	             } catch (SQLException e) {
@@ -509,6 +509,7 @@ public class AdminDAO {
 								e.printStackTrace();
 							} finally {
 									try {
+										if(rs != null) rs.close();
 										if(psmt != null) psmt.close();
 										if(con != null) con.close();
 									} catch (SQLException e) {

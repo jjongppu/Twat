@@ -64,6 +64,8 @@ public class RequestFriend extends HttpServlet {
 		    	jsonObj.put("friendExist", "requestExist");
 		    }else if(result == 2){
 		    	jsonObj.put("friendExist", "responseExist");
+		    }else if(result == 3){
+		    	jsonObj.put("friendExist", "me");
 		    }
 		    	
 		    jsonArr.add(jsonObj);

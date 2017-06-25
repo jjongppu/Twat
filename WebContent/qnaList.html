@@ -11,6 +11,7 @@
     <script src="js/jquery.form.js"></script>
     </head>
 	<style>
+  
 		ul {
 			list-style: none;
 		}
@@ -25,7 +26,7 @@
         
 		span {
             display: inline-block;
-			border: 1px solid red;
+            vertical-align: middle;
 		}
 		.listNum {
 			width: 60px;
@@ -55,14 +56,74 @@
         #contentListWrapUl li{
             cursor: pointer;
             text-align: center;
+            border-bottom: 1px solid gray;
+        }
+        .listLi{
+            padding: 5px 0;
+            
+        }
+        #contentTitleWrapUl{
+            margin: 0;
         }
         #contentListWrapUl{
-            height: 300px;
             margin: 0;
+            border-top: 1px solid gray;
+            font-size: 13px;
+            
         }
         ul{
             padding: 0;
         }
+    #pageChoiceCover{
+        padding: 10px 0;
+        width: 800px;
+        margin: auto;
+    }
+        .btn{
+            display: inline-block;
+            height: 50px;
+            line-height: 50px;
+            font-size: 12px;
+            cursor: pointer;
+            width:82px;
+        }
+        
+        /*검색 커버*/
+        #selectCover{
+            width: 500px;
+            margin: auto;
+            text-align: center;
+        }
+        #searchText{
+            height: 24px;
+            border: none;
+            border-bottom: 1px solid #3B3E42;
+            padding-left: 10px;
+            margin: 0 10px;
+            width: 200px;
+        }
+        #searchCategory{
+            height: 24px;
+        }
+        
+        .writeBtn{
+            float: right;
+        }
+    a{
+        text-decoration: none;
+        padding: 14px 0;
+        color: black;
+    }
+        #addPageCover{
+            width: 200px;
+            text-align: center;
+            margin: auto;
+        }
+    input:-ms-input-placeholder { color: #3B3E42; } 
+   input::-webkit-input-placeholder { color: #3B3E42; } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+        
 	</style>
 	
 	<script>
@@ -80,36 +141,26 @@
         var notfind = '0';
         $.ajax ({
             type : 'post',
-            url : 'getQnaList.do',
+            url : 'SearchQna.do',
             dataType : "json",
-            data: {page : page , val : notfind } ,
+            data: {page : page ,val : 'get', kind : 4 } ,
             success : function(data) {
                 console.log(data);
                 var userInfos = "";
               for(var i=0; i< data.length;i++){
                     var num = page*10+i+1-10;
-                   userInfos += '<li class="listLi" ';
+                    userInfos += '<li class="listLi" ';
                     if(i%2 !=0){
                         userInfos += ' style="background-color: #AFBACB;" ';
                     }
-                        userInfos += 'id="'+data[i].QNA_ID+'" onclick="qnaDetailPage(this)">';    
-                    
+                    userInfos += 'id="'+data[i].QNA_ID+'" onclick="qnaDetailPage(this)">';    
                     userInfos += '<span class="listNum">'+num+'</span>';
                     userInfos += '<span class="listCate">'+ data[i].QNA_CATEGORY +'</span>';
                     userInfos += '<span class="listTitle">'+ data[i].QNA_TITLE +'</span>'
-//                    userInfos += '<div class="countText">게시글 방번호 :</div>';
-//                    userInfos += '<span class="tdCon">'+ data[i].QNA_CONTENTS +'</span>';
                     userInfos += '<span class="listWriter">'+ data[i].MEMBER_ID +'</span>';
                     userInfos += '<span class="listDate">'; 
                     userInfos += data[i].QNA_DATE.substring(0,10);
                     userInfos += '</span>';
-//                    userInfos += '<span class="tdan"><textarea rows="4" cols="20" style="resize :none;">';
-//                    var reply = data[i].QNA_REPLY;
-//                    if(reply != null && reply != ""){
-//                        userInfos += reply;    
-//                    }
-//                    userInfos += '</textarea></span>';
-//                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick="replyBtn(this)"/> </span>';
                     userInfos += '</li>';
                 }
                 $('#contentListWrapUl').html(userInfos);
@@ -189,58 +240,54 @@
         getNextFriends(cPage);
     };
     
-    //검색으로 실시간 호출
-    function getNextFriends2(page) {
-        nowPage = page;
-        var pages =1;
-        if(page >pages){
-            pages = page
-        }
-        $.ajax ({
-            type : 'post',
-            url : 'admingGetQnaList.do',
-            dataType : "json",
-            data: {page : pages ,val : $('#findMember').val()} ,
-            success : function(data) {
-                console.log(data);
-                var userInfos = "";
-                for(var i=0; i< data.length;i++){
-                    var num = pages*10+i+1-10;
-                    if(i%2 !=0){
-                        userInfos += '<li style="background-color: #AFBACB;">';
-                    }else{
-                        userInfos += '<li>';    
-                    }
-                    
-                    userInfos += '<span class="tdNum">'+num+'</span>';
-                    userInfos += '<span class="tdKind">'+ data[i].QNA_CATEGORY +'</span>';
-                    userInfos += '<span class="tdtit">'+ data[i].QNA_TITLE +'</span>'
-                    userInfos += '<div class="countText">게시글 방번호 :</div>';
-                    userInfos += '<span class="tdCon">'+ data[i].QNA_CONTENTS +'</span>';
-                    userInfos += '<span class="tdId">'+ data[i].MEMBER_ID +'</span>';
-                    userInfos += '<span class="tdBi">'; 
-                    userInfos += data[i].QNA_DATE.substring(0,10);
-                    userInfos += '</span>';
-                    userInfos += '<span class="tdan"><textarea rows="4" cols="20" style="resize :none;">';
-                    var reply = data[i].QNA_REPLY;
-                    if(reply != null && reply != ""){
-                        userInfos += reply;    
-                    }
-                    userInfos += '</textarea></span>';
-                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick="replyBtn(this)"/> </span>';
-                    userInfos += '</li>';
-                }
-                $('#contentListWrapUl').html(userInfos);
-
-                var page_viewList2 = Paging2(data[0].QNA_ID, 10, 10 ,pages, "S");
-                $("#addPageCover").empty().html(page_viewList2);
-
-
-            }, error: function (req) {
-
-                console.log(req);
+    //검색으로 누르면 호출
+    function getNextQna2(page) {
+        if($('#searchText').val().trim() != ""){
+            nowPage = page;
+            var pages =1;
+            if(page >pages){
+                pages = page
             }
-        });
+            $.ajax ({
+                type : 'post',
+                url : 'SearchQna.do',
+                dataType : "json",
+                data: {page : pages ,val : $('#searchText').val() , kind : $('#searchCategory').val() } ,
+                success : function(data) {
+                    console.log(data);
+                    var userInfos = "";
+                    if(data.length > 0){
+                      for(var i=0; i< data.length;i++){
+                        var num = pages*10+i+1-10;
+                        userInfos += '<li class="listLi" ';
+                        if(i%2 !=0){
+                            userInfos += ' style="background-color: #AFBACB;" ';
+                        }
+                        userInfos += 'id="'+data[i].QNA_ID+'" onclick="qnaDetailPage(this)">';    
+                        userInfos += '<span class="listNum">'+num+'</span>';
+                        userInfos += '<span class="listCate">'+ data[i].QNA_CATEGORY +'</span>';
+                        userInfos += '<span class="listTitle">'+ data[i].QNA_TITLE +'</span>'
+                        userInfos += '<span class="listWriter">'+ data[i].MEMBER_ID +'</span>';
+                        userInfos += '<span class="listDate">'; 
+                        userInfos += data[i].QNA_DATE.substring(0,10);
+                        userInfos += '</span>';
+                        userInfos += '</li>';
+                    }
+                    var page_viewList2 = Paging2(data[0].QNA_ID, 10, 10 ,pages, "S");
+                    }else{
+                    var page_viewList2 = Paging2(1, 10, 10 ,1, "S");
+                    }
+                    $("#addPageCover").empty().html(page_viewList2);
+                    $('#contentListWrapUl').html(userInfos);
+
+
+
+                }, error: function (req) {
+
+                    console.log(req);
+                }
+            });
+        }
     }
     
             //페이지 나타내기
@@ -304,13 +351,14 @@
     }
 
     var goPaging_S = function(cPage){
-        getNextFriends2(cPage);
+        getNextQna2(cPage);
     };
         
         
         function qnaDetailPage(id){
             location.href="test.html?qna="+$(id).attr('id');
         }
+        
         
 	</script>
 <body>
@@ -348,12 +396,12 @@
 		<div id="contentTitleWrap">
 			<ul id="contentTitleWrapUl">
 				<li>
-					<span class="listNum" style="width:60">글번호</span>
-					<span class="listCate" style="width:100">카테고리</span>
-					<span class="listTitle" style="width:60">제목</span>
-					<span class="listWriter" style="width:100">작성자</span>
-					<span class="listDate" style="width:100">날짜</span>
-					<span class="listViewNum" style="width:60">조회수</span>
+					<span class="listNum" style="width:50px;">글번호</span>
+					<span class="listCate" style="width:140px;">카테고리</span>
+					<span class="listTitle" style="width:250px;">제목</span>
+					<span class="listWriter" style="width:90px;">작성자</span>
+					<span  style="width:140px;">날짜</span>
+<!--					<span class="listViewNum" style="width:60px;">조회수</span>-->
 				</li>
 			</ul>
 		</div>
@@ -374,30 +422,28 @@
 			</ul>
 		</div>
 		<div>
-			<input type="button" value="글쓰기" onclick="location.href='qnaWrite.html'"/>
+            <div class="btn writeBtn" onclick="location.href='qnaWrite.html'">글쓰기</div>
 			</div>
             
             
             
             
                     <div id="pageChoiceCover">
-                        <span id="addPageCover">
-                        </span>
+                        <div id="addPageCover">
+                        </div>
                     </div>
             
             
             
-		<form id="qnaListForm" action="SearchQna.do" method="post">	
-			<div>
-				<select name="searchCategory">
+			<div id="selectCover">
+				<select id="searchCategory">
 					<option value="1">제목</option>
 					<option value="2">글 내용</option>
 					<option value="3">글 작성자</option>
 				</select>
 				<input type="text" name="searchBox" id="searchText"/>
-				<input type="button" value="검색" onclick="qnaSearchEnter()"/>
+                <div class="btn" onclick="getNextQna2(nowPage2)">검색</div>
 			</div>
-		</form>
     	</div>
 	</div>
 	</div>
