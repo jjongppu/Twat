@@ -14,70 +14,62 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.admin.dao.AdminDAO;
+import com.twat.dao.MemberDAO;
 import com.twat.dao.QnaDAO;
 import com.twat.dto.MemberVO;
 import com.twat.dto.QnaVO;
 
-/**
- * Servlet implementation class SearchQnaServlet
- */
 @WebServlet("/SearchQna.do")
 public class SearchQnaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public SearchQnaServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
-	    response.setContentType("application/json;");
-	    response.setHeader("Cache-Control", "no-cache");
-	    request.setCharacterEncoding("UTF-8");
-	    
-	    HttpSession session = request.getSession();
-	    String qnaId = (String)session.getAttribute("loginUserId");
-	    int searchCategory = Integer.parseInt(request.getParameter("searchCategory"));
-	    String searchBox = request.getParameter("searchBox");
-	    
-	    QnaDAO qnaDao = QnaDAO.getInstance();
-	    ArrayList<QnaVO> arList = qnaDao.searchQnA(searchCategory, searchBox);
-	    
-	    PrintWriter writer = response.getWriter();
-		JSONArray jsonList = new JSONArray();
-		JSONObject jsonOb = new JSONObject();
-		System.out.println(arList.size());
-		if(arList.size() > 0) {
-			for(int i = 0; i < arList.size(); i++) {
-				QnaVO qvo = arList.get(i);
-				jsonOb.put("QNA_ID", qnaId);
-				jsonOb.put("MEMBER_ID", qvo.getMEMBER_ID());
-				jsonOb.put("QNA_CATEGORY", qvo.getQNA_CATEGORY());
-				jsonOb.put("QNA_PW", qvo.getQNA_PW());
-				jsonOb.put("QNA_TITLE", qvo.getQNA_TITLE());
-				jsonOb.put("QNA_CONTENTS", qvo.getQNA_CONTENTS());
-				jsonOb.put("QNA_DATE", qvo.getQNA_DATE());
-				jsonOb.put("QNA_REPLY", qvo.getQNA_REPLY());
-				jsonList.add(jsonOb);
+		response.setContentType("application/json;");
+		response.setHeader("Cache-Control", "no-cache");
+		request.setCharacterEncoding("UTF-8");
+		
+		JSONArray jarr = new JSONArray();
+		PrintWriter out = response.getWriter();
+		
+		int page = Integer.parseInt(request.getParameter("page"));
+		String val = request.getParameter("val");
+		int kind = Integer.parseInt(request.getParameter("kind"));
+		
+		QnaDAO qnaDao = QnaDAO.getInstance();
+		ArrayList<QnaVO> qnaList = qnaDao.searchQnA(page,val,kind);
+		
+			if(qnaList.size() > 0 ){
+				for (int i = 1; i < qnaList.size(); i++) {
+					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("COUNT", qnaList.get(0).getQNA_ID());
+					jsonObj.put("QNA_ID", qnaList.get(i).getQNA_ID());
+					jsonObj.put("MEMBER_ID", qnaList.get(i).getMEMBER_ID());
+					jsonObj.put("QNA_CATEGORY", qnaList.get(i).getQNA_CATEGORY());
+					jsonObj.put("QNA_PW", qnaList.get(i).getQNA_PW());
+					jsonObj.put("QNA_TITLE", qnaList.get(i).getQNA_TITLE());
+					jsonObj.put("QNA_CONTENTS", qnaList.get(i).getQNA_CONTENTS());
+					jsonObj.put("QNA_DATE", qnaList.get(i).getQNA_DATE().toString());
+					jsonObj.put("QNA_REPLY", qnaList.get(i).getQNA_REPLY());
+					
+					jarr.add(jsonObj);
+				}
+			}else{
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("COUNT","noGroup");
+				jarr.add(jsonObj);
 			}
-		} else {
-			jsonOb.put("result", "fail");
-			jsonList.add(jsonOb);
-		}
-		writer.println(jsonList.toJSONString());
+		out.print(jarr);
+		out.flush();
+		out.close();
 	}
 }

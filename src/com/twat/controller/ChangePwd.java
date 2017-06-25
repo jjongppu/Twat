@@ -49,31 +49,33 @@ public class ChangePwd extends HttpServlet {
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
 	    
-		PrintWriter out = response.getWriter();
+	    JSONArray jsonArr = new JSONArray();
+	    JSONObject jsonObj = new JSONObject();
+	    PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession();
-	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
-	    String nowpwd = request.getParameter("nowPwd");
-		String chpwd = request.getParameter("chPwd");
-		String chkpwd = request.getParameter("chkPwd");
+	    String userId = (String)session.getAttribute("loginUserId");
+	    String beforePw = request.getParameter("beforePw");
+		String afterPw = request.getParameter("afterPw");
+		
 		
 		
 	    MemberDAO mdo = MemberDAO.getInstance();
-//	    int result = mdo.changePw(MEMBER_ID, nowpwd, chpwd , chkpwd);
-	    int result = mdo.ch
 	    
-	    JSONArray jsonList = new JSONArray();
-		JSONObject jsonOb = new JSONObject();
+	    int result = mdo.changePw(userId, beforePw, afterPw);
 	    
-	    if(result ==1){
-	    	jsonOb.put("result", "success");
-	    }else{
-	    	jsonOb.put("result", "fail");
-	    }
+	    
+	    System.out.println(beforePw);
+	    System.out.println(afterPw);
+	    
+	    
+	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
+	    jsonArr.add(jsonObj);
+	    
+	    out.println(jsonArr);
+
 		
-		jsonList.add(jsonOb);
 		
-		out.println(jsonList);
 		
 	}
 

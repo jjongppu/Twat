@@ -37,16 +37,20 @@ public class AdminMemberOut extends HttpServlet {
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
+	    HttpSession session = request.getSession();
 	    
 		PrintWriter out = response.getWriter();
-	    String MEMBER_ID = request.getParameter("out");
+		String MEMBER_ID="";
+    	MEMBER_ID = request.getParameter("out");
 	    
 	    MemberDAO mdo = MemberDAO.getInstance();
-		
+	    
 	    JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 	    
-		int result = mdo.outUser(MEMBER_ID);
+		int result = mdo.outUser(MEMBER_ID,"out");
+		
+		session.invalidate();
 	    if(result ==1){
 	    	
 	    	jsonOb.put("result", "success");

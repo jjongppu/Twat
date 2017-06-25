@@ -103,7 +103,7 @@
     
     function signUpEnter() {
         // 빈칸인 상태에서 회원가입 눌렀을때 검사........ 성별을 어떻게 검사할지 아직..
-        regexIdCheck();
+//        regexIdCheck();
 //        regexPwCheck();
         if($('#idBox').val() == "") {
             alert("아이디를 입력하세요.");
@@ -122,32 +122,32 @@
             $('#phoneBox').focus();
         } else {
             $.ajax ({
-            type : 'post',
-            url : 'signUp.do',
-            data : $('#personalInfo').serialize(),
-//            data :
-//            {
-//                signUpId : document.getElementById("signUpId").value,
-//                signUpPw : document.getElementById("signUpPw").value,
-//                signUpImg : document.getElementById("signUpImg").value,
-//                signUpName : document.getElementById("signUpName").value,
-//                signUpGender : document.getElementById("signUpGender").value,
-//                signUpBirth : document.getElementById("signUpBirth").value,
-//                signUpPhone : document.getElementById("signUpPhone").value
-//            },
-            dataType : "json",
-            success : function(data) {
-                console.log(data);
-                var result = data[0].result;
-                
+				type : 'post',
+				url : 'signUp.do',
+				data : $('#personalInfo').serialize(),
+	//            data :
+	//            {
+	//                signUpId : document.getElementById("signUpId").value,
+	//                signUpPw : document.getElementById("signUpPw").value,
+	//                signUpImg : document.getElementById("signUpImg").value,
+	//                signUpName : document.getElementById("signUpName").value,
+	//                signUpGender : document.getElementById("signUpGender").value,
+	//                signUpBirth : document.getElementById("signUpBirth").value,
+	//                signUpPhone : document.getElementById("signUpPhone").value
+	//            },
+				dataType : "json",
+				success : function(data) {
+					console.log(data);
+					var result = data[0].result;
 
-                alert('회원가입이 완료되었습니다.');
-                location.href="index.html";
 
-            },
-            error: function(req) {
-                alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
-            }
+					alert('회원가입이 완료되었습니다.');
+					location.href="index.html";
+
+				},
+				error: function(req) {
+					alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+				}
         });
         }
       
@@ -161,6 +161,7 @@
         var idVal2 = $('#idBox').val();
         var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
         console.log(idVal);
+		console.log(idVal2);
 		// 아이디 길이 검사
         if(idVal < 6 || idVal > 12) { // 1~5거나, 13이상 이면
             alert("아이디는 6자 이상, 12자 이하여야 합니다.");
@@ -171,20 +172,15 @@
         return retVal;
 		
 		// 정규식 검사
-//		if(!idRegex.test(idVal2)) {
-//            alert("아이디는 영문, 숫자 조합으로 구성되어야 합니다.");
-//        } else {
-//			retVal = true;
-//		}
-//		return retVal;
-		
-		
-		// test
-		var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
-        if( !idRegex.test( $('#idBox').val() ) ) {
+		if(!idRegex.test(idVal2)) {
             alert("아이디는 영문, 숫자 조합으로 구성되어야 합니다.");
-            return;
-        }
+        } else {
+			retVal = true;
+		}
+		return retVal;
+		
+		
+		
     }
     
 
@@ -196,48 +192,26 @@
         var retVal = false;
         var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
         
-        if(pw1 != null && pw1 != null) {
+		console.log(pw1);
+		console.log(pw2);
+		console.log(pwVal);
+		
+		
+		// 비밀번호
+        if(pw1 != null && pw2 != null) {
             if(pwVal < 8 || pwVal > 16) {
                 $('#pwMessage').html("<p style='font-size:10px; color:red'>비밀번호는 8자 이상, 16자 이하여야 합니다.</p>");
             } else if(pw1 != pw2) {
                 $('#pwMessage').html("<p style='font-size:10px; color:red'>사용할 수 없는 비밀번호입니다.</p>");
-            } else if(pwRegex.test(pwVal)){
+            } else if(!pwRegex.test(pwVal)){
                 $('#pwMessage').html("<p style='font-size:10px; color:red'>비밀번호는 영문, 숫자로 구성되어야 합니다.</p>");
             } else {
                 $('#pwMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
             }
         }
+        
     }
 
-    
-//    // 비밀번호 정규식 체크
-//    function regexPwCheck() {
-//        var retVal = false;
-//        var pwVal = $('#pwBox').val();
-//        var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
-//
-//        
-//        if(pwVal < 8 || pwVal > 16) {
-//            alert("비밀번호는 8자 이상, 16자 이하여야 합니다.");
-//        } else if(!pwRegex.test(pwVal)) {
-//            alert("비밀번호는 영문, 숫자로 구성되어야 합니다.");
-//        } else {
-//            retVal = true;
-//        }
-//        return retVal;
-//    }
-//    
-//    
-//    // 회원가입시 비밀번호 실시간 검사 진행중.......................
-//    $(document).ready(function() {
-//        $('#pwBox2').keyup(function() {
-//            if($('#pwBox').val() == $('#pwBox2').val()) {
-//                $('#pwMessage').html("<p style='font-size:10px; color:blue'>비밀번호가 일치합니다.</p>");
-//            } else {
-//                $('#pwMessage').html("<p style='font-size:10px; color:red'>사용할 수 없는 비밀번호입니다.</p>");
-//            }
-//        });
-//    });
     
     
     // 회원가입시 아이디 실시간 검사 진행중......................
@@ -250,14 +224,24 @@
                 success : function(data) {
                     console.log(data);
                     var result = data[0].result;
-
+					var idVal = $('#idBox').val().length;
+					var idVal2 = $('#idBox').val();
+					var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
+					
                     console.log(result);
-
+					// 1번
                     if(result == 'fail') {
-                        $('#idMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 아이디입니다.</p>");
+						if(idVal < 6 || idVal > 12) {
+							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
+						} else if(!idRegex.test(idVal2)) {
+							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
+						} else {
+							$('#idMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 아이디입니다.</p>");
+						}
                     } else {
                         $('#idMessage').html("<p style='font-size:10px; color:red'>사용중이거나 사용 불가한 아이디입니다.</p>");
                     }
+					
                 },
                 error: function(req) {
                     alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
@@ -286,7 +270,55 @@
             x.value = tmp;
         }
     }
-    
+	
+	
+	function jsDayCheck(Obj) {
+		var strValue = Obj.value;
+		var chk1 = /^(19|20)\d{2}-([1-9]|1[012])-([1-9]|[12][0-9]|3[01])$/;
+		var chk2 = /^(19|20)\d{2}\/([0][1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])$/;
+		if (strValue == "") { // 공백이면 무시
+			 return true;
+		}
+
+		//-------------------------------------------------------------------------------
+		// 유효성 검사- 입력형식에 맞게 들왔는지 // 예) 2000-1-1, 2000-01-01 2가지 형태 지원
+		//-------------------------------------------------------------------------------
+		if (chk2.test(strValue) == false) { // 유효성 검사에 성공하지 못했다면
+			alert("1999-1-1 형식 또는 \r\n1999-01-01 형식으로 날자를 입력해주세요.");
+			Obj.value = "";
+			Obj.focus = true;
+		   	return false;
+		}
+
+		//-------------------------------------------------------------------------------
+		// 존재하는 날자(유효한 날자) 인지 체크
+		//-------------------------------------------------------------------------------
+		var bDateCheck = true;
+		var arrDate = Obj.value.split("-");
+		var nYear = Number(arrDate[0]);
+		var nMonth = Number(arrDate[1]);
+		var nDay = Number(arrDate[2]);
+
+		if (nYear < 1900 || nYear > 3000) { // 사용가능 하지 않은 년도 체크
+			bDateCheck = false;
+		}
+
+		if (nMonth < 1 || nMonth > 12) { // 사용가능 하지 않은 달 체크
+			bDateCheck = false;
+		}
+
+		// 해당달의 마지막 일자 구하기
+		var nMaxDay = new Date(new Date(nYear, nMonth, 1) - 86400000).getDate();
+		if (nDay < 1 || nDay > nMaxDay) { // 사용가능 하지 않은 날자 체크
+			bDateCheck = false;
+		}
+
+		if(bDateCheck == false) { 
+		   alert("존재하지 않은 년월일을 입력하셨습니다. 다시한번 확인해주세요");
+		   return false;
+		}
+	}
+
     
 </script>
 <title>Insert title here</title>
@@ -299,14 +331,14 @@
             <h3 class="mainText">회원가입</h3>
             <div class="idpwContaioner">
                 <div>
-                    <input type="text" name="signUpId" placeholder="아이디" class="inputBox" maxlength='12' id="idBox" onkeyup="overlapId()" />
+                    <input type="text" name="signUpId" placeholder="아이디" class="inputBox" maxlength='14' id="idBox" onkeyup="overlapId()" />
                     <div id="idMessage"></div>
                 </div>
                 <div>
                     <input type="password" name="signUpPw" placeholder="비밀번호" maxlength='16' id="pwBox" class="inputBox"/>
                 </div>
                 <div>
-                    <input type="password" name="signUpPw2" placeholder="비밀번호 확인" id="pwBox2" class="inputBox" onkeyup="onkeyupPwCheck()"/>
+                    <input type="password" name="signUpPw2" placeholder="비밀번호 확인" maxlength='16' id="pwBox2" class="inputBox" onkeyup="onkeyupPwCheck()"/>
                     <div id="pwMessage"></div>
                 </div>
             </div>    
