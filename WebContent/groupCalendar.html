@@ -1876,14 +1876,14 @@
                                         monthTEmp = item.substr(4, 2);
                                         voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
                                         voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
-                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일</div>";
+                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
                                     } else if (monthTEmp < item.substr(4, 2)) {
                                         voteString += "</div>";
                                         monthTEmp = item.substr(4, 2);
                                         voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
-                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일</div>";
+                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
                                     } else {
-                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일</div>";
+                                        voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
                                     }
                                 }
                                 voteString += "</div>";
@@ -1896,6 +1896,7 @@
                             voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer;
                             // 참가자 출력
                             var voteMemberSet = new Set();
+                            var user0000 = false;
 
                             for (var j = 0; j < memberList.length; j++) {
                                 //                                console.log(memberList[j]);
@@ -1904,9 +1905,15 @@
                                 //                                {
                                 //                                    a
                                 //                                }
+                                if (memberList[j].split("-")[1].match(login_userId) && memberList[j].split("-")[0].match("00000000"))
+                                {
+                                    user0000 = true;
+                                }
+                                
                                 if (memberList[j].split("-")[1].match(login_userId) && !memberList[j].split("-")[0].match("00000000")) {
                                     //                                    console.log(memberList[j]);
                                     if (!login_userId.match(group_master)) {
+//                                        user0000 = true;
                                         addMemberVoteList(parseInt(memberList[j].split("-")[0]));
                                     }
                                 }
@@ -1951,7 +1958,7 @@
                     //                    voteString += commentsString;
                     //                    voteString += "</div>"; // Comment
                     //                    voteString += "</div>"; // CommentBox
-
+                    var alreadyVote = false;
                     var strMemberSet = "";
                     for (let item of voteMemberSet.keys()) {
                         memTempList.add(item)
@@ -1971,6 +1978,7 @@
                         for (let item of voteMemberSet.keys()) {
                             if (item.match(login_userId)) {
                                 voteBox = "<input type='button' value='수정하기' onclick='addVoteList(" + cal_num + ")'/>";
+                                alreadyVote = true;
                             }
                         }
                     }
@@ -1980,7 +1988,24 @@
                     $("#voteButtonBox").html(voteBox);
                     $("#commentList").html(commentsString);
                     $("#modal2").css('display', 'inline-block');
-
+                    
+                    console.log(alreadyVote);
+                    console.log(user0000);
+                    
+                    if(alreadyVote && user0000)
+                    {
+                        for (let item of voteDateSet.keys()) {
+                            $('#voteList' + item).css("background-image", "url(img/etcIcon/unchecked.png)");
+                        }
+                    }
+                    
+                    
+                    
+//                    for (let item of memberVoteListSet.keys()) {
+//                        //                        addMemberVoteList(item);
+////                        $("#voteList" + item).css("backgroundColor", "antiquewhite");
+//                        $("#voteList" + date).css("background-image", "url(img/etcIcon/checked.png)");
+//                    }
                     //                    document.getElementById('modal2').innerHTML = voteString;
                 },
                 error: function(req) {
@@ -1988,9 +2013,12 @@
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 },
                 complete: function() {
+                    
+                    
                     for (let item of memberVoteListSet.keys()) {
                         //                        addMemberVoteList(item);
-                        $("#voteList" + item).css("backgroundColor", "antiquewhite");
+//                        $("#voteList" + item).css("backgroundColor", "antiquewhite");
+                        $("#voteList" + item).css("background-image", "url(img/etcIcon/checked.png)");
                     }
                 }
             })
@@ -1999,10 +2027,12 @@
         function addMemberVoteList(date) {
             if (memberVoteListSet.has(date)) {
                 memberVoteListSet.delete(date);
-                $("#voteList" + date).css("backgroundColor", "white");
+//                $("#voteList" + date).css("backgroundColor", "white");
+                $("#voteList" + date).css("background-image", "url(img/etcIcon/unchecked.png)");
             } else {
                 memberVoteListSet.add(date);
-                $("#voteList" + date).css("backgroundColor", "antiquewhite");
+//                $("#voteList" + date).css("backgroundColor", "antiquewhite");
+                $("#voteList" + date).css("background-image", "url(img/etcIcon/checked.png)");
                 //                console.log("등록 : " + date);
             }
             console.log(memberVoteListSet);

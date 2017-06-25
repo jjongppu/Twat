@@ -536,11 +536,7 @@ public class MemberDAO {
 // }
 	   
 
-//	   public int changePw(String MEMBER_ID, String nowpwd){
-//		   con = getConnection();
-//		   String sql = "select "
-//		   PreparedStatement psmt2 = con.prepareStatement(sql);
-//	   }
+
 	   
 	   
 	   
@@ -979,6 +975,7 @@ public class MemberDAO {
 //				System.out.println("내아이디 : " +userId);
 //				System.out.println("친구리스트 : " + friendsList);
 				if(friendsList.equals("") || friendsList.equals(",")){
+							
 					return null;
 				}else{
 					String[] eachFriend = friendsList.split(",");
@@ -1192,6 +1189,71 @@ public class MemberDAO {
 			
 			
 		}
+		
+		
+		public int changePw(String userId, String beforePw, String afterPw){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			
+			
+			
+			 try {
+				con = getConnection();
+				String sql = "select * from member where MEMBER_ID = ? AND MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW'))";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				psmt2.setString(2, beforePw);
+				rs2 = psmt2.executeQuery();
+				
+				
+				
+				if(rs2.next()){ // 현재 배밀번호와 일치할때 ->새로 바꿀 비밀번호로 수정
+					
+					String sql2 = "update member set MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) where MEMBER_ID = ?";
+					psmt2 = con.prepareStatement(sql2);
+					psmt2.setString(1, afterPw);
+					psmt2.setString(2, userId);
+					psmt2.executeUpdate();
+					return 0;
+					
+					
+				}else{// 현재비밀번호와 일치하지 않을때
+					return -1; 
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}finally {
+				
+				try {
+					if(rs2 != null)
+						rs2.close();
+					if(psmt2!=null)
+						psmt2.close();
+					if(con!=null)
+						con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+		}
+			 
+			 
+			return 1;
+				
+			   
+		}
+		
+		
 		
 		
 }
