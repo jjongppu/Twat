@@ -1122,6 +1122,14 @@
 
 
     // ================ 요넘이 캘린더 그려주는 애. ================ 
+    $(document).ready(function(){
+        $("#yearSelect option:selected").val(today.getFullYear());
+        $("#monthSelect").val(today.getMonth()+1).attr("selected","selected");
+        update();
+        
+        console.log(today);
+        
+    });
     function buildCalendar(dateArr, titleArr, memChoiceArr) {
         var nMonth = new Date(today.getFullYear(), today.getMonth(), 1); // 이번 달의 첫째 날
         var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // 이번 달의 마지막 날
@@ -1540,7 +1548,6 @@
                 <!--  ========================= CALENDAR ========================== -->
                 <!-- {달력}, {알수없는 무언가} -->
                 <div id="right-side">
-                    <button class="modalButton" onclick="addSchedule()">종길이</button>
                     <!-- {달력} -->
                     <div class="cal">
                         <table id="calendar">
@@ -1593,6 +1600,7 @@
                                 <td>토</td>
                             </tr>
                         </table>
+                        <button class="modalButton" onclick="addSchedule()">일정추가하기</button>
                     </div>
                     <!-- ============ 텍스트 입력 모달창 ============ -->
                     <div>
