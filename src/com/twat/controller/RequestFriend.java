@@ -51,9 +51,9 @@ public class RequestFriend extends HttpServlet {
 		    //*로시작 : 친구요청을 함
 		    //!로시작 : 친구요청을 받음
 		    
-		    System.out.println(loginUserId);
-		    System.out.println(friendId);
-		    
+//		    System.out.println(loginUserId);
+//		    System.out.println(friendId);
+	    
 		    MemberDAO memberDao = MemberDAO.getInstance();
 		    int result = memberDao.requestFriend(loginUserId, friendId); 
 		    if(result == -1){

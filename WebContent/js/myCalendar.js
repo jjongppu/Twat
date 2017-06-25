@@ -1342,6 +1342,8 @@ $(document).ready(function () {
                 console.log(item.friendId);
                 console.log(item.friendName);
                 console.log(item.friendBirth);
+//                    document.getElementById("fName").innerHTML="<div>"+data[i].friendName+"</div>";
+//                    document.getElementById("fBirth").innerHTML="<div>"+data[i].friendBirth+"</div>";
                 for(var i = 0; i < data.length; i++){
                     document.getElementById("fName").innerHTML="<div>"+data[i].friendName+"</div>";
                     document.getElementById("fBirth").innerHTML="<div>"+data[i].friendBirth+"</div>";
@@ -1360,7 +1362,7 @@ $(document).ready(function () {
             });
         },
         error: function (req) {
-            alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//            alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
         }
 
     });

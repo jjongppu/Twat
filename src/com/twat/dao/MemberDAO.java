@@ -536,11 +536,7 @@ public class MemberDAO {
 // }
 	   
 
-//	   public int changePw(String MEMBER_ID, String nowpwd){
-//		   con = getConnection();
-//		   String sql = "select "
-//		   PreparedStatement psmt2 = con.prepareStatement(sql);
-//	   }
+
 	   
 	   
 	   
@@ -979,6 +975,7 @@ public class MemberDAO {
 //				System.out.println("내아이디 : " +userId);
 //				System.out.println("친구리스트 : " + friendsList);
 				if(friendsList.equals("") || friendsList.equals(",")){
+							
 					return null;
 				}else{
 					String[] eachFriend = friendsList.split(",");
@@ -1037,13 +1034,13 @@ public class MemberDAO {
 			PreparedStatement psmt2 = null;
 			ResultSet rs2 = null;
 			String friendList = "";
-			String sql = "select FRIEND_LIST FROM member where MEMBER_ID = ?";
+			String sql = "select FRIENDS_LIST FROM member where MEMBER_ID = ?";
 			try {
 				psmt2 = con.prepareStatement(sql);
 				psmt2.setString(1, userId);
 				rs2 = psmt2.executeQuery();
 				if(rs2.next());
-					friendList = rs2.getString("FRIEND_LIST");
+					friendList = rs2.getString("FRIENDS_LIST");
 					
 					
 				
@@ -1075,21 +1072,188 @@ public class MemberDAO {
 		public void acceptFriend(String userId, String friendId){//친구요청 수락
 			
 			PreparedStatement psmt2 = null;
+			String []myFriendList = null;
+			String changeMyFriendList = "";
+			String []friendFriendList =null;
+			String changeFriendFriendList = "";
 			
 			try {
+//				내친구목록 수정
 				con = getConnection();
-//				String sql = "select "
-//				psmt2 = con.prepareStatement(sql);
+				String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				
+				myFriendList = getfriendListForString(userId).split(",");
+				
+				for(int i = 0; i < myFriendList.length; i++){
+					if(myFriendList[i].length() != 0){
+						if(myFriendList[i].equals("!" + friendId)){
+							myFriendList[i] = myFriendList[i].substring(1, myFriendList[i].length());
+							
+						}
+						
+					}
+						
+					
+				}
+				
+				for(int i = 0; i < myFriendList.length; i++){
+					if(i == myFriendList.length - 1){
+						changeMyFriendList += myFriendList[i];
+						
+					}else{
+						changeMyFriendList += myFriendList[i] + ",";	
+					}
+					
+					
+				}
+				
+//				System.out.println(changeFriendList);
+				
+				psmt2.setString(1, changeMyFriendList);				
+				psmt2.setString(2, userId);
+				
+				psmt2.executeUpdate();
+				
+//				System.out.println(changeMyFriendList);
+				
+
+				
+				// 친구의 친구목록 수정
+				String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql2);
+				
+				
+				friendFriendList = getfriendListForString(friendId).split(",");
+				for(int i = 0; i < friendFriendList.length; i++){
+					if(friendFriendList[i].length() != 0){
+						if(friendFriendList[i].equals("*" + userId)){
+							friendFriendList[i] = friendFriendList[i].substring(1, friendFriendList[i].length());
+							
+						}
+						
+					}
+						
+					
+				}
+				
+				
+				for(int i = 0; i < friendFriendList.length; i++){
+					if(i == friendFriendList.length - 1){
+						changeFriendFriendList += friendFriendList[i];
+						
+					}else{
+						changeFriendFriendList += friendFriendList[i] + ",";	
+					}
+					
+					
+				}
+//				System.out.println(changeFriendFriendList);
+				
+				psmt2.setString(1, changeFriendFriendList);				
+				psmt2.setString(2, friendId);
+				
+				psmt2.executeUpdate();
+				
+				
+				
+			
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}finally {
+				
+					try {
+						if(psmt2!=null)
+							psmt2.close();
+						if(con!=null)
+							con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
 			}
 			
 			
 			
 		}
+		
+		
+		public int changePw(String userId, String beforePw, String afterPw){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			
+			
+			
+			 try {
+				con = getConnection();
+				String sql = "select * from member where MEMBER_ID = ? AND MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW'))";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				psmt2.setString(2, beforePw);
+				rs2 = psmt2.executeQuery();
+				
+				
+				
+				if(rs2.next()){ // 현재 배밀번호와 일치할때 ->새로 바꿀 비밀번호로 수정
+					
+					String sql2 = "update member set MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) where MEMBER_ID = ?";
+					psmt2 = con.prepareStatement(sql2);
+					psmt2.setString(1, afterPw);
+					psmt2.setString(2, userId);
+					psmt2.executeUpdate();
+					return 0;
+					
+					
+				}else{// 현재비밀번호와 일치하지 않을때
+					return -1; 
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}finally {
+				
+				try {
+					if(rs2 != null)
+						rs2.close();
+					if(psmt2!=null)
+						psmt2.close();
+					if(con!=null)
+						con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+		}
+			 
+			 
+			return 1;
+				
+			   
+		}
+		
+		
 		
 		
 }
