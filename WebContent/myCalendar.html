@@ -1461,6 +1461,12 @@
             $('#blindCover').css("width", $(document).width());
         });
     });
+    
+    
+    function reloadList(){
+        
+        location.reload();
+    }
 
 </script>
 
@@ -1481,7 +1487,7 @@
                 <li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
                 <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
                 <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-                <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
+                <li class="nav_li"><a class="nav_text" href="friendList.html" onclick="reloadList()">친구 목록</a></li>
                 <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
             </ul>
             <ul id="logout" class="nav_ul" onclick="logout()">
