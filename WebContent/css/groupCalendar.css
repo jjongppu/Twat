@@ -374,6 +374,14 @@
     {
         display: inline-block;
         border: 1px solid black;
+        background-size: 16px 16px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 16px 16px;
+        border-radius: 6px;
+        padding: 4px;
+        background-position: right 50%;
+        height: 16px;
 /*        box-shadow: 5px 5px 5px;*/
     }
 
