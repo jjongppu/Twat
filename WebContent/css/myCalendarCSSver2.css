@@ -204,7 +204,7 @@
         padding: 10px;
         border-radius: 50px;
         border: 1px solid pink;
-        
+        position:fixed;
     }
    #right-side {
        width: 50%;

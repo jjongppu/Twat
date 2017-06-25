@@ -1126,7 +1126,6 @@
         $("#yearSelect option:selected").val(today.getFullYear());
         $("#monthSelect").val(today.getMonth()+1).attr("selected","selected");
         update();
-        
         console.log(today);
         
     });
@@ -1265,13 +1264,6 @@
                 document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
 
                 for (var arrCal = 1; arrCal < data.length; arrCal++) {
-                    //                        console.log(data[arrCal].cal_num);
-                    //                        console.log(data[arrCal].cal_date);
-                    //                        console.log(data[arrCal].cal_group);
-                    //                        console.log(data[arrCal].cal_memo);
-                    //                        console.log(data[arrCal].cal_writer);
-                    //                        console.log(data[arrCal].state_icon);
-                    //                        console.log(data[arrCal].member_choice);
                     var str = "";
                     var str2 = data[arrCal].cal_date;
                     console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
@@ -1512,12 +1504,12 @@
                     <div class="leftUp">
                         <!-- 위 -->
                         <div class="privSchedule">
-                            <div class="program txt">한줄 일기</div>
+                            <div class="program txt">개인 일정</div>
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">
                             <div class="schCont scheDate txt">6월 14일</div>
-                            <div class="schCont scheText txt">아침운동</div>
+                            <div class="schCont scheText txt">가까운 개인일정들 뽑아버려</div>
                             <div class="schCont dayTime">
                                 <div class="schCont scheTime txt">오전 08시 00분</div>
                                 <div class="scheDetail txt"></div>
@@ -1535,7 +1527,7 @@
                         </div>
                         <div class="schedule">
                             <div class="schCont scheDate txt">6월 20일</div>
-                            <div class="schCont scheText txt">아침운동</div>
+                            <div class="schCont scheText txt">여기에 단체 자신의 단체방들 셀렉트로 뽑아버려</div>
                             <div class="schCont dayTime">
                                 <div class="schCont scheTime txt">오전 08시 00분</div>
                                 <div class="scheDetail txt">자세히 보기gogo</div>
