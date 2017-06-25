@@ -1700,6 +1700,7 @@
                 },
                 dataType: "json",
                 success: function(data) {
+                    console.log("확정");
                     console.log(data);
 
                     var scheduleString = "";
@@ -1777,6 +1778,7 @@
                 },
                 dataType: "json",
                 success: function(data) {
+                    console.log("미확정");
                     console.log(data);
                     nowCalNum = cal_num;
                     var voteString = "";
@@ -1811,7 +1813,7 @@
                     //                    console.log(voteDateCount);
 
                     for (var i = 0; i < data.length; i++) {
-                        console.log(data[i].cal_depth);
+//                        console.log(data[i].cal_depth);
                         if (data[i].cal_depth == 0) {
                             voteString += "<div id='voteListBox'>";
                             if (login_userId.match(group_master)) {
@@ -1931,11 +1933,11 @@
                             }
                             voteString += "</div>";
                         } else if (data[i].cal_depth > 0) {
-                            console.log(data[i]);
+//                            console.log(data[i]);
 
                             commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
                             commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
-                            console.log(commentsString);
+//                            console.log(commentsString);
                             //                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
                         }
 
