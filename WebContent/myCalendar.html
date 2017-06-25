@@ -1124,7 +1124,7 @@
     // ================ 요넘이 캘린더 그려주는 애. ================ 
     $(document).ready(function(){
         $("#yearSelect option:selected").val(today.getFullYear());
-        $("#monthSelect option:selected").val(today.getMonth()+1);
+        $("#monthSelect").val(today.getMonth()+1).attr("selected","selected");
         update();
         
         console.log(today);
