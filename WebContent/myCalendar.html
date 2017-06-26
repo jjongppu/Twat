@@ -1387,10 +1387,18 @@
             ,success : function(data){
                 console.log(data);
               $.each(data, function(index, item){
-                  console.log(item.myCalIndex);
+//                  console.log(item.myCalIndex);
                   console.log(item.myCalContents);
-                  console.log(item.myWriteTime);
-                  document.getElementById("myCalDate").innerHTML+="<div>"+item.myCalDate+"</div></br>";
+//                  console.log(item.myWriteTime);
+//                  console.log(item.myCalDate.split(","));
+                  var calDate = item.myCalDate.split(",");
+                  console.log(calDate.length);
+                  
+                  if(calDate.length != 2){
+                     document.getElementById("myCalDate").innerHTML+="<div>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
+                  } else {
+                    document.getElementById("myCalDate").innerHTML+="<div>"+calDate[0]+"</div></br>";
+                  }
                   document.getElementById("myCalContents").innerHTML+="<div>"+item.myCalContents+"</div></br>";
 //                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
               });

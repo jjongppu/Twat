@@ -76,11 +76,12 @@ public class MyCalendarDAO{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
-		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = '(" + MEMBER_ID+")'";
+		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ?";
 
 		try{
 			con = getConnection();
 			pstmt = con.prepareCall(sql);
+			pstmt.setString(1, MEMBER_ID);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
