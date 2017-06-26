@@ -356,6 +356,36 @@
         }
         
         
+        function deleteMyfriend(a){
+            
+            var deleteId = $(a).prev().attr("name");
+            
+            $.ajax({
+                type:"post",
+                url:"DeleteFriend.do",
+                data:{
+                    deleteId : deleteId                    
+                },
+                dataType:"json",
+                success:function(data){
+                    if(data[0].result == "delete")
+                        alert(deleteId + "친구 삭제 완료!");
+                    
+                    location.reload();
+                    
+                },error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+                
+            });
+            
+            
+            
+            
+            
+        }
+        
         
         /////친구 목록 가져오기.
         $.ajax({
@@ -369,14 +399,14 @@
                 
                 
                 for(var i=0; i < data.length; i++){
-                    out += '<div id="userIn" onclick="detailUser();">';
+                    out += '<div id="userIn">';
                     out += '<div id="userImg"></div>';
                     out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
                     out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
                     out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
                     out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
                     out += '<input type="hidden" value="아이디" id="MEMBER_ID" name="'+ data[i].MEMBER_ID +'">';
-                    out += '</div>';
+                    out += '<input type="button" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
                     
                 }
                 document.getElementById('allFriends').innerHTML = out;

@@ -1245,13 +1245,130 @@ public class MemberDAO {
 					e.printStackTrace();
 				}
 			
-		}
-			 
-			 
+			}			 
 			return 1;
+		}	
+		
+		
+		public void deleteFriend(String userId, String deleteFriend){ //친구 삭제하기
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			String friendsList = "";
+			ArrayList<String> friendsListArr = new ArrayList<String>();
+			String deletedFriendsList = "";
+			
+			try {
+				con = getConnection();				
 				
-			   
+				friendsList = getfriendListForString(userId);				
+				
+				for(int i = 0; i < friendsList.split(",").length; i++){					
+					friendsListArr.add(friendsList.split(",")[i]);					
+				}
+				
+				
+				for(int i = 0; i < friendsListArr.size(); i++){
+					if(friendsListArr.get(i).equals(deleteFriend))
+						friendsListArr.remove(i);
+						
+					
+					
+					
+				}
+				
+				
+				for(int i = 0; i < friendsListArr.size(); i++){
+					if(friendsListArr.get(i).length() != 0)
+						deletedFriendsList += "," + friendsListArr.get(i);
+					
+				}
+				
+//				System.out.println(deletedFriendsList);
+				
+				
+				String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, deletedFriendsList);
+				psmt2.setString(2, userId);
+				psmt2.executeUpdate();
+				
+				
+				friendsList = getfriendListForString(deleteFriend);
+				friendsListArr.clear();// 어레이리스트 초기화
+				deletedFriendsList = ""; //친구리스트 변수 초기화
+				
+				for(int i = 0; i < friendsList.split(",").length; i++){					
+					friendsListArr.add(friendsList.split(",")[i]);					
+				}
+				
+				
+				for(int i = 0; i < friendsListArr.size(); i++){
+					if(friendsListArr.get(i).equals(userId))
+						friendsListArr.remove(i);					
+					
+					
+				}
+				
+				
+				for(int i = 0; i < friendsListArr.size(); i++){
+					if(friendsListArr.get(i).length() != 0)
+						deletedFriendsList += "," + friendsListArr.get(i);
+					
+				}
+				
+				String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql2);
+				psmt2.setString(1, deletedFriendsList);
+				psmt2.setString(2, deleteFriend);
+				psmt2.executeUpdate();
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+					
+				
+				
+				
+					
+					
+					
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				
+					try {
+						if(rs2 != null)
+							rs2.close();
+						if(psmt2 != null)
+							psmt2.close();
+						if(con != null)
+							con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+			}
+			
+			
+			
+			
+			
 		}
+		
+		
+		
 		
 		
 		
