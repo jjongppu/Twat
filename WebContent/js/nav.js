@@ -27,18 +27,7 @@ $.ajax({
 
 
 
-    window.onload = function(){
-        $(".left_nav").css("height",window.innerHeight );
-    }
-    
-    $(window).resize(function(){
-        if(window.innerHeight > 600){
-            $(".left_nav").css("height",window.innerHeight);
-        }else{
-            $(".left_nav").css("height",'600px');
-        }
 
-    });
 
             
     /* 로그아웃 처리*/

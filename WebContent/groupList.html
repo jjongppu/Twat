@@ -52,16 +52,7 @@
                 output += '</div>';
                 output += '</div>';
             }
-                // + 그룹 추가 버튼 올자리
-            output += '<div class="center_cover">';
-            output += '<div class="group_Cover">';
-            output += '<div id="addGroup">';
-            output += '<span id="addGroupBtn" onclick="addGroup();">';
-            output += '<img id="plusImg" src="img/etcIcon/plus.png"/>';
-            output += '</span>';
-            output += '</div>';
-            output += '</div>';
-            output += '</div>';
+
             
             document.getElementById('list_Cover_Cover').innerHTML = output;
             
@@ -145,7 +136,8 @@
         });
         
     }
-        
+     
+    //블라인드 커버 --
     $(document).ready(function(){
         
         $('#blindCover').css("height",$(window).height());
@@ -160,7 +152,7 @@
         
     });
     
-        
+    //선택한 친구들 체크
     function choiceFriend(tag){
         var backcolor = $(tag).css('background-color');
         var thisId = $(tag).attr('id');
@@ -236,7 +228,6 @@
 <style>
     div{
         position: relative;
-        display: inline-block;
     }
     #list_Cover_Cover{
        display: block;
@@ -244,19 +235,20 @@
         margin: auto;
     }
     #list_Cover{
+            position: absolute;
+        top: 70px;
+        left: 100px;
          display: block;
-        min-width: 550px;
+        width: 1400px;
         margin: auto;
     }
     .center_cover{
-        width: 505px;
-        margin: 25px 0;
+        width: 29%;
+        margin: 25px 25px;
     }
     .group_Cover{
-        display: block;
         height: 100px;
-        width: 350px;
-        margin: auto;
+        width: 400px;
     }
     .group_top{
         width: 350px;
@@ -305,8 +297,8 @@
     
     
     #title_cover{
+        margin-left: 100px;
         display: block;
-        width: 50%;
     }
     .stick{
         background-color: #83C5F1;
@@ -328,10 +320,16 @@
         text-align: center;
         font-size: 20px;
     }
-    #plusImg,#addGroupBtn{
+    #addGroupBtn{
+        position: absolute;
+        right: 70px;
+        top: 5px;
         display: inline-block;
-        width: 50px;
-        height: 50px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        width: 150px;
+        font-size: 13px;
         cursor: pointer;
     }
     
@@ -473,22 +471,13 @@
     #btn_place{
         display: block;
     }
-    
-    
-/*    중앙정렬 미디어 쿼릿~~~~~~~~~~~~~~~*/
-     @media screen and (min-width:1130px) and (max-width : 1634px){
-         #list_Cover_Cover{
-             width: 1050px;
-        }
+    #title_name{
+        display: inline-block;
+        font-size: 40px;
+        font-weight: bold;
+        margin-left: 20px;
+        
     }
-    
-    @media screen and (max-width : 1130px){
-        #list_Cover_Cover{
-             width: 600px;
-        }
-    
-    }
-    
     
     
     
@@ -498,45 +487,143 @@
        
 <body>
     
-    <div id="wrap">
     
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            position: relative;
+            display: inline-block;
+        }
+        #newWrap{
+            display: block;
+            background-color: #F6F6F6;
+            width: 1500px;
+            height: 900px;
+            box-shadow: 10px 10px 30px gray;
+            margin: auto;
+        }
+        .left_nav{
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #DCDAE4 ;
+            width: 100px;
+            overflow: hidden;
+            height: 900px;
+            z-index: 100;
+        }
+        .nav_ul{
+            padding: 0;
+            margin: auto;
+        }
+        li{
+            position: relative;
+        }
+        .nav_li{
+            display: block;
+            list-style: none;
+            width: 50px;
+            padding: 0 25px;
+            margin: 5px 0;
+            text-align: center;
+        }
+        #nav_menu{
+            margin-top: 50px;
+        }
+        .navMenuImg{
+            width: 50px;
+            height: 50px;
+        }
+        .nav_text{
+            margin: auto;
+        }
+        #user_Img_Cover{
+            margin-top: 50px;
+        }
+        #user_Id, #user_Img_Cover{
+            cursor: pointer;
+        }
+        #user_Img_Cover li{
+            padding: 0;
+            width: 100%;
+        }
+        #user_Img{
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+        }
+        #navHere{
+            background-color:#182D42;
+            display: inline-block;
+            width: 10px;
+            height: 50px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #userInfo{
+            display: block;
+        }
+        #main_container{
+            
+            display: block;
+        }
+    </style>
     
+    <script>
+        window.onload = function(){
+        if((window.innerHeight-900)/2 > 1){
+            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
+        }else{
+            $("#newWrap").css("margin-top", 0 );
+        }
+
+        }
+    
+    $(window).resize(function(){
+        if((window.innerHeight-900)/2 > 1){
+            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
+        }else{
+            $("#newWrap").css("margin-top", 0 );
+        }
+
+    });
+    </script>
+    
+    <div id="newWrap">
       <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                 <li class="nav_li">
-                    <img id="user_Img" src=""/>
+                    <img id="user_Img" src="img/member/gong13.jpg"/>
                 </li>
-                <li class="nav_li">
-                    <div id="user_Id"></div>
+                <li class="nav_li idLi">
+                    <div id="user_Id">test</div>
                 </li>
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/adminView_ask.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
             <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
         </ul>
-    </nav>
-    
-    
-    
-    
-    
-    
-        <div id="main_container">
+    </nav><div id="main_container">
 
             <div id="title_cover">
-                <div class="center_coverTitle">
-                    <span id="tilte_name">참여중인 캘린더</span>
-                    <div class="stick">
-                    </div>
-                </div>   
+                    <span id="title_name">My Calgather</span>
+                    
+                <span id="addGroupBtn" onclick="addGroup();">그룹 추가하기..</span>
+                
+                
             </div>
             
             <div id="list_Cover">
