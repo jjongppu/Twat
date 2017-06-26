@@ -226,6 +226,13 @@
     
 </script>
 <style>
+    body{
+                background-image: url(../img/background/background2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
     div{
         position: relative;
     }
@@ -487,113 +494,7 @@
        
 <body>
     
-    
-    <style>
-        html,body{
-            margin: 0;
-            padding: 0;
-        }
-        div{
-            position: relative;
-            display: inline-block;
-        }
-        #newWrap{
-            display: block;
-            background-color: #F6F6F6;
-            width: 1500px;
-            height: 900px;
-            box-shadow: 10px 10px 30px gray;
-            margin: auto;
-        }
-        .left_nav{
-            display: inline-block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: #DCDAE4 ;
-            width: 100px;
-            overflow: hidden;
-            height: 900px;
-            z-index: 100;
-        }
-        .nav_ul{
-            padding: 0;
-            margin: auto;
-        }
-        li{
-            position: relative;
-        }
-        .nav_li{
-            display: block;
-            list-style: none;
-            width: 50px;
-            padding: 0 25px;
-            margin: 5px 0;
-            text-align: center;
-        }
-        #nav_menu{
-            margin-top: 50px;
-        }
-        .navMenuImg{
-            width: 50px;
-            height: 50px;
-        }
-        .nav_text{
-            margin: auto;
-        }
-        #user_Img_Cover{
-            margin-top: 50px;
-        }
-        #user_Id, #user_Img_Cover{
-            cursor: pointer;
-        }
-        #user_Img_Cover li{
-            padding: 0;
-            width: 100%;
-        }
-        #user_Img{
-            width: 60px;
-            height: 60px;
-            border-radius: 60px;
-        }
-        #navHere{
-            background-color:#182D42;
-            display: inline-block;
-            width: 10px;
-            height: 50px;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        #userInfo{
-            display: block;
-        }
-        #main_container{
-            
-            display: block;
-        }
-    </style>
-    
-    <script>
-        window.onload = function(){
-        if((window.innerHeight-900)/2 > 1){
-            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
-        }else{
-            $("#newWrap").css("margin-top", 0 );
-        }
 
-        }
-    
-    $(window).resize(function(){
-        if((window.innerHeight-900)/2 > 1){
-            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
-        }else{
-            $("#newWrap").css("margin-top", 0 );
-        }
-
-    });
-    </script>
-    
     <div id="newWrap">
       <nav class="left_nav">
         <div id="userInfo">
@@ -608,16 +509,22 @@
         </div>
         <ul class="nav_ul" id="nav_menu">
             <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
             <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/adminView_ask.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
         </ul>
-    </nav><div id="main_container">
+          
+    </nav>
+        
+        
+        <div id="main_container">
 
+        
+        
             <div id="title_cover">
                     <span id="title_name">My Calgather</span>
                     

@@ -25,8 +25,24 @@ $.ajax({
     }
 });
 
+        //중앙 정렬
+        window.onload = function(){
+        if((window.innerHeight-900)/2 > 1){
+            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
+        }else{
+            $("#newWrap").css("margin-top", 0 );
+        }
 
+        }
+    
+    $(window).resize(function(){
+        if((window.innerHeight-900)/2 > 1){
+            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
+        }else{
+            $("#newWrap").css("margin-top", 0 );
+        }
 
+    });
 
 
             
