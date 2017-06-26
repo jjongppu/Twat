@@ -346,7 +346,11 @@
                 },
                 dataType:"json",
                 success: function (data){
-                    console.log(data);
+          
+                    
+                    
+                    
+                    
                 }, error: function(req) {
 //                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
@@ -355,6 +359,36 @@
             location.href="friendList.html";
         }
         
+        
+        function deleteMyfriend(a){
+            
+            var deleteId = $(a).prev().attr("name");
+            
+            $.ajax({
+                type:"post",
+                url:"DeleteFriend.do",
+                data:{
+                    deleteId : deleteId                    
+                },
+                dataType:"json",
+                success:function(data){
+                    if(data[0].result == "delete")
+                        alert(deleteId + "친구 삭제 완료!");
+                    
+                    location.reload();
+                    
+                },error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+                
+            });
+            
+            
+            
+            
+            
+        }
         
         
         /////친구 목록 가져오기.
@@ -369,14 +403,14 @@
                 
                 
                 for(var i=0; i < data.length; i++){
-                    out += '<div id="userIn" onclick="detailUser();">';
+                    out += '<div id="userIn">';
                     out += '<div id="userImg"></div>';
                     out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
                     out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
                     out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
                     out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
                     out += '<input type="hidden" value="아이디" id="MEMBER_ID" name="'+ data[i].MEMBER_ID +'">';
-                    out += '</div>';
+                    out += '<input type="button" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
                     
                 }
                 document.getElementById('allFriends').innerHTML = out;
@@ -438,9 +472,9 @@
     <div id="contents">
                        
         <div id="topCover">
-            <div class="topListbtn" id="allFriend" onclick="tabCange(this)"> 전체 </div>
-            <div class="topListbtn" id="getFriends" onclick="tabCange(this)"> 받은 친구 요청 </div>
-            <div class="topListbtn" id="sendFriends" onclick="tabCange(this)"> 보낸 친구 요청 </div>
+            <div class="topListbtn" id="allFriend" onclick="tabChange(this)"> 전체 </div>
+            <div class="topListbtn" id="getFriends" onclick="tabChange(this)"> 받은 친구 요청 </div>
+            <div class="topListbtn" id="sendFriends" onclick="tabChange(this)"> 보낸 친구 요청 </div>
             <div class="topListbtn" id="searchFriends" onclick="viewSearch()"> 검색 </div>
         
         </div>
@@ -462,10 +496,28 @@
         </div>                
     </div>
     
+    
+    <style>
+        #responseExist{
+            
+            border: 1px solid black;
+            margin: 10px;
+        }
+        
+        .responsingFImg{
+            width: 100px;
+            height: 100px;
+            
+        }
+    
+    </style>
+    
+    
+    
             
     <script>
         
-    function tabCange(id){
+    function tabChange(id){
         var ids = $(id).attr('id');
         $('#allFriends').css('display','none');
         $('#requestExist').css('display','none');
@@ -475,8 +527,38 @@
         }else if(ids == 'getFriends'){
             $('#requestExist').css('display','inline-block');
             requestFriendMe();
-        }else if(ids == 'sendFriends'){
+        }else if(ids == 'sendFriends'){            
             $('#responseExist').css('display','inline-block');
+//            alert("!!!");
+//            responseExist
+            
+            $.ajax({
+                type: "post", 
+                url: "ResponsingFriends.do",               
+                dataType:"json",
+                success: function (data){ 
+                              
+                    
+                    for(var h = 0; h < data.length; h++){                       
+                        
+                        document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
+                        + "<div>아이디 : " + data[h].userId + "</div>"
+                        + "<div>이름 : " + data[h].userName + "</div>"
+                        + "<div>전화번호 : " + data[h].userPhone + "</div>";
+                        
+                    }
+                    
+            
+                }, error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            });
+            
+            
+            
+            
+            
         }
     }    
         
