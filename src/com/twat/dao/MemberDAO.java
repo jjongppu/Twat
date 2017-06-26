@@ -773,7 +773,6 @@ public class MemberDAO {
 				psmt2 = con.prepareStatement(Sql);
 				psmt2.setString(1, phoneNum);
 				rs2 = psmt2.executeQuery();
-				
 				while(rs2.next()){
 					memArr.add(rs2.getString("MEMBER_ID"));
 					memArr.add(rs2.getString("MEMBER_NAME"));					
@@ -876,6 +875,7 @@ public class MemberDAO {
 			
 			
 		}
+		
 		
 		public void requestFriendsUpdate(String userId, String friendId, String myFriendList, String friendFriendsList){
 			PreparedStatement psmt2 = null;			
@@ -1203,6 +1203,7 @@ public class MemberDAO {
 				psmt2 = con.prepareStatement(sql);
 				psmt2.setString(1, userId);
 				psmt2.setString(2, beforePw);
+				
 				rs2 = psmt2.executeQuery();
 				
 				
