@@ -10,6 +10,7 @@ $.ajax({
                 url: "PersonalServlet.do",
                 dataType: "json",
                 success: function(data) {
+                    console.log(data);
                     var id = data[0].MEMBER_ID;
                     var photo = data[0].MEMBER_IMG;
                     $('#user_Id').html(id);
