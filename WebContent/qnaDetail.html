@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Untitled Document</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	<script src="js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/nav.css">
+	<script src="js/nav.js"></script>
+    <script src="js/jquery.form.js"></script>
+</head>
+	<style>
+		#wrap {
+			border: 1px solid red;
+			height: 700px;
+			max-width: 1000px;
+			width: 0 auto;
+			position: relative;
+			left: 120px;
+		}
+		
+		#container {
+			border: 1px solid black;
+		}
+		#title_box {
+			border: 1px solid blue;
+		}
+		
+		
+		#title_div {
+			border: 1px dotted red;
+		}
+		
+		
+		#top_container {
+			border: 1px solid green;
+		}
+		.title_divs {
+			display: inline-block;
+		}
+		#time_div {
+			float: right;
+		}
+		
+		#middle_container {
+			border: 1px solid orange;
+			height: 400px;
+		}
+		#bottom_container {
+			border: 1px solid purple;
+		}
+		
+		#write_btn_div {
+			float: right;
+		}
+	</style>
+<body>
+	<div>
+	    <!--  네브바 입니다  -->
+		<nav class="left_nav">
+			<div id="userInfo">
+				<ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+					<li class="nav_li">
+						<img id="user_Img" src=""/>
+					</li>
+					<li class="nav_li">
+						<div id="user_Id"></div>
+					</li>
+				</ul>
+			</div>
+			<ul class="nav_ul" id="nav_menu">
+				<li class="nav_li"><a class="nav_text"  href="home.html">홈</a></li>
+				<li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
+				<li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
+				<li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
+				<li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="qnaList.html">문의 하기</a></li>
+			</ul>
+			<ul id="logout" class="nav_ul" onclick="logout()">
+				<li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+			</ul>
+		</nav>
+		
+		
+		<div id="wrap">
+			<div id="container">
+				<div id="title_box">
+					<h3>twat 건의사항</h3>
+				</div>
+				<div id="top_container">
+					<div id="top_title">
+						<div id="category_div" class="title_divs">
+							<span>해킹관련</span>
+							<span></span>
+						</div> |
+						<div id="title_div" class="title_divs">
+							<div>나 해킹 당했다니가 운영자 개쉐기야</div>
+						</div>
+					</div>
+					<div id="bottom_title" >
+						<div id="id_div" class="title_divs">
+							<span>글쓴이</span>
+							<span></span>
+						</div>
+						<div id="time_div" class="title_divs">
+							<span>작성 시간</span>
+						</div>
+					</div>
+				</div>
+				<div id="middle_container">
+					<div>
+						내용이 들어갈 곳
+					</div>
+				</div>
+				<div id="bottom_container">
+					<span id="list_btn_div">
+						<input type="button" value="전체목록" onclick="location.href='qnaList.html'"/>
+					</span>
+					<span id="write_btn_div">
+						<input type="button" value="글쓰기" onclick="location.href='qnaWrite.html'"/>
+					</span>
+				</div>
+			</div>
+		</div>
+		
+	
+	</div>
+</body>
+</html>
