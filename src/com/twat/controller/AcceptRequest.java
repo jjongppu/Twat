@@ -55,8 +55,9 @@ public class AcceptRequest extends HttpServlet {
 //	    System.out.println(requestFriendId);
 	    
 	    
-	    jsonObj.put("myId", loginUserId);
-	    jsonObj.put("friendId", requestFriendId);
+//	    jsonObj.put("myId", loginUserId);
+//	    jsonObj.put("friendId", requestFriendId);
+	    jsonObj.put("result", "yes");
 	    jsonArr.add(jsonObj);
 	    System.out.println(jsonArr);
 	    out.println(jsonArr);

@@ -1700,6 +1700,7 @@
                 },
                 dataType: "json",
                 success: function(data) {
+                    console.log("확정");
                     console.log(data);
 
                     var scheduleString = "";
@@ -1777,6 +1778,7 @@
                 },
                 dataType: "json",
                 success: function(data) {
+                    console.log("미확정");
                     console.log(data);
                     nowCalNum = cal_num;
                     var voteString = "";
@@ -1811,7 +1813,7 @@
                     //                    console.log(voteDateCount);
 
                     for (var i = 0; i < data.length; i++) {
-                        console.log(data[i].cal_depth);
+//                        console.log(data[i].cal_depth);
                         if (data[i].cal_depth == 0) {
                             voteString += "<div id='voteListBox'>";
                             if (login_userId.match(group_master)) {
@@ -1864,23 +1866,36 @@
                                 var yearTemp = voteObject.cal_date.substr(0, 4);
                                 //                                var yearTemp = 
                                 var monthTEmp = voteObject.cal_date.substr(4, 2);
+                                if(parseInt(monthTEmp) < 10)
+                                    monthTEmp = voteObject.cal_date.substr(5, 1);
                                 //                                var monthTEmp = voteObject.cal_date.substr(4,2);
 
                                 //                                console.log(yearTemp);
                                 voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
-                                voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
+                                voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
                                 for (let item of voteDateSet.keys()) {
                                     if (yearTemp < item.substr(0, 4)) {
                                         voteString += "</div></div>";
                                         yearTemp = item.substr(0, 4);
                                         monthTEmp = item.substr(4, 2);
+//                                        console.log(parseInt(item.substr(4, 2)));
+//                                        monthTEmp = parseInt(item.substr(4, 2));
+                                        if(parseInt(monthTEmp) < 10)
+                                        {
+                                            monthTEmp = item.substr(5, 1);
+                                        }
                                         voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
-                                        voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
+                                        voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
                                         voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
-                                    } else if (monthTEmp < item.substr(4, 2)) {
+//                                    } else if (monthTEmp < item.substr(4, 2)) {
+                                    } else if (monthTEmp < parseInt(item.substr(4, 2))) {
                                         voteString += "</div>";
                                         monthTEmp = item.substr(4, 2);
-                                        voteString += "<div class='voteMonth'>" + monthTEmp + "월\n\t";
+                                        if(parseInt(monthTEmp) < 10)
+                                        {
+                                            monthTEmp = item.substr(5, 1);
+                                        }
+                                        voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
                                         voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
                                     } else {
                                         voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
@@ -1938,11 +1953,11 @@
                             }
                             voteString += "</div>";
                         } else if (data[i].cal_depth > 0) {
-                            console.log(data[i]);
+//                            console.log(data[i]);
 
                             commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
                             commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
-                            console.log(commentsString);
+//                            console.log(commentsString);
                             //                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
                         }
 
@@ -1992,12 +2007,12 @@
                     console.log(alreadyVote);
                     console.log(user0000);
                     
-                    if(alreadyVote && user0000)
-                    {
+//                    if(alreadyVote && user0000)
+//                    {
                         for (let item of voteDateSet.keys()) {
                             $('#voteList' + item).css("background-image", "url(img/etcIcon/unchecked.png)");
                         }
-                    }
+//                    }
                     
                     
                     
