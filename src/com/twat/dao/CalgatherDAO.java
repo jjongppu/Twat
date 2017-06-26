@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.twat.dto.CalgatherVO;
+import com.twat.dto.MyCalendarVO;
 
 
 public class CalgatherDAO {
@@ -256,7 +257,7 @@ public class CalgatherDAO {
 	      return cv;
 	   }
 
-	      public String getGroupMaster(int groupId){//현재 그룹방의 그룹 마스터 알아오기 // 나동주 추가
+	   public String getGroupMaster(int groupId){//현재 그룹방의 그룹 마스터 알아오기 // 나동주 추가
 
 		String sql = "";
 		String groupMaster = "";
@@ -293,7 +294,37 @@ public class CalgatherDAO {
 		   
 		   
 	   }
-	
+	   
+	   
+	   // memberId로 단체일정 얻어오기! 승훈 추가.
+	   public ArrayList<CalgatherVO> getGatherInfo(String MEMBER_ID){   
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ArrayList<CalgatherVO> myCalGatherList = new ArrayList<CalgatherVO>();
+			String sql = "SELECT * FROM CALGATHER";
+
+			try{
+				con = getConnection();
+				pstmt = con.prepareCall(sql);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					myCalGatherList.add(new CalgatherVO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7)));
+				}
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			} finally {
+				try{
+					if(rs != null)rs.close();
+					if(pstmt != null)pstmt.close();
+					if(con != null)con.close();
+				}	catch (SQLException e){
+					e.printStackTrace();
+				}
+			}
+			return myCalGatherList;
+		}
 	
 	
 	

@@ -51,7 +51,7 @@ public class RequestingFriend extends HttpServlet {
 	    
 	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
-	    ArrayList<MemberVO> member = memberDAO.requestingFriendList(loginUserId);
+	    ArrayList<MemberVO> member = memberDAO.requestingFriendList(loginUserId , "!");
 //	    System.out.println(member.size());
 	    
 	    if(member != null){

@@ -954,8 +954,10 @@ public class MemberDAO {
 			
 		}
 		
+
 		
-		public ArrayList<MemberVO> requestingFriendList(String userId){
+		
+		public ArrayList<MemberVO> requestingFriendList(String userId , String tokenRes){
 			PreparedStatement psmt2 = null;
 			ResultSet rs2 = null;
 			String friendsList = null;
@@ -982,7 +984,7 @@ public class MemberDAO {
 					for(int i = 0; i < eachFriend.length; i++){
 						
 						if(eachFriend[i].length() != 0){
-							if(eachFriend[i].substring(0, 1).equals("!") ){
+							if(eachFriend[i].substring(0, 1).equals(tokenRes) ){
 								
 //								System.out.println(friendInfo(eachFriend[i].substring(1, eachFriend[i].length())).getMEMBER_NAME());
 								memberArr.add(friendInfo(eachFriend[i].substring(1, eachFriend[i].length())));
@@ -1029,6 +1031,7 @@ public class MemberDAO {
 			
 			
 		}
+		
 		public String getfriendListForString(String userId){
 			
 			PreparedStatement psmt2 = null;
@@ -1036,6 +1039,15 @@ public class MemberDAO {
 			String friendList = "";
 			String sql = "select FRIENDS_LIST FROM member where MEMBER_ID = ?";
 			try {
+				
+				try {
+					if(con.isClosed())
+					con = getConnection();
+				} catch (Exception e) {
+				
+					e.printStackTrace();
+				}
+					
 				psmt2 = con.prepareStatement(sql);
 				psmt2.setString(1, userId);
 				rs2 = psmt2.executeQuery();

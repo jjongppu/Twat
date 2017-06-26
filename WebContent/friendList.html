@@ -346,7 +346,11 @@
                 },
                 dataType:"json",
                 success: function (data){
-                    console.log(data);
+          
+                    
+                    
+                    
+                    
                 }, error: function(req) {
 //                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }
@@ -468,9 +472,9 @@
     <div id="contents">
                        
         <div id="topCover">
-            <div class="topListbtn" id="allFriend" onclick="tabCange(this)"> 전체 </div>
-            <div class="topListbtn" id="getFriends" onclick="tabCange(this)"> 받은 친구 요청 </div>
-            <div class="topListbtn" id="sendFriends" onclick="tabCange(this)"> 보낸 친구 요청 </div>
+            <div class="topListbtn" id="allFriend" onclick="tabChange(this)"> 전체 </div>
+            <div class="topListbtn" id="getFriends" onclick="tabChange(this)"> 받은 친구 요청 </div>
+            <div class="topListbtn" id="sendFriends" onclick="tabChange(this)"> 보낸 친구 요청 </div>
             <div class="topListbtn" id="searchFriends" onclick="viewSearch()"> 검색 </div>
         
         </div>
@@ -492,10 +496,28 @@
         </div>                
     </div>
     
+    
+    <style>
+        #responseExist{
+            
+            border: 1px solid black;
+            margin: 10px;
+        }
+        
+        .responsingFImg{
+            width: 100px;
+            height: 100px;
+            
+        }
+    
+    </style>
+    
+    
+    
             
     <script>
         
-    function tabCange(id){
+    function tabChange(id){
         var ids = $(id).attr('id');
         $('#allFriends').css('display','none');
         $('#requestExist').css('display','none');
@@ -505,8 +527,38 @@
         }else if(ids == 'getFriends'){
             $('#requestExist').css('display','inline-block');
             requestFriendMe();
-        }else if(ids == 'sendFriends'){
+        }else if(ids == 'sendFriends'){            
             $('#responseExist').css('display','inline-block');
+//            alert("!!!");
+//            responseExist
+            
+            $.ajax({
+                type: "post", 
+                url: "ResponsingFriends.do",               
+                dataType:"json",
+                success: function (data){ 
+                              
+                    document.getElementById("responseExist").innerHTML = "";
+                    for(var h = 0; h < data.length; h++){                       
+                        
+                        document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
+                        + "<div>아이디 : " + data[h].userId + "</div>"
+                        + "<div>이름 : " + data[h].userName + "</div>"
+                        + "<div>전화번호 : " + data[h].userPhone + "</div>";
+                        
+                    }
+                    
+            
+                }, error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }
+            });
+            
+            
+            
+            
+            
         }
     }    
         
