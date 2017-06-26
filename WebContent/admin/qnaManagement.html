@@ -393,7 +393,7 @@
                 }
                 $('#inputMemberinfo').html(userInfos);
                 
-                var page_viewList = Paging(data[0].QNA_ID, 10, 10 ,nowPage, "PagingView");
+                var page_viewList = Paging(data[0].COUNT, 10, 10 ,nowPage, "PagingView");
                 $("#addPageCover").empty().html(page_viewList);
 
                 
@@ -511,7 +511,7 @@
                 }
                 $('#inputMemberinfo').html(userInfos);
 
-            var page_viewList2 = Paging2(data[0].QNA_ID, 10, 10 ,pages, "S");
+            var page_viewList2 = Paging2(data[0].COUNT, 10, 10 ,pages, "S");
             $("#addPageCover").empty().html(page_viewList2);
 
 

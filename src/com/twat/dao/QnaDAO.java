@@ -115,139 +115,90 @@ public class QnaDAO {
 	}
 	
 	
-	// 건의사항 제목으로 찾기 ----------------승우----------------------------
-	public ArrayList<QnaVO> searchQnA(int searchCategory, String searchBox) {
+	// 건의사항 제목으로 찾기 ----------------승우---------------------------- 쫑길수정
+	public ArrayList<QnaVO> searchQnA(int page, String val, int kind) {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
+		ArrayList<QnaVO> qnaArry = new ArrayList<QnaVO>();
 		
-		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
-		QnaVO qnaVo = new QnaVO();
-		// 1 = 제목 / 제목으로 검색하기
-		System.out.println("1");
-		if(searchCategory == 1) {
-			String selectSql = "select * from qna where QNA_TITLE = ?";
-			// LIKE 수정중 쿼리문 맞는데 슈발
-//			String selectSql = "select * from qna where QNA_TITLE LIKE '%?%'";
-			System.out.println("2");
-			try {
-				con = getConnection();
-				psmt = con.prepareStatement(selectSql);
-				
-				psmt.setString(1, searchBox);
-				
-				rs = psmt.executeQuery();
-				
-				while(rs.next()) {
-
-					// 여기 수정
-					qnaVo.setQNA_ID(rs.getInt(1));
-					qnaVo.setMEMBER_ID(rs.getString(2));
-					qnaVo.setQNA_CATEGORY(rs.getString(3));
-					qnaVo.setQNA_PW(rs.getInt(4));
-					qnaVo.setQNA_TITLE(rs.getString(5));
-					qnaVo.setQNA_CONTENTS(rs.getString(6));
-					qnaVo.setQNA_DATE(rs.getTimestamp(7));
-					qnaVo.setQNA_REPLY(rs.getString(8));
-					
-					arList.add(qnaVo);
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-		        try {
-		        	if(rs != null) rs.close();
-			        if(psmt != null) psmt.close();
-			        if(con != null) con.close();
-		        } catch (SQLException e) {
-		        	// TODO Auto-generated catch block
-			        e.printStackTrace();
-		        }
-//		        System.out.println(result);
-		        return arList;
-			}   
+		
+		
+		// 그릅수 얻어옴
+		String selectQnaCount = "SELECT COUNT(*) FROM QNA ";
+		if(kind ==1){
+			selectQnaCount += " WHERE QNA_TITLE LIKE ?";
+		}else if(kind ==2){
+			selectQnaCount += " WHERE QNA_CONTENTS LIKE ?";
+		}else if(kind ==3){
+			selectQnaCount +=" WHERE MEMBER_ID LIKE ?";
+		}else{
 			
-		// 2 = 글 내용 / 글 내용으로 검색하기
-		} else if(searchCategory == 2) {
-			String selectSql = "select * from qna where QNA_CONTENTS = ?";
-			
-			try {
-				con = getConnection();
-				psmt = con.prepareStatement(selectSql);
-				
-				psmt.setString(1, searchBox);
-				
-				rs = psmt.executeQuery();
-				
-				while(rs.next()) {
-					qnaVo.setQNA_ID(rs.getInt(1));
-					qnaVo.setMEMBER_ID(rs.getString(2));
-					qnaVo.setQNA_CATEGORY(rs.getString(3));
-					qnaVo.setQNA_PW(rs.getInt(4));
-					qnaVo.setQNA_TITLE(rs.getString(5));
-					qnaVo.setQNA_CONTENTS(rs.getString(6));
-					qnaVo.setQNA_DATE(rs.getTimestamp(7));
-					qnaVo.setQNA_REPLY(rs.getString(8));
-					
-					arList.add(qnaVo);
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-		        try {
-		        	if(rs != null) rs.close();
-			        if(psmt != null) psmt.close();
-			        if(con != null) con.close();
-		        } catch (SQLException e) {
-		        	// TODO Auto-generated catch block
-			        e.printStackTrace();
-		        }
-//		        System.out.println(result);
-		        return arList;
-			} 
-			
-		// 3 = 글 작성자 / 글 작성자로 검색하기
-		} else {
-			String selectSql = "select * from qna where MEMBER_ID = ?";
-			
-			try {
-				con = getConnection();
-				psmt = con.prepareStatement(selectSql);
-				
-				psmt.setString(1, searchBox);
-				
-				rs = psmt.executeQuery();
-				
-				while(rs.next()) {
-					qnaVo.setQNA_ID(rs.getInt(1));
-					qnaVo.setMEMBER_ID(rs.getString(2));
-					qnaVo.setQNA_CATEGORY(rs.getString(3));
-					qnaVo.setQNA_PW(rs.getInt(4));
-					qnaVo.setQNA_TITLE(rs.getString(5));
-					qnaVo.setQNA_CONTENTS(rs.getString(6));
-					qnaVo.setQNA_DATE(rs.getTimestamp(7));
-					qnaVo.setQNA_REPLY(rs.getString(8));
-					
-					arList.add(qnaVo);
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-		        try {
-		        	if(rs != null) rs.close();
-			        if(psmt != null) psmt.close();
-			        if(con != null) con.close();
-		        } catch (SQLException e) {
-		        	// TODO Auto-generated catch block
-			        e.printStackTrace();
-		        }
-//		        System.out.println(result);
-		        return arList;
-			} 
 		}
-	}
+		selectQnaCount+= "  ORDER BY QNA_DATE DESC";
+		
+		//실질적인 내용
+		//제목순
+		String selectKindQnaSql = "SELECT * FROM QNA";
+		
+		if(kind ==1){
+			selectKindQnaSql += " WHERE QNA_TITLE LIKE ?";
+		}else if(kind ==2){
+			selectKindQnaSql += " WHERE QNA_CONTENTS LIKE ?";
+		}else if(kind ==3){
+			selectKindQnaSql +=" WHERE MEMBER_ID LIKE ?";
+		}else{
+			
+		}
+		selectKindQnaSql += " ORDER BY QNA_DATE DESC LIMIT "+ (page*10-10) +",10";
+		
+		try{
+			con = getConnection();
+			
+			psmt = con.prepareStatement(selectQnaCount);
+			if(kind != 4) {
+				psmt.setString(1, "%"+val+"%");
+			}
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				int count = rs.getInt("COUNT(*)");
+				QnaVO qv = new QnaVO();
+				qv.setQNA_ID(count);
+				qnaArry.add(qv);
+			}
+			
+			psmt = con.prepareStatement(selectKindQnaSql);
+			if(kind != 4) {
+				psmt.setString(1,"%"+val+"%");
+			}
+			rs = psmt.executeQuery();
+				
+			while(rs.next()){
+				QnaVO qv = new QnaVO();
+				qv.setQNA_ID(rs.getInt("QNA_ID"));
+				qv.setMEMBER_ID(rs.getString("MEMBER_ID"));
+				qv.setQNA_CATEGORY(rs.getString("QNA_CATEGORY"));
+				qv.setQNA_PW(rs.getInt("QNA_PW"));
+				qv.setQNA_TITLE(rs.getString("QNA_TITLE"));
+				qv.setQNA_CONTENTS(rs.getString("QNA_CONTENTS"));
+				qv.setQNA_DATE(rs.getTimestamp("QNA_DATE"));
+				qv.setQNA_REPLY(rs.getString("QNA_REPLY"));
+				qnaArry.add(qv);
+			}
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs != null)rs.close();
+				if(psmt != null)psmt.close();
+				if(con != null)con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+        return qnaArry;
+	} 
 	
 	
 	
@@ -261,9 +212,74 @@ public class QnaDAO {
 		// searchCategry = 문의사항 종류(카테고리)
 		// val = 검색어
 		
+		String countSql = "SELECT COUNT(*) FROM QNA";
+		if(!val.equals("0")) {
+			countSql += "WHERE QNA_TITLE LIKE ?";
+		}
+		countSql += "ORDER BY QNA_ID asc";
+		
+		String AllSql = "SELECT * FROM QNA";
+		if(!val.equals("0")) {
+			AllSql += "WHERE QNA_TITLE LIKE ?";
+		}
+		AllSql += "ORDER BY QNA_ID asc LIMIT " + (page*10-10) + " ,10";
 		
 		// 1 = 제목 / 제목으로 검색하기
 		if(searchCategory == 1) {
+			try {
+				con = getConnection();
+				
+				psmt = con.prepareStatement(countSql);
+				if(!val.equals("0")) {
+					psmt.setString(1, "%"+val+"%");
+				}
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					int count = rs.getInt("COUNT(*)");
+					QnaVO qv = new QnaVO();
+					qv.setQNA_ID(count);
+					arList.add(qv);
+				}
+				
+				psmt = con.prepareStatement(AllSql);
+				if(!val.equals("0")) {
+					psmt.setString(1, "%" + val + "%");
+				}
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					QnaVO qv = new QnaVO();
+					qv.setQNA_ID(rs.getInt("QNA_ID"));
+					qv.setQNA_CATEGORY(rs.getString("QNA_CATEGORY"));
+					qv.setQNA_TITLE(rs.getString("QNA_TITLE"));
+					qv.setMEMBER_ID(rs.getString("MEMBER_ID"));
+					qv.setQNA_DATE(rs.getTimestamp("QNA_DATE"));
+					// 조회수 어떻게 처리할지 생각해야되
+					
+					arList.add(qv);
+				}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+		        try {
+		        	if(rs != null) rs.close();
+			        if(psmt != null) psmt.close();
+			        if(con != null) con.close();
+		        } catch (SQLException e) {
+		        	// TODO Auto-generated catch block
+			        e.printStackTrace();
+		        }
+//		        System.out.println(result);
+		        return arList;
+			}
+		
+		// 2 = 글 내용 / 글 내용으로 검색하기
+		} else if(searchCategory == 2) {
+			
+			
+			
 			
 		}
 		
