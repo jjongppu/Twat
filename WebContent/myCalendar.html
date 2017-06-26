@@ -1402,6 +1402,34 @@
         });
     });
     
+    $(document).ready(function(){
+       document.getElementById("groupCreateDate").innerHTML=""; 
+       document.getElementById("groupName").innerHTML=""; 
+       document.getElementById("groupMaster").innerHTML=""; 
+        $.ajax({
+             type:'post'
+            ,url:'myGroupSchedule.do'
+            ,dataType : "json"
+//            ,dataType : "text"
+            ,success : function(data){
+                console.log(data);
+              $.each(data, function(index, item){
+                  console.log(item.groupCreateDate);
+                  console.log(item.groupName);
+                  console.log(item.groupMaster);
+                  document.getElementById("groupCreateDate").innerHTML+="<div>"+item.groupCreateDate+"</div></br>";
+                  document.getElementById("groupName").innerHTML+="<div>"+item.groupName+"</div></br>";
+                  document.getElementById("groupMaster").innerHTML+="<div>"+item.groupMaster+"</div></br>";
+//                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
+              });
+            },
+            error:function(req){
+//             alert("!");   
+             alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+            }
+        });
+    });
+    
     //}
     // 확정된 일정 정보 출력
     function getScheduleInfo() {}
@@ -1553,11 +1581,13 @@
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">
-                            <div class="schCont scheDate txt">6월 20일</div>
-                            <div class="schCont scheText txt">여기에 단체 자신의 단체방들 셀렉트로 뽑아버려</div>
-                            <div class="schCont dayTime">
+                            <div class="schCont scheDate txt" id="groupCreateDate"></div>
+                            <div class="schCont scheText txt" id="groupName"></div>
+                            <div class="schCont dayTime" id="groupMaster">
+<!--
                                 <div class="schCont scheTime txt">오전 08시 00분</div>
                                 <div class="scheDetail txt">자세히 보기gogo</div>
+-->
                             </div>
                         </div>
                     </div>
