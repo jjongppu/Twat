@@ -538,7 +538,7 @@
                 dataType:"json",
                 success: function (data){ 
                               
-                    
+                    document.getElementById("responseExist").innerHTML = "";
                     for(var h = 0; h < data.length; h++){                       
                         
                         document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
