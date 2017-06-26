@@ -301,7 +301,7 @@ public class CalgatherDAO {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			ArrayList<CalgatherVO> myCalGatherList = new ArrayList<CalgatherVO>();
-			String sql = "SELECT * FROM CALGATHER WHERE GROUP_MASTER=MEMBER_ID";
+			String sql = "SELECT * FROM CALGATHER";
 
 			try{
 				con = getConnection();

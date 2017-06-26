@@ -160,7 +160,8 @@
 }
 
 .schedule{
-    display:table;
+    display:table; 
+    /* height: 300px; */ 
 }
 
 .schCont{
