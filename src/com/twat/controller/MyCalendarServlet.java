@@ -38,58 +38,33 @@ public class MyCalendarServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("application/json;");
 		response.setHeader("Cache-Control", "no-cache");
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("loginUserId");
+		
+		JSONArray jsonArr = new JSONArray();
 		PrintWriter out = response.getWriter();
-		
-		JSONArray group = new JSONArray();
 
-		String member_id = (String) session.getAttribute("loginUserId");
-		
 		MyCalendarDAO myCalDao = MyCalendarDAO.getInstance();
-//		MyCalendarVO groupTitle = calgDao.getGroupInfo(request.getParameter("group"));
 		
-		if(member_id != null){
-			JSONObject mycalInfo = new JSONObject();
-			
-//			groupInfo.put("group_id", groupTitle.getMy_cal_index());
-//			groupInfo.put("group_name", groupTitle.getGroup_name());
-//			groupInfo.put("group_date", groupTitle.getCreate_date());
-//			groupInfo.put("group_master", groupTitle.getGroup_master());
-//			groupInfo.put("group_master_name", groupTitle.getGroup_master_name());
-//			groupInfo.put("group_img", groupTitle.getGroup_img());
-//			groupInfo.put("group_count", groupTitle.getGroup_count());
-//
-//			group.add(groupInfo);
+		ArrayList<MyCalendarVO> myCalArr = myCalDao.getInfo(userId);
+		
+		for(int i=0; i<myCalArr.size(); i++){
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("myCalIndex", myCalArr.get(i).getMy_cal_index());
+			jsonObj.put("memberId", myCalArr.get(i).getMember_id());
+//			jsonObj.put("myWriteTime", myCalArr.get(i).getMy_write_time());
+			jsonObj.put("myCalContents", myCalArr.get(i).getMy_cal_contents());
+			jsonObj.put("myCalDate", myCalArr.get(i).getMy_cal_date());
+			jsonArr.add(jsonObj);
 		}
 		
-		ArrayList<MyCalendarVO> arrList = myCalDao.getInfo(request.getParameter("group"));
-//		ArrayList<CalendarVO> arrList = calDao.getInfo((String)session.getAttribute("loginUserId"));
-//		ArrayList<CalendarVO> arrList = calDao.getInfo("2");
 		
-		if(arrList.size() > 0){
-			for(int i = 0; i < arrList.size(); i++){
-				JSONObject groupSchedule = new JSONObject();
-				
-//				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
-//				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
-//				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
-//				//getCal_group
-//				groupSchedule.put("cal_memo", arrList.get(i).getCal_memo());
-//				groupSchedule.put("cal_writer", arrList.get(i).getCal_writer());
-//				groupSchedule.put("state_icon", arrList.get(i).getState_icon());
-//				groupSchedule.put("member_choice", arrList.get(i).getMember_choice());
-//				groupSchedule.put("cal_reference", arrList.get(i).getCal_reference());
-//				groupSchedule.put("cal_depth", arrList.get(i).getCal_depth());
-				
-				group.add(groupSchedule);
-			}
-		}
-		
-		out.print(group.toJSONString());
-		out.close();
+		System.out.println(jsonArr.toJSONString());
+		out.println(jsonArr);
 	}
 
 }
