@@ -120,6 +120,9 @@ public class MemberDAO {
 			long result = -1;
 			
 			long currentTime = System.currentTimeMillis();
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			
 			   
 			System.out.println(currentTime);
 			
@@ -128,20 +131,20 @@ public class MemberDAO {
 			
 			try {
 				con = getConnection();
-				psmt = con.prepareStatement(selectSql);
-				psmt.setString(1, MEMBER_ID);
-				psmt.setString(2, MEMBER_PW);
-				rs = psmt.executeQuery();
-				if(rs.next()) {
-						result = rs.getLong(1);
+				psmt2 = con.prepareStatement(selectSql);
+				psmt2.setString(1, MEMBER_ID);
+				psmt2.setString(2, MEMBER_PW);
+				rs2 = psmt2.executeQuery();
+				if(rs2.next()) {
+						result = rs2.getLong(1);
 				}
 			} catch (Exception e) {
 				System.out.print("占쏙옙占쏙옙 占쏙옙占쏙옙");
 				e.printStackTrace();
 			} finally {
 					try {
-						if(rs != null)rs.close();
-						if(psmt != null) psmt.close();
+						if(rs2 != null)rs2.close();
+						if(psmt2 != null) psmt2.close();
 						if(con != null) con.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
