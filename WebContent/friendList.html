@@ -49,7 +49,6 @@
             position: absolute;
         }
         #findUserName{
-            border: 1px solid black;
             width: 229px;
             height: 45px;
             display: inline-block;
@@ -133,7 +132,6 @@
             margin-top: 10px;
         }
         .eachFriendRequest{
-            border: 1px solid black;
             margin: 20px;
         }
         
@@ -638,10 +636,10 @@
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
@@ -663,37 +661,28 @@
              
         
     <!-- 친구 목록 띄워줌-->
-        <div id="allFriends">
-            
-        
-            
-            
-            
-            
-            
-            
-            
-            
-            
+    <div id="allFriends">
 
-        </div> 
+
+    </div> 
         
     <!--        요청 온 친구 목록-->
     <div id="requestExist">
+        
     </div>
 
 <!--        보낸 친구 목록-->
-        <div id="responseExist">
-        </div>
+    <div id="responseExist">
         
-        </div>                
+    </div>
+        
+    </div>                
     </div>
     
     
     <style>
         #responseExist{
             
-            border: 1px solid black;
             margin: 10px;
         }
         
