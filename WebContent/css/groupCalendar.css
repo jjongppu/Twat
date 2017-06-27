@@ -382,12 +382,21 @@
         padding: 4px;
         background-position: right 50%;
         height: 16px;
+        line-height: 16px;
 /*        box-shadow: 5px 5px 5px;*/
+    }
+
+    .voteList:hover
+    {    
+        cursor: pointer;
     }
 
     .commentBox
     {
         border: 1px solid gray;
+        padding: 4px;
+        border-radius: 5px;
+        margin: 2px;
     }
 
     .commentWriter
@@ -425,9 +434,29 @@
         height: 100%;
     }
 
+.moreInfo:hover
+{
+    cursor: pointer;
+}
+
+.userButton:hover
+{
+    cursor: pointer;
+}
+
+.ndjButton:hover
+{
+    cursor: pointer;
+}
+
 .spanMonth
 {
     width: 40px;
     text-align: right;
     display: inline-block;
+}
+
+input[type=radio]:hover
+{
+    cursor: pointer;
 }
