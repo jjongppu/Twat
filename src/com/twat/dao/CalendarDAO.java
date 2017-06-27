@@ -642,6 +642,9 @@ public class CalendarDAO {
 				calList.add(calendarVO);
 			}
 			
+<<<<<<< HEAD
+			sql += "order by CAL_DATE desc limit 100";
+=======
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -660,6 +663,7 @@ public class CalendarDAO {
 		for(int i = 0; i < calList.size(); i++)
 		{
 			boolean voted = true;
+>>>>>>> 24c3f33e18e92799052cd72689dba718586a143a
 			
 			CalendarVO calendarVO = calList.get(i);
 			String memberChoice = calendarVO.getMember_choice();

@@ -1,101 +1,94 @@
-/*  #756C6F : 
-    #F6F6F6 : 
-    #DCDAE4 : 
-    #B3B2C1 : 
-    PINK
-*/
-
-    html, body {
-       margin: 0;
-       padding: 0;
-/*       background-color: #fccdd3;*/
-   background-color: white;
-
-   }
-   
-   #wrap {
-       display: block;
-   }
-   
-   .left_nav {
-       position: fixed;
-       top: 0;
-       left: 0;
-       display: inline-block;
-       width: 120px;
-/*       background-color: #2C3E50;*/
-/*       background-color: #bbc4ef;*/
-/*       background-color: #6534ff;*/
-/*       background-color: #62bcfa;*/
-       background-color: palevioletred;
-       background-color: papayawhip;
-/*       background: linear-gradient( to bottom, white, papayawhip, #fccdd3, #fccdd3, palevioletred, #6534ff);*/
-       background: linear-gradient( 135deg, white, papayawhip, #fccdd3, #fccdd3, palevioletred, #6534ff);
-       border-right: 5px solid #6534ff;
-       height: 210px;
-   }
-   
-   .nav_ul {
-       margin: 0;
-       padding: 0px;
-       list-style: none;
-       text-align: center;
-   }
-   
-   .nav_li {
-       cursor: pointer;
-   }
-   
-   #logout > li:hover,
-   #nav_menu > li:hover {
-       background-color: white;
-   }
-   
-   #user_Id {
-       color: #FFFFFF;
-   }
-   
-   .nav_text {
-       text-decoration: none;
-       color: #6534ff;
-       font-family: sans-serif;
-       font-size: 20px;
-       display: block;
-       padding: 14px 0;
-   }
-    .logout{
-        color: white;
-    }
-   #userInfo {
-       display: block;
-       height: 120px;
-   }
-   
-   #user_Img {
-       width: 60px;
-       height: 60px;
-       border-radius: 60px;
-   }
-   
-   #user_Img_Cover {
-       display: block;
-       width: 60px;
-       margin: 30px auto 0 auto;
-   }
-   
-   #logout {
-       position: absolute;
-       bottom: 10px;
-       width: 100%;
-   }
-   
-   #main_container {
-       display: block;
-       margin-left: 120px;
-/*       background-color: #fccdd3;*/
-       
-
-   }
+        html,body{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            position: relative;
+            display: inline-block;
+        }
+        #newWrap{
+            display: block;
+            background-color: #F6F6F6;
+            width: 1350px;
+            height: 800px;
+            box-shadow: 10px 10px 30px gray;
+            margin: auto;
+        }
+        .left_nav{
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #DCDAE4 ;
+            width: 100px;
+            overflow: hidden;
+            height: 800px;
+            z-index: 100;
+        }
+        .nav_ul{
+            padding: 0;
+            margin: auto;
+        }
+        li{
+            position: relative;
+        }
+        .nav_li{
+            display: block;
+            list-style: none;
+            width: 50px;
+            padding: 0 27.5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        #nav_menu{
+            margin-top: 50px;
+        }
+        #nav_menu li{
+            padding-top: 10px;
+        }
+        .navMenuImg{
+            width: 35px;
+            height: 35px;
+        }
+        .nav_text{
+            margin: auto;
+        }
+        #user_Img_Cover{
+            margin-top: 50px;
+        }
+        #user_Id, #user_Img_Cover{
+            cursor: pointer;
+        }
+        #user_Img_Cover li{
+            padding: 0;
+            width: 100%;
+        }
+        #user_Img{
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+        }
+        #navHere{
+            background-color:pink;
+            display: inline-block;
+            width: 0;
+            height: 55px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #userInfo{
+            display: block;
+        }
+        #main_container{
+            display: block;
+        }
+        #logout{
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+        }
     /* 이쁘게 호버 */
     .typeText{
         width: 100%;
