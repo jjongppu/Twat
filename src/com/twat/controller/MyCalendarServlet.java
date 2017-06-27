@@ -44,7 +44,7 @@ public class MyCalendarServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("loginUserId");
-		
+		System.out.println(session.getAttribute("loginUserId"));
 		JSONArray jsonArr = new JSONArray();
 		PrintWriter out = response.getWriter();
 

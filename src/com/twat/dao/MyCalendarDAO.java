@@ -69,14 +69,19 @@ public class MyCalendarDAO{
 	
 	
 	public ArrayList<MyCalendarVO> getInfo(String MEMBER_ID){
+		System.out.println(MEMBER_ID);
+		System.out.println(MEMBER_ID);
+		System.out.println(MEMBER_ID);
+		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
-		String sql = "SELECT * FROM MY_CALENDAR";
+		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ?";
 
 		try{
 			con = getConnection();
 			pstmt = con.prepareCall(sql);
+			pstmt.setString(1, MEMBER_ID);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){

@@ -65,14 +65,21 @@
             margin-left: 40px;
             
         }
-        #userName{
+<<<<<<< HEAD
+        
+=======
+        #userName,#userPhone,#userBirth,#chInfo,#uId{
+            display: block;
+            border: none;
+            border-bottom: 1px solid gray;
+
             width: 200px;
-            margin-left: 40px;
-            margin-top: 40px;
+            margin: 20px auto 0 auto;
             text-align: center;
             height: 30px;
             
         }
+<<<<<<< HEAD
         #userPhone{
             width: 200px;
             margin-left: 40px;
@@ -93,7 +100,15 @@
             margin-top: 20px;
             text-align: center;
             height: 30px;
+        }
+
+        #uId{
+            border: none;
+        }
+        #chInfo{
+            margin-top: 40px;
             cursor: pointer;
+            border: none;
         }
         .chPwd{
             float: right;
@@ -135,7 +150,7 @@
             height: 30px;
             margin-top: 20px;
             padding-left: 20px;
-            
+        }
             
         }
         #chPwd{
@@ -197,6 +212,7 @@
                 datatype:"json",
                 success: function(data){
                     console.log(data);
+                    $("#uId").html(data[0].MEMBER_IMG);
                     $("#uImg").attr("src",data[0].MEMBER_IMG);
                     $('#userName').val(data[0].MEMBER_NAME);
                     $('#userPhone').val(data[0].MEMBER_PHONE);
@@ -395,8 +411,6 @@ $(document).ready(function() {
         </ul>
     </nav>
         <div id="main_container">
-
-    
     
     <div class="container">
         <div class="userIn">
@@ -404,20 +418,13 @@ $(document).ready(function() {
                 <div class="userInfo2">
                     <div id="userImg">
                             <img src="" id="uImg"/>
-
-<!--                            <form id="formTag" enctype="multipart/form-data" method="post" action="imageFileUpload.do">-->
                             <form id="formTag" enctype="multipart/form-data">
                                   <input type="file"  id="attachFile" name="attachFile" size="5"/>
-                                        <label id="fileTagCss" for="attachFile"></label>
-
-                                    
-<!--                                    <input id="Imgsubmit" type="submit" value="사진 변경">-->
-<!--                                    <input id="Imgsubmit" type="button" onclick="test()" value="사진 변경">-->
+                                <label id="fileTagCss" for="attachFile"></label>
                             </form>
-
--->
                     </div>
                     <form method="post" id="changeInfo">
+                        <div id="uId"></div>
                         <input type="text" id="userName" name="userName">
                         <input type="text" id="userPhone" name="userPhone" onkeyup="autoHypen()">
                         <input type="text" id="userBirth" name="userBirth">
@@ -454,73 +461,7 @@ $(document).ready(function() {
             </div>
             </div>
     
-    
-    
-    
 
-    
-    
-    <script>
-        
-    
-    
-//        var option = {
-//            type : 'POST',
-//            url : '/uploadImage.json',
-//            dataType : 'json',
-//            success : function(data) {
-//            // 적절한 callback 함수 정의
-//            }
-//        };
-//        $('#formTag').ajaxSubmit(option);
-//        
-//        
-//        
-        
-        
-
-//         function test(){
-////            var data = new FormData();
-////            $.each($('#attachFile')[0].files, function(i, file) {          
-////                data.append('file-' + i, file);
-////            });
-////             
-////            $.ajax({
-////                url: '/upload.action',
-////                type: "post",
-////                dataType: "text",
-////                data: data,
-////                // cache: false,
-////                processData: false,
-////                contentType: false,
-////                success: function(data, textStatus, jqXHR) {
-////                    alert(data);
-////                }, error: function(jqXHR, textStatus, errorThrown) {}
-////            });
-//             
-//             var formdata = new FormData();
-//             var form = $('#formTag')[0];
-//            formdata.append("img", form);
-//            var xhr = new XMLHttpRequest();
-//
-//            xhr.open("POST", "changMemberImg.do");  
-//            xhr.send(formdata);
-//             
-//             
-//             
-//             
-//        }
-        
-       
-    </script>
-    
-    
-    
-    
-    
-    
-    
-    
     
 </body>
 </html>

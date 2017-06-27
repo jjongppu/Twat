@@ -10,6 +10,7 @@ $.ajax({
                 url: "PersonalServlet.do",
                 dataType: "json",
                 success: function(data) {
+                    console.log(data);
                     var id = data[0].MEMBER_ID;
                     var photo = data[0].MEMBER_IMG;
                     $('#user_Id').html(id);
@@ -25,20 +26,25 @@ $.ajax({
     }
 });
 
+        //중앙 정렬
+        window.onload = function(){
+        if((window.innerHeight-900)/2 > 1){
+            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
+        }else{
+            $("#newWrap").css("margin-top", 0 );
+        }
 
-
-    window.onload = function(){
-        $(".left_nav").css("height",window.innerHeight );
-    }
+        }
     
     $(window).resize(function(){
-        if(window.innerHeight > 600){
-            $(".left_nav").css("height",window.innerHeight);
+        if((window.innerHeight-900)/2 > 1){
+            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
         }else{
-            $(".left_nav").css("height",'600px');
+            $("#newWrap").css("margin-top", 0 );
         }
 
     });
+
 
             
     /* 로그아웃 처리*/
