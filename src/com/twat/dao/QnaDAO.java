@@ -290,7 +290,47 @@ public class QnaDAO {
 	}
 	
 	
-	
-	
+	public ArrayList<QnaVO> detailQnA(int val) {
+		PreparedStatement psmt= null;
+		ResultSet rs= null;
+		
+		ArrayList<QnaVO> arList = new ArrayList<QnaVO>(); 
+		
+		int result = -1;
+		
+		String selectSql = "select * from qna where qna_id= ? ";
+		
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(selectSql);
+			psmt.setInt(1, val);
+			
+			while(rs.next()) {
+				QnaVO qvo = new QnaVO();
+				qvo.setMEMBER_ID(rs.getString("MEMBER_ID"));
+				qvo.setQNA_CATEGORY(rs.getString("QNA_CATEGORY"));
+				qvo.setQNA_PW(rs.getInt("QNA_PW"));
+				qvo.setQNA_TITLE(rs.getString("QNA_TITLE"));
+				qvo.setQNA_CONTENTS(rs.getString("QNA_CONTENTS"));
+				qvo.setQNA_DATE(rs.getTimestamp("QNA_DATE"));
+				qvo.setQNA_REPLY(rs.getString("QNA_REPLY"));
+				
+				arList.add(qvo);
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+            try {
+                if(rs != null)
+                if(psmt != null) psmt.close();
+                if(con != null) con.close();
+             } catch (SQLException e) {
+             }
+       }
+		return arList;
+		
+	}
 	
 }
