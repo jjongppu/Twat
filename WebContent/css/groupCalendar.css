@@ -485,12 +485,17 @@ input[type=radio]:hover
 	height: 64px;
 }
 
+.memberBox:hover
+{
+/*	cursor: pointer;*/
+}
+
 .memberInfoBox
 {
 	display: inline-block;
 }
 
-#modal3
+#buttonBox3
 {
-	
+	text-align: center;
 }
