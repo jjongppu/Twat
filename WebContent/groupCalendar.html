@@ -1423,12 +1423,12 @@
                     //                    $("#icon").html = "<img src='" + data[0].group_img + "'>";
                     //                    document.getElementById("schedule").innerHTML += "<img src='" + data[0].group_img + "'>";
                     document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
-                    $("#title").html = "<span>" + data[0].group_name + "</span>";
-                    document.getElementById("title").innerHTML += "<span>" + data[0].group_name + "</span>";
-                    $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
-                    document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
-                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
-                    document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
+//                    $("#title").html = "<span id='groupTitle'>" + data[0].group_name + "</span>";
+                    document.getElementById("title").innerHTML += "<span id='groupTitle'>" + data[0].group_name + "</span>";
+//                    $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
+                    document.getElementById("master").innerHTML += "<span id='spanGroupMaster'>" + data[0].group_master_name + "(" + group_master + ")님</span>";
+//                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
+                    document.getElementById("otherMembers").innerHTML += "<span>&nbsp;외 " + data[0].group_count + "명</span>";
 
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
                         var str = "";
@@ -1848,6 +1848,7 @@
                                 var possibleCount = 0;
 
                                 if (voteDateCount == 1) {
+									var tempML = new Set();
                                     console.log(memberList);
                                     for (var j = 0; j < memberList.length; j++) {
                                         if (memberList[j].split("-")[0].match("00000000")) {
@@ -1855,16 +1856,20 @@
                                         } else if (memberList[j].split("-")[0].match(voteObject.cal_date)) {
                                             possibleCount++;
                                         }
+										tempML.add(memberList[j].split("-")[1]);
                                     }
+									
+									ImpossibleCount = tempML.size - possibleCount;
 
                                     voteString += "<input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
                                     if (ImpossibleCount == 0) {
-                                        voteString += "-명";
+                                        voteString += "없음";
                                     } else {
                                         voteString += ImpossibleCount + "명";
                                     }
                                     voteString += " </span>]<br>";
                                 } else {
+									var tempML = new Set();
                                     for (let item of voteDateSet.keys()) {
                                         ImpossibleCount = 0;
                                         possibleCount = 0;
@@ -1875,11 +1880,14 @@
                                             } else if (memberList[j].split("-")[0].match(item)) {
                                                 possibleCount++;
                                             }
+											tempML.add(memberList[j].split("-")[1]);
                                         }
+										
+										ImpossibleCount = tempML.size - possibleCount;
 
                                         voteString += "<input type='radio' id='' name='masterSelected' value='" + item + "'> " + item.substr(0, 4) + "년 " + item.substr(4, 2) + "월 " + item.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
                                         if (ImpossibleCount == 0) {
-                                            voteString += "-명";
+                                            voteString += "없음";
                                         } else {
                                             voteString += ImpossibleCount + "명";
                                         }
@@ -2320,6 +2328,9 @@
                     });
 
                 },
+				complete: function() {
+					location.reload();
+				},
                 error: function(req) {
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : ScheduleAdd.do");
@@ -2334,7 +2345,7 @@
 
 
 
-            location.reload();
+//            location.reload();
 
         }
 
@@ -2736,6 +2747,7 @@
 
                         function closeModal2() {
                             $('#modal2').css('display', 'none');
+							$('#blindCover').css('display', 'none');
                         }
 
                         //모달 뜰떄 뒤에 까만화면 크기를....
