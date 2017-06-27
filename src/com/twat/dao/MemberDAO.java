@@ -765,16 +765,21 @@ public class MemberDAO {
 		
 		
 		
-		public ArrayList<String> friendPhoneSearch(String phoneNum){
+		public ArrayList<String> friendPhoneSearch(int phoneOrId , String phoneId){//0: 폰번호로 친구 검색, 1: 아이디로 친구검색
 			ArrayList<String> memArr = new ArrayList<String>();
 			PreparedStatement psmt2 = null;
 			ResultSet rs2 = null;
+			String sql = "";
 			try {
 				con = getConnection();
 								 
-				String Sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_PHONE = ?";
-				psmt2 = con.prepareStatement(Sql);
-				psmt2.setString(1, phoneNum);
+				if(phoneOrId == 0)
+					sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_PHONE = ?";
+				else
+					sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_ID = ?";
+				
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, phoneId);
 				rs2 = psmt2.executeQuery();
 				
 				while(rs2.next()){
