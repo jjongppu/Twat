@@ -29,10 +29,6 @@
      Welcome to Tomcat
   </description>
   
-  	<servlet> 
-	<servlet-name>LoginServlet</servlet-name>
-	<servlet-class>com.poem.admin.controller.LoginServlet</servlet-class> 
-	</servlet>
 
 
 <!-- 쫑기리 서버 시작시 제일 끝의 그룹 id 얻어오기 -->
