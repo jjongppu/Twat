@@ -19,6 +19,7 @@ import com.twat.dao.CalendarDAO;
 import com.twat.dao.CalgatherDAO;
 import com.twat.dao.MemberJoinGroupDAO;
 import com.twat.dao.MyCalendarDAO;
+import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MyCalendarVO;
 
@@ -53,32 +54,33 @@ public class MyGroupScheduleServlet extends HttpServlet {
 		
 		System.out.println(groupIdArr);
 
-//		CalgatherDAO calgatherDao = CalgatherDAO.getInstance();
-//		ArrayList<CalgatherVO> calGatherArr = calgatherDao.getGatherInfo(groupIdArr);
 		CalendarDAO calendarDao = CalendarDAO.getInstance();
-		ArrayList(CalendarVO) calendarArr = calendarDao.getGatherInfo(groupIdArr);
-//		ArrayList(CalendarVO) calArr = calendarDao.getGatherInfo(groupIdArr);
+		ArrayList<CalendarVO> calendarArr = calendarDao.groupCalInfo(groupIdArr);
 		
-//		if(groupIdArr.size() > 0){
-//			
-//			if(calendarArr.size()>0){
-//				for(int i=0; i<calendarArr.size(); i++){
-//					JSONObject jsonObj = new JSONObject();
-//					jsonObj.put("groupId", calendarArr.get(i).getCal_num());
-//					jsonObj.put("groupName", calendarArr.get(i).getCal_date());
-//					jsonObj.put("groupCreateDate", calendarArr.get(i).getGroup_id());
-//					jsonObj.put("groupMaster", calendarArr.get(i).getCal_memo());
-//					jsonObj.put("groupMasterName", calendarArr.get(i).getCal_writer());
-//					jsonObj.put("groupImg", calendarArr.get(i).getState_icon());
-//					jsonObj.put("groupCount", calendarArr.get(i).getMember_choice());
-//					jsonObj.put("groupCount", calendarArr.get(i).getDecide_date());
-//					jsonObj.put("groupCount", calendarArr.get(i).getCal_reference());
-//					jsonObj.put("groupCount", calendarArr.get(i).getCal_depth());
-//					jsonArr.add(jsonObj);
-//				}
-//			}
-//		}
+		if(groupIdArr.size() > 0){
+			
+			if(calendarArr.size()>0){
+				for(int i=0; i<calendarArr.size(); i++){
+					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("calNum", calendarArr.get(i).getCal_num());
+					jsonObj.put("calDate", calendarArr.get(i).getCal_date());
+					jsonObj.put("groupId", calendarArr.get(i).getGroup_id());
+					jsonObj.put("calMemo", calendarArr.get(i).getCal_memo());
+					jsonObj.put("calWriter", calendarArr.get(i).getCal_writer());
+					jsonObj.put("calIcon", calendarArr.get(i).getState_icon());
+					jsonObj.put("calMemChoice", calendarArr.get(i).getMember_choice());
+					jsonObj.put("calDecideDate", calendarArr.get(i).getDecide_date());
+					jsonObj.put("calReference", calendarArr.get(i).getCal_reference());
+					jsonObj.put("calDepth", calendarArr.get(i).getCal_depth());
+					jsonArr.add(jsonObj);
+				}
+			}
+		}
 		
+		System.out.println(calendarArr);
+		System.out.println(calendarArr);
+		System.out.println(calendarArr);
+		System.out.println(calendarArr);
 		
 		
 		System.out.println(jsonArr.toJSONString());

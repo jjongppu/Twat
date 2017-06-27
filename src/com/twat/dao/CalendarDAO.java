@@ -632,16 +632,18 @@ public class CalendarDAO
 	}
 	
 	// memberId로 단체일정 얻어오기! 승훈 추가.
-	   public ArrayList<CalendarVO> getGatherInfo(ArrayList<String> groupIdArr){   
+	   public ArrayList<CalendarVO> groupCalInfo(ArrayList<String> groupIdArr){   
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			ArrayList<CalendarVO> myCalGatherList = new ArrayList<CalendarVO>();
-			String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=? order by CAL_DATE desc limit 1";
+			String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=?";
 //			String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=?";
 			
 			for(int i = 1; i< groupIdArr.size(); i++){
-				sql += " or GROUP_ID=?";
+				sql += " or GROUP_ID=? ";
 			}
+			
+			sql += "order by CAL_DATE desc limit 1";
 			
 			try{
 				con = getConnection();
@@ -656,24 +658,17 @@ public class CalendarDAO
 				
 				while(rs.next()){
 					CalendarVO cv = new CalendarVO();
-					cv.setCal_num(rs.getInt(1));
-					cv.setCal_time(rs.getTimestamp(2));
-					cv.setCal_date(rs.getString(3));
-					cv.setGroup_id(rs.getInt(4));
-					cv.setCal_memo(rs.getString(5));
-					cv.setCal_writer(rs.getString(6));
-					cv.setState_icon(rs.getString(7));
-					cv.setMember_choice(rs.getString(8));
-					cv.setCal_reference(rs.getInt(9));
-					cv.setCal_depth(rs.getInt(10));
+					cv.setCal_num(rs.getInt("CAL_NUM"));
+//					cv.setCal_time(rs.getTimestamp("CAL_TIME"));
+					cv.setCal_date(rs.getString("CAL_DATE"));
+					cv.setGroup_id(rs.getInt("GROUP_ID"));
+					cv.setCal_memo(rs.getString("CAL_MEMO"));
+					cv.setCal_writer(rs.getString("CAL_WRITER"));
+					cv.setState_icon(rs.getString("STATE_ICON"));
+					cv.setMember_choice(rs.getString("MEMBER_CHOICE"));
+					cv.setCal_reference(rs.getInt("CAL_REFERENCE"));
+					cv.setCal_depth(rs.getInt("CAL_DEPTH"));
 					
-//					cv.setGroup_id(rs.getInt("GROUP_ID"));
-//					cv.setGroup_name(rs.getString("GROUP_NAME"));
-//					cv.setCreate_date(rs.getString("CREATE_DATE"));
-//					cv.setGroup_master(rs.getString("GROUP_MASTER"));
-//					cv.setGroup_master_name(rs.getString("GROUP_MASTER_NAME"));
-//					cv.setGroup_img(rs.getString("GROUP_IMG"));
-//					cv.setGroup_count(rs.getInt("GROUP_COUNT"));
 					myCalGatherList.add(cv);
 				}
 			}
