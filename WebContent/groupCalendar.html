@@ -2199,6 +2199,23 @@
 				success: function(data) {
 					console.log(data);
 					
+					var joinMemberString = "";
+					
+					if(data != null)
+					{
+						for(var i = 0; i < data.length; i++)
+						{
+							joinMemberString += "<div class='memberBox'>";
+							joinMemberString += "<div class='memberImgBox'><img class='memberImg' src='" + data[i].MEMBER_IMG + "'></div>"; // memberImgBox
+							joinMemberString += "<div class='memberInfoBox'>" + data[i].MEMBER_NAME + "(" + data[i].MEMBER_ID + ")</div>"; // memberInfoBox
+							joinMemberString += "</div>"; // memberBox
+						}
+					}
+					
+					$("#divMemberList").html(joinMemberString);
+					
+					$("#modal3").css('display', 'block');
+					$("#blindCover").css('display', 'block');
 				},
 				beforeSend: function() {
 					var width = 0;
@@ -2711,27 +2728,23 @@
 					<footer>
 						<div id="blindCover" onclick="closeModal();"></div>
 						<span class='modal' style="border:1px solid black;">
-            <div id="contentsHeight">
-            <div id="titleAdd">
-                <input type="text" placeholder="일정 제목을 입력하세요" id="calTitle" maxlength="20"/> 
-                <div id="groupAddBtn" onclick="clickAddCal()">추가하기</div>
-            </div>
+							<div id="contentsHeight">
+								<div id="titleAdd">
+									<input type="text" placeholder="일정 제목을 입력하세요" id="calTitle" maxlength="20"/> 
+									<div id="groupAddBtn" onclick="clickAddCal()">추가하기</div>
+								</div>
                            
-            <div id="answerBox">
-	            <div id="selectAnswer"></div>
-	            <div class="btnCenter">
-                    <div class="choiceBtn" id="yesButton" onclick="selectYes()"  > 예 </div>
-                    <div class="choiceBtn" id="noButton" onclick="closeModal()"> 아니오 </div>
-                </div>
-        	</div>
-            </div>
-        </span>
+								<div id="answerBox">
+									<div id="selectAnswer"></div>
+									<div class="btnCenter">
+										<div class="choiceBtn" id="yesButton" onclick="selectYes()"  > 예 </div>
+										<div class="choiceBtn" id="noButton" onclick="closeModal()"> 아니오 </div>
+									</div>
+								</div>
+							</div>
+						</span>
 
 						<div id='modal2'>
-							<!--
-            <h3>Test Modal</h3>
-            <p>이 창은 모달창입니다.</p>
--->
 							<div>
 								<div class="modalSchduleInfo"></div>
 								<div id="voteButtonBox">
@@ -2746,16 +2759,15 @@
 									</div>
 								</div>
 							</div>
-							<!--
-            <input type="text" placeholder="댓글을 입력하세요" id="commentContents"/>
-            <button id="confirm_button" onclick="addComment(this)">확인</button>
-            <button class="js_close" onclick="closeModal2();">닫기</button>
--->
-							<!--
-            <div id="voteButtonBox">
-                <input type="button" value="투표하기" onclick="addVoteList()"/>
-            </div>
--->
+						</div>
+						
+						<div id='modal3'>
+							<div id='divMemberList'>
+							
+							</div>
+							<div>
+								<input type="button" value="닫기" onclick="closeModal3()">
+							</div>
 						</div>
 
 						<div id="inviteModal">
@@ -2776,10 +2788,16 @@
 							$('.modal input').val("");
 
 							$('#modal2').css('display', 'none');
+							$('#modal3').css('display', 'none');
 						}
 
 						function closeModal2() {
 							$('#modal2').css('display', 'none');
+							$('#blindCover').css('display', 'none');
+						}
+						
+						function closeModal3() {
+							$('#modal3').css('display', 'none');
 							$('#blindCover').css('display', 'none');
 						}
 
@@ -2893,7 +2911,27 @@
 */
 							padding: 10px;
 							border: 2px solid #E2E2E2;
-							z-Index: 9999
+							z-Index: 100;
+						}
+						
+						#modal3 {
+							/*                            display: none;*/
+							/*                            display: inline-block;*/
+							background-color: #FFFFFF;
+							/*                            position:absolute;*/
+							/* 추가 */
+							position: fixed;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+							display: none;
+							/*
+                            top:300px;
+                            left:200px;
+*/
+							padding: 10px;
+							border: 2px solid #E2E2E2;
+							z-Index: 100;
 						}
 
 					</style>
