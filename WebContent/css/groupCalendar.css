@@ -473,3 +473,24 @@ input[type=radio]:hover
 {
     cursor: pointer;
 }
+
+.memberImgBox
+{
+	display: inline-block;
+}
+
+.memberImg
+{
+	width: 64px;
+	height: 64px;
+}
+
+.memberInfoBox
+{
+	display: inline-block;
+}
+
+#modal3
+{
+	
+}
