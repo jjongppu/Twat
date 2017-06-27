@@ -55,6 +55,38 @@
 			float: right;
 		}
 	</style>
+	
+	<script>
+		$(document).ready(function() {
+			function qnaView() {
+				var para = document.location.href.split("?"); 
+				console.log(para[1]);
+
+				$.ajax ({
+					type : 'get',
+					url : 'QnaWrite.do',
+					data : $('#qnaForm').serialize(),
+					dataType : "json",
+					success : function(data) {
+						console.log(data);
+						var result = data[0].result;
+
+						console.log(result);
+
+					},
+					error: function(req) {
+						alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+					}
+				});  
+			}
+		});
+
+		
+		
+	
+	
+	</script>
+	
 <body>
 	<div>
 	    <!--  네브바 입니다  -->
@@ -90,7 +122,7 @@
 				<div id="top_container">
 					<div id="top_title">
 						<div id="category_div" class="title_divs">
-							<span>해킹관련</span>
+							<span>해킹신고 및 예방</span>
 							<span></span>
 						</div> |
 						<div id="title_div" class="title_divs">
