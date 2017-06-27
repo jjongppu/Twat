@@ -1387,11 +1387,47 @@
             ,success : function(data){
                 console.log(data);
               $.each(data, function(index, item){
-                  console.log(item.myCalIndex);
+//                  console.log(item.myCalIndex);
                   console.log(item.myCalContents);
-                  console.log(item.myWriteTime);
-                  document.getElementById("myCalDate").innerHTML+="<div>"+item.myCalDate+"</div></br>";
+//                  console.log(item.myWriteTime);
+//                  console.log(item.myCalDate.split(","));
+                  var calDate = item.myCalDate.split(",");
+                  console.log(calDate.length);
+                  
+                  if(calDate.length != 2){
+                     document.getElementById("myCalDate").innerHTML+="<div>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
+                  } else {
+                    document.getElementById("myCalDate").innerHTML+="<div>"+calDate[0]+"</div></br>";
+                  }
                   document.getElementById("myCalContents").innerHTML+="<div>"+item.myCalContents+"</div></br>";
+//                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
+              });
+            },
+            error:function(req){
+//             alert("!");   
+             alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+            }
+        });
+    });
+    
+    $(document).ready(function(){
+       document.getElementById("groupCreateDate").innerHTML=""; 
+       document.getElementById("groupName").innerHTML=""; 
+       document.getElementById("groupMaster").innerHTML=""; 
+        $.ajax({
+             type:'post'
+            ,url:'myGroupSchedule.do'
+            ,dataType : "json"
+//            ,dataType : "text"
+            ,success : function(data){
+                console.log(data);
+              $.each(data, function(index, item){
+                  console.log(item.groupCreateDate);
+                  console.log(item.groupName);
+                  console.log(item.groupMaster);
+                  document.getElementById("groupCreateDate").innerHTML+="<div>"+item.groupCreateDate+"</div></br>";
+                  document.getElementById("groupName").innerHTML+="<div>"+item.groupName+"</div></br>";
+                  document.getElementById("groupMaster").innerHTML+="<div>"+item.groupMaster+"</div></br>";
 //                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
               });
             },
@@ -1535,12 +1571,12 @@
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">
-                            <div class="schCont scheDate txt"><div id="myCalDate"></div></div>
-                            <div class="schCont scheText txt"><div id="myCalContents"></div></div>
-                            <div class="schCont dayTime">
-                                <div class="schCont scheTime txt"><div id="myWriteTime"></div></div>
-                                <div class="scheDetail txt"></div>
-                            </div>
+                            <div class="schCont scheDate txt" id="myCalDate"></div>
+                            <div class="schCont scheText txt" id="myCalContents"></div>
+                            <div class="schCont scheTime txt" id="myWriteTime"></div>
+<!--                            <div class="schCont dayTime">-->
+<!--                                <div class="scheDetail txt"></div>-->
+<!--                            </div>-->
                         </div>
                     </div>
 
@@ -1553,11 +1589,13 @@
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">
-                            <div class="schCont scheDate txt">6월 20일</div>
-                            <div class="schCont scheText txt">여기에 단체 자신의 단체방들 셀렉트로 뽑아버려</div>
-                            <div class="schCont dayTime">
+                            <div class="schCont scheDate txt" id="groupCreateDate"></div>
+                            <div class="schCont scheText txt" id="groupName"></div>
+                            <div class="schCont dayTime" id="groupMaster">
+<!--
                                 <div class="schCont scheTime txt">오전 08시 00분</div>
                                 <div class="scheDetail txt">자세히 보기gogo</div>
+-->
                             </div>
                         </div>
                     </div>
