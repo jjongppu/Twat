@@ -1411,9 +1411,9 @@
     });
     
     $(document).ready(function(){
-       document.getElementById("groupCreateDate").innerHTML=""; 
-       document.getElementById("groupName").innerHTML=""; 
-       document.getElementById("groupMaster").innerHTML=""; 
+       document.getElementById("calDate").innerHTML=""; 
+       document.getElementById("calMemo").innerHTML=""; 
+       document.getElementById("calWriter").innerHTML=""; 
         $.ajax({
              type:'post'
             ,url:'myGroupSchedule.do'
@@ -1422,12 +1422,12 @@
             ,success : function(data){
                 console.log(data);
               $.each(data, function(index, item){
-                  console.log(item.groupCreateDate);
-                  console.log(item.groupName);
-                  console.log(item.groupMaster);
-                  document.getElementById("groupCreateDate").innerHTML+="<div>"+item.groupCreateDate+"</div></br>";
-                  document.getElementById("groupName").innerHTML+="<div>"+item.groupName+"</div></br>";
-                  document.getElementById("groupMaster").innerHTML+="<div>"+item.groupMaster+"</div></br>";
+                  console.log(item.calDate);
+                  console.log(item.calMemo);
+                  console.log(item.calWriter);
+                  document.getElementById("calDate").innerHTML+="<div>"+item.calDate+"</div></br>";
+                  document.getElementById("calMemo").innerHTML+="<div>"+item.calMemo+"</div></br>";
+                  document.getElementById("calWriter").innerHTML+="<div>"+item.calWriter+"</div></br>";
 //                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
               });
             },
@@ -1589,9 +1589,9 @@
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">
-                            <div class="schCont scheDate txt" id="groupCreateDate"></div>
-                            <div class="schCont scheText txt" id="groupName"></div>
-                            <div class="schCont dayTime" id="groupMaster">
+                            <div class="schCont scheDate txt" id="calDate"></div>
+                            <div class="schCont scheText txt" id="calMemo"></div>
+                            <div class="schCont dayTime" id="calWriter">
 <!--
                                 <div class="schCont scheTime txt">오전 08시 00분</div>
                                 <div class="scheDetail txt">자세히 보기gogo</div>

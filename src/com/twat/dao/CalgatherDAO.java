@@ -296,35 +296,7 @@ public class CalgatherDAO {
 	   }
 	   
 	   
-	   // memberId로 단체일정 얻어오기! 승훈 추가.
-	   public ArrayList<CalgatherVO> getGatherInfo(String MEMBER_ID){   
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			ArrayList<CalgatherVO> myCalGatherList = new ArrayList<CalgatherVO>();
-			String sql = "SELECT * FROM CALGATHER";
-
-			try{
-				con = getConnection();
-				pstmt = con.prepareCall(sql);
-				rs = pstmt.executeQuery();
-				
-				while(rs.next()){
-					myCalGatherList.add(new CalgatherVO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7)));
-				}
-			}
-			catch (Exception e){
-				e.printStackTrace();
-			} finally {
-				try{
-					if(rs != null)rs.close();
-					if(pstmt != null)pstmt.close();
-					if(con != null)con.close();
-				}	catch (SQLException e){
-					e.printStackTrace();
-				}
-			}
-			return myCalGatherList;
-		}
+	   
 	
 	
 	
