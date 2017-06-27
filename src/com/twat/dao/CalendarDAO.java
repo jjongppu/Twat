@@ -26,7 +26,7 @@ public class CalendarDAO
 	Statement stmt;
 
 	
-	// CalendarDAO ÀÇ ½Ì±ÛÅæ ================================================================================================
+	// CalendarDAO ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ ================================================================================================
 	private static CalendarDAO instance = new CalendarDAO();
 	
 	private CalendarDAO() {	}
@@ -36,7 +36,7 @@ public class CalendarDAO
 		return instance;
 	}
 	
-	// DB¿¬°áÀ» À§ÇØ conÀ» ¹İÈ¯ÇÏ´Â ¸Ş¼­µå ==================================================================================
+	// DBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ conï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½ ==================================================================================
 	public Connection getConnection() throws Exception
 	{
 		Context initCtx = new InitialContext();
@@ -45,7 +45,7 @@ public class CalendarDAO
 		return ds.getConnection();
 	}
 
-	// °¢Á¾ ÀÏÁ¤ ¹Ş¾Æ¿À±â ===================================================================================================
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¾Æ¿ï¿½ï¿½ï¿½ ===================================================================================================
 	public ArrayList<CalendarVO> getInfo(String groupId)
 	{
 		PreparedStatement pstmt = null;
@@ -99,7 +99,7 @@ public class CalendarDAO
 		return arrList;
 	}
 	
-	// °¢Á¾ÀÏÁ¤ ¹Ş¾Æ¿À±â(±×·ì ¾ÆÀÌµğ, ÀÏÁ¤ ¾ÆÀÌµğ)
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¾Æ¿ï¿½ï¿½ï¿½(ï¿½×·ï¿½ ï¿½ï¿½ï¿½Ìµï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½)
 	public ArrayList<CalendarVO> getInfo(String groupId, String calId)
 	{
 		PreparedStatement pstmt = null;
@@ -266,7 +266,7 @@ public class CalendarDAO
 			rs = psmt.executeQuery();
 			while(rs.next()){
 				cal_depth = rs.getInt("CAL_DEPTH"); 
-//				System.out.println("±íÀÌ : " + cal_depth);
+//				System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + cal_depth);
 			}
 			
 		} catch (Exception e) {
@@ -416,7 +416,7 @@ public class CalendarDAO
 //		
 //	}
 //	
-	// ÅõÇ¥ ÀÏÁ¤ ¾÷µ¥ÀÌÆ®
+	// ï¿½ï¿½Ç¥ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 	public void updateMemberChoice(String calNum, String voteList, String user)
 	{
 		PreparedStatement pstmt = null;
@@ -503,7 +503,7 @@ public class CalendarDAO
 			
 			if(pstmt.executeUpdate() == 1)
 			{
-				System.out.println("¼º°ø : " + updateList);
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + updateList);
 			}
 		}
 		catch (Exception e)
@@ -524,7 +524,7 @@ public class CalendarDAO
 			}
 		}
 	}
-	// ÀÏÁ¤ È®Á¤ÇÏ´Â ÇÔ¼ö
+	// ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 	public void scheduleSelected(String calNum, String calDate)
 	{
 		PreparedStatement pstmt = null;
@@ -609,7 +609,7 @@ public class CalendarDAO
 			
 			if(pstmt.executeUpdate() == 1)
 			{
-				System.out.println("¼º°ø : " + updateList);
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ : " + updateList);
 			}
 		}
 		catch (Exception e)
@@ -631,6 +631,59 @@ public class CalendarDAO
 		}
 	}
 	
-	
+	// memberIdë¡œ ë‹¨ì²´ì¼ì • ì–»ì–´ì˜¤ê¸°! ìŠ¹í›ˆ ì¶”ê°€.
+	   public ArrayList<CalendarVO> groupCalInfo(ArrayList<String> groupIdArr){   
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			ArrayList<CalendarVO> myCalGatherList = new ArrayList<CalendarVO>();
+			String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=?";
+//			String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=?";
+			
+			for(int i = 1; i< groupIdArr.size(); i++){
+				sql += " or GROUP_ID=? ";
+			}
+			
+			sql += "order by CAL_DATE desc limit 1";
+			
+			try{
+				con = getConnection();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, groupIdArr.get(0));
+				
+				for(int i=1; i<groupIdArr.size(); i++){
+					pstmt.setString(i+1,  groupIdArr.get(i));
+				}
+				
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()){
+					CalendarVO cv = new CalendarVO();
+					cv.setCal_num(rs.getInt("CAL_NUM"));
+//					cv.setCal_time(rs.getTimestamp("CAL_TIME"));
+					cv.setCal_date(rs.getString("CAL_DATE"));
+					cv.setGroup_id(rs.getInt("GROUP_ID"));
+					cv.setCal_memo(rs.getString("CAL_MEMO"));
+					cv.setCal_writer(rs.getString("CAL_WRITER"));
+					cv.setState_icon(rs.getString("STATE_ICON"));
+					cv.setMember_choice(rs.getString("MEMBER_CHOICE"));
+					cv.setCal_reference(rs.getInt("CAL_REFERENCE"));
+					cv.setCal_depth(rs.getInt("CAL_DEPTH"));
+					
+					myCalGatherList.add(cv);
+				}
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			} finally {
+				try{
+					if(rs != null)rs.close();
+					if(pstmt != null)pstmt.close();
+					if(con != null)con.close();
+				}	catch (SQLException e){
+					e.printStackTrace();
+				}
+			}
+			return myCalGatherList;
+		}
 	
 }

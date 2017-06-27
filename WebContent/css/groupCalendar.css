@@ -95,8 +95,8 @@
        height: 800px;
 /*       float: right;*/
        margin: auto;
-       margin-top: 60px;
-       background-color: #000000;
+       margin-top: 30px;
+/*       background-color: #000000;*/
    }
    /*  ���� ===============================================  */
    
@@ -104,7 +104,7 @@
        width: 40%;
        height: 800px;
        float: left;
-       background-color: #505050;
+/*       background-color: #505050;*/
    }
    /*  �� ���� ==============================================  */   
    
@@ -113,7 +113,7 @@
        /*        margin: 0;*/
        width: 100%;
        height: 20%;
-       background-color: #808080;
+/*       background-color: #808080;*/
    }
    
    #icon {
@@ -139,37 +139,45 @@
        width: 40%;
        height: 100%;
        float: left;
-       background-color: #f0a0a0;
+/*       background-color: #f0a0a0;*/
    }
    
    #content #title {
+	   position: relative;
        width: 100%;
        height: 50%;
 /*       background-color: firebrick;*/
        background-color: white;
        font-size: 25px;
        font-weight: bold;
-       line-height: 80px;
+/*       line-height: 80px;*/
    }
+
+#content #title #groupTitle {
+	position: absolute;
+	bottom: 5px;
+}
    
    #content #member {
        width: 100%;
        height: 50%;
-       background-color: indianred;
+/*       background-color: indianred;*/
+	   padding-top: 10px;
+	   box-sizing: border-box;
    }
    
    #content #member #master {
-       width: 50%;
+/*       width: 50%;*/
        height: 100%;
        float: left;
-       background-color: orange;
+/*       background-color: orange;*/
    }
    
    #content #member #otherMembers {
-       width: 50%;
+/*       width: 50%;*/
        height: 100%;
        float: left;
-       background-color: orangered;
+/*       background-color: orangered;*/
    }
    
    #config {
@@ -243,6 +251,9 @@
         width: 100%;
         height: 50%;
         line-height: 45px;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
     }
 
     .middle-bottom
@@ -262,9 +273,11 @@
 
     .right-top
     {
-        width: 100%;
+/*        width: 100%;*/
+        width: 80%;
         height: 50%;
         line-height: 45px;
+/*		margin: auto;*/
     }
 
     .stateOK
@@ -324,9 +337,7 @@
        width: 100px;
        height: 100px;
    }
-   
-   #container {}
-   
+      
    .saturday {
        color: blue;
    }
@@ -366,9 +377,7 @@
         width: 200px;
         margin-top: 20px;
     }
-   
-   #container {}
-   
+      
 /*-------------------------------------------------*/
     .voteList
     {
@@ -382,12 +391,21 @@
         padding: 4px;
         background-position: right 50%;
         height: 16px;
+        line-height: 16px;
 /*        box-shadow: 5px 5px 5px;*/
+    }
+
+    .voteList:hover
+    {    
+        cursor: pointer;
     }
 
     .commentBox
     {
         border: 1px solid gray;
+        padding: 4px;
+        border-radius: 5px;
+        margin: 2px;
     }
 
     .commentWriter
@@ -406,28 +424,73 @@
     .stateBar
     {
         background-color: dimgray;
-        height: 100%;
+/*        height: 100%;*/
+        height: 50%;
         border-radius: 25px;
         overflow: hidden;
+		position: relative;
+		top: 50%;
+		transform: translate(0,-50%);
     }
 
     .barOK
     {
         display: inline-block;
         background-color: limegreen;
-        height: 100%;
+        height: 200%;
     }
 
     .barNO
     {
         display: inline-block;
         background-color: crimson;
-        height: 100%;
+        height: 200%;
     }
+
+.moreInfo:hover
+{
+    cursor: pointer;
+}
+
+.userButton:hover
+{
+    cursor: pointer;
+}
+
+.ndjButton:hover
+{
+    cursor: pointer;
+}
 
 .spanMonth
 {
     width: 40px;
     text-align: right;
     display: inline-block;
+}
+
+input[type=radio]:hover
+{
+    cursor: pointer;
+}
+
+.memberImgBox
+{
+	display: inline-block;
+}
+
+.memberImg
+{
+	width: 64px;
+	height: 64px;
+}
+
+.memberInfoBox
+{
+	display: inline-block;
+}
+
+#modal3
+{
+	
 }
