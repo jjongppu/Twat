@@ -939,9 +939,13 @@
 
                     getGroupInfo();
                 },
+                complete: function() {
+//                    getGroupInfo();
+//                    setTimeout(getGroupInfo(), 100);
+                },
                 error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupMaster.do");
                 }
 
             });
@@ -959,9 +963,11 @@
             */
             /////////////////////////////    
             // console.log("getGroupInfo");
-            //            getGroupInfo();
+//            setTimeout(getGroupInfo(), 200);
+//            getGroupInfo();
             // console.log("getGroupBirth");
-            getGroupBrith();
+            setTimeout(getGroupBrith, 300);
+//            getGroupBrith();
             // console.log("cal");
             //            $('.saturday').css('color','blue');
             $('#yearSelect').change(function() {
@@ -1019,7 +1025,7 @@
                 },
                 error: function(req) {
                     //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : json/holiday.json");
                 }
             });
         }
@@ -1052,7 +1058,10 @@
                 for (let item of scheSet.keys()) {
                     if (item == dateToFormat(initDay)) {
                         if ($('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1) {
-                            $('#date' + initDay.getDate()).css("backgroundColor", "green");
+//                            $('#date' + initDay.getDate()).css("backgroundColor", "green");
+                            $('#date' + initDay.getDate()).css("backgroundImage", "url(img/etcIcon/verified-text-paper.png)");
+                            $('#date' + initDay.getDate()).css("backgroundRepeat", "no-repeat");
+                            $('#date' + initDay.getDate()).css("backgroundPosition", "right 50%");
                             //                            console.log(initDay.getDate());
                         }
                     }
@@ -1147,8 +1156,13 @@
                     alert("지난 날짜는 선택할수 없습니다!")
                     return;
                 } else {
-                    if ($(a).css("backgroundColor") == "rgb(0, 128, 0)") {
-                        $(a).css("backgroundColor", "white");
+//                    if ($(a).css("backgroundColor") == "rgb(0, 128, 0)")
+//                    console.log($(a).css("backgroundImage"));
+                    if (!$(a).css("backgroundImage").match("none"))
+                    {
+//                        $(a).css("backgroundColor", "white");
+                        console.log("!");
+                        $(a).css("backgroundImage", "none");
                         //                    scheArr[parseInt(dayInfo)] = false;
                         scheSet.delete(yearInfo + monthInfo + dayInfo);
                         for (let item of voteSet.keys()) {
@@ -1171,7 +1185,10 @@
                         }
                         initToday();
                     } else if (group_master == login_userId) {
-                        $(a).css("backgroundColor", "green");
+//                        $(a).css("backgroundColor", "green");
+                        $(a).css("backgroundImage", "url(img/etcIcon/verified-text-paper.png)");
+                        $(a).css("backgroundRepeat", "no-repeat");
+                        $(a).css("backgroundPosition", "right 50%");
                         //                    scheArr[parseInt(dayInfo)] = dayInfo;
                         scheSet.add(yearInfo + monthInfo + dayInfo);
                         //                        console.log(selectDate);
@@ -1263,11 +1280,7 @@
                         dateParam = today.getFullYear() + "" + (today.getMonth() + 1) + "" + calDay;
                     }
                 }
-                for (let item of scheSet.keys()) {
-                    if (item == dateParam) {
-                        $('#date' + calDay).css("backgroundColor", "green");
-                    }
-                } //선택한 날짜 초록색으로 표기
+                
                 var saveSolar = gfnSolar2Lunar(dateParam);
                 dateColor.setFullYear(today.getFullYear());
                 dateColor.setMonth(today.getMonth());
@@ -1363,7 +1376,16 @@
                 //                    }
                 //                }
 
-
+                for (let item of scheSet.keys()) {
+                    if (item == dateParam) {
+//                        $('#date' + calDay).parent().css("backgroundColor", "green");
+                        $('#date' + calDay).parent().css("backgroundImage", "url(img/etcIcon/verified-text-paper.png)");
+                        $('#date' + calDay).parent().css("backgroundRepeat", "no-repeat");
+                        $('#date' + calDay).parent().css("backgroundPosition", "right 50%");
+                        // url(img/etcIcon/verified-text-paper.png)
+                        console.log(item + ", " + calDay);
+                    }
+                } //선택한 날짜 초록색으로 표기
             }
             //            initToday();
         }
@@ -1401,12 +1423,12 @@
                     //                    $("#icon").html = "<img src='" + data[0].group_img + "'>";
                     //                    document.getElementById("schedule").innerHTML += "<img src='" + data[0].group_img + "'>";
                     document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
-                    $("#title").html = "<span>" + data[0].group_name + "</span>";
-                    document.getElementById("title").innerHTML += "<span>" + data[0].group_name + "</span>";
-                    $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
-                    document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
-                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
-                    document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
+//                    $("#title").html = "<span id='groupTitle'>" + data[0].group_name + "</span>";
+                    document.getElementById("title").innerHTML += "<span id='groupTitle'>" + data[0].group_name + "</span>";
+//                    $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
+                    document.getElementById("master").innerHTML += "<span id='spanGroupMaster'>" + data[0].group_master_name + "(" + group_master + ")님</span>";
+//                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
+                    document.getElementById("otherMembers").innerHTML += "<span>&nbsp;외 " + data[0].group_count + "명</span>";
 
                     for (var arrCal = 1; arrCal < data.length; arrCal++) {
                         var str = "";
@@ -1601,10 +1623,13 @@
                         
                         $(item.split("-")[0]).css("width", percentC + "%");
                     }
-                },
-                error: function(req) {
+                }
+                , complete: function() {
+//                    getGroupBrith();
+                }
+                ,error: function(req) {
                     //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupCal.do");
                 }
             });
         }
@@ -1681,7 +1706,7 @@
                 },
                 error: function(req) {
                     //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupBirth.do");
                 }
             })
         }
@@ -1752,13 +1777,14 @@
                     $(".modalSchduleInfo").html(scheduleString);
                     $("#commentList").html(commentsString);
                     $("#modal2").css('display', 'inline-block');
+                    $("#blindCover").css('display', 'block');
                     $("#voteButtonBox").html("");
 
                     //                    document.getElementById('modal2').innerHTML = scheduleString;
                 },
                 error: function(req) {
                     //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
                 }
             })
         }
@@ -1822,6 +1848,7 @@
                                 var possibleCount = 0;
 
                                 if (voteDateCount == 1) {
+									var tempML = new Set();
                                     console.log(memberList);
                                     for (var j = 0; j < memberList.length; j++) {
                                         if (memberList[j].split("-")[0].match("00000000")) {
@@ -1829,16 +1856,20 @@
                                         } else if (memberList[j].split("-")[0].match(voteObject.cal_date)) {
                                             possibleCount++;
                                         }
+										tempML.add(memberList[j].split("-")[1]);
                                     }
+									
+									ImpossibleCount = tempML.size - possibleCount;
 
                                     voteString += "<input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
                                     if (ImpossibleCount == 0) {
-                                        voteString += "-명";
+                                        voteString += "없음";
                                     } else {
                                         voteString += ImpossibleCount + "명";
                                     }
                                     voteString += " </span>]<br>";
                                 } else {
+									var tempML = new Set();
                                     for (let item of voteDateSet.keys()) {
                                         ImpossibleCount = 0;
                                         possibleCount = 0;
@@ -1849,11 +1880,14 @@
                                             } else if (memberList[j].split("-")[0].match(item)) {
                                                 possibleCount++;
                                             }
+											tempML.add(memberList[j].split("-")[1]);
                                         }
+										
+										ImpossibleCount = tempML.size - possibleCount;
 
                                         voteString += "<input type='radio' id='' name='masterSelected' value='" + item + "'> " + item.substr(0, 4) + "년 " + item.substr(4, 2) + "월 " + item.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
                                         if (ImpossibleCount == 0) {
-                                            voteString += "-명";
+                                            voteString += "없음";
                                         } else {
                                             voteString += ImpossibleCount + "명";
                                         }
@@ -1985,14 +2019,14 @@
                     var voteBox = "";
                     if (login_userId.match(group_master)) {
                         // 방장전용
-                        voteBox = "<input type='button' value='결정하기' onclick='selectVoteList(" + cal_num + ")'/>";
+                        voteBox = "<input class='userButton' type='button' value='결정하기' onclick='selectVoteList(" + cal_num + ")'/>";
                     } else {
                         // 일반유저
-                        voteBox = "<input type='button' value='투표하기' onclick='addVoteList(" + cal_num + ")'/>";
+                        voteBox = "<input class='userButton' type='button' value='투표하기' onclick='addVoteList(" + cal_num + ")'/>";
 
                         for (let item of voteMemberSet.keys()) {
                             if (item.match(login_userId)) {
-                                voteBox = "<input type='button' value='수정하기' onclick='addVoteList(" + cal_num + ")'/>";
+                                voteBox = "<input class='userButton' type='button' value='수정하기' onclick='addVoteList(" + cal_num + ")'/>";
                                 alreadyVote = true;
                             }
                         }
@@ -2003,6 +2037,7 @@
                     $("#voteButtonBox").html(voteBox);
                     $("#commentList").html(commentsString);
                     $("#modal2").css('display', 'inline-block');
+                    $("#blindCover").css('display', 'block');
                     
                     console.log(alreadyVote);
                     console.log(user0000);
@@ -2025,7 +2060,7 @@
                 },
                 error: function(req) {
                     //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
                 },
                 complete: function() {
                     
@@ -2108,7 +2143,7 @@
                 },
                 error: function(req) {
                     //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : addVote.do");
                 }
             })
         }
@@ -2152,7 +2187,7 @@
                 },
                 error: function(req) {
                     //                    alert('통신실패');
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : scheduleSelected.do");
                 }
             })
         }
@@ -2165,10 +2200,10 @@
 //            console.log(cal_date);
 
             if (member_choice == "" || cal_date.indexOf(',') >= 0) {
-                console.log("false : " + member_choice);
+//                console.log("false : " + member_choice);
                 return false;
             } else if (member_choice.indexOf(",") == -1) {
-                console.log("false : " + member_choice);
+//                console.log("false : " + member_choice);
                 return false;
             } else {
                 //                console.log(member_choice);
@@ -2179,7 +2214,7 @@
 
                 for (var i = 0; i < memSplit.length; i++) {
                     if (memSplit[i].indexOf('-') >= 0 && !memSplit[i].split("-")[0].match("00000000")) {
-                        console.log("false : " + memSplit[i].split("-")[0]);
+//                        console.log("false : " + memSplit[i].split("-")[0]);
                         return false;
                     } else if (memSplit[i].indexOf('-') >= 0 && memSplit[i].split("-")[0].match("00000000")) {
                         matchCount++;
@@ -2187,7 +2222,7 @@
                 }
 
                 if (memSplit.length == matchCount) {
-                    console.log("false : " + matchCount);
+//                    console.log("false : " + matchCount);
                     return false;
                 }
                 //                var dateSplit;
@@ -2293,9 +2328,12 @@
                     });
 
                 },
+				complete: function() {
+					location.reload();
+				},
                 error: function(req) {
 
-                    //                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : ScheduleAdd.do");
                 }
             });
 
@@ -2307,7 +2345,7 @@
 
 
 
-            location.reload();
+//            location.reload();
 
         }
 
@@ -2361,20 +2399,24 @@
 
 
                     $.each(data, function(index, item) {
-                        console.log(item.userId);
+//                        console.log(item.userId);
                     });
 
                 },
+				complete: function() {
+					getVoteInfo(nowCalNum);
+//					console.log($('#commentContents').val());
+					$('#commentContents').val(null);
+				},
                 error: function(req) {
 
-                    //                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : addComment.do");
                 }
 
             });
-            location.reload();
+//            location.reload();
             //            setTimeout(3000);
             //            getVoteInfo(nowCalNum);
-
         }
 
         function inviteFriends2() {
@@ -2434,7 +2476,7 @@
                 },
                 error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : inviteFriends.do");
                 }
 
             });
@@ -2666,8 +2708,8 @@
                                     <div id="commentList"></div>
                                     <div id="myComment">
                                         <input type="text" placeholder="댓글을 입력하세요" id="commentContents" />
-                                        <button id="confirm_button" onclick="addComment(this)">확인</button>
-                                        <button class="js_close" onclick="closeModal2();">닫기</button>
+                                        <button class="ndjButton" id="confirm_button" onclick="addComment(this)">확인</button>
+                                        <button class="ndjButton" onclick="closeModal2();">닫기</button>
                                     </div>
                                 </div>
                             </div>
@@ -2699,10 +2741,13 @@
                             $('.modal').css('display', 'none');
                             $('#inviteModal').css('display', 'none');
                             $('.modal input').val("");
+                            
+                            $('#modal2').css('display', 'none');
                         }
 
                         function closeModal2() {
                             $('#modal2').css('display', 'none');
+							$('#blindCover').css('display', 'none');
                         }
 
                         //모달 뜰떄 뒤에 까만화면 크기를....
