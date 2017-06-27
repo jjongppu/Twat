@@ -703,7 +703,14 @@ public class CalendarDAO {
 			String memChoice = "";
 			
 			for (String string : list) {
-				memChoice += string + ",";
+				if(string.equals("00000000-" + after))
+				{
+					
+				}
+				else
+				{
+					memChoice += string + ",";
+				}
 			}
 			
 			memChoice = memChoice.substring(0, memChoice.length() -1);
