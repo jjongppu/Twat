@@ -13,66 +13,15 @@
 </head>
     <style>
         
-        body{
-            width: 1200px;
-            height: auto;
-            margin: auto;
-            background-color: white;
-        }
-        #userIn{
-            border: 3px solid gray;
-            margin-top: 20px;
-            width: 370px;
-            height: 110px;
-            cursor: pointer;
-            margin: auto;
-            border-radius: 20px;
-            margin-top: 30px;
-            background-color: antiquewhite;
-        }
-        #userImg{
-            margin-left: 30px;
-            border: 1px solid aqua;
-            width: 110px;
-            border-radius: 110px;
-            height: 100px;
-            margin-left: 5px;
-            margin-top: 5px;
-            display: inline-block;
-            position: absolute;
-        }
-        #userName{
-            border-radius: 10px;
-            border: 1px solid black;
-            width: 230px;
-            height: 45px;
-            display: inline-block;
-            margin-left: 120px;
-            margin-top: 5px;
-            padding-top: 10px;
-            padding-left: 10px;
-            font-size: 20px;
-            text-align: center;
-        }
-        #userBirth{
-            border: 1px solid gray;
-            width: 100px;
-            height: 45px;
-            margin-left: 120px;
-            border-radius: 10px;
-            display: inline-block;
-            text-align: center;
-            font-size: 15px;
-        }
-        #userPhone{
-            border: 1px solid gray;
-            width: 140px;
-            height: 45px;
-            text-align: center;
-            display: inline-block;
-            border-radius: 10px;
-            font-size: 15px;
-        }
+    body{   
+        background-image: url(img/background/back1.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+
+
 /*        ///////////////////////////////////////////////////////////////////////////////////////////////*/
         /*        모달창 css 매긴곳.*/
         #realFriend{
@@ -100,7 +49,6 @@
             position: absolute;
         }
         #findUserName{
-            border: 1px solid black;
             width: 229px;
             height: 45px;
             display: inline-block;
@@ -184,7 +132,6 @@
             margin-top: 10px;
         }
         .eachFriendRequest{
-            border: 1px solid black;
             margin: 20px;
         }
         
@@ -275,11 +222,14 @@
         .requestMsg{
             text-align: center;
         }
-        #contents{
-            margin-left: 120px;
+        #main_container{
+            margin-left: 100px;
+            width: 1250px;
+            height: 800px;
         }
         
         #topCover{
+            display: block;
             border-bottom: 1px solid gray;
         }
         
@@ -293,8 +243,147 @@
             cursor: pointer;
         }
         
+        /* 친구 커버~*/
+                .userIn{
+            width: 350px;
+            height: 100px;
+            cursor: pointer;
+            margin: auto;
+            margin: 30px 30px;
+        }
+        .userImgCover{
+            width: 80px;
+            height: 100px;
+            display: inline-block;
+        }
+        .userImg{
+            display: inline-block;
+            height: 80px;
+            width: 80px;
+            border-radius: 80px;
+            margin-top: 10px;
+        }
+        .userName{
+            height: 50px;
+            display: block;
+            font-size: 14px;
+            line-height: 50px;
+            text-align: center;
+        }
+        .userBirth{
+            width: 100px;
+            height: 50px;
+            display: inline-block;
+            text-align: center;
+            font-size: 15px;
+        }
+        .userPhone{
+            width: 140px;
+            height: 50px;
+            text-align: center;
+            display: inline-block;
+            font-size: 15px;
+        }
+                
+        .userGender{
+             position: absolute;
+            top: 20px;
+            right: 20px;
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+        }
+        .userTop{
+            position: absolute;
+            top: 0;
+            left: 80px;
+            height: 50px;
+            width: 270px;
+            display: block;
+        }
+        .userBottom{
+             position: absolute;
+            bottom: 0;
+            left: 80px;
+            height: 50px;
+            width: 270px;
+            display: block;
+            line-height: 50px;
+            font-size: 14px;
+
+        }
+        .delFriend{
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+        }
+
     </style>
     <script>
+        
+        /////친구 목록 가져오기.
+        $.ajax({
+           type:"post",
+            url:"friends.do",
+            data:$('#allFriends').serialize(),
+            dataType:"json",
+            success:function(data){
+                var result = data[0].result;
+                var out = '';
+                
+                
+                for(var i=0; i < data.length; i++){
+                    out += '<div class="userIn">';
+                    out += '<div class="userImgCover">';
+                    out += '<img src="'+ data[i].MEMBER_IMG +'" class="userImg"></div>';
+                    out += '<div class="userTop"><div class="userName">'+ data[i].MEMBER_NAME +'</div></div>';
+                    out += '<div class="userBottom"><div class="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
+                    out += '<div class="userPhone">'+ data[i].MEMBER_PHONE +'</div></div>'
+                    out += '<input type="hidden" value="아이디" class="MEMBER_ID" name="'+ data[i].MEMBER_ID +'">';
+                    out += '<img class="userGender" src="';
+                     if(data[i].MEMBER_GENDER == 'F'){
+                        out += 'img/etcIcon/gender_f.png"/>';
+                    }else{
+                        out += 'img/etcIcon/gender_m.png"/>';
+                    }
+                    out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
+                    
+                }
+                document.getElementById('allFriends').innerHTML = out;
+            } , beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    console.log("통신중");
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                 console.log("통신완료");
+             }
+            
+        });
          function requestFriendMe(){
             
               $.ajax({
@@ -309,16 +398,32 @@
                     if(data.length != 0){
 //                        console.log("!");
                         $('#requestExist').html('');
+                        var out = "";
                         for(var index = 0; index < data.length; index ++){
-                        document.getElementById("requestExist").innerHTML += "<div class='eachFriendRequest'>"
-                            + "<img src ='" + data[index].friendImg + "' class='requestFriendImg' />"
-                            + "<div class='requestFriendName'>" + data[index].friendId + "님에게 친구요청이 왔습니다.</div>"
-                            + "<div> 이름 : " + data[index].friendName + "</div>"
-                            + "<div> 전화번호 : " + data[index].friendPhone + "</div>"
-                            + "<input type=button value='수락' onclick='acceptRequest(this)'/><input type=button value='거절' onclick=refuseRequest(this)/></div>";
-                        
-                        
+//                        document.getElementById("requestExist").innerHTML += "<div class='eachFriendRequest'>"
+//                            + "<img src ='" + data[index].friendImg + "' class='requestFriendImg' />"
+//                            + "<div class='requestFriendName'>" + data[index].friendId + "님에게 친구요청이 왔습니다.</div>"
+//                            + "<div> 이름 : " + data[index].friendName + "</div>"
+//                            + "<div> 전화번호 : " + data[index].friendPhone + "</div>"
+//                            + "<input type=button value='수락' onclick='acceptRequest(this)'/><input type=button value='거절' onclick=refuseRequest(this)/></div>";
+//                        
+                            
+                            out += '<div class="userIn">';
+                            out += '<div class="userImgCover">';
+                            out += '<img src="'+ data[index].friendImg +'" class="userImg"></div>';
+                            out += '<div class="userTop"><div class="userName">'+ data[index].friendId +'님에게 친구요청이 왔습니다.</div></div>';
+                            out += '<div class="userBottom"><div class="userBirth">'+ data[index].friendName +'</div>';
+                            out += '<div class="userPhone">'+ data[index].friendPhone +'</div></div>'
+                            out += '<img class="userGender" src="';
+                             if(data[i].friendGender == 'F'){
+                                out += 'img/etcIcon/gender_f.png"/>';
+                            }else{
+                                out += 'img/etcIcon/gender_m.png"/>';
+                            }
+                            out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
+                            
                         }
+                        $('#requestExist').html(out)
                     }else{
                         document.getElementById("requestExist").innerHTML = "<div> 받은 친구 요청이 없습니다. </div>";
                     }
@@ -483,65 +588,7 @@
             
         }
         
-        
-        /////친구 목록 가져오기.
-        $.ajax({
-           type:"post",
-            url:"friends.do",
-            data:$('#allFriends').serialize(),
-            dataType:"json",
-            success:function(data){
-                var result = data[0].result;
-                var out = '';
-                
-                
-                for(var i=0; i < data.length; i++){
-                    out += '<div id="userIn">';
-                    out += '<div id="userImg"></div>';
-                    out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
-                    out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
-                    out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
-                    out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
-                    out += '<input type="hidden" value="아이디" id="MEMBER_ID" name="'+ data[i].MEMBER_ID +'">';
-                    out += '<input type="button" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
-                    
-                }
-                document.getElementById('allFriends').innerHTML = out;
-            } , beforeSend: function () {
-                    var width = 0;
-                    var height = 0;
-                    var left = 0;
-                    var top = 0;
-
-                    width = 50;
-                    height = 50;
-
-
-                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
-                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
-
-                    if($("#div_ajax_load_image").length != 0) {
-                           $("#div_ajax_load_image").css({
-                                  "top": top+"px",
-                                  "left": left+"px"
-                           });
-                           $("#div_ajax_load_image").show();
-                    }
-                    else {
-                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-                    }
-                    console.log("통신중");
-
-             }
-             , complete: function () {
-                           $("#div_ajax_load_image").hide();
-                 console.log("통신완료");
-             }
             
-            
-        });
         function addFriend(){
             $('#realFriend').css('display','inline-block');
             $('cont1').css('opacity','1');
@@ -576,31 +623,33 @@
     
 <body>
     
-    <div id="wrap">
-    <nav class="left_nav">
+    <div id="newWrap">
+      <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                 <li class="nav_li">
-                    <img id="user_Img" src="/img/member/basis_photo.png"/>
+                    <img id="user_Img" src=""/>
                 </li>
-                <li class="nav_li">
+                <li class="nav_li idLi">
                     <div id="user_Id"></div>
                 </li>
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="#">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
         </ul>
+          
     </nav>
         
-    <div id="contents">
+        
+    <div id="main_container">
                        
         <div id="topCover">
             <div class="topListbtn" id="allFriend" onclick="tabChange(this)"> 전체 </div>
@@ -612,26 +661,28 @@
              
         
     <!-- 친구 목록 띄워줌-->
-        <div id="allFriends">
+    <div id="allFriends">
 
-        </div> 
+
+    </div> 
         
     <!--        요청 온 친구 목록-->
     <div id="requestExist">
+        
     </div>
 
 <!--        보낸 친구 목록-->
-        <div id="responseExist">
-        </div>
+    <div id="responseExist">
         
-        </div>                
+    </div>
+        
+    </div>                
     </div>
     
     
     <style>
         #responseExist{
             
-            border: 1px solid black;
             margin: 10px;
         }
         
@@ -670,15 +721,28 @@
                 success: function (data){ 
                               
                     document.getElementById("responseExist").innerHTML = "";
+                    var out = "";
                     for(var h = 0; h < data.length; h++){                       
                         
-                        document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
-                        + "<div>아이디 : " + data[h].userId + "</div>"
-                        + "<div>이름 : " + data[h].userName + "</div>"
-                        + "<div>전화번호 : " + data[h].userPhone + "</div>";
-                        
+//                        document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
+//                        + "<div>아이디 : " + data[h].userId + "</div>"
+//                        + "<div>이름 : " + data[h].userName + "</div>"
+//                        + "<div>전화번호 : " + data[h].userPhone + "</div>";
+                            out += '<div class="userIn">';
+                            out += '<div class="userImgCover">';
+                            out += '<img src="'+ data[h].userImg +'" class="userImg"></div>';
+                            out += '<div class="userTop"><div class="userName">'+ data[h].userId +'님에게 친구요청이 왔습니다.</div></div>';
+                            out += '<div class="userBottom"><div class="userBirth">'+ data[h].userName +'</div>';
+                            out += '<div class="userPhone">'+ data[h].userPhone +'</div></div>'
+                            out += '<img class="userGender" src="';
+                             if(data[i].userGender == 'F'){
+                                out += 'img/etcIcon/gender_f.png"/>';
+                            }else{
+                                out += 'img/etcIcon/gender_m.png"/>';
+                            }
+                            out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
                     }
-                    
+                    $('#responseExist').html("out");
             
                 }, error: function(req) {
 

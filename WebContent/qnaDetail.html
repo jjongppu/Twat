@@ -11,26 +11,35 @@
     <script src="js/jquery.form.js"></script>
 </head>
 	<style>
-		div {
+	
+		/* 외부 css 땜시 따로 display : block */
+		#title_box, #top_title, #middle_container, #bottom_container, #bottom_title {
 			display: block;
 		}
+		
+		#newWrap {
+		    width: 1500px;
+    		height: 900px;
+		}
+		
 		#wrap {
 			border: 1px solid red;
-			height: 700px;
-			max-width: 1000px;
-			width: 0 auto;
+			height: 800px;
+			width: 1000px;
+/*			width: 0 auto;*/
 			position: relative;
-			left: 120px;
+			left: 100px;
 		}
 		
 		#container {
 			border: 1px solid black;
+			height: 800px;
+			width: 1000px;
 		}
 		#title_box {
 			border: 1px solid blue;
+			
 		}
-		
-		
 		#title_div {
 			border: 1px dotted red;
 		}
@@ -38,13 +47,11 @@
 		
 		#top_container {
 			border: 1px solid green;
+			width: 1000px;
 		}
-/*
-		.title_divs {
-			display: inline-block;
-		}
-*/
+
 		#time_div {
+			border: 1px dotted green;
 			float: right;
 		}
 		
@@ -62,29 +69,33 @@
 	</style>
 	
 	<script>
-		$(document).ready(function() {
-			function qnaView() {
-				var para = document.location.href.split("?"); 
-				console.log(para[1]);
-
-				$.ajax ({
-					type : 'get',
-					url : 'QnaWrite.do',
-					data : $('#qnaForm').serialize(),
-					dataType : "json",
-					success : function(data) {
-						console.log(data);
-						var result = data[0].result;
-
-						console.log(result);
-
-					},
-					error: function(req) {
-						alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
-					}
-				});  
+//		$(document).ready(function() {
+//			
+//			function qnaView() {
+//				
+//
+//			}
+//		});
+		
+		var url = decodeURI(location.href);
+		console.log(url);
+		var parameter = url.split('=', 2);
+		console.log(parameter[1]);
+		
+		$.ajax ({
+			type : 'post',
+			url : 'QnaDetail.do',
+			data : { val : parameter[1] },
+			dataType : "json",
+			success : function(data) {
+				console.log(data);
+				var result = data[0].result;
+				console.log(result);
+			},
+			error: function(req) {
+				alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "QnaDetail.do");
 			}
-		});
+		});  
 
 		
 		
@@ -93,7 +104,7 @@
 	</script>
 	
 <body>
-	<div>
+	<div id="newWrap">
 	    <!--  네브바 입니다  -->
 		<nav class="left_nav">
 			<div id="userInfo">
