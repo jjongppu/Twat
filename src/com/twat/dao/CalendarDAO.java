@@ -643,7 +643,7 @@ public class CalendarDAO
 				sql += " or GROUP_ID=? ";
 			}
 			
-			sql += "order by CAL_DATE desc limit 1";
+			sql += "order by CAL_DATE desc limit 100";
 			
 			try{
 				con = getConnection();
