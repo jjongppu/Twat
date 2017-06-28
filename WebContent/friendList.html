@@ -242,7 +242,20 @@
             font-size: 13px;
             cursor: pointer;
         }
+        #responseExist{
+            
+            border: 1px solid black;
+            margin: 10px;
+        }
         
+
+        .responsingFImg{
+            width: 100px;
+            height: 100px;
+            
+        }
+    
+
         /* 친구 커버~*/
                 .userIn{
             width: 350px;
@@ -321,6 +334,7 @@
     </style>
     <script>
         
+
         /////친구 목록 가져오기.
         $.ajax({
            type:"post",
@@ -333,6 +347,7 @@
                 
                 
                 for(var i=0; i < data.length; i++){
+
                     out += '<div class="userIn">';
                     out += '<div class="userImgCover">';
                     out += '<img src="'+ data[i].MEMBER_IMG +'" class="userImg"></div>';
@@ -384,6 +399,7 @@
              }
             
         });
+
          function requestFriendMe(){
             
               $.ajax({
@@ -415,11 +431,11 @@
                             out += '<div class="userBottom"><div class="userBirth">'+ data[index].friendName +'</div>';
                             out += '<div class="userPhone">'+ data[index].friendPhone +'</div></div>'
                             out += '<img class="userGender" src="';
-                             if(data[i].friendGender == 'F'){
-                                out += 'img/etcIcon/gender_f.png"/>';
-                            }else{
-                                out += 'img/etcIcon/gender_m.png"/>';
-                            }
+//                             if(data[i].friendGender == 'F'){
+//                                out += 'img/etcIcon/gender_f.png"/>';
+//                            }else{
+//                                out += 'img/etcIcon/gender_m.png"/>';
+//                            }
                             out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
                             
                         }
@@ -428,6 +444,7 @@
                         document.getElementById("requestExist").innerHTML = "<div> 받은 친구 요청이 없습니다. </div>";
                     }
                 }, error: function(req) {
+
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 } , beforeSend: function () {
@@ -453,7 +470,7 @@
                            $("#div_ajax_load_image").show();
                     }
                     else {
-                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img\loadingImg\ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
                     console.log("통신중");
 
@@ -462,6 +479,7 @@
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
+
             });
             
             
@@ -488,7 +506,10 @@
                     
                     
                 }, error: function(req) {
-//                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : AcceptRequest.do");
+
+
                 } , beforeSend: function () {
                     var width = 0;
                     var height = 0;
@@ -512,7 +533,7 @@
                            $("#div_ajax_load_image").show();
                     }
                     else {
-                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img\loadingImg\ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
                     console.log("통신중");
 
@@ -521,6 +542,7 @@
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
+
             });
 //            location.reload();
             location.href="friendList.html";
@@ -579,6 +601,7 @@
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
+
                 
             });
             
@@ -588,12 +611,13 @@
             
         }
         
-            
+
         function addFriend(){
             $('#realFriend').css('display','inline-block');
             $('cont1').css('opacity','1');
         }
         
+
 
        function findUserFriend(){
            $.ajax({
@@ -699,6 +723,7 @@
             
     <script>
         
+
     function tabChange(id){
         var ids = $(id).attr('id');
         $('#allFriends').css('display','none');
@@ -720,6 +745,7 @@
                 dataType:"json",
                 success: function (data){ 
                               
+
                     document.getElementById("responseExist").innerHTML = "";
                     var out = "";
                     for(var h = 0; h < data.length; h++){                       
@@ -735,14 +761,14 @@
                             out += '<div class="userBottom"><div class="userBirth">'+ data[h].userName +'</div>';
                             out += '<div class="userPhone">'+ data[h].userPhone +'</div></div>'
                             out += '<img class="userGender" src="';
-                             if(data[i].userGender == 'F'){
-                                out += 'img/etcIcon/gender_f.png"/>';
-                            }else{
-                                out += 'img/etcIcon/gender_m.png"/>';
-                            }
+//                             if(data[i].userGender == 'F'){
+//                                out += 'img/etcIcon/gender_f.png"/>';
+//                            }else{
+//                                out += 'img/etcIcon/gender_m.png"/>';
+//                            }
                             out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
                     }
-                    $('#responseExist').html("out");
+                    $('#responseExist').html(out);
             
                 }, error: function(req) {
 
@@ -779,6 +805,7 @@
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
+
             });
             
             
@@ -832,6 +859,7 @@
                     heightAnimation('modal',180 , 500 );
                 }, error: function(req) {
 
+
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 } , beforeSend: function () {
                     var width = 0;
@@ -865,6 +893,7 @@
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
+
             });
             
             
@@ -912,27 +941,7 @@
                 heightAnimation('modal',150 , 500 );
         }
     
-/* <<<<<<< HEAD
-        <div id="dUser">
-            <div class="user1"> 
-                <div class="user2">
-                    <div id="user3">
-                        <form method="post" id="ch" action="">
-                            <img src="img/member/basis_photo.png" id="uI" name="uI"/>
-                        </form>
-                    </div>
-                        <div id="uName" name="userName"></div>
-                        <div id="uPhone" name="userPhone"></div>
-                        <div id="uBirth" name="userBirth"></div>
-                        <div id="uGender"  name="userGender"></div>
-                        <div id="uMemberId" name="userGender"></div>
-                        <div id="uStartDay"  name="userStartDay"></div>
-                    
-                    
-<!--                    성별, 아이디, 회원가입한 날자.-->
-                    <input type="button" value="친구 삭제" id="btndelFriend">
-======= */
-        
+
         
         
         function idSearch(){
@@ -957,15 +966,16 @@
                 },
                 dataType:"json",
                 success: function (data){
-                    console.log(data);
-                    friendImg = data[0].friendImg;
-                    friendId = data[0].friendId;
-                    friendName = data[0].friendName;
-                    friendPhoneNum = data[0].friendPhone;
-                    friendGender = data[0].friendGender;
-                    friendBirth = data[0].friendBirth;
+                   
                     
                     if(data[0].userExist == "Exist"){
+                        console.log(data);
+                        friendImg = data[0].friendImg;
+                        friendId = data[0].friendId;
+                        friendName = data[0].friendName;
+                        friendPhoneNum = data[0].friendPhone;
+                        friendGender = data[0].friendGender;
+                        friendBirth = data[0].friendBirth;
                         var out = "";
                         out = "<div><div id='imgCover'><img src='" + friendImg + "' id='friendImg'/></div>";
                         out += "<div id='infoCover'><div id='friendId'> 아이디 : " + friendId + "</div>";
@@ -984,6 +994,7 @@
                     
                    
                 }, error: function(req) {
+
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 } , beforeSend: function () {
@@ -1019,6 +1030,7 @@
                  console.log("통신완료");
              }
                  
+
             });
             
             
@@ -1049,15 +1061,16 @@
                 },
                 dataType:"json",
                 success: function (data){
-                    console.log(data);
-                    friendImg = data[0].friendImg;
-                    friendId = data[0].friendId;
-                    friendName = data[0].friendName;
-                    friendPhoneNum = data[0].friendPhone;
-                    friendGender = data[0].friendGender;
-                    friendBirth = data[0].friendBirth;
+                   
                     
                     if(data[0].userExist == "Exist"){
+                        console.log(data);
+                        friendImg = data[0].friendImg;
+                        friendId = data[0].friendId;
+                        friendName = data[0].friendName;
+                        friendPhoneNum = data[0].friendPhone;
+                        friendGender = data[0].friendGender;
+                        friendBirth = data[0].friendBirth;
                         var out = "";
                         out = "<div><div id='imgCover'><img src='" + friendImg + "' id='friendImg'/></div>";
                         out += "<div id='infoCover'><div id='friendId'> 아이디 : " + friendId + "</div>";
@@ -1073,6 +1086,7 @@
                         heightAnimation('modal',180 , 500 );
                     }
                 }, error: function(req) {
+
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
                 }    , beforeSend: function () {
@@ -1100,23 +1114,79 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    console.log("통신중");
+                    
 
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
-                 console.log("통신완료");
+                
              }
 
 
 
       
+
             });
             
         }
         
         
     </script>
+    
+<body>
+    
+    <div id="wrap">
+    <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src="/img/member/basis_photo.png"/>
+                </li>
+                <li class="nav_li">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="#">홈</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+        </ul>
+    </nav>
+        
+    <div id="contents">
+                       
+        <div id="topCover">
+            <div class="topListbtn" id="allFriend" onclick="tabChange(this)"> 전체 </div>
+            <div class="topListbtn" id="getFriends" onclick="tabChange(this)"> 받은 친구 요청 </div>
+            <div class="topListbtn" id="sendFriends" onclick="tabChange(this)"> 보낸 친구 요청 </div>
+            <div class="topListbtn" id="searchFriends" onclick="viewSearch()"> 검색 </div>
+        
+        </div>
+             
+        
+    <!-- 친구 목록 띄워줌-->
+        <div id="allFriends">
+
+        </div> 
+        
+    <!--        요청 온 친구 목록-->
+    <div id="requestExist">
+    </div>
+
+<!--        보낸 친구 목록-->
+        <div id="responseExist">
+        </div>
+        
+        </div>                
+    </div>
+    
+
     
     <div id = "addFriends" style="margin-left:120px">
        

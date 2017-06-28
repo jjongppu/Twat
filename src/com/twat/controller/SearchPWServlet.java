@@ -66,6 +66,7 @@ public class SearchPWServlet extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		writer.println(jsonList);
+		writer.close();
 	}
 
 }

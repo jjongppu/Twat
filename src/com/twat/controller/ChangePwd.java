@@ -73,7 +73,7 @@ public class ChangePwd extends HttpServlet {
 	    jsonArr.add(jsonObj);
 	    
 	    out.println(jsonArr);
-
+	    out.close();
 		
 		
 		

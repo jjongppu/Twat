@@ -7,8 +7,8 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendar.css">-->
-        <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver2.css"> 
-    <!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">-->
+<!--        <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver2.css"> -->
+        <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!--    <link rel="stylesheet" type="text/javascript" href="js/myCalendar.js">-->
 <!--    <script type="text/javascript" src="js/myCalendar.js"></script>-->
@@ -983,7 +983,40 @@
             },
             error: function(req) {
                 alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }
+            }, 
+            beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                
+             }
+            
         });
     }
 
@@ -1315,7 +1348,38 @@
             error: function(req) {
                 //                    alert('통신실패');
                 alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }
+            }, beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                
+             }
         });
     }
     //================== 모달 작업 부분    =====================================
@@ -1345,8 +1409,39 @@
             error: function(req) {
                 //                    alert('통신실패');
                 alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }
-        })
+            }, beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                
+             }
+        });
     }
 
 
@@ -1370,7 +1465,38 @@
             },
             error: function(req) {
                 alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }
+            }, beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                
+             }
 
         });
     });
@@ -1406,7 +1532,38 @@
             error:function(req){
 //             alert("!");   
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }
+            }, beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                
+             }
         });
     });
     
@@ -1434,7 +1591,38 @@
             error:function(req){
 //             alert("!");   
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }
+            }, beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                
+             }
         });
     });
     
@@ -1478,7 +1666,38 @@
             },
             error: function(req) {
                 //                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }
+            }, beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                
+             }
         });
         location.reload();
     }
@@ -1526,29 +1745,29 @@
 </script>
 
 <body>
-    <div id="wrap">
-        <!--  네브바 입니다  -->
-        <nav class="left_nav">
-            <div id="userInfo">
-                <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-                    <!--                    <li class="nav_li"> <img id="user_Img" src="/img/member/basis_photo.png" /> </li>-->
-                    <li class="nav_li"> <img id="user_Img" src="" /> </li>
-                    <li class="nav_li">
-                        <div id="user_Id"></div>
-                    </li>
-                </ul>
-            </div>
-            <ul class="nav_ul" id="nav_menu">
-                <li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
-                <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-                <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-                <li class="nav_li"><a class="nav_text" href="friendList.html" onclick="reloadList()">친구 목록</a></li>
-                <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+    <div id="newWrap">
+      <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src=""/>
+                </li>
+                <li class="nav_li idLi">
+                    <div id="user_Id"></div>
+                </li>
             </ul>
-            <ul id="logout" class="nav_ul" onclick="logout()">
-                <li class="nav_li"><a class="nav_text logout" onclick="logout();">로그아웃</a></li>
-            </ul>
-        </nav>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
+        </ul>
+    </nav>
 
         <!--  ========================= NAV 밑 ========================== -->
 
@@ -1599,6 +1818,30 @@
                             </div>
                         </div>
                     </div>
+                    
+                    
+                     <div class="events">
+                    <!-- 밑 감싸기-->
+                    <div class="eveLeft">
+                        <!-- 옆 -->
+                        <div class="closeEvent">
+                            <div class="closeText txt">친구 생일</div>
+                            <div class="closeDeco"></div>
+                        </div>
+                        <div class="closeSub">
+                            <div class="sub closePic">
+                                <!--<img src="/img/member/jennie.png" id="user_Img">--></div>
+                            <div class="sub closeName txt">
+                                <div id="fName"></div>
+                            </div>
+                            <div class="sub closeCont txt">
+                                <div id="fBirth"></div>
+                            </div>
+                            </br>
+                        </div>
+                    </div>
+                    </div>
+                    
                 </div>
                 <!-- left-side끝 -->
 
@@ -1692,35 +1935,15 @@
             <!--  ========================= FOOTER ========================== -->
             <footer class="footer">
                 <!--밑-->
-                <div class="events">
-                    <!-- 밑 감싸기-->
-                    <div class="eveLeft">
-                        <!-- 옆 -->
-                        <div class="closeEvent">
-                            <div class="closeText txt">친구 생일</div>
-                            <div class="closeDeco"></div>
-                        </div>
-                        <div class="closeSub">
-                            <div class="sub closePic">
-                                <!--<img src="/img/member/jennie.png" id="user_Img">--></div>
-                            <div class="sub closeName txt">
-                                <div id="fName"></div>
-                            </div>
-                            <div class="sub closeCont txt">
-                                <div id="fBirth"></div>
-                            </div>
-                            </br>
-                        </div>
-                    </div>
+               
+<!--
                     <div class="eveRight">
-                        <!-- 오른쪽 -->
                         <div class="closeEvent">
                             <div class="closeText txt">여기 뭐 넣노</div>
                             <div class="closeDeco"></div>
                         </div>
                         <div class="closeSub">
-                            <div class="sub closePic">
-                                <!--<img src="/img/member/jennie.png" id="user_Img">--></div>
+                            <div class="sub closePic"></div>
                             <div class="sub closeName txt">admin</div>
                             <div class="sub closeCont txt">6월 13일 생일</div>
                             <br>
@@ -1731,7 +1954,9 @@
                             <div class="sub closeCont txt">6월 13일 생일</div>
                         </div>
                     </div>
-                </div>
+-->
+                    
+                
             </footer>
 
         </div>

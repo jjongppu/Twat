@@ -64,6 +64,7 @@ public class GetFriendListServlet extends HttpServlet {
 			jarr.add(job);
 		}
 		out.println(jarr);
+		 out.close();
 		
 	}
 

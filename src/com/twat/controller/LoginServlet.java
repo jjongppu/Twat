@@ -83,5 +83,6 @@ public class LoginServlet extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		writer.println(jsonList);
+		writer.close();
 	}
 }

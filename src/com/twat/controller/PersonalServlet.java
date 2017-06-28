@@ -65,7 +65,10 @@ public class PersonalServlet extends HttpServlet {
 	    	jsonob.put("MEMBER_ID", "");
 	    	jsonArr.add(jsonob);
 	    }
+	    
 	    out.print(jsonArr);
+	    
+	    out.close();
 		
 	}
 

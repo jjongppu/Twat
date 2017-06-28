@@ -2726,31 +2726,30 @@
 </head>
 
 <body>
-	<div id="wrap">
-		<!--        네브바 입니다 ```````````````````````````````````````````````` -->
-		<nav class="left_nav" style="z-index:15">
-			<div id="userInfo">
-				<ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-					<li class="nav_li">
-						<!--                        <img id="user_Img" src="/img/member/basis_photo.png" />-->
-						<img id="user_Img" />
-					</li>
-					<li class="nav_li">
-						<div id="user_Id"></div>
-					</li>
-				</ul>
-			</div>
-			<ul class="nav_ul" id="nav_menu">
-				<li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
-				<li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-				<li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="#">단체 캘린더</a></li>
-				<li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
-				<li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
-			</ul>
-			<ul id="logout" class="nav_ul" onclick="logout()">
-				<li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
-			</ul>
-		</nav>
+    <div id="newWrap">
+      <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src=""/>
+                </li>
+                <li class="nav_li idLi">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
+        </ul>
+    </nav>
+        
 		<div id="main_container">
 			<div id="container">
 				<!-- {방 이름, 방장, 설정}, {단체일정}, {진행중인 투표}, {가까운 이벤트} -->
@@ -2905,13 +2904,18 @@
 							//                            buildCalendar();
 
 						</script>
-					</div>
+                        <!-- 버튼들인데 달력 div 태그안에 밀어 넣었음 종길..-->
+                    <div id="btnCover">
 					<input type="button" value="일정추가하기" onclick="addSchedule()" class="addschedule" />
 					<input type="button" value="친구초대하기" onclick="inviteFriends()" class="addschedule" />
+                    </div>
+                        
 					<div class="admin">
 						<div class="title"></div>
 						<div class="content"></div>
 					</div>
+                        
+                </div>
 					<!-- 모달~ 모달~                                 ------------------------------>
 					<footer>
 						<div id="blindCover" onclick="closeModal();"></div>
@@ -3013,13 +3017,13 @@
 					</script>
 					<style>
 						#blindCover {
-							position: absolute;
+							position: fixed;
 							top: 0;
 							left: 0;
 							background-color: black;
 							opacity: 0.7;
 							display: none;
-							z-index: 10;
+							z-index: 300;
 						}
 						
 						.modal,
@@ -3034,7 +3038,7 @@
 							padding: 30px 10px 20px 10px;
 							overflow: hidden;
 							height: 40px;
-							z-index: 100;
+							z-index: 1000;
 						}
 						
 						textarea:focus,
@@ -3104,7 +3108,7 @@
 */
 							padding: 10px;
 							border: 2px solid #E2E2E2;
-							z-Index: 100;
+							z-Index: 1000;
 						}
 						
 						#modal3 {
@@ -3125,7 +3129,7 @@
 							padding: 20px;
 							padding-top: 10px;
 							border: 2px solid #E2E2E2;
-							z-Index: 100;
+							z-Index: 1000;
 						}
 
 					</style>
@@ -3307,13 +3311,12 @@
 
 					<body>
 
-						<!-- panel with buttons -->
+<!--                   필요없는 모달
 						<div class="panel">
 							<a href="#login_form" id="login_pop">CSS 모달 테스트 1</a>
 							<a href="#join_form" id="join_pop">CSS 모달 테스트 2</a>
 						</div>
 
-						<!-- popup form #1 -->
 						<a href="#x" class="overlay" id="login_form"></a>
 						<div class="popup">
 							<h2>Welcome Guest!</h2>
@@ -3331,7 +3334,6 @@
 							<a class="close" href="#close"></a>
 						</div>
 
-						<!-- popup form #2 -->
 						<a href="#x" class="overlay" id="join_form"></a>
 						<div class="popup">
 							<h2>Sign Up</h2>
@@ -3356,6 +3358,7 @@
 
 							<a class="close" href="#close"></a>
 						</div>
+-->
 
 				</div>
 			</div>
