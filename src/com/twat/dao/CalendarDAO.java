@@ -705,7 +705,7 @@ public class CalendarDAO {
 			String memChoice = "";
 			
 			for (String string : list) {
-				if(string.equals("00000000-" + after))
+				if(string.contains("-") && string.equals("00000000-" + after))
 				{
 					
 				}
