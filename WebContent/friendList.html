@@ -365,7 +365,10 @@
                     
                 }
                 document.getElementById('allFriends').innerHTML = out;
-            } , beforeSend: function () {
+            }, error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : friends.do");
+            }, beforeSend: function () {
                     var width = 0;
                     var height = 0;
                     var left = 0;
@@ -446,7 +449,7 @@
                 }, error: function(req) {
 
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : RequestingFriend.do");
                 } , beforeSend: function () {
                     var width = 0;
                     var height = 0;
@@ -568,7 +571,7 @@
                     
                 },error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ": DeleteFriend.do");
                 } , beforeSend: function () {
                     var width = 0;
                     var height = 0;
@@ -618,28 +621,28 @@
         }
         
 
-
-       function findUserFriend(){
-           $.ajax({
-                type: "post", 
-                url: "FindFriendservlet.do",
-                data:
-                    { findPhoneNumber:$('#findPhoneNumber').val()},
-                dataType:"json",
-                success: function (data){
-                    console.log(data);
-                    $('#findUserName').html(data[0].MEMBER_NAME);
-                    $('#findUserPhone').html(data[0].MEMBER_PHONE);
-                    $('#findUserBirth').html(data[0].MEMBER_BIRTH);
-                }
-            });
-       }
-        //////////////////////////////////////////////////
-            function viewSearch(){
-        $('#modal').css('display','block');
-        $('#blindCover').css('display','block');
-        
-    }
+//
+//       function findUserFriend(){
+//           $.ajax({
+//                type: "post", 
+//                url: "FindFriendservlet.do",
+//                data:
+//                    { findPhoneNumber:$('#findPhoneNumber').val()},
+//                dataType:"json",
+//                success: function (data){
+//                    console.log(data);
+//                    $('#findUserName').html(data[0].MEMBER_NAME);
+//                    $('#findUserPhone').html(data[0].MEMBER_PHONE);
+//                    $('#findUserBirth').html(data[0].MEMBER_BIRTH);
+//                }
+//            });
+//       }
+//        //////////////////////////////////////////////////
+//            function viewSearch(){
+//        $('#modal').css('display','block');
+//        $('#blindCover').css('display','block');
+//        
+//    }
         
 
 
@@ -714,7 +717,7 @@
             
                 }, error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : ResponsingFriends.do");
                 } , beforeSend: function () {
                     var width = 0;
                     var height = 0;
@@ -802,7 +805,7 @@
                 }, error: function(req) {
 
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : RequestFriend.do");
                 } , beforeSend: function () {
                     var width = 0;
                     var height = 0;
@@ -938,7 +941,7 @@
                 }, error: function(req) {
 
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : friendPhoneSearch.do");
                 } , beforeSend: function () {
                     var width = 0;
                     var height = 0;
@@ -1030,7 +1033,7 @@
                 }, error: function(req) {
 
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : friendPhoneSearch.do");
                 }    , beforeSend: function () {
                     var width = 0;
                     var height = 0;
