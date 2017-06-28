@@ -49,6 +49,7 @@ public class QnaDetailServlet extends HttpServlet {
 	    
 	    JSONArray jarr = new JSONArray();
 		PrintWriter out = response.getWriter();
+		
 	    System.out.println("!");
 	    int val = Integer.parseInt(request.getParameter("val"));
 	    System.out.println(val);
@@ -63,7 +64,7 @@ public class QnaDetailServlet extends HttpServlet {
 				jsonObj.put("QNA_PW", detailList.get(i).getQNA_PW());
 				jsonObj.put("QNA_TITLE", detailList.get(i).getQNA_TITLE());
 				jsonObj.put("QNA_CONTENTS", detailList.get(i).getQNA_CONTENTS());
-				jsonObj.put("QNA_DATE", detailList.get(i).getQNA_DATE());
+				jsonObj.put("QNA_DATE", detailList.get(i).getQNA_DATE().toString());
 				jsonObj.put("QNA_REPLY", detailList.get(i).getQNA_REPLY());
 				
 				jarr.add(jsonObj);
