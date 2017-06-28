@@ -298,13 +298,14 @@ public class QnaDAO {
 		
 		int result = -1;
 		
-		String selectSql = "select * from qna where qna_id= ? ";
+		String selectSql = "select * from qna where qna_id=?";
 		
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(selectSql);
 			psmt.setInt(1, val);
 			
+			rs = psmt.executeQuery();
 			while(rs.next()) {
 				QnaVO qvo = new QnaVO();
 				qvo.setMEMBER_ID(rs.getString("MEMBER_ID"));
@@ -323,7 +324,7 @@ public class QnaDAO {
 			e.printStackTrace();
 		} finally {
             try {
-                if(rs != null)
+                if(rs != null) rs.close();
                 if(psmt != null) psmt.close();
                 if(con != null) con.close();
              } catch (SQLException e) {
