@@ -67,7 +67,7 @@ public class ResponsingFriends extends HttpServlet {
 	    }
 	    
 	    out.println(jsonArr);
-	    
+	    out.close();
 	    
 	    
 //	    for(int i = 1; i < friendsList.split(",").length; i++){

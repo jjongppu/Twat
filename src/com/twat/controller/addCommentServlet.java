@@ -64,7 +64,7 @@ public class addCommentServlet extends HttpServlet {
 	    jsonObj.put("userId", cal_writer);
 	    jsonArr.add(jsonObj);
 	    out.print(jsonArr);
-	    
+	    out.close();
 
 	}
 

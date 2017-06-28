@@ -68,7 +68,7 @@ public class ChangeImg extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		out.println(jsonList);
-
+		 out.close();
 		}
 
 }

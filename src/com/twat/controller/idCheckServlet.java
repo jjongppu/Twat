@@ -62,6 +62,7 @@ public class idCheckServlet extends HttpServlet {
 		
 		jsonList.add(jsonOb);
 	    writer.println(jsonList.toJSONString());
+	    writer.close();
 		
 	}
 

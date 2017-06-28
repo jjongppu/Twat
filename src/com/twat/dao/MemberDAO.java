@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.apache.tomcat.dbcp.dbcp2.PoolableConnection;
+
 import com.twat.dto.MemberVO;
 
 public class MemberDAO {
@@ -831,9 +833,10 @@ public class MemberDAO {
 		String myFriendList = null;
 		String friendFriendsList = null;
 		int result = 0;
+		
 
 		try {
-			con = getConnection();
+			con = getConnection();			
 			String sql = "select FRIENDS_LIST from member where MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, userId);
@@ -928,7 +931,7 @@ public class MemberDAO {
 		ResultSet rs2 = null;
 		MemberVO member = new MemberVO();
 		try {
-			con = getConnection();
+			
 			String sql = "select * from member where MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, friendId);
@@ -1053,10 +1056,13 @@ public class MemberDAO {
 		} finally {
 
 			try {
+				
 				if (rs2 != null)
 					rs2.close();
 				if (psmt2 != null)
 					psmt2.close();
+				if(con != null)
+					con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

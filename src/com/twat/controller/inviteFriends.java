@@ -62,7 +62,7 @@ public class inviteFriends extends HttpServlet {
 	    
 	    System.out.println(jsonArr.toJSONString());
 	    out.print(jsonArr);
-	    
+	    out.close();
 	    
 	    
 	    
