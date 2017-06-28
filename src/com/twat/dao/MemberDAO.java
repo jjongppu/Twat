@@ -200,7 +200,7 @@ public class MemberDAO {
 	// 회占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 ------占승울옙----------------------------
 
 	public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE,
-			String MEMBER_GENDER, String MEMBER_BIRTH, int OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
+			String MEMBER_GENDER, String MEMBER_BIRTH, long OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
 
 		int result = 0;
 		int signUp = 0;
@@ -222,10 +222,10 @@ public class MemberDAO {
 			psmt.setString(5, "img/member/basis_photo.png");
 			psmt.setString(6, MEMBER_GENDER);
 			psmt.setString(7, MEMBER_BIRTH);
-			psmt.setString(8, null);
+			psmt.setString(8, "");
 			psmt.setString(9, "");
 			// psmt.setTimestamp(10, null);
-			psmt.setInt(10, OUT_TIME);
+			psmt.setLong(10, OUT_TIME);
 
 			psmt.setString(11, MEMBER_QUESTION);
 			psmt.setString(12, MEMBER_ANSWER);
@@ -941,6 +941,7 @@ public class MemberDAO {
 				member.setMEMBER_NAME(rs2.getString("MEMBER_NAME"));
 				member.setMEMBER_IMG(rs2.getString("MEMBER_IMG"));
 				member.setMEMBER_PHONE(rs2.getString("MEMBER_PHONE"));
+				member.setMEMBER_GENDER(rs2.getString("MEMBER_GENDER"));
 
 			}
 

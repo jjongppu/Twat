@@ -83,14 +83,37 @@
 		console.log(parameter[1]);
 		
 		$.ajax ({
+			
 			type : 'post',
 			url : 'QnaDetail.do',
 			data : { val : parameter[1] },
 			dataType : "json",
 			success : function(data) {
-				console.log(data);
-				var result = data[0].result;
-				console.log(result);
+//				console.log(data);
+				console.log(data[0].QNA_CATEGORY);
+				console.log(data[0].QNA_TITLE);
+				console.log(data[0].MEMBER_ID);
+				console.log(data[0].QNA_DATE);
+				console.log(data[0].QNA_CONTENTS);
+				console.log(data[0].QNA_PW);
+				console.log(data[0].QNA_REPLY);
+				
+				var qnaContents = "";
+				
+				qnaContents = '<span id="category_span">' + data[0].QNA_CATEGORY + '</span>';
+				qnaContents = '<div id="title_divDiv">' + data[0].QNA_TITLE + '</div>';
+				qnaContents = '<span id="id_span">' + data[0].MEMBER_ID + '</span>';
+				qnaContents = '<span id="time_span">';
+				qnaContents = data[0].QNA_DATE.substring(0,10);
+				qnaContents = '</span>';
+				qnaContents = '<span id="content_span">' + data[0].QNA_CONTENTS + '</span>';
+				
+				$('#category_div').html(qnaContents);
+				$('#title_div').html(qnaContents);
+				$('#id_div').html(qnaContents);
+				$('#time_div').html(qnaContents);
+				$('#content_div').html(qnaContents);
+				
 			},
 			error: function(req) {
 				alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "QnaDetail.do");
@@ -138,25 +161,28 @@
 				<div id="top_container">
 					<div id="top_title">
 						<div id="category_div" class="title_divs">
-							<span>해킹신고 및 예방</span>
+<!--							<span id="category_span">해킹신고 및 예방</span>-->
 						</div> |
 						<div id="title_div" class="title_divs">
-							<div>나 해킹 당했다니가 운영자 개쉐기야</div>
+<!--							<div id="title_divDiv">나 해킹 당했다니가 운영자 개쉐기야</div>-->
 						</div>
 					</div>
 					<div id="bottom_title" >
 						<div id="id_div" class="title_divs">
-							<span>글쓴이</span>
-							<span></span>
+<!--							<span id="id_span">글쓴이</span>-->
 						</div>
 						<div id="time_div" class="title_divs">
-							<span>작성 시간</span>
+<!--							<span id="time_span">작성 시간</span>-->
 						</div>
 					</div>
 				</div>
 				<div id="middle_container">
-					<div>
-						내용이 들어갈 곳
+					<div id="content_div">
+<!--
+						<span id="content_span">
+							내용이 들어갈 곳
+						</span>
+-->
 					</div>
 				</div>
 				<div id="bottom_container">

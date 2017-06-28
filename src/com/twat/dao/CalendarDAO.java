@@ -641,9 +641,6 @@ public class CalendarDAO {
 				
 				calList.add(calendarVO);
 			}
-			
-
-			sql += "order by CAL_DATE desc limit 100";
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
