@@ -23,7 +23,7 @@ public class CalendarDAO {
 	ResultSet rs = null;
 	Statement stmt;
 
-	// CalendarDAO 占쏙옙 占싱깍옙占쏙옙
+	// CalendarDAO �뜝�룞�삕 �뜝�떛源띿삕�뜝�룞�삕
 	// ================================================================================================
 	private static CalendarDAO instance = new CalendarDAO();
 
@@ -34,7 +34,7 @@ public class CalendarDAO {
 		return instance;
 	}
 
-	// DB占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 con占쏙옙 占쏙옙환占싹댐옙 占쌨쇽옙占쏙옙
+	// DB�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 con�뜝�룞�삕 �뜝�룞�삕�솚�뜝�떦�뙋�삕 �뜝�뙣�눦�삕�뜝�룞�삕
 	// ==================================================================================
 	public Connection getConnection() throws Exception {
 		Context initCtx = new InitialContext();
@@ -43,7 +43,7 @@ public class CalendarDAO {
 		return ds.getConnection();
 	}
 
-	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨아울옙占쏙옙
+	// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�뙣�븘�슱�삕�뜝�룞�삕
 	// ===================================================================================================
 	public ArrayList<CalendarVO> getInfo(String groupId) {
 		PreparedStatement pstmt = null;
@@ -91,7 +91,7 @@ public class CalendarDAO {
 		return arrList;
 	}
 
-	// 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아울옙占쏙옙(占쌓뤄옙 占쏙옙占싱듸옙, 占쏙옙占쏙옙 占쏙옙占싱듸옙)
+	// �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙣�븘�슱�삕�뜝�룞�삕(�뜝�뙎琉꾩삕 �뜝�룞�삕�뜝�떛�벝�삕, �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떛�벝�삕)
 	public ArrayList<CalendarVO> getInfo(String groupId, String calId) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
@@ -148,7 +148,7 @@ public class CalendarDAO {
 		int cal_num = 0;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
 			sql = "SELECT * FROM calendar order by CAL_NUM desc limit 1";
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
@@ -166,8 +166,8 @@ public class CalendarDAO {
 					rs.close();
 				if (psmt != null)
 					psmt.close();
-				if (con != null)
-					con.close();
+//				if (con != null)
+//					con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -230,14 +230,14 @@ public class CalendarDAO {
 		int cal_depth = 0;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
 			sql = "SELECT CAL_DEPTH FROM calendar where CAL_REFERENCE = ? order by CAL_DEPTH desc limit 1";
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, cal_num);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				cal_depth = rs.getInt("CAL_DEPTH");
-				// System.out.println("占쏙옙占쏙옙 : " + cal_depth);
+				// System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + cal_depth);
 			}
 
 		} catch (Exception e) {
@@ -250,8 +250,8 @@ public class CalendarDAO {
 					rs.close();
 				if (psmt != null)
 					psmt.close();
-				if (con != null)
-					con.close();
+//				if (con != null)
+//					con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -376,7 +376,7 @@ public class CalendarDAO {
 	//
 	// }
 	//
-	// 占쏙옙표 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙트
+	// �뜝�룞�삕�몴 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�듃
 	public void updateMemberChoice(String calNum, String voteList, String user) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
@@ -451,7 +451,7 @@ public class CalendarDAO {
 			pstmt.setInt(2, Integer.parseInt(calNum));
 
 			if (pstmt.executeUpdate() == 1) {
-				System.out.println("占쏙옙占쏙옙 : " + updateList);
+				System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + updateList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -469,7 +469,7 @@ public class CalendarDAO {
 		}
 	}
 
-	// 占쏙옙占쏙옙 확占쏙옙占싹댐옙 占쌉쇽옙
+	// �뜝�룞�삕�뜝�룞�삕 �솗�뜝�룞�삕�뜝�떦�뙋�삕 �뜝�뙃�눦�삕
 	public void scheduleSelected(String calNum, String calDate) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
@@ -541,7 +541,7 @@ public class CalendarDAO {
 			pstmt.setInt(3, Integer.parseInt(calNum));
 
 			if (pstmt.executeUpdate() == 1) {
-				System.out.println("占쏙옙占쏙옙 : " + updateList);
+				System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + updateList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -559,7 +559,7 @@ public class CalendarDAO {
 		}
 	}
 
-	// memberId濡� �떒泥댁씪�젙 �뼸�뼱�삤湲�! �듅�썕 異붽�.
+	// memberId嚥∽옙 占쎈뼊筌ｋ똻�뵬占쎌젟 占쎈섯占쎈선占쎌궎疫뀐옙! 占쎈뱟占쎌뜒 �빊遺쏙옙.
 	public ArrayList<CalendarVO> groupCalInfo(ArrayList<String> groupIdArr) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -616,7 +616,7 @@ public class CalendarDAO {
 		return myCalGatherList;
 	}
 
-	// 방장 전환 : 쉬뿔,,, 이건,,, 아니다,,, 진짜,,, 끔찍하네
+	// 諛⑹옣 �쟾�솚 : �돩肉�,,, �씠嫄�,,, �븘�땲�떎,,, 吏꾩쭨,,, �걫李랁븯�꽕
 	public void changeGM(int groupId, String before, String after) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
