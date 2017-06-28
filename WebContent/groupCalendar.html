@@ -2514,15 +2514,61 @@
 			if(login_userId.match(group_master))
 			{
 				getJoinMember();
+				return;
 //				$('#groupTitle').click();
 //				setTimeout(giveGroupMaster(), 300);
 //				$('#giveGM').trigger('click');
 //				$('.radioGM').css('display','inline-block');
-				setTimeout(function() { $('#giveGM').trigger('click'), 500});
+//				setTimeout(function() { $('#giveGM').trigger('click'), 500});
 //				setTimeout(function() { giveGroupMaster(), 300});
 //				$('.radioGM').css('display','inline-block');
-//				alert("방장은 방을 나갈 수 없습니다. 방장을 선택해주세요.");
+				alert("방장은 방을 나갈 수 없습니다. 방장을 선택해주세요.");
 			}
+			
+			$.ajax({
+				type: 'post',
+				url: 'setRoomOut.do',
+				data: {
+					groupID: group_id,
+					userID: login_userId
+				},
+				dataType: "json",
+				success: function(data) {
+					console.log(data);
+
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+				},
+				complete: function() {
+					$("#div_ajax_load_image").hide();
+//					window.location.reload(true);
+					location.href="";
+				},
+				error: function(req) {
+					//                    alert('통신실패');
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : getGroupMember.do");
+				}
+			})
 		}
 
 		function voteMeeting(cal_date) {
