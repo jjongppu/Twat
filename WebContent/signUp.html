@@ -139,10 +139,14 @@
 				success : function(data) {
 					console.log(data);
 					var result = data[0].result;
+                    
 
-
-					alert('회원가입이 완료되었습니다.');
-					location.href="index.html";
+                    if(result == 'success'){
+                        alert('회원가입이 완료되었습니다.');
+                        location.href="index.html";
+                    }else{
+                        alert('회원가입에 실패하였습니다.');
+                    }
 
 				},
 				error: function(req) {
@@ -246,8 +250,6 @@
             }
             
         }
-
-            
             
          
     }

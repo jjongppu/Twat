@@ -67,6 +67,7 @@ public class searchIDServlet extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		writer.println(jsonList);
+		writer.close();
 	}
 
 }

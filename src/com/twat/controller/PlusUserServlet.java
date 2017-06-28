@@ -83,6 +83,7 @@ public class PlusUserServlet extends HttpServlet {
 	    }
 	    
 	    out.print(jsonList.toJSONString());
+	    out.close();
 	    
 	}
 

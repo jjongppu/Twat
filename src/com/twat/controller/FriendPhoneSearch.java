@@ -80,6 +80,7 @@ public class FriendPhoneSearch extends HttpServlet {
 	    
 //	    System.out.println(jsonArr);
 	    out.print(jsonArr);
+	    out.close();
 	    
 
 	}

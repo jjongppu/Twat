@@ -63,11 +63,12 @@ public class ResponsingFriends extends HttpServlet {
 	    	jsonObj.put("userImg", responsingFriends.get(i).getMEMBER_IMG());
 	    	jsonObj.put("userName",responsingFriends.get(i).getMEMBER_NAME());
 	    	jsonObj.put("userPhone", responsingFriends.get(i).getMEMBER_PHONE());
+	    	jsonObj.put("userGender", responsingFriends.get(i).getMEMBER_GENDER());
 	    	jsonArr.add(jsonObj);
 	    }
 	    
 	    out.println(jsonArr);
-	    
+	    out.close();
 	    
 	    
 //	    for(int i = 1; i < friendsList.split(",").length; i++){

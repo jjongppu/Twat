@@ -44,6 +44,7 @@ public class SessionCheck extends HttpServlet {
 	
 		jarr.add(jsonObj);
 		out.print(jarr);
+		 out.close();
 	}
 
 }

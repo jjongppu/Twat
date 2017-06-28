@@ -61,6 +61,7 @@ public class AcceptRequest extends HttpServlet {
 	    jsonArr.add(jsonObj);
 	    System.out.println(jsonArr);
 	    out.println(jsonArr);
+	    out.close();
 	    
 	    
 		
