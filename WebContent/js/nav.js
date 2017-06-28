@@ -26,19 +26,38 @@ $.ajax({
     }
 });
 
-        //중앙 정렬
-        window.onload = function(){
-        if((window.innerHeight-900)/2 > 1){
-            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
-        }else{
-            $("#newWrap").css("margin-top", 0 );
-        }
 
-        }
+
+        window.onload = function(){
+            
+            //중앙 정렬
+            if((window.innerHeight-800)/2 > 1){
+                $("#newWrap").css("margin-top",(window.innerHeight-800)/2 );
+            }else{
+                $("#newWrap").css("margin-top", 0 );
+            }
+
+            //네브바 옆 체크표시 애니매이션 ㅋㅋ 귀욥
+                
+            $('#navHere').animate({
+                    width: 12,
+                }, 500);
+                for(var j=0;j <4;j++){
+                    if(j%2==0){
+                        $('#navHere').animate({
+                            width: 8,
+                        }, 300);
+                    }else{
+                        $('#navHere').animate({
+                            width: 12,
+                        }, 300);
+                    }
+            }
     
+        }
     $(window).resize(function(){
-        if((window.innerHeight-900)/2 > 1){
-            $("#newWrap").css("margin-top",(window.innerHeight-900)/2 );
+        if((window.innerHeight-800)/2 > 1){
+            $("#newWrap").css("margin-top",(window.innerHeight-800)/2 );
         }else{
             $("#newWrap").css("margin-top", 0 );
         }
@@ -55,7 +74,6 @@ $.ajax({
                 dataType: "json",
                 success: function(data) {
                     if(data[0].result == "s"){
-                        alert("로그아웃 되었습니다.");
                         location.href='index.html';
                     }
                 }

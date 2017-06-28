@@ -41,20 +41,23 @@ public class MemberJoinGroupDAO
 	// GROUP_ID를 통해 MEMBER_ID를 받아오는 함수, MEMBER_ID는 ArrayList<String>으로 반환
 	public ArrayList<String> getMemberId(String GROUP_ID)
 	{
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		
 		ArrayList<String> arrList = new ArrayList<String>();
 		String sql = "select MEMBER_ID from MEMBER_JOIN_GROUP where GROUP_ID=?";
 		
 		try
 		{
 			con = getConnection();
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, GROUP_ID);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, GROUP_ID);
 			
-			rs = psmt.executeQuery();
+			resultSet = pstmt.executeQuery();
 			
-			while(rs.next())
+			while(resultSet.next())
 			{
-				arrList.add(rs.getString(1));
+				arrList.add(resultSet.getString(1));
 			}
 		}
 		catch (Exception e)
@@ -65,8 +68,8 @@ public class MemberJoinGroupDAO
 		{
 			try
 			{
-				if(rs != null)rs.close();
-				if(psmt != null)psmt.close();
+				if(resultSet != null)resultSet.close();
+				if(pstmt != null)pstmt.close();
 				if(con != null)con.close();
 			}
 			catch (SQLException e)

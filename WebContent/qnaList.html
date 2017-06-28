@@ -11,17 +11,31 @@
     <script src="js/jquery.form.js"></script>
     </head>
 	<style>
-  
+        body{
+            background-image: url(img/background/back1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center top;
+        }
 		ul {
 			list-style: none;
 		}
-         .container{
-            
-            margin-left: 120px;
+        div{
+            display: block;
+        }
+         .main_container{
+             width: 1350px;
+             height: 800px;
+             
         }
         #qnaCover{
             width: 800px;
-            margin: 100px auto 0 auto;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
         }
         
 		span {
@@ -69,6 +83,7 @@
             margin: 0;
             border-top: 1px solid gray;
             font-size: 13px;
+            height: 301px;
             
         }
         ul{
@@ -101,6 +116,7 @@
             padding-left: 10px;
             margin: 0 10px;
             width: 200px;
+            background-color: transparent;
         }
         #searchCategory{
             height: 24px;
@@ -170,7 +186,7 @@
 
                 
             }, error: function (req) {
-                
+                alert("SearchQna.do");
                 console.log(req);
             }
         });
@@ -357,41 +373,40 @@
         
         
         function qnaDetailPage(id){
-            location.href="test.html?qna="+$(id).attr('id');
+            location.href="qnaDetail.html?qna="+$(id).attr('id');
         }
         
         
 	</script>
 <body>
-    <div>
-    <!--  네브바 입니다  -->
-    <nav class="left_nav">
+    <div id="newWrap">
+      <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                 <li class="nav_li">
                     <img id="user_Img" src=""/>
                 </li>
-                <li class="nav_li">
+                <li class="nav_li idLi">
                     <div id="user_Id"></div>
                 </li>
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text"  href="home.html">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="qnaList.html">문의 하기</a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
         </ul>
+          
     </nav>
 
 
 	
-	<div id="wrap">
-        <div class="container">
+        <div class="main_container">
             
             <div id="qnaCover">
 		<div id="contentTitleWrap">
@@ -448,6 +463,5 @@
     	</div>
 	</div>
 	</div>
-</div>
 </body>
 </html>

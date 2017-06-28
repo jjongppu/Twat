@@ -146,7 +146,7 @@
 
 				},
 				error: function(req) {
-					alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+					alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "signUp.do");
 				}
         });
         }
@@ -185,31 +185,71 @@
     
 
     // 비밀번호 길이, 같은지, 정규식 검사
-    function onkeyupPwCheck() {
-        var pw1 = $('#pwBox').val();
-        var pw2 = $('#pwBox2').val();
-        var pwVal = $('#pwBox').val().length;
-        var retVal = false;
-        var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
-        
-		console.log(pw1);
-		console.log(pw2);
-		console.log(pwVal);
-		
-		
-		// 비밀번호
+//    function onkeyupPwCheck() {
+//        var pw1 = $('#pwBox').val();
+//        var pw2 = $('#pwBox2').val();
+//        var pwVal = $('#pwBox').val().length;
+//        var retVal = false;
+//        var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
+//        
+//		console.log(pw1);
+//		console.log(pw2);
+//		console.log(pwVal);
+//		
+//		
+//		// 비밀번호
+//        if(pw1 != null && pw2 != null) {
+//            if(pwVal < 8 || pwVal > 16) {
+//                $('#pwMessage').html("<p style='font-size:10px; color:red'>비밀번호는 8자 이상, 16자 이하여야 합니다.</p>");
+//            } else if(pw1 != pw2) {
+//                $('#pwMessage').html("<p style='font-size:10px; color:red'>사용할 수 없는 비밀번호입니다.</p>");
+//            } else if(!pwRegex.test(pwVal)){
+//                $('#pwMessage').html("<p style='font-size:10px; color:red'>비밀번호는 영문, 숫자로 구성되어야 합니다.</p>");
+//            } else {
+//                $('#pwMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
+//            }
+//        }
+//        
+//    }
+    ///비밀번호 유효성검사2
+     function checkPassword2(){
+            var pw1 = $('#pwBox').val();
+            var pw2 = $('#pwBox2').val();
+            var pwVal = $('#pwBox').val().length;
+            var retVal = false;
+            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
+            
+            if(pw2 != pw1){
+                $('#pwMessage').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
+            }
+        }
+
+        function checkPassword(){
+            var pw1 = $('#pwBox').val();
+            var pw2 = $('#pwBox2').val();
+            var pwVal = $('#pwBox').val().length;
+            var retVal = false;
+            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
         if(pw1 != null && pw2 != null) {
             if(pwVal < 8 || pwVal > 16) {
                 $('#pwMessage').html("<p style='font-size:10px; color:red'>비밀번호는 8자 이상, 16자 이하여야 합니다.</p>");
-            } else if(pw1 != pw2) {
-                $('#pwMessage').html("<p style='font-size:10px; color:red'>사용할 수 없는 비밀번호입니다.</p>");
-            } else if(!pwRegex.test(pwVal)){
+            } else if(pw1 != pw2 && pw2 != pw1) {
+                $('#pwMessage').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
+            } else if(!pwRegex.test(pwVal) && !pwRegex.test(pw2)){
                 $('#pwMessage').html("<p style='font-size:10px; color:red'>비밀번호는 영문, 숫자로 구성되어야 합니다.</p>");
-            } else {
+            } else if(pw2 == pw1){
                 $('#pwMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
+            } else if(pw1 == ""){
+                $('#pwMessage').html("<p style='font-size:10px; color:blue'>비밀번호를 입력해주세요.</p>");
+            } else{
+                $('#pwMessage').html("<p style='font-size:10px; color:blue'>비밀번호가 일치하지 않습니다.</p>");
             }
+            
         }
-        
+
+            
+            
+         
     }
 
     
@@ -272,6 +312,7 @@
     }
 	
 	
+	// 일단 복붙하고 추후 수정
 	function jsDayCheck(Obj) {
 		var strValue = Obj.value;
 		var chk1 = /^(19|20)\d{2}-([1-9]|1[012])-([1-9]|[12][0-9]|3[01])$/;
@@ -335,10 +376,10 @@
                     <div id="idMessage"></div>
                 </div>
                 <div>
-                    <input type="password" name="signUpPw" placeholder="비밀번호" maxlength='16' id="pwBox" class="inputBox"/>
+                    <input type="password" name="signUpPw" placeholder="비밀번호" maxlength='16' id="pwBox" class="inputBox" onkeyup="checkPassword2()"/>
                 </div>
                 <div>
-                    <input type="password" name="signUpPw2" placeholder="비밀번호 확인" maxlength='16' id="pwBox2" class="inputBox" onkeyup="onkeyupPwCheck()"/>
+                    <input type="password" name="signUpPw2" placeholder="비밀번호 확인" maxlength='16' id="pwBox2" class="inputBox" onkeyup="checkPassword()"/>
                     <div id="pwMessage"></div>
                 </div>
             </div>    

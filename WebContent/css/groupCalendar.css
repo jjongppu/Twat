@@ -1,83 +1,102 @@
-   html,
-   body {
-       margin: 0;
-       padding: 0;
-   }
-   
-   #wrap {
-       display: block;
-   }
-   
-   .left_nav {
-       position: fixed;
-       top: 0;
-       left: 0;
-       display: inline-block;
-       width: 120px;
-       background-color: #2C3E50;
-       height: 210px;
-   }
-   
-   .nav_ul {
-       margin: 0;
-       padding: 0px;
-       list-style: none;
-       text-align: center;
-   }
-   
-   .nav_li {
-       cursor: pointer;
-   }
-   
-   #logout > li:hover,
-   #nav_menu > li:hover {
-       background-color: #182D42;
-   }
-   
-   #user_Id {
-       color: #FFFFFF;
-   }
-   
-   .nav_text {
-       text-decoration: none;
-       color: #FFFFFF;
-       display: block;
-       padding: 14px 0;
-   }
-   
-   #userInfo {
-       display: block;
-       height: 120px;
-   }
-   
-   #user_Img {
-       width: 60px;
-       height: 60px;
-       border-radius: 60px;
-   }
-   
-   #user_Img_Cover {
-       display: block;
-       width: 60px;
-       margin: 30px auto 0 auto;
-   }
-   
-   #logout {
-       position: absolute;
-       bottom: 10px;
-       width: 100%;
-   }
-   
-   #main_container {
-       /*    position: absolute;*/
-       display: block;
-       margin-left: 120px;
-       /*
-    top: 0;
-    left: 120px;
-*/
-   }
-   
+    body{   
+        background-image: url(../img/background/back1.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+
+html,body{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            position: relative;
+            display: inline-block;
+        }
+        #newWrap{
+            display: block;
+            background-color: #F6F6F6;
+            width: 1350px;
+            height: 800px;
+            box-shadow: 10px 10px 30px gray;
+            margin: auto;
+        }
+        .left_nav{
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #DCDAE4 ;
+            width: 100px;
+            overflow: hidden;
+            height: 800px;
+            z-index: 100;
+        }
+        .nav_ul{
+            padding: 0;
+            margin: auto;
+        }
+        li{
+            position: relative;
+        }
+        .nav_li{
+            display: block;
+            list-style: none;
+            width: 50px;
+            padding: 0 27.5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        #nav_menu{
+            margin-top: 50px;
+        }
+        #nav_menu li{
+            padding-top: 10px;
+        }
+        .navMenuImg{
+            width: 35px;
+            height: 35px;
+        }
+        .nav_text{
+            margin: auto;
+        }
+        #user_Img_Cover{
+            margin-top: 50px;
+        }
+        #user_Id, #user_Img_Cover{
+            cursor: pointer;
+        }
+        #user_Img_Cover li{
+            padding: 0;
+            width: 100%;
+        }
+        #user_Img{
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+        }
+        #navHere{
+            background-color:pink;
+            display: inline-block;
+            width: 0;
+            height: 55px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #userInfo{
+            display: block;
+        }
+        #main_container{
+            display: block;
+        }
+        #logout{
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+        }
    body {
        /*    max-width: 1200px;*/
        /*    width: 1200px;*/
@@ -90,21 +109,22 @@
    #container {
        /* ���� ���� ����ŭ ����ֱ� */
 /*       width: 1200px;*/
-       width: 1500px;
+       width: 1250px;
        /*    width: 95%;*/
        height: 800px;
 /*       float: right;*/
-       margin: auto;
-       margin-top: 60px;
-       background-color: #000000;
+       margin-left: 100px;
+/*       background-color: #000000;*/
    }
    /*  ���� ===============================================  */
    
    #left-side {
-       width: 40%;
+/*       width: 40%;*/
+       width: 500px;
        height: 800px;
-       float: left;
-       background-color: #505050;
+       margin-left: 20px;
+/*       float: left;*/
+/*       background-color: #505050;*/
    }
    /*  �� ���� ==============================================  */   
    
@@ -113,7 +133,9 @@
        /*        margin: 0;*/
        width: 100%;
        height: 20%;
-       background-color: #808080;
+       height: 15%;
+       margin-top: 6px;
+/*       background-color: #808080;*/
    }
    
    #icon {
@@ -133,43 +155,53 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
+        width: 120px;
+        height: 120px;
     }
    
    #content {
        width: 40%;
        height: 100%;
        float: left;
-       background-color: #f0a0a0;
+/*       background-color: #f0a0a0;*/
    }
    
    #content #title {
+	   position: relative;
        width: 100%;
        height: 50%;
 /*       background-color: firebrick;*/
        background-color: white;
        font-size: 25px;
        font-weight: bold;
-       line-height: 80px;
+/*       line-height: 80px;*/
    }
+
+#content #title #groupTitle {
+	position: absolute;
+	bottom: 5px;
+}
    
    #content #member {
        width: 100%;
        height: 50%;
-       background-color: indianred;
+/*       background-color: indianred;*/
+	   padding-top: 10px;
+	   box-sizing: border-box;
    }
    
    #content #member #master {
-       width: 50%;
+/*       width: 50%;*/
        height: 100%;
        float: left;
-       background-color: orange;
+/*       background-color: orange;*/
    }
    
    #content #member #otherMembers {
-       width: 50%;
+/*       width: 50%;*/
        height: 100%;
        float: left;
-       background-color: orangered;
+/*       background-color: orangered;*/
    }
    
    #config {
@@ -183,21 +215,21 @@
    .schedule {
        width: 100%;
        height: 30%;
-       background-color: #665522;
+/*       background-color: #665522;*/
        overflow-y: hidden;
    }
    
    .vote {
        width: 100%;
        height: 30%;
-       background-color: #a034a0;
+/*       background-color: #a034a0;*/
        overflow-y: hidden;
    }
    
    .event {
        width: 100%;
        height: 20%;
-       background-color: #a0f0a0;
+/*       background-color: #a0f0a0;*/
    }
    
    .title {
@@ -235,7 +267,7 @@
        width: 40%;
        height: 100%;
        float: left;
-       background-color: antiquewhite;
+/*       background-color: antiquewhite;*/
    }
 
     .middle-top
@@ -243,6 +275,9 @@
         width: 100%;
         height: 50%;
         line-height: 45px;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
     }
 
     .middle-bottom
@@ -262,9 +297,11 @@
 
     .right-top
     {
-        width: 100%;
+/*        width: 100%;*/
+        width: 80%;
         height: 50%;
         line-height: 45px;
+/*		margin: auto;*/
     }
 
     .stateOK
@@ -302,18 +339,19 @@
    /*  ������ ===============================================  */
    
    #right-side {
-       width: 60%;
+/*       width: 60%;*/
+       width: 730px;
        height: 800px;
        float: right;
        background-color: white;
    }
    
    .cal {
-       height: 852px;
+       height: 800px;
    }
    
    #calendar {
-       padding-left: 100px;
+       padding-left: 30px;
        /*        width: 100%;*/
        /*        height: 100%;*/
        color: black;
@@ -321,12 +359,10 @@
    }
    
    td {
-       width: 100px;
-       height: 100px;
+       width: 95px;
+       height: 95px;
    }
-   
-   #container {}
-   
+      
    .saturday {
        color: blue;
    }
@@ -346,14 +382,10 @@
        width: 100px;
        padding: 12px;
        margin-top: 8px;
-       font-family: Cursive;
        line-height: 1;
-       border-radius: 5px;
-       background-color: #A2AB58;
-       color: #ff0;
        font-size: 20px;
-       -webkit-appearance: none;
-       box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.6);
+       border: none;
+/*       -webkit-appearance: none;*/
        outline: none;
        text-align: center;
    }
@@ -366,9 +398,7 @@
         width: 200px;
         margin-top: 20px;
     }
-   
-   #container {}
-   
+      
 /*-------------------------------------------------*/
     .voteList
     {
@@ -382,12 +412,21 @@
         padding: 4px;
         background-position: right 50%;
         height: 16px;
+        line-height: 16px;
 /*        box-shadow: 5px 5px 5px;*/
+    }
+
+    .voteList:hover
+    {    
+        cursor: pointer;
     }
 
     .commentBox
     {
         border: 1px solid gray;
+        padding: 4px;
+        border-radius: 5px;
+        margin: 2px;
     }
 
     .commentWriter
@@ -406,28 +445,83 @@
     .stateBar
     {
         background-color: dimgray;
-        height: 100%;
+/*        height: 100%;*/
+        height: 50%;
         border-radius: 25px;
         overflow: hidden;
+		position: relative;
+		top: 50%;
+		transform: translate(0,-50%);
     }
 
     .barOK
     {
         display: inline-block;
         background-color: limegreen;
-        height: 100%;
+        height: 200%;
     }
 
     .barNO
     {
         display: inline-block;
         background-color: crimson;
-        height: 100%;
+        height: 200%;
     }
+
+.moreInfo:hover
+{
+    cursor: pointer;
+}
+
+.userButton:hover
+{
+    cursor: pointer;
+}
+
+.ndjButton:hover
+{
+    cursor: pointer;
+}
 
 .spanMonth
 {
     width: 40px;
     text-align: right;
     display: inline-block;
+}
+
+input[type=radio]:hover
+{
+    cursor: pointer;
+}
+
+.memberImgBox
+{
+	display: inline-block;
+}
+
+.memberImg
+{
+	width: 64px;
+	height: 64px;
+}
+
+.memberBox:hover
+{
+/*	cursor: pointer;*/
+}
+
+.memberInfoBox
+{
+	display: inline-block;
+}
+
+#buttonBox3
+{
+	text-align: center;
+}
+#btnCover{
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

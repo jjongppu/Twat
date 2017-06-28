@@ -227,7 +227,7 @@
 </script>
 <style>
     body{
-                background-image: url(img/background/background2.jpg);
+        background-image: url(img/background/back1.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
@@ -246,7 +246,7 @@
         top: 70px;
         left: 100px;
          display: block;
-        width: 1400px;
+        width: 1250px;
         margin: auto;
     }
     .center_cover{
@@ -255,7 +255,7 @@
     }
     .group_Cover{
         height: 100px;
-        width: 400px;
+        width: 350px;
     }
     .group_top{
         width: 350px;
@@ -344,7 +344,7 @@
 /*    메세지 모달---*/
     #messagMeodal{
         position: fixed;
-        z-index: 100;
+        z-index: 1000;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
@@ -379,13 +379,15 @@
     
 /*    모달 ----------------- */
     #blindCover{
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         background-color: black;
         opacity: 0.7;
         display: none;
+        z-index: 200;
     }
+    
     #modal{
         position: fixed;
         width: 500px;
@@ -393,7 +395,7 @@
         left: 50%;
         transform: translate(-50%,-50%);
         background-color: white;
-        z-index: 50;
+        z-index: 900;
     }
     #ment{
         font-size: 20px;
@@ -500,10 +502,10 @@
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                 <li class="nav_li">
-                    <img id="user_Img" src="img/member/gong13.jpg"/>
+                    <img id="user_Img" src=""/>
                 </li>
                 <li class="nav_li idLi">
-                    <div id="user_Id">test</div>
+                    <div id="user_Id"></div>
                 </li>
             </ul>
         </div>
