@@ -1005,6 +1005,14 @@
 			}); // 달 선택
 			$('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
 			$('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
+			$('#roomOut').hover(function() {
+				$(this).attr('src', 'img/etcIcon/door_hover.png');
+//				alert('!');
+				$(this).css( 'cursor', 'pointer' );
+			}, function() {
+				$(this).attr('src', 'img/etcIcon/door.png');
+//				alert('!!');
+			})
 			//            initToday(); //  주석1
 		});
 
@@ -2500,6 +2508,22 @@
 
 			return true;
 		}
+		// 방나가기 메서드
+		function getOutRoom()
+		{
+			if(login_userId.match(group_master))
+			{
+				getJoinMember();
+//				$('#groupTitle').click();
+//				setTimeout(giveGroupMaster(), 300);
+//				$('#giveGM').trigger('click');
+//				$('.radioGM').css('display','inline-block');
+				setTimeout(function() { $('#giveGM').trigger('click'), 500});
+//				setTimeout(function() { giveGroupMaster(), 300});
+//				$('.radioGM').css('display','inline-block');
+//				alert("방장은 방을 나갈 수 없습니다. 방장을 선택해주세요.");
+			}
+		}
 
 		function voteMeeting(cal_date) {
 			//            console.log(cal_date);
@@ -2771,7 +2795,7 @@
 							</div>
 						</div>
 						<!-- 설정 -->
-						<div id="config"></div>
+						<div id="config"><img id='roomOut' src="img/etcIcon/door.png" onclick="getOutRoom()"></div>
 					</div>
 					<!-- {단체일정} -->
 					<div class="schedule" ondrop="drop(event);" ondragover="allowDrop(event);">
