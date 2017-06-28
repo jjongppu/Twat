@@ -56,12 +56,21 @@ public class SetRoomOut extends HttpServlet {
 			afterMaster: radio.value.split(",")[1],
 			afterMasterName: radio.value.split(",")[0]
 		 */
+		CalgatherDAO cDao = CalgatherDAO.getInstance();
+		boolean isDel = cDao.setRoomOut(Integer.parseInt(request.getParameter("groupID")));
+		
 		MemberJoinGroupDAO mDao = MemberJoinGroupDAO.getInstance();
 		mDao.roomOut(request.getParameter("groupID"), request.getParameter("userID"));
 		
 		CalendarDAO calendarDAO = CalendarDAO.getInstance();
-//		calendarDAO.changeGM(Integer.parseInt(request.getParameter("groupID")), request.getParameter("beforeMaster"), request.getParameter("afterMaster"));
-		
+		if(isDel)
+		{
+			calendarDAO.delCal(Integer.parseInt(request.getParameter("groupID")));
+		}
+		else
+		{
+			calendarDAO.setRoomOut(Integer.parseInt(request.getParameter("groupID")), request.getParameter("userID"));
+		}
 		out.print(result.toJSONString());
 		out.close();
 	}

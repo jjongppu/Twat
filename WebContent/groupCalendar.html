@@ -29,6 +29,8 @@
 		var memTempList = new Set();
 		// 색칠용 셋
 		var barColorSet = new Set();
+		// 해당 방의 인원수
+		var groupCount = 0;
 		var initDay = new Date();
 		var cal_date = "";
 		// 해당 방의 방장
@@ -1426,7 +1428,7 @@
 					//                    console.log(group_master);
 					//                    data[0].group_master_name;
 					//                    data[0].group_img;
-					//                    data[0].group_count;
+					groupCount = data[0].group_count;
 					//                    $("#icon").html = "<img src='" + data[0].group_img + "'>";
 					//                    document.getElementById("schedule").innerHTML += "<img src='" + data[0].group_img + "'>";
 					document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
@@ -2508,12 +2510,20 @@
 
 			return true;
 		}
+		// 방나가기 모달
+		function showModal4()
+		{
+			$('#modal4').css('display', 'block');
+			$('#blindCover').css('display', 'block');
+		}
 		// 방나가기 메서드
 		function getOutRoom()
 		{
-			if(login_userId.match(group_master))
+			if(login_userId.match(group_master) && groupCount > 0)
 			{
 				getJoinMember();
+				alert("방장은 방을 나갈 수 없습니다. 방장을 선택해주세요.");
+				closeModal4();
 				return;
 //				$('#groupTitle').click();
 //				setTimeout(giveGroupMaster(), 300);
@@ -2522,14 +2532,14 @@
 //				setTimeout(function() { $('#giveGM').trigger('click'), 500});
 //				setTimeout(function() { giveGroupMaster(), 300});
 //				$('.radioGM').css('display','inline-block');
-				alert("방장은 방을 나갈 수 없습니다. 방장을 선택해주세요.");
 			}
 			
+			var groupId = location.href.split("=")[1];
 			$.ajax({
 				type: 'post',
 				url: 'setRoomOut.do',
 				data: {
-					groupID: group_id,
+					groupID: groupId,
 					userID: login_userId
 				},
 				dataType: "json",
@@ -2562,7 +2572,7 @@
 				complete: function() {
 					$("#div_ajax_load_image").hide();
 //					window.location.reload(true);
-					location.href="";
+					location.href="/Twat/groupList.html";
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -2841,7 +2851,7 @@
 							</div>
 						</div>
 						<!-- 설정 -->
-						<div id="config"><img id='roomOut' src="img/etcIcon/door.png" onclick="getOutRoom()"></div>
+						<div id="config"><img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()"></div>
 					</div>
 					<!-- {단체일정} -->
 					<div class="schedule" ondrop="drop(event);" ondragover="allowDrop(event);">
@@ -3036,6 +3046,11 @@
 -->
 							</div>
 						</div>
+						<div id='modal4'>
+							<h3>정말로 방에서 나가시겠습니까?</h3>
+							<input type="button" value="예" onclick="getOutRoom()">
+							<input type="button" value="아니오" onclick="closeModal4()">
+						</div>
 
 						<div id="inviteModal">
 
@@ -3056,6 +3071,7 @@
 
 							$('#modal2').css('display', 'none');
 							$('#modal3').css('display', 'none');
+							$('#modal4').css('display', 'none');
 						}
 
 						function closeModal2() {
@@ -3065,6 +3081,11 @@
 						
 						function closeModal3() {
 							$('#modal3').css('display', 'none');
+							$('#blindCover').css('display', 'none');
+						}
+						
+						function closeModal4() {
+							$('#modal4').css('display', 'none');
 							$('#blindCover').css('display', 'none');
 						}
 
@@ -3200,6 +3221,28 @@
 							padding-top: 10px;
 							border: 2px solid #E2E2E2;
 							z-Index: 1000;
+						}
+						
+						#modal4 {
+							/*                            display: none;*/
+							/*                            display: inline-block;*/
+							background-color: #FFFFFF;
+							/*                            position:absolute;*/
+							/* 추가 */
+							position: fixed;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+							display: none;
+							/*
+                            top:300px;
+                            left:200px;
+*/
+							padding: 20px;
+							padding-top: 10px;
+							border: 2px solid #E2E2E2;
+							z-Index: 1000;
+							text-align: right;
 						}
 
 					</style>

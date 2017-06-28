@@ -13,6 +13,7 @@ html,body{
         div{
             position: relative;
             display: inline-block;
+/*            display: block;*/
         }
         #newWrap{
             display: block;
@@ -449,6 +450,7 @@ html,body{
     .stateBar
     {
         background-color: dimgray;
+		display: block;
 /*        height: 100%;*/
         height: 50%;
         border-radius: 25px;
