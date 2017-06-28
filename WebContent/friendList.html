@@ -434,11 +434,11 @@
                             out += '<div class="userBottom"><div class="userBirth">'+ data[index].friendName +'</div>';
                             out += '<div class="userPhone">'+ data[index].friendPhone +'</div></div>'
                             out += '<img class="userGender" src="';
-//                             if(data[i].friendGender == 'F'){
-//                                out += 'img/etcIcon/gender_f.png"/>';
-//                            }else{
-//                                out += 'img/etcIcon/gender_m.png"/>';
-//                            }
+                             if(data[index].friendGender == 'F'){
+                                out += 'img/etcIcon/gender_f.png"/>';
+                            }else{
+                                out += 'img/etcIcon/gender_m.png"/>';
+                            }
                             out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
                             out += "<input type=button value='수락' onclick='acceptRequest(this)'/><input type=button value='거절' onclick=refuseRequest(this)/></div>";
                         }
@@ -692,7 +692,7 @@
                 success: function (data){ 
                               
 
-                    document.getElementById("responseExist").innerHTML = "";
+//                    document.getElementById("responseExist").innerHTML = "";
                     var out = "";
                     for(var h = 0; h < data.length; h++){                       
                         
@@ -703,16 +703,16 @@
                             out += '<div class="userIn">';
                             out += '<div class="userImgCover">';
                             out += '<img src="'+ data[h].userImg +'" class="userImg"></div>';
-                            out += '<div class="userTop"><div class="userName">'+ data[h].userId +'님에게 친구요청이 왔습니다.</div></div>';
+                            out += '<div class="userTop"><div class="userName">'+ data[h].userId +'님에게 친구요청 중입니다..</div></div>';
                             out += '<div class="userBottom"><div class="userBirth">'+ data[h].userName +'</div>';
                             out += '<div class="userPhone">'+ data[h].userPhone +'</div></div>'
                             out += '<img class="userGender" src="';
-//                             if(data[i].userGender == 'F'){
-//                                out += 'img/etcIcon/gender_f.png"/>';
-//                            }else{
-//                                out += 'img/etcIcon/gender_m.png"/>';
-//                            }
-                            out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
+                             if(data[h].userGender == 'F'){
+                                out += 'img/etcIcon/gender_f.png"/>';
+                            }else{
+                                out += 'img/etcIcon/gender_m.png"/>';
+                            }
+                            out += '<input type="button" class="cancelRequest" value="요청취소" onclick="cancelRequest(this)"/></div>';
                     }
                     $('#responseExist').html(out);
             
