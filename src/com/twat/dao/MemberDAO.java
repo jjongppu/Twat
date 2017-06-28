@@ -941,6 +941,7 @@ public class MemberDAO {
 				member.setMEMBER_NAME(rs2.getString("MEMBER_NAME"));
 				member.setMEMBER_IMG(rs2.getString("MEMBER_IMG"));
 				member.setMEMBER_PHONE(rs2.getString("MEMBER_PHONE"));
+				member.setMEMBER_GENDER(rs2.getString("MEMBER_GENDER"));
 
 			}
 
