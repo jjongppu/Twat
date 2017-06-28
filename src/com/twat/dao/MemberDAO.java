@@ -1047,9 +1047,8 @@ public class MemberDAO {
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, userId);
 			rs2 = psmt2.executeQuery();
-			if (rs2.next())
-				;
-			friendList = rs2.getString("FRIENDS_LIST");
+			if (rs2.next())				
+				friendList = rs2.getString("FRIENDS_LIST");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1075,7 +1074,7 @@ public class MemberDAO {
 	}
 
 	public void acceptFriend(String userId, String friendId) {// 친구요청 수락
-
+		PreparedStatement psmt3 = null;
 		PreparedStatement psmt2 = null;
 		String[] myFriendList = null;
 		String changeMyFriendList = "";
@@ -1084,10 +1083,8 @@ public class MemberDAO {
 
 		try {
 			// 내친구목록 수정
-			con = getConnection();
-			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
-			psmt2 = con.prepareStatement(sql);
-
+			
+			
 			myFriendList = getfriendListForString(userId).split(",");
 
 			for (int i = 0; i < myFriendList.length; i++) {
@@ -1112,6 +1109,9 @@ public class MemberDAO {
 			}
 
 			// System.out.println(changeFriendList);
+			con = getConnection();
+			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			psmt2 = con.prepareStatement(sql);
 
 			psmt2.setString(1, changeMyFriendList);
 			psmt2.setString(2, userId);
@@ -1119,10 +1119,9 @@ public class MemberDAO {
 			psmt2.executeUpdate();
 
 			// System.out.println(changeMyFriendList);
-
+			
 			// 친구의 친구목록 수정
-			String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
-			psmt2 = con.prepareStatement(sql2);
+			
 
 			friendFriendList = getfriendListForString(friendId).split(",");
 			for (int i = 0; i < friendFriendList.length; i++) {
@@ -1146,11 +1145,13 @@ public class MemberDAO {
 
 			}
 			// System.out.println(changeFriendFriendList);
+			con = getConnection();
+			String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			psmt3 = con.prepareStatement(sql2);
+			psmt3.setString(1, changeFriendFriendList);
+			psmt3.setString(2, friendId);
 
-			psmt2.setString(1, changeFriendFriendList);
-			psmt2.setString(2, friendId);
-
-			psmt2.executeUpdate();
+			psmt3.executeUpdate();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1160,6 +1161,8 @@ public class MemberDAO {
 			try {
 				if (psmt2 != null)
 					psmt2.close();
+				if (psmt3 != null)
+					psmt3.close();
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {
@@ -1227,7 +1230,7 @@ public class MemberDAO {
 		String deletedFriendsList = "";
 
 		try {
-			con = getConnection();
+			
 
 			friendsList = getfriendListForString(userId);
 
@@ -1248,7 +1251,8 @@ public class MemberDAO {
 			}
 
 			// System.out.println(deletedFriendsList);
-
+			
+			con = getConnection();
 			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, deletedFriendsList);
@@ -1274,6 +1278,7 @@ public class MemberDAO {
 			}
 
 			String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			con.close();
 			psmt2 = con.prepareStatement(sql2);
 			psmt2.setString(1, deletedFriendsList);
 			psmt2.setString(2, deleteFriend);

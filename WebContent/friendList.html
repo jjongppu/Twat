@@ -434,11 +434,11 @@
                             out += '<div class="userBottom"><div class="userBirth">'+ data[index].friendName +'</div>';
                             out += '<div class="userPhone">'+ data[index].friendPhone +'</div></div>'
                             out += '<img class="userGender" src="';
-                             if(data[i].friendGender == 'F'){
-                                out += 'img/etcIcon/gender_f.png"/>';
-                            }else{
-                                out += 'img/etcIcon/gender_m.png"/>';
-                            }
+//                             if(data[i].friendGender == 'F'){
+//                                out += 'img/etcIcon/gender_f.png"/>';
+//                            }else{
+//                                out += 'img/etcIcon/gender_m.png"/>';
+//                            }
                             out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
                             out += "<input type=button value='수락' onclick='acceptRequest(this)'/><input type=button value='거절' onclick=refuseRequest(this)/></div>";
                         }
@@ -493,7 +493,8 @@
         
         
         function acceptRequest(a){//친구요청 수락
-            var acceptFriendId = $(a).prev().prev().prev().text().split("님")[0]; //요청 수락할 친구 ID
+            var acceptFriendId = $(a).prev().children().eq(1).text().split("님")[0]; //요청 수락할 친구 ID
+            console.log(acceptFriendId);
             
              $.ajax({
                 type: "post",                  
@@ -548,13 +549,13 @@
 
             });
 //            location.reload();
-            location.href="friendList.html";
+//            location.href="friendList.html";
         }
         
         
         function deleteMyfriend(a){
             
-            var deleteId = $(a).prev().attr("name");
+            var deleteId = $(a).prev().prev().attr("name");
             
             $.ajax({
                 type:"post",
@@ -638,11 +639,11 @@
 //            });
 //       }
 //        //////////////////////////////////////////////////
-//            function viewSearch(){
-//        $('#modal').css('display','block');
-//        $('#blindCover').css('display','block');
-//        
-//    }
+            function viewSearch(){
+        $('#modal').css('display','block');
+        $('#blindCover').css('display','block');
+        
+    }
         
 
 
@@ -706,11 +707,11 @@
                             out += '<div class="userBottom"><div class="userBirth">'+ data[h].userName +'</div>';
                             out += '<div class="userPhone">'+ data[h].userPhone +'</div></div>'
                             out += '<img class="userGender" src="';
-                             if(data[i].userGender == 'F'){
-                                out += 'img/etcIcon/gender_f.png"/>';
-                            }else{
-                                out += 'img/etcIcon/gender_m.png"/>';
-                            }
+//                             if(data[i].userGender == 'F'){
+//                                out += 'img/etcIcon/gender_f.png"/>';
+//                            }else{
+//                                out += 'img/etcIcon/gender_m.png"/>';
+//                            }
                             out += '<input type="button" class="delFriend" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
                     }
                     $('#responseExist').html(out);
