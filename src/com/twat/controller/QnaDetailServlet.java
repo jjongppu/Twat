@@ -2,30 +2,31 @@ package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.twat.dao.QnaDAO;
+import com.twat.dto.QnaVO;
 
 /**
- * Servlet implementation class QnaWriteServlet
+ * Servlet implementation class QnaDetailServlet
  */
-@WebServlet("/QnaWrite.do")
-public class QnaWriteServlet extends HttpServlet {
+@WebServlet("/QnaDetail.do")
+public class QnaDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaWriteServlet() {
+    public QnaDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,31 +47,37 @@ public class QnaWriteServlet extends HttpServlet {
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
 	    
-	    HttpSession session = request.getSession();
-	    String qnaId = (String)session.getAttribute("loginUserId");
-	    String qnaCategory = request.getParameter("qnaCategory");
-	    int qnaPw = Integer.parseInt(request.getParameter("qnaPw"));
-	    String qnaTitle = request.getParameter("qnaTitle");
-	    String qnaContents = request.getParameter("qnaContents");
-	    
+	    JSONArray jarr = new JSONArray();
+		PrintWriter out = response.getWriter();
+		
+	    System.out.println("!");
+	    int val = Integer.parseInt(request.getParameter("val"));
+	    System.out.println(val);
 	    QnaDAO qnaDao = QnaDAO.getInstance();
-	    int result = qnaDao.insertQnA(qnaId, qnaCategory, qnaPw, qnaTitle, qnaContents);
-	    
-	    PrintWriter writer = response.getWriter();
-		JSONArray jsonList = new JSONArray();
-		JSONObject jsonOb = new JSONObject();
+		ArrayList<QnaVO> detailList = qnaDao.detailQnA(val);
 		
-		if(result == 1) {
-			jsonOb.put("result", "success");
+		if(detailList.size() > 0) {
+			for(int i = 0; i < detailList.size(); i++) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("MEMBER_ID", detailList.get(i).getMEMBER_ID());
+				jsonObj.put("QNA_CATEGORY", detailList.get(i).getQNA_CATEGORY());
+				jsonObj.put("QNA_PW", detailList.get(i).getQNA_PW());
+				jsonObj.put("QNA_TITLE", detailList.get(i).getQNA_TITLE());
+				jsonObj.put("QNA_CONTENTS", detailList.get(i).getQNA_CONTENTS());
+				jsonObj.put("QNA_DATE", detailList.get(i).getQNA_DATE().toString());
+				jsonObj.put("QNA_REPLY", detailList.get(i).getQNA_REPLY());
+				
+				jarr.add(jsonObj);
+				
+			}
 		} else {
-			jsonOb.put("result", "fail");
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("result","fail");
+			jarr.add(jsonObj);
 		}
-		
-		jsonList.add(jsonOb);
-	    writer.println(jsonList);
-	    writer.close();
-	    
-	    
+		out.print(jarr);
+		out.flush();
+		out.close();
 	}
 
 }

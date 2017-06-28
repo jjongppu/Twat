@@ -14,19 +14,23 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.twat.dao.CalendarDAO;
+import com.twat.dao.CalgatherDAO;
 import com.twat.dao.MemberDAO;
+import com.twat.dao.MemberJoinGroupDAO;
+import com.twat.dto.MemberVO;
 
 /**
- * Servlet implementation class ChangePwd
+ * Servlet implementation class ChangeGroupMaster
  */
-@WebServlet("/ChangePwd.do")
-public class ChangePwd extends HttpServlet {
+@WebServlet("/changeGroupMaster.do")
+public class ChangeGroupMaster extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangePwd() {
+    public ChangeGroupMaster() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,48 +39,35 @@ public class ChangePwd extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
-	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-	    response.setContentType("application/json;");
-	    response.setHeader("Cache-Control", "no-cache");
-	    request.setCharacterEncoding("UTF-8");
-	    
-	    JSONArray jsonArr = new JSONArray();
-	    JSONObject jsonObj = new JSONObject();
-	    PrintWriter out = response.getWriter();
-		
 		HttpSession session = request.getSession();
-	    String userId = (String)session.getAttribute("loginUserId");
-	    String beforePw = request.getParameter("beforePw");
-		String afterPw = request.getParameter("afterPw");
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("application/json;");
+		response.setHeader("Cache-Control", "no-cache");
+		PrintWriter out = response.getWriter();
 		
+		JSONArray result = new JSONArray();
 		
+		/*
+		 	groupID: group_id,
+			beforeMaster: group_master,
+			afterMaster: radio.value.split(",")[1],
+			afterMasterName: radio.value.split(",")[0]
+		 */
+		CalgatherDAO calgatherDAO = CalgatherDAO.getInstance();
+		calgatherDAO.changeGM(Integer.parseInt(request.getParameter("groupID")), request.getParameter("afterMaster"), request.getParameter("afterMasterName"));
 		
-	    MemberDAO mdo = MemberDAO.getInstance();
-	    
-	    int result = mdo.changePw(userId, beforePw, afterPw);
-	    
-	    
-	    System.out.println(beforePw);
-	    System.out.println(afterPw);
-	    
-	    
-	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
-	    jsonArr.add(jsonObj);
-	    
-	    out.println(jsonArr);
-	    out.close();
+		CalendarDAO calendarDAO = CalendarDAO.getInstance();
+		calendarDAO.changeGM(Integer.parseInt(request.getParameter("groupID")), request.getParameter("beforeMaster"), request.getParameter("afterMaster"));
 		
-		
-		
+		out.print(result.toJSONString());
+		out.close();
 	}
 
 }

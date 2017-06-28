@@ -23,16 +23,12 @@
   version="3.0"
   metadata-complete="true">
 
-  <display-name>Poem</display-name>
+  <display-name>Twat</display-name>
 
   <description>
      Welcome to Tomcat
   </description>
   
-  	<servlet> 
-	<servlet-name>LoginServlet</servlet-name>
-	<servlet-class>com.poem.admin.controller.LoginServlet</servlet-class> 
-	</servlet>
 
 
 <!-- 쫑기리 서버 시작시 제일 끝의 그룹 id 얻어오기 -->
@@ -44,190 +40,512 @@
       </listener-class>
   </listener>
 
-
-<!-- 쫑기리  -->
-    <servlet> 
-        <servlet-name>groupCal</servlet-name> 
-        <servlet-class>com.twat.controller.GroupCalendar</servlet-class> 
+<!--  어드민 서블릿 매핑 -->
+     <servlet> 
+        <servlet-name>AdminGetCalenarList</servlet-name> 
+        <servlet-class>com.admin.controller.AdminGetCalenarList</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>groupCal</servlet-name> 
-        <url-pattern>/groupCal.do</url-pattern> 
-    </servlet-mapping> 
-
-<!-- 쫑기리 친구목록  -->
-    <servlet> 
-        <servlet-name>friednsList</servlet-name> 
-        <servlet-class>com.twat.controller.GetFriendListServlet</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>friednsList</servlet-name> 
-        <url-pattern>/friends.do</url-pattern> 
-    </servlet-mapping> 
-
-
-<!-- 쫑기리 참여중인 그룹 얻어오기 -->
-    <servlet> 
-        <servlet-name>getgroupList</servlet-name> 
-        <servlet-class>com.twat.controller.GetGroupListProcess</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>getgroupList</servlet-name> 
-        <url-pattern>/groupList.do</url-pattern> 
-    </servlet-mapping> 
-	
-<!-- 최승우 LoginServlet -->
-    <servlet> 
-        <servlet-name>LoginServletcsw</servlet-name> 
-        <servlet-class>com.twat.controller.LoginServlet</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>LoginServletcsw</servlet-name> 
-        <url-pattern>/login.do</url-pattern> 
+        <servlet-name>AdminGetCalenarList</servlet-name> 
+        <url-pattern>/adminGetCalenarList.do</url-pattern> 
     </servlet-mapping>
-
-<!-- 최승우 signUpServlet -->
-    <servlet> 
-        <servlet-name>signUpServletcsw</servlet-name> 
-        <servlet-class>com.twat.controller.signUpServlet</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>signUpServletcsw</servlet-name> 
-        <url-pattern>/signUp.do</url-pattern> 
-    </servlet-mapping>
-
-<!-- 최승우 searchIDServlet -->
-    <servlet> 
-        <servlet-name>searchIDServletcsw</servlet-name> 
-        <servlet-class>com.twat.controller.searchIDServlet</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>searchIDServletcsw</servlet-name> 
-        <url-pattern>/searchID.do</url-pattern> 
-    </servlet-mapping>
-
-<!-- 최승우 SearchPWServlet -->
-    <servlet> 
-        <servlet-name>SearchPWServletcsw</servlet-name> 
-        <servlet-class>com.twat.controller.SearchPWServlet</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>SearchPWServletcsw</servlet-name> 
-        <url-pattern>/SearchPW.do</url-pattern> 
-    </servlet-mapping>
-
-
-<!-- 최승우 idCheckServlet -->
-    <servlet> 
-        <servlet-name>idCheckServletcsw</servlet-name> 
-        <servlet-class>com.twat.controller.idCheckServlet</servlet-class> 
-    </servlet> 
-    <servlet-mapping> 
-        <servlet-name>idCheckServletcsw</servlet-name> 
-        <url-pattern>/idCheck.do</url-pattern> 
-    </servlet-mapping>
-
-
-
-<!-- 테스트 logintest-->
 
      <servlet> 
-        <servlet-name>logintest</servlet-name> 
-        <servlet-class>com.twat.controller.logintest</servlet-class> 
+        <servlet-name>AdminGetGroupList</servlet-name> 
+        <servlet-class>com.admin.controller.AdminGetGroupList</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>logintest</servlet-name> 
-        <url-pattern>/logintest.do</url-pattern> 
+        <servlet-name>AdminGetGroupList</servlet-name> 
+        <url-pattern>/adminGetGroupList.do</url-pattern> 
     </servlet-mapping>
 
 
-<!-- 쫑기리 그룹 만들기 서블릿-->
-
      <servlet> 
-        <servlet-name>makeGourp</servlet-name> 
-        <servlet-class>com.twat.controller.MakeGroupProcess</servlet-class> 
+        <servlet-name>AdminGetMemberList</servlet-name> 
+        <servlet-class>com.admin.controller.AdminGetMemberList</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>makeGourp</servlet-name> 
-        <url-pattern>/makeGourp.do</url-pattern> 
+        <servlet-name>AdminGetMemberList</servlet-name> 
+        <url-pattern>/getmemberInfo.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 현우 개인정보 가져오기 서블릿-->
 
      <servlet> 
-        <servlet-name>personalGetInfo</servlet-name> 
-        <servlet-class>com.twat.controller.PersonalServlet</servlet-class> 
+        <servlet-name>AdmingGetQnaList</servlet-name> 
+        <servlet-class>com.admin.controller.AdmingGetQnaList</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>personalGetInfo</servlet-name> 
-        <url-pattern>/PersonalServlet.do</url-pattern> 
+        <servlet-name>AdmingGetQnaList</servlet-name> 
+        <url-pattern>/admingGetQnaList.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 종길 로그인시 세션체크 -->
-
-     <servlet> 
-        <servlet-name>sessionCheckServlet</servlet-name> 
-        <servlet-class>com.twat.controller.SessionCheck</servlet-class> 
+<servlet> 
+        <servlet-name>AdminGroupOut</servlet-name> 
+        <servlet-class>com.admin.controller.AdminGroupOut</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>sessionCheckServlet</servlet-name> 
-        <url-pattern>/SessionCheck.do</url-pattern> 
+        <servlet-name>AdminGroupOut</servlet-name> 
+        <url-pattern>/adminGroupOut.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 종길 로그아웃 처리-->
-
-     <servlet> 
-        <servlet-name>logoutServlet</servlet-name> 
-        <servlet-class>com.twat.controller.Logout</servlet-class> 
+<servlet> 
+        <servlet-name>AdminMemberOut</servlet-name> 
+        <servlet-class>com.admin.controller.AdminMemberOut</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>logoutServlet</servlet-name> 
-        <url-pattern>/Logout.do</url-pattern> 
+        <servlet-name>AdminMemberOut</servlet-name> 
+        <url-pattern>/memberout.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 종길 어드민 로그인 처리-->
 
-     <servlet> 
-        <servlet-name>AdminloginServlet</servlet-name> 
-        <servlet-class>com.twat.controller.Adminlogin</servlet-class> 
+<servlet> 
+        <servlet-name>AdminSetQnaReply</servlet-name> 
+        <servlet-class>com.admin.controller.AdminSetQnaReply</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>AdminloginServlet</servlet-name> 
-        <url-pattern>/adminlogin.do</url-pattern> 
+        <servlet-name>AdminSetQnaReply</servlet-name> 
+        <url-pattern>/adminSetQnaReply.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 종기리 보이의 어드민 세션 체크-->
-
-     <servlet> 
-        <servlet-name>AdminSettingServlet</servlet-name> 
-        <servlet-class>com.twat.controller.AdminSetting</servlet-class> 
+<servlet> 
+        <servlet-name>AdminSetting</servlet-name> 
+        <servlet-class>com.admin.controller.AdminSetting</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>AdminSettingServlet</servlet-name> 
+        <servlet-name>AdminSetting</servlet-name> 
         <url-pattern>/adminSetting.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 종기리 보이의 어드민 세션 체크-->
-
-     <servlet> 
-        <servlet-name>GetTwatDataInfoServlet</servlet-name> 
-        <servlet-class>com.twat.controller.GetTwatDataInfo</servlet-class> 
+<servlet> 
+        <servlet-name>GetTwatDatInfo</servlet-name> 
+        <servlet-class>com.admin.controller.GetTwatDatInfo</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>GetTwatDataInfoServlet</servlet-name> 
+        <servlet-name>GetTwatDatInfo</servlet-name> 
         <url-pattern>/getinfo.do</url-pattern> 
     </servlet-mapping>
 
+<!--  서블릿 매핑 -->
 
-<!-- 종기리 보이의 어드민 멤버정보 얻어오기-->
-
-     <servlet> 
-        <servlet-name>AdminGetMemberListServlet</servlet-name> 
-        <servlet-class>com.twat.controller.AdminGetMemberList</servlet-class> 
+<servlet> 
+        <servlet-name>AcceptRequest</servlet-name> 
+        <servlet-class>com.twat.controller.AcceptRequest</servlet-class> 
     </servlet> 
     <servlet-mapping> 
-        <servlet-name>AdminGetMemberListServlet</servlet-name> 
-        <url-pattern>/getmemberInfo.do</url-pattern> 
+        <servlet-name>AcceptRequest</servlet-name> 
+        <url-pattern>/AcceptRequest.do</url-pattern> 
     </servlet-mapping>
+
+<servlet> 
+        <servlet-name>addCommentServlet</servlet-name> 
+        <servlet-class>com.twat.controller.addCommentServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>addCommentServlet</servlet-name> 
+        <url-pattern>/addComment.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>FindFriendservlet</servlet-name> 
+        <servlet-class>com.twat.controller.FindFriendservlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>FindFriendservlet</servlet-name> 
+        <url-pattern>/FindFriendservlet.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>AddVoteList</servlet-name> 
+        <servlet-class>com.twat.controller.AddVoteList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AddVoteList</servlet-name> 
+        <url-pattern>/addVote.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ChangeGroupMaster</servlet-name> 
+        <servlet-class>com.twat.controller.ChangeGroupMaster</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangeGroupMaster</servlet-name> 
+        <url-pattern>/changeGroupMaster.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ChangeImg</servlet-name> 
+        <servlet-class>com.twat.controller.ChangeImg</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangeImg</servlet-name> 
+        <url-pattern>/changeImg.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ChangeInfo</servlet-name> 
+        <servlet-class>com.twat.controller.ChangeInfo</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangeInfo</servlet-name> 
+        <url-pattern>/ChangeInfo.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ChangePwd</servlet-name> 
+        <servlet-class>com.twat.controller.ChangePwd</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangePwd</servlet-name> 
+        <url-pattern>/ChangePwd.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ChangMemberImg</servlet-name> 
+        <servlet-class>com.twat.controller.ChangMemberImg</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangMemberImg</servlet-name> 
+        <url-pattern>/changMemberImg.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>DeleteFriend</servlet-name> 
+        <servlet-class>com.twat.controller.DeleteFriend</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>DeleteFriend</servlet-name> 
+        <url-pattern>/DeleteFriend.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>FriendPhoneSearch</servlet-name> 
+        <servlet-class>com.twat.controller.FriendPhoneSearch</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>FriendPhoneSearch</servlet-name> 
+        <url-pattern>/friendPhoneSearch.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>GetFriendListServlet</servlet-name> 
+        <servlet-class>com.twat.controller.GetFriendListServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetFriendListServlet</servlet-name> 
+        <url-pattern>/friends.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>GetGroupListProcess</servlet-name> 
+        <servlet-class>com.twat.controller.GetGroupListProcess</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetGroupListProcess</servlet-name> 
+        <url-pattern>/groupList.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>GetGroupMember</servlet-name> 
+        <servlet-class>com.twat.controller.GetGroupMember</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetGroupMember</servlet-name> 
+        <url-pattern>/getGroupMember.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>GetQnaList</servlet-name> 
+        <servlet-class>com.twat.controller.GetQnaList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetQnaList</servlet-name> 
+        <url-pattern>/getQnaList.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>GroupBirth</servlet-name> 
+        <servlet-class>com.twat.controller.GroupBirth</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GroupBirth</servlet-name> 
+        <url-pattern>/groupBirth.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>GroupCalendar</servlet-name> 
+        <servlet-class>com.twat.controller.GroupCalendar</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GroupCalendar</servlet-name> 
+        <url-pattern>/groupCal.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>groupMasterServlet</servlet-name> 
+        <servlet-class>com.twat.controller.groupMasterServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>groupMasterServlet</servlet-name> 
+        <url-pattern>/groupMaster.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>GroupSchedule</servlet-name> 
+        <servlet-class>com.twat.controller.GroupSchedule</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GroupSchedule</servlet-name> 
+        <url-pattern>/groupSchedule.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>idCheckServlet</servlet-name> 
+        <servlet-class>com.twat.controller.idCheckServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>idCheckServlet</servlet-name> 
+        <url-pattern>/idCheck.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>imageFileUpload</servlet-name> 
+        <servlet-class>com.twat.controller.imageFileUpload</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>imageFileUpload</servlet-name> 
+        <url-pattern>/imageFileUpload.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>inviteFriends</servlet-name> 
+        <servlet-class>com.twat.controller.inviteFriends</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>inviteFriends</servlet-name> 
+        <url-pattern>/inviteFriends.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>LoginServlet</servlet-name> 
+        <servlet-class>com.twat.controller.LoginServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>LoginServlet</servlet-name> 
+        <url-pattern>/login.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>Logout</servlet-name> 
+        <servlet-class>com.twat.controller.Logout</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>Logout</servlet-name> 
+        <url-pattern>/Logout.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>MakeGroupProcess</servlet-name> 
+        <servlet-class>com.twat.controller.MakeGroupProcess</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>MakeGroupProcess</servlet-name> 
+        <url-pattern>/makeGourp.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>MyCalBirthServlet</servlet-name> 
+        <servlet-class>com.twat.controller.MyCalBirthServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>MyCalBirthServlet</servlet-name> 
+        <url-pattern>/myCalBirth.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>MyCalendarServlet</servlet-name> 
+        <servlet-class>com.twat.controller.MyCalendarServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>MyCalendarServlet</servlet-name> 
+        <url-pattern>/myCal.do</url-pattern> 
+    </servlet-mapping>
+
+
+<servlet> 
+        <servlet-name>MyGroupScheduleServlet</servlet-name> 
+        <servlet-class>com.twat.controller.MyGroupScheduleServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>MyGroupScheduleServlet</servlet-name> 
+        <url-pattern>/myGroupSchedule.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>MyScheduleServlet</servlet-name> 
+        <servlet-class>com.twat.controller.MyScheduleServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>MyScheduleServlet</servlet-name> 
+        <url-pattern>/mySchedule.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>OutUser</servlet-name> 
+        <servlet-class>com.twat.controller.OutUser</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>OutUser</servlet-name> 
+        <url-pattern>/outUser.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>PersonalServlet</servlet-name> 
+        <servlet-class>com.twat.controller.PersonalServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>PersonalServlet</servlet-name> 
+        <url-pattern>/PersonalServlet.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>PlusUserServlet</servlet-name> 
+        <servlet-class>com.twat.controller.PlusUserServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>PlusUserServlet</servlet-name> 
+        <url-pattern>/PlusUserServlet.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>QnaDetailServlet</servlet-name> 
+        <servlet-class>com.twat.controller.QnaDetailServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>QnaDetailServlet</servlet-name> 
+        <url-pattern>/QnaDetail.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>QnaWrite</servlet-name> 
+        <servlet-class>com.twat.controller.QnaWrite</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>QnaWrite</servlet-name> 
+        <url-pattern>/QnaWrite.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>RequestFriend</servlet-name> 
+        <servlet-class>com.twat.controller.RequestFriend</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>RequestFriend</servlet-name> 
+        <url-pattern>/RequestFriend.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>RequestingFriend</servlet-name> 
+        <servlet-class>com.twat.controller.RequestingFriend</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>RequestingFriend</servlet-name> 
+        <url-pattern>/RequestingFriend.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ResponsingFriends</servlet-name> 
+        <servlet-class>com.twat.controller.ResponsingFriends</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ResponsingFriends</servlet-name> 
+        <url-pattern>/ResponsingFriends.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ScheduleAdd</servlet-name> 
+        <servlet-class>com.twat.controller.ScheduleAdd</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ScheduleAdd</servlet-name> 
+        <url-pattern>/ScheduleAdd.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ScheduleSelected</servlet-name> 
+        <servlet-class>com.twat.controller.ScheduleSelected</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ScheduleSelected</servlet-name> 
+        <url-pattern>/scheduleSelected.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>searchIDServlet</servlet-name> 
+        <servlet-class>com.twat.controller.searchIDServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>searchIDServlet</servlet-name> 
+        <url-pattern>/searchID.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>SearchPWServlet</servlet-name> 
+        <servlet-class>com.twat.controller.SearchPWServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>SearchPWServlet</servlet-name> 
+        <url-pattern>/SearchPW.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>SearchQnaServlet</servlet-name> 
+        <servlet-class>com.twat.controller.SearchQnaServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>SearchQnaServlet</servlet-name> 
+        <url-pattern>/SearchQna.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>SessionCheck</servlet-name> 
+        <servlet-class>com.twat.controller.SessionCheck</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>SessionCheck</servlet-name> 
+        <url-pattern>/SessionCheck.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>signUpServlet</servlet-name> 
+        <servlet-class>com.twat.controller.signUpServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>signUpServlet</servlet-name> 
+        <url-pattern>/signUp.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>StartGetGourpId</servlet-name> 
+        <servlet-class>com.twat.controller.StartGetGourpId</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>StartGetGourpId</servlet-name> 
+        <url-pattern>/StartGetGourpId.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </web-app>

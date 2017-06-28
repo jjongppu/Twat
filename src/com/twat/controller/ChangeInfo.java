@@ -56,6 +56,7 @@ public class ChangeInfo extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		out.println(jsonList);
+		 out.close();
 	}
 
 }
