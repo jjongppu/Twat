@@ -37,6 +37,7 @@ public class Logout extends HttpServlet {
 	
 		jarr.add(jsonObj);
 		out.print(jarr);
+		 out.close();
 	}
 	
 

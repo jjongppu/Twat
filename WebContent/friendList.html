@@ -292,9 +292,54 @@
             font-size: 13px;
             cursor: pointer;
         }
+        #responseExist{
+            
+            border: 1px solid black;
+            margin: 10px;
+        }
         
+        .responsingFImg{
+            width: 100px;
+            height: 100px;
+            
+        }
+    
     </style>
     <script>
+           
+        /////친구 목록 가져오기.
+        $.ajax({
+           type:"post",
+            url:"friends.do",
+            data:$('#allFriends').serialize(),
+            dataType:"json",
+            success:function(data){
+                var result = data[0].result;
+                var out = '';
+                
+                
+                for(var i=0; i < data.length; i++){
+                    out += '<div id="userIn">';
+                    out += '<div id="userImg"></div>';
+                    out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
+                    out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
+                    out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
+                    out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
+                    out += '<input type="hidden" value="아이디" id="MEMBER_ID" name="'+ data[i].MEMBER_ID +'">';
+                    out += '<input type="button" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
+                    
+                }
+                document.getElementById('allFriends').innerHTML = out;
+            },error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : friends.do" );
+                }
+            
+            
+            
+        });
+        
+        
          function requestFriendMe(){
             
               $.ajax({
@@ -324,7 +369,7 @@
                     }
                 }, error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ":RequestingFriend.do");
                 }
             });
             
@@ -352,7 +397,7 @@
                     
                     
                 }, error: function(req) {
-//                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : AcceptRequest.do");
                 }
             });
 //            location.reload();
@@ -379,7 +424,7 @@
                     
                 },error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + "DeleteFriend.do" );
                 }
                 
             });
@@ -390,133 +435,16 @@
             
         }
         
+     
         
-        /////친구 목록 가져오기.
-        $.ajax({
-           type:"post",
-            url:"friends.do",
-            data:$('#allFriends').serialize(),
-            dataType:"json",
-            success:function(data){
-                var result = data[0].result;
-                var out = '';
-                
-                
-                for(var i=0; i < data.length; i++){
-                    out += '<div id="userIn">';
-                    out += '<div id="userImg"></div>';
-                    out += '<img src="'+ data[i].MEMBER_IMG +'" id="userImg">';
-                    out += '<div id="userName">'+ data[i].MEMBER_NAME +'</div>';
-                    out += '<div id="userBirth">'+ data[i].MEMBER_BIRTH +'</div>';
-                    out += '<div id="userPhone">'+ data[i].MEMBER_PHONE +'</div>'
-                    out += '<input type="hidden" value="아이디" id="MEMBER_ID" name="'+ data[i].MEMBER_ID +'">';
-                    out += '<input type="button" value="친구삭제" onclick="deleteMyfriend(this)"/></div>';
-                    
-                }
-                document.getElementById('allFriends').innerHTML = out;
-            }
-            
-            
-        });
+        
         function addFriend(){
             $('#realFriend').css('display','inline-block');
             $('cont1').css('opacity','1');
         }
         
 
-       function findUserFriend(){
-           $.ajax({
-                type: "post", 
-                url: "FindFriendservlet.do",
-                data:
-                    { findPhoneNumber:$('#findPhoneNumber').val()},
-                dataType:"json",
-                success: function (data){
-                    console.log(data);
-                    $('#findUserName').html(data[0].MEMBER_NAME);
-                    $('#findUserPhone').html(data[0].MEMBER_PHONE);
-                    $('#findUserBirth').html(data[0].MEMBER_BIRTH);
-                }
-            });
-       }
-        //////////////////////////////////////////////////
-
-    </script>
-    
-<body>
-    
-    <div id="wrap">
-    <nav class="left_nav">
-        <div id="userInfo">
-            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-                <li class="nav_li">
-                    <img id="user_Img" src="/img/member/basis_photo.png"/>
-                </li>
-                <li class="nav_li">
-                    <div id="user_Id"></div>
-                </li>
-            </ul>
-        </div>
-        <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="#">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
-        </ul>
-        <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
-        </ul>
-    </nav>
-        
-    <div id="contents">
-                       
-        <div id="topCover">
-            <div class="topListbtn" id="allFriend" onclick="tabChange(this)"> 전체 </div>
-            <div class="topListbtn" id="getFriends" onclick="tabChange(this)"> 받은 친구 요청 </div>
-            <div class="topListbtn" id="sendFriends" onclick="tabChange(this)"> 보낸 친구 요청 </div>
-            <div class="topListbtn" id="searchFriends" onclick="viewSearch()"> 검색 </div>
-        
-        </div>
-             
-        
-    <!-- 친구 목록 띄워줌-->
-        <div id="allFriends">
-
-        </div> 
-        
-    <!--        요청 온 친구 목록-->
-    <div id="requestExist">
-    </div>
-
-<!--        보낸 친구 목록-->
-        <div id="responseExist">
-        </div>
-        
-        </div>                
-    </div>
-    
-    
-    <style>
-        #responseExist{
-            
-            border: 1px solid black;
-            margin: 10px;
-        }
-        
-        .responsingFImg{
-            width: 100px;
-            height: 100px;
-            
-        }
-    
-    </style>
-    
-    
-    
-            
-    <script>
-        
+               
     function tabChange(id){
         var ids = $(id).attr('id');
         $('#allFriends').css('display','none');
@@ -538,20 +466,19 @@
                 dataType:"json",
                 success: function (data){ 
                               
-                    document.getElementById("responseExist").innerHTML = "";
+                    var out = "";
                     for(var h = 0; h < data.length; h++){                       
-                        
-                        document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
+                        out += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
                         + "<div>아이디 : " + data[h].userId + "</div>"
                         + "<div>이름 : " + data[h].userName + "</div>"
                         + "<div>전화번호 : " + data[h].userPhone + "</div>";
                         
                     }
                     
-            
+                    $("#responseExist").html(out);
                 }, error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ": ResponsingFriends.do");
                 }
             });
             
@@ -612,7 +539,7 @@
                     heightAnimation('modal',180 , 500 );
                 }, error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ": RequestFriend.do");
                 }
             });
             
@@ -686,15 +613,16 @@
                 },
                 dataType:"json",
                 success: function (data){
-                    console.log(data);
-                    friendImg = data[0].friendImg;
-                    friendId = data[0].friendId;
-                    friendName = data[0].friendName;
-                    friendPhoneNum = data[0].friendPhone;
-                    friendGender = data[0].friendGender;
-                    friendBirth = data[0].friendBirth;
+                   
                     
                     if(data[0].userExist == "Exist"){
+                        console.log(data);
+                        friendImg = data[0].friendImg;
+                        friendId = data[0].friendId;
+                        friendName = data[0].friendName;
+                        friendPhoneNum = data[0].friendPhone;
+                        friendGender = data[0].friendGender;
+                        friendBirth = data[0].friendBirth;
                         var out = "";
                         out = "<div><div id='imgCover'><img src='" + friendImg + "' id='friendImg'/></div>";
                         out += "<div id='infoCover'><div id='friendId'> 아이디 : " + friendId + "</div>";
@@ -714,7 +642,7 @@
                    
                 }, error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : friendPhoneSearch.do");
                 }
             });
             
@@ -746,15 +674,16 @@
                 },
                 dataType:"json",
                 success: function (data){
-                    console.log(data);
-                    friendImg = data[0].friendImg;
-                    friendId = data[0].friendId;
-                    friendName = data[0].friendName;
-                    friendPhoneNum = data[0].friendPhone;
-                    friendGender = data[0].friendGender;
-                    friendBirth = data[0].friendBirth;
+                   
                     
                     if(data[0].userExist == "Exist"){
+                        console.log(data);
+                        friendImg = data[0].friendImg;
+                        friendId = data[0].friendId;
+                        friendName = data[0].friendName;
+                        friendPhoneNum = data[0].friendPhone;
+                        friendGender = data[0].friendGender;
+                        friendBirth = data[0].friendBirth;
                         var out = "";
                         out = "<div><div id='imgCover'><img src='" + friendImg + "' id='friendImg'/></div>";
                         out += "<div id='infoCover'><div id='friendId'> 아이디 : " + friendId + "</div>";
@@ -771,7 +700,7 @@
                     }
                 }, error: function(req) {
 
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ": friendPhoneSearch.do");
                 }
             });
             
@@ -779,6 +708,61 @@
         
         
     </script>
+    
+<body>
+    
+    <div id="wrap">
+    <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src="/img/member/basis_photo.png"/>
+                </li>
+                <li class="nav_li">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="#">홈</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+        </ul>
+    </nav>
+        
+    <div id="contents">
+                       
+        <div id="topCover">
+            <div class="topListbtn" id="allFriend" onclick="tabChange(this)"> 전체 </div>
+            <div class="topListbtn" id="getFriends" onclick="tabChange(this)"> 받은 친구 요청 </div>
+            <div class="topListbtn" id="sendFriends" onclick="tabChange(this)"> 보낸 친구 요청 </div>
+            <div class="topListbtn" id="searchFriends" onclick="viewSearch()"> 검색 </div>
+        
+        </div>
+             
+        
+    <!-- 친구 목록 띄워줌-->
+        <div id="allFriends">
+
+        </div> 
+        
+    <!--        요청 온 친구 목록-->
+    <div id="requestExist">
+    </div>
+
+<!--        보낸 친구 목록-->
+        <div id="responseExist">
+        </div>
+        
+        </div>                
+    </div>
+    
+
     
     <div id = "addFriends" style="margin-left:120px">
        

@@ -79,6 +79,7 @@ public class logintest extends HttpServlet {
 		
 		out.print(jarr.toJSONString());
 		out.flush();
+		 out.close();
 		
 	}
 

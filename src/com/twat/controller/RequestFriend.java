@@ -71,6 +71,7 @@ public class RequestFriend extends HttpServlet {
 		    jsonArr.add(jsonObj);
 		    
 		    out.print(jsonArr);
+		    out.close();
 		    
 		    
 		    

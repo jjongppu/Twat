@@ -55,6 +55,7 @@ public class MyScheduleServlet extends HttpServlet {
 
 		System.out.println(jsonArr);		
 		out.print(jsonArr);
+		 out.close();
 		
 	}
 

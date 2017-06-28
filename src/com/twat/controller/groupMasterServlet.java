@@ -60,6 +60,7 @@ public class groupMasterServlet extends HttpServlet {
 	    jsonArr.add(jsonObj);
 	    
 	    out.print(jsonArr);
+	    out.close();
 	    
 	    
 	    

@@ -79,6 +79,7 @@ public class ScheduleAdd extends HttpServlet {
 
 		System.out.println(jsonArr);		
 		out.print(jsonArr);
+		 out.close();
 
 		
 	
