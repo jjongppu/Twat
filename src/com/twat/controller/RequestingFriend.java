@@ -71,6 +71,7 @@ public class RequestingFriend extends HttpServlet {
 	    
 //	    System.out.println(jsonArr);
 	    out.println(jsonArr);
+	    out.close();
 	    
 	    
 	    

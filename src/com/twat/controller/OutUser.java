@@ -62,7 +62,7 @@ public class OutUser extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		out.println(jsonList);
-		
+		 out.close();
 	}
 
 }

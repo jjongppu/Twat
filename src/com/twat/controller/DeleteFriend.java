@@ -50,6 +50,7 @@ public class DeleteFriend extends HttpServlet {
 	    JSONArray jsonArr = new JSONArray();
 	    JSONObject jsonObj = new JSONObject();
 	    
+	    
 		PrintWriter out = response.getWriter();	    
 	    MemberDAO mdo = MemberDAO.getInstance();
 	    HttpSession session = request.getSession();
@@ -63,6 +64,7 @@ public class DeleteFriend extends HttpServlet {
 	    jsonArr.add(jsonObj);
 	    
 	    out.println(jsonArr);
+	    out.close();
 	    
 	    
 	    

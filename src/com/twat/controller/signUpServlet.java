@@ -53,14 +53,14 @@ public class signUpServlet extends HttpServlet {
 	    String signUpId = request.getParameter("signUpId");
 	    String signUpPw = request.getParameter("signUpPw");
 	    
-//	    // ���� ���ε� �ذ�x----------------------------------------------------------
+//	    // 占쏙옙占쏙옙 占쏙옙占싸듸옙 占쌔곤옙x----------------------------------------------------------
 //	    String savePath = "img/member";
-//	    int uploadFileSize = 5 * 1024 * 1024; // ������ ũ�⸦ 5MB�� ���� (1024 = 2^10)
+//	    int uploadFileSize = 5 * 1024 * 1024; // 占쏙옙占쏙옙占쏙옙 크占썩를 5MB占쏙옙 占쏙옙占쏙옙 (1024 = 2^10)
 ////	    String encType = "UTF-8";
 //	    
-//	    ServletContext context = getServletContext(); // ���� ���ؽ�Ʈ ��ü ����
-//	    String uploadFilePath = context.getContextPath(); // ���� ������ ���� �����θ� ����
-//	    System.out.println("�������� ������ : " + uploadFilePath);
+//	    ServletContext context = getServletContext(); // 占쏙옙占쏙옙 占쏙옙占쌔쏙옙트 占쏙옙체 占쏙옙占쏙옙
+//	    String uploadFilePath = context.getContextPath(); // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占싸몌옙 占쏙옙占쏙옙
+//	    System.out.println("占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 : " + uploadFilePath);
 //	    
 //	    MultipartRequest multi = new MultipartRequest(
 //				request
@@ -68,9 +68,9 @@ public class signUpServlet extends HttpServlet {
 //				, uploadFileSize
 //				, new DefaultFileRenamePolicy());
 //	    
-//	    // ���ε� �� ���� �̸� ���
+//	    // 占쏙옙占싸듸옙 占쏙옙 占쏙옙占쏙옙 占싱몌옙 占쏙옙占�
 //	 	String fileName = multi.getFilesystemName("uploadFile");
-//	    // ------���� �ٿ��ֱ� �´��� �ȸ´��� ����----------------------------------------------------------------------
+//	    // ------占쏙옙占쏙옙 占쌕울옙占쌍깍옙 占승댐옙占쏙옙 占싫맞댐옙占쏙옙 占쏙옙占쏙옙----------------------------------------------------------------------
 //	    String signUpImgName = request.getParameter("signUpImg");
 //	    String signUpImg = savePath + fileName;
 	    String signUpName = request.getParameter("signUpName");
@@ -82,7 +82,7 @@ public class signUpServlet extends HttpServlet {
 	    String signUpBirth = signUpBirthYear.substring(2) + signUpBirthMonth + signUpBirthDay;
 	    
 	    String signUpPhone = request.getParameter("signUpPhone");
-	    int signUpOutTime = 0;
+	    long signUpOutTime = 0;
 
 	    String signUpQuestion = request.getParameter("signUpQuestion");
 	    String signUpAnswer = request.getParameter("signUpAnswer");
@@ -98,18 +98,10 @@ public class signUpServlet extends HttpServlet {
 	    
 	    if(result == 1) {
 	    	jsonOb.put("result", "success");
-	    	jsonOb.put("signUpOutTime", signUpOutTime);
 	    } else {
 	    	jsonOb.put("result", "fail");
 	    	
-	    	jsonOb.put("signUpId", signUpId);
-	    	jsonOb.put("signUpPw", signUpPw);
-//	    	jsonOb.put("signUpImg", signUpImg);
-	    	jsonOb.put("signUpName", signUpName);
-	    	jsonOb.put("signUpGender", signUpGender);
-	    	jsonOb.put("signUpBirth", signUpBirth);
-	    	jsonOb.put("signUpPhone", signUpPhone);
-	    	jsonOb.put("signUpOutTime", signUpOutTime);
+
 	    }
 	    
 	    jsonList.add(jsonOb);
