@@ -47,10 +47,15 @@ public class RefuseRequest extends HttpServlet {
 	    HttpSession session = request.getSession(); 
 	    String loginUserId = (String) session.getAttribute("loginUserId");
 	    String friendId = request.getParameter("friendId");
+	    String tok = request.getParameter("tok");
 	    
 	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
-	    memberDAO.requestCancelRefuse(loginUserId, friendId, "refuse");
+	    
+	    memberDAO.requestCancelRefuse(loginUserId, friendId, tok);
+	    	
+	    
+	    
 	    
 	    jsonObj.put("result", "refuseSuccess");
 	    jsonArr.add(jsonObj);
