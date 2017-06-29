@@ -1598,7 +1598,22 @@
         });
     });
     
-    //}
+    $(document).ready(function(){
+        var times = [];
+        var value="";
+        for(var i = 0; i <25; i++){
+            if(i<10){
+                value="0"+i;
+            }else{
+                value=i;
+            }
+            times[i] = "<option value="+value+">"+value+"</option>";
+        }
+        $("#scheTime").append(times.join(''));
+    });
+   
+    
+    //
     // 확정된 일정 정보 출력
     function getScheduleInfo() {}
     // 미확정된 일정 정보 출력
@@ -1667,7 +1682,7 @@
         });
         location.reload();
     }
-
+    
     function selectNo() {
         $("#modal").css("display", "none");
         console.log("!!!!");
@@ -1873,6 +1888,8 @@
                                    
                                     <div id="titleAdd">
                                         <input type="text" placeholder="자신의 일정을 한줄로 써보세요." id="calTitle" maxlength="20"/> 
+                                        <select name="scheTime" id="scheTime">
+                                        </select>
                                         <div id="groupAddBtn" onclick="clickAddCal()">작성하기</div>
                                     </div>
 
