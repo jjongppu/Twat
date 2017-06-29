@@ -215,7 +215,6 @@ public class MemberJoinGroupDAO
 				mj.setMEMBER_ID(rs.getString("MEMBER_ID"));
 				mj.setGROUP_ID(rs.getString("GROUP_ID"));
 				mj.setCALENDAR_READ_VIEW(rs.getInt("CALENDAR_READ_VIEW"));
-				System.out.println(rs.getInt("CALENDAR_READ_VIEW"));
 				mj.setCALENDAR_VIEW(rs.getInt("CALENDAR_VIEW"));
 				arrList.add(mj);
 			}
@@ -239,8 +238,7 @@ public class MemberJoinGroupDAO
 	
 	
 	// 게시물을 읽었다고 표시해주기 위한 메서드...
-	public void updateMyCalView(int groupId, String userName)
-	{
+	public void updateMyCalView(int groupId, String userName){
 		PreparedStatement pstmt = null;
 
 		try {
