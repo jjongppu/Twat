@@ -167,7 +167,7 @@ public class MemberDAO {
 			con = getConnection();
 
 			// 占쏙옙占싱듸옙占� 占쌓뤄옙占쏙옙 占쌀뤄옙占쏙옙占쏙옙
-			String sql = "select GROUP_ID from MEMBER_JOIN_GROUP where MEMBER_ID =?";
+			String sql = "select * from MEMBER_JOIN_GROUP where MEMBER_ID =?";
 
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, MEMBER_ID);
