@@ -148,7 +148,7 @@ public class CalendarDAO {
 		int cal_num = 0;
 
 		try {
-//			con = getConnection();
+			con = getConnection();
 			sql = "SELECT * FROM calendar order by CAL_NUM desc limit 1";
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
@@ -166,8 +166,8 @@ public class CalendarDAO {
 					rs.close();
 				if (psmt != null)
 					psmt.close();
-//				if (con != null)
-//					con.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
