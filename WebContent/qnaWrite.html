@@ -24,6 +24,12 @@
 	
 	<script>
 		function qnaEnter() {
+			if($('#qnaCategory').val() == "") {
+				alert("카테고리를 ");
+				$('#qnaCategory').focus();
+			} else if($('#qnaCategory').val() == "")
+				
+				
 			$.ajax ({
                 type : 'post',
                 url : 'QnaWrite.do',
