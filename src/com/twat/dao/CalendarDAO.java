@@ -231,7 +231,9 @@ public class CalendarDAO {
 		int cal_depth = 0;
 
 		try {
-//			con = getConnection();
+			if(con == null)
+				con = getConnection();
+			
 			sql = "SELECT CAL_DEPTH FROM calendar where CAL_REFERENCE = ? order by CAL_DEPTH desc limit 1";
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, cal_num);
@@ -560,7 +562,6 @@ public class CalendarDAO {
 		}
 	}
 
-	// memberId嚥∽옙 占쎈뼊筌ｋ똻�뵬占쎌젟 占쎈섯占쎈선占쎌궎疫뀐옙! 占쎈뱟占쎌뜒 �빊遺쏙옙.
 	public ArrayList<CalendarVO> groupCalInfo(ArrayList<String> groupIdArr) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -572,7 +573,7 @@ public class CalendarDAO {
 			sql += " or GROUP_ID=? ";
 		}
 
-		sql += "order by CAL_DATE desc limit 1";
+		sql += "order by CAL_DATE desc limit 8";
 
 		try {
 			con = getConnection();
