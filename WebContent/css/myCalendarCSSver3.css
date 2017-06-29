@@ -6,7 +6,7 @@
 */
 
 body {
-    background-image: url(../img/background/back2.jpg);
+    background-image: url(../img/background/back4.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -103,7 +103,8 @@ li {
 }
 
 #navHere {
-    background-color: pink;
+/*    background-color: pink;*/
+    background-color: black;
     display: inline-block;
     width: 0;
     height: 55px;
@@ -143,7 +144,7 @@ li {
 }
 
 .leftUp {
-    background-color: antiquewhite;
+    background: linear-gradient( 165deg, white, #FDF9FF, white, #F0F3FA);
     height: 300px;
     width: 500px;
 }
@@ -171,7 +172,8 @@ li {
 
 .leftDown {
     width: 500px;
-    background-color: floralwhite;
+/*    background-color: floralwhite;*/
+    background: linear-gradient( 205deg, white, #FDF9FF, white, #FFFAF3);
     height: 300px;
 }
 
@@ -180,7 +182,7 @@ li {
     width: 500px;
     /*    height: 100%;*/
     display: inline-block;
-    background-color: ghostwhite;
+    background: linear-gradient( 165deg, white, #FDF9FF, white, #EBF7FD);
 }
 
 .closeEvent div {
@@ -203,7 +205,13 @@ li {
     display: inline-block;
     width: 200px;
     height: 10px;
-    background: linear-gradient( 45deg, pink, #6534ff);
+    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
+}
+.decoLine{
+    display: inline-block;
+    width: 200px;
+    height: 10px;
+    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
 }
 
 .closeSub {
@@ -302,7 +310,8 @@ td {
 .modalButton{
     width:100px;
     height: 30px;
-    background-color: whitesmoke;
+/*    background-color: whitesmoke;*/
+    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
     border-radius: 100px;
     font-size: 15px;
     border: 0.5px solid white;
