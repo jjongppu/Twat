@@ -403,17 +403,85 @@
             
         });
         
-        function refuseRequest(a){
-            
-            var refuseFriendId = $(a).prev().prev().children().eq(1).text().split("님")[0];
-            console.log(refuseFriendId);
+        function cancelRequest(a){
+            var cancelFriendId = $(a).prev().children().eq(1).children().eq(0).text().split("님")[0];
+//            console.log(cancelFriendId);
             
             $.ajax({
                 type: "post", 
                 url: "RefuseRequest.do",                
                 dataType:"json",
                 data : {
-                    friendId : refuseFriendId
+                    friendId : cancelFriendId,
+                    tok : "cancel"
+                
+                }, success: function (data){
+                    if(data[0].result == "refuseSuccess")
+                        alert("친구 요청을 취소합니다.");
+                    
+
+                }, error: function(req) {
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : RefuseRequest.do");
+                } 
+                , beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img\loadingImg\ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    console.log("통신중");
+
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                 console.log("통신완료");
+             }
+
+            
+            
+            
+            
+            });
+            
+            
+            
+            
+            
+        }
+        
+        
+        function refuseRequest(a){
+            
+            var refuseFriendId = $(a).prev().prev().children().eq(1).text().split("님")[0];
+//            console.log(refuseFriendId);
+            
+            $.ajax({
+                type: "post", 
+                url: "RefuseRequest.do",                
+                dataType:"json",
+                data : {
+                    friendId : refuseFriendId,
+                    tok : "refuse"
                 
                 }, success: function (data){
                     if(data[0].result == "refuseSuccess")
@@ -778,7 +846,7 @@
                             }else{
                                 out += 'img/etcIcon/gender_m.png"/>';
                             }
-                            out += '<input type="button" class="cancelRequest" value="요청취소" onclick="cancelRequest(this)"/></div>';
+                            out += '</div><input type="button" class="cancelRequest" value="요청취소" onclick="cancelRequest(this)" style="cursor:pointer" /></div>';
                     }
                     $('#responseExist').html(out);
             
