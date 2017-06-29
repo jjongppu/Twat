@@ -231,7 +231,9 @@ public class CalendarDAO {
 		int cal_depth = 0;
 
 		try {
-//			con = getConnection();
+			if(con == null)
+				con = getConnection();
+			
 			sql = "SELECT CAL_DEPTH FROM calendar where CAL_REFERENCE = ? order by CAL_DEPTH desc limit 1";
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, cal_num);
