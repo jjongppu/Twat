@@ -142,6 +142,8 @@ li {
 
 .leftUp {
     background-color: antiquewhite;
+    height: 300px;
+    width: 500px;
 }
 
 .schedule {
@@ -161,10 +163,14 @@ li {
     margin: auto;
     left: 50%;
     transform: translate(-50%, 0);
+    height: 200px;
+    width: 500px;
 }
 
 .leftDown {
+    width: 500px;
     background-color: aliceblue;
+    height: 300px;
 }
 
 .eveLeft {
@@ -283,4 +289,82 @@ td {
     border: none;
     outline: none;
     text-align: center;
+}
+
+
+/* Modal */
+
+#blindCover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0.7;
+    display: none;
+    z-index: 300;
+}
+
+.modal,
+#inviteModal {
+    position: fixed;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 350px;
+    padding: 30px 10px 20px 10px;
+    overflow: hidden;
+    height: 40px;
+    z-index: 1000;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+#titleAdd {
+    margin-bottom: 30px;
+}
+
+#groupAddBtn {
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#calTitle {
+    height: 23px;
+    width: 250px;
+    padding-left: 10px;
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+#selectAnswer {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.btnCenter {
+    width: 290px;
+    margin: 20px auto 20px auto;
+    font-size: 17px;
+}
+
+.choiceBtn {
+    display: inline-block;
+    width: 48%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    margin: none;
 }
