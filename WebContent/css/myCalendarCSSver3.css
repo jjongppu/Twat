@@ -156,7 +156,12 @@ li {
 }
 
 .schCont {
-    border: 1px solid black;
+/*    border: 1px solid black;*/
+}
+.schedules{
+/*    border: 1px solid black;*/
+    height: 14px;
+    padding: 2px;
 }
 
 .events {
@@ -257,6 +262,9 @@ li {
 .program{
     font-size: 40px;
 }
+
+
+
 
 /*    ========== right  ======================*/
 
