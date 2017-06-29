@@ -1037,7 +1037,7 @@ public class MemberDAO {
 		try {
 
 			try {
-				if (con.isClosed())
+//				if (con.isClosed() || con == null)
 					con = getConnection();
 			} catch (Exception e) {
 
