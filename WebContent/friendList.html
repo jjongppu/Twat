@@ -142,11 +142,12 @@
         
         
     #blindCover{
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         background-color: black;
         opacity: 0.7;
+        z-index: 300;
         display: none;
     }
 /*        친구 검색 모달*/
@@ -542,21 +543,10 @@
                 dataType:"json",
                 success: function (data){
                     
-//                    console.log(data);
-                    
-//                    console.log(data.length);
                     if(data.length != 0){
-//                        console.log("!");
                         $('#requestExist').html('');
                         var out = "";
-                        for(var index = 0; index < data.length; index ++){
-//                        document.getElementById("requestExist").innerHTML += "<div class='eachFriendRequest'>"
-//                            + "<img src ='" + data[index].friendImg + "' class='requestFriendImg' />"
-//                            + "<div class='requestFriendName'>" + data[index].friendId + "님에게 친구요청이 왔습니다.</div>"
-//                            + "<div> 이름 : " + data[index].friendName + "</div>"
-//                            + "<div> 전화번호 : " + data[index].friendPhone + "</div>"
-//                            + "<input type=button value='수락' onclick='acceptRequest(this)'/><input type=button value='거절' onclick=refuseRequest(this)/></div>";
-//                        
+                        for(var index = 0; index < data.length; index ++){          
                             
                             out += '<div class="userIn">';
                             out += '<div class="userImgCover">';

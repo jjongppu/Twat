@@ -229,9 +229,12 @@ public class CalendarDAO {
 	public int getLastDepth(int cal_num) {
 		String sql = "";
 		int cal_depth = 0;
-
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
-//			con = getConnection();
+			if(con == null)
+				con = getConnection();
+			
 			sql = "SELECT CAL_DEPTH FROM calendar where CAL_REFERENCE = ? order by CAL_DEPTH desc limit 1";
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, cal_num);
@@ -251,8 +254,8 @@ public class CalendarDAO {
 					rs.close();
 				if (psmt != null)
 					psmt.close();
-//				if (con != null)
-//					con.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
