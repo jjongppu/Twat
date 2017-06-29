@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.twat.dto.CalgatherVO;
+import com.twat.dto.MemberJoinGroupVO;
 import com.twat.dto.MyCalendarVO;
 
 public class CalgatherDAO {
@@ -40,8 +41,10 @@ public class CalgatherDAO {
 
 	// 李몄뿬以묒씤 罹섎┛�뜑瑜� 肉뚮젮二쇨린�쐞�빐 �옄�떊�씠 李몄뿬�븯怨좎엳�뒗 紐⑤뱺 罹섎┛�뜑�쓽 �젙蹂대��
 	// �뼸�뼱�샃�땲�떎..
-	public ArrayList<CalgatherVO> myGroupList(ArrayList<Integer> groupList) {
-
+	public ArrayList<CalgatherVO> myGroupList(ArrayList<MemberJoinGroupVO> groupList) {
+		
+		ArrayList<MemberJoinGroupVO> groupArray = groupList;
+		
 		ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();
 		String selectMygroupSql = "select * from CALGATHER where GROUP_ID=?";
 
@@ -52,11 +55,12 @@ public class CalgatherDAO {
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(selectMygroupSql);
-
-			psmt.setInt(1, groupList.get(0));
+			int groupId = Integer.parseInt(groupArray.get(0).getGROUP_ID());
+			psmt.setInt(1, groupId);
 
 			for (int i = 1; i < groupList.size(); i++) {
-				psmt.setInt(i + 1, groupList.get(i));
+				groupId = Integer.parseInt(groupArray.get(i).getGROUP_ID());
+				psmt.setInt(i + 1, groupId);
 			}
 
 			rs = psmt.executeQuery();

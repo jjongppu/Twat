@@ -20,16 +20,58 @@
         }
 		
 		#wrap {
-			border: 1px solid black;
-		}
-		.container {
-			border: 1px solid black;
-			margin: 4px;
+/*			margin-left: 100px;*/
+			width: 1000px;
+			margin: 0 auto;
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%,-50%);
 		}
 		span {
 			display: inline-block;
-			width: 110px;
+			width: 140px;
+			padding-left: 8px;
 		}
+		div {
+			display: block;
+		}
+		
+		#bigTitle {
+			margin-bottom: 80px;
+			background-color: #cccccc;
+		}
+		
+		#pwId {
+			width: 121px;
+		}
+		#titleId {
+			width: 720px;
+		}
+		#contWrap {
+/*			border: 1px solid black;*/
+		}
+		
+		.container {
+			border: 1px solid white;
+			margin: 2px;
+			background-color: #e6e6e6;
+		}
+		
+		
+		/* ------------------버튼 div ---------------*/
+		#btnWrap {
+/*			border: 1px solid red;*/
+			margin-top: 35px;
+			float: right;
+		}
+		.btn {
+			border: none;
+			widows: 100px;
+			height: 28px;
+/*			background-color: white;*/
+		}
+		
 	</style>
 	
 	<script>
@@ -115,38 +157,40 @@
 			</nav>
 			
 			<!--여기까지 네브바-->
-			<div>
-				<h4>문의사항 작성하기</h4>
-			</div>
-
 			<div id="wrap">
-				<div id="wrap_Cate" class="container">
-					<span>카테고리</span>
-					<select id="cateId" name="qnaCategory">
-						<option>--</option>
-						<option>서비스 문의</option>
-						<option>아이디 관련</option>
-						<option>해킹신고 및 예방</option>
-						<option>신고하기</option>
-						<option>개선/불만사항</option>
-					</select>
+				<div id="bigTitle">
+					<h4>문의사항 작성하기</h4>
 				</div>
-				<div id="wrap_Pw" class="container">
-					<span>비밀번호</span>
-					<input type="password" id="pwId" name="qnaPw" maxlength="10"/>
+
+				<div id="contWrap">
+					<div id="wrap_Cate" class="container">
+						<span>카테고리</span>
+						<select id="cateId" name="qnaCategory">
+							<option>--</option>
+							<option>서비스 문의</option>
+							<option>아이디 관련</option>
+							<option>해킹신고 및 예방</option>
+							<option>신고하기</option>
+							<option>개선/불만사항</option>
+						</select>
+					</div>
+					<div id="wrap_Pw" class="container">
+						<span>비밀번호</span>
+						<input type="password" id="pwId" name="qnaPw" maxlength="10"/>
+					</div>
+					<div id="wrap_Title" class="container">
+						<span>제목</span>
+						<input type="text" id="titleId" name="qnaTitle"/>
+					</div>
+					<div id="wrap_Content" class="container">
+						<span>문의 내용</span>
+						<textarea id="contId" name="qnaContents" cols="100" rows="15" style="resize: none;"></textarea>
+					</div>
 				</div>
-				<div id="wrap_Title" class="container">
-					<span>제목</span>
-					<input type="text" id="titleId" name="qnaTitle"/>
+				<div id="btnWrap">
+					<input type="button" value="작성완료" id="submitBtn" class="btn" onclick="qnaEnter()"/>
+					<input type="button" value="취소" id="cancelBtn" class="btn" onclick="location.href='qnaList.html'"/>
 				</div>
-				<div id="wrap_Content" class="container">
-					<span>문의하실 내용</span>
-					<textarea id="contId" name="qnaContents"></textarea>
-				</div>
-			</div>
-			<div id="btnWrap">
-				<input type="button" value="작성완료" onclick="qnaEnter()"/>
-				<input type="button" value="취소" onclick="location.href='qnaList.html'"/>
 			</div>
 		</div>
 	</form>

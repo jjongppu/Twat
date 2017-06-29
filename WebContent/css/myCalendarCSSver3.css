@@ -145,6 +145,7 @@ li {
 
 .leftUp {
     background: linear-gradient( 165deg, white, #FDF9FF, white, #F0F3FA);
+/*    background: linear-gradient( 165deg, white, #FDF9FF, white);*/
     height: 300px;
     width: 500px;
 }
