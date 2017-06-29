@@ -2208,10 +2208,13 @@
 			}
 			//            console.log(masterCheck);
 
+			var groupId = location.href.split("=")[1];
+			
 			$.ajax({
 				type: 'post',
 				url: 'scheduleSelected.do',
 				data: {
+					groupId: groupId,
 					calNum: cal_num,
 					calDate: masterCheck
 				},
