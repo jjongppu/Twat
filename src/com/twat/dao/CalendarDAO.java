@@ -150,6 +150,7 @@ public class CalendarDAO {
 		try {
 			con = getConnection();
 			sql = "SELECT * FROM calendar order by CAL_NUM desc limit 1";
+//			con = getConnection();
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) {

@@ -6,48 +6,124 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 	<script src="js/jquery-3.2.1.min.js"></script>
-	
+	<link rel="stylesheet" type="text/css" href="css/nav.css">
+	    <script src="js/nav.js"></script>
+    <script src="js/jquery.form.js"></script>
 	
 	<style>
+		body{
+            background-image: url(img/background/back1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center top;
+        }
+		
 		#wrap {
-			border: 1px solid black;
-		}
-		.container {
-			border: 1px solid black;
-			margin: 4px;
+/*			margin-left: 100px;*/
+			width: 1000px;
+			margin: 0 auto;
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%,-50%);
 		}
 		span {
 			display: inline-block;
-			width: 110px;
+			width: 140px;
+			padding-left: 8px;
 		}
+		div {
+			display: block;
+		}
+		
+		#bigTitle {
+			margin-bottom: 80px;
+			background-color: #cccccc;
+		}
+		
+		#pwId {
+			width: 121px;
+		}
+		#titleId {
+			width: 720px;
+		}
+		#contWrap {
+/*			border: 1px solid black;*/
+		}
+		
+		.container {
+			border: 1px solid white;
+			margin: 2px;
+			background-color: #e6e6e6;
+		}
+		
+		
+		/* ------------------버튼 div ---------------*/
+		#btnWrap {
+/*			border: 1px solid red;*/
+			margin-top: 35px;
+			float: right;
+		}
+		.btn {
+			border: none;
+			widows: 100px;
+			height: 28px;
+/*			background-color: white;*/
+		}
+		
 	</style>
 	
 	<script>
 		function qnaEnter() {
-			if($('#qnaCategory').val() == "") {
-				alert("카테고리를 ");
-				$('#qnaCategory').focus();
-			} else if($('#qnaCategory').val() == "")
+			
+			pwTest(); // 비밀번호 숫자로만 입력
+			
+			if($('#cateId option:selected').val() == "--") {
+				alert("카테고리를 선택해주세요.");
+				$('#cateId').focus();
+			} else if($('#pwId').val() == "") {
+				alert("비밀번호를 설정해 주세요.");
+				$('#pwId').focus();
+			} else if($('#titleId').val() == "") {
+				alert("제목을 입력해 주세요.");
+				$('#titleId').focus();
+			} else if($('#contId').val() == "") {
+				alert("내용을 입력해 주세요.");
+				$('#contId').focus();
+			} else {
+				$.ajax ({
+					type : 'post',
+					url : 'QnaWrite.do',
+					data : $('#qnaForm').serialize(),
+					dataType : "json",
+					success : function(data) {
+						console.log(data);
+						var result = data[0].result;
+						console.log(result);
+						
+						if(result == 'success') {
+							alert("글 작성이 완료되었습니다.");
+							location.href='qnaList.html';
+						} else {
+							alert("글 작성에 실패하였습니다.");
+						}
+						
+					},
+					error: function(req) {
+						alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "QnaWrite.do");
+					}
+				});  
+			}
 				
 				
-			$.ajax ({
-                type : 'post',
-                url : 'QnaWrite.do',
-                data : $('#qnaForm').serialize(),
-                dataType : "json",
-                success : function(data) {
-                    console.log(data);
-                    var result = data[0].result;
-
-                    console.log(result);
-					
-					alert("글 작성이 완료되었습니다.");
-					location.href='qnaList.html';
-                },
-                error: function(req) {
-                    alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "QnaWrite.do");
-                }
-            });  
+		}
+		
+		function pwTest() {
+			var num_regx=/^[0-9]*$/; // 숫자만
+			if(!num_regx.test($('#pwId').val())) {
+				alert("비밀번호는 숫자로만 입력해야 합니다.");
+			}
 		}
 	
 	
@@ -55,38 +131,67 @@
 </head>
 <body>
 	<form id="qnaForm" action="QnaWrite.do" method="post">
-		<div>
-			<h4>문의사항 작성하기</h4>
-		</div>
+		<div id="newWrap">
+			<nav class="left_nav">
+				<div id="userInfo">
+					<ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+						<li class="nav_li">
+							<img id="user_Img" src=""/>
+						</li>
+						<li class="nav_li idLi">
+							<div id="user_Id"></div>
+						</li>
+					</ul>
+				</div>
+				<ul class="nav_ul" id="nav_menu">
+					<li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+					<li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
+					<li class="nav_li"><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+					<li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+					<li class="nav_li"><div id="navHere"></div><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
+				</ul>
+				<ul id="logout" class="nav_ul" onclick="logout()">
+					<li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
+				</ul>
 
-		<div id="wrap">
-			<div id="wrap_Cate" class="container">
-				<span>카테고리</span>
-				<select name="qnaCategory">
-					<option>--</option>
-					<option>서비스 문의</option>
-					<option>아이디 관련</option>
-					<option>해킹신고 및 예방</option>
-					<option>신고하기</option>
-					<option>개선/불만사항</option>
-				</select>
+			</nav>
+			
+			<!--여기까지 네브바-->
+			<div id="wrap">
+				<div id="bigTitle">
+					<h4>문의사항 작성하기</h4>
+				</div>
+
+				<div id="contWrap">
+					<div id="wrap_Cate" class="container">
+						<span>카테고리</span>
+						<select id="cateId" name="qnaCategory">
+							<option>--</option>
+							<option>서비스 문의</option>
+							<option>아이디 관련</option>
+							<option>해킹신고 및 예방</option>
+							<option>신고하기</option>
+							<option>개선/불만사항</option>
+						</select>
+					</div>
+					<div id="wrap_Pw" class="container">
+						<span>비밀번호</span>
+						<input type="password" id="pwId" name="qnaPw" maxlength="10"/>
+					</div>
+					<div id="wrap_Title" class="container">
+						<span>제목</span>
+						<input type="text" id="titleId" name="qnaTitle"/>
+					</div>
+					<div id="wrap_Content" class="container">
+						<span>문의 내용</span>
+						<textarea id="contId" name="qnaContents" cols="100" rows="15" style="resize: none;"></textarea>
+					</div>
+				</div>
+				<div id="btnWrap">
+					<input type="button" value="작성완료" id="submitBtn" class="btn" onclick="qnaEnter()"/>
+					<input type="button" value="취소" id="cancelBtn" class="btn" onclick="location.href='qnaList.html'"/>
+				</div>
 			</div>
-			<div id="wrap_Pw" class="container">
-				<span>비밀번호</span>
-				<input type="text" name="qnaPw"/>
-			</div>
-			<div id="wrap_Title" class="container">
-				<span>제목</span>
-				<input type="text" name="qnaTitle"/>
-			</div>
-			<div id="wrap_Content" class="container">
-				<span>문의하실 내용</span>
-				<textarea name="qnaContents"></textarea>
-			</div>
-		</div>
-		<div id="btnWrap">
-			<input type="button" value="작성완료" onclick="qnaEnter()"/>
-			<input type="button" value="취소" onclick="location.href='qnaList.html'"/>
 		</div>
 	</form>
 </body>
