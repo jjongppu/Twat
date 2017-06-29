@@ -18,12 +18,12 @@ public class MemberJoinGroupVO
 	
 	public int getCALENDAR_READ_VIEW()
 	{
-		return CALENDAR_VIEW;
+		return CALENDAR_READ_VIEW;
 	}
 
 	public void setCALENDAR_READ_VIEW(int CALENDAR_READ_VIEW)
 	{
-		this.CALENDAR_VIEW = CALENDAR_VIEW;
+		this.CALENDAR_READ_VIEW = CALENDAR_READ_VIEW;
 	}
 	
 	public int getCALENDAR_VIEW()

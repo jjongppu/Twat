@@ -427,30 +427,30 @@
         
     </script>
 <body>
- <div id="wrap">
-<!--        네브바 입니다 ```````````````````````````````````````````````` -->
-    <nav class="left_nav">
+    <div id="newWrap">
+      <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                 <li class="nav_li">
+                    <div id="navHere"></div>
                     <img id="user_Img" src=""/>
                 </li>
-                <li class="nav_li">
+                <li class="nav_li idLi">
                     <div id="user_Id"></div>
                 </li>
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="home.html">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html" onclick='pageload()'>친구 목록</a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
         </ul>
-        
+          
     </nav>
         <div id="main_container">
     
