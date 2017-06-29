@@ -98,17 +98,17 @@ public class CalgatherDAO {
 			int GroupPk) {
 		int result = 0;
 		int GroupCount = members.length;
-		String masterName = "遺덈윭�삤吏� 紐삵븿";
+		String masterName = "";
 
 		String selectMasterName = "SELECT * FROM MEMBER WHERE MEMBER_ID=?";
 
 		String selectMakeGroupSql = "INSERT INTO CALGATHER VALUES(?,?,?,?,?,?,?)";
 
 		String selectaddGMSql = "INSERT INTO MEMBER_JOIN_GROUP VALUES";
-		selectaddGMSql += "('" + masterId + "','" + GroupPk + "',0),";
+		selectaddGMSql += "('" + masterId + "','" + GroupPk + "',0,0),";
 
 		for (int i = 0; i < members.length; i++) {
-			selectaddGMSql += "('" + members[i] + "','" + GroupPk + "',0)";
+			selectaddGMSql += "('" + members[i] + "','" + GroupPk + "',0,0)";
 
 			if (i != members.length - 1) {
 				selectaddGMSql += ",";

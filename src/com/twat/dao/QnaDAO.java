@@ -75,7 +75,7 @@ public class QnaDAO {
 	
 	// 건의사항 글쓰기 --------------------------최승우-------------------
 	public int insertQnA(String qnaId, String qnaCategory, int qnaPW, String qnaTitle, String qnaContents) {
-		PreparedStatement psmt= null;
+//		PreparedStatement psmt= null;
 		ResultSet rs= null;
 		int result = -1;
 //		int qna_number = 0;
@@ -103,7 +103,7 @@ public class QnaDAO {
 		} finally {
 	        try {
 	        	if(rs != null) rs.close();
-		        if(psmt != null) psmt.close();
+		        if(psmt2 != null) psmt2.close();
 		        if(con != null) con.close();
 	        } catch (SQLException e) {
 	        	// TODO Auto-generated catch block
