@@ -120,4 +120,43 @@ public class MemberJoinGroupDAO
 		
 		return arrList;
 	}
+
+	// ¹æÅ»Åð
+	public void roomOut(String groupId, String userId)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+
+		try {
+			con = getConnection();
+			String sql = "DELETE FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? and GROUP_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, Integer.parseInt(groupId));
+
+			int result = pstmt.executeUpdate();
+			
+			if(result == 1)
+			{
+				System.out.println("¹æÅ»Åð ¼º°ø");
+			}
+			else
+			{
+				System.out.println("¹æÅ»Åð ½ÇÆÐ");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rSet != null)
+					rSet.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

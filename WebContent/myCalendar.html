@@ -1758,14 +1758,14 @@
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
-            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/diary.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/calendar.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/friends.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/qna.png"/></a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/exit.png"/></a></li>
         </ul>
     </nav>
 
@@ -1799,8 +1799,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="leftDown">
                         <!-- 밑 -->
                         <div class="privSchedule">
@@ -1819,27 +1817,26 @@
                         </div>
                     </div>
                     
-                    
-                     <div class="events">
+                    <div class="events">
                     <!-- 밑 감싸기-->
-                    <div class="eveLeft">
-                        <!-- 옆 -->
-                        <div class="closeEvent">
-                            <div class="closeText txt">친구 생일</div>
-                            <div class="closeDeco"></div>
-                        </div>
-                        <div class="closeSub">
-                            <div class="sub closePic">
-                                <!--<img src="/img/member/jennie.png" id="user_Img">--></div>
-                            <div class="sub closeName txt">
-                                <div id="fName"></div>
+                        <div class="eveLeft">
+                            <!-- 옆 -->
+                            <div class="closeEvent">
+                                <div class="closeText txt">친구 생일</div>
+                                <div class="closeDeco"></div>
                             </div>
-                            <div class="sub closeCont txt">
-                                <div id="fBirth"></div>
+                            <div class="closeSub">
+                                <div class="sub closePic">
+                                    <!--<img src="/img/member/jennie.png" id="user_Img">--></div>
+                                <div class="sub closeName txt">
+                                    <div id="fName"></div>
+                                </div>
+                                <div class="sub closeCont txt">
+                                    <div id="fBirth"></div>
+                                </div>
+                                </br>
                             </div>
-                            </br>
                         </div>
-                    </div>
                     </div>
                     
                 </div>
@@ -1902,6 +1899,7 @@
                         </table>
                         <button class="modalButton" onclick="addSchedule()">일정추가하기</button>
                     </div>
+                    
                     <!-- ============ 텍스트 입력 모달창 ============ -->
                     <div>
                         <div id="blindCover" onclick="closeModal();"></div>
@@ -1935,7 +1933,6 @@
             <!--  ========================= FOOTER ========================== -->
             <footer class="footer">
                 <!--밑-->
-               
 <!--
                     <div class="eveRight">
                         <div class="closeEvent">
@@ -1954,9 +1951,7 @@
                             <div class="sub closeCont txt">6월 13일 생일</div>
                         </div>
                     </div>
--->
-                    
-                
+-->             
             </footer>
 
         </div>

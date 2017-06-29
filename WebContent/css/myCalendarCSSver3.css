@@ -1,13 +1,18 @@
+/*   
+    #756C6F : 진한 그레이
+    #F6F6F6 : 흰색에 가까운 그레이
+    #DCDAE4: 연한 그레이
+    #B3B2C1 : 그레이
+*/
     body {
-        background-image: url(../img/background/back1.jpg);
+        background-image: url(../img/background/back2.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
         background-position: center top;
     }
     
-    html,
-    body {
+    html, body {
         margin: 0;
         padding: 0;
     }
@@ -77,8 +82,7 @@
         margin-top: 50px;
     }
     
-    #user_Id,
-    #user_Img_Cover {
+    #user_Id, #user_Img_Cover {
         cursor: pointer;
     }
     
@@ -118,7 +122,6 @@
         left: 0;
     }
     
-    
     #container {
         width: 1250px;
         height: 800px;
@@ -132,285 +135,34 @@
         margin-left: 20px;
     }
     
-    .top {
-        width: 100%;
-        height: 20%;
-    }
-/*
-    
-    #icon {
-        width: 30%;
-        height: 100%;
-        float: left;
-        position: relative;
-        top: 50%;
-        transform: translate(0, -50%);
-        background-color: white;
-    }
-    
-    #icon>img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
-    #content {
-        width: 40%;
-        height: 100%;
-        float: left;
-
-    }
-    
-    #content #title {
-        position: relative;
-        width: 100%;
-        height: 50%;
-
-        background-color: white;
-        font-size: 25px;
-        font-weight: bold;
-    }
-    
-    #content #title #groupTitle {
-        position: absolute;
-        bottom: 5px;
-    }
-    
-    #content #member {
-        width: 100%;
-        height: 50%;
-
-        padding-top: 10px;
-        box-sizing: border-box;
-    }
-    
-    #content #member #master {
-
-        height: 100%;
-        float: left;
-    }
-    
-    #content #member #otherMembers {
-
-        height: 100%;
-        float: left;
-
-    }
-    
-    #config {
-        width: 30%;
-        height: 100%;
-        float: left;
-        background-color: #a0f0a0;
-    }
-
-    
-*/
-    .schedule {
-        width: 100%;
-        height: 30%;
-        background-color: #665522;
-        overflow-y: hidden;
-    }
-    
-/*
-    .vote {
-        width: 100%;
-        height: 30%;
-        background-color: #a034a0;
-        overflow-y: hidden;
-    }
-    
-    .event {
-        width: 100%;
-        height: 20%;
-        background-color: #a0f0a0;
-    }
-    
-    .title {
-        width: 100%;
-        height: 15%;
-        background-color: white;
-    }
-    
-    .contentBox {
-        width: 100%;
-        height: 90%;
-        background-color: white;
-    }
-    
-    .content {
-        width: 100%;
-        height: 32%;
-        background-color: white;
-    }
-    
-    .left {
-        width: 30%;
-        height: 100%;
-        float: left;
-        text-align: center;
-        line-height: 71px;
-        background-color: white;
-    }
-    
-    .middle {
-        width: 40%;
-        height: 100%;
-        float: left;
-        background-color: antiquewhite;
-    }
-    
-    .middle-top {
-        width: 100%;
-        height: 50%;
-        line-height: 45px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    
-    .middle-bottom {
-        width: 100%;
-        height: 50%;
-        line-height: 25px;
-    }
-    
-    .right {
-        width: 30%;
-        height: 100%;
-        float: left;
-        background-color: white;
-    }
-    
-    .right-top {
-        width: 80%;
-        height: 50%;
-        line-height: 45px;
-    }
-    
-    .stateOK {
-        color: limegreen;
-        font-weight: bold;
-    }
-    
-    .stateNO {
-        color: crimson;
-        font-weight: bold;
-    }
-    
-    .stateYET {
-        color: dimgray;
-        font-weight: bold;
-    }
-    
-    .right-bottom {
-        width: 100%;
-        height: 50%;
-        line-height: 25px;
-    }
-    
-    .birth {
-        line-height: 46px;
-    }
-*/
-/*    ========== right  ======================*/
-    #right-side {
-        /*       width: 60%;*/
-        width: 730px;
-        height: 800px;
-        float: right;
-        background-color: white;
-    }
-    
-    .cal {
-        height: 800px;
-    }
-    
-    #calendar {
-        padding-left: 30px;
-        /*        width: 100%;*/
-        /*        height: 100%;*/
-        color: black;
-        border-color: wheat;
-    }
-    
-    td {
-        width: 95px;
-        height: 95px;
-    }
-    
-    .saturday {
-        color: blue;
-    }
-    
-    .sunday {
-        color: red;
-    }
-    
-    #yearSelect,
-    #monthSelect {
-        background-position: 300px;
-        width: 100px;
-        padding: 12px;
-        margin-top: 8px;
-        line-height: 1;
-        font-size: 20px;
-        border: none;
-        outline: none;
-        text-align: center;
-    }
-    
-    .stick {
-        display: inline-block;
-        background-color: #83C5F1;
-        height: 5px;
-        width: 200px;
-        margin-top: 20px;
-    }
-
-    
-   
-    /*-----------------------------------------------------*/
-    
-
-
-
-
-/*   ================   footer    ============  */
-/*
-.footer{
-    background: linear-gradient( 45deg, white, pink, white, #6534ff);
-    height: 100%;
-}
-*/
-
-.events{
-    background-color: white;
-/*    height: 100%;*/
-    position: relative;
-    display: inline-block;    
-    margin: auto;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
+        .leftUp{
+            background-color: aliceblue;
+                
+        }
+        .schedule {
+            width: 100%;
+            height: 30%;
+        }
+        .schCont{
+            border: 1px solid black;
+        }
+        .events{
+            background-color: white;
+        /*    height: 100%;*/
+            position: relative;
+            display: inline-block;    
+            margin: auto;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
 
 .eveLeft{
-    width:500px;
+    width:300px;
 /*    height: 100%;*/
     display: inline-block;
     background-color: white;
 }
 
-/*
-.eveRight{
-    width:500px;
-    height: 170px;
-    display: inline-block;
-    background-color: white;
-}
-*/
     
 .closeEvent div {
     display: inline-block;
@@ -466,3 +218,52 @@
     padding: 0;
     margin: 0;
 }
+    
+    
+/*    ========== right  ======================*/
+    #right-side {
+        /*       width: 60%;*/
+        width: 730px;
+        height: 800px;
+        float: right;
+        background-color: white;
+    }
+    
+    .cal {
+        height: 800px;
+    }
+    
+    #calendar {
+        padding-left: 30px;
+        /*        width: 100%;*/
+        /*        height: 100%;*/
+        color: black;
+        border-color: wheat;
+    }
+    
+    td {
+        width: 95px;
+        height: 95px;
+    }
+    
+    .saturday {
+        color: blue;
+    }
+    
+    .sunday {
+        color: red;
+    }
+    
+    #yearSelect, #monthSelect {
+        background-position: 300px;
+        width: 100px;
+        padding: 12px;
+        margin-top: 8px;
+        line-height: 1;
+        font-size: 20px;
+        border: none;
+        outline: none;
+        text-align: center;
+    } 
+
+

@@ -323,4 +323,69 @@ public class CalgatherDAO {
 		}
 	}
 
+	public boolean setRoomOut(int groupId)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		boolean isDel = false;
+
+		try {
+			con = getConnection();
+			String sql = "SELECT GROUP_COUNT FROM CALGATHER WHERE GROUP_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, groupId);
+			
+			rSet = pstmt.executeQuery();
+			
+			int count = -1;
+			
+			while(rSet.next())
+			{
+				count = rSet.getInt(1) - 1;
+			}
+			
+			
+			if(count < 0)
+			{
+				sql = "DELETE FROM CALGATHER WHERE GROUP_ID=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, groupId);
+				
+				isDel = true;
+			}
+			else
+			{
+				sql = "UPDATE CALGATHER SET GROUP_COUNT=? WHERE GROUP_ID=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, count);
+				pstmt.setInt(2, groupId);
+			}
+
+			int result = pstmt.executeUpdate();
+			
+			if(result == 1)
+			{
+				System.out.println("성공");
+			}
+			else
+			{
+				System.out.println("실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rSet != null)
+					rSet.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return isDel;
+	}
 }
