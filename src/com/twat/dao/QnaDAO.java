@@ -103,7 +103,7 @@ public class QnaDAO {
 		} finally {
 	        try {
 	        	if(rs != null) rs.close();
-		        if(psmt != null) psmt.close();
+		        if(psmt2 != null) psmt2.close();
 		        if(con != null) con.close();
 	        } catch (SQLException e) {
 	        	// TODO Auto-generated catch block
