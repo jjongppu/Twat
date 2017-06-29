@@ -993,11 +993,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1009,14 +1006,10 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
+             }, 
+            complete: function () {
+                           $("#div_ajax_load_image").hide();  
              }
-             , complete: function () {
-                           $("#div_ajax_load_image").hide();
-                
-             }
-            
         });
     }
 
@@ -1275,7 +1268,6 @@
     }
     //  ================================ 달력 출력 끝! ================================
 
-
     function getGroupInfo() {
         var para = document.location.href.split("?");
         para = para[1].split("=");
@@ -1357,11 +1349,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1372,13 +1361,10 @@
                     }
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-                    }
-                    
-
+                    }                    
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
-                
              }
         });
     }
@@ -1474,11 +1460,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1489,9 +1472,7 @@
                     }
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-                    }
-                    
-
+                    }  
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
@@ -1541,11 +1522,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1557,8 +1535,6 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
@@ -1600,11 +1576,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1616,12 +1589,9 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
-                
              }
         });
     });
@@ -1674,12 +1644,9 @@
 
                     width = 50;
                     height = 50;
-
-
+                
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1691,12 +1658,9 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
-                
              }
         });
         location.reload();
@@ -1738,7 +1702,6 @@
     
     
     function reloadList(){
-        
         location.reload();
     }
 
@@ -1802,7 +1765,7 @@
                     <div class="leftDown">
                         <!-- 밑 -->
                         <div class="privSchedule">
-                            <div class="program txt">단체 </div>
+                            <div class="program txt">단체 일정</div>
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">

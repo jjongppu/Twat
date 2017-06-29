@@ -1037,7 +1037,7 @@ public class MemberDAO {
 		try {
 
 			try {
-				if (con.isClosed())
+//				if (con.isClosed() || con == null)
 					con = getConnection();
 			} catch (Exception e) {
 
@@ -1224,6 +1224,7 @@ public class MemberDAO {
 
 	public void deleteFriend(String userId, String deleteFriend) { // 친구 삭제하기
 		PreparedStatement psmt2 = null;
+		PreparedStatement psmt3 = null;
 		ResultSet rs2 = null;
 		String friendsList = "";
 		ArrayList<String> friendsListArr = new ArrayList<String>();
@@ -1276,13 +1277,14 @@ public class MemberDAO {
 				if (friendsListArr.get(i).length() != 0)
 					deletedFriendsList += "," + friendsListArr.get(i);
 			}
-
+			con = getConnection();
 			String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
-			con.close();
-			psmt2 = con.prepareStatement(sql2);
-			psmt2.setString(1, deletedFriendsList);
-			psmt2.setString(2, deleteFriend);
-			psmt2.executeUpdate();
+			
+			psmt3 = con.prepareStatement(sql2);
+			
+			psmt3.setString(1, deletedFriendsList);
+			psmt3.setString(2, deleteFriend);
+			psmt3.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1293,6 +1295,8 @@ public class MemberDAO {
 					rs2.close();
 				if (psmt2 != null)
 					psmt2.close();
+				if (psmt3 != null)
+					psmt3.close();
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {
@@ -1345,4 +1349,122 @@ public class MemberDAO {
 
 		return arrList;
 	}
+	
+	public ArrayList<String> friendsListForArrList(String userId){
+		
+		ArrayList<String> friendArrList = new ArrayList<String>();
+		String friendsList = getfriendListForString(userId);
+		
+		for(int i = 0; i < friendsList.split(",").length; i++){
+			
+			if(friendsList.split(",")[i].length() != 0){
+				friendArrList.add(friendsList.split(",")[i]);
+				
+			}
+			
+			
+		}
+		
+		return friendArrList;
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	public void requestCancelRefuse(String userId, String friendId, String refuseOrCancel){
+		PreparedStatement psmt2 = null;
+		String myFriendList = "";
+		String friendFriendList = "";
+		String myToken = "";
+		String frToken = "";		
+		ArrayList<String> myArr = friendsListForArrList(userId);
+		ArrayList<String> frArr = friendsListForArrList(friendFriendList);
+		if(refuseOrCancel.equals("refuse")){
+			myToken = "!";
+			frToken = "*";			
+		}else{
+			myToken = "*";
+			frToken = "!";			
+		}
+		
+		
+		
+		for(int i = 0; i < myArr.size(); i++){
+			if(myArr.get(i).equals(myToken+friendId)){
+				myArr.remove(i);				
+			}else{
+				if(myArr.get(i).length() != 0)
+					myFriendList += "," + myArr.get(i); 
+				
+			}			
+		}
+		
+		for(int i = 0; i < frArr.size(); i++){
+			if(frArr.get(i).equals(frToken+userId)){
+				frArr.remove(i);				
+			}else{
+				if(frArr.get(i).length() != 0)
+					friendFriendList += "," + frArr.get(i);
+				
+			}			
+		}
+		
+		
+		
+		
+		
+		System.out.println("내리스트 :" + myFriendList);
+		System.out.println("친구리스트 : " + friendFriendList);
+		
+		
+		try {
+			con = getConnection();
+			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";// 내 친구목록 갱신
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, myFriendList);
+			psmt2.setString(2, userId);
+			psmt2.executeUpdate();
+			
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, friendFriendList);
+			psmt2.setString(2, friendId);
+			psmt2.executeUpdate(); 
+			
+			
+			
+			
+			
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+				try {
+					if(psmt2 != null)
+						psmt2.close();
+					if(con != null)
+						con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+	}
+	
+	
+	
 }
