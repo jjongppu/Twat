@@ -13,6 +13,7 @@ html,body{
         div{
             position: relative;
             display: inline-block;
+/*            display: block;*/
         }
         #newWrap{
             display: block;
@@ -97,6 +98,23 @@ html,body{
             bottom: 10px;
             left: 0;
         }
+            #newContents{
+        position: absolute;
+        top: 0;
+        left: 20px;
+        background-color: red;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        font-weight: bold;
+        line-height: 20px;
+        font-size: 11px;
+        color: yellow;
+        border-radius: 20px;
+        display: none;
+    }
+        
+        
    body {
        /*    max-width: 1200px;*/
        /*    width: 1200px;*/
@@ -164,6 +182,7 @@ html,body{
        height: 100%;
        float: left;
 /*       background-color: #f0a0a0;*/
+       background-color: white;
    }
    
    #content #title {
@@ -208,7 +227,10 @@ html,body{
        width: 30%;
        height: 100%;
        float: left;
-       background-color: #a0f0a0;
+/*       background-color: #a0f0a0;*/
+       background-color: white;
+	   text-align: center;
+	   position: relative;
    }
    /*  ������ �ؿ� �͵� ======================================  */
    
@@ -229,7 +251,7 @@ html,body{
    .event {
        width: 100%;
        height: 20%;
-/*       background-color: #a0f0a0;*/
+       background-color: white;
    }
    
    .title {
@@ -445,6 +467,7 @@ html,body{
     .stateBar
     {
         background-color: dimgray;
+		display: block;
 /*        height: 100%;*/
         height: 50%;
         border-radius: 25px;
@@ -524,4 +547,14 @@ input[type=radio]:hover
     position: absolute;
     bottom: 0;
     right: 0;
+}
+
+#roomOut
+{
+	width: 80px;
+	height: 80px;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

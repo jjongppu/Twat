@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.RowSetProvider;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -51,24 +52,38 @@ public class ResponsingFriends extends HttpServlet {
 	    HttpSession session = request.getSession();	    
 	    String userId = (String) session.getAttribute("loginUserId");
 	    
+	    
+	    
+	    
 	    String friendsList = mdo.getfriendListForString(userId);
 //	    System.out.println(friendsList);
 	    
 	    
 	    responsingFriends = mdo.requestingFriendList(userId, "*");
 	    
-	    for(int i = 0; i < responsingFriends.size(); i++){
+	    
+	    if(responsingFriends != null){
+	    	for(int i = 0; i < responsingFriends.size(); i++){
+		    	jsonObj = new JSONObject();
+		    	jsonObj.put("userId" , responsingFriends.get(i).getMEMBER_ID());
+		    	jsonObj.put("userImg", responsingFriends.get(i).getMEMBER_IMG());
+		    	jsonObj.put("userName",responsingFriends.get(i).getMEMBER_NAME());
+		    	jsonObj.put("userPhone", responsingFriends.get(i).getMEMBER_PHONE());
+		    	jsonObj.put("userGender", responsingFriends.get(i).getMEMBER_GENDER());		    	
+		    	jsonArr.add(jsonObj);
+		    }
+		    
+		    out.println(jsonArr);
+		    out.close();	    	
+	    }else{
 	    	jsonObj = new JSONObject();
-	    	jsonObj.put("userId" , responsingFriends.get(i).getMEMBER_ID());
-	    	jsonObj.put("userImg", responsingFriends.get(i).getMEMBER_IMG());
-	    	jsonObj.put("userName",responsingFriends.get(i).getMEMBER_NAME());
-	    	jsonObj.put("userPhone", responsingFriends.get(i).getMEMBER_PHONE());
+	    	jsonObj.put("result", "fail");
 	    	jsonArr.add(jsonObj);
+	    	out.println(jsonArr);
+		    out.close();	    
+	    	
 	    }
-	    
-	    out.println(jsonArr);
-	    out.close();
-	    
+	    	    
 	    
 //	    for(int i = 1; i < friendsList.split(",").length; i++){
 //	    	if(friendsList.split(",")[i].substring(0, 1).equals("*")){

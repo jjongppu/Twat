@@ -15,15 +15,22 @@
     $.ajax({
         type: "post",
         url: "groupList.do",
+        data: {kind:1},
         dataType: "json",
         success: function(data) {
             var output = "";
+            var countMeView = 0;
+            var countGroupView = 0;
             console.log(data);
             if(data[0].group_id != "noGroup"){
                 for(var i=0;i<data.length;i++){
+                    var count = data[i].view_group;
                     output += '<div class="center_cover">';
                     output += '<div class="group_Cover" id="'+ data[i].group_id +'">';
                     output += '<div class="group_top">';
+                       if((count-data[i].view_me) >0){
+                        output +='<div class="newCon">'+(count-data[i].view_me)+'</div>';
+                    }
                     output += '<div class="group_icon">';
                     output += '<img class="iconImg" src="'+data[i].group_img+'"/>';
                     output += '</div>';
@@ -44,6 +51,9 @@
                     output += '</div>';
                     output += '</div>';
                     output += '</div>';
+                    countGroupView += count;
+                    countMeView += data[i].view_me;
+                    
                 }
             }else{
                 output += '<div class="center_cover">';
@@ -53,8 +63,12 @@
                 output += '</div>';
             }
 
-            
             document.getElementById('list_Cover_Cover').innerHTML = output;
+            if(countGroupView > countMeView){
+                $('#newContents').css('display','inline-block');
+            }
+            
+            
             
         },
         error: function(e) {
@@ -67,6 +81,15 @@
         // 입장하기 누르면 그방의 pk 값을 들고 고고씽~?
     function jongGroup(tag){
         var groupPk = $(tag).parent().parents('.group_Cover').attr('id');
+        $.ajax({
+            type: 'post', 
+            dataType: 'json',
+            url: 'setMyGroupContentsView.do',
+            data: { group_id : groupPk},
+            success: function (data){
+
+            }
+        });    
         location.href="groupCalendar.html?group="+groupPk ;
     }
     
@@ -224,6 +247,7 @@
     }
     
     
+    
 </script>
 <style>
     body{
@@ -272,8 +296,12 @@
         height: 50px;
     }
     .title_Cover{
-        width: 290px;
+        width: 270px;
         height: 50px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+/*        display: block;*/
     }
     .group_Title{
         display: block;
@@ -487,10 +515,24 @@
         margin-left: 20px;
         
     }
+    .newCon{
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        height: 20px;
+        min-width: 20px;
+        text-align: center;
+        font-weight: bold;
+        line-height: 20px;
+        font-size: 11px;
+        color: yellow;
+        border-radius: 20px;
+    }
     
     
     
-    
+
     
 </style>
        
@@ -510,9 +552,10 @@
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
+            
             <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
-            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a><div id="newContents">N</div></li>
             <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
         </ul>

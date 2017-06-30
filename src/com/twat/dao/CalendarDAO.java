@@ -148,8 +148,9 @@ public class CalendarDAO {
 		int cal_num = 0;
 
 		try {
-//			con = getConnection();
+			con = getConnection();
 			sql = "SELECT * FROM calendar order by CAL_NUM desc limit 1";
+//			con = getConnection();
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
@@ -166,8 +167,8 @@ public class CalendarDAO {
 					rs.close();
 				if (psmt != null)
 					psmt.close();
-//				if (con != null)
-//					con.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -228,9 +229,12 @@ public class CalendarDAO {
 	public int getLastDepth(int cal_num) {
 		String sql = "";
 		int cal_depth = 0;
-
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		try {
-//			con = getConnection();
+			if(con == null)
+				con = getConnection();
+			
 			sql = "SELECT CAL_DEPTH FROM calendar where CAL_REFERENCE = ? order by CAL_DEPTH desc limit 1";
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, cal_num);
@@ -250,8 +254,8 @@ public class CalendarDAO {
 					rs.close();
 				if (psmt != null)
 					psmt.close();
-//				if (con != null)
-//					con.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -559,7 +563,6 @@ public class CalendarDAO {
 		}
 	}
 
-	// memberId嚥∽옙 占쎈뼊筌ｋ똻�뵬占쎌젟 占쎈섯占쎈선占쎌궎疫뀐옙! 占쎈뱟占쎌뜒 �빊遺쏙옙.
 	public ArrayList<CalendarVO> groupCalInfo(ArrayList<String> groupIdArr) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -571,7 +574,7 @@ public class CalendarDAO {
 			sql += " or GROUP_ID=? ";
 		}
 
-		sql += "order by CAL_DATE desc limit 1";
+		sql += "order by CAL_DATE desc limit 8";
 
 		try {
 			con = getConnection();
@@ -730,6 +733,172 @@ public class CalendarDAO {
 				
 				pstmt.executeUpdate();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// 방나가기 처리
+	public void setRoomOut(int groupId, String userId)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<CalendarVO> calList = new ArrayList<CalendarVO>();
+
+		try {
+			con = getConnection();
+			String sql = "select CAL_NUM, CAL_DATE, MEMBER_CHOICE FROM CALENDAR WHERE GROUP_ID=? and CAL_DEPTH=0";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, groupId);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				CalendarVO calendarVO = new CalendarVO();
+				
+				calendarVO.setCal_num(rs.getInt(1));
+				calendarVO.setCal_date(rs.getString(2));
+				calendarVO.setMember_choice(rs.getString(3));
+				
+				calList.add(calendarVO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		for(int i = 0; i < calList.size(); i++)
+		{
+			boolean voted = true;
+			
+			CalendarVO calendarVO = calList.get(i);
+			String memberChoice = calendarVO.getMember_choice();
+			
+			if(!memberChoice.contains(","))
+			{
+				System.out.println(memberChoice);
+				return;
+			}
+			
+			TreeSet<String> list = new TreeSet<String>();
+			String[] memSplit = memberChoice.split(",");
+				
+			for(int j = 0; j < memSplit.length; j++)
+			{
+				list.add(memSplit[j]);
+				
+				if(memSplit[j].contains("-") && !memSplit[j].split("-")[0].equals("00000000"))
+				{
+					voted = false;
+				}
+			}
+				
+			if(!voted)
+			{
+				if(calendarVO.getCal_date().contains(","))
+				{
+					String[] dateList = calendarVO.getCal_date().split(",");
+					
+					for(int k = 0; k < dateList.length; k++)
+					{
+						list.add(dateList[k] + "-" + userId);
+					}
+				}
+				else
+				{
+					list.add(calendarVO.getCal_date() + "-" + userId);
+				}
+			}
+			
+			String memChoice = "";
+			
+			for (String string : list) {
+//				if(string.contains("-") && string.equals("00000000-" + userId))
+				if(string.contains("-") && string.split("-")[1].equals(userId))
+				{
+					
+				}
+				else
+				{
+					memChoice += string + ",";
+				}
+			}
+			
+			memChoice = memChoice.substring(0, memChoice.length() -1);
+			
+			calendarVO.setMember_choice(memChoice);
+			
+			calList.set(i, calendarVO);
+		}
+		
+		try {
+			con = getConnection();
+			for(int i = 0; i < calList.size(); i++)
+			{
+				String sql = "UPDATE CALENDAR SET MEMBER_CHOICE=? WHERE CAL_NUM=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, calList.get(i).getMember_choice());
+				pstmt.setInt(2, calList.get(i).getCal_num());
+				
+				pstmt.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void delCal(int groupId)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			con = getConnection();
+			String sql = "DELETE FROM CALENDAR WHERE GROUP_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, groupId);
+
+			int result = pstmt.executeUpdate();
+			
+			if(result == 1)
+				System.out.println("calendar에서 groupId가 " + groupId + "인 row 삭제");
+			else
+				System.out.println("삭제 실패");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

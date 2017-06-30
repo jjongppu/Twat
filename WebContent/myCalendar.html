@@ -993,11 +993,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1009,14 +1006,10 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
+             }, 
+            complete: function () {
+                           $("#div_ajax_load_image").hide();  
              }
-             , complete: function () {
-                           $("#div_ajax_load_image").hide();
-                
-             }
-            
         });
     }
 
@@ -1275,113 +1268,106 @@
     }
     //  ================================ 달력 출력 끝! ================================
 
-
-    function getGroupInfo() {
-        var para = document.location.href.split("?");
-        para = para[1].split("=");
-        $.ajax({
-            type: 'post',
-            url: 'myCal.do',
-            data: {
-                group: para[1]
-            },
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
-                $("#title").html = "<span>" + data[0].group_name + "</span>";
-                document.getElementById("title").innerHTML += "<span>" + data[0].group_name + "</span>";
-                $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
-                document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
-                $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
-                document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
-
-                for (var arrCal = 1; arrCal < data.length; arrCal++) {
-                    var str = "";
-                    var str2 = data[arrCal].cal_date;
-                    console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
-                    str += '<div class="content">';
-                    str += '<div class="left">';
-                    if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
-                        str += data[arrCal].cal_date;
-                        console.log("확정 : " + data[arrCal].cal_memo);
-                        scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo);
-                    } else {
-                        var res = str2.split(",");
-                        str += res[0] + "~" + res[res.length - 1];
-                        console.log("투표 : " + data[arrCal].cal_memo);
-                        for (var i = 0; i < res.length; i++) {
-                            voteSet.add(res[i] + "-" + data[arrCal].cal_memo);
-                        }
-                    }
-                    str += '</div>';
-                    str += '<div class="middle" onclick="addComment(this)">';
-                    str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
-                    str += '<div class="middle-bottom">';
-                    str += '<span>' + data[arrCal].cal_writer + '님</span>';
-                    str += '<span>외 ' + data[0].group_count + '명 참여</span>';
-                    str += '</div>';
-                    str += '</div>';
-                    str += '<div class="right">';
-                    str += '<div class="right-top"></div>';
-                    str += '<div class="right-bottom">';
-
-                    if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
-                        // 전체 일정(확정)
-                        str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
-                    } else {
-                        // 투표(미확정)
-                        str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
-                    }
-
-                    str += '</div>';
-                    str += '</div>'; // div-right
-                    str += '</div>'; // div=middle
-                    if (str2.indexOf(',') == -1) {
-                        $(".schedule").append(str);
-                    } else {
-                        $(".vote").append(str);
-                    }
-                }
-                buildCalendar();
-            },
-            error: function(req) {
-                //                    alert('통신실패');
-                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }, beforeSend: function () {
-                    var width = 0;
-                    var height = 0;
-                    var left = 0;
-                    var top = 0;
-
-                    width = 50;
-                    height = 50;
-
-
-                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
-                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
-
-                    if($("#div_ajax_load_image").length != 0) {
-                           $("#div_ajax_load_image").css({
-                                  "top": top+"px",
-                                  "left": left+"px"
-                           });
-                           $("#div_ajax_load_image").show();
-                    }
-                    else {
-                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-                    }
-                    
-
-             }
-             , complete: function () {
-                           $("#div_ajax_load_image").hide();
-                
-             }
-        });
-    }
+//    function getGroupInfo() {
+//        var para = document.location.href.split("?");
+//        para = para[1].split("=");
+//        $.ajax({
+//            type: 'post',
+//            url: 'groupCal.do',
+//            data: {
+//                group: para[1]
+//            },
+//            dataType: "json",
+//            success: function(data) {
+//                console.log(data);
+//                document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
+//                $("#title").html = "<span>" + data[0].group_name + "</span>";
+//                document.getElementById("title").innerHTML += "<span>" + data[0].group_name + "</span>";
+//                $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
+//                document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
+//                $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
+//                document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
+//
+//                for (var arrCal = 1; arrCal < data.length; arrCal++) {
+//                    var str = "";
+//                    var str2 = data[arrCal].cal_date;
+//                    console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
+//                    str += '<div class="content">';
+//                    str += '<div class="left">';
+//                    if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
+//                        str += data[arrCal].cal_date;
+//                        console.log("확정 : " + data[arrCal].cal_memo);
+//                        scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo);
+//                    } else {
+//                        var res = str2.split(",");
+//                        str += res[0] + "~" + res[res.length - 1];
+//                        console.log("투표 : " + data[arrCal].cal_memo);
+//                        for (var i = 0; i < res.length; i++) {
+//                            voteSet.add(res[i] + "-" + data[arrCal].cal_memo);
+//                        }
+//                    }
+//                    str += '</div>';
+//                    str += '<div class="middle" onclick="addComment(this)">';
+//                    str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
+//                    str += '<div class="middle-bottom">';
+//                    str += '<span>' + data[arrCal].cal_writer + '님</span>';
+//                    str += '<span>외 ' + data[0].group_count + '명 참여</span>';
+//                    str += '</div>';
+//                    str += '</div>';
+//                    str += '<div class="right">';
+//                    str += '<div class="right-top"></div>';
+//                    str += '<div class="right-bottom">';
+//
+//                    if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
+//                        // 전체 일정(확정)
+//                        str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+//                    } else {
+//                        // 투표(미확정)
+//                        str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
+//                    }
+//
+//                    str += '</div>';
+//                    str += '</div>'; // div-right
+//                    str += '</div>'; // div=middle
+//                    if (str2.indexOf(',') == -1) {
+//                        $(".schedule").append(str);
+//                    } else {
+//                        $(".vote").append(str);
+//                    }
+//                }
+//                buildCalendar();
+//            },
+//            error: function(req) {
+//                //                    alert('통신실패');
+//                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//            }, beforeSend: function () {
+//                    var width = 0;
+//                    var height = 0;
+//                    var left = 0;
+//                    var top = 0;
+//
+//                    width = 50;
+//                    height = 50;
+//
+//                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+//                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+//
+//                    if($("#div_ajax_load_image").length != 0) {
+//                           $("#div_ajax_load_image").css({
+//                                  "top": top+"px",
+//                                  "left": left+"px"
+//                           });
+//                           $("#div_ajax_load_image").show();
+//                    }
+//                    else {
+//                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+//                    }                    
+//             }
+//             , complete: function () {
+//                           $("#div_ajax_load_image").hide();
+//             }
+//        });
+//    }
     //================== 모달 작업 부분    =====================================
     function getGroupBrith() {
         var para = document.location.href.split("?");
@@ -1418,11 +1404,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1434,8 +1417,6 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
@@ -1474,11 +1455,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1489,9 +1467,7 @@
                     }
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-                    }
-                    
-
+                    }  
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
@@ -1504,7 +1480,8 @@
     $(document).ready(function(){
        document.getElementById("myCalDate").innerHTML=""; 
        document.getElementById("myCalContents").innerHTML=""; 
-       document.getElementById("myWriteTime").innerHTML=""; 
+//       document.getElementById("myWriteTime").innerHTML=""; 
+       document.getElementById("myCalTime").innerHTML=""; 
         $.ajax({
              type:'post'
             ,url:'myCal.do'
@@ -1515,18 +1492,19 @@
               $.each(data, function(index, item){
 //                  console.log(item.myCalIndex);
                   console.log(item.myCalContents);
+                  console.log(item.myCalTime);
 //                  console.log(item.myWriteTime);
 //                  console.log(item.myCalDate.split(","));
                   var calDate = item.myCalDate.split(",");
                   console.log(calDate.length);
                   
                   if(calDate.length != 2){
-                     document.getElementById("myCalDate").innerHTML+="<div>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
+                     document.getElementById("myCalDate").innerHTML+="<div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
                   } else {
-                    document.getElementById("myCalDate").innerHTML+="<div>"+calDate[0]+"</div></br>";
+                    document.getElementById("myCalDate").innerHTML+="<div class='schedules'>"+calDate[0]+"</div></br>";
                   }
-                  document.getElementById("myCalContents").innerHTML+="<div>"+item.myCalContents+"</div></br>";
-//                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
+                  document.getElementById("myCalContents").innerHTML+="<div class='schedules'>"+item.myCalContents+"</div></br>";
+                  document.getElementById("myCalTime").innerHTML+="<div class='schedules'>"+item.myCalTime+"</div></br>";
               });
             },
             error:function(req){
@@ -1541,11 +1519,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1557,8 +1532,6 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
@@ -1582,9 +1555,16 @@
                   console.log(item.calDate);
                   console.log(item.calMemo);
                   console.log(item.calWriter);
-                  document.getElementById("calDate").innerHTML+="<div>"+item.calDate+"</div></br>";
-                  document.getElementById("calMemo").innerHTML+="<div>"+item.calMemo+"</div></br>";
-                  document.getElementById("calWriter").innerHTML+="<div>"+item.calWriter+"</div></br>";
+                  
+                  var calDate = item.calDate.split(",");
+                
+                  if(calDate.length !=2){
+                    document.getElementById("calDate").innerHTML+="<div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
+                  } else {
+                    document.getElementById("calDate").innerHTML+="<div class='schedules'>"+calDate[0]+"</div></br>";
+                  }
+                  document.getElementById("calMemo").innerHTML+="<div class='schedules'>"+item.calMemo+"</div></br>";
+                  document.getElementById("calWriter").innerHTML+="<div class='schedules'>"+item.calWriter+"</div></br>";
 //                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
               });
             },
@@ -1600,11 +1580,8 @@
                     width = 50;
                     height = 50;
 
-
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1616,17 +1593,13 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
-                
              }
         });
     });
     
-    //}
     // 확정된 일정 정보 출력
     function getScheduleInfo() {}
     // 미확정된 일정 정보 출력
@@ -1644,6 +1617,28 @@
         }
     }
 
+    function clickAddCal() {
+        $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
+        var heights = $('#contentsHeight').css('height');
+        if ($("#calTitle").val() != "") {
+            $('#modal').animate({
+                height: heights,
+            }, 300);
+        }
+        var times = [];
+        var value="";
+        for(var i = 0; i <25; i++){
+            if(i<10){
+                value="0"+i;
+            }else{
+                value=i;
+            }
+            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
+        }
+        $("#scheTime").append(times.join(''));
+    }
+    
+    
     function selectYes() {
         var groupId = location.href.split("=")[1];
         console.log(groupId);
@@ -1651,14 +1646,15 @@
         for (let item of scheSet.keys())
             calDate += item + ","; // 달력에 날짜를 클릭했을때 (년도+월+선택한 일) + ","
         var calTitle = $("#calTitle").val();
-        console.log("");
+        var calTime = $("#scheTime").val();
         $.ajax({
             type: 'post',
             url: 'mySchedule.do',
             data: { // 이 데이터가 서블릿으로 보내주는것이다.
                 title: calTitle,
                 calDate: calDate,
-                groupId: groupId
+                groupId: groupId,
+                calTime: calTime
             },
             dataType: "json",
             success: function(data) { // 이것이 서블릿에서 받는 코드.
@@ -1674,12 +1670,9 @@
 
                     width = 50;
                     height = 50;
-
-
+                
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-       
 
                     if($("#div_ajax_load_image").length != 0) {
                            $("#div_ajax_load_image").css({
@@ -1691,17 +1684,14 @@
                     else {
                            $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
                     }
-                    
-
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
-                
              }
         });
         location.reload();
     }
-
+    
     function selectNo() {
         $("#modal").css("display", "none");
         console.log("!!!!");
@@ -1709,15 +1699,8 @@
 
     }
 
-    function clickAddCal() {
-        $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
-        var heights = $('#contentsHeight').css('height');
-        if ($("#calTitle").val() != "") {
-            $('#modal').animate({
-                height: heights,
-            }, 300);
-        }
-    }
+    
+    
     //=============   모달 사라짐 ==============
     function closeModal() {
         console.log("!");
@@ -1738,7 +1721,6 @@
     
     
     function reloadList(){
-        
         location.reload();
     }
 
@@ -1758,14 +1740,14 @@
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
-            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/diary.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/calendar.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/friends.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/qna.png"/></a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/exit.png"/></a></li>
         </ul>
     </nav>
 
@@ -1792,19 +1774,17 @@
                         <div class="schedule">
                             <div class="schCont scheDate txt" id="myCalDate"></div>
                             <div class="schCont scheText txt" id="myCalContents"></div>
-                            <div class="schCont scheTime txt" id="myWriteTime"></div>
+                            <div class="schCont scheTime txt" id="myCalTime"></div>
 <!--                            <div class="schCont dayTime">-->
 <!--                                <div class="scheDetail txt"></div>-->
 <!--                            </div>-->
                         </div>
                     </div>
 
-
-
                     <div class="leftDown">
                         <!-- 밑 -->
                         <div class="privSchedule">
-                            <div class="program txt">단체 </div>
+                            <div class="program txt">단체 일정</div>
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">
@@ -1819,27 +1799,26 @@
                         </div>
                     </div>
                     
-                    
-                     <div class="events">
+                    <div class="events">
                     <!-- 밑 감싸기-->
-                    <div class="eveLeft">
-                        <!-- 옆 -->
-                        <div class="closeEvent">
-                            <div class="closeText txt">친구 생일</div>
-                            <div class="closeDeco"></div>
-                        </div>
-                        <div class="closeSub">
-                            <div class="sub closePic">
-                                <!--<img src="/img/member/jennie.png" id="user_Img">--></div>
-                            <div class="sub closeName txt">
-                                <div id="fName"></div>
+                        <div class="eveLeft">
+                            <!-- 옆 -->
+                            <div class="closeEvent">
+                                <div class="closeText txt">친구 생일</div>
+                                <div class="closeDeco"></div>
                             </div>
-                            <div class="sub closeCont txt">
-                                <div id="fBirth"></div>
+                            <div class="closeSub">
+                                <div class="sub closePic">
+                                    <!--<img src="/img/member/jennie.png" id="user_Img">--></div>
+                                <div class="sub closeName txt">
+                                    <div id="fName"></div>
+                                </div>
+                                <div class="sub closeCont txt">
+                                    <div id="fBirth"></div>
+                                </div>
+                                </br>
                             </div>
-                            </br>
                         </div>
-                    </div>
                     </div>
                     
                 </div>
@@ -1902,6 +1881,7 @@
                         </table>
                         <button class="modalButton" onclick="addSchedule()">일정추가하기</button>
                     </div>
+                    
                     <!-- ============ 텍스트 입력 모달창 ============ -->
                     <div>
                         <div id="blindCover" onclick="closeModal();"></div>
@@ -1910,6 +1890,7 @@
                                    
                                     <div id="titleAdd">
                                         <input type="text" placeholder="자신의 일정을 한줄로 써보세요." id="calTitle" maxlength="20"/> 
+                                        <select name="scheTime" id="scheTime"></select>
                                         <div id="groupAddBtn" onclick="clickAddCal()">작성하기</div>
                                     </div>
 
@@ -1931,33 +1912,6 @@
                 <!-- right-side 끝 -->
             </div>
             <!-- contatiner 끝 -->
-
-            <!--  ========================= FOOTER ========================== -->
-            <footer class="footer">
-                <!--밑-->
-               
-<!--
-                    <div class="eveRight">
-                        <div class="closeEvent">
-                            <div class="closeText txt">여기 뭐 넣노</div>
-                            <div class="closeDeco"></div>
-                        </div>
-                        <div class="closeSub">
-                            <div class="sub closePic"></div>
-                            <div class="sub closeName txt">admin</div>
-                            <div class="sub closeCont txt">6월 13일 생일</div>
-                            <br>
-                            <div class="sub closeName txt">admin</div>
-                            <div class="sub closeCont txt">6월 13일 생일</div>
-                            <br>
-                            <div class="sub closeName txt">admin</div>
-                            <div class="sub closeCont txt">6월 13일 생일</div>
-                        </div>
-                    </div>
--->
-                    
-                
-            </footer>
 
         </div>
     </div>

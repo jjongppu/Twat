@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.twat.dto.CalgatherVO;
+import com.twat.dto.MemberJoinGroupVO;
 import com.twat.dto.MyCalendarVO;
 
 public class CalgatherDAO {
@@ -40,8 +41,10 @@ public class CalgatherDAO {
 
 	// 李몄뿬以묒씤 罹섎┛�뜑瑜� 肉뚮젮二쇨린�쐞�빐 �옄�떊�씠 李몄뿬�븯怨좎엳�뒗 紐⑤뱺 罹섎┛�뜑�쓽 �젙蹂대��
 	// �뼸�뼱�샃�땲�떎..
-	public ArrayList<CalgatherVO> myGroupList(ArrayList<Integer> groupList) {
-
+	public ArrayList<CalgatherVO> myGroupList(ArrayList<MemberJoinGroupVO> groupList) {
+		
+		ArrayList<MemberJoinGroupVO> groupArray = groupList;
+		
 		ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();
 		String selectMygroupSql = "select * from CALGATHER where GROUP_ID=?";
 
@@ -52,11 +55,12 @@ public class CalgatherDAO {
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(selectMygroupSql);
-
-			psmt.setInt(1, groupList.get(0));
+			int groupId = Integer.parseInt(groupArray.get(0).getGROUP_ID());
+			psmt.setInt(1, groupId);
 
 			for (int i = 1; i < groupList.size(); i++) {
-				psmt.setInt(i + 1, groupList.get(i));
+				groupId = Integer.parseInt(groupArray.get(i).getGROUP_ID());
+				psmt.setInt(i + 1, groupId);
 			}
 
 			rs = psmt.executeQuery();
@@ -98,17 +102,17 @@ public class CalgatherDAO {
 			int GroupPk) {
 		int result = 0;
 		int GroupCount = members.length;
-		String masterName = "遺덈윭�삤吏� 紐삵븿";
+		String masterName = "";
 
 		String selectMasterName = "SELECT * FROM MEMBER WHERE MEMBER_ID=?";
 
 		String selectMakeGroupSql = "INSERT INTO CALGATHER VALUES(?,?,?,?,?,?,?)";
 
 		String selectaddGMSql = "INSERT INTO MEMBER_JOIN_GROUP VALUES";
-		selectaddGMSql += "('" + masterId + "','" + GroupPk + "',0),";
+		selectaddGMSql += "('" + masterId + "','" + GroupPk + "',0,0),";
 
 		for (int i = 0; i < members.length; i++) {
-			selectaddGMSql += "('" + members[i] + "','" + GroupPk + "',0)";
+			selectaddGMSql += "('" + members[i] + "','" + GroupPk + "',0,0)";
 
 			if (i != members.length - 1) {
 				selectaddGMSql += ",";
@@ -323,4 +327,69 @@ public class CalgatherDAO {
 		}
 	}
 
+	public boolean setRoomOut(int groupId)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		boolean isDel = false;
+
+		try {
+			con = getConnection();
+			String sql = "SELECT GROUP_COUNT FROM CALGATHER WHERE GROUP_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, groupId);
+			
+			rSet = pstmt.executeQuery();
+			
+			int count = -1;
+			
+			while(rSet.next())
+			{
+				count = rSet.getInt(1) - 1;
+			}
+			
+			
+			if(count < 0)
+			{
+				sql = "DELETE FROM CALGATHER WHERE GROUP_ID=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, groupId);
+				
+				isDel = true;
+			}
+			else
+			{
+				sql = "UPDATE CALGATHER SET GROUP_COUNT=? WHERE GROUP_ID=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, count);
+				pstmt.setInt(2, groupId);
+			}
+
+			int result = pstmt.executeUpdate();
+			
+			if(result == 1)
+			{
+				System.out.println("성공");
+			}
+			else
+			{
+				System.out.println("실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rSet != null)
+					rSet.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return isDel;
+	}
 }

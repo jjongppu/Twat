@@ -29,6 +29,8 @@
 		var memTempList = new Set();
 		// 색칠용 셋
 		var barColorSet = new Set();
+		// 해당 방의 인원수
+		var groupCount = 0;
 		var initDay = new Date();
 		var cal_date = "";
 		// 해당 방의 방장
@@ -1005,6 +1007,14 @@
 			}); // 달 선택
 			$('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
 			$('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
+			$('#roomOut').hover(function() {
+				$(this).attr('src', 'img/etcIcon/door_hover.png');
+//				alert('!');
+				$(this).css( 'cursor', 'pointer' );
+			}, function() {
+				$(this).attr('src', 'img/etcIcon/door.png');
+//				alert('!!');
+			})
 			//            initToday(); //  주석1
 		});
 
@@ -1418,7 +1428,7 @@
 					//                    console.log(group_master);
 					//                    data[0].group_master_name;
 					//                    data[0].group_img;
-					//                    data[0].group_count;
+					groupCount = data[0].group_count;
 					//                    $("#icon").html = "<img src='" + data[0].group_img + "'>";
 					//                    document.getElementById("schedule").innerHTML += "<img src='" + data[0].group_img + "'>";
 					document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
@@ -2198,10 +2208,13 @@
 			}
 			//            console.log(masterCheck);
 
+			var groupId = location.href.split("=")[1];
+			
 			$.ajax({
 				type: 'post',
 				url: 'scheduleSelected.do',
 				data: {
+					groupId: groupId,
 					calNum: cal_num,
 					calDate: masterCheck
 				},
@@ -2500,6 +2513,76 @@
 
 			return true;
 		}
+		// 방나가기 모달
+		function showModal4()
+		{
+			$('#modal4').css('display', 'block');
+			$('#blindCover').css('display', 'block');
+		}
+		// 방나가기 메서드
+		function getOutRoom()
+		{
+			if(login_userId.match(group_master) && groupCount > 0)
+			{
+				getJoinMember();
+				alert("방장은 방을 나갈 수 없습니다. 방장을 선택해주세요.");
+				closeModal4();
+				return;
+//				$('#groupTitle').click();
+//				setTimeout(giveGroupMaster(), 300);
+//				$('#giveGM').trigger('click');
+//				$('.radioGM').css('display','inline-block');
+//				setTimeout(function() { $('#giveGM').trigger('click'), 500});
+//				setTimeout(function() { giveGroupMaster(), 300});
+//				$('.radioGM').css('display','inline-block');
+			}
+			
+			var groupId = location.href.split("=")[1];
+			$.ajax({
+				type: 'post',
+				url: 'setRoomOut.do',
+				data: {
+					groupID: groupId,
+					userID: login_userId
+				},
+				dataType: "json",
+				success: function(data) {
+					console.log(data);
+
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+				},
+				complete: function() {
+					$("#div_ajax_load_image").hide();
+//					window.location.reload(true);
+					location.href="/Twat/groupList.html";
+				},
+				error: function(req) {
+					//                    alert('통신실패');
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : getGroupMember.do");
+				}
+			})
+		}
 
 		function voteMeeting(cal_date) {
 			//            console.log(cal_date);
@@ -2741,7 +2824,7 @@
         <ul class="nav_ul" id="nav_menu">
             <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
-            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a><div id="newContents">N</div></li>
             <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
         </ul>
@@ -2771,7 +2854,7 @@
 							</div>
 						</div>
 						<!-- 설정 -->
-						<div id="config"></div>
+						<div id="config"><img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()"></div>
 					</div>
 					<!-- {단체일정} -->
 					<div class="schedule" ondrop="drop(event);" ondragover="allowDrop(event);">
@@ -2966,6 +3049,11 @@
 -->
 							</div>
 						</div>
+						<div id='modal4'>
+							<h3>정말로 방에서 나가시겠습니까?</h3>
+							<input type="button" value="예" onclick="getOutRoom()">
+							<input type="button" value="아니오" onclick="closeModal4()">
+						</div>
 
 						<div id="inviteModal">
 
@@ -2986,6 +3074,7 @@
 
 							$('#modal2').css('display', 'none');
 							$('#modal3').css('display', 'none');
+							$('#modal4').css('display', 'none');
 						}
 
 						function closeModal2() {
@@ -2995,6 +3084,11 @@
 						
 						function closeModal3() {
 							$('#modal3').css('display', 'none');
+							$('#blindCover').css('display', 'none');
+						}
+						
+						function closeModal4() {
+							$('#modal4').css('display', 'none');
 							$('#blindCover').css('display', 'none');
 						}
 
@@ -3130,6 +3224,28 @@
 							padding-top: 10px;
 							border: 2px solid #E2E2E2;
 							z-Index: 1000;
+						}
+						
+						#modal4 {
+							/*                            display: none;*/
+							/*                            display: inline-block;*/
+							background-color: #FFFFFF;
+							/*                            position:absolute;*/
+							/* 추가 */
+							position: fixed;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+							display: none;
+							/*
+                            top:300px;
+                            left:200px;
+*/
+							padding: 20px;
+							padding-top: 10px;
+							border: 2px solid #E2E2E2;
+							z-Index: 1000;
+							text-align: right;
 						}
 
 					</style>
