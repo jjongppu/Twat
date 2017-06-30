@@ -78,11 +78,7 @@ public class MyGroupScheduleServlet extends HttpServlet {
 		}
 		
 		System.out.println(calendarArr);
-		System.out.println(calendarArr);
-		System.out.println(calendarArr);
-		System.out.println(calendarArr);
-		
-		
+				
 		System.out.println(jsonArr.toJSONString());
 		out.println(jsonArr);
 		 out.close();
