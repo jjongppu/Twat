@@ -56,6 +56,7 @@ public class RequestFriend extends HttpServlet {
 	    
 		    MemberDAO memberDao = MemberDAO.getInstance();
 		    int result = memberDao.requestFriend(loginUserId, friendId); 
+		    System.out.println(result);
 		    if(result == -1){
 		    	jsonObj.put("friendExist", "Exist");		    	
 		    }else if(result == 0){
