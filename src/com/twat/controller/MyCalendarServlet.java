@@ -64,8 +64,8 @@ public class MyCalendarServlet extends HttpServlet {
 		}
 		
 		System.out.println(myCalArr);
-		System.out.println(myCalArr);
-		System.out.println(myCalArr);
+//		System.out.println(myCalArr);
+//		System.out.println(myCalArr);
 		
 		System.out.println(jsonArr.toJSONString());
 		out.println(jsonArr);
