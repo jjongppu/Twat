@@ -905,66 +905,66 @@
     }
     /*음력 알고리즘..끝*/
     var today = new Date(); // 오늘 날짜
-    //$(document).ready(function () {
-    //    var groupId = location.href.split("=")[1];
-    //    $.ajax({
-    //        type: 'post',
-    //        url: 'groupMaster.do',
-    //        data: {
-    //            groupId: groupId
-    //        },
-    //        dataType: "json",
-    //        success: function (data) {
-    //            $.each(data, function (index, item) {
-    //                //                        console.log(item.groupMaster);
-    //                if (item.groupMaster == "no") {
-    //                    $(".addschedule").css("display", "none");
-    //                }
-    //
-    //                login_userId = item.userId;
-    //
-    //            });
-    //
-    //            getGroupInfo();
-    //        },
-    //        error: function (req) {
-    //
-    //            alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-    //        }
-    //    });
-    //    /*
-    //        드레그앤 드롭
-    //    */
-    //    getGroupBrith();
-    //    $('#yearSelect').change(function () {
-    //        initToday();
-    //        today = new Date(parseInt($("#yearSelect").val()), today.getMonth(), today.getDate());
-    //        buildCalendar();
-    //        if ($(this).val() == "2030" && $("#monthSelect").val() == "12") {
-    //            $("#nextButton").css("display", "none");
-    //        } else if ($(this).val() == "2017" && $("#monthSelect").val() == "1") {
-    //            $("#preButton").css("display", "none");
-    //        } else {
-    //            $("#preButton").css("display", "block");
-    //            $("#nextButton").css("display", "block");
-    //        }
-    //    }); //연도 선택
-    //    $('#monthSelect').change(function () {
-    //        initToday();
-    //        today = new Date(parseInt($("#yearSelect").val()), parseInt($("#monthSelect").val()) - 1, today.getDate());
-    //        buildCalendar();
-    //        if ($("#yearSelect").val() == "2030" && $(this).val() == "12") {
-    //            $("#nextButton").css("display", "none");
-    //        } else if ($("#yearSelect").val() == "2017" && $(this).val() == "1") {
-    //            $("#preButton").css("display", "none");
-    //        } else {
-    //            $("#preButton").css("display", "block");
-    //            $("#nextButton").css("display", "block");
-    //        }
-    //    }); // 달 선택
-    //    $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
-    //    $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
-    //});
+    $(document).ready(function () {
+        var groupId = location.href.split("=")[1];
+        $.ajax({
+            type: 'post',
+            url: 'groupMaster.do',
+            data: {
+                groupId: groupId
+            },
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    //                        console.log(item.groupMaster);
+                    if (item.groupMaster == "no") {
+                        $(".addschedule").css("display", "none");
+                    }
+    
+                    login_userId = item.userId;
+    
+                });
+    
+                getGroupInfo();
+            },
+            error: function (req) {
+    
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+            }
+        });
+        /*
+            드레그앤 드롭
+        */
+        getGroupBrith();
+        $('#yearSelect').change(function () {
+            initToday();
+            today = new Date(parseInt($("#yearSelect").val()), today.getMonth(), today.getDate());
+            buildCalendar();
+            if ($(this).val() == "2030" && $("#monthSelect").val() == "12") {
+                $("#nextButton").css("display", "none");
+            } else if ($(this).val() == "2017" && $("#monthSelect").val() == "1") {
+                $("#preButton").css("display", "none");
+            } else {
+                $("#preButton").css("display", "block");
+                $("#nextButton").css("display", "block");
+            }
+        }); //연도 선택
+        $('#monthSelect').change(function () {
+            initToday();
+            today = new Date(parseInt($("#yearSelect").val()), parseInt($("#monthSelect").val()) - 1, today.getDate());
+            buildCalendar();
+            if ($("#yearSelect").val() == "2030" && $(this).val() == "12") {
+                $("#nextButton").css("display", "none");
+            } else if ($("#yearSelect").val() == "2017" && $(this).val() == "1") {
+                $("#preButton").css("display", "none");
+            } else {
+                $("#preButton").css("display", "block");
+                $("#nextButton").css("display", "block");
+            }
+        }); // 달 선택
+        $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
+        $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
+    });
 
     function update() {
         $.ajax({
@@ -1266,108 +1266,10 @@
             }
         }
     }
+
     //  ================================ 달력 출력 끝! ================================
 
-    function getGroupInfo() {
-        var para = document.location.href.split("?");
-        para = para[1].split("=");
-        $.ajax({
-            type: 'post',
-            url: 'myCal.do',
-            data: {
-                group: para[1]
-            },
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
-                $("#title").html = "<span>" + data[0].group_name + "</span>";
-                document.getElementById("title").innerHTML += "<span>" + data[0].group_name + "</span>";
-                $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
-                document.getElementById("master").innerHTML += "<span>" + data[0].group_master_name + "님</span>";
-                $("#otherMembers").html = "<span>외 " + data[0].group_count + "명</span>";
-                document.getElementById("otherMembers").innerHTML += "<span>외 " + data[0].group_count + "명</span>";
 
-                for (var arrCal = 1; arrCal < data.length; arrCal++) {
-                    var str = "";
-                    var str2 = data[arrCal].cal_date;
-                    console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
-                    str += '<div class="content">';
-                    str += '<div class="left">';
-                    if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
-                        str += data[arrCal].cal_date;
-                        console.log("확정 : " + data[arrCal].cal_memo);
-                        scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo);
-                    } else {
-                        var res = str2.split(",");
-                        str += res[0] + "~" + res[res.length - 1];
-                        console.log("투표 : " + data[arrCal].cal_memo);
-                        for (var i = 0; i < res.length; i++) {
-                            voteSet.add(res[i] + "-" + data[arrCal].cal_memo);
-                        }
-                    }
-                    str += '</div>';
-                    str += '<div class="middle" onclick="addComment(this)">';
-                    str += '<div class="middle-top">' + data[arrCal].cal_memo + '</div>';
-                    str += '<div class="middle-bottom">';
-                    str += '<span>' + data[arrCal].cal_writer + '님</span>';
-                    str += '<span>외 ' + data[0].group_count + '명 참여</span>';
-                    str += '</div>';
-                    str += '</div>';
-                    str += '<div class="right">';
-                    str += '<div class="right-top"></div>';
-                    str += '<div class="right-bottom">';
-
-                    if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
-                        // 전체 일정(확정)
-                        str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
-                    } else {
-                        // 투표(미확정)
-                        str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
-                    }
-
-                    str += '</div>';
-                    str += '</div>'; // div-right
-                    str += '</div>'; // div=middle
-                    if (str2.indexOf(',') == -1) {
-                        $(".schedule").append(str);
-                    } else {
-                        $(".vote").append(str);
-                    }
-                }
-                buildCalendar();
-            },
-            error: function(req) {
-                //                    alert('통신실패');
-                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }, beforeSend: function () {
-                    var width = 0;
-                    var height = 0;
-                    var left = 0;
-                    var top = 0;
-
-                    width = 50;
-                    height = 50;
-
-                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
-                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-                    if($("#div_ajax_load_image").length != 0) {
-                           $("#div_ajax_load_image").css({
-                                  "top": top+"px",
-                                  "left": left+"px"
-                           });
-                           $("#div_ajax_load_image").show();
-                    }
-                    else {
-                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-                    }                    
-             }
-             , complete: function () {
-                           $("#div_ajax_load_image").hide();
-             }
-        });
-    }
     //================== 모달 작업 부분    =====================================
     function getGroupBrith() {
         var para = document.location.href.split("?");
@@ -1480,7 +1382,8 @@
     $(document).ready(function(){
        document.getElementById("myCalDate").innerHTML=""; 
        document.getElementById("myCalContents").innerHTML=""; 
-       document.getElementById("myWriteTime").innerHTML=""; 
+//       document.getElementById("myWriteTime").innerHTML=""; 
+       document.getElementById("myCalTime").innerHTML=""; 
         $.ajax({
              type:'post'
             ,url:'myCal.do'
@@ -1491,10 +1394,12 @@
               $.each(data, function(index, item){
 //                  console.log(item.myCalIndex);
                   console.log(item.myCalContents);
+//                  console.log(item.myCalTime);
+                  console.log(item.myCalIndex);
 //                  console.log(item.myWriteTime);
 //                  console.log(item.myCalDate.split(","));
                   var calDate = item.myCalDate.split(",");
-                  console.log(calDate.length);
+//                  console.log(calDate.length);
                   
                   if(calDate.length != 2){
                      document.getElementById("myCalDate").innerHTML+="<div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
@@ -1502,7 +1407,7 @@
                     document.getElementById("myCalDate").innerHTML+="<div class='schedules'>"+calDate[0]+"</div></br>";
                   }
                   document.getElementById("myCalContents").innerHTML+="<div class='schedules'>"+item.myCalContents+"</div></br>";
-//                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
+                  document.getElementById("myCalTime").innerHTML+="<div class='schedules'>"+item.myCalTime+" 시 예약<button name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
               });
             },
             error:function(req){
@@ -1537,6 +1442,59 @@
              }
         });
     });
+    
+    function moreShow(){
+        alert("!");
+    }
+    function scheDelete(del){
+        console.log(del);
+        var deleteId = $(del).attr('id');
+        console.log(deleteId);
+        console.log(deleteId.split('delete'));
+        var deleteNum = deleteId.split('delete');
+        console.log(deleteNum[1]);
+        
+        $.ajax({
+             type:'post'
+            ,url:'scheDelete.do'
+            ,dataType : "json"
+            ,data: {
+                deleteNum : deleteNum[1]
+            }
+            ,success : function(data){
+                
+            },
+            error:function(req){
+             alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+            }, beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+             }
+        });
+        location.reload();
+    }
     
     $(document).ready(function(){
        document.getElementById("calDate").innerHTML=""; 
@@ -1598,12 +1556,7 @@
         });
     });
     
-    //}
-    // 확정된 일정 정보 출력
-    function getScheduleInfo() {}
-    // 미확정된 일정 정보 출력
-    function getVoteInfo() {}
-
+  
     function voteMeeting(cal_date) {
         for (var vote = 0; vote < cal_date.length; vote++) {
             $("#date" + parseInt(cal_date[vote].substr(6, 2))).children().last().html();
@@ -1616,6 +1569,28 @@
         }
     }
 
+    function clickAddCal() {
+        $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
+        var heights = $('#contentsHeight').css('height');
+        if ($("#calTitle").val() != "") {
+            $('#modal').animate({
+                height: heights,
+            }, 300);
+        }
+        var times = [];
+        var value="";
+        for(var i = 0; i <25; i++){
+            if(i<10){
+                value="0"+i;
+            }else{
+                value=i;
+            }
+            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
+        }
+        $("#scheTime").append(times.join(''));
+    }
+    
+    
     function selectYes() {
         var groupId = location.href.split("=")[1];
         console.log(groupId);
@@ -1623,14 +1598,15 @@
         for (let item of scheSet.keys())
             calDate += item + ","; // 달력에 날짜를 클릭했을때 (년도+월+선택한 일) + ","
         var calTitle = $("#calTitle").val();
-        console.log("");
+        var calTime = $("#scheTime").val();
         $.ajax({
             type: 'post',
             url: 'mySchedule.do',
             data: { // 이 데이터가 서블릿으로 보내주는것이다.
                 title: calTitle,
                 calDate: calDate,
-                groupId: groupId
+                groupId: groupId,
+                calTime: calTime
             },
             dataType: "json",
             success: function(data) { // 이것이 서블릿에서 받는 코드.
@@ -1667,7 +1643,7 @@
         });
         location.reload();
     }
-
+    
     function selectNo() {
         $("#modal").css("display", "none");
         console.log("!!!!");
@@ -1675,15 +1651,8 @@
 
     }
 
-    function clickAddCal() {
-        $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
-        var heights = $('#contentsHeight').css('height');
-        if ($("#calTitle").val() != "") {
-            $('#modal').animate({
-                height: heights,
-            }, 300);
-        }
-    }
+    
+    
     //=============   모달 사라짐 ==============
     function closeModal() {
         console.log("!");
@@ -1757,11 +1726,12 @@
                         <div class="schedule">
                             <div class="schCont scheDate txt" id="myCalDate"></div>
                             <div class="schCont scheText txt" id="myCalContents"></div>
-                            <div class="schCont scheTime txt" id="myWriteTime"></div>
+                            <div class="schCont scheTime txt" id="myCalTime"></div>
 <!--                            <div class="schCont dayTime">-->
 <!--                                <div class="scheDetail txt"></div>-->
 <!--                            </div>-->
                         </div>
+                        <button class="more" onclick=moreShow()>+</button>
                     </div>
 
                     <div class="leftDown">
@@ -1813,7 +1783,7 @@
                     <!-- {달력} -->
                     <div class="cal">
                         <table id="calendar">
-                            <tr>
+                            <tr id="yearMonth">
                                 <td>
                                     <label id="preButton" onclick="prevCalendar()"><img src="img/moveIcon/left.png" style="cursor:pointer;" /></label>
                                 </td>
@@ -1862,7 +1832,7 @@
                                 <td>토</td>
                             </tr>
                         </table>
-                        <button class="modalButton" onclick="addSchedule()">일정추가하기</button>
+                       <button class="modalButton" onclick="addSchedule()">일정추가하기</button>
                     </div>
                     
                     <!-- ============ 텍스트 입력 모달창 ============ -->
@@ -1873,6 +1843,8 @@
                                    
                                     <div id="titleAdd">
                                         <input type="text" placeholder="자신의 일정을 한줄로 써보세요." id="calTitle" maxlength="20"/> 
+                                        <span style="font-size:10px">시간 선택</span>
+                                        <select name="scheTime" id="scheTime"></select>
                                         <div id="groupAddBtn" onclick="clickAddCal()">작성하기</div>
                                     </div>
 
