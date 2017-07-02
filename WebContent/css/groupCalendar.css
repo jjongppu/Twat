@@ -816,7 +816,8 @@ input[type=radio]:hover
 	width: 100%;
 /*	max-height: 280px;*/
 /*	height: 50%;*/
-	height: 48%;
+/*	height: 48%;*/
+	height: 40%;
 }
 
 #commentList
@@ -882,7 +883,8 @@ rdoSelect
 .modalSchduleInfo
 {
 	width: 100%;
-	height: 40%;
+/*	height: 40%;*/
+	height: 46%;
 }
 
 #scheduleMemo, #scheduleWriter, #scheduleDate, #scheduleMember
@@ -895,7 +897,8 @@ rdoSelect
 
 .modalSchduleInfo .swiper-container {
 	width: 100%;
-	height: 80%;
+/*	height: 80%;*/
+	height: 200px;
 /*
 	margin-left: auto;
 	margin-right: auto;

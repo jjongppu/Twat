@@ -2211,7 +2211,7 @@
 					for (var i = 0; i < data.length; i++) {
 						//                        console.log(data[i].cal_depth);
 						if (data[i].cal_depth == 0) {
-							voteString += "<div id='voteListBox'>";
+//							voteString += "<div id='voteListBox'>";
 							if (login_userId.match(group_master)) {
 								//                                var groupMemberSet = new Set();
 								var ImpossibleCount = 0;
@@ -2234,9 +2234,9 @@
 //									voteString += "<div id='vLBTitle'>날짜선택</div>";
 //
 //									voteString += "<div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
-									swiperString += "<div id='vLBTitle'>날짜선택</div>";
+									swiperString += "<div class='swiper-slide'><div id='vLBTitle'>날짜선택</div></div>";
 
-									swiperString += "<div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
+									swiperString += "<div class='swiper-slide'><div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
 									if (ImpossibleCount == 0) {
 //										voteString += "없음";
 										swiperString += "없음";
@@ -2245,11 +2245,12 @@
 										swiperString += ImpossibleCount + "명";
 									}
 //									voteString += " </span>]</div>";
-									swiperString += " </span>]</div>";
+									swiperString += " </span>]</div></div>";
 								} else {
 									var tempML = new Set();
 
-									voteString += "<div id='vLBTitle'>날짜선택</div>";
+//									voteString += "<div id='vLBTitle'>날짜선택</div>";
+									swiperString += "<div class='swiper-slide'><div id='vLBTitle'>날짜선택</div></div>";
 
 									for (let item of voteDateSet.keys()) {
 										ImpossibleCount = 0;
@@ -2266,18 +2267,28 @@
 
 										ImpossibleCount = tempML.size - possibleCount;
 
-										voteString += "<div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + item + "'> " + item.substr(0, 4) + "년 " + item.substr(4, 2) + "월 " + item.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
+//										voteString += "<div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + item + "'> " + item.substr(0, 4) + "년 " + item.substr(4, 2) + "월 " + item.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
+										swiperString += "<div class='swiper-slide'><div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + item + "'> " + item.substr(0, 4) + "년 " + item.substr(4, 2) + "월 " + item.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
 										if (ImpossibleCount == 0) {
-											voteString += "없음";
+//											voteString += "없음";
+											swiperString += "없음";
 										} else {
-											voteString += ImpossibleCount + "명";
+//											voteString += ImpossibleCount + "명";
+											swiperString += ImpossibleCount + "명";
 										}
-										voteString += " </span>]</div>";
+//										voteString += " </span>]</div>";
+										swiperString += " </span>]</div></div>";
 									}
 								}
 							} else if (voteDateCount == 1) {
-								voteString += "<div id='vLBTitle'>일정투표</div>";
-								voteString += "<div class='voteList' id='voteList" + voteObject.cal_date + "' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
+//								voteString += "<div id='vLBTitle'>일정투표</div>";
+//								voteString += "<div class='voteList' id='voteList" + voteObject.cal_date + "' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
+								swiperString += "<div class='swiper-slide'><div id='vLBTitle'>일정투표</div></div>";
+								swiperString += "<div class='swiper-slide'><div class='voteYear'>" + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월</div></div>";
+								swiperString += "<div class='swiper-slide'><div class='voteList' id='voteList" + voteObject.cal_date + "' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div></div>";
+								
+//								swiperString += "<div class='swiper-slide'><div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+								
 							} else {
 								var yearTemp = voteObject.cal_date.substr(0, 4);
 								//                                var yearTemp = 
@@ -2287,12 +2298,16 @@
 								//                                var monthTEmp = voteObject.cal_date.substr(4,2);
 
 								//                                console.log(yearTemp);
-								voteString += "<div id='vLBTitle'>일정투표</div>";
-								voteString += "<div class='voteYear'>" + yearTemp + "년<br>";
-								voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
+//								voteString += "<div id='vLBTitle'>일정투표</div>";
+//								voteString += "<div class='voteYear'>" + yearTemp + "년<br>";
+//								voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
+								swiperString += "<div class='swiper-slide'><div id='vLBTitle'>일정투표</div></div>";
+								swiperString += "<div class='swiper-slide'><div class='voteYear'>" + yearTemp + "년 " + monthTEmp + "월</div></div><div class='swiper-slide'>";
+								var vDSCount = 0;
 								for (let item of voteDateSet.keys()) {
 									if (yearTemp < item.substr(0, 4)) {
-										voteString += "</div></div>";
+//										voteString += "</div></div>";
+										swiperString += "</div>";
 										yearTemp = item.substr(0, 4);
 										monthTEmp = item.substr(4, 2);
 										//                                        console.log(parseInt(item.substr(4, 2)));
@@ -2300,26 +2315,49 @@
 										if (parseInt(monthTEmp) < 10) {
 											monthTEmp = item.substr(5, 1);
 										}
-										voteString += "<div class='voteYear'>" + yearTemp + "년<br>";
-										voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
-										voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+//										voteString += "<div class='voteYear'>" + yearTemp + "년<br>";
+//										voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
+//										voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+										swiperString += "<div class='swiper-slide'><div class='voteYear'>" + yearTemp + "년 " + monthTEmp + "월</div></div>";
+										swiperString += "<div class='swiper-slide'><div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
 										//                                    } else if (monthTEmp < item.substr(4, 2)) {
-									} else if (monthTEmp < parseInt(item.substr(4, 2))) {
-										voteString += "</div>";
+									}
+									else if (monthTEmp < parseInt(item.substr(4, 2))) {
+//										voteString += "</div>";
+										swiperString += "</div>";
 										monthTEmp = item.substr(4, 2);
 										if (parseInt(monthTEmp) < 10) {
 											monthTEmp = item.substr(5, 1);
 										}
-										voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
-										voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
-									} else {
-										voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+//										voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
+//										voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+										swiperString += "<div class='swiper-slide'><div class='voteYear'>" + yearTemp + "년 " + monthTEmp + "월</div></div>";
+										swiperString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
 									}
+									else if (vDSCount >= 5) {
+//										voteString += "</div>";
+										swiperString += "</div>";
+										monthTEmp = item.substr(4, 2);
+										if (parseInt(monthTEmp) < 10) {
+											monthTEmp = item.substr(5, 1);
+										}
+//										voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
+//										voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+										swiperString += "<div class='swiper-slide'><div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+										
+										vDSCount = 0;
+									}
+									else {
+//										voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+										swiperString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
+									}
+									vDSCount++;
 								}
-								voteString += "</div>";
-								voteString += "</div>";
+//								voteString += "</div>";
+//								voteString += "</div>";
+								swiperString += "</div>";
 							}
-							voteString += "</div>"; // voteListBox
+//							voteString += "</div>"; // voteListBox
 							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div>";
 							voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div>";
 							//							voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
@@ -2414,7 +2452,7 @@
 					}
 
 //					$(".modalSchduleInfo").html(voteString);
-					$(".modalSchduleInfo .swiper-wrapper").html(voteString); // swiper
+					$(".modalSchduleInfo .swiper-wrapper").html(swiperString); // swiper
 					$(".modalSchduleInfo .mSIinfo").html(voteString); // info
 					$("#voteButtonBox").html(voteBox);
 					$('#voteButtonBox').css('display', 'block');
@@ -2495,7 +2533,7 @@
 						slidesPerView: 5,
 						paginationClickable: true,
 //						centeredSlides: true,
-						spaceBetween: 10,
+						spaceBetween: 3,
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
@@ -3600,7 +3638,8 @@
 							/*                            display: none;*/
 							/*                            display: inline-block;*/
 							width: 500px;
-							height: 600px;
+/*							height: 600px;*/
+							height: 700px;
 							background-color: #FFFFFF;
 							/*                            position:absolute;*/
 							/* 추가 */
