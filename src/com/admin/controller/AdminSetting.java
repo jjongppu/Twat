@@ -42,7 +42,7 @@ public class AdminSetting extends HttpServlet {
 		JSONObject jsonOb = new JSONObject();
 		
 		// 로그인 성공/실패 
-		if(loginAdmin == "" || adminGrade == "" ){
+		if(request.getParameter("loginAdmin") == null ){
 			
 			jsonOb.put("result", "fail");
 		} else {
