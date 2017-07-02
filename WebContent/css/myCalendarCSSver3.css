@@ -157,7 +157,7 @@ li {
 
 .schCont {
 /*    border: 1px solid black;*/
-    height: 300px;
+/*    height: 300px;*/
 }
 .schedules{
 /*    border: 1px solid black;*/
@@ -234,6 +234,8 @@ li {
     vertical-align: middle;
     padding: 2px 10px;
 }
+/*
+
 
 .closeName {
     padding: 0;
@@ -259,17 +261,19 @@ li {
     padding: 0;
     margin: 0;
 }
+*/
 
 .program{
     font-size: 40px;
 }
+
 
 .more{
 /*    float: right;*/
     margin:3px 0 3px 450px;
     background-color: bisque;
     border-radius: 100px;
-    border: white 10px solid;
+    border: white 5px solid;
 }
 
 /* 더보기 버튼 시도...*/
