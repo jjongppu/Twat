@@ -1,0 +1,441 @@
+/*   
+    #756C6F : 진한 그레이
+    #F6F6F6 : 흰색에 가까운 그레이
+    #DCDAE4: 연한 그레이
+    #B3B2C1 : 그레이
+*/
+
+body {
+    background-image: url(../img/background/back4.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center top;
+    font-family: sans-serif;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    position: relative;
+    display: inline-block;
+}
+
+#newWrap {
+    display: block;
+    background-color: #F6F6F6;
+    width: 1350px;
+    height: 800px;
+    box-shadow: 10px 10px 30px gray;
+    margin: auto;
+}
+
+.left_nav {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+/*    background-color: #DCDAE4;*/
+    background-color: white;
+    width: 100px;
+    overflow: hidden;
+    height: 800px;
+    z-index: 100;
+}
+
+.nav_ul {
+    padding: 0;
+    margin: auto;
+}
+
+li {
+    position: relative;
+}
+
+.nav_li {
+    display: block;
+    list-style: none;
+    width: 50px;
+    padding: 0 27.5px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+#nav_menu {
+    margin-top: 50px;
+}
+
+#nav_menu li {
+    padding-top: 10px;
+}
+
+.navMenuImg {
+    width: 35px;
+    height: 35px;
+}
+
+.nav_text {
+    margin: auto;
+}
+
+#user_Img_Cover {
+    margin-top: 50px;
+}
+
+#user_Id,
+#user_Img_Cover {
+    cursor: pointer;
+}
+
+#user_Img_Cover li {
+    padding: 0;
+    width: 100%;
+}
+
+#user_Img {
+    width: 60px;
+    height: 60px;
+    border-radius: 60px;
+}
+
+#navHere {
+/*    background-color: pink;*/
+    background-color: black;
+    display: inline-block;
+    width: 0;
+    height: 55px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#userInfo {
+    display: block;
+}
+
+#main_container {
+    display: block;
+}
+
+#logout {
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+}
+
+#container {
+    width: 1250px;
+    height: 800px;
+    margin-left: 100px;
+}
+
+
+/*  ========== left =========*/
+
+#left-side {
+    width: 500px;
+    height: 800px;
+    margin-left: 20px;
+}
+
+.leftUp {
+    background: linear-gradient( 165deg, white, #FDF9FF, white, #F0F3FA);
+/*    background: linear-gradient( 165deg, white, #FDF9FF, white);*/
+    height: 300px;
+    width: 500px;
+}
+
+.schedule {
+    width: 100%;
+    height: 30%;
+}
+
+.schCont {
+/*    border: 1px solid black;*/
+/*    height: 300px;*/
+}
+.schedules{
+/*    border: 1px solid black;*/
+    height: 14px;
+    padding: 2px;
+}
+
+.events {
+    background-color: white;
+    /*    height: 100%;*/
+    position: relative;
+    display: inline-block;
+    margin: auto;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 200px;
+    width: 500px;
+}
+
+.leftDown {
+    width: 500px;
+/*    background-color: floralwhite;*/
+    background: linear-gradient( 205deg, white, #FDF9FF, white, #FFFAF3);
+    height: 300px;
+}
+
+.eveLeft {
+    height: 200px;
+    width: 500px;
+    /*    height: 100%;*/
+    display: inline-block;
+    background: linear-gradient( 165deg, white, #FDF9FF, white, #EBF7FD);
+}
+
+.closeEvent div {
+    display: inline-block;
+}
+
+.closeEvent {
+    display: table;
+}
+
+.closeText {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 40px;
+    padding: 0 10px 0 0;
+}
+
+.closeDeco {
+    display: inline-block;
+    width: 200px;
+    height: 10px;
+    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
+}
+.decoLine{
+    display: inline-block;
+    width: 200px;
+    height: 10px;
+    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
+}
+
+.closeSub {
+    display: table;
+    padding: 0;
+    margin: 0;
+}
+
+.closeSub div {
+    display: inline-block;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding: 2px 10px;
+}
+/*
+
+
+.closeName {
+    padding: 0;
+    margin: 0;
+}
+
+.closeContent {
+    padding: 0;
+    margin: 0;
+}
+
+.fname {
+    padding: 0;
+    margin: 0;
+}
+
+.fbirth {
+    padding: 0;
+    margin: 0;
+}
+
+#fName {
+    padding: 0;
+    margin: 0;
+}
+*/
+
+.program{
+    font-size: 40px;
+}
+
+
+.more{
+/*    float: right;*/
+    margin:3px 0 3px 450px;
+    background-color: bisque;
+    border-radius: 100px;
+    border: white 5px solid;
+}
+
+/* 더보기 버튼 시도...*/
+
+/*
+.privSchedule{
+    display: none;
+}
+.scheList{
+    display: none;
+}
+.scheList.active {
+        display: block;
+}
+*/
+
+/* 더보기 버튼 실패... */
+
+
+/*    ========== right  ======================*/
+
+#right-side {
+    /*       width: 60%;*/
+    width: 730px;
+    height: 800px;
+    float: right;
+    background-color: white;
+}
+
+.cal {
+    height: 800px;
+}
+
+#calendar {
+    padding-left: 30px;
+    /*        width: 100%;*/
+    /*        height: 100%;*/
+    color: black;
+    border-color: wheat;
+}
+
+td {
+    width: 95px;
+    height: 91px;
+}
+
+.saturday {
+    color: blue;
+}
+
+.sunday {
+    color: red;
+}
+
+#yearSelect,
+#monthSelect {
+    background-position: 300px;
+    width: 100px;
+    padding: 12px;
+    margin-top: 8px;
+    line-height: 1;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    text-align: center;
+}
+#yearMonth{
+    height:80px;
+}
+
+
+/* Modal */
+.modalButton{
+    width:100px;
+    height: 27px;
+/*    background-color: whitesmoke;*/
+    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
+    border-radius: 100px;
+    font-size: 12px;
+    border: 0.5px solid white;
+    float: right;
+    margin: 5px 30px 0 0;
+}
+
+#blindCover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0.7;
+    display: none;
+    z-index: 300;
+}
+
+#modal,
+#inviteModal {
+    position: fixed;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 350px;
+    padding: 30px 10px 20px 10px;
+    overflow: hidden;
+    height: 40px;
+    z-index: 1000;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+#titleAdd {
+    margin-bottom: 30px;
+    background: white;
+}
+
+#groupAddBtn {
+/*    display: inline-block;*/
+    float: right;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#calTitle {
+    height: 23px;
+    width: 235px;
+    padding-left: 10px;
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+#selectAnswer {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.btnCenter {
+    width: 290px;
+    margin: 20px auto 20px auto;
+    font-size: 17px;
+}
+
+.choiceBtn {
+    display: inline-block;
+    width: 48%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    margin: none;
+}
+#scheTime{
+    width: 40px;
+    height: 20px;
+    background-color: aliceblue;
+}
