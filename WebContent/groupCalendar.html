@@ -1163,7 +1163,10 @@
 				$('#modal2').css('display', 'none');
 
 				if (selectDate < dateToFormat(initDay)) {
-					alert("지난 날짜는 선택할수 없습니다!")
+					if(login_userId.match(group_master))
+					{
+						alert("지난 날짜는 선택할수 없습니다!")
+					}
 					return;
 				} else {
 					//                    if ($(a).css("backgroundColor") == "rgb(0, 128, 0)")
@@ -1319,24 +1322,17 @@
 				// 확정된 일정표시
 				for (let item of scheduleSet.keys()) {
 					if (item.split("-")[0] == dateParam) {
+//						console.log(item);
+						$(cell).attr('class', 'trSche' + item.split("-")[2]);
 						cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-						//                        $('.votedSchedule').prevAll().css("background-color", "#ff8080");
-						//                        console.log("#date" + parseInt(dateParam.substr(6)));
-						//                        console.log(item);
-						//                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
-						// 클릭 시 모달창 추가
-						//                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getScheduleInfo(' + item.split("-")[2] + ')');
 					}
 				}
 				// 미확정된 일정표시
 				for (let item of voteSet.keys()) {
 					if (item.split("-")[0] == dateParam) {
+//						console.log(item);
+						$(cell).attr('class', 'trVote' + item.split("-")[2]);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-						//                        $('.voteSchedule').prevAll().css("background-color", "#00ff80");
-						//                        console.log("#date" + parseInt(dateParam.substr(6)));
-						//                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
-						// 클릭 시 모달창 추가, 투표할 일정 눌러도 체크 안되게 onclick 덮음
-						//                        $("#date" + parseInt(dateParam.substr(6))).attr('onclick', 'getVoteInfo(' + item.split("-")[2] + ')');
 					}
 				}
 				// 생일표시
@@ -1440,6 +1436,26 @@
 					document.getElementById("otherMembers").innerHTML += "<span>&nbsp;외 " + data[0].group_count + "명</span>";
 
 					for (var arrCal = 1; arrCal < data.length; arrCal++) {
+						
+//						var chkDate = false;
+						if(parseInt(data[arrCal].cal_date) < parseInt(dateToFormat(initDay)) && data[arrCal].cal_date.indexOf(",") == -1)
+						{
+//							console.log(1);
+							continue;
+						}
+//						else if(parseInt(data[arrCal].cal_date.split(",")[data[arrCal].cal_date.split(",").lastIndexOf()]) < parseInt(dateToFormat(initDay)) && data[arrCal].cal_date.indexOf(",") > 0)
+//						{
+//							continue;
+//						}
+						
+//						if(data[arrCal].cal_date.indexOf(",") > 0)
+//						{
+//							var tempCAL = Array.from().sort();
+////							console.log(data[arrCal].cal_date.split(","));
+//							//[data[arrCal].cal_date.split(",").lastIndexOf()]
+//						}
+						
+						
 						var str = "";
 						var strA = "";
 						strA += '</div>';
@@ -1456,7 +1472,8 @@
 						// 0 / 0 / 0 처리
 						//                        if (data[arrCal].member_choice.indexOf(",") == -1)
 						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
-							// 확정된 날짜 오른쪽 상단 표시
+							// 확정된 날짜 왼쪽 상단 표시
+
 							var mcCheck = data[arrCal].member_choice.split(",");
 							var mcResult = false;
 							for(var k = 0; k < mcCheck.length; k++)
@@ -1696,6 +1713,7 @@
 		// 모달 작업 부분
 		function getGroupBrith() {
 			var para = document.location.href.split("?");
+			var tempBirth;
 			//            console.log("para : " + para);
 			//            console.log("para[1] : " + para[1]);
 			para = para[1].split("=");
@@ -1711,6 +1729,7 @@
 				},
 				dataType: "json",
 				success: function(data) {
+					console.log(data);
 					//                    console.log("groupBirth");
 					//                    console.log(data);
 					//                    console.log("이런");
@@ -1718,36 +1737,157 @@
 					//                    {
 					//                        console.log($(this).find('memberNa    me').text());
 					//                    });
+					
 					for (var i = 0; i < data.length; i++) {
 						//                        console.log(data[i].memberBirth + "-" + data[i].memberName + "-" + data[i].memberId);
-						var memBirth = data[i].memberBirth + "-" + data[i].memberName + "-" + data[i].memberId;
+						var memBirth = data[i].memberBirth + "-" + data[i].memberName + "-" + data[i].memberId + "-" + data[i].memberImg;
 						birthSet.add(memBirth);
 						//                        console.log(memBirth);
 						//                        console.log(birthSet[i]);
 						// 생일자 작업중임
 						//                        var today = new Date('YYYYMMDD');
 						//                        console.log(today.getFullYear());
-						if (data[i].memberBirth > 0) {
-							var str = "<div class='content'><div class='left birth'>" + data[i].memberBirth + "</div>";
-							str += "<div class='middle birth'>" + data[i].memberName + "님(" + data[i].memberId + ")의 생일</div>";
-							str += "<div class='right birth'></div></div>"
-							$('.event .contentBox').append(str);
-							//                            console.log(today.getFullYear() + "" + (today.getMonth('MM') + 1) + "" + today.getDay());
-							//                            console.log(today);
-						}
+//						if (data[i].memberBirth > 0) {
+//							var str = "<div class='content'><div class='left birth'>" + data[i].memberBirth + "</div>";
+//							str += "<div class='middle birth'>" + data[i].memberName + "님(" + data[i].memberId + ")의 생일</div>";
+//							str += "<div class='right birth'></div></div>"
+//							$('.event .contentBox').append(str);
+//							//                            console.log(today.getFullYear() + "" + (today.getMonth('MM') + 1) + "" + today.getDay());
+//							//                            console.log(today);
+//						}
 
 					}
+					
+					var birthSortSet = new Set();
+					
+					for(let item of birthSet.keys())
+					{
+						birthSortSet.add(item.substr(2));
+					}
+					
+//					console.log(birthSortSet);
+					
+					tempBirth = Array.from(birthSortSet).sort();
+					
+					console.log(tempBirth);
+//					birthSet = new Set();
+					var birthIndex = 0;
+					for(var i = 0; i < tempBirth.length; i++)
+					{
+						if(parseInt(tempBirth[i].split("-")[0].substr(0, 2)) >= initDay.getMonth() + 1 && 
+							parseInt(tempBirth[i].split("-")[0].substr(2, 2)) >= initDay.getDate())
+						{
+							birthIndex = i;
+//							console.log(tempBirth[i]);
+							break;
+						}
+					}
+//					console.log(birthSet);
+//					console.log(initDay.getMonth() + 1);
+//					console.log(initDay.getDate());
 					//                    console.log("birthSet");
-					for (let item of birthSet.keys()) {
+					var CurrentMonth;
+					
+					for (var i = 0; i < tempBirth.length; i++)
+					{
 						//                        console.log(item.split("-"));
 						//                        console.log("split : " + item.split("-")[0].substr(2, 4));
+						var birthDay = tempBirth[i].split("-")[0];
+//						var str = "<div class='content'><div class='left birth'>" + parseInt(birthDay.substr(0, 2)) + "월 " + parseInt(birthDay.substr(2, 2)) + "일</div>";
+//						str += "<div class='middle birth'>" + tempBirth[i].split("-")[1] + "님(" + tempBirth[i].split("-")[2] + ")의 생일</div>";
+//						str += "<div class='right birth'></div></div>";
+						var str = "<div class='birthListBox'>";
+						if(i == 0)
+						{
+							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'>                                 </div></div>";
+							CurrentMonth = parseInt(birthDay.substr(0, 2));
+						}
+						else if(parseInt(birthDay.substr(0, 2)) > CurrentMonth)
+						{
+							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'>                                 </div></div>";
+						}
+						else
+						{
+							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'><div class='stick'>                                 </div></div>";
+						}
+						
+						str += "<div class='birthMemBox' id='bMB" + i + "' value='" + tempBirth[i].split("-")[2] + "' onclick='getbMB(this)'>&nbsp;";
+						str += "<div class='birthMemImg'><img src='" + tempBirth[i].split("-")[3] + "'/></div>";
+						str += "<div class='birthMemInfo'>"
+						str += "<div class='birthMemName'>" + tempBirth[i].split("-")[1] + "</div>";
+						str += "<div class='birthMemDate'>" + parseInt(birthDay.substr(0, 2)) + "월 " + parseInt(birthDay.substr(2, 2)) + "일</div>";
+						str += "</div>"; // birthMemInfo
+						str += "</div>"; // birthMemBox
+						str += "</div>"; // birthListBox
+						$('.event .contentBox').css('width', tempBirth.length * 201);
+						$('.event .contentBox').append(str);
 					}
+					
+//					for(var i = 0; i < tempBirth.length; i++)
+//					{
+////						$('#bMB' + i).attr('onlick', "getMemInfo('" + tempBirth[i].split("-")[2] + "')");
+//						$('#bMB' + i).click(function(){
+//							getMemInfo(tempBirth[i].split("-")[2]);
+//						});
+//					}
+					
+//					for (var i = birthIndex; i < tempBirth.length; i++)
+//					{
+//						//                        console.log(item.split("-"));
+//						//                        console.log("split : " + item.split("-")[0].substr(2, 4));
+//						var birthDay = tempBirth[i].split("-")[0];
+//						var str = "<div class='content'><div class='left birth'>" + parseInt(birthDay.substr(0, 2)) + "월 " + parseInt(birthDay.substr(2, 2)) + "일</div>";
+//						str += "<div class='middle birth'>" + tempBirth[i].split("-")[1] + "님(" + tempBirth[i].split("-")[2] + ")의 생일</div>";
+//						str += "<div class='right birth'></div></div>";
+//						$('.event .contentBox').append(str);
+//					}
+//					
+//					for (var i = 0; i < birthIndex; i++)
+//					{
+//						//                        console.log(item.split("-"));
+//						//                        console.log("split : " + item.split("-")[0].substr(2, 4));
+////						var str = "<div class='content'><div class='left birth'>" + tempBirth[i].split("-")[0] + "</div>";
+//						var birthDay = tempBirth[i].split("-")[0];
+//						var str = "<div class='content'><div class='left birth'>" + parseInt(birthDay.substr(0, 2)) + "월 " + parseInt(birthDay.substr(2, 2)) + "일</div>";
+//						str += "<div class='middle birth'>" + tempBirth[i].split("-")[1] + "님(" + tempBirth[i].split("-")[2] + ")의 생일</div>";
+//						str += "<div class='right birth'></div></div>";
+//						$('.event .contentBox').append(str);
+//					}
+//					for (let item of birthSet.keys())
+//					{
+//						//                        console.log(item.split("-"));
+//						//                        console.log("split : " + item.split("-")[0].substr(2, 4));
+//						var str = "<div class='content'><div class='left birth'>" + item.split("-")[0] + "</div>";
+//						str += "<div class='middle birth'>" + item.split("-")[1] + "님(" + item.split("-")[2] + ")의 생일</div>";
+//						str += "<div class='right birth'></div></div>";
+//						$('.event .contentBox').append(str);
+//					}
+					
 				},
 				error: function(req) {
 					//                    alert('통신실패');
 					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupBirth.do");
+				},
+				complete: function() {
+//					console.log(tempBirth);
+//					for(var i = 0; i < tempBirth.length; i++)
+//					{
+//						var tempMN = tempBirth[i].split("-")[2];
+//						console.log(tempMN);
+//////						$('#bMB' + i).attr('onlick', "getMemInfo('" + tempBirth[i].split("-")[2] + "')");
+////						$('#bMB' + i).attr('onlick', "getMemInfo(" + tempMN + ")");
+//						$('#bMB' + i).click(function(){
+//							getMemInfo(tempMN);
+//						});
+//					}
 				}
 			})
+		}
+		// 임시 함수
+		function getbMB(bMB)
+		{
+//			console.log($(bMB).attr('value'));
+			getMemInfo($(bMB).attr('value'));
 		}
 		// 확정된 일정 정보 출력
 		function getScheduleInfo(cal_num) {
@@ -2355,7 +2495,7 @@
 		// 친구창 클릭시 정보 출력 함수
 		function getMemInfo(member_id)
 		{
-			console.log("미구현");
+			console.log(member_id);
 		}
 		// 방장위임 클릭시 이벤트
 		var toggleGGM = true;
@@ -2618,23 +2758,30 @@
 		}
 
 		function selectYes() {
-			//            console.log("!");
+//			            console.log("!");
 			//            console.log(scheSet.toString());
 
 
 			var calDate = "";
 			var groupId = location.href.split("=")[1];
-			console.log(groupId);
+//			console.log(groupId);
+            
+            var scheArr = Array.from(scheSet).sort();
 
-			for (let item of scheSet.keys())
-				calDate += item + ",";
+            for(var scheIndex = 0; scheIndex < scheArr.length; scheIndex++){
+                
+                calDate += scheArr[scheIndex] + ",";
+            }            
+
+            
+            console.log(calDate);
 
 
 
 
 
 			var calTitle = $("#calTitle").val();
-			console.log("");
+			
 
 			$.ajax({
 				type: 'post',
@@ -2658,7 +2805,7 @@
 
 				},
 				complete: function() {
-					location.reload();
+//					location.reload();
 				},
 				error: function(req) {
 
