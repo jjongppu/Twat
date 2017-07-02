@@ -77,7 +77,7 @@ public class ResponsingFriends extends HttpServlet {
 		    out.close();	    	
 	    }else{
 	    	jsonObj = new JSONObject();
-	    	jsonObj.put("result", "fail");
+	    	jsonObj.put("userId", "fail");
 	    	jsonArr.add(jsonObj);
 	    	out.println(jsonArr);
 		    out.close();	    
