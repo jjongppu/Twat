@@ -11,8 +11,8 @@
 	<!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
 	<!--    네브바 js, 세션검사 -->
 	<script src="js/jquery-3.2.1.min.js"></script>
-	<script src="js/swiper.jquery.min.js"></script>
 	<script src="js/nav.js"></script>
+	<script src="js/swiper.jquery.min.js"></script>
 
 	<script language="javascript" type="text/javascript">
 		// 일정 잡기 저장용
@@ -40,6 +40,10 @@
 		var swiperSche;
 		// swiper Vote
 		var swiperVote;
+		// swiper Comment
+		var swiperComment;
+		// swiper Select
+		var swiperSelect;
 		var cal_date = "";
 		// 해당 방의 방장
 		var group_master = "";
@@ -917,15 +921,41 @@
 		var today = new Date(); // 오늘 날짜
 
 		$(document).ready(function() {
+			var group_id = location.href.split("=")[1];
+
+			$.ajax({
+				type: 'post',
+				url: 'chkId.do',
+				dataType: "json",
+				data: {
+					groupId: group_id
+				},
+				success: function(data) {
+					console.log(data);
+					var sessionResult = data[0].result;
+					if (!sessionResult) {
+						location.href = "/Twat/groupList.html";
+					}
+				},
+				complete: function() {
+					//                    getGroupInfo();
+					//                    setTimeout(getGroupInfo(), 100);
+				},
+				error: function(req) {
+
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : chkId.do");
+				}
+
+			});
 
 			var groupId = location.href.split("=")[1];
-//			var swiper = new Swiper('.swiper-container', {
-//				pagination: '.swiper-pagination',
-//				slidesPerView: 3,
-//				paginationClickable: true,
-//				spaceBetween: 30,
-//				freeMode: true
-//			});
+			//			var swiper = new Swiper('.swiper-container', {
+			//				pagination: '.swiper-pagination',
+			//				slidesPerView: 3,
+			//				paginationClickable: true,
+			//				spaceBetween: 30,
+			//				freeMode: true
+			//			});
 
 			$.ajax({
 				type: 'post',
@@ -983,15 +1013,15 @@
 			//            getGroupInfo();
 			// console.log("getGroupBirth");
 			setTimeout(getGroupBrith, 300);
-			
-			
-//			var swiper = new Swiper('.swiper-container', {
-//				pagination: '.swiper-pagination',
-//				slidesPerView: 3,
-//				paginationClickable: true,
-//				spaceBetween: 30,
-//				freeMode: true
-//			});
+
+
+			//			var swiper = new Swiper('.swiper-container', {
+			//				pagination: '.swiper-pagination',
+			//				slidesPerView: 3,
+			//				paginationClickable: true,
+			//				spaceBetween: 30,
+			//				freeMode: true
+			//			});
 			//            getGroupBrith();
 			// console.log("cal");
 			//            $('.saturday').css('color','blue');
@@ -1351,10 +1381,9 @@
 				}
 				// 미확정된 일정표시
 				for (let item of voteSet.keys()) {
-//					if (item.split("-")[0] == dateParam)
-					if (parseInt(item.split("-")[0]) == parseInt(dateParam))
-					{
-//						console.log(item);
+					//					if (item.split("-")[0] == dateParam)
+					if (parseInt(item.split("-")[0]) == parseInt(dateParam)) {
+						//						console.log(item);
 						$(cell).attr('class', 'trVote' + item.split("-")[2]);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
 					}
@@ -1569,24 +1598,21 @@
 						strB += '</div>'; // div=middle
 						var str2 = data[arrCal].cal_date;
 						//                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
-						
+
 						str += '<div class="swiper-slide">';
-						
-						
+
+
 						str += '<div class="content">';
 						//                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
 						str += '<div class="left">';
 						//                        if (str2.indexOf(',') == -1)
 						// ======================================================================================================
 						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
-//							str += data[arrCal].cal_date;
-							if(parseInt(str2.substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
-							{
-								str += "<div class='onlyOne'>" + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
-							}
-							else
-							{
-								str += "<div class='onlyOne'>" + str2.substr(0,4) + "년 " + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+							//							str += data[arrCal].cal_date;
+							if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
+								str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+							} else {
+								str += "<div class='onlyOne'>" + str2.substr(0, 4) + "년 " + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
 							}
 							//                            console.log("확정 : " + data[arrCal].cal_memo);
 							scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
@@ -1594,55 +1620,43 @@
 							// 전체 일정(확정)
 							str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
 							str += strB;
-							
+
 							str += '</div>'; // swiper-slide
-							
-//							$(".schedule .contentBox").append(str);
+
+							//							$(".schedule .contentBox").append(str);
 							$(".schedule .swiper-wrapper").append(str);
 						} else {
 							var res = str2.split(",");
-//							var res;
-//							str += res[0] + "~" + res[res.length - 1];
-							if(str2.indexOf(",") == -1)
-							{
-//								res = str2;
-								if(parseInt(str2.substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
-								{
-									str += "<div class='onlyOne'>" + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+							//							var res;
+							//							str += res[0] + "~" + res[res.length - 1];
+							if (str2.indexOf(",") == -1) {
+								//								res = str2;
+								if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
+									str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+								} else {
+									str += "<div class='onlyOne'>" + str2.substr(0, 4) + "년 " + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
 								}
-								else
-								{
-									str += "<div class='onlyOne'>" + str2.substr(0,4) + "년 " + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
-								}
-							}
-							else
-							{
+							} else {
 								res = str2.split(",");
-								var resMonth1 = parseInt(res[0].substr(4,2));
-								var resMDate1 = parseInt(res[0].substr(6,2));
-								var resMonth2 = parseInt(res[res.length - 1].substr(4,2));
-								var resMDate2 = parseInt(res[res.length - 1].substr(6,2));
-//								str += res[0] + "~" + res[res.length - 1];
-								if(parseInt(res[0].substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
-								{
-									str += "<div style='text-align:left; padding-left:5px;'>" + resMonth1 + "월 " + resMDate1 +"일</div>";
+								var resMonth1 = parseInt(res[0].substr(4, 2));
+								var resMDate1 = parseInt(res[0].substr(6, 2));
+								var resMonth2 = parseInt(res[res.length - 1].substr(4, 2));
+								var resMDate2 = parseInt(res[res.length - 1].substr(6, 2));
+								//								str += res[0] + "~" + res[res.length - 1];
+								if (parseInt(res[0].substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
+									str += "<div style='text-align:left; padding-left:5px;'>" + resMonth1 + "월 " + resMDate1 + "일</div>";
+								} else {
+									str += "<div style='text-align:left; padding-left:5px;'>" + res[0].substr(0, 4) + "년 " + resMonth1 + "월 " + resMDate1 + "일</div>";
 								}
-								else
-								{
-									str += "<div style='text-align:left; padding-left:5px;'>" + res[0].substr(0,4) + "년 " + resMonth1 + "월 " + resMDate1 +"일</div>";
+								//								str += "<div style='text-align:left; padding-left:5px;'>" + res[0] + "</div>";
+								//								str += "<div>~</div>";
+
+								if (parseInt(res[res.length - 1].substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
+									str += "<div style='text-align:right;'>~ " + resMonth2 + "월 " + resMDate2 + "일</div>";
+								} else {
+									str += "<div style='text-align:right;'>~ " + res[res.length - 1].substr(0, 4) + "년 " + resMonth2 + "월 " + resMDate2 + "일</div>";
 								}
-//								str += "<div style='text-align:left; padding-left:5px;'>" + res[0] + "</div>";
-//								str += "<div>~</div>";
-								
-								if(parseInt(res[res.length - 1].substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
-								{
-									str += "<div style='text-align:right;'>~ " + resMonth2 + "월 " + resMDate2 +"일</div>";
-								}
-								else
-								{
-									str += "<div style='text-align:right;'>~ " + res[res.length - 1].substr(0,4) + "년 " + resMonth2 + "월 " + resMDate2 +"일</div>";
-								}
-//								str += "<div style='text-align:right;'>~ " + res[res.length - 1] + "</div>";
+								//								str += "<div style='text-align:right;'>~ " + res[res.length - 1] + "</div>";
 							}
 							//                            console.log("투표 : " + data[arrCal].cal_memo);
 							for (var i = 0; i < res.length; i++) {
@@ -1652,10 +1666,10 @@
 							// 투표(미확정)
 							str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
 							str += strB;
-							
+
 							str += '</div>'; // swiper-slide
-							
-//							$(".vote .contentBox").append(str);
+
+							//							$(".vote .contentBox").append(str);
 							$(".vote .swiper-wrapper").append(str);
 						}
 						//                        // ======================================================================================================
@@ -1753,7 +1767,7 @@
 					//                        var cal_date = data[1].cal_date.split(",");
 					//                        voteMeeting(cal_date);
 					//                    }
-//					console.log(barColorSet);
+					//					console.log(barColorSet);
 					for (let item of barColorSet.keys()) {
 						var percentC = parseFloat(item.split("-")[1]) * 100;
 
@@ -1767,36 +1781,36 @@
 						direction: 'vertical',
 						slidesPerView: 3,
 						paginationClickable: true,
-//						spaceBetween: 30,
+						centeredSlides: true,
+						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
-					
+
 					swiperVote = new Swiper('.vote .swiper-container', {
 						pagination: '.vote .swiper-pagination',
 						direction: 'vertical',
 						slidesPerView: 3,
 						paginationClickable: true,
-//						spaceBetween: 30,
+						centeredSlides: true,
+						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
-					
+
 					$('.schedule .contentBox').css('display', 'none');
 					$('.vote .contentBox').css('display', 'none');
-					
-//					if(scheSet)
+
+					//					if(scheSet)
 					console.log(scheduleSet);
 					console.log(voteSet);
-					
-					
-					
-					if(scheduleSet.size < 1)
-					{
+
+
+
+					if (scheduleSet.size < 1) {
 						var noStr = "<div class='swiper-slide'>잡혀있는 일정이 없습니다</div>";
 						$(".schedule .swiper-wrapper").html(noStr);
 					}
-					
-					if(voteSet.size < 1)
-					{
+
+					if (voteSet.size < 1) {
 						var noStr = "<div class='swiper-slide'>등록된 투표가 없습니다</div>"
 						$(".vote .swiper-wrapper").html(noStr);
 					}
@@ -1886,7 +1900,7 @@
 
 					tempBirth = Array.from(birthSortSet).sort();
 
-//					console.log(tempBirth);
+					//					console.log(tempBirth);
 					//					birthSet = new Set();
 					var birthIndex = 0;
 					for (var i = 0; i < tempBirth.length; i++) {
@@ -1931,7 +1945,7 @@
 						$('.event .contentBox').css('width', tempBirth.length * 201);
 						$('.event .contentBox').append(str);
 					}
-					
+
 					// swiper-container
 					for (var i = 0; i < tempBirth.length; i++) {
 						//                        console.log(item.split("-"));
@@ -1961,7 +1975,7 @@
 						str += "</div>"; // birthListBox
 						str += "</div>"; // swiper-slide
 						$('.event .contentBox').css('width', tempBirth.length * 201);
-//						$('.event .contentBox').append(str);
+						//						$('.event .contentBox').append(str);
 						$('.event .swiper-wrapper').append(str);
 					}
 
@@ -2025,10 +2039,12 @@
 					$('.event .contentBox').css('display', 'none');
 					swiper = new Swiper('.event .swiper-container', {
 						pagination: '.event .swiper-pagination',
-//						slidesPerView: 3,
+						//						slidesPerView: 3,
 						slidesPerView: 'auto',
 						centeredSlides: true,
 						paginationClickable: true,
+						nextButton: '.swiper-button-next',
+						prevButton: '.swiper-button-prev',
 						spaceBetween: 0,
 						freeMode: true
 					});
@@ -2068,9 +2084,9 @@
 					for (var i = 0; i < data.length; i++) {
 						// 일정 정보
 						if (data[i].cal_depth == 0) {
-							scheduleString += "<div id='scheduleMemo'>내용 : " + scheduleObject.cal_memo + "</div>";
-							scheduleString += "<div id='scheduleWriter'>작성자 : " + findMemberName(scheduleObject.cal_writer) + "</div>";
 							scheduleString += "<div id='scheduleDate'>일정 : " + scheduleObject.cal_date.substr(0, 4) + "년 " + scheduleObject.cal_date.substr(4, 2) + "월 " + scheduleObject.cal_date.substr(6, 2) + "일</div>";
+							scheduleString += "<div id='scheduleWriter'>작성자 : " + findMemberName(scheduleObject.cal_writer) + "</div>";
+							scheduleString += "<div id='scheduleMemo'>내용 : " + scheduleObject.cal_memo + "</div>";
 							scheduleString += "<div id='scheduleMember'>참가자 : ";
 							// 참가자 출력
 							for (var j = 0; j < memberList.length; j++) {
@@ -2086,8 +2102,10 @@
 						} else if (data[i].cal_depth > 0) {
 							//                            console.log("확인!");
 
-							commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
-							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div></div>";
+//							commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
+//							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div></div>";
+							commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
+							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div></div></div>";
 							//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
 						}
 
@@ -2105,23 +2123,37 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
-					
-					if(commentsString.match(""))
-					{
-						commentsString += "<div class='commentBox'><div class='commentWriter'></div>";
-						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div>";
+
+					if (commentsString.match("")) {
+						//<div class="swiper-slide">Slide 1</div>
+						commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'></div>";
+						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div><div>";
 					}
 					console.log(commentsString);
-					$("#commentList").html(commentsString);
+//					$("#commentList").html(commentsString);
+					$("#commentList .swiper-wrapper").html(commentsString);
+					$("#modal2>#modalTitle").html("일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
 					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
 					$("#voteButtonBox").html("");
-
+					$('.commentBox').css('display', 'block');
 					//                    document.getElementById('modal2').innerHTML = scheduleString;
 				},
 				error: function(req) {
 					//                    alert('통신실패');
 					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
+				},
+				complete: function() {
+					swiperComment = new Swiper('#commentList .swiper-container', {
+						pagination: '#commentList .swiper-pagination',
+						direction: 'vertical',
+						slidesPerView: 5,
+						paginationClickable: true,
+//						centeredSlides: true,
+						spaceBetween: 10,
+						//						spaceBetween: 30,
+						mousewheelControl: true
+					});
 				}
 			})
 		}
@@ -2145,6 +2177,7 @@
 					console.log(data);
 					nowCalNum = cal_num;
 					var voteString = "";
+					var swiperString = "";
 					//                    var commentsString = "<div id='CommentBox'>";
 					var commentsString = "";
 					var voteObject = data[0];
@@ -2198,15 +2231,26 @@
 
 									ImpossibleCount = tempML.size - possibleCount;
 
-									voteString += "<input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
+//									voteString += "<div id='vLBTitle'>날짜선택</div>";
+//
+//									voteString += "<div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
+									swiperString += "<div id='vLBTitle'>날짜선택</div>";
+
+									swiperString += "<div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + voteObject.cal_date + "'> " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
 									if (ImpossibleCount == 0) {
-										voteString += "없음";
+//										voteString += "없음";
+										swiperString += "없음";
 									} else {
-										voteString += ImpossibleCount + "명";
+//										voteString += ImpossibleCount + "명";
+										swiperString += ImpossibleCount + "명";
 									}
-									voteString += " </span>]<br>";
+//									voteString += " </span>]</div>";
+									swiperString += " </span>]</div>";
 								} else {
 									var tempML = new Set();
+
+									voteString += "<div id='vLBTitle'>날짜선택</div>";
+
 									for (let item of voteDateSet.keys()) {
 										ImpossibleCount = 0;
 										possibleCount = 0;
@@ -2222,16 +2266,17 @@
 
 										ImpossibleCount = tempML.size - possibleCount;
 
-										voteString += "<input type='radio' id='' name='masterSelected' value='" + item + "'> " + item.substr(0, 4) + "년 " + item.substr(4, 2) + "월 " + item.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
+										voteString += "<div class='rdoSelect'><input type='radio' id='' name='masterSelected' value='" + item + "'> " + item.substr(0, 4) + "년 " + item.substr(4, 2) + "월 " + item.substr(6, 2) + "일 [<span class='stateOK'>가능 : " + possibleCount + "명 </span> / <span class='stateNO'>불가능 : ";
 										if (ImpossibleCount == 0) {
 											voteString += "없음";
 										} else {
 											voteString += ImpossibleCount + "명";
 										}
-										voteString += " </span>]<br>";
+										voteString += " </span>]</div>";
 									}
 								}
 							} else if (voteDateCount == 1) {
+								voteString += "<div id='vLBTitle'>일정투표</div>";
 								voteString += "<div class='voteList' id='voteList" + voteObject.cal_date + "' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
 							} else {
 								var yearTemp = voteObject.cal_date.substr(0, 4);
@@ -2242,7 +2287,8 @@
 								//                                var monthTEmp = voteObject.cal_date.substr(4,2);
 
 								//                                console.log(yearTemp);
-								voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
+								voteString += "<div id='vLBTitle'>일정투표</div>";
+								voteString += "<div class='voteYear'>" + yearTemp + "년<br>";
 								voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
 								for (let item of voteDateSet.keys()) {
 									if (yearTemp < item.substr(0, 4)) {
@@ -2254,7 +2300,7 @@
 										if (parseInt(monthTEmp) < 10) {
 											monthTEmp = item.substr(5, 1);
 										}
-										voteString += "<div class='voteYear'>" + yearTemp + "년\n\t";
+										voteString += "<div class='voteYear'>" + yearTemp + "년<br>";
 										voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
 										voteString += "<div class='voteList' id='voteList" + item + "' onclick='addMemberVoteList(" + item + ")'>" + item.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div>&nbsp;";
 										//                                    } else if (monthTEmp < item.substr(4, 2)) {
@@ -2273,19 +2319,19 @@
 								voteString += "</div>";
 								voteString += "</div>";
 							}
-							voteString += "</div><br>"; // voteListBox
-							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div><br>";
-							voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div><br>";
-//							voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
+							voteString += "</div>"; // voteListBox
+							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div>";
+							voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div>";
+							//							voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
 							voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer;
 							// 참가자 출력
 							var voteMemberSet = new Set();
 							var user0000 = false;
 
 							for (var j = 0; j < memberList.length; j++) {
-								//                                console.log(memberList[j]);
+//								                                console.log(memberList[j]);
 								//                                console.log(memberList[j].split("-")[1]);
-								//                                if(memberList.indexOf(",") == -1 && memberList.split("-")[1].match(login_userId))
+//								                                if(memberList.indexOf(",") == -1 && memberList.split("-")[1].match(login_userId))
 								//                                {
 								//                                    a
 								//                                }
@@ -2321,12 +2367,13 @@
 							}
 							voteString += "</div>";
 						} else if (data[i].cal_depth > 0) {
-							//                            console.log(data[i]);
-
-							commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
-							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div><br>";
-							//                            console.log(commentsString);
-							//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
+//							                            console.log(data[i]);
+							
+//							commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
+//							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
+							// <div class="swiper-slide">Slide 1</div>
+							commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
+							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div></div>";
 						}
 
 						// 댓글창
@@ -2366,23 +2413,39 @@
 						}
 					}
 
-
-					$(".modalSchduleInfo").html(voteString);
+//					$(".modalSchduleInfo").html(voteString);
+					$(".modalSchduleInfo .swiper-wrapper").html(voteString); // swiper
+					$(".modalSchduleInfo .mSIinfo").html(voteString); // info
 					$("#voteButtonBox").html(voteBox);
 					$('#voteButtonBox').css('display', 'block');
-					
-					if(commentsString.length < 1)
-					{
-						commentsString += "<div class='commentBox'><div class='commentWriter'></div>";
-						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div>";
+
+					if (commentsString.length < 1) {
+//						 <div class="swiper-slide">Slide 1</div>
+						commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'></div>";
+						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div></div>";
 					}
-					
-					$("#commentList").html(commentsString);
+
+//					$("#commentList").html(commentsString);
+					$("#commentList .swiper-wrapper").html(commentsString);
+					$("#modal2>#modalTitle").html("투표중인 일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>")
 					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
 
-					console.log(alreadyVote);
-					console.log(user0000);
+					//					setTimeout(function(){
+					//						if(parseInt($("#modal2").css('height'))%2 == 1)
+					//						{
+					//							var height = parseInt($("#modal2").css('height'));
+					//							$("#modal2").css('height', height + 1);
+					//						}
+					//					}, 300)
+					//					if(parseInt($("#modal2").css('height'))%2 == 1)
+					//					{
+					//						var height = parseInt($("#modal2").css('height'));
+					//						$("#modal2").css('height', height + 1);
+					//					}
+
+					//					console.log(alreadyVote);
+					//					console.log(user0000);
 
 					//                    if(alreadyVote && user0000)
 					//                    {
@@ -2399,19 +2462,43 @@
 					//                        $("#voteList" + date).css("background-image", "url(img/etcIcon/checked.png)");
 					//                    }
 					//                    document.getElementById('modal2').innerHTML = voteString;
+
+
 				},
 				error: function(req) {
 					//                    alert('통신실패');
 					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
 				},
 				complete: function() {
-
-
 					for (let item of memberVoteListSet.keys()) {
 						//                        addMemberVoteList(item);
 						//                        $("#voteList" + item).css("backgroundColor", "antiquewhite");
 						$("#voteList" + item).css("background-image", "url(img/etcIcon/checked.png)");
 					}
+					$('#commentList .swiper-pagination').css('z-index', 450);
+//					$('#commentList .swiper-slide').first().css('margin-top', '10px');
+					
+					swiperComment = new Swiper('#commentList .swiper-container', {
+						pagination: '#commentList .swiper-pagination',
+						direction: 'vertical',
+						slidesPerView: 5,
+						paginationClickable: true,
+//						centeredSlides: true,
+						spaceBetween: 10,
+						//						spaceBetween: 30,
+						mousewheelControl: true
+					});
+					
+					swiperSelect = new Swiper('.modalSchduleInfo .swiper-container', {
+						pagination: '.modalSchduleInfo .swiper-pagination',
+						direction: 'vertical',
+						slidesPerView: 5,
+						paginationClickable: true,
+//						centeredSlides: true,
+						spaceBetween: 10,
+						//						spaceBetween: 30,
+						mousewheelControl: true
+					});
 				}
 			})
 		}
@@ -2580,7 +2667,7 @@
 								// onclick='giveGM(" + data[i].MEMBER_ID + ")'
 							}
 
-							joinTempString += "<br>";
+							joinTempString += "";
 
 							memIdList.add(data[i].MEMBER_ID);
 
@@ -2995,11 +3082,11 @@
 			var first_cal = $("#voteDate").text().substr(5, 4) + $("#voteDate").text().substr(11, 2) + $("#voteDate").text().substr(15, 2);
 			var new_memo = $("#commentContents").val();
 			console.log(first_cal);
-            if(new_memo == ""){
-                alert("댓글을 입력해주세요!");
-                return;
-            }
-                
+			if (new_memo == "") {
+				alert("댓글을 입력해주세요!");
+				return;
+			}
+
 
 			$.ajax({
 				type: 'post',
@@ -3236,7 +3323,7 @@
 					<div class="event">
 						<div class="title">
 							<div id="eventName">친구 생일
-<!--
+								<!--
 								<div class="stick">
 								</div>
 -->
@@ -3248,6 +3335,8 @@
 							<div class="swiper-wrapper"></div>
 							<!-- Add Pagination -->
 							<div class="swiper-pagination"></div>
+							<div class="swiper-button-next"></div>
+							<div class="swiper-button-prev"></div>
 						</div>
 					</div>
 				</div>
@@ -3343,22 +3432,42 @@
 						</span>
 
 						<div id='modal2'>
-							<div>
-								<div class="modalSchduleInfo"></div>
+							<div id="modalTitle"></div>
+							<div id="modalContent">
+								<div class="modalSchduleInfo">
+									<div class="swiper-container">
+										<div class="swiper-wrapper">
+										</div>
+										<!-- Add Pagination -->
+										<div class="swiper-pagination"></div>
+									</div>
+									<div class="mSIinfo"></div>
+								</div>
 								<div id="voteButtonBox">
 									<input type="button" value="투표하기" onclick="addVoteList()" />
 								</div>
 								<div class="modalComment">
+<!--									<div style="display:inline-block; height:20px; font-weight:bold;">댓글 </div>-->
+									<div class="stick" style="display:block; width:100%; margin-bottom:10px;"></div>
+									<!--
 									<fieldset>
-										<legend>댓글</legend>
-										<div id="commentList"></div>
-										<div id="myComment">
-											<input type="text" placeholder="댓글을 입력하세요" id="commentContents" onkeyup="if(event.keyCode==13) {addComment(this)}" />
-										<button class="ndjButton" id="confirm_button" onclick="addComment(this)">확인</button>
+										<legend style="height:22px;">댓글</legend>
+-->
+									<div id="commentList">
+										<div class="swiper-container">
+											<div class="swiper-wrapper">
+											</div>
+											<!-- Add Pagination -->
+											<div class="swiper-pagination"></div>
 										</div>
-									</fieldset>
-									<button class="ndjButton" onclick="closeModal2();">닫기</button>
+									</div>
+									<div id="myComment">
+										<input type="text" placeholder="댓글을 입력하세요" id="commentContents" onkeyup="if(event.keyCode==13) {addComment(this)}" />
+										<button class="ndjButton" id="confirm_button" onclick="addComment(this)">확인</button>
+									</div>
+									<!--									</fieldset>-->
 								</div>
+								<button class="ndjButton" onclick="closeModal2();">닫기</button>
 							</div>
 						</div>
 
@@ -3490,6 +3599,8 @@
 						#modal2 {
 							/*                            display: none;*/
 							/*                            display: inline-block;*/
+							width: 500px;
+							height: 600px;
 							background-color: #FFFFFF;
 							/*                            position:absolute;*/
 							/* 추가 */
@@ -3504,8 +3615,25 @@
 */
 							padding: 10px;
 							border: 2px solid #E2E2E2;
-							z-Index: 1000;
+/*							z-Index: 1000;*/
+							z-index: 400;
+							/*							text-align: center;*/
 						}
+						
+						#modal2>div {
+							/*							text-align: initial;*/
+							text-align: left;
+						}
+						
+						#modal2>div>div {
+							display: block;
+						}
+						
+/*
+						#modal2 div {
+														display: block;
+						}
+*/
 						
 						#modal3 {
 							/*                            display: none;*/
@@ -3730,13 +3858,14 @@
 		</div>
 	</div>
 	<script>
-//		var swiper = new Swiper('.swiper-container', {
-//			pagination: '.swiper-pagination',
-//			slidesPerView: 3,
-//			paginationClickable: true,
-//			spaceBetween: 30,
-//			freeMode: true
-//		});
+		//		var swiper = new Swiper('.swiper-container', {
+		//			pagination: '.swiper-pagination',
+		//			slidesPerView: 3,
+		//			paginationClickable: true,
+		//			spaceBetween: 30,
+		//			freeMode: true
+		//		});
+
 	</script>
 </body>
 

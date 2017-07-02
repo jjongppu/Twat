@@ -269,6 +269,52 @@ public class MemberJoinGroupDAO
 			}
 		}
 	}
+
+	public boolean chkId(String MEMBER_ID, String groupId)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		int result = 0;
+
+		try {
+			con = getConnection();
+			String sql = "SELECT COUNT(MEMBER_ID) FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? and GROUP_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, MEMBER_ID);
+			pstmt.setInt(2, Integer.parseInt(groupId));
+
+			rSet = pstmt.executeQuery();
+			
+			
+			while(rSet.next())
+			{
+				result = rSet.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rSet != null)
+					rSet.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(result == 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
 	
 	
