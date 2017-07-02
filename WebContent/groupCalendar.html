@@ -3162,19 +3162,108 @@
 			//            getVoteInfo(nowCalNum);
 		}
 
+       
+        
 		function inviteFriends2() {
-			for (let item of birthSet.keys()) {
-
-				console.log(item);
-
-
-
-			}
+			
+            
+//            console.log(groupMem);
 
 
 		}
+        
+        var comeOnStr = "";
+        
+        function selectFriends(a){
+//            var groupMem =  $(".memberInfoBox").text();
+//            
+//            for(var j = 0; j < groupMem.length; j++){
+////                console.log(groupMem[j].memberId);
+//                console.log(groupMem[j]);
+//                
+//            }
+            var comeOnFriends = new Set();//내가 선택한 친구를 저장할 Set
+            var select = $(a).children().eq(1).text().split(":")[1].trim();
+//            console.log(select);
+            
+            
+            console.log($(a).children().eq(3).attr("src"));
+            
+            
+            if($(a).children().eq(3).attr("src") != "img/etcIcon/friendcheck.png"){
+                
+                $(a).children().eq(3).attr("src","img/etcIcon/friendcheck.png");
+                
+                comeOnFriends.add(select); //선택한 아이디                
+            }else{
+                $(a).children().eq(3).attr("src","");
+                comeOnFriends.delete(select);                
+            }
+            
+            
+
+            
+            for (let item of comeOnFriends.keys()) {
+                comeOnStr += "," + item;
+                
+			}
+            
+//            comeOnStr = Array.from(comeOnFriends);
+            
+            
+        }
+        
+        function friendsComeOn(){
+//            console.log(comeOnStr);
+            
+            
+            $.ajax({
+				type: 'post',
+				url: 'MyFriendsComeOn.do',
+				dataType: "json",
+                data:{
+                    groupMem : comeOnStr,
+                    groupId : location.href.split("=")[1]
+                    
+                },
+                success: function(data) {
+					//                    console.log(data);
+					$.each(data, function(index, item) {                           
+						
+
+						
+
+					});
+                    
+
+				},
+				error: function(req) {
+
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : MyFriendsComeOn.do");
+				}
+
+			});
+            location.reload();
+//            inviteFriends();
+            
+            
+        }
+        
+        
+        
 
 		function inviteFriends() {
+            var groupMem = new Array();
+            for (let item of birthSet.keys()) {
+//				console.log(item);
+                groupMem.push(item.split("-")[2]);
+			}
+            
+            var groupStr = String(groupMem);
+//            console.log(groupStr);
+            
+            
+            
 			document.getElementById("inviteModal").innerHTML = "";
 			$('#inviteModal').css('display', 'block').css('height', 'auto').css('border', '1px solid black');
 			$('#blindCover').css('display', 'block');
@@ -3182,39 +3271,32 @@
 				type: 'post',
 				url: 'inviteFriends.do',
 				dataType: "json",
-				success: function(data) {
+                data:{
+                    groupMem : groupStr
+                },
+                success: function(data) {
 					//                    console.log(data);
 					$.each(data, function(index, item) {
-						var flag = false;
+                        
+                     
 
+						
+                            
+                            document.getElementById("inviteModal").innerHTML += "<div id='friend" + index + "' style='border:3px solid black; margin:20px;' onclick='selectFriends(this)'><img src='" + item.friendImg + "'style='width:100px; height:100px; ' /><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
+							item.friendId + "  </div><div class='friendName'> 이름 : " +
+							item.friendName + "</div><img src='' class='checkImg'/></div>";
+                            
+                            
+                        
+						
 
-						for (var setIndex = 0; setIndex < birthSet.size; setIndex++) {
-							//                            if(item.friendId != .split("-")[1]){
-							////                                if(item2.ind)
-							//                            }
-							//                            
-
-						}
-
-						//                      if(flag){
-						document.getElementById("inviteModal").innerHTML += "<div id='friend" + index + "' style='border:3px solid black; margin:20px;'><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
-							item.friendId + "</div><div class='friendName'> 이름 : " +
-							item.friendName + "</div></div>";
-
-						//                      }  
-
-
-
-
-
-
-						//                        document.getElementById("inviteModal").innerHTML += "<div class='friendId'> 아이디 : "
-						//                            + item.friendId + "</div>";
-						//                        document.getElementById("inviteModal").innerHTML += "<div class='friendName'> 이름 : "
-						//                            + item.friendName + "</div>";
-						//                        document.getElementById("inviteModal").innerHTML += "</div>";
+						
 
 					});
+                    
+                    
+                    
+                    document.getElementById("inviteModal").innerHTML += "<input type='button' value='친구초대' onclick='friendsComeOn()' />";
 
 				},
 				error: function(req) {
@@ -3532,7 +3614,7 @@
 
 						<div id="inviteModal">
 
-
+                            
 						</div>
 
 					</footer>

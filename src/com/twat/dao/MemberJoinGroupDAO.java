@@ -268,6 +268,43 @@ public class MemberJoinGroupDAO
 				e.printStackTrace();
 			}
 		}
+		
+		
+		
+	}
+	
+	
+	
+	public void inviteFriends(String friendId, int groupId){//그룹방 친구초대
+		PreparedStatement pstmt = null;
+
+		try {
+			con = getConnection();
+			String sql = "insert into member_join_group values(?,?,0,0)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, friendId);
+			pstmt.setInt(2, groupId);
+			
+
+			int result = pstmt.executeUpdate();
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+	
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
 	}
 
 	public boolean chkId(String MEMBER_ID, String groupId)
