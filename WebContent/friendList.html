@@ -346,6 +346,8 @@
         }
         .cancelRequest{
             position: absolute;
+            bottom: 0;
+            right: -40px;
         }
     </style>
     <script>
@@ -822,7 +824,7 @@
                                 }else{
                                     out += 'img/etcIcon/gender_m.png"/>';
                                 }
-                                out += '</div><input type="button" class="cancelRequest" value="요청취소" onclick="cancelRequest(this)" style="cursor:pointer" /></div>';
+                                out += '<input type="button" class="cancelRequest" value="요청취소" onclick="cancelRequest(this)" style="cursor:pointer" /></div>';
                         }
                     }else{
                         out += '<div class="undefinedResult"> 보낸 친구 요청이 없습니다. </div>'
