@@ -339,6 +339,7 @@
         #allFriends,#requestExist,#responseExist{
             width: 1250px;
             height: 749px;
+            display: none;
         }
         .divBlock{
             display: block;
@@ -381,6 +382,7 @@
                 }else{
                     out += '<div class="undefinedResult"><div class="divBlock">친구가 없습니다.</div><div class="divBlock">지금 바로 친구를 추가해보세요.</div></div>';
                     $('.addFriendsNow').css('display','block');
+                    $('#allFriends').css('display','block');
                 }
                 
                 document.getElementById('allFriends').innerHTML = out;
@@ -915,7 +917,8 @@
                 },
                 dataType:"json",
                 success: function (data){
-                    
+                $('#phoneSearchList').html("");
+                $('#idSearchList').html("");
                     
                     console.log(data);
                     if(data[0].friendExist == "Exist")
@@ -1011,7 +1014,8 @@
         
         
         function idSearch(){
-            
+            $('#phoneSearchList').html("");
+            $('#idSearchList').html("");
             var friendId = $('#idSearchInput').val();
             var friendImg = "";
             
@@ -1105,6 +1109,8 @@
         }
         
          function phoneSearch(){// 전화번호로 친구 찾기
+             $('#phoneSearchList').html("");
+            $('#idSearchList').html("");
             var friendPhone = $('#phoneSearchInput').val();
             var friendImg = "";
             
@@ -1285,11 +1291,11 @@
                     <div class="btn" onclick='idSearch();' >검색</div>
                 </div>    
 <!--                검색 결과-->
-                    <div id="phoneSearchList">
+                    <div id="phoneSearchList" class="divBlock">
                     
                         
                     </div>
-                    <div id="idSearchList">
+                    <div id="idSearchList" class="divBlock">
                     
                         
                     </div>
