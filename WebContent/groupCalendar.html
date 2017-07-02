@@ -2618,23 +2618,30 @@
 		}
 
 		function selectYes() {
-			//            console.log("!");
+//			            console.log("!");
 			//            console.log(scheSet.toString());
 
 
 			var calDate = "";
 			var groupId = location.href.split("=")[1];
-			console.log(groupId);
+//			console.log(groupId);
+            
+            var scheArr = Array.from(scheSet).sort();
 
-			for (let item of scheSet.keys())
-				calDate += item + ",";
+            for(var scheIndex = 0; scheIndex < scheArr.length; scheIndex++){
+                
+                calDate += scheArr[scheIndex] + ",";
+            }            
+
+            
+            console.log(calDate);
 
 
 
 
 
 			var calTitle = $("#calTitle").val();
-			console.log("");
+			
 
 			$.ajax({
 				type: 'post',
@@ -2658,7 +2665,7 @@
 
 				},
 				complete: function() {
-					location.reload();
+//					location.reload();
 				},
 				error: function(req) {
 
