@@ -2995,6 +2995,11 @@
 			var first_cal = $("#voteDate").text().substr(5, 4) + $("#voteDate").text().substr(11, 2) + $("#voteDate").text().substr(15, 2);
 			var new_memo = $("#commentContents").val();
 			console.log(first_cal);
+            if(new_memo == ""){
+                alert("댓글을 입력해주세요!");
+                return;
+            }
+                
 
 			$.ajax({
 				type: 'post',
@@ -3347,8 +3352,8 @@
 										<legend>댓글</legend>
 										<div id="commentList"></div>
 										<div id="myComment">
-											<input type="text" placeholder="댓글을 입력하세요" id="commentContents" />
-											<button class="ndjButton" id="confirm_button" onclick="addComment(this)">확인</button>
+											<input type="text" placeholder="댓글을 입력하세요" id="commentContents" onkeyup="if(event.keyCode==13) {addComment(this)}" />
+										<button class="ndjButton" id="confirm_button" onclick="addComment(this)">확인</button>
 										</div>
 									</fieldset>
 									<button class="ndjButton" onclick="closeModal2();">닫기</button>
