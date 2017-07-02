@@ -583,9 +583,12 @@ input[type=radio]:hover
 	width: 80px;
 	height: 80px;
 	position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/*    top: 50%;*/
+/*    left: 50%;*/
+	top: 0;
+	right: 0;
+	z-index: 10;
+/*    transform: translate(-50%, -50%);*/
 }
 
 .birthListBox
@@ -782,4 +785,44 @@ input[type=radio]:hover
 	transform: translate(0, -50%);
 	text-align: center;
 	line-height: 32px;
+}
+
+.ndjButton
+{
+	display: block;
+}
+
+#confirm_button
+{
+	display: inline-block;
+}
+
+.modalComment
+{
+	width: 100%;
+}
+
+#commentList
+{
+	width: 100%;
+}
+
+#configMemInfo
+{
+	width: 80px;
+	height: 80px;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+/*
+	top: 0;
+	right: 0;
+*/
+	z-index: 10;
+    transform: translate(-50%, -50%);
+}
+
+#configMemInfo:hover
+{
+	cursor: pointer;
 }

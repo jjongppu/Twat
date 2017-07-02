@@ -93,22 +93,60 @@ public class MyCalendarDAO{
 		}
 	}
 	
-	int i = -10;
+	
+	// 더보기 버튼 구현 하려다 실패... 
+//	int i = -10;
+//	public ArrayList<MyCalendarVO> getInfo(String MEMBER_ID){
+//		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
+//		int j = i+= 10;
+//		
+//		if(j == -10 && myCalList.size() == 10){
+//			j += 10;
+//		}  else if(myCalList.size()<10){
+//			j += 0;
+//		}
+//		PreparedStatement pstmt3 = null;
+//		ResultSet rs3 = null;
+//		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ? LIMIT "+j+", 10";
+//		try{
+//			con = getConnection();
+//			pstmt3 = con.prepareCall(sql);
+//			pstmt3.setString(1, MEMBER_ID);
+//			rs3 = pstmt3.executeQuery();
+//			
+//			while(rs3.next()){
+//				myCalList.add(new MyCalendarVO(rs3.getInt(1), rs3.getString(2), rs3.getTimestamp(3), rs3.getString(4), rs3.getString(5), rs3.getString(6)));
+//				
+//			}
+//			
+//		}
+//		catch (Exception e){
+//			e.printStackTrace();
+//		} finally {
+//			try{
+//				if(rs3 != null)rs3.close();
+//				if(pstmt3 != null)pstmt3.close();
+//				if(con != null)con.close();
+//			}	catch (SQLException e){
+//				e.printStackTrace();
+//			}
+//		}
+//		System.out.println(myCalList.size()+"리스트 사이즈");
+//		System.out.println(j +"J");
+//		System.out.println(myCalList.size()+"리스트 사이즈");
+//		System.out.println(j +"J");
+//		System.out.println(myCalList.size()+"리스트 사이즈");
+//		System.out.println(j +"J");
+//		System.out.println(myCalList.size()+"리스트 사이즈");
+//		System.out.println(j +"J");
+//		return myCalList;
+//	}
 	
 	public ArrayList<MyCalendarVO> getInfo(String MEMBER_ID){
 		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
-//		System.out.println(MEMBER_ID);
-		int j = i+=10; // j를 처음 불러올때 -10인 i에 +10 해준다.
-		if(j > myCalList.size()){   // 처음엔 0인 J가 리스트 사이즈보다 작기 때문에 그냥 넘어감.
-			j=10;			// 그다음엔 j가 10이되고 리스트는 5가 되기 때문에 J를 10으로 초기화.
-		}
-		
-//		while(j){
-//			
-//		}
 		PreparedStatement pstmt3 = null;
 		ResultSet rs3 = null;
-		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ? LIMIT "+j+", 10";
+		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ?";
 		try{
 			con = getConnection();
 			pstmt3 = con.prepareCall(sql);
@@ -132,16 +170,9 @@ public class MyCalendarDAO{
 				e.printStackTrace();
 			}
 		}
-		System.out.println(myCalList.size()+"리스트 사이즈");
-		System.out.println(j +"J");
-		System.out.println(myCalList.size()+"리스트 사이즈");
-		System.out.println(j +"J");
-		System.out.println(myCalList.size()+"리스트 사이즈");
-		System.out.println(j +"J");
-		System.out.println(myCalList.size()+"리스트 사이즈");
-		System.out.println(j +"J");
 		return myCalList;
 	}
+	
 	
 	
 	
