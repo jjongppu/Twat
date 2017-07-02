@@ -1453,7 +1453,7 @@
 					//                    document.getElementById("schedule").innerHTML += "<img src='" + data[0].group_img + "'>";
 					document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
 					//                    $("#title").html = "<span id='groupTitle'>" + data[0].group_name + "</span>";
-					document.getElementById("title").innerHTML += "<span id='groupTitle' onclick='getJoinMember()'>" + data[0].group_name + "</span>";
+					document.getElementById("title").innerHTML += "<span id='groupTitle'>" + data[0].group_name + "</span>";
 					//                    $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
 					document.getElementById("master").innerHTML += "<span id='spanGroupMaster'>" + data[0].group_master_name + "(" + group_master + ")님</span>";
 					//                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
@@ -3145,6 +3145,7 @@
 		</nav>
 
 		<div id="main_container">
+			<img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()">
 			<div id="container">
 				<!-- {방 이름, 방장, 설정}, {단체일정}, {진행중인 투표}, {가까운 이벤트} -->
 				<div id="left-side">
@@ -3165,7 +3166,7 @@
 							</div>
 						</div>
 						<!-- 설정 -->
-						<div id="config"><img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()"></div>
+						<div id="config"><img id='configMemInfo' src="img/etcIcon/group-button.png" onclick='getJoinMember()'></div>
 					</div>
 					<!-- {단체일정} -->
 					<div class="schedule" ondrop="drop(event);" ondragover="allowDrop(event);">

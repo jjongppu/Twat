@@ -583,9 +583,12 @@ input[type=radio]:hover
 	width: 80px;
 	height: 80px;
 	position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/*    top: 50%;*/
+/*    left: 50%;*/
+	top: 0;
+	right: 0;
+	z-index: 10;
+/*    transform: translate(-50%, -50%);*/
 }
 
 .birthListBox
@@ -802,4 +805,24 @@ input[type=radio]:hover
 #commentList
 {
 	width: 100%;
+}
+
+#configMemInfo
+{
+	width: 80px;
+	height: 80px;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+/*
+	top: 0;
+	right: 0;
+*/
+	z-index: 10;
+    transform: translate(-50%, -50%);
+}
+
+#configMemInfo:hover
+{
+	cursor: pointer;
 }
