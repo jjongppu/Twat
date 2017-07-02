@@ -101,7 +101,7 @@ public class MyCalendarDAO{
 		PreparedStatement pstmt3 = null;
 		ResultSet rs3 = null;
 		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
-		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ?";
+		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ? DESC LIMIT 11";
 
 		try{
 			con = getConnection();

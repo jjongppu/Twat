@@ -813,9 +813,9 @@ public class MemberDAO {
 		} finally {
 			try {
 				if (rs2 != null)
-					rs.close();
+					rs2.close();
 				if (psmt2 != null)
-					psmt.close();
+					psmt2.close();
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {
@@ -830,28 +830,19 @@ public class MemberDAO {
 		PreparedStatement psmt2 = null;
 		ResultSet rs2 = null;
 		ResultSet rs3 = null;
-		String myFriendList = null;
-		String friendFriendsList = null;
+		String myFriendList = getfriendListForString(userId);
+		String friendFriendsList = getfriendListForString(friendId);
 		int result = 0;
 		
+		System.out.println(userId + " , " + friendId);
+		
+		if (userId.equals(friendId)) {
+			result = 3; // 본인 일때
+			return result;
+		}	
 
-		try {
-			con = getConnection();			
-			String sql = "select FRIENDS_LIST from member where MEMBER_ID = ?";
-			psmt2 = con.prepareStatement(sql);
-			psmt2.setString(1, userId);
-			rs2 = psmt2.executeQuery();
-			while (rs2.next())
-				myFriendList = rs2.getString("FRIENDS_LIST"); // 로그인한 유저의 친구 리스트
-
-			psmt2.setString(1, friendId);
-			rs3 = psmt2.executeQuery();
-
-			while (rs3.next())
-				friendFriendsList = rs3.getString("FRIENDS_LIST"); // 친구의 친구 리스트
-
-			System.out.println(myFriendList);
-			System.out.println(friendFriendsList);
+		
+		
 
 			for (int i = 0; i < myFriendList.split(",").length; i++) {
 				if (myFriendList.split(",")[i].equals(friendId)) {
@@ -863,32 +854,13 @@ public class MemberDAO {
 				} else if (myFriendList.split(",")[i].equals("!" + friendId)) {
 					result = 2; // 나에게 온 친구요청이 있을때
 					return result;
-				} else if (userId.equals(friendId)) {
-					result = 3; // 본인 일때
-					return result;
 				}
 
 			}
 
 			requestFriendsUpdate(userId, friendId, myFriendList, friendFriendsList);
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs2 != null)
-					rs.close();
-				if (rs3 != null)
-					rs.close();
-				if (psmt2 != null)
-					psmt.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException e) {
-			}
-		}
-
+		
 		return result;
 
 	}
@@ -899,6 +871,9 @@ public class MemberDAO {
 		System.out.println(myFriendList);
 
 		try {
+		
+			con = getConnection();
+		 
 			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, myFriendList + "," + "*" + friendId);
@@ -910,7 +885,7 @@ public class MemberDAO {
 			psmt2.setString(2, friendId);
 			psmt2.executeUpdate();
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
