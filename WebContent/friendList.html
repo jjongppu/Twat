@@ -285,8 +285,8 @@
                 
         .userGender{
              position: absolute;
-            top: 20px;
-            right: 20px;
+            top: -10px;
+            left: 70px;
             display: inline-block;
             width: 25px;
             height: 25px;
@@ -339,13 +339,19 @@
         #allFriends,#requestExist,#responseExist{
             width: 1250px;
             height: 749px;
+            display: none;
         }
         .divBlock{
             display: block;
         }
+        .cancelRequest{
+            position: absolute;
+            bottom: 0;
+            right: -40px;
+        }
     </style>
     <script>
-        
+
 
         /////친구 목록 가져오기.
         function getMyfriendsList(){
@@ -383,6 +389,7 @@
                     $('.addFriendsNow').css('display','block');
                 }
                 
+                $('#allFriends').css('display','block');
                 document.getElementById('allFriends').innerHTML = out;
             }, error: function(req) {
 
@@ -423,7 +430,7 @@
             
         });
                 }
-        getMyfriendsList();
+        
         function cancelRequest(a){
             var cancelFriendId = $(a).prev().children().eq(1).children().eq(0).text().split("님")[0];
 //            console.log(cancelFriendId);
@@ -768,24 +775,7 @@
         }
         
 
-//
-//       function findUserFriend(){
-//           $.ajax({
-//                type: "post", 
-//                url: "FindFriendservlet.do",
-//                data:
-//                    { findPhoneNumber:$('#findPhoneNumber').val()},
-//                dataType:"json",
-//                success: function (data){
-//                    console.log(data);
-//                    $('#findUserName').html(data[0].MEMBER_NAME);
-//                    $('#findUserPhone').html(data[0].MEMBER_PHONE);
-//                    $('#findUserBirth').html(data[0].MEMBER_BIRTH);
-//                }
-//            });
-//       }
-//        //////////////////////////////////////////////////
-            function viewSearch(){
+        function viewSearch(){
         $('#modal').css('display','block');
         $('#blindCover').css('display','block');
         
@@ -825,7 +815,7 @@
                                 out += '<div class="userIn">';
                                 out += '<div class="userImgCover">';
                                 out += '<img src="'+ data[h].userImg +'" class="userImg"></div>';
-                                out += '<div class="userTop"><div class="userName">'+ data[h].userId +'님에게 친구요청 중입니다..</div></div>';
+                                out += '<div class="userTop"><div class="userName">'+ data[h].userId +'님 에게 친구요청 중입니다.</div></div>';
                                 out += '<div class="userBottom"><div class="userBirth">'+ data[h].userName +'</div>';
                                 out += '<div class="userPhone">'+ data[h].userPhone +'</div></div>'
                                 out += '<img class="userGender" src="';
@@ -834,7 +824,7 @@
                                 }else{
                                     out += 'img/etcIcon/gender_m.png"/>';
                                 }
-                                out += '</div><input type="button" class="cancelRequest" value="요청취소" onclick="cancelRequest(this)" style="cursor:pointer" /></div>';
+                                out += '<input type="button" class="cancelRequest" value="요청취소" onclick="cancelRequest(this)" style="cursor:pointer" /></div>';
                         }
                     }else{
                         out += '<div class="undefinedResult"> 보낸 친구 요청이 없습니다. </div>'
@@ -915,7 +905,8 @@
                 },
                 dataType:"json",
                 success: function (data){
-                    
+                $('#phoneSearchList').html("");
+                $('#idSearchList').html("");
                     
                     console.log(data);
                     if(data[0].friendExist == "Exist")
@@ -1011,7 +1002,8 @@
         
         
         function idSearch(){
-            
+            $('#phoneSearchList').html("");
+            $('#idSearchList').html("");
             var friendId = $('#idSearchInput').val();
             var friendImg = "";
             
@@ -1105,6 +1097,8 @@
         }
         
          function phoneSearch(){// 전화번호로 친구 찾기
+             $('#phoneSearchList').html("");
+            $('#idSearchList').html("");
             var friendPhone = $('#phoneSearchInput').val();
             var friendImg = "";
             
@@ -1199,7 +1193,11 @@
             
         }
         
-        
+                
+        $(document).ready(function(){
+           getMyfriendsList();
+            
+        });
     </script>
     
     
@@ -1285,11 +1283,11 @@
                     <div class="btn" onclick='idSearch();' >검색</div>
                 </div>    
 <!--                검색 결과-->
-                    <div id="phoneSearchList">
+                    <div id="phoneSearchList" class="divBlock">
                     
                         
                     </div>
-                    <div id="idSearchList">
+                    <div id="idSearchList" class="divBlock">
                     
                         
                     </div>

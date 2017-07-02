@@ -185,50 +185,7 @@
         #inputMemberinfo li{
             height: 150px;
         }
-        .tdNum{
-            top: 10px;
-            left: 20px;
-        }
-        .tdPp{
-            top : 31px;
-            left: 20px;
-        }
-        .tdCon{
-            top : 40px;
-            left: 90px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
-        }
-        .tdBt{
-            top: 104px;
-            right: 40px;
-        }
-        .tdBt2{
-            top: 104px;
-            right: 130px;
-        }
-        .tdNa{
-            top: 40px;
-            left: 90px;
-        }
-        .tdPh{
-            top: 60px;
-            left: 90px;
-        }
-        .tdGn{
-            top: 100px;
-            left: 20px;
-        }
-        .tdBi{
-            top: 60px;
-            left: 190px;
-        }
-        .tdId{
-            top: 20px;
-            left: 210px;
-        }
+
         .menuMedia{
             display: none;
         }
@@ -259,7 +216,6 @@
                     location.href="admin.html";
                 }else{
                 //페이지 로딩시 1번 멤버 를 얻어오고 뿌려줌
-                   getGroupList(1);
                 }
             } , error: function (req) {
                 
@@ -323,17 +279,13 @@
                 </div>
 
                 <div class="realContentsPlace">
-                    
+                    <form id="adminSingup">
+                        <input type="text" name="adminID" placeholder=" 아이디 "/>
+                        <input type="password" name="adminPW" placeholder=" 비밀번호 "/>
+                    </form>
 
-                    <ul class="memberInfoTable" id="inputMemberinfo">
-                    </ul>
-
-                    
-                    
-                    <div id="pageChoiceCover">
-                        <span id="addPageCover">
-                        </span>
-                    </div>
+ 
+  
                 </div>
             
             </div>
