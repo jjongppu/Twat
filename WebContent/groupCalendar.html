@@ -34,8 +34,12 @@
 		// 해당 방의 인원수
 		var groupCount = 0;
 		var initDay = new Date();
-		// swiper
+		// swiperBirth
 		var swiper;
+		// swiper Schedule
+		var swiperSche;
+		// swiper Vote
+		var swiperVote;
 		var cal_date = "";
 		// 해당 방의 방장
 		var group_master = "";
@@ -1347,8 +1351,10 @@
 				}
 				// 미확정된 일정표시
 				for (let item of voteSet.keys()) {
-					if (item.split("-")[0] == dateParam) {
-						//						console.log(item);
+//					if (item.split("-")[0] == dateParam)
+					if (parseInt(item.split("-")[0]) == parseInt(dateParam))
+					{
+//						console.log(item);
 						$(cell).attr('class', 'trVote' + item.split("-")[2]);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
 					}
@@ -1447,7 +1453,7 @@
 					//                    document.getElementById("schedule").innerHTML += "<img src='" + data[0].group_img + "'>";
 					document.getElementById("icon").innerHTML = "<img src='" + data[0].group_img + "'>";
 					//                    $("#title").html = "<span id='groupTitle'>" + data[0].group_name + "</span>";
-					document.getElementById("title").innerHTML += "<span id='groupTitle' onclick='getJoinMember()'>" + data[0].group_name + "</span>";
+					document.getElementById("title").innerHTML += "<span id='groupTitle'>" + data[0].group_name + "</span>";
 					//                    $("#master").html = "<span>" + data[0].group_master_name + "님</span>";
 					document.getElementById("master").innerHTML += "<span id='spanGroupMaster'>" + data[0].group_master_name + "(" + group_master + ")님</span>";
 					//                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
@@ -1563,23 +1569,81 @@
 						strB += '</div>'; // div=middle
 						var str2 = data[arrCal].cal_date;
 						//                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
+						
+						str += '<div class="swiper-slide">';
+						
+						
 						str += '<div class="content">';
 						//                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
 						str += '<div class="left">';
 						//                        if (str2.indexOf(',') == -1)
 						// ======================================================================================================
 						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
-							str += data[arrCal].cal_date;
+//							str += data[arrCal].cal_date;
+							if(parseInt(str2.substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
+							{
+								str += "<div class='onlyOne'>" + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+							}
+							else
+							{
+								str += "<div class='onlyOne'>" + str2.substr(0,4) + "년 " + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+							}
 							//                            console.log("확정 : " + data[arrCal].cal_memo);
 							scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
 							str += strA;
 							// 전체 일정(확정)
 							str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
 							str += strB;
-							$(".schedule .contentBox").append(str);
+							
+							str += '</div>'; // swiper-slide
+							
+//							$(".schedule .contentBox").append(str);
+							$(".schedule .swiper-wrapper").append(str);
 						} else {
 							var res = str2.split(",");
-							str += res[0] + "~" + res[res.length - 1];
+//							var res;
+//							str += res[0] + "~" + res[res.length - 1];
+							if(str2.indexOf(",") == -1)
+							{
+//								res = str2;
+								if(parseInt(str2.substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
+								{
+									str += "<div class='onlyOne'>" + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+								}
+								else
+								{
+									str += "<div class='onlyOne'>" + str2.substr(0,4) + "년 " + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+								}
+							}
+							else
+							{
+								res = str2.split(",");
+								var resMonth1 = parseInt(res[0].substr(4,2));
+								var resMDate1 = parseInt(res[0].substr(6,2));
+								var resMonth2 = parseInt(res[res.length - 1].substr(4,2));
+								var resMDate2 = parseInt(res[res.length - 1].substr(6,2));
+//								str += res[0] + "~" + res[res.length - 1];
+								if(parseInt(res[0].substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
+								{
+									str += "<div style='text-align:left; padding-left:5px;'>" + resMonth1 + "월 " + resMDate1 +"일</div>";
+								}
+								else
+								{
+									str += "<div style='text-align:left; padding-left:5px;'>" + res[0].substr(0,4) + "년 " + resMonth1 + "월 " + resMDate1 +"일</div>";
+								}
+//								str += "<div style='text-align:left; padding-left:5px;'>" + res[0] + "</div>";
+//								str += "<div>~</div>";
+								
+								if(parseInt(res[res.length - 1].substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
+								{
+									str += "<div style='text-align:right;'>~ " + resMonth2 + "월 " + resMDate2 +"일</div>";
+								}
+								else
+								{
+									str += "<div style='text-align:right;'>~ " + res[res.length - 1].substr(0,4) + "년 " + resMonth2 + "월 " + resMDate2 +"일</div>";
+								}
+//								str += "<div style='text-align:right;'>~ " + res[res.length - 1] + "</div>";
+							}
 							//                            console.log("투표 : " + data[arrCal].cal_memo);
 							for (var i = 0; i < res.length; i++) {
 								voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
@@ -1588,7 +1652,11 @@
 							// 투표(미확정)
 							str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
 							str += strB;
-							$(".vote .contentBox").append(str);
+							
+							str += '</div>'; // swiper-slide
+							
+//							$(".vote .contentBox").append(str);
+							$(".vote .swiper-wrapper").append(str);
 						}
 						//                        // ======================================================================================================
 						//                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
@@ -1685,7 +1753,7 @@
 					//                        var cal_date = data[1].cal_date.split(",");
 					//                        voteMeeting(cal_date);
 					//                    }
-					console.log(barColorSet);
+//					console.log(barColorSet);
 					for (let item of barColorSet.keys()) {
 						var percentC = parseFloat(item.split("-")[1]) * 100;
 
@@ -1694,6 +1762,44 @@
 				},
 				complete: function() {
 					//                    getGroupBrith();
+					swiperSche = new Swiper('.schedule .swiper-container', {
+						pagination: '.schedule .swiper-pagination',
+						direction: 'vertical',
+						slidesPerView: 3,
+						paginationClickable: true,
+//						spaceBetween: 30,
+						mousewheelControl: true
+					});
+					
+					swiperVote = new Swiper('.vote .swiper-container', {
+						pagination: '.vote .swiper-pagination',
+						direction: 'vertical',
+						slidesPerView: 3,
+						paginationClickable: true,
+//						spaceBetween: 30,
+						mousewheelControl: true
+					});
+					
+					$('.schedule .contentBox').css('display', 'none');
+					$('.vote .contentBox').css('display', 'none');
+					
+//					if(scheSet)
+					console.log(scheduleSet);
+					console.log(voteSet);
+					
+					
+					
+					if(scheduleSet.size < 1)
+					{
+						var noStr = "<div class='swiper-slide'>잡혀있는 일정이 없습니다</div>";
+						$(".schedule .swiper-wrapper").html(noStr);
+					}
+					
+					if(voteSet.size < 1)
+					{
+						var noStr = "<div class='swiper-slide'>등록된 투표가 없습니다</div>"
+						$(".vote .swiper-wrapper").html(noStr);
+					}
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -1780,7 +1886,7 @@
 
 					tempBirth = Array.from(birthSortSet).sort();
 
-					console.log(tempBirth);
+//					console.log(tempBirth);
 					//					birthSet = new Set();
 					var birthIndex = 0;
 					for (var i = 0; i < tempBirth.length; i++) {
@@ -1917,8 +2023,8 @@
 					//						});
 					//					}
 					$('.event .contentBox').css('display', 'none');
-					swiper = new Swiper('.swiper-container', {
-						pagination: '.swiper-pagination',
+					swiper = new Swiper('.event .swiper-container', {
+						pagination: '.event .swiper-pagination',
 //						slidesPerView: 3,
 						slidesPerView: 'auto',
 						centeredSlides: true,
@@ -1999,6 +2105,13 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
+					
+					if(commentsString.match(""))
+					{
+						commentsString += "<div class='commentBox'><div class='commentWriter'></div>";
+						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div>";
+					}
+					console.log(commentsString);
 					$("#commentList").html(commentsString);
 					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
@@ -2160,10 +2273,10 @@
 								voteString += "</div>";
 								voteString += "</div>";
 							}
-							voteString += "</div>"; // voteListBox
-							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div>";
-							voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div>";
-							voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
+							voteString += "</div><br>"; // voteListBox
+							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div><br>";
+							voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div><br>";
+//							voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
 							voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer;
 							// 참가자 출력
 							var voteMemberSet = new Set();
@@ -2211,7 +2324,7 @@
 							//                            console.log(data[i]);
 
 							commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
-							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
+							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div><br>";
 							//                            console.log(commentsString);
 							//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
 						}
@@ -2256,6 +2369,14 @@
 
 					$(".modalSchduleInfo").html(voteString);
 					$("#voteButtonBox").html(voteBox);
+					$('#voteButtonBox').css('display', 'block');
+					
+					if(commentsString.length < 1)
+					{
+						commentsString += "<div class='commentBox'><div class='commentWriter'></div>";
+						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div>";
+					}
+					
 					$("#commentList").html(commentsString);
 					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
@@ -2829,7 +2950,7 @@
 
 				},
 				complete: function() {
-					//					location.reload();
+					location.reload();
 				},
 				error: function(req) {
 
@@ -2874,6 +2995,11 @@
 			var first_cal = $("#voteDate").text().substr(5, 4) + $("#voteDate").text().substr(11, 2) + $("#voteDate").text().substr(15, 2);
 			var new_memo = $("#commentContents").val();
 			console.log(first_cal);
+            if(new_memo == ""){
+                alert("댓글을 입력해주세요!");
+                return;
+            }
+                
 
 			$.ajax({
 				type: 'post',
@@ -2922,6 +3048,18 @@
 
 
 		}
+        
+        
+        
+        function selectFriends(a){
+            
+            if($(a).find("img").eq(1).attr("src") != "img/etcIcon/friendcheck.png")
+                $(a).append("<img src='img/etcIcon/friendcheck.png'/>");
+            
+            console.log($(a).find("img").eq(1).attr("src"));
+            
+            
+        }
 
 		function inviteFriends() {
 			document.getElementById("inviteModal").innerHTML = "";
@@ -2934,36 +3072,18 @@
 				success: function(data) {
 					//                    console.log(data);
 					$.each(data, function(index, item) {
-						var flag = false;
+						
 
-
-						for (var setIndex = 0; setIndex < birthSet.size; setIndex++) {
-							//                            if(item.friendId != .split("-")[1]){
-							////                                if(item2.ind)
-							//                            }
-							//                            
-
-						}
-
-						//                      if(flag){
-						document.getElementById("inviteModal").innerHTML += "<div id='friend" + index + "' style='border:3px solid black; margin:20px;'><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
-							item.friendId + "</div><div class='friendName'> 이름 : " +
+						
+						document.getElementById("inviteModal").innerHTML += "<div id='friend" + index + "' style='border:3px solid black; margin:20px;' onclick='selectFriends(this)'><img src='" + item.friendImg + "'style='width:100px; height:100px; ' /><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
+							item.friendId + "  </div><div class='friendName'> 이름 : " +
 							item.friendName + "</div></div>";
 
-						//                      }  
-
-
-
-
-
-
-						//                        document.getElementById("inviteModal").innerHTML += "<div class='friendId'> 아이디 : "
-						//                            + item.friendId + "</div>";
-						//                        document.getElementById("inviteModal").innerHTML += "<div class='friendName'> 이름 : "
-						//                            + item.friendName + "</div>";
-						//                        document.getElementById("inviteModal").innerHTML += "</div>";
+						
 
 					});
+                    
+                    document.getElementById("inviteModal").innerHTML += "<input type='button' value='친구초대' />";
 
 				},
 				error: function(req) {
@@ -3019,6 +3139,7 @@
 		</nav>
 
 		<div id="main_container">
+			<img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()">
 			<div id="container">
 				<!-- {방 이름, 방장, 설정}, {단체일정}, {진행중인 투표}, {가까운 이벤트} -->
 				<div id="left-side">
@@ -3039,7 +3160,7 @@
 							</div>
 						</div>
 						<!-- 설정 -->
-						<div id="config"><img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()"></div>
+						<div id="config"><img id='configMemInfo' src="img/etcIcon/group-button.png" onclick='getJoinMember()'></div>
 					</div>
 					<!-- {단체일정} -->
 					<div class="schedule" ondrop="drop(event);" ondragover="allowDrop(event);">
@@ -3052,6 +3173,11 @@
 							</div>
 						</div>
 						<div class="contentBox">
+						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper"></div>
+							<!-- Add Pagination -->
+							<div class="swiper-pagination"></div>
 						</div>
 						<!--
                 <div class="content">
@@ -3078,6 +3204,11 @@
 							</div>
 						</div>
 						<div class="contentBox">
+						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper"></div>
+							<!-- Add Pagination -->
+							<div class="swiper-pagination"></div>
 						</div>
 						<!--
                 <div class="content">
@@ -3108,20 +3239,7 @@
 						<div class="contentBox">
 						</div>
 						<div class="swiper-container">
-							<div class="swiper-wrapper">
-<!--
-								<div class="swiper-slide">Slide 1</div>
-								<div class="swiper-slide">Slide 2</div>
-								<div class="swiper-slide">Slide 3</div>
-								<div class="swiper-slide">Slide 4</div>
-								<div class="swiper-slide">Slide 5</div>
-								<div class="swiper-slide">Slide 6</div>
-								<div class="swiper-slide">Slide 7</div>
-								<div class="swiper-slide">Slide 8</div>
-								<div class="swiper-slide">Slide 9</div>
-								<div class="swiper-slide">Slide 10</div>
--->
-							</div>
+							<div class="swiper-wrapper"></div>
 							<!-- Add Pagination -->
 							<div class="swiper-pagination"></div>
 						</div>
@@ -3225,12 +3343,15 @@
 									<input type="button" value="투표하기" onclick="addVoteList()" />
 								</div>
 								<div class="modalComment">
-									<div id="commentList"></div>
-									<div id="myComment">
-										<input type="text" placeholder="댓글을 입력하세요" id="commentContents" />
+									<fieldset>
+										<legend>댓글</legend>
+										<div id="commentList"></div>
+										<div id="myComment">
+											<input type="text" placeholder="댓글을 입력하세요" id="commentContents" onkeyup="if(event.keyCode==13) {addComment(this)}" />
 										<button class="ndjButton" id="confirm_button" onclick="addComment(this)">확인</button>
-										<button class="ndjButton" onclick="closeModal2();">닫기</button>
-									</div>
+										</div>
+									</fieldset>
+									<button class="ndjButton" onclick="closeModal2();">닫기</button>
 								</div>
 							</div>
 						</div>
@@ -3258,7 +3379,7 @@
 
 						<div id="inviteModal">
 
-
+                            
 						</div>
 
 					</footer>

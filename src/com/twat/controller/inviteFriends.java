@@ -55,7 +55,8 @@ public class inviteFriends extends HttpServlet {
 	    for(int i = 0; i < memArr.size(); i++){
 	    	JSONObject jsonObj = new JSONObject();
 	    	jsonObj.put("friendId", memArr.get(i).getMEMBER_ID());
-	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());	    	
+	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());
+	    	jsonObj.put("friendImg", memArr.get(i).getMEMBER_IMG());
 	    	jsonArr.add(jsonObj);
 	    	System.out.println(getServletName());
 	    }
