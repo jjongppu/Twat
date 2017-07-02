@@ -72,6 +72,7 @@ public class GroupBirth extends HttpServlet
 			memberInfo.put("memberId", memberList.get(i).getMEMBER_ID());
 			memberInfo.put("memberName", memberList.get(i).getMEMBER_NAME());
 			memberInfo.put("memberBirth", memberList.get(i).getMEMBER_BIRTH());
+			memberInfo.put("memberImg", memberList.get(i).getMEMBER_IMG());
 			
 			group.add(memberInfo);
 		}

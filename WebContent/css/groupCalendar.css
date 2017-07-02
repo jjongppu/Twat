@@ -113,7 +113,25 @@ html,body{
         border-radius: 20px;
         display: none;
     }
-        
+         #blindCover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0.7;
+        display: none;
+        z-index: 300;
+						}
+#blindCoverWhite {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    opacity: 0.7;
+    z-index: 3000;
+    display: none;
+}
+   
         
    body {
        /*    max-width: 1200px;*/
@@ -252,7 +270,9 @@ html,body{
        width: 100%;
        height: 20%;
        background-color: white;
+	   overflow: hidden;
    }
+
    
    .title {
        width: 100%;
@@ -263,9 +283,11 @@ html,body{
    }
 
 .contentBox{
-    width: 100%;
+/*    width: 100%;*/
+	width: auto;
     height: 90%;
     background-color: white;
+/*	overflow: hidden;*/
 }
    
    .content {
@@ -557,4 +579,128 @@ input[type=radio]:hover
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.birthListBox
+{
+	width: 200px;
+	height: 100%;
+	display: inline-block;
+	overflow: hidden;
+/*
+	text-overflow:ellipsis;
+	white-space:nowrap;
+*/
+}
+
+.birthMonth
+{
+/*	width: 100%;*/
+	font-size: 24px;
+	font-weight: bold;
+	color: #83C5F1;
+	height: 20%;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+.birthMemBox
+{
+/*	width: 100%;*/
+	width: 220px;
+/*	height: 80%;*/
+	height: 64%;
+	
+}
+
+.birthMemImg
+{
+/*	width: 100%;*/
+/*	width: 35%;*/
+	width: 64px;
+/*	height: 50%;*/
+	height: 100%;
+}
+
+.birthMemImg img
+{
+	
+	position: relative;
+	top: 50%;
+	transform: translate(0, -50%);
+	width: 64px;
+	height: 64px;
+}
+
+.birthMemInfo
+{
+/*	width: 156px;*/
+	width: auto;
+	margin-left: 15px;
+/*	width: 64%;*/
+/*	height: 100%;*/
+/*
+	top: 50%;
+	transform: translate(0, -50%);
+*/
+/*	vertical-align: middle;*/
+	overflow: hidden;
+}
+.birthMemBox:hover
+{
+	cursor: pointer;
+}
+
+.birthMemName
+{
+	width: 100%;
+	height: 49%
+}
+
+.birthMemDate
+{
+	width: 100%;
+	height: 49%;
+}
+
+
+/*
+.event .contentBox
+{
+	visibility: hidden;
+	display: none;
+}*/
+
+.swiper-container {
+	width: 100%;
+	height: 85%;
+	margin: 0px auto;
+	display: block;
+}
+/*
+.swiper-wrapper {
+	display: block;
+}
+*/
+.swiper-slide {
+/*	width: 220px;*/
+	width: auto;
+/*	text-align: center;*/
+	font-size: 18px;
+	background: #fff;
+
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
 }
