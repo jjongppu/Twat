@@ -272,6 +272,7 @@ html,body{
        background-color: white;
 	   overflow: hidden;
    }
+
    
    .title {
        width: 100%;
@@ -606,15 +607,18 @@ input[type=radio]:hover
 
 .birthMemBox
 {
-	width: 100%;
-	height: 80%;
+/*	width: 100%;*/
+	width: 220px;
+/*	height: 80%;*/
+	height: 64%;
 	
 }
 
 .birthMemImg
 {
 /*	width: 100%;*/
-	width: 35%;
+/*	width: 35%;*/
+	width: 64px;
 /*	height: 50%;*/
 	height: 100%;
 }
@@ -626,18 +630,22 @@ input[type=radio]:hover
 	top: 50%;
 	transform: translate(0, -50%);
 	width: 64px;
+	height: 64px;
 }
 
 .birthMemInfo
 {
-	
+/*	width: 156px;*/
+	width: auto;
+	margin-left: 15px;
 /*	width: 64%;*/
 /*	height: 100%;*/
 /*
 	top: 50%;
 	transform: translate(0, -50%);
 */
-	vertical-align: middle;
+/*	vertical-align: middle;*/
+	overflow: hidden;
 }
 .birthMemBox:hover
 {
@@ -654,4 +662,45 @@ input[type=radio]:hover
 {
 	width: 100%;
 	height: 49%;
+}
+
+
+/*
+.event .contentBox
+{
+	visibility: hidden;
+	display: none;
+}*/
+
+.swiper-container {
+	width: 100%;
+	height: 85%;
+	margin: 0px auto;
+	display: block;
+}
+/*
+.swiper-wrapper {
+	display: block;
+}
+*/
+.swiper-slide {
+/*	width: 220px;*/
+	width: auto;
+/*	text-align: center;*/
+	font-size: 18px;
+	background: #fff;
+
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
 }
