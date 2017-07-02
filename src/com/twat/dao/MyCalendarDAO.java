@@ -68,6 +68,30 @@ public class MyCalendarDAO{
 		}		
 	}
 	
+	public void deleteMySchedule(int deleteSche){
+		PreparedStatement psmt3= null;
+		String sql ="";
+		try {
+			con = getConnection();			
+			sql = "DELETE FROM MY_CALENDAR WHERE MY_CAL_INDEX = "+deleteSche;
+			psmt3 = con.prepareStatement(sql);			
+//			psmt3.setInt(1, deleteSche);
+			
+			psmt3.executeUpdate();
+//			psmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(psmt3 != null)
+					psmt3.close();
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public ArrayList<MyCalendarVO> getInfo(String MEMBER_ID){
 		System.out.println(MEMBER_ID);
@@ -77,7 +101,7 @@ public class MyCalendarDAO{
 		PreparedStatement pstmt3 = null;
 		ResultSet rs3 = null;
 		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
-		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ?";
+		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ? DESC LIMIT 11";
 
 		try{
 			con = getConnection();

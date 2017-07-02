@@ -14,7 +14,7 @@
     body{
         margin: 0;
         padding: 0;
-        background-image: url(img/background/background4.jpg);
+        background-image: url(img/background/back1.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
@@ -95,7 +95,7 @@
       left: 0px;
 /*        transform: translate(50%,50%);*/
       z-index: 0;
-      background-image: url('img/background/background4.jpg');
+      background-image: url('img/background/back1.jpg');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center top;
@@ -209,11 +209,8 @@
          
     
     function hideModal(){
-        
         $('#modal').animate({
-
             height: 0,
-
         }, 500);
         $('#noBtn').attr('onclick','');
         $('#yesBtn').attr('onclick','');
@@ -265,8 +262,8 @@
                         <div><b>회원탈퇴</b>가 진행중인 회원입니다.</div>
                         <div>계정을 <strong>복구</strong> 하시겠습니까?</div>
                     
-                        <input type="button"  id='noBtn' class='btn smallBtn' value="아니오" onclick=""/>
-                        <input type="button"  id='yesBtn' class='btn smallBtn' value="네" onclick=""/>
+                        <div id='noBtn' class='btn smallBtn' onclick="">아니오</div>
+                        <div id='yesBtn' class='btn smallBtn' onclick="">네</div>
                     </div>
                     <div>
                         <div>
