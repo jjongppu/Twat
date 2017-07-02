@@ -1811,7 +1811,7 @@
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'><div class='stick'>                                 </div></div>";
 						}
 						
-						str += "<div class='birthMemBox' id='bMB" + i + "'>&nbsp;";
+						str += "<div class='birthMemBox' id='bMB" + i + "' value='" + tempBirth[i].split("-")[2] + "' onclick='getbMB(this)'>&nbsp;";
 						str += "<div class='birthMemImg'><img src='" + tempBirth[i].split("-")[3] + "'/></div>";
 						str += "<div class='birthMemInfo'>"
 						str += "<div class='birthMemName'>" + tempBirth[i].split("-")[1] + "</div>";
@@ -1884,7 +1884,11 @@
 			})
 		}
 		// 임시 함수
-		
+		function getbMB(bMB)
+		{
+//			console.log($(bMB).attr('value'));
+			getMemInfo($(bMB).attr('value'));
+		}
 		// 확정된 일정 정보 출력
 		function getScheduleInfo(cal_num) {
 			//            console.log("확정된 일정 : " + cal_num);
