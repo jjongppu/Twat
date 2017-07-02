@@ -15,6 +15,25 @@ $.ajax({
                     var photo = data[0].MEMBER_IMG;
                     $('#user_Id').html(id);
                     $('#user_Img').attr('src',photo);
+                     $.ajax({
+                        type: "post",
+                        url: "groupList.do",
+                        data: {kind:0},
+                        dataType: "json",
+                        success: function(data) {
+                            var countMeView = 0;
+                            var countGroupView = 0;
+                            if(data[0].group_id != "noGroup"){
+                                for(var i=0;i<data.length;i++){
+                                    countGroupView += data[i].view_group;
+                                    countMeView += data[i].view_me;
+                                }
+                            }
+                            if(countGroupView > countMeView){
+                                $('#newContents').css('display','inline-block');
+                            }
+                        }
+                    });
                 }
             });
         }else{
@@ -25,6 +44,17 @@ $.ajax({
     
     }
 });
+
+
+    
+
+
+
+
+
+
+
+
 
 
 

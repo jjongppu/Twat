@@ -170,6 +170,12 @@
             left: 0;
             z-index: 1000;
         }
+        #checkedName{
+            width: 200px;
+            height: 30px;
+            margin-left: 40px;
+            padding-left: 30px;
+        }
     </style>
     <script>
         ////////////////정보가져오기///////////////////////////////////////////////////
@@ -197,6 +203,9 @@
                         ////////////////////////사진 변경/////////////////////
                         var form = $('#formTag')[0];
                         var formData = new FormData(form);
+                        var namename = $('#userName').val();
+                        var phonephone = $('#userPhone').val();
+                        var birthbirth = $('#userbirth').val();
                          $.ajax({
                             url: 'imageFileUpload.do',
                             processData: false,
@@ -204,10 +213,15 @@
                             data: formData,
                             type: 'POST',
                             success: function(result){
-                                alert("회원정보가 변경되었습니다.");
-                                location.href='myInfo.html';
+//                                if(namename == ""){
+//                                    alert("이름을 입력해주세요");
+//                                }else{
+                                    alert("회원정보가 변경되었습니다.");
+                                    location.href='myInfo.html';    
+//                                }
                                 
-                            }
+                                }
+//                            }
                         });
                     }
                 });
@@ -339,7 +353,7 @@
         x.value = x.value.replace(/[^0-9]/g, '');
         var tmp = "";
         var uPhone = $('#userPhone').val().length;
-        var regExp = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+//        var regExp = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
         if (x.value.length > 3 && x.value.length <= 7) {
             tmp += x.value.substr(0, 3);
             tmp += '-';
@@ -352,18 +366,22 @@
             tmp += '-';
             tmp += x.value.substr(7);
             x.value = tmp;
-            
-            
         }else if(uPhone > 12 && uPhone < 12){
             alert("핸드폰번호가 길거나 작습니다.");
-        }else if(!regExp.test(uPhone)){
-            alert("핸드폰번호 형식에 맞지 않습니다.");
         }else{
             
         }
+//        }else if(!regExp){
+//            alert("핸드폰번호 형식에 맞지 않습니다.");
+        }
+//        else if(!regExp.test(uPhone)){
+//            alert("핸드폰번호 형식에 맞지 않습니다.");
+//        }else{
+            
+//        }
           
             
-    }
+//    }
         
         
           function checkPassword2(){
@@ -406,51 +424,104 @@
             } else{
                 $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호가 일치하지 않습니다.</p>");
             }
-            
         }
-            
-         
     }
+///////////////////////////이름 유효성 검사/////////////////////////////////////////////////////////////////////////////////////
+//        function chkName(){
+//            var Uname = $('#userName').val();
+//            var Uname2 = $('#userName').val().length;
+//            var reg = /^[가-힣ㄱ-ㅎㅏ-ㅣ]{2,6}$/;
+//            if(Uname == null){
+//            if(Uname == ""){
+//                $('#checkedName').html("<p style='font-size:10px; color:red'>이름을 입력해주세요.</p>");    
+//            }else if (Uname2 > 5){
+//                $('#checkedName').html("<p style='font-size:10px; color:red'>이름을 6자 이하로 입력해주세요.</p>");    
+//            }else if (Uname2 == 4 && Uname2 ==3 && Uname2 ==2 && Uname2 ==1){
+//                $('#checkedName').html("<p style='font-size:10px; color:red'>이름을 6자 이하로 입력해주세요.</p>");    
+//            }else if(!reg.test(Uname)){
+//                $('#checkedName').html("<p style='font-size:10px; color:red'>이름은 한글로만 입력해주세요.</p>");    
+//            }else{
+//                
+//            }
+//            }
+//    }
+///////////////////////////이름 유효성 검사알럿으로 띄우기./////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(function() {
 
-        function chkName(){
-            var Uname = $('#userName').val().length;
-            var reg = /^[가-힣]{2,6}$/;
-            if(Uname > 7){
-                $('#checkedName').html("<p style='font-size:10px; color:blue'>이름을 6자 이하로 입력해주세요.</p>");    
-            }else if(!reg.text(Uname)){
-                $('#checkedName').html("<p style='font-size:10px; color:blue'>이름은 한글로만 입력해주세요.</p>");    
-            }else{
-//                $('#checkedName').html("<p style='font-size:10px; color:blue'>이름은 한글로만 입력해주세요.</p>");    
-            }
-            
-        }
-        
+             $("input[name=userName]").keyup(function(event){
+                var Uname = $('#userName').val();
+                var Uname2 = $('#userName').val().length;
+                var regexp = /^[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+                var reg = /^[가-힣ㄱ-ㅎㅏ-ㅣ]{2,6}$/;
+                v = $('#userName').val();
+                if( regexp.test(v) ) {
+                    alert("이름은 한글만 입력해주세요");
+                $(this).val(v.replace(regexp,''));
+                }else if (Uname2 >= 7){
+                    alert("이름을 6자 이하로 입력해주세요.");    
+                    $('#userName').val(v.replace(reg,''));
+                }
+            });
+
+        });
+////////////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(function(){
+            $("input[name=userPhone]").keyup(function(event){
+                var phonephone = $('#userPhone').val();
+                var phonelen = $('#userPhone').val().length;
+                console.log(phonelen);
+                var regExp = /^01([0|1|6|7|8|9]?)-?([0-9]{4})-?([0-9]{4})$/g;
+                var special = /^[a-z]|[\[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+                v = $('#userPhone').val();
+                if(phonelen >= 16){
+                    alert("핸드폰번호 형식에 맞게 입력해주세요\n ex) 010-XXXX-XXXX");
+                }
+//                if(!regExp.test(v)){
+//                    alert("핸드폰번호 형식에 맞게 입력해주세요\n ex) 010-XXXX-XXXX");
+//                    $(this).val(v.replace(regExp,''));
+//                }else if(!special.test(v)){
+//                    alert("숫자만 입력해주세요.");
+//                    
+//                }
+            });
+        });
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//        $(document).ready(function(){
+//           $("input[name=userBirth]").keyup(function(event){
+//               var birbir = $('#userPhone') .val();
+//               var birbirth = $('#userPhone') .val().length;
+//               var chkBirth = /^[1-9][a-z][\[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]{6}/g;
+//               //v = $('#userbirth').val();
+//               console.log(birbirth);
+//           });
+//        });
+//////////////////////////////////////////////////////////////////////////////////////////////////
     </script>
 <body>
- <div id="wrap">
-<!--        네브바 입니다 ```````````````````````````````````````````````` -->
-    <nav class="left_nav">
+    <div id="newWrap">
+      <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                 <li class="nav_li">
+                    <div id="navHere"></div>
                     <img id="user_Img" src=""/>
                 </li>
-                <li class="nav_li">
+                <li class="nav_li idLi">
                     <div id="user_Id"></div>
                 </li>
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="home.html">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html" onclick='pageload()'>친구 목록</a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
         </ul>
-        
+          
     </nav>
         <div id="main_container">
     
@@ -469,10 +540,10 @@
                     </div>
                     <form method="post" id="changeInfo">
                         <div id="uId"></div>
-                        <input type="text" id="userName" name="userName" onkeyup="chkName()">
-                        <div id="checkedName"></div>
-                        <input type="text" id="userPhone" name="userPhone" onkeyup="autoHypen()">
-                        <input type="text" id="userBirth" name="userBirth" onkeyup="chInformation()">
+                        <input type="text" id="userName" name="userName" onkeyup="chkName()" placeholder="이름을 입력하세요.">
+<!--                        <div id="checkedName"></div>-->
+                        <input type="text" id="userPhone" name="userPhone" onkeyup="autoHypen()"placeholder="핸드폰 번호를 입력하세요." maxlength="13">
+                        <input type="text" id="userBirth" name="userBirth" onkeyup="chInformation()" placeholder="생년월일을 입력하세요." maxlength="6">
                         <div id="chInfo" onclick="changeInfo()" >정보 수정하기</div>
                     </form>
                 </div>

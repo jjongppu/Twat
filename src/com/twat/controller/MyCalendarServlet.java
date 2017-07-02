@@ -59,13 +59,17 @@ public class MyCalendarServlet extends HttpServlet {
 //			jsonObj.put("myWriteTime", myCalArr.get(i).getMy_write_time());
 			jsonObj.put("myCalContents", myCalArr.get(i).getMy_cal_contents());
 			jsonObj.put("myCalDate", myCalArr.get(i).getMy_cal_date());
+			jsonObj.put("myCalTime", myCalArr.get(i).getMy_cal_time());
 			jsonArr.add(jsonObj);
 		}
 		
+		System.out.println(myCalArr);
+//		System.out.println(myCalArr);
+//		System.out.println(myCalArr);
 		
 		System.out.println(jsonArr.toJSONString());
 		out.println(jsonArr);
-		 out.close();
+		out.close();
 	}
 
 }

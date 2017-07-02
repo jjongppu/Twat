@@ -11,6 +11,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.twat.dto.CalgatherVO;
+import com.twat.dto.MemberJoinGroupVO;
 
 public class MemberJoinGroupDAO
 {
@@ -19,7 +20,7 @@ public class MemberJoinGroupDAO
 	ResultSet rs= null;
 
 	
-	// MemberJoinGroupDAO ÀÇ ½Ì±ÛÅæ -----------------------------------
+	// MemberJoinGroupDAO ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ -----------------------------------
 	private static MemberJoinGroupDAO instance = new MemberJoinGroupDAO();
 	
 	private MemberJoinGroupDAO(){}
@@ -29,7 +30,7 @@ public class MemberJoinGroupDAO
 		return instance;
 	}
 	
-	// DB¿¬°áÀ» À§ÇØ conÀ» ¹ÝÈ¯ÇÏ´Â ¸Þ¼­µå --------------------------------------------
+	// DBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ conï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ --------------------------------------------
 	public Connection getConnection() throws Exception
 	{
 		Context initCtx = new InitialContext();
@@ -38,7 +39,7 @@ public class MemberJoinGroupDAO
 		return ds.getConnection();
 	}
 	
-	// GROUP_ID¸¦ ÅëÇØ MEMBER_ID¸¦ ¹Þ¾Æ¿À´Â ÇÔ¼ö, MEMBER_ID´Â ArrayList<String>À¸·Î ¹ÝÈ¯
+	// GROUP_IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ MEMBER_IDï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½, MEMBER_IDï¿½ï¿½ ArrayList<String>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 	public ArrayList<String> getMemberId(String GROUP_ID)
 	{
 		PreparedStatement pstmt = null;
@@ -81,7 +82,7 @@ public class MemberJoinGroupDAO
 		return arrList;
 	}
 	
-	// MEMBER_ID¸¦ ÅëÇØ GROUP_ID¸¦ ¹Þ¾Æ¿À´Â ÇÔ¼ö, GROUP_ID´Â ArrayList<String>À¸·Î ¹ÝÈ¯
+	// MEMBER_IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GROUP_IDï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½, GROUP_IDï¿½ï¿½ ArrayList<String>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 	public ArrayList<String> getGroupId(String MEMBER_ID)
 	{
 		ArrayList<String> arrList = new ArrayList<String>();
@@ -121,7 +122,7 @@ public class MemberJoinGroupDAO
 		return arrList;
 	}
 
-	// ¹æÅ»Åð
+	// ï¿½ï¿½Å»ï¿½ï¿½
 	public void roomOut(String groupId, String userId)
 	{
 		PreparedStatement pstmt = null;
@@ -138,11 +139,11 @@ public class MemberJoinGroupDAO
 			
 			if(result == 1)
 			{
-				System.out.println("¹æÅ»Åð ¼º°ø");
+				System.out.println("ï¿½ï¿½Å»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			}
 			else
 			{
-				System.out.println("¹æÅ»Åð ½ÇÆÐ");
+				System.out.println("ï¿½ï¿½Å»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,4 +160,123 @@ public class MemberJoinGroupDAO
 			}
 		}
 	}
+	
+	public void updateCalView(int groupId)
+	{
+		PreparedStatement pstmt = null;
+
+		try {
+			con = getConnection();
+			String sql = "UPDATE MEMBER_JOIN_GROUP SET CALENDAR_READ_VIEW=CALENDAR_READ_VIEW+1 WHERE GROUP_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, groupId);
+
+			int result = pstmt.executeUpdate();
+			
+			if(result == 1)
+			{
+				System.out.println("+1");
+			}
+			else
+			{
+				System.out.println("--");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+	
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½Ø¿ï¿½
+	public ArrayList<MemberJoinGroupVO> getViewCountCheck(String MEMBER_ID){
+		ArrayList<MemberJoinGroupVO> arrList = new ArrayList<MemberJoinGroupVO>();
+		String sql = "select * from MEMBER_JOIN_GROUP where MEMBER_ID=?";
+		PreparedStatement psmt1 = null;
+		ResultSet rs1 = null;
+		try{
+			con = getConnection();
+			psmt1 = con.prepareStatement(sql);
+			psmt1.setString(1, MEMBER_ID);
+			
+			rs1 = psmt1.executeQuery();
+			
+			while(rs1.next()){
+				MemberJoinGroupVO mj = new MemberJoinGroupVO();
+				mj.setMEMBER_ID(rs1.getString("MEMBER_ID"));
+				mj.setGROUP_ID(rs1.getString("GROUP_ID"));
+				mj.setCALENDAR_READ_VIEW(rs1.getInt("CALENDAR_READ_VIEW"));
+				mj.setCALENDAR_VIEW(rs1.getInt("CALENDAR_VIEW"));
+				arrList.add(mj);
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		finally{
+			try{
+				if(rs1 != null)rs1.close();
+				if(psmt1 != null)psmt1.close();
+				if(con != null)con.close();
+			}
+			catch (SQLException e){
+				e.printStackTrace();
+			}
+		}
+		
+		return arrList;
+	}
+	
+	
+	// ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½Ù°ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½...
+	public void updateMyCalView(int groupId, String userName){
+		PreparedStatement pstmt = null;
+
+		try {
+			con = getConnection();
+			String sql = "UPDATE member_join_group SET CALENDAR_VIEW = CALENDAR_READ_VIEW WHERE GROUP_ID=? AND MEMBER_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, groupId);
+			pstmt.setString(2, userName);
+
+			int result = pstmt.executeUpdate();
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+	
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

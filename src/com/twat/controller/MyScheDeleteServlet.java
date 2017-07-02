@@ -3,6 +3,7 @@ package com.twat.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,14 +16,13 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.MyCalendarDAO;
 
-@WebServlet("/mySchedule.do")
-public class MyScheduleServlet extends HttpServlet {
+@WebServlet("/scheDelete.do")
+public class MyScheDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public MyScheduleServlet() {
+    public MyScheDeleteServlet() {
         super();
     }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -30,7 +30,7 @@ public class MyScheduleServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json;");
-		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Cashe-control", "no-cashe");
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		
@@ -40,21 +40,17 @@ public class MyScheduleServlet extends HttpServlet {
 		
 		MyCalendarDAO mycalendarDAO = MyCalendarDAO.getInstance();
 		
-		String member_id = (String) session.getAttribute("loginUserId");
-		String my_cal_contents = (String) request.getParameter("title");
-		String my_cal_date = (String) request.getParameter("calDate");		
-		String my_cal_time = (String) request.getParameter("calTime");		
+		int deleteSche = Integer.parseInt(request.getParameter("deleteNum"));
 		
-//		System.out.println(member_id);
-//		System.out.println(my_cal_contents);
-//		System.out.println(my_cal_date);
+		mycalendarDAO.deleteMySchedule(deleteSche);
 		
-		mycalendarDAO.addMySchedule(member_id, my_cal_contents, my_cal_date, my_cal_time);
+		jsonArr.add(jsonObj);
 		
-		jsonObj.put("result", "succesCalAdd");
-		jsonArr.add(jsonObj);		
-
-		System.out.println(jsonArr);		
+//		String url = "myCalendar.html";
+//		RequestDispatcher rd = request.getRequestDispatcher(url); //페이지를 넘기는것!!!
+//		rd.forward(request, response);// 페이지를 넘기는것!!!
+		
+		System.out.println(jsonArr);
 		out.print(jsonArr);
 		out.close();
 		

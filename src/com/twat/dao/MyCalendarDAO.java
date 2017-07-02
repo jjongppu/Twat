@@ -38,18 +38,19 @@ public class MyCalendarDAO{
 		return ds.getConnection();
 	}
 
-	public void addMySchedule( String member_id, String my_cal_contents, String my_cal_date ) {
+	public void addMySchedule( String member_id, String my_cal_contents, String my_cal_date, String my_cal_time ) {
 		PreparedStatement psmt2= null;
 		String sql ="";
 		try {
 			con = getConnection();			
-			sql = "INSERT INTO MY_CALENDAR VALUES(?, ?, CURRENT_TIMESTAMP, ?, ?)";
+			sql = "INSERT INTO MY_CALENDAR VALUES(?, ?, CURRENT_TIMESTAMP, ?, ?, ?)";
 			psmt2 = con.prepareStatement(sql);			
 			psmt2.setInt(1, getMaxNum());
 			System.out.println(getMaxNum());
 			psmt2.setString(2, member_id);
 			psmt2.setString(3, my_cal_contents);
 			psmt2.setString(4, my_cal_date);
+			psmt2.setString(5,  my_cal_time);
 			
 			psmt2.executeUpdate();
 //			psmt.executeQuery();
@@ -67,43 +68,58 @@ public class MyCalendarDAO{
 		}		
 	}
 	
+	public void deleteMySchedule(int deleteSche){
+		PreparedStatement psmt3= null;
+		String sql ="";
+		try {
+			con = getConnection();			
+			sql = "DELETE FROM MY_CALENDAR WHERE MY_CAL_INDEX = "+deleteSche;
+			psmt3 = con.prepareStatement(sql);			
+//			psmt3.setInt(1, deleteSche);
+			
+			psmt3.executeUpdate();
+//			psmt.executeQuery();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(psmt3 != null)
+					psmt3.close();
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public ArrayList<MyCalendarVO> getInfo(String MEMBER_ID){
 		System.out.println(MEMBER_ID);
 		System.out.println(MEMBER_ID);
 		System.out.println(MEMBER_ID);
 		
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+		PreparedStatement pstmt3 = null;
+		ResultSet rs3 = null;
 		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
-		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ?";
+		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ? DESC LIMIT 11";
 
 		try{
 			con = getConnection();
-			pstmt = con.prepareCall(sql);
-			pstmt.setString(1, MEMBER_ID);
-			rs = pstmt.executeQuery();
+			pstmt3 = con.prepareCall(sql);
+			pstmt3.setString(1, MEMBER_ID);
+			rs3 = pstmt3.executeQuery();
 			
-			while(rs.next()){
-				myCalList.add(new MyCalendarVO(rs.getInt(1), rs.getString(2), rs.getTimestamp(3), rs.getString(4), rs.getString(5)));
+			while(rs3.next()){
+				myCalList.add(new MyCalendarVO(rs3.getInt(1), rs3.getString(2), rs3.getTimestamp(3), rs3.getString(4), rs3.getString(5), rs3.getString(6)));
+				
 			}
-//			while(rSet.next()){
-//				MyCalendarVO myCalInfo = new MyCalendarVO();
-//				myCalInfo.setMy_cal_index(rSet.getInt(1));
-//				myCalInfo.setMember_id(rSet.getString(2));
-//				myCalInfo.setMy_write_time(rSet.getTimestamp(3));
-//				myCalInfo.setMy_cal_contents(rSet.getString(4));
-//				myCalInfo.setMy_cal_date(rSet.getString(5));
-//				
-//				arrList.add(myCalInfo);
-//			}
 		}
 		catch (Exception e){
 			e.printStackTrace();
 		} finally {
 			try{
-				if(rs != null)rs.close();
-				if(pstmt != null)pstmt.close();
+				if(rs3 != null)rs3.close();
+				if(pstmt3 != null)pstmt3.close();
 				if(con != null)con.close();
 			}	catch (SQLException e){
 				e.printStackTrace();
