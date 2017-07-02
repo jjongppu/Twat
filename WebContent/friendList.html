@@ -346,7 +346,7 @@
         }
     </style>
     <script>
-        
+
 
         /////친구 목록 가져오기.
         function getMyfriendsList(){
@@ -382,9 +382,9 @@
                 }else{
                     out += '<div class="undefinedResult"><div class="divBlock">친구가 없습니다.</div><div class="divBlock">지금 바로 친구를 추가해보세요.</div></div>';
                     $('.addFriendsNow').css('display','block');
-                    $('#allFriends').css('display','block');
                 }
                 
+                $('#allFriends').css('display','block');
                 document.getElementById('allFriends').innerHTML = out;
             }, error: function(req) {
 
@@ -425,7 +425,7 @@
             
         });
                 }
-        getMyfriendsList();
+        
         function cancelRequest(a){
             var cancelFriendId = $(a).prev().children().eq(1).children().eq(0).text().split("님")[0];
 //            console.log(cancelFriendId);
@@ -770,24 +770,7 @@
         }
         
 
-//
-//       function findUserFriend(){
-//           $.ajax({
-//                type: "post", 
-//                url: "FindFriendservlet.do",
-//                data:
-//                    { findPhoneNumber:$('#findPhoneNumber').val()},
-//                dataType:"json",
-//                success: function (data){
-//                    console.log(data);
-//                    $('#findUserName').html(data[0].MEMBER_NAME);
-//                    $('#findUserPhone').html(data[0].MEMBER_PHONE);
-//                    $('#findUserBirth').html(data[0].MEMBER_BIRTH);
-//                }
-//            });
-//       }
-//        //////////////////////////////////////////////////
-            function viewSearch(){
+        function viewSearch(){
         $('#modal').css('display','block');
         $('#blindCover').css('display','block');
         
@@ -1205,7 +1188,11 @@
             
         }
         
-        
+                
+        $(document).ready(function(){
+           getMyfriendsList();
+            
+        });
     </script>
     
     
