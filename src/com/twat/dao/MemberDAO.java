@@ -444,7 +444,7 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 		ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
-		String sql = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH from MEMBER";
+		String sql = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_IMG from MEMBER";
 
 		try {
 			con = getConnection();
@@ -461,6 +461,7 @@ public class MemberDAO {
 						member.setMEMBER_ID(resultSet.getString(1));
 						member.setMEMBER_NAME(resultSet.getString(2));
 						member.setMEMBER_BIRTH(resultSet.getString(3));
+						member.setMEMBER_IMG(resultSet.getString(4));
 
 						arrList.add(member);
 					}
@@ -1360,7 +1361,9 @@ public class MemberDAO {
 		String myToken = "";
 		String frToken = "";		
 		ArrayList<String> myArr = friendsListForArrList(userId);
-		ArrayList<String> frArr = friendsListForArrList(friendFriendList);
+		ArrayList<String> frArr = friendsListForArrList(friendId);
+		System.out.println(friendId);
+		
 		if(refuseOrCancel.equals("refuse")){
 			myToken = "!";
 			frToken = "*";			
