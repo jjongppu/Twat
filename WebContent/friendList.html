@@ -432,8 +432,8 @@
                 }
         
         function cancelRequest(a){
-            var cancelFriendId = $(a).prev().children().eq(1).children().eq(0).text().split("님")[0];
-//            console.log(cancelFriendId);
+            var cancelFriendId = $(a).prev().prev().prev().children().eq(0).text().split("님")[0];
+            console.log(cancelFriendId);
             
             $.ajax({
                 type: "post", 
@@ -805,7 +805,10 @@
                 success: function (data){ 
                     console.log(data);
                     var out = "";
-                    if(data[0].userId != 'fail'){
+//                    console.log(data[0].userId);
+                    
+                    
+                    if(data.length != 0 && data[0].userId != 'fail'){
                         for(var h = 0; h < data.length; h++){                       
 
     //                        document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
