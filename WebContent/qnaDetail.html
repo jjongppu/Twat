@@ -7,64 +7,81 @@
     <meta name="keywords" content="">
 	<script src="js/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/nav.css">
-	<script src="js/nav.js"></script>
+	    <script src="js/nav.js"></script>
     <script src="js/jquery.form.js"></script>
 </head>
 	<style>
-	
+		body{
+            background-image: url(img/background/back1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center top;
+        }
+		
 		/* 외부 css 땜시 따로 display : block */
 		#title_box, #top_title, #middle_container, #bottom_container, #bottom_title {
 			display: block;
 		}
 		
 		#newWrap {
-		    width: 1500px;
-    		height: 900px;
+		    width: 1350px;
+    		height: 800px;
 		}
 		
 		#wrap {
-			border: 1px solid red;
-			height: 800px;
+/*			border: 1px solid black;*/
+/*			margin-left: 100px;*/
 			width: 1000px;
-/*			width: 0 auto;*/
-			position: relative;
-			left: 100px;
+			height: 600px;
+			margin: 0 auto;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
 		}
 		
-		#container {
-			border: 1px solid black;
-			height: 800px;
-			width: 1000px;
-		}
 		#title_box {
-			border: 1px solid blue;
+/*			border: 1px solid blue;*/
+			margin-bottom: 80px;
+			background-color: #cccccc;
 			
 		}
+	
 		#title_div {
-			border: 1px dotted red;
+/*			border: 1px dotted red;*/
 		}
 		
-		
 		#top_container {
-			border: 1px solid green;
+/*			border: 1px solid green;*/
+			border-top: 2px solid gray;
 			width: 1000px;
+			background-color: #e6e6e6;
+			margin-bottom: 20px;
 		}
 
 		#time_div {
-			border: 1px dotted green;
+/*			border: 1px dotted black;*/
 			float: right;
 		}
 		
 		#middle_container {
-			border: 1px solid orange;
-			height: 400px;
+/*			border: 1px solid orange;*/
+			border-top: 2px solid gray;
+			border-left: 1px solid gray;
+			height: 350px;
+			margin-bottom: 30px;
 		}
 		#bottom_container {
-			border: 1px solid purple;
+/*			border: 1px solid purple;*/
 		}
 		
 		#write_btn_div {
 			float: right;
+		}
+		
+		.btn {
+			border: none;
 		}
 	</style>
 	
@@ -97,7 +114,6 @@
 				console.log(data[0].QNA_CONTENTS);
 				console.log(data[0].QNA_PW);
 				console.log(data[0].QNA_REPLY);
-				
 				var category = "";
 				var title = "";
 				var id = "";
@@ -106,10 +122,11 @@
 				
 				category = '<span id="category_span">' + data[0].QNA_CATEGORY + '</span>';
 				title = '<div id="title_divDiv">' + data[0].QNA_TITLE + '</div>';
-				id = '<span id="id_span">' + data[0].MEMBER_ID + '</span>';
-				time = '<span id="time_span">';
-				time = data[0].QNA_DATE.substring(0,10);
-				time = '</span>';
+				id = '<span id="id_span">작성자 ' + data[0].MEMBER_ID + '</span>';
+//				time = '<span id="time_span">';
+//				time = data[0].QNA_DATE;
+//				time = '</span>';
+				time = '<span id="time_span">' + data[0].QNA_DATE + '</span>';
 				content = '<span id="content_span">' + data[0].QNA_CONTENTS + '</span>';
 				
 				$('#category_div').html(category);
@@ -139,43 +156,45 @@
 					<li class="nav_li">
 						<img id="user_Img" src=""/>
 					</li>
-					<li class="nav_li">
+					<li class="nav_li idLi">
 						<div id="user_Id"></div>
 					</li>
 				</ul>
 			</div>
 			<ul class="nav_ul" id="nav_menu">
-				<li class="nav_li"><a class="nav_text"  href="home.html">홈</a></li>
-				<li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-				<li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-				<li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
-				<li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="qnaList.html">문의 하기</a></li>
+				<li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
+				<li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
+				<li class="nav_li"><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a></li>
+				<li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
+				<li class="nav_li"><div id="navHere"></div><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
 			</ul>
 			<ul id="logout" class="nav_ul" onclick="logout()">
-				<li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+				<li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
 			</ul>
+
 		</nav>
+			
+		<!--여기까지 네브바-->
 		
 		
 		<div id="wrap">
-			<div id="container">
 				<div id="title_box">
-					<h3>twat 건의사항</h3>
+					<h4>건의사항</h4>
 				</div>
 				<div id="top_container">
 					<div id="top_title">
-						<div id="category_div" class="title_divs">
+						<div id="category_div">
 <!--							<span id="category_span">해킹신고 및 예방</span>-->
-						</div> |
-						<div id="title_div" class="title_divs">
+						</div> &nbsp;|&nbsp;
+						<div id="title_div">
 <!--							<div id="title_divDiv">나 해킹 당했다니가 운영자 개쉐기야</div>-->
 						</div>
 					</div>
-					<div id="bottom_title" >
-						<div id="id_div" class="title_divs">
+					<div id="bottom_title">
+						<div id="id_div">
 <!--							<span id="id_span">글쓴이</span>-->
 						</div>
-						<div id="time_div" class="title_divs">
+						<div id="time_div">
 <!--							<span id="time_span">작성 시간</span>-->
 						</div>
 					</div>
@@ -191,13 +210,15 @@
 				</div>
 				<div id="bottom_container">
 					<span id="list_btn_div">
-						<input type="button" value="전체목록" onclick="location.href='qnaList.html'"/>
+						<input type="button" id="listBtn" class="btn" value="전체목록" onclick="location.href='qnaList.html'"/>
+					</span>
+					<span id="delete_btn_div">
+						<input type="button" id="deleteBtn" class="btn" value="삭제하기" onclick=""/>
 					</span>
 					<span id="write_btn_div">
-						<input type="button" value="글쓰기" onclick="location.href='qnaWrite.html'"/>
+						<input type="button" id="writeBtn" class="btn" value="글쓰기" onclick="location.href='qnaWrite.html'"/>
 					</span>
 				</div>
-			</div>
 		</div>
 		
 	
