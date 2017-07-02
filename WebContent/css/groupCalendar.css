@@ -252,6 +252,7 @@ html,body{
        width: 100%;
        height: 20%;
        background-color: white;
+	   overflow: hidden;
    }
    
    .title {
@@ -263,9 +264,11 @@ html,body{
    }
 
 .contentBox{
-    width: 100%;
+/*    width: 100%;*/
+	width: auto;
     height: 90%;
     background-color: white;
+/*	overflow: hidden;*/
 }
    
    .content {
@@ -557,4 +560,80 @@ input[type=radio]:hover
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.birthListBox
+{
+	width: 200px;
+	height: 100%;
+	display: inline-block;
+	overflow: hidden;
+/*
+	text-overflow:ellipsis;
+	white-space:nowrap;
+*/
+}
+
+.birthMonth
+{
+/*	width: 100%;*/
+	font-size: 24px;
+	font-weight: bold;
+	color: #83C5F1;
+	height: 20%;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
+.birthMemBox
+{
+	width: 100%;
+	height: 80%;
+	
+}
+
+.birthMemImg
+{
+/*	width: 100%;*/
+	width: 35%;
+/*	height: 50%;*/
+	height: 100%;
+}
+
+.birthMemImg img
+{
+	
+	position: relative;
+	top: 50%;
+	transform: translate(0, -50%);
+	width: 64px;
+}
+
+.birthMemInfo
+{
+	
+/*	width: 64%;*/
+/*	height: 100%;*/
+/*
+	top: 50%;
+	transform: translate(0, -50%);
+*/
+	vertical-align: middle;
+}
+.birthMemBox:hover
+{
+	cursor: pointer;
+}
+
+.birthMemName
+{
+	width: 100%;
+	height: 49%
+}
+
+.birthMemDate
+{
+	width: 100%;
+	height: 49%;
 }
