@@ -272,6 +272,22 @@ li {
     border: white 10px solid;
 }
 
+/* 더보기 버튼 시도...*/
+
+/*
+.privSchedule{
+    display: none;
+}
+.scheList{
+    display: none;
+}
+.scheList.active {
+        display: block;
+}
+*/
+
+/* 더보기 버튼 실패... */
+
 
 /*    ========== right  ======================*/
 
