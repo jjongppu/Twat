@@ -160,20 +160,7 @@
         
     }
      
-    //블라인드 커버 --
-    $(document).ready(function(){
-        
-        $('#blindCover').css("height",$(window).height());
-        $('#blindCover').css("width",$(window).width());
-        
-        $(window).resize(function(){
-        
-            $('#blindCover').css("height",$(window).height());
-            $('#blindCover').css("width",$(window).width());
-            
-        });
-        
-    });
+
     
     //선택한 친구들 체크
     function choiceFriend(tag){
@@ -587,7 +574,7 @@
                 </div>
             </div>
 
-            <div id="blindCover" onclick="closeModal();">
+            <div id="blindCover" class="blind" onclick="closeModal();">
             </div>
 
         </div>
