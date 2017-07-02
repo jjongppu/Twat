@@ -334,17 +334,17 @@ public class QnaDAO {
 		
 	}
 	
-	public int deleteQna(String userId, int qnaPw) {
+	public int deleteQna(int val, int qnaPw) {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
 		int result = -1;
 		
-		String deleteSql = "DELETE from qna where MEMBER_ID=? and QNA_PW=?";
+		String deleteSql = "DELETE from qna where QNA_ID=? and QNA_PW=?";
 		
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(deleteSql);
-			psmt.setString(1, userId);
+			psmt.setInt(1, val);
 			psmt.setInt(2, qnaPw);
 			
 			result = psmt.executeUpdate();
