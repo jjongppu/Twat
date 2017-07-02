@@ -25,7 +25,7 @@
             if(data[0].group_id != "noGroup"){
                 for(var i=0;i<data.length;i++){
                     var count = data[i].view_group;
-                    output += '<div class="center_cover"  draggable="true" ondragstart="drag(event);">';
+                    output += '<div class="center_cover"  draggable="true" ondragstart="drag(event,this);">';
                     output += '<div class="group_Cover" id="'+ data[i].group_id +'">';
                     output += '<div class="group_top">';
                        if((count-data[i].view_me) >0){
@@ -234,9 +234,9 @@
     }
     
     
-    function drag(ev){
+    function drag(ev, a){
         ev.dataTransfer.setData("text",ev.target.id);
-        console.log("드래그중");
+        console.log($(a).html());
         
     }
     
@@ -245,6 +245,8 @@
         ev.preventDefault();
 //        var data = ev.dataTransfer.getData("tag");
 //        ev.target.appendChild(document.getElementById(data));
+        
+        
         console.log("!!");
         
         
@@ -255,11 +257,25 @@
     }
     
     
+    function changeTrashCanOpen(){
+        
+        $("#trashCanIcon").attr("src", "img/etcIcon/trash-can-open.png");            
+        
+    }
+    
+    function changeTrashCanClosed(){
+        $("#trashCanIcon").attr("src", "img/etcIcon/trash-can-closed.png");            
+        
+    }
+    
     
     
     
 </script>
 <style>
+    
+    
+    
     body{
         background-image: url(img/background/back1.jpg);
         background-repeat: no-repeat;
@@ -593,7 +609,7 @@
 
         </div>
         <div id="trashcan">
-        <img src="img/etcIcon/trash-can.png" ondrop="drop(event)" ondragover="allowDrop(event)" /></div>
+        <img src="img/etcIcon/trash-can-closed.png" ondrop="drop(event)" ondragover="allowDrop(event)"  id="trashCanIcon" onmouseover="changeTrashCanOpen()" onmouseout="changeTrashCanClosed()"/></div>
     </div>
 </body>
 </html>
