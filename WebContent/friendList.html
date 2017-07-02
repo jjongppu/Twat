@@ -139,17 +139,7 @@
             width: 100px;
             height: 100px;
         }
-        
-        
-    #blindCover{
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: black;
-        opacity: 0.7;
-        z-index: 300;
-        display: none;
-    }
+
 /*        친구 검색 모달*/
         
         #modal{
@@ -212,6 +202,7 @@
             height: 100px;
         }
         .addfriendBtn{
+            display: block;
             width: 100px;
             height: 30px;
             line-height: 30px;
@@ -405,7 +396,7 @@
                     width = 50;
                     height = 50;
 
-
+                $('#blindCoverWhite').css('display','block');
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
 
@@ -425,7 +416,8 @@
 
              }
              , complete: function () {
-                           $("#div_ajax_load_image").hide();
+                 $('#blindCoverWhite').css('display','none');
+               $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
             
@@ -461,7 +453,7 @@
 
                     width = 50;
                     height = 50;
-
+                    $('#blindCoverWhite').css('display','block');    
 
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
@@ -482,6 +474,7 @@
 
              }
              , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
@@ -530,7 +523,7 @@
                     width = 50;
                     height = 50;
 
-
+                    $('#blindCoverWhite').css('display','block');
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
 
@@ -550,6 +543,7 @@
 
              }
              , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
@@ -608,7 +602,7 @@
                     width = 50;
                     height = 50;
 
-
+                    $('#blindCoverWhite').css('display','block');
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
 
@@ -628,6 +622,7 @@
 
              }
              , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
@@ -672,7 +667,7 @@
                     width = 50;
                     height = 50;
 
-
+                    $('#blindCoverWhite').css('display','block');
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
 
@@ -692,6 +687,7 @@
 
              }
              , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
@@ -730,7 +726,7 @@
 
                     width = 50;
                     height = 50;
-
+                    $('#blindCoverWhite').css('display','block');
 
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
@@ -751,6 +747,7 @@
 
              }
              , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
@@ -816,8 +813,9 @@
                 url: "ResponsingFriends.do",               
                 dataType:"json",
                 success: function (data){ 
+                    console.log(data);
                     var out = "";
-                    if(data[0].result != 'fail'){
+                    if(data[0].userId != 'fail'){
                         for(var h = 0; h < data.length; h++){                       
 
     //                        document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
@@ -854,7 +852,7 @@
 
                     width = 50;
                     height = 50;
-
+                    $('#blindCoverWhite').css('display','block');
 
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
@@ -875,6 +873,7 @@
 
              }
              , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
@@ -983,27 +982,18 @@
         
     }
             
-    $(document).ready(function(){
-        
-        $('#blindCover').css("height",$(window).height());
-        $('#blindCover').css("width",$(window).width());
-        
-        $(window).resize(function(){
-        
-            $('#blindCover').css("height",$(window).height());
-            $('#blindCover').css("width",$(window).width());
-            
-        });
-        
-    });
+
         
         
         function changeTab(id){
             $('#phoneSearchList').html("");
+            $('#idSearchList').html("");
+            
             var ids = $(id).attr('id');
             if(ids == 'phoneTab'){
                 $('#phoneSearch').css('display','block');
                 $('#idSearch').css('display','none');
+                
                 
                 $('#phoneTab').css('background-color','gray');
                 $('#idTab').css('background-color','white');
@@ -1081,7 +1071,7 @@
 
                     width = 50;
                     height = 50;
-
+                    $('#blindCoverWhite').css('display','block');
 
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
@@ -1102,6 +1092,7 @@
 
              }
              , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
                            $("#div_ajax_load_image").hide();
                  console.log("통신완료");
              }
@@ -1165,7 +1156,8 @@
 
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : friendPhoneSearch.do");
-                }    , beforeSend: function () {
+                }    
+                , beforeSend: function () {
                     var width = 0;
                     var height = 0;
                     var left = 0;
@@ -1173,7 +1165,7 @@
 
                     width = 50;
                     height = 50;
-
+                    $('#blindCoverWhite').css('display','block');
 
                     top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
                     left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
@@ -1194,6 +1186,7 @@
 
              }
              , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
                            $("#div_ajax_load_image").hide();
                 
              }
@@ -1302,8 +1295,8 @@
                     </div>
                 </div>
             </div>
-                    <div id="blindCover" onclick="closeModal();">
-            </div>
+        <div id="blindCover" class="blind" onclick="closeModal();"></div>
+        <div id="blindCoverWhite" class="blind" ></div>
         
         
         

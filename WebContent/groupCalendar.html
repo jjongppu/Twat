@@ -3001,7 +3001,8 @@
                 </div>
 					<!-- 모달~ 모달~                                 ------------------------------>
 					<footer>
-						<div id="blindCover" onclick="closeModal();"></div>
+						<div id="blindCover" class="blind" onclick="closeModal();"></div>
+                        <div id="blindCoverWhite" class="blind" ></div>
 						<span class='modal' style="border:1px solid black;">
 							<div id="contentsHeight">
 								<div id="titleAdd">
@@ -3092,33 +3093,11 @@
 							$('#blindCover').css('display', 'none');
 						}
 
-						//모달 뜰떄 뒤에 까만화면 크기를....
 
-						$(document).ready(function() {
-
-							//                            $('#blindCover').css("height",$(window).height());
-							//                            $('#blindCover').css("width",$(window).width());
-							$('#blindCover').css("height", $(document).height());
-							$('#blindCover').css("width", $(document).width());
-							$(window).resize(function() {
-								//                                $('#blindCover').css("height",$(window).height());
-								//                                $('#blindCover').css("width",$(window).width());
-								$('#blindCover').css("height", $(document).height());
-								$('#blindCover').css("width", $(document).width());
-							});
-						});
 
 					</script>
 					<style>
-						#blindCover {
-							position: fixed;
-							top: 0;
-							left: 0;
-							background-color: black;
-							opacity: 0.7;
-							display: none;
-							z-index: 300;
-						}
+
 						
 						.modal,
 						#inviteModal {

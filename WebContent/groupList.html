@@ -160,20 +160,7 @@
         
     }
      
-    //블라인드 커버 --
-    $(document).ready(function(){
-        
-        $('#blindCover').css("height",$(window).height());
-        $('#blindCover').css("width",$(window).width());
-        
-        $(window).resize(function(){
-        
-            $('#blindCover').css("height",$(window).height());
-            $('#blindCover').css("width",$(window).width());
-            
-        });
-        
-    });
+
     
     //선택한 친구들 체크
     function choiceFriend(tag){
@@ -406,15 +393,6 @@
     }
     
 /*    모달 ----------------- */
-    #blindCover{
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: black;
-        opacity: 0.7;
-        display: none;
-        z-index: 200;
-    }
     
     #modal{
         position: fixed;
@@ -587,8 +565,8 @@
                 </div>
             </div>
 
-            <div id="blindCover" onclick="closeModal();">
-            </div>
+            <div id="blindCover" class="blind" onclick="closeModal();"></div>
+            <div id="blindCoverWhite" class="blind" ></div>
 
         </div>
         <div id="trashcan">
