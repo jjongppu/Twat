@@ -5,6 +5,7 @@ $.ajax({
     dataType: "json",
     success: function(data) {
         if(data[0].result == "s"){
+            /*세션이 있으면 왼쪽 개인정보 띄워주는것들 불러옴*/
             $.ajax({
                 type: "post",
                 url: "PersonalServlet.do",
@@ -46,20 +47,13 @@ $.ajax({
 });
 
 
-    
-
-
-
-
-
-
-
-
-
 
 
         window.onload = function(){
-            
+                    //블라인드 꽉채우기
+        $('.blind').css("height",$(window).height());
+        $('.blind').css("width",$(window).width());
+        
             //중앙 정렬
             if((window.innerHeight-800)/2 > 1){
                 $("#newWrap").css("margin-top",(window.innerHeight-800)/2 );
@@ -86,6 +80,9 @@ $.ajax({
     
         }
     $(window).resize(function(){
+        $('.blind').css("height",$(window).height());
+        $('.blind').css("width",$(window).width());
+            
         if((window.innerHeight-800)/2 > 1){
             $("#newWrap").css("margin-top",(window.innerHeight-800)/2 );
         }else{

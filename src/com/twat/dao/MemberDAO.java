@@ -81,16 +81,19 @@ public class MemberDAO {
 	}
 
 	// 占쏙옙橘占싫� 찾占쏙옙 占쌨쇽옙占쏙옙 ---------占승울옙-------------------------------
-	public String searchPW(String MEMBER_ID, String MEMBER_NAME, String MEMBER_PHONE) {
-		String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
+	public String searchPW(String MEMBER_ID, String MEMBER_PHONE, String MEMBER_QUESTION, String MEMBER_ANSWER) {
+//		String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
+		String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_PHONE=? and MEMBER_QUESTION=? and MEMBER_ANSWER=?";
 		String getPW = "";
 
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(selectSql);
 			psmt.setString(1, MEMBER_ID);
-			psmt.setString(2, MEMBER_NAME);
-			psmt.setString(3, MEMBER_PHONE);
+//			psmt.setString(2, MEMBER_NAME);
+			psmt.setString(2, MEMBER_PHONE);
+			psmt.setString(3, MEMBER_QUESTION);
+			psmt.setString(4, MEMBER_ANSWER);
 
 			rs = psmt.executeQuery();
 

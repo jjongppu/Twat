@@ -169,10 +169,11 @@
             url : '../getinfo.do',
             dataType : "json",
             success : function(data) {
+                console.log(data);
                 $('#memVal').html(data[0].memberCount);
                 $('#qnaVal').html(data[0].qnaCount);
                 $('#calVal').html(data[0].calendatCount);
-                $('#viewData').html(data[0].visitCount);
+                $('#visVal').html(data[0].visitCount);
                 $('#calgVal').html(data[0].calgtherCount);
                 
             }
