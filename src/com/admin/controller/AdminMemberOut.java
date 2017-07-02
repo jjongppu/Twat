@@ -50,7 +50,7 @@ public class AdminMemberOut extends HttpServlet {
 	    
 		int result = mdo.outUser(MEMBER_ID,"out");
 		
-		session.invalidate();
+
 	    if(result ==1){
 	    	
 	    	jsonOb.put("result", "success");

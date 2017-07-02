@@ -277,23 +277,45 @@ public class MemberJoinGroupDAO
 	
 	public void inviteFriends(String friendId, int groupId){//그룹방 친구초대
 		PreparedStatement pstmt = null;
-
+		ResultSet rs2 = null;
 		try {
 			con = getConnection();
 			String sql = "insert into member_join_group values(?,?,0,0)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, friendId);
 			pstmt.setInt(2, groupId);
-			
-
 			int result = pstmt.executeUpdate();
+			
+			
+			String sql2 = "select GROUP_COUNT from calgather where GROUP_ID = ?";
+			pstmt = con.prepareStatement(sql2);
+			pstmt.setInt(1, groupId);
+			
+			rs2 = pstmt.executeQuery();
+			rs2.next();
+			int groupLastNum = rs2.getInt(1);
+			
+			groupLastNum++;
+			
+			
+			String sql3 = "update calgather set GROUP_COUNT = ? where GROUP_ID = ?";
+			pstmt = con.prepareStatement(sql3);
+			pstmt.setInt(1, groupLastNum);
+			pstmt.setInt(2, groupId);
+			pstmt.executeUpdate();
+			
+			
+			
+			
+			
 			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-	
+				if (rs2 != null)
+					rs2.close();
 				if (pstmt != null)
 					pstmt.close();
 				if (con != null)
