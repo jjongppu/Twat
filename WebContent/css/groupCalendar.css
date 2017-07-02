@@ -783,3 +783,23 @@ input[type=radio]:hover
 	text-align: center;
 	line-height: 32px;
 }
+
+.ndjButton
+{
+	display: block;
+}
+
+#confirm_button
+{
+	display: inline-block;
+}
+
+.modalComment
+{
+	width: 100%;
+}
+
+#commentList
+{
+	width: 100%;
+}

@@ -1354,7 +1354,7 @@
 //					if (item.split("-")[0] == dateParam)
 					if (parseInt(item.split("-")[0]) == parseInt(dateParam))
 					{
-						console.log(item);
+//						console.log(item);
 						$(cell).attr('class', 'trVote' + item.split("-")[2]);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
 					}
@@ -1753,7 +1753,7 @@
 					//                        var cal_date = data[1].cal_date.split(",");
 					//                        voteMeeting(cal_date);
 					//                    }
-					console.log(barColorSet);
+//					console.log(barColorSet);
 					for (let item of barColorSet.keys()) {
 						var percentC = parseFloat(item.split("-")[1]) * 100;
 
@@ -1782,6 +1782,24 @@
 					
 					$('.schedule .contentBox').css('display', 'none');
 					$('.vote .contentBox').css('display', 'none');
+					
+//					if(scheSet)
+					console.log(scheduleSet);
+					console.log(voteSet);
+					
+					
+					
+					if(scheduleSet.size < 1)
+					{
+						var noStr = "<div class='swiper-slide'>잡혀있는 일정이 없습니다</div>";
+						$(".schedule .swiper-wrapper").html(noStr);
+					}
+					
+					if(voteSet.size < 1)
+					{
+						var noStr = "<div class='swiper-slide'>등록된 투표가 없습니다</div>"
+						$(".vote .swiper-wrapper").html(noStr);
+					}
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -1868,7 +1886,7 @@
 
 					tempBirth = Array.from(birthSortSet).sort();
 
-					console.log(tempBirth);
+//					console.log(tempBirth);
 					//					birthSet = new Set();
 					var birthIndex = 0;
 					for (var i = 0; i < tempBirth.length; i++) {
@@ -2087,6 +2105,13 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
+					
+					if(commentsString.match(""))
+					{
+						commentsString += "<div class='commentBox'><div class='commentWriter'></div>";
+						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div>";
+					}
+					console.log(commentsString);
 					$("#commentList").html(commentsString);
 					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
@@ -2248,10 +2273,10 @@
 								voteString += "</div>";
 								voteString += "</div>";
 							}
-							voteString += "</div>"; // voteListBox
-							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div>";
-							voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div>";
-							voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
+							voteString += "</div><br>"; // voteListBox
+							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div><br>";
+							voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div><br>";
+//							voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
 							voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer;
 							// 참가자 출력
 							var voteMemberSet = new Set();
@@ -2299,7 +2324,7 @@
 							//                            console.log(data[i]);
 
 							commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
-							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
+							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div><br>";
 							//                            console.log(commentsString);
 							//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
 						}
@@ -2344,6 +2369,14 @@
 
 					$(".modalSchduleInfo").html(voteString);
 					$("#voteButtonBox").html(voteBox);
+					$('#voteButtonBox').css('display', 'block');
+					
+					if(commentsString.length < 1)
+					{
+						commentsString += "<div class='commentBox'><div class='commentWriter'></div>";
+						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div>";
+					}
+					
 					$("#commentList").html(commentsString);
 					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
@@ -3310,12 +3343,15 @@
 									<input type="button" value="투표하기" onclick="addVoteList()" />
 								</div>
 								<div class="modalComment">
-									<div id="commentList"></div>
-									<div id="myComment">
-										<input type="text" placeholder="댓글을 입력하세요" id="commentContents" />
-										<button class="ndjButton" id="confirm_button" onclick="addComment(this)">확인</button>
-										<button class="ndjButton" onclick="closeModal2();">닫기</button>
-									</div>
+									<fieldset>
+										<legend>댓글</legend>
+										<div id="commentList"></div>
+										<div id="myComment">
+											<input type="text" placeholder="댓글을 입력하세요" id="commentContents" />
+											<button class="ndjButton" id="confirm_button" onclick="addComment(this)">확인</button>
+										</div>
+									</fieldset>
+									<button class="ndjButton" onclick="closeModal2();">닫기</button>
 								</div>
 							</div>
 						</div>
