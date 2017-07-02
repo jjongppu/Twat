@@ -285,8 +285,8 @@
                 
         .userGender{
              position: absolute;
-            top: 20px;
-            right: 20px;
+            top: -10px;
+            left: 70px;
             display: inline-block;
             width: 25px;
             height: 25px;
@@ -343,6 +343,9 @@
         }
         .divBlock{
             display: block;
+        }
+        .cancelRequest{
+            position: absolute;
         }
     </style>
     <script>
@@ -810,7 +813,7 @@
                                 out += '<div class="userIn">';
                                 out += '<div class="userImgCover">';
                                 out += '<img src="'+ data[h].userImg +'" class="userImg"></div>';
-                                out += '<div class="userTop"><div class="userName">'+ data[h].userId +'님에게 친구요청 중입니다..</div></div>';
+                                out += '<div class="userTop"><div class="userName">'+ data[h].userId +'님 에게 친구요청 중입니다.</div></div>';
                                 out += '<div class="userBottom"><div class="userBirth">'+ data[h].userName +'</div>';
                                 out += '<div class="userPhone">'+ data[h].userPhone +'</div></div>'
                                 out += '<img class="userGender" src="';
