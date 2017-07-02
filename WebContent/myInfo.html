@@ -14,7 +14,21 @@
     <script src="js/jquery.form.js"></script>
 </head>
     <style>
-        
+        #newWrap {
+            display: block;
+            background-color: #F6F6F6;
+            width: 1350px;
+            height: 800px;
+            box-shadow: 10px 10px 30px grey;
+            margin: auto;
+        }
+        body{
+             background-image: url(img/background/back1.jpg);
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-attachment: fixed;
+             background-position: center top;
+        }
         #wrap{
             width: auto;
         }
@@ -23,21 +37,21 @@
             display: block
         }
         .container{
-            margin:150px auto 0 auto;
+            margin: 0 auto 0 auto;
             width: 800px;
             height: 600px;
         }
         .userIn{
             width: 780px;
             height: 500px;
-            margin: auto;
-            margin-top: 10px; 
+            margin: 0 auto 0 auto;
+            margin-top: 80px; 
         }
         .userInfo{
             width: 340px;
             height: 480px;
             margin-left: 10px;
-            margin-top: 10px;
+            margin-top: 70px;
             float: left;
         }
         .userInfo2{
@@ -69,7 +83,7 @@
             
         }
 
-        #userName,#userPhone,#userBirth,#chInfo,#uId{
+        #userName,#userPhone,#userBirth,#uId{
             display: block;
             border: none;
             border-bottom: 1px solid gray;
@@ -77,6 +91,7 @@
             margin: 20px auto 0 auto;
             text-align: center;
             height: 30px;
+            
             
         }
         #uId{
@@ -86,30 +101,35 @@
             margin-top: 40px;
             cursor: pointer;
             border: none;
+            display: block;
+            border: none;
+            
+            width: 200px;
+            margin: 20px auto 0 auto;
+            text-align: center;
+            height: 30px;
+            padding: 0;
         }
         .chPwd{
-            
             float: right;
             width: 340px;
             height: 480px;
             margin-left: 10px;
-            
         }
         #ckck{
-            
             cursor: pointer;
-            width: 250px;
+            width: 240px;
             display: block;
             height: 30px;
             margin-top: 40px;
             text-align: center;
+            
         }
-        
         #nowPwd{
             width: 250px;
             display: block;
             height: 30px;
-            margin-top: 240px;
+            margin-top: 280px;
             padding-left: 20px;
             border: none;
             border-bottom: 1px solid gray;
@@ -143,7 +163,8 @@
             text-align: center;
             padding-top: 5px;
             margin-right: 80px;
-            border-bottom: 1px solid gray;
+            
+            margin-top: 80px;
             
         }
         
@@ -176,6 +197,7 @@
             margin-left: 40px;
             padding-left: 30px;
         }
+       
     </style>
     <script>
         ////////////////정보가져오기///////////////////////////////////////////////////
@@ -308,44 +330,7 @@
             location.reload();
             
         }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//        function checkPassword2(){
-//            var pw1 = $('#chPwd').val();
-//            var pw2 = $('#chkPwd').val();
-//            var pwVal = $('#chPwd').val().length;
-//            var retVal = false;
-//            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
-//            if(pw2 != pw1){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
-//            }
-//        }
-//
-//            function checkPassword(){
-//            var pw1 = $('#chPwd').val();
-//            var pw2 = $('#chkPwd').val();
-//            var pwVal = $('#chPwd').val().length;
-//            var retVal = false;
-//            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
-//        if(pw1 != null && pw2 != null) {
-//                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호를 입력해주세요.</p>");
-//            if(pwVal < 8 || pwVal > 16) {
-//                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호는 8자 이상, 16자 이하여야 합니다.</p>");
-//            } else if(pw1 != pw2 && pw2 != pw1) {
-//                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
-//            } else if(!pwRegex.test(pwVal) && !pwRegex.test(pw2)){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호는 영문, 숫자로 구성되어야 합니다.</p>");
-//            } else if(pw1 == pw2){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
-//            } else if(pw1 != pw2){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호가 일치하지 않습니다.</p>");
-//            } else if(pw1 == ""){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호를 입력해주세요.</p>");
-//            }
-//            
-//        }
-//    }
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function autoHypen() {
@@ -371,17 +356,7 @@
         }else{
             
         }
-//        }else if(!regExp){
-//            alert("핸드폰번호 형식에 맞지 않습니다.");
-        }
-//        else if(!regExp.test(uPhone)){
-//            alert("핸드폰번호 형식에 맞지 않습니다.");
-//        }else{
-            
-//        }
-          
-            
-//    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         
           function checkPassword2(){
@@ -470,9 +445,8 @@
                 var phonephone = $('#userPhone').val();
                 var phonelen = $('#userPhone').val().length;
                 console.log(phonelen);
-                var regExp = /^01([0|1|6|7|8|9]?)-?([0-9]{4})-?([0-9]{4})$/g;
+                var regExp = /^01([0|1|6|7|8|9]{3})-?([0-9]{4})-?([0-9]{4})$/g;
                 var special = /^[a-z]|[\[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
-                v = $('#userPhone').val();
                 if(phonelen >= 16){
                     alert("핸드폰번호 형식에 맞게 입력해주세요\n ex) 010-XXXX-XXXX");
                 }
@@ -499,6 +473,7 @@
     </script>
 <body>
     <div id="newWrap">
+        
       <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
@@ -544,7 +519,7 @@
 <!--                        <div id="checkedName"></div>-->
                         <input type="text" id="userPhone" name="userPhone" onkeyup="autoHypen()"placeholder="핸드폰 번호를 입력하세요." maxlength="13">
                         <input type="text" id="userBirth" name="userBirth" onkeyup="chInformation()" placeholder="생년월일을 입력하세요." maxlength="6">
-                        <div id="chInfo" onclick="changeInfo()" >정보 수정하기</div>
+                        <div id="chInfo" class="btnInfo"onclick="changeInfo()" >정보 수정하기</div>
                     </form>
                 </div>
             </div>
@@ -558,7 +533,7 @@
                     
                     <input type="password" placeholder="비밀번호 확인" id="chkPwd" name="chkPwd" onkeyup="checkPassword()">
                     <div id="chkOnKey"></div>
-                    <div id="ckck" onclick="changePwd()">비밀번호 변경</div>
+                    <div id="ckck" class="btnckck" onclick="changePwd()">비밀번호 변경</div>
                 </div>  
             </div>
             </form>
@@ -567,7 +542,7 @@
         <form method="post" id="outout">
         <div class="userout">
             <div> 
-                <div id="uOut" onclick="outclick()"> 회원 탈퇴</div>
+                <div id="uOut" class="btnStyle" onclick="outclick()"> 회원 탈퇴</div>
             </div>
         </div>
         </form>
