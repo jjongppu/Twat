@@ -901,7 +901,8 @@
         }
         
         function requestFriend(){
-
+            var friendId = $("#friendId").text().split(":")[1].trim();
+//            console.log(friendId);
             
             $.ajax({
                 type: "post", 
