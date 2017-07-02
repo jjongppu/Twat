@@ -107,18 +107,20 @@
 			dataType : "json",
 			success : function(data) {
 //				console.log(data);
-				console.log(data[0].QNA_CATEGORY);
-				console.log(data[0].QNA_TITLE);
-				console.log(data[0].MEMBER_ID);
-				console.log(data[0].QNA_DATE);
-				console.log(data[0].QNA_CONTENTS);
-				console.log(data[0].QNA_PW);
-				console.log(data[0].QNA_REPLY);
+//				console.log(data[0].QNA_CATEGORY);
+//				console.log(data[0].QNA_TITLE);
+//				console.log(data[0].MEMBER_ID);
+//				console.log(data[0].QNA_DATE);
+//				console.log(data[0].QNA_CONTENTS);
+//				console.log(data[0].QNA_PW);
+//				console.log(data[0].QNA_REPLY);
 				var category = "";
 				var title = "";
 				var id = "";
 				var time = "";
 				var content = "";
+				
+				console.log(parameter[1]);
 				
 				category = '<span id="category_span">' + data[0].QNA_CATEGORY + '</span>';
 				title = '<div id="title_divDiv">' + data[0].QNA_TITLE + '</div>';
@@ -147,7 +149,6 @@
 			
 		}
 
-		
 		
 	
 	
@@ -219,7 +220,7 @@
 						<input type="button" id="listBtn" class="btn" value="전체목록" onclick="location.href='qnaList.html'"/>
 					</span>
 					<span id="delete_btn_div">
-						<input type="button" id="deleteBtn" class="btn" value="삭제하기" onclick="location.href='qnaDelete.html'"/>
+						<input type="button" id="deleteBtn" class="btn" value="삭제하기" onclick="location.href='qnaDelete.html?qna=' + parameter[1]"/>
 					</span>
 					<span id="write_btn_div">
 						<input type="button" id="writeBtn" class="btn" value="글쓰기" onclick="location.href='qnaWrite.html'"/>

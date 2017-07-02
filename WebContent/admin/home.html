@@ -5,6 +5,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="../js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <style>
     body{
@@ -234,7 +235,46 @@
         <div id="contents">
             
             <div id="viewCover">
-            
+                
+                
+                
+                
+                
+                
+                
+              <div id="curve_chart" style="width: 900px; height: 500px"></div>
+                 <script type="text/javascript">
+                      google.charts.load('current', {'packages':['corechart']});
+                      google.charts.setOnLoadCallback(drawChart);
+
+                      function drawChart() {
+                        var data = google.visualization.arrayToDataTable([
+                          ['Year', '방문자 수 '],
+                          ['2월',  540]
+                        ]);
+
+                        var options = {
+                          curveType: 'function',
+                          legend: { position: 'bottom' }
+                        };
+
+                        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                        chart.draw(data, options);
+                      }
+                </script>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 <!-------------------------------------           방문자 관련     ----------->
                 <div class="mainViewInfoCover">
                     <div class="mainViewInfo" id="visit"  onclick="location.href='visitManagement.html'">

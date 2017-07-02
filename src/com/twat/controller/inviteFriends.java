@@ -51,11 +51,29 @@ public class inviteFriends extends HttpServlet {
 	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
 	    ArrayList<MemberVO> memArr = memberDAO.getFriendList(userId);
+	    String groupMem = request.getParameter("groupMem");
+	    
+	    String[] groupArr = groupMem.split(",");
+	    
+	    for(int i = 0; i < memArr.size(); i++){
+	    	
+	    	for(int j = 0; j < groupArr.length; j++){
+	    		if(groupArr[j].equals(memArr.get(i).getMEMBER_ID())){
+	    			memArr.remove(i);	    			
+	    		}
+	    		
+	    	}
+	    	
+	    	
+	    }
+	    
+	    
 	    
 	    for(int i = 0; i < memArr.size(); i++){
 	    	JSONObject jsonObj = new JSONObject();
 	    	jsonObj.put("friendId", memArr.get(i).getMEMBER_ID());
-	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());	    	
+	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());
+	    	jsonObj.put("friendImg", memArr.get(i).getMEMBER_IMG());
 	    	jsonArr.add(jsonObj);
 	    	System.out.println(getServletName());
 	    }

@@ -13,31 +13,24 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.twat.dao.MemberDAO;
-import com.twat.dao.QnaDAO;
+import com.twat.dao.MemberJoinGroupDAO;
 
 /**
- * Servlet implementation class QnaDeleteServlet
+ * Servlet implementation class MyFriendsComeOn
  */
-@WebServlet("/QnaDelete.do")
-public class QnaDeleteServlet extends HttpServlet {
+@WebServlet("/MyFriendsComeOn.do")
+public class MyFriendsComeOn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaDeleteServlet() {
+    public MyFriendsComeOn() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -45,34 +38,39 @@ public class QnaDeleteServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
-	    request.setCharacterEncoding("UTF-8");
+	    request.setCharacterEncoding("UTF-8");		
 	    
-	    JSONArray jsonArr = new JSONArray();
+	    HttpSession session = request.getSession();
+	    String userId = (String) session.getAttribute("loginUserId");	    
+	    
 	    JSONObject jsonObj = new JSONObject();
+	    JSONArray jsonArr = new JSONArray();
 	    PrintWriter out = response.getWriter();
 	    
-		HttpSession session = request.getSession();
-	    String userId = (String)session.getAttribute("loginUserId");
-	    int val = Integer.parseInt(request.getParameter("val"));
-	    int qnaPw = Integer.parseInt(request.getParameter("pw"));
+	    String groupMem = request.getParameter("groupMem");
+	    String groupId = request.getParameter("groupId");
+	    MemberJoinGroupDAO memberJoinGroupDAO = MemberJoinGroupDAO.getInstance();
 	    
 	    
 	    
-	    QnaDAO qnaDao = QnaDAO.getInstance();
-	    int result = qnaDao.deleteQna(val, qnaPw);
-	    System.out.println(val);
-	    System.out.println(qnaPw);
 	    
-	    if(result == 1) {
-	    	jsonObj.put("result", "success");
-	    } else {
-	    	jsonObj.put("result", "fail");
+	    for(int i = 0; i < groupMem.split(",").length; i++){
+	    	
+	    	if(groupMem.split(",")[i].length() != 0){
+	    		
+	    		memberJoinGroupDAO.inviteFriends(groupMem.split(",")[i], Integer.parseInt(groupId));
+	    	}
+	    	
 	    }
 	    
+	    jsonObj.put("1", "1");
 	    jsonArr.add(jsonObj);
-		
 	    out.println(jsonArr);
-	    out.close();
+	    
+	    
+//	    System.out.println(request.getParameter("groupMem"));
+//	    System.out.println(request.getParameter("groupId"));
+	    
 	}
 
 }
