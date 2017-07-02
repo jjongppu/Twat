@@ -34,8 +34,12 @@
 		// 해당 방의 인원수
 		var groupCount = 0;
 		var initDay = new Date();
-		// swiper
+		// swiperBirth
 		var swiper;
+		// swiper Schedule
+		var swiperSche;
+		// swiper Vote
+		var swiperVote;
 		var cal_date = "";
 		// 해당 방의 방장
 		var group_master = "";
@@ -1347,8 +1351,10 @@
 				}
 				// 미확정된 일정표시
 				for (let item of voteSet.keys()) {
-					if (item.split("-")[0] == dateParam) {
-						//						console.log(item);
+//					if (item.split("-")[0] == dateParam)
+					if (parseInt(item.split("-")[0]) == parseInt(dateParam))
+					{
+						console.log(item);
 						$(cell).attr('class', 'trVote' + item.split("-")[2]);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
 					}
@@ -1563,23 +1569,81 @@
 						strB += '</div>'; // div=middle
 						var str2 = data[arrCal].cal_date;
 						//                        console.log("member_choice : " + scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date));
+						
+						str += '<div class="swiper-slide">';
+						
+						
 						str += '<div class="content">';
 						//                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
 						str += '<div class="left">';
 						//                        if (str2.indexOf(',') == -1)
 						// ======================================================================================================
 						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
-							str += data[arrCal].cal_date;
+//							str += data[arrCal].cal_date;
+							if(parseInt(str2.substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
+							{
+								str += "<div class='onlyOne'>" + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+							}
+							else
+							{
+								str += "<div class='onlyOne'>" + str2.substr(0,4) + "년 " + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+							}
 							//                            console.log("확정 : " + data[arrCal].cal_memo);
 							scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
 							str += strA;
 							// 전체 일정(확정)
 							str += '<a class="moreInfo" onclick="getScheduleInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
 							str += strB;
-							$(".schedule .contentBox").append(str);
+							
+							str += '</div>'; // swiper-slide
+							
+//							$(".schedule .contentBox").append(str);
+							$(".schedule .swiper-wrapper").append(str);
 						} else {
 							var res = str2.split(",");
-							str += res[0] + "~" + res[res.length - 1];
+//							var res;
+//							str += res[0] + "~" + res[res.length - 1];
+							if(str2.indexOf(",") == -1)
+							{
+//								res = str2;
+								if(parseInt(str2.substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
+								{
+									str += "<div class='onlyOne'>" + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+								}
+								else
+								{
+									str += "<div class='onlyOne'>" + str2.substr(0,4) + "년 " + parseInt(str2.substr(4,2)) + "월 " + parseInt(str2.substr(6,2)) +"일</div>";
+								}
+							}
+							else
+							{
+								res = str2.split(",");
+								var resMonth1 = parseInt(res[0].substr(4,2));
+								var resMDate1 = parseInt(res[0].substr(6,2));
+								var resMonth2 = parseInt(res[res.length - 1].substr(4,2));
+								var resMDate2 = parseInt(res[res.length - 1].substr(6,2));
+//								str += res[0] + "~" + res[res.length - 1];
+								if(parseInt(res[0].substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
+								{
+									str += "<div style='text-align:left; padding-left:5px;'>" + resMonth1 + "월 " + resMDate1 +"일</div>";
+								}
+								else
+								{
+									str += "<div style='text-align:left; padding-left:5px;'>" + res[0].substr(0,4) + "년 " + resMonth1 + "월 " + resMDate1 +"일</div>";
+								}
+//								str += "<div style='text-align:left; padding-left:5px;'>" + res[0] + "</div>";
+//								str += "<div>~</div>";
+								
+								if(parseInt(res[res.length - 1].substr(0,4)) == parseInt(dateToFormat(initDay).substr(0,4)))
+								{
+									str += "<div style='text-align:right;'>~ " + resMonth2 + "월 " + resMDate2 +"일</div>";
+								}
+								else
+								{
+									str += "<div style='text-align:right;'>~ " + res[res.length - 1].substr(0,4) + "년 " + resMonth2 + "월 " + resMDate2 +"일</div>";
+								}
+//								str += "<div style='text-align:right;'>~ " + res[res.length - 1] + "</div>";
+							}
 							//                            console.log("투표 : " + data[arrCal].cal_memo);
 							for (var i = 0; i < res.length; i++) {
 								voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
@@ -1588,7 +1652,11 @@
 							// 투표(미확정)
 							str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
 							str += strB;
-							$(".vote .contentBox").append(str);
+							
+							str += '</div>'; // swiper-slide
+							
+//							$(".vote .contentBox").append(str);
+							$(".vote .swiper-wrapper").append(str);
 						}
 						//                        // ======================================================================================================
 						//                        if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
@@ -1694,6 +1762,26 @@
 				},
 				complete: function() {
 					//                    getGroupBrith();
+					swiperSche = new Swiper('.schedule .swiper-container', {
+						pagination: '.schedule .swiper-pagination',
+						direction: 'vertical',
+						slidesPerView: 3,
+						paginationClickable: true,
+//						spaceBetween: 30,
+						mousewheelControl: true
+					});
+					
+					swiperVote = new Swiper('.vote .swiper-container', {
+						pagination: '.vote .swiper-pagination',
+						direction: 'vertical',
+						slidesPerView: 3,
+						paginationClickable: true,
+//						spaceBetween: 30,
+						mousewheelControl: true
+					});
+					
+					$('.schedule .contentBox').css('display', 'none');
+					$('.vote .contentBox').css('display', 'none');
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -1917,8 +2005,8 @@
 					//						});
 					//					}
 					$('.event .contentBox').css('display', 'none');
-					swiper = new Swiper('.swiper-container', {
-						pagination: '.swiper-pagination',
+					swiper = new Swiper('.event .swiper-container', {
+						pagination: '.event .swiper-pagination',
 //						slidesPerView: 3,
 						slidesPerView: 'auto',
 						centeredSlides: true,
@@ -2829,7 +2917,7 @@
 
 				},
 				complete: function() {
-					//					location.reload();
+					location.reload();
 				},
 				error: function(req) {
 
@@ -3058,6 +3146,11 @@
 						</div>
 						<div class="contentBox">
 						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper"></div>
+							<!-- Add Pagination -->
+							<div class="swiper-pagination"></div>
+						</div>
 						<!--
                 <div class="content">
                     <div class="left"></div>
@@ -3083,6 +3176,11 @@
 							</div>
 						</div>
 						<div class="contentBox">
+						</div>
+						<div class="swiper-container">
+							<div class="swiper-wrapper"></div>
+							<!-- Add Pagination -->
+							<div class="swiper-pagination"></div>
 						</div>
 						<!--
                 <div class="content">
@@ -3113,20 +3211,7 @@
 						<div class="contentBox">
 						</div>
 						<div class="swiper-container">
-							<div class="swiper-wrapper">
-<!--
-								<div class="swiper-slide">Slide 1</div>
-								<div class="swiper-slide">Slide 2</div>
-								<div class="swiper-slide">Slide 3</div>
-								<div class="swiper-slide">Slide 4</div>
-								<div class="swiper-slide">Slide 5</div>
-								<div class="swiper-slide">Slide 6</div>
-								<div class="swiper-slide">Slide 7</div>
-								<div class="swiper-slide">Slide 8</div>
-								<div class="swiper-slide">Slide 9</div>
-								<div class="swiper-slide">Slide 10</div>
--->
-							</div>
+							<div class="swiper-wrapper"></div>
 							<!-- Add Pagination -->
 							<div class="swiper-pagination"></div>
 						</div>

@@ -334,4 +334,37 @@ public class QnaDAO {
 		
 	}
 	
+	public int deleteQna(String userId, int qnaPw) {
+		PreparedStatement psmt= null;
+		ResultSet rs= null;
+		int result = -1;
+		
+		String deleteSql = "DELETE from qna where MEMBER_ID=? and QNA_PW=?";
+		
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(deleteSql);
+			psmt.setString(1, userId);
+			psmt.setInt(2, qnaPw);
+			
+			result = psmt.executeUpdate();
+			System.out.println(result);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	        try {
+	        	if(rs != null) rs.close();
+		        if(psmt != null) psmt.close();
+		        if(con != null) con.close();
+	        } catch (SQLException e) {
+	        	// TODO Auto-generated catch block
+		        e.printStackTrace();
+	        }
+//	        System.out.println(result);
+	        return result;
+		}    
+		
+	}
+	
 }

@@ -85,20 +85,23 @@ public class MemberJoinGroupDAO
 	// MEMBER_ID�� ���� GROUP_ID�� �޾ƿ��� �Լ�, GROUP_ID�� ArrayList<String>���� ��ȯ
 	public ArrayList<String> getGroupId(String MEMBER_ID)
 	{
+		PreparedStatement psmt5 = null;
+		ResultSet rs5 = null;
+		
 		ArrayList<String> arrList = new ArrayList<String>();
 		String sql = "select GROUP_ID from MEMBER_JOIN_GROUP where MEMBER_ID=?";
 		
 		try
 		{
 			con = getConnection();
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, MEMBER_ID);
+			psmt5 = con.prepareStatement(sql);
+			psmt5.setString(1, MEMBER_ID);
 			
-			rs = psmt.executeQuery();
+			rs5 = psmt5.executeQuery();
 			
-			while(rs.next())
+			while(rs5.next())
 			{
-				arrList.add(rs.getString(1));
+				arrList.add(rs5.getString(1));
 			}
 		}
 		catch (Exception e)
@@ -109,8 +112,8 @@ public class MemberJoinGroupDAO
 		{
 			try
 			{
-				if(rs != null)rs.close();
-				if(psmt != null)psmt.close();
+				if(rs5 != null)rs5.close();
+				if(psmt5 != null)psmt5.close();
 				if(con != null)con.close();
 			}
 			catch (SQLException e)
@@ -202,21 +205,21 @@ public class MemberJoinGroupDAO
 	public ArrayList<MemberJoinGroupVO> getViewCountCheck(String MEMBER_ID){
 		ArrayList<MemberJoinGroupVO> arrList = new ArrayList<MemberJoinGroupVO>();
 		String sql = "select * from MEMBER_JOIN_GROUP where MEMBER_ID=?";
-		PreparedStatement psmt1 = null;
-		ResultSet rs1 = null;
+		PreparedStatement psmt10 = null;
+		ResultSet rs10 = null;
 		try{
 			con = getConnection();
-			psmt1 = con.prepareStatement(sql);
-			psmt1.setString(1, MEMBER_ID);
+			psmt10 = con.prepareStatement(sql);
+			psmt10.setString(1, MEMBER_ID);
 			
-			rs1 = psmt1.executeQuery();
+			rs10 = psmt10.executeQuery();
 			
-			while(rs1.next()){
+			while(rs10.next()){
 				MemberJoinGroupVO mj = new MemberJoinGroupVO();
-				mj.setMEMBER_ID(rs1.getString("MEMBER_ID"));
-				mj.setGROUP_ID(rs1.getString("GROUP_ID"));
-				mj.setCALENDAR_READ_VIEW(rs1.getInt("CALENDAR_READ_VIEW"));
-				mj.setCALENDAR_VIEW(rs1.getInt("CALENDAR_VIEW"));
+				mj.setMEMBER_ID(rs10.getString("MEMBER_ID"));
+				mj.setGROUP_ID(rs10.getString("GROUP_ID"));
+				mj.setCALENDAR_READ_VIEW(rs10.getInt("CALENDAR_READ_VIEW"));
+				mj.setCALENDAR_VIEW(rs10.getInt("CALENDAR_VIEW"));
 				arrList.add(mj);
 			}
 		}
@@ -225,8 +228,8 @@ public class MemberJoinGroupDAO
 		}
 		finally{
 			try{
-				if(rs1 != null)rs1.close();
-				if(psmt1 != null)psmt1.close();
+				if(rs10 != null)rs10.close();
+				if(psmt10 != null)psmt10.close();
 				if(con != null)con.close();
 			}
 			catch (SQLException e){
