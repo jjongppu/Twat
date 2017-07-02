@@ -212,6 +212,7 @@
             height: 100px;
         }
         .addfriendBtn{
+            display: block;
             width: 100px;
             height: 30px;
             line-height: 30px;
@@ -816,8 +817,9 @@
                 url: "ResponsingFriends.do",               
                 dataType:"json",
                 success: function (data){ 
+                    console.log(data);
                     var out = "";
-                    if(data[0].result != 'fail'){
+                    if(data[0].userId != 'fail'){
                         for(var h = 0; h < data.length; h++){                       
 
     //                        document.getElementById("responseExist").innerHTML += "<img src='" + data[h].userImg + "'class= 'responsingFImg'/>"
@@ -1000,10 +1002,13 @@
         
         function changeTab(id){
             $('#phoneSearchList').html("");
+            $('#idSearchList').html("");
+            
             var ids = $(id).attr('id');
             if(ids == 'phoneTab'){
                 $('#phoneSearch').css('display','block');
                 $('#idSearch').css('display','none');
+                
                 
                 $('#phoneTab').css('background-color','gray');
                 $('#idTab').css('background-color','white');
@@ -1165,7 +1170,8 @@
 
 
                     alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : friendPhoneSearch.do");
-                }    , beforeSend: function () {
+                }    
+                , beforeSend: function () {
                     var width = 0;
                     var height = 0;
                     var left = 0;
