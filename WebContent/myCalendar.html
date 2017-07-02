@@ -8,12 +8,15 @@
     <meta name="keywords" content="">
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendar.css">-->
 <!--        <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver2.css"> -->
-        <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">
+<!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">-->
+    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver4.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!--    <link rel="stylesheet" type="text/javascript" href="js/myCalendar.js">-->
 <!--    <script type="text/javascript" src="js/myCalendar.js"></script>-->
     <!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/swiper.jquery.min.js"></script>
     <script src="js/nav.js"></script>
 </head>
 
@@ -1405,6 +1408,37 @@
                   document.getElementById("myCalTime").innerHTML+="<div class='schedules scheList'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
               });
             },
+            complete: function() {
+                    swiperSche = new Swiper('.schedule .swiper-container', {
+                        pagination: '.schedule .swiper-pagination',
+                        direction: 'vertical',
+                        slidesPerView: 3,
+                        paginationClickable: true,
+                        mousewheelControl: true
+                    });
+
+                    swiperVote = new Swiper('.vote .swiper-container', {
+                        pagination: '.vote .swiper-pagination',
+                        direction: 'vertical',
+                        slidesPerView: 3,
+                        paginationClickable: true,
+                        mousewheelControl: true
+                    });
+
+                    $('.schedule .contentBox').css('display', 'none');
+                    $('.vote .contentBox').css('display', 'none');
+                    console.log(scheduleSet);
+                    console.log(voteSet);
+                    if (scheduleSet.size < 1) {
+                        var noStr = "<div class='swiper-slide'>잡혀있는 일정이 없습니다</div>";
+                        $(".schedule .swiper-wrapper").html(noStr);
+                    }
+
+                    if (voteSet.size < 1) {
+                        var noStr = "<div class='swiper-slide'>등록된 투표가 없습니다</div>"
+                        $(".vote .swiper-wrapper").html(noStr);
+                    }
+                },
             error:function(req){ 
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }, beforeSend: function () {
