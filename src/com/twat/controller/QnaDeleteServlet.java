@@ -50,14 +50,17 @@ public class QnaDeleteServlet extends HttpServlet {
 	    JSONArray jsonArr = new JSONArray();
 	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
-		
+	    
 		HttpSession session = request.getSession();
 	    String userId = (String)session.getAttribute("loginUserId");
-	    int qnaPw = Integer.parseInt(request.getParameter("qnaPw"));
+	    int val = Integer.parseInt(request.getParameter("val"));
+	    int qnaPw = Integer.parseInt(request.getParameter("pw"));
+	    
+	    
 	    
 	    QnaDAO qnaDao = QnaDAO.getInstance();
-	    int result = qnaDao.deleteQna(userId, qnaPw);
-	    System.out.println(userId);
+	    int result = qnaDao.deleteQna(val, qnaPw);
+	    System.out.println(val);
 	    System.out.println(qnaPw);
 	    
 	    if(result == 1) {
