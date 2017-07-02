@@ -62,6 +62,31 @@
 		}
 		
 	</style>
+	
+	<script>
+		function searchEnter() {
+        
+            $.ajax ({
+            type : 'post',
+            url : 'ChangePW.do',
+            data : $('#changePW').serialize(),
+
+            dataType : "json",
+            success : function(data) {
+//                console.log(data);
+                var result = data[0].result;
+                
+//                console.log(result);
+//                alert(result);
+                
+            },
+            error: function(req) {
+                alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "SearchPW.do");
+            }
+        });
+      
+    }
+	</script>
 </head>
 <body>
 	<div id="newWrap">
@@ -90,29 +115,31 @@
 
 		<!-- ---------------------네브바 ------------------------->
 		
-		<div class="container">
-			<div id="contentHeader">
-				<h4>비밀번호 변경</h4>
-			</div>
+		<form id="changePW" action="ChangePW.do" method="post">
+			<div class="container">
+				<div id="contentHeader">
+					<h4>비밀번호 변경</h4>
+				</div>
 
-			<div id="contentBody">
-				<div id="pw1" class="textBox">
-					<span>변경할 비밀번호</span>
-					<input type="text" name="" />
+				<div id="contentBody">
+					<div id="pw1" class="textBox">
+						<span>변경할 비밀번호</span>
+						<input type="text" name="" />
+					</div>
+					<div id="pw2" class="textBox">
+						<span>변경할 새 비밀번호</span>
+						<input type="text" name="" />
+					</div>
 				</div>
-				<div id="pw2" class="textBox">
-					<span>변경할 새 비밀번호</span>
-					<input type="text" name="" />
-				</div>
-			</div>
 
-			<div id="contentSubmit">
-				<div>
-					<input type="button" value="확인" id="submitBtn" class="btn" onclick="searchEnter()"/>
-					<input type="button" value="취소" id="cancelBtn" class="btn" onclick="" />
+				<div id="contentSubmit">
+					<div>
+						<input type="button" value="확인" id="submitBtn" class="btn" onclick="searchEnter()"/>
+						<input type="button" value="취소" id="cancelBtn" class="btn" onclick="" />
+					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </body>
 </html>
