@@ -98,14 +98,22 @@ public class MyCalendarDAO{
 	public ArrayList<MyCalendarVO> getInfo(String MEMBER_ID){
 		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
 //		System.out.println(MEMBER_ID);
-		int j = i+=10; // j를 처음 불러올때 -10인 i에 +10 해준다.
-		if(j > myCalList.size()){   // 처음엔 0인 J가 리스트 사이즈보다 작기 때문에 그냥 넘어감.
-			j=10;			// 그다음엔 j가 10이되고 리스트는 5가 되기 때문에 J를 10으로 초기화.
+		int j = i+=10; // j를 처음 불러올때 -10인 i에 +10 해준다 처음 j=0.
+		if(myCalList.size()==0){
+			j += 0;
 		}
+		if(myCalList.size() == 10){
+			j += 10;
+		} else if(myCalList.size()<10){
+			j += 0;
+		}
+//		if(j>myCalList.size() && myCalList.size() == 0){   
+//			j+=0;
+//			if(myCalList.size()<10){
+//				j+=0;
+//			}
+//		} 
 		
-//		while(j){
-//			
-//		}
 		PreparedStatement pstmt3 = null;
 		ResultSet rs3 = null;
 		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ? LIMIT "+j+", 10";
