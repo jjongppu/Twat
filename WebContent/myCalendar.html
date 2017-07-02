@@ -1153,8 +1153,8 @@
         $("#monthSelect").val(today.getMonth()+1).attr("selected","selected");
         update();
         console.log(today);
-        
     });
+    
     function buildCalendar(dateArr, titleArr, memChoiceArr) {
         var nMonth = new Date(today.getFullYear(), today.getMonth(), 1); // 이번 달의 첫째 날
         var lastDate = new Date(today.getFullYear(), today.getMonth() + 1, 0); // 이번 달의 마지막 날
@@ -1328,7 +1328,7 @@
 //    }
 
 
-
+/* ==== 친구들 생일 뽑아주는 함수 ===== */
     $(document).ready(function() {
         document.getElementById("fName").innerHTML="";
         document.getElementById("fBirth").innerHTML="";
@@ -1379,39 +1379,33 @@
         });
     });
 
+    
+    // ===== 개인일정 뽑아주는 함수! ========
     $(document).ready(function(){
        document.getElementById("myCalDate").innerHTML=""; 
        document.getElementById("myCalContents").innerHTML=""; 
-//       document.getElementById("myWriteTime").innerHTML=""; 
        document.getElementById("myCalTime").innerHTML=""; 
         $.ajax({
              type:'post'
             ,url:'myCal.do'
             ,dataType : "json"
-//            ,dataType : "text"
             ,success : function(data){
                 console.log(data);
               $.each(data, function(index, item){
-//                  console.log(item.myCalIndex);
-                  console.log(item.myCalContents);
-//                  console.log(item.myCalTime);
                   console.log(item.myCalIndex);
-//                  console.log(item.myWriteTime);
-//                  console.log(item.myCalDate.split(","));
+                  console.log(item.myCalContents);
+                  console.log(item.myCalTime);
                   var calDate = item.myCalDate.split(",");
-//                  console.log(calDate.length);
-                  
                   if(calDate.length != 2){
-                     document.getElementById("myCalDate").innerHTML+="<div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
+                     document.getElementById("myCalDate").innerHTML+="<div class='schedules scheList'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
                   } else {
-                    document.getElementById("myCalDate").innerHTML+="<div class='schedules'>"+calDate[0]+"</div></br>";
+                    document.getElementById("myCalDate").innerHTML+="<div class='schedules scheList'>"+calDate[0]+"</div></br>";
                   }
-                  document.getElementById("myCalContents").innerHTML+="<div class='schedules'>"+item.myCalContents+"</div></br>";
-                  document.getElementById("myCalTime").innerHTML+="<div class='schedules'>"+item.myCalTime+" 시 예약<button name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
+                  document.getElementById("myCalContents").innerHTML+="<div class='schedules scheList'>"+item.myCalContents+"</div></br>";
+                  document.getElementById("myCalTime").innerHTML+="<div class='schedules scheList'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
               });
             },
-            error:function(req){
-//             alert("!");   
+            error:function(req){ 
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }, beforeSend: function () {
                     var width = 0;
@@ -1443,12 +1437,33 @@
         });
     });
     
-    function moreShow(){
-        alert("!");
-    }
+    
+// 더보기 버튼 시도!! 
+//    $(window).on('load', function () {
+//        load('#privSchedule', '4');
+//        $(".more").on("click", function () {
+//            load('#privSchedule', '4');
+//        })
+//    });
+//    function load(id, cnt, btn) {
+//        var list = id + " .scheList:not(.active)";
+//        var length = $(list).length;
+//        var total_cnt;
+//        if (cnt < length) {
+//            total_cnt = cnt;
+//        } else {
+//            total_cnt = length;
+//            $(".more").hide();
+//        }
+//        $(list + ":lt(" + total_cnt + ")").addClass("active");
+//    }
+// 더보기 버튼 실패.......    
     
     
     
+    
+    
+    /* ====== 개인일정 삭제해주는 함수 ======= */
     function scheDelete(del){
         console.log(del);
         var deleteId = $(del).attr('id');
@@ -1499,6 +1514,8 @@
         location.reload();
     }
     
+    
+    /* ====== 단체일정 뽑아주는 함수 ====== */
     $(document).ready(function(){
        document.getElementById("calDate").innerHTML=""; 
        document.getElementById("calMemo").innerHTML=""; 
@@ -1507,7 +1524,6 @@
              type:'post'
             ,url:'myGroupSchedule.do'
             ,dataType : "json"
-//            ,dataType : "text"
             ,success : function(data){
                 console.log(data);
               $.each(data, function(index, item){
@@ -1524,11 +1540,9 @@
                   }
                   document.getElementById("calMemo").innerHTML+="<div class='schedules'>"+item.calMemo+"</div></br>";
                   document.getElementById("calWriter").innerHTML+="<div class='schedules'>"+item.calWriter+"</div></br>";
-//                  document.getElementById("myWriteTime").innerHTML+="<div>"+item.myWriteTime+"</div></br>";
               });
             },
             error:function(req){
-//             alert("!");   
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }, beforeSend: function () {
                     var width = 0;
@@ -1655,7 +1669,6 @@
     }
 
     
-    
     //=============   모달 사라짐 ==============
     function closeModal() {
         console.log("!");
@@ -1726,7 +1739,7 @@
                             <div class="program txt">개인 일정</div>
                             <div class="decoLine"></div>
                         </div>
-                        <div class="schedule">
+                        <div id ="privSchedule" class="schedule privSchedule">
                             <div class="schCont scheDate txt" id="myCalDate"></div>
                             <div class="schCont scheText txt" id="myCalContents"></div>
                             <div class="schCont scheTime txt" id="myCalTime"></div>

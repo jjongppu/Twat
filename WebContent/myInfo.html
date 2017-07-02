@@ -37,14 +37,14 @@
             display: block
         }
         .container{
-            margin: 87px auto 0 auto;
+            margin: 0 auto 0 auto;
             width: 800px;
             height: 600px;
         }
         .userIn{
             width: 780px;
             height: 500px;
-            margin: auto;
+            margin: 0 auto 0 auto;
             margin-top: 80px; 
         }
         .userInfo{
@@ -197,53 +197,7 @@
             margin-left: 40px;
             padding-left: 30px;
         }
-        .btnStyle{
-            border : solid 0px #e6e6e6;
-            border-radius : 3px;
-            -moz-border-radius : 3px;
-            
-            color : #696869;
-            padding : 1px 17px;
-            background : #ffffff;
-            background : -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(49%,#f1f1f1), color-stop(51%,#e1e1e1), color-stop(100%,#f6f6f6));
-            background : -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            background : -webkit-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            background : -o-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            background : -ms-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            background : linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 );
-}
-        .btnInfo{
-            border : solid 0px #e6e6e6;
-            border-radius : 3px;
-            -moz-border-radius : 3px;
-            color : #696869;
-            padding : 1px 17px;
-            background : #ffffff;
-            background : -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(49%,#f1f1f1), color-stop(51%,#e1e1e1), color-stop(100%,#f6f6f6));
-            background : -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            background : -webkit-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            background : -o-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            background : -ms-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            background : linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-            filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 );
-        }
-        .btnckck{
-            border : solid 0px #e6e6e6;
-           border-radius : 3px;
-           -moz-border-radius : 3px;
-           
-           color : #696869;
-           padding : 1px 17px;
-           background : #ffffff;
-           background : -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(49%,#f1f1f1), color-stop(51%,#e1e1e1), color-stop(100%,#f6f6f6));
-           background : -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-           background : -webkit-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-           background : -o-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-           background : -ms-linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-           background : linear-gradient(top, #ffffff 0%, #f1f1f1 49%, #e1e1e1 51%, #f6f6f6 100%);
-           filter : progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 );
-        }
+       
     </style>
     <script>
         ////////////////정보가져오기///////////////////////////////////////////////////
@@ -376,44 +330,7 @@
             location.reload();
             
         }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//        function checkPassword2(){
-//            var pw1 = $('#chPwd').val();
-//            var pw2 = $('#chkPwd').val();
-//            var pwVal = $('#chPwd').val().length;
-//            var retVal = false;
-//            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
-//            if(pw2 != pw1){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
-//            }
-//        }
-//
-//            function checkPassword(){
-//            var pw1 = $('#chPwd').val();
-//            var pw2 = $('#chkPwd').val();
-//            var pwVal = $('#chPwd').val().length;
-//            var retVal = false;
-//            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
-//        if(pw1 != null && pw2 != null) {
-//                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호를 입력해주세요.</p>");
-//            if(pwVal < 8 || pwVal > 16) {
-//                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호는 8자 이상, 16자 이하여야 합니다.</p>");
-//            } else if(pw1 != pw2 && pw2 != pw1) {
-//                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
-//            } else if(!pwRegex.test(pwVal) && !pwRegex.test(pw2)){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호는 영문, 숫자로 구성되어야 합니다.</p>");
-//            } else if(pw1 == pw2){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
-//            } else if(pw1 != pw2){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호가 일치하지 않습니다.</p>");
-//            } else if(pw1 == ""){
-//                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호를 입력해주세요.</p>");
-//            }
-//            
-//        }
-//    }
-        
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function autoHypen() {
@@ -439,17 +356,7 @@
         }else{
             
         }
-//        }else if(!regExp){
-//            alert("핸드폰번호 형식에 맞지 않습니다.");
-        }
-//        else if(!regExp.test(uPhone)){
-//            alert("핸드폰번호 형식에 맞지 않습니다.");
-//        }else{
-            
-//        }
-          
-            
-//    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         
           function checkPassword2(){
@@ -538,9 +445,8 @@
                 var phonephone = $('#userPhone').val();
                 var phonelen = $('#userPhone').val().length;
                 console.log(phonelen);
-                var regExp = /^01([0|1|6|7|8|9]?)-?([0-9]{4})-?([0-9]{4})$/g;
+                var regExp = /^01([0|1|6|7|8|9]{3})-?([0-9]{4})-?([0-9]{4})$/g;
                 var special = /^[a-z]|[\[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
-                v = $('#userPhone').val();
                 if(phonelen >= 16){
                     alert("핸드폰번호 형식에 맞게 입력해주세요\n ex) 010-XXXX-XXXX");
                 }

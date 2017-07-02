@@ -5,6 +5,7 @@ $.ajax({
     dataType: "json",
     success: function(data) {
         if(data[0].result == "s"){
+            /*세션이 있으면 왼쪽 개인정보 띄워주는것들 불러옴*/
             $.ajax({
                 type: "post",
                 url: "PersonalServlet.do",
