@@ -1,11 +1,19 @@
 package com.twat.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import com.twat.dao.MemberDAO;
 
 /**
  * Servlet implementation class ChangePWServlet
@@ -37,6 +45,33 @@ public class ChangePWServlet extends HttpServlet {
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
+	    
+	    JSONArray jsonArr = new JSONArray();
+	    JSONObject jsonObj = new JSONObject();
+	    PrintWriter out = response.getWriter();
+		
+		HttpSession session = request.getSession();
+		String userId = request.getParameter("userId");
+	    String beforePw = request.getParameter("beforePw");
+		String afterPw = request.getParameter("afterPw");
+		
+		
+		
+	    MemberDAO mdo = MemberDAO.getInstance();
+	    
+	    int result = mdo.changePw(userId, beforePw, afterPw);
+	    
+	    
+	    System.out.println(beforePw);
+	    System.out.println(afterPw);
+	    
+	    
+	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
+	    jsonArr.add(jsonObj);
+	    
+	    out.println(jsonArr);
+	    out.close();
+		
 	}
 
 }
