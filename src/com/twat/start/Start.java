@@ -21,19 +21,19 @@ public class Start implements ServletContextListener {
 		 ServletContext application = event.getServletContext();
 
 		application.setAttribute("groupCount", count);
-		AdminDAO admDao = AdminDAO.getInstance();
-		int countVisit = admDao.setGetVisit(0,"start");
+//		AdminDAO admDao = AdminDAO.getInstance();
+//		int countVisit = admDao.setGetVisit(0,"start");
 		
-		application.setAttribute("siteVisit", count);
+//		application.setAttribute("siteVisit", count);
 		
 	} 
 	
 	public void contextDestroyed(ServletContextEvent event) { 
-		ServletContext application = event.getServletContext();
-		AdminDAO admDao = AdminDAO.getInstance();
-		int visit = (int)application.getAttribute("siteVisit");
+//		ServletContext application = event.getServletContext();
+//		AdminDAO admDao = AdminDAO.getInstance();
+//		int visit = (int)application.getAttribute("siteVisit");
 		
-		admDao.setGetVisit(visit,"end");
+//		admDao.setGetVisit(visit,"end");
 		
 		
 		

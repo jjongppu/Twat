@@ -154,7 +154,7 @@
 				},
 				dataType : "json",
 				success : function(data) {
-	//				console.log(data);
+					
 					var result = data[0].result;
 
 	//                theForm = document.frm1
@@ -162,8 +162,33 @@
 
 					// 로그인 / 탈퇴중 / 탈퇴 / 실패 
 					if(result == 'success') {
-						location.href='home.html';
-					} else if(result == 'outIng'){
+ 
+                        
+                        
+                        var cookies = getCookie($('#idBox').val());
+                        var turn = 'getCookie';
+                        if(cookies != "visitUser"){
+                            turn = "noCookie";
+                        }
+                        console.log(cookies);
+                            var dates = setCookieAt00();
+                             $.ajax({
+                                type:"post",
+                                url: "AdminSetVisitToday.do",
+                                data: {turn:turn, dates: dates,userid : $("#idBox").val()},
+                                success: function(data){
+                                var result = data[0].result;
+                                    if(result == "success"){
+                                        location.href='home.html';
+                                    }else{
+                                        console.log("뭔가실패");
+                                    }
+
+                                }
+                            });
+
+						
+                    } else if(result == 'outIng'){
                         $('#noBtn').attr('onclick','hideModal()');
                         $('#yesBtn').attr('onclick','returnAccount()');
 						$('#modal').animate({
@@ -234,7 +259,29 @@
         
     }
          
+
     
+        function setCookieAt00() {   
+            var todayDate = new Date();   
+            todayDate = new Date(parseInt(todayDate.getTime() / 86400000) * 86400000 + 54000000);  
+
+            return todayDate.getTime();
+ 
+        }  
+    
+        function getCookie(cName) {
+            cName = cName + '=';
+            var cookieData = document.cookie;
+            var start = cookieData.indexOf(cName);
+            var cValue = '';
+            if(start != -1){
+                start += cName.length;
+                var end = cookieData.indexOf(';', start);
+                if(end == -1)end = cookieData.length;
+                cValue = cookieData.substring(start, end);
+            }
+            return unescape(cValue);
+        }  
     
 </script>
 
