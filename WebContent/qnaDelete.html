@@ -30,7 +30,12 @@
 						console.log(data);
 						var result = data[0].result;
 
-
+						if(result == "success") {
+							alert("삭제가 완료 되었습니다.");
+							location.href="qnaList.html";
+						} else {
+							alert("다시 한 번 확인해주세요.");
+						}
 
 					},
 					error: function(req) {
@@ -62,7 +67,7 @@
 		</div>
 		<div>
 			<input type="button" value="확인" onclick="deleteQna()"/>
-			<input type="button" value="목록보기" onclick="location.href='qnaDetail.html'" />
+			<input type="button" value="목록보기" onclick="location.href='qnaList.html'" />
 			<input type="button" value="뒤로가기" onclick="history.back(-1);"/>
 		</div>
 		
