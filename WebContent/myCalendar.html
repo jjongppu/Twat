@@ -11,16 +11,16 @@
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">-->
     <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver4.css">
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 <!--    <link rel="stylesheet" type="text/javascript" href="js/myCalendar.js">-->
 <!--    <script type="text/javascript" src="js/myCalendar.js"></script>-->
     <!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
+    
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/nav.js"></script>
+<!--    <script src="js/swiper.jquery.min.js"></script>-->
     <script src="js/swiper.jquery.min.js"></script>
-</head>
-
-<script>
+    <script language="javascript" type="text/javascript">
     //  gfnToday() : 해당 PC의 오늘 날짜를 가져온다. String.
     //  gfnTodayTime() : 해당 PC의 오늘 날짜+시간를 가져온다. String.
     //  gfnCurrentTime() : 해당 PC의 현재시간를 가져온다. String.
@@ -45,14 +45,16 @@
     //      sDate  8자리 형식으로된 날짜. yyyyMMdd의 형식으로 입력됩니다.
     //  요일에 따른 숫자,   0 = 일요일 ~ 6 = 토요일 로 대응됩니다., 오류가 발생할 경우 -1이 Return됩니다.
 
+    // swiper
+    var swip;
 
-    var oScript = document.createElement("script");
-    oScript.type = "text/javascript";
-    oScript.charset = "utf-8";
-    oScript.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js";
-    //oScript.src = "WebContent/js/jquery-3.2.1.min.js";
-    //oScript.src = "/js/jquery-3.2.1.min.js";
-    document.getElementsByTagName("head")[0].appendChild(oScript);
+//    var oScript = document.createElement("script");
+//    oScript.type = "text/javascript";
+//    oScript.charset = "utf-8";
+//    oScript.src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js";
+//    //oScript.src = "WebContent/js/jquery-3.2.1.min.js";
+//    //oScript.src = "/js/jquery-3.2.1.min.js";
+//    document.getElementsByTagName("head")[0].appendChild(oScript);
 
     var scheSet = new Set(); // 일정 잡기 저장용
     var birthSet = new Set(); // 생일자 저장용
@@ -1384,11 +1386,23 @@
 
     
 // ================ 개인일정 뽑아주는 함수! =====================
+    
     $(document).ready(function(){
-        var swip;
+//        var swip;
+//        swip = new Swiper('.leftUp .swiper-container', {
+//                        pagination: '.leftUp .swiper-pagination',
+//                        direction: 'vertical',
+////                        centeredSlides: true,
+//                        slidesPerView: 5,
+//                        paginationClickable: true,
+//                        spaceBetween: 3,
+//                        mousewheelControl: true
+//                    });
 //       document.getElementById("myCalDate").innerHTML=""; 
 //       document.getElementById("myCalContents").innerHTML=""; 
 //       document.getElementById("myCalTime").innerHTML=""; document.getElementById("privSchedule").innerHTML=+""; 
+        
+        
         $.ajax({
              type:'post'
             ,url:'myCal.do'
@@ -1421,28 +1435,39 @@
 //                  document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
                   // <div class="swiper-slide">Slide 1</div>
                   
-//                  if(calDate.length != 2){
-//                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
-//                  } else {
-//                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"</div>";
-//                  }
-//                  str+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
-//                  str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
+                  if(calDate.length != 2){
+                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
+                  } else {
+                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"</div>";
+                  }
+                  str+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
+                  str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
                   
                   
 
               });
-                str+="<div class='swiper-slide'>Slide 1</div>";
-                  str+="<div class='swiper-slide'>Slide 51</div>";
-                  str+="<div class='swiper-slide'>Slide4 1</div>";
-                  str+="<div class='swiper-slide'>Slide3 1</div>";
-                  str+="<div class='swiper-slide'>Slide2 1</div>";
-                  str+="<div class='swiper-slide'>Slide 21</div>";
-                  str+="<div class='swiper-slide'>Slide 61</div>";
-                  str+="<div class='swiper-slide'>Slide 21</div>";
-                  str+="<div class='swiper-slide'>Slide3 1</div>";
-                  str+="<div class='swiper-slide'>Slide 1</div>";
                 $(".leftUp .swiper-wrapper").append(str);
+                
+                
+                var swiper = new Swiper('.leftUp .swiper-container', {
+                    pagination: '.leftUp .swiper-pagination',
+                    direction: 'vertical',
+                    slidesPerView: 5,
+                    paginationClickable: true,
+//                    centeredSlides: true,
+                    spaceBetween: 5,
+                    mousewheelControl: true
+                });
+                
+//                swiperSche = new Swiper('.schedule .swiper-container', {
+//						pagination: '.schedule .swiper-pagination',
+//						direction: 'vertical',
+//						slidesPerView: 3,
+//						paginationClickable: true,
+//						centeredSlides: true,
+//						//						spaceBetween: 30,
+//						mousewheelControl: true
+//					});
             },
             
             error:function(req){ 
@@ -1471,16 +1496,17 @@
                     }
              }
              , complete: function () {
-                           $("#div_ajax_load_image").hide();
-                swip = new Swiper('.leftUp .swiper-container', {
-                        pagination: '.leftUp .swiper-pagination',
-                        direction: 'vertical',
-                            centeredSlides: true,
-                        slidesPerView: 5,
-                        paginationClickable: true,
-                        spaceBetween: 3,
-                        mousewheelControl: true
-                    });
+                $("#div_ajax_load_image").hide();
+//                swip = new Swiper('.leftUp .swiper-container', {
+//                        pagination: '.leftUp .swiper-pagination',
+//                        direction: 'vertical',
+////                        centeredSlides: true,
+////                        slidesPerView: 5,
+//                        slidesPerView: 3,
+//                        paginationClickable: true,
+////                        spaceBetween: 3,
+//                        mousewheelControl: true
+//                    });
              }
         });
     });
@@ -1666,9 +1692,7 @@
     
 /* ================ 단체일정 뽑아주는 함수 ================== */
     $(document).ready(function(){
-       document.getElementById("calDate").innerHTML=""; 
-       document.getElementById("calMemo").innerHTML=""; 
-       document.getElementById("calWriter").innerHTML=""; 
+
         $.ajax({
              type:'post'
             ,url:'myGroupSchedule.do'
@@ -1683,13 +1707,26 @@
                   var calDate = item.calDate.split(",");
                 
                   if(calDate.length !=2){
-                    document.getElementById("calDate").innerHTML+="<div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
+                    str+="<div class='swiper-slide'><div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
                   } else {
-                    document.getElementById("calDate").innerHTML+="<div class='schedules'>"+calDate[0]+"</div></br>";
+                    str+="<div class='schedules'>"+calDate[0]+"</div></br>";
                   }
-                  document.getElementById("calMemo").innerHTML+="<div class='schedules'>"+item.calMemo+"</div></br>";
-                  document.getElementById("calWriter").innerHTML+="<div class='schedules'>"+item.calWriter+"</div></br>";
+                  str+="<div class='schedules'>"+item.calMemo+"</div></br>";
+                  str+="<div class='schedules'>"+item.calWriter+"</div></div></br>";
               });
+                  $(".leftUp .swiper-wrapper").append(str);
+                
+                
+                var swiper = new Swiper('.schedule .swiper-container', {
+                    pagination: '.schedule .swiper-pagination',
+                    direction: 'vertical',
+                    slidesPerView: 5,
+                    paginationClickable: true,
+//                    centeredSlides: true,
+                    spaceBetween: 5,
+                    mousewheelControl: true
+                });
+                
             },
             error:function(req){
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
@@ -1842,6 +1879,9 @@
     }
 
 </script>
+</head>
+
+
 
 <body>
     <div id="newWrap">
@@ -1899,8 +1939,8 @@
 <!--                            </div>-->
 <!--                        </div>-->
                         <div class="swiper-container">
-							<div class="swiper-wrapper"></div>
-<!--                                <div id ="privSchedule" class="schedule  privSchedule"></div>-->
+							<div class="swiper-wrapper">
+							</div>
 							<div class="swiper-pagination"></div>
 						</div>
                         <!-- ===== 더보기 버튼 ===== -->
@@ -1914,13 +1954,20 @@
                             <div class="decoLine"></div>
                         </div>
                         <div class="schedule">
+<!--
                             <div class="schCont scheDate txt" id="calDate"></div>
                             <div class="schCont scheText txt" id="calMemo"></div>
                             <div class="schCont dayTime" id="calWriter">
+-->
 <!--
                                 <div class="schCont scheTime txt">오전 08시 00분</div>
                                 <div class="scheDetail txt">자세히 보기gogo</div>
 -->
+<!--                            </div>-->
+                       
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper"></div>
+                                <div class="swiper-pagination"></div>
                             </div>
                         </div>
                     </div>
@@ -2042,6 +2089,19 @@
 
         </div>
     </div>
+    <script>
+//        $(document).ready(function(){
+//            var swiper = new Swiper('.leftUp .swiper-container', {
+//                        pagination: '.leftUp .swiper-pagination',
+//                        direction: 'vertical',
+////                        centeredSlides: true,
+//                        slidesPerView: 5,
+//                        paginationClickable: true,
+//                        spaceBetween: 3,
+//                        mousewheelControl: true
+//                    });
+//        });
+    </script>
 </body>
 
 </html>
