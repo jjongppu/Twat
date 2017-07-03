@@ -49,18 +49,18 @@ public class AdminSetVisitToday extends HttpServlet {
 		long nowtimes = System.currentTimeMillis();
 
 
-		if(userturn.equals("getCookie")){
-			Cookie chokoCook = new Cookie("visitUser",userid);  // cookie name : id ,  value : kjg
+		if(!userturn.equals("getCookie")){
+			Cookie chokoCook = new Cookie(userid,"visitUser");  // cookie name : id ,  value : kjg
 			chokoCook.setMaxAge((int) (dates-nowtimes));
 			response.addCookie(chokoCook);
 		}
 	
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar c1 = Calendar.getInstance();
 
         String strToday = sdf.format(c1.getTime());
-
+        System.out.println(userturn);
 	  
 	    AdminDAO ado = AdminDAO.getInstance();
 		boolean result = ado.visitups(userturn,userid,strToday);

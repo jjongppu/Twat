@@ -89,7 +89,7 @@ public class AdminDAO {
 			selectGetInfo +="(SELECT COUNT(*) FROM member) as memC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM qna) as qnaC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM calendar where CAL_DEPTH=0) as calC,";
-			selectGetInfo +="(SELECT VISIT_COUNT FROM visit where VISIT_KIND='TOTAL') as visC,";
+			selectGetInfo +="(SELECT SUM(VISIT_COUNT) FROM VISIT) as visC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM calgather) as calgC";	
 			
 			try {
@@ -531,24 +531,23 @@ public class AdminDAO {
 							boolean result = false;
 							String updateVisit = "UPDATE VISIT SET VISIT_COUNT=VISIT_COUNT+1 WHERE VISIT_KIND=?";
 							//개인 방문 기록
-							String updateVisituser = "INSET INTO VISIT_MEMBER VALUES(?,CURRENT_TIMESTAMP)";
+							String updateVisituser = "INSERT INTO VISIT_MEMBER VALUES(?,CURRENT_TIMESTAMP)";
 							// 쿠키!
-							String selectVisit = "SELECT * FROM VISIT ORDER BY VISIT_KIND DESC LIMIT 1;";
-							String insertVisitToday = "INSET INTO VISIT VALUES(?,1)";
+							String selectVisit = "SELECT * FROM VISIT ORDER BY VISIT_KIND DESC LIMIT 1";
+							String insertVisitToday = "INSERT INTO VISIT VALUES(?,1)";
 							try {
 								con = getConnection();
 								if(!userturn.equals("getCookie")){
 									psmt = con.prepareStatement(selectVisit);
 									rs = psmt.executeQuery();
-									
 									if(rs.next()){
-										String date = rs.getString("VISIT_KIND").substring(0,10);
+										String date = rs.getString("VISIT_KIND");
 										if(!date.equals(strToday)){
 											psmt = con.prepareStatement(insertVisitToday);
 											psmt.setString(1,strToday);
 											psmt.executeUpdate();
 										}else{
-											psmt = con.prepareStatement(insertVisitToday);
+											psmt = con.prepareStatement(updateVisit);
 											psmt.setString(1, strToday);
 											psmt.executeUpdate();
 										}
