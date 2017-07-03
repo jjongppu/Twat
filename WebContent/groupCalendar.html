@@ -3179,7 +3179,7 @@
 		}
         
         var comeOnStr = "";
-        
+         var comeOnFriends = new Set();
         function selectFriends(a){
 //            var groupMem =  $(".memberInfoBox").text();
 //            
@@ -3188,7 +3188,7 @@
 //                console.log(groupMem[j]);
 //                
 //            }
-            var comeOnFriends = new Set();//내가 선택한 친구를 저장할 Set
+           //내가 선택한 친구를 저장할 Set
             var select = $(a).children().eq(1).text().split(":")[1].trim();
 //            console.log(select);
             
@@ -3207,12 +3207,13 @@
             }
             
             
+//            console.log(comeOnFriends);
 
             
-            for (let item of comeOnFriends.keys()) {
-                comeOnStr += "," + item;
-                
-			}
+           
+            
+//            console.log(comeOnStr);
+            
             
 //            comeOnStr = Array.from(comeOnFriends);
             
@@ -3221,6 +3222,11 @@
         
         function friendsComeOn(){
 //            console.log(comeOnStr);
+            for (let item of comeOnFriends.keys()) {
+                
+                comeOnStr += "," + item;
+                
+			}
             
             
             $.ajax({
@@ -3249,6 +3255,7 @@
 				}
 
 			});
+            
             location.reload();
 //            inviteFriends();
             

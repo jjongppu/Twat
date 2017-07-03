@@ -519,6 +519,62 @@ public class AdminDAO {
 							}
 							return result;
 						}
+						
+						
+						
+						
+						
+
+						public boolean visitups(String userturn, String userid, String strToday) {
+							PreparedStatement psmt= null;
+							ResultSet rs= null;
+							
+							String updateVisit = "UPDATE VISIT SET VISIT_COUNT=? WHERE VISIT_KIND=?";
+							//개인 방문 기록
+							String updateVisituser = "INSET INTO VISIT_MEMBER VALUES(?,CURRENT_TIMESTAMP)";
+							// 쿠키!
+							String selectVisit = "SELECT * FROM VISIT ORDER BY VISIT_KIND DESC LIMIT 1;";
+							String insertVisitToday = "INSET INTO VISIT VALUES(?,1)";
+							int result =0;
+							try {
+								con = getConnection();
+								
+								psmt = con.prepareStatement(selectVisit);
+								rs = psmt.executeQuery();
+								
+								if(rs.next()){
+									if(!rs.getString("VISIT_KIND").equals(strToday)){
+										psmt = con.prepareStatement(insertVisitToday);
+										psmt.setString(1,strToday);
+									}else{
+										psmt = con.prepareStatement(insertVisitToday);
+										psmt.setString(1, strToday);
+										psmt.setString(1, strToday);
+									}
+								}
+									
+									
+									
+									
+									
+								
+							} catch (Exception e) {
+								e.printStackTrace();
+							} finally {
+									try {
+										if(rs != null) rs.close();
+										if(psmt != null) psmt.close();
+										if(con != null) con.close();
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}
+								
+							}
+							return result;
+							
+							
+							
+						}
 			
 			
 			
