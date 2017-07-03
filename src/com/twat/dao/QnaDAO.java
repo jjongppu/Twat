@@ -368,4 +368,43 @@ public class QnaDAO {
 		
 	}
 	
+	
+	public int updateQna(String userId, int val, String cate, int pw, String qnaTitle, String qnaCont) {
+		PreparedStatement psmt= null;
+		ResultSet rs= null;
+		int result = -1;
+		
+		String updateSql = "UPDATE qna SET QNA_CATEGORY=?, QNA_PW=?, QNA_TITLE=?, QNA_CONTENTS=? WHERE MEMBER_ID=? AND QNA_ID=?";
+		
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(updateSql);
+			psmt.setString(1, cate);
+			psmt.setInt(2, pw);
+			psmt.setString(3, qnaTitle);
+			psmt.setString(4, qnaCont);
+			psmt.setString(5, userId);
+			psmt.setInt(6, val);
+			
+			result = psmt.executeUpdate();
+			System.out.println(result);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+	        try {
+	        	if(rs != null) rs.close();
+		        if(psmt != null) psmt.close();
+		        if(con != null) con.close();
+	        } catch (SQLException e) {
+	        	// TODO Auto-generated catch block
+		        e.printStackTrace();
+	        }
+//	        System.out.println(result);
+	        return result;
+		}    
+		
+	}
+
+	
 }
