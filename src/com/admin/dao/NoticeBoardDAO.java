@@ -1,6 +1,8 @@
 package com.admin.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -33,6 +35,45 @@ public class NoticeBoardDAO {
 	}
 	
 	
+	public int inputNotice(String adminId, String title, String content, String classification){
+		PreparedStatement psmt = null;
+		int result = 0;
+		try {
+			con = getConnection();
+			String sql = "INSERT INTO notice_board VALUES(?, ?, ?, ?, CURRENT_TIMESTAMP, 0, ?)";
+			psmt = con.prepareStatement(sql);
+			System.out.println(System.currentTimeMillis());
+			
+			psmt.setString(1, String.valueOf(System.currentTimeMillis()));
+			psmt.setString(2, title);
+			psmt.setString(3, content);
+			psmt.setString(4, adminId);
+			psmt.setString(5, classification);
+			
+			result = psmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+				try {
+					if(psmt != null)
+						psmt.close();
+					if(con != null)
+						con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+		}
+		
+		
+		return result;
+		
+	}
 	
 	
 	
