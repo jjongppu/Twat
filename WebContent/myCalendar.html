@@ -1388,21 +1388,6 @@
 // ================ 개인일정 뽑아주는 함수! =====================
     
     $(document).ready(function(){
-//        var swip;
-//        swip = new Swiper('.leftUp .swiper-container', {
-//                        pagination: '.leftUp .swiper-pagination',
-//                        direction: 'vertical',
-////                        centeredSlides: true,
-//                        slidesPerView: 5,
-//                        paginationClickable: true,
-//                        spaceBetween: 3,
-//                        mousewheelControl: true
-//                    });
-//       document.getElementById("myCalDate").innerHTML=""; 
-//       document.getElementById("myCalContents").innerHTML=""; 
-//       document.getElementById("myCalTime").innerHTML=""; document.getElementById("privSchedule").innerHTML=+""; 
-        
-        
         $.ajax({
              type:'post'
             ,url:'myCal.do'
@@ -1416,25 +1401,6 @@
 //                  console.log(item.myCalTime);
                   
                   var calDate = item.myCalDate.split(",");
-//                  if(calDate.length != 2){
-//                     document.getElementById("myCalDate").innerHTML+="<div class='schedules scheList'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
-//                  } else {
-//                    document.getElementById("myCalDate").innerHTML+="<div class='schedules scheList'>"+calDate[0]+"</div></br>";
-//                  }
-//                  document.getElementById("myCalContents").innerHTML+="<div class='schedules scheList'>"+item.myCalContents+"</div></br>";
-//                  document.getElementById("myCalTime").innerHTML+="<div class='schedules scheList'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
-                  
-//                  document.getElementById("privSchedule").innerHTML+= "<div class='wrap'>";
-                  
-//                  if(calDate.length != 2){
-//                     document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
-//                  } else {
-//                    document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList1'>"+calDate[0]+"</div>";
-//                  }
-//                  document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
-//                  document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
-                  // <div class="swiper-slide">Slide 1</div>
-                  
                   if(calDate.length != 2){
                      str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
                   } else {
@@ -1442,9 +1408,6 @@
                   }
                   str+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
                   str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
-                  
-                  
-
               });
                 $(".leftUp .swiper-wrapper").append(str);
                 
@@ -1459,15 +1422,6 @@
                     mousewheelControl: true
                 });
                 
-//                swiperSche = new Swiper('.schedule .swiper-container', {
-//						pagination: '.schedule .swiper-pagination',
-//						direction: 'vertical',
-//						slidesPerView: 3,
-//						paginationClickable: true,
-//						centeredSlides: true,
-//						//						spaceBetween: 30,
-//						mousewheelControl: true
-//					});
             },
             
             error:function(req){ 
@@ -1689,10 +1643,10 @@
         location.reload();
     }
     
-    
+    var str2="";
 /* ================ 단체일정 뽑아주는 함수 ================== */
     $(document).ready(function(){
-
+        
         $.ajax({
              type:'post'
             ,url:'myGroupSchedule.do'
@@ -1700,25 +1654,25 @@
             ,success : function(data){
                 console.log(data);
               $.each(data, function(index, item){
-                  console.log(item.calDate);
-                  console.log(item.calMemo);
-                  console.log(item.calWriter);
+//                  console.log(item.calDate);
+//                  console.log(item.calMemo);
+//                  console.log(item.calWriter);
                   
                   var calDate = item.calDate.split(",");
                 
                   if(calDate.length !=2){
-                    str+="<div class='swiper-slide'><div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
+                    str2+="<div class='swiper-slide'><div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
                   } else {
-                    str+="<div class='schedules'>"+calDate[0]+"</div></br>";
+                    str2+="<div class='swiper-slide'><div class='schedules'>"+calDate[0]+"</div>";
                   }
-                  str+="<div class='schedules'>"+item.calMemo+"</div></br>";
-                  str+="<div class='schedules'>"+item.calWriter+"</div></div></br>";
+                  str2+="<div class='schedules'>"+item.calMemo+"</div>";
+                  str2+="<div class='schedules'>"+item.calWriter+"</div></div></br>";
               });
-                  $(".leftUp .swiper-wrapper").append(str);
+                  $(".leftDown .swiper-wrapper").append(str2);
                 
                 
-                var swiper = new Swiper('.schedule .swiper-container', {
-                    pagination: '.schedule .swiper-pagination',
+                var swiper = new Swiper('.leftDown .swiper-container', {
+                    pagination: '.leftDown .swiper-pagination',
                     direction: 'vertical',
                     slidesPerView: 5,
                     paginationClickable: true,
@@ -1939,8 +1893,7 @@
 <!--                            </div>-->
 <!--                        </div>-->
                         <div class="swiper-container">
-							<div class="swiper-wrapper">
-							</div>
+							<div class="swiper-wrapper"></div>
 							<div class="swiper-pagination"></div>
 						</div>
                         <!-- ===== 더보기 버튼 ===== -->
@@ -1953,7 +1906,7 @@
                             <div class="program txt">단체 일정</div>
                             <div class="decoLine"></div>
                         </div>
-                        <div class="schedule">
+
 <!--
                             <div class="schCont scheDate txt" id="calDate"></div>
                             <div class="schCont scheText txt" id="calMemo"></div>
@@ -1969,7 +1922,6 @@
                                 <div class="swiper-wrapper"></div>
                                 <div class="swiper-pagination"></div>
                             </div>
-                        </div>
                     </div>
                     
                     <div class="events">
