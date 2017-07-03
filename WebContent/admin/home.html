@@ -72,7 +72,7 @@
     
     #viewCover{
         margin: auto;
-        background-color: white;
+        opacity: 0.9
     }
     .viewImgCover{
         display: inline-block;
@@ -138,7 +138,16 @@
         height: 20px;
     }
     #curve_chart{
-        margin: auto;
+        margin: 20px;
+        display: inline-block;
+    }
+    #todayVal{
+        width: 150px;
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        right: 10px;
+        font-size: 28px;
     }
     
     @media screen and (min-width:1130px) and (max-width : 1500px){
@@ -215,11 +224,8 @@
 
                                         chart.draw(data, options);
                                     }
-
-
-
                                 }
-
+                                $('#todayVal').html(data[data.length-1].VISIT_COUNT);
                             }
                         });
             }
@@ -316,18 +322,18 @@
                 
                 <!-------------------------------------           방문자 관련     ----------->
                 <div class="mainViewInfoCover">
-                    <div class="mainViewInfo" id="visit"  onclick="location.href='visitManagement.html'">
+                    <div class="mainViewInfo" id="visit" >
                         <div class="viewTopCover">
                             <div class="viewImgCover">
                                 <img class="viewImg" src="../img/etcIcon/adminView_visit.png"/> 
                             </div>
                             <div class="viewContents">
-                                <div class="viewName">Visit</div>
+                                <div class="viewName">Total</div>
                                 <div class="viewData" id="visVal">0</div>
                             </div>
                         </div>
                         <div class="viewBottomCover">
-                            <span class="viewBottomText">방문자 수</span>
+                            <span class="viewBottomText">Today</span><div class="viewData" id="todayVal">0</div>
                         </div>
                     </div>
                 </div>
