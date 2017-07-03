@@ -1,4 +1,4 @@
-package com.twat.controller;
+package com.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,29 +13,24 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.twat.dao.MemberDAO;
+import com.admin.dao.NoticeBoardDAO;
 
 /**
- * Servlet implementation class ChangePWServlet
+ * Servlet implementation class WriteNoticeBoard
  */
-@WebServlet("/ChangePW.do")
-public class ChangePWServlet extends HttpServlet {
+@WebServlet("/WriteNoticeBoard.do")
+public class WriteNoticeBoard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangePWServlet() {
+    public WriteNoticeBoard() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -45,32 +40,29 @@ public class ChangePWServlet extends HttpServlet {
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
+		
 	    
 	    JSONArray jsonArr = new JSONArray();
 	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
-		
-		HttpSession session = request.getSession();
-		String userId = request.getParameter("userId");
-	    String beforePw = request.getParameter("beforePw");
-		String afterPw = request.getParameter("afterPw");
-		
-		
-		
-	    MemberDAO mdo = MemberDAO.getInstance();
+	    HttpSession session = request.getSession();
 	    
-	    int result = mdo.changePw(userId, beforePw, afterPw);
+//	    System.out.println(session.getAttribute("loginAdmin"));
+//	    System.out.println(request.getParameter("noticeTitle"));
+//	    System.out.println(request.getParameter("noticeContent"));
+//	    System.out.println(request.getParameter("noticeClassification"));
+	    
+	    NoticeBoardDAO noticeBoardDAO = NoticeBoardDAO.getInstance();
+	    int result = noticeBoardDAO.inputNotice((String)session.getAttribute("loginAdmin"), request.getParameter("noticeTitle"), request.getParameter("noticeContent"), request.getParameter("noticeClassification"));
 	    
 	    
-	    System.out.println(beforePw);
-	    System.out.println(afterPw);
-	    
-	    
-	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
+	    jsonObj.put("result", result);
 	    jsonArr.add(jsonObj);
-	    
 	    out.println(jsonArr);
 	    out.close();
+	    
+	    
+	    
 		
 	}
 

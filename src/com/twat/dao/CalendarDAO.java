@@ -225,46 +225,52 @@ public class CalendarDAO {
 
 	}
 
-	public int getLastDepth(int cal_num) {
-		String sql = "";
-		int cal_depth = 0;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		try {
-			if(con == null)
-				con = getConnection();
-			
-			sql = "SELECT CAL_DEPTH FROM calendar where CAL_REFERENCE = ? order by CAL_DEPTH desc limit 1";
-			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, cal_num);
-			rs = psmt.executeQuery();
-			while (rs.next()) {
-				cal_depth = rs.getInt("CAL_DEPTH");
-				// System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + cal_depth);
-			}
+//	public int getLastDepth(int cal_num) {
+//		String sql = "";
+//		int cal_depth = 0;
+//		Connection con2 = null;
+//		PreparedStatement psmt = null;
+//		ResultSet rs = null;
+//		try {
+//			
+//			
+//			sql = "SELECT CAL_DEPTH FROM calendar where CAL_REFERENCE = ? order by CAL_DEPTH desc limit 1";
+////			if(con2 == null)
+//				con2 = getConnection();
+//			System.out.println(con2);
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
+//			psmt = con.prepareStatement(sql);
+//			psmt.setInt(1, cal_num);
+//			rs = psmt.executeQuery();
+//			while (rs.next()) {
+//				cal_depth = rs.getInt("CAL_DEPTH");
+//				// System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + cal_depth);
+//			}
+//
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//
+//			try {
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
 
-			try {
-				if (rs != null)
-					rs.close();
-				if (psmt != null)
-					psmt.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//				if (con2 != null)
+//					con2.close();
 
-		}
-
-		return cal_depth + 1;
-
-	}
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
+//		}
+//
+//		return cal_depth + 1;
+//
+//	}
 
 	public void addCalComment(int group_id, String cal_memo, String first_cal, String new_memo, String cal_writer) {
 		PreparedStatement psmt2 = null;
@@ -297,7 +303,7 @@ public class CalendarDAO {
 			psmt2.setString(6, " ");
 			psmt2.setString(7, " ");
 			psmt2.setInt(8, cal_num);
-			psmt2.setInt(9, getLastDepth(cal_num));
+			psmt2.setInt(9, 1);
 
 			psmt2.executeUpdate();
 
