@@ -165,12 +165,15 @@
                         
                         
                         var cookies = getCookie($('#idBox').val());
-                        if(cookies == ""){
+                        var turn = "noCookie";
+                        if(cookies != ""){
+                            turn = 'getCookie';
+                        }
                             var dates = setCookieAt00();
                              $.ajax({
                                 type:"post",
                                 url: "AdminSetVisitToday.do",
-                                data: {dates: dates,userid : $("#idBox").val()},
+                                data: {turn:turn, dates: dates,userid : $("#idBox").val()},
                                 success: function(data){
                                     console.log(data);
                                 var result = data[0].result;
@@ -179,21 +182,7 @@
                                 }
                             });
 
-                        }
-                        
-                        
-                        
 						location.href='home.html';
-					
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     } else if(result == 'outIng'){
                         $('#noBtn').attr('onclick','hideModal()');
                         $('#yesBtn').attr('onclick','returnAccount()');
@@ -287,7 +276,6 @@
             return todayDate.getTime();
  
         }  
-        console.log(setCookieAt00());
     
     
     

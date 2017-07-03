@@ -49,7 +49,7 @@ public class AdminSetVisitToday extends HttpServlet {
 		long nowtimes = System.currentTimeMillis();
 
 
-		if(userturn.equals("1")){
+		if(userturn.equals("getCookie")){
 			Cookie chokoCook = new Cookie("visitUser",userid);  // cookie name : id ,  value : kjg
 			chokoCook.setMaxAge((int) (dates-nowtimes));
 			response.addCookie(chokoCook);
@@ -74,14 +74,11 @@ public class AdminSetVisitToday extends HttpServlet {
 		
 		// 로그인 성공/실패 
 		if(!result){
-			
 			jsonOb.put("result", "fail");
 		} else {
 			jsonOb.put("result", "success");
 		}
-		
 		jsonList.add(jsonOb);
-		
 		writer.println(jsonList);
 	}
 
