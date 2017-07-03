@@ -11,22 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import com.twat.dao.MemberDAO;
-import com.twat.dao.QnaDAO;
 
 /**
- * Servlet implementation class QnaDeleteServlet
+ * Servlet implementation class QnaUpdateServlet
  */
-@WebServlet("/QnaDelete.do")
-public class QnaDeleteServlet extends HttpServlet {
+@WebServlet("/QnaUpdate.do")
+public class QnaUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaDeleteServlet() {
+    public QnaUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,32 +43,11 @@ public class QnaDeleteServlet extends HttpServlet {
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
 	    
-	    JSONArray jsonArr = new JSONArray();
-	    JSONObject jsonObj = new JSONObject();
-	    PrintWriter out = response.getWriter();
-	    
+	    JSONArray jarr = new JSONArray();
+		PrintWriter out = response.getWriter();
+		
 		HttpSession session = request.getSession();
 	    String userId = (String)session.getAttribute("loginUserId");
-	    int val = Integer.parseInt(request.getParameter("val"));
-	    int qnaPw = Integer.parseInt(request.getParameter("pw"));
-	    
-	    
-	    
-	    QnaDAO qnaDao = QnaDAO.getInstance();
-	    int result = qnaDao.deleteQna(userId, val, qnaPw);
-	    System.out.println(val);
-	    System.out.println(qnaPw);
-	    
-	    if(result == 1) {
-	    	jsonObj.put("result", "success");
-	    } else {
-	    	jsonObj.put("result", "fail");
-	    }
-	    
-	    jsonArr.add(jsonObj);
-		
-	    out.println(jsonArr);
-	    out.close();
 	}
 
 }
