@@ -148,6 +148,7 @@ li {
 /*    background: linear-gradient( 165deg, white, #FDF9FF, white);*/
     height: 300px;
     width: 500px;
+    overflow: hidden;
 }
 
 .schedule {
@@ -277,14 +278,17 @@ li {
 }
 
 .scheList1{
-    width:155px;
+/*    width:155px;*/
+    width:30%;
 }
 .scheList2{
-    width:230px;
+/*    width:230px;*/
+    width:48%;
 }
 
 .scheList3{
-    width:94px;
+/*    width:94px;*/
+    width:20%;
 }
 
 
@@ -306,31 +310,7 @@ li {
 
 
 
-.leftUp .swiper-container {
-        width: 100%;
-        height: 100%;
-        margin-left: auto;
-        margin-right: auto;
-}
-.leftUp .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
 
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-    }
 
 
 /*    =============================== right  ============================*/
@@ -479,3 +459,57 @@ input:focus {
     height: 20px;
     background-color: aliceblue;
 }
+
+.leftUp .swiper-container {
+        width: 100%;
+/*        height: 100%;*/
+        height: 80%;
+        margin-left: auto;
+        margin-right: auto;
+}
+.leftUp .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+
+.leftDown .swiper-container {
+        width: 100%;
+/*        height: 100%;*/
+        height: 80%;
+        margin-left: auto;
+        margin-right: auto;
+}
+.leftDown .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }

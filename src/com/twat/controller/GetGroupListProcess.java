@@ -53,10 +53,11 @@ public class GetGroupListProcess extends HttpServlet {
 		CalgatherDAO calDao = CalgatherDAO.getInstance();
 		MemberJoinGroupDAO getGourpInfo = MemberJoinGroupDAO.getInstance();
 		ArrayList<MemberJoinGroupVO> mjg = getGourpInfo.getViewCountCheck(userId);
-		
+		System.out.println(mjg.size());
 		// 1일떄만 방정보까지 얻어옴 불필요한 정보 최소화
 		if(kinds == 1){
 			groupInfo = calDao.myGroupList(mjg);
+			System.out.println(groupInfo.size());
 		}
 		
 		if(mjg.size() > 0 ){
@@ -75,7 +76,6 @@ public class GetGroupListProcess extends HttpServlet {
 				MemberJoinGroupVO mj = mjg.get(i);
 				jsonObj.put("view_me", mj.getCALENDAR_VIEW());
 				jsonObj.put("view_group", mj.getCALENDAR_READ_VIEW());
-				System.out.println(mj.getCALENDAR_READ_VIEW());
 				jarr.add(jsonObj);
 			}
 		}else{

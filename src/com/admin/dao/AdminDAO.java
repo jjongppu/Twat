@@ -14,6 +14,7 @@ import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberVO;
 import com.twat.dto.QnaVO;
+import com.twat.dto.VisitVO;
 
 	
 
@@ -89,7 +90,7 @@ public class AdminDAO {
 			selectGetInfo +="(SELECT COUNT(*) FROM member) as memC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM qna) as qnaC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM calendar where CAL_DEPTH=0) as calC,";
-			selectGetInfo +="(SELECT VISIT_COUNT FROM visit where VISIT_KIND='TOTAL') as visC,";
+			selectGetInfo +="(SELECT SUM(VISIT_COUNT) FROM VISIT) as visC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM calgather) as calgC";	
 			
 			try {
@@ -531,24 +532,23 @@ public class AdminDAO {
 							boolean result = false;
 							String updateVisit = "UPDATE VISIT SET VISIT_COUNT=VISIT_COUNT+1 WHERE VISIT_KIND=?";
 							//개인 방문 기록
-							String updateVisituser = "INSET INTO VISIT_MEMBER VALUES(?,CURRENT_TIMESTAMP)";
+							String updateVisituser = "INSERT INTO VISIT_MEMBER VALUES(?,CURRENT_TIMESTAMP)";
 							// 쿠키!
-							String selectVisit = "SELECT * FROM VISIT ORDER BY VISIT_KIND DESC LIMIT 1;";
-							String insertVisitToday = "INSET INTO VISIT VALUES(?,1)";
+							String selectVisit = "SELECT * FROM VISIT ORDER BY VISIT_KIND DESC LIMIT 1";
+							String insertVisitToday = "INSERT INTO VISIT VALUES(?,1)";
 							try {
 								con = getConnection();
 								if(!userturn.equals("getCookie")){
 									psmt = con.prepareStatement(selectVisit);
 									rs = psmt.executeQuery();
-									
 									if(rs.next()){
-										String date = rs.getString("VISIT_KIND").substring(0,10);
+										String date = rs.getString("VISIT_KIND");
 										if(!date.equals(strToday)){
 											psmt = con.prepareStatement(insertVisitToday);
 											psmt.setString(1,strToday);
 											psmt.executeUpdate();
 										}else{
-											psmt = con.prepareStatement(insertVisitToday);
+											psmt = con.prepareStatement(updateVisit);
 											psmt.setString(1, strToday);
 											psmt.executeUpdate();
 										}
@@ -574,6 +574,50 @@ public class AdminDAO {
 							}
 							return result;
 						}
+
+		public ArrayList<VisitVO> getVisits() {
+			ArrayList<VisitVO> array = new ArrayList<VisitVO>();
+			PreparedStatement psmt= null;
+			ResultSet rs= null;
+			
+			String selectVisit1 = "SELECT * FROM VISIT ORDER BY VISIT_KIND ASC LIMIT 10";
+			String selectVisit2 = "SELECT SUM(VISIT_COUNT) FROM visit";
+			try {
+				con = getConnection();
+				
+//					psmt = con.prepareStatement(selectVisit2);
+//					rs = psmt.executeQuery();
+//					
+//					if(rs.next()){
+//						VisitVO vv = new VisitVO();
+//						vv.setVISIT_KIND(rs.getString("SUM(VISIT_COUNT)"));
+//						array.add(vv);
+//					}
+					
+					psmt = con.prepareStatement(selectVisit1);
+					rs = psmt.executeQuery();
+					
+					while(rs.next()){
+						VisitVO vv = new VisitVO();
+						vv.setVISIT_KIND(rs.getString("VISIT_KIND"));
+						vv.setVISIT_COUNT(rs.getInt("VISIT_COUNT"));
+						array.add(vv);
+					}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs != null) rs.close();
+						if(psmt != null) psmt.close();
+						if(con != null) con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				
+			}
+			return array;
+		}
 			
 			
 			

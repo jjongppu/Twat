@@ -2,9 +2,8 @@ package com.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
-import java.security.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.ServletException;
@@ -19,12 +18,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.admin.dao.AdminDAO;
+import com.twat.dto.VisitVO;
 
-@WebServlet("/AdminSetVisitToday.do")
-public class AdminSetVisitToday extends HttpServlet {
+@WebServlet("/GetVisits.do")
+public class GetVisits extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AdminSetVisitToday() {
+    public GetVisits() {
         super();
     }
 
@@ -33,52 +33,36 @@ public class AdminSetVisitToday extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//CURRENT_TIMESTAMP
+
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
 	    HttpSession session = request.getSession();
-	    
-	    
-	    String userturn = request.getParameter("turn");
-		String userid = request.getParameter("userid");
-		//오늘 정각까지의 시간
-		long dates = Long.parseLong(request.getParameter("dates"));
-		//현재시간
-		long nowtimes = System.currentTimeMillis();
 
-
-		if(!userturn.equals("getCookie")){
-			Cookie chokoCook = new Cookie(userid,"visitUser");  // cookie name : id ,  value : kjg
-			chokoCook.setMaxAge((int) (dates-nowtimes));
-			response.addCookie(chokoCook);
-		}
-	
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-        Calendar c1 = Calendar.getInstance();
-
-        String strToday = sdf.format(c1.getTime());
-        System.out.println(userturn);
-	  
 	    AdminDAO ado = AdminDAO.getInstance();
-		boolean result = ado.visitups(userturn,userid,strToday);
-	
-		
-		
+		ArrayList<VisitVO> result = ado.getVisits();
 		
 		PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
-		JSONObject jsonOb = new JSONObject();
 		
-		// 로그인 성공/실패 
-		if(!result){
-			jsonOb.put("result", "fail");
-		} else {
-			jsonOb.put("result", "success");
+		if(result.size()>0){
+//			JSONObject jsonOb1 = new JSONObject();
+//			jsonOb1.put("VISIT_KIND", result.get(0).getVISIT_KIND());
+//			jsonOb1.put("VISIT_COUNT", result.get(0).getVISIT_COUNT());
+//			jsonList.add(jsonOb1);
+			for(int i=0;i < result.size();i++){
+				JSONObject jsonOb = new JSONObject();
+				jsonOb.put("VISIT_KIND", result.get(i).getVISIT_KIND());
+				jsonOb.put("VISIT_COUNT", result.get(i).getVISIT_COUNT());
+				jsonList.add(jsonOb);
+			}
+		}else{
+			JSONObject jsonOb = new JSONObject();
+			jsonOb.put("VISIT_KIND", "-1");
+			jsonList.add(jsonOb);
 		}
-		jsonList.add(jsonOb);
+		
 		writer.println(jsonList);
 	}
 
