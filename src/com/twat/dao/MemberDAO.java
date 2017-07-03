@@ -1359,7 +1359,9 @@ public class MemberDAO {
 		String myToken = "";
 		String frToken = "";		
 		ArrayList<String> myArr = friendsListForArrList(userId);
-		ArrayList<String> frArr = friendsListForArrList(friendFriendList);
+		ArrayList<String> frArr = friendsListForArrList(friendId);
+		System.out.println(friendId);
+		
 		if(refuseOrCancel.equals("refuse")){
 			myToken = "!";
 			frToken = "*";			

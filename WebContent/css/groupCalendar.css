@@ -9,6 +9,7 @@
 html,body{
             margin: 0;
             padding: 0;
+/*			font-family: */
         }
         div{
             position: relative;
@@ -256,6 +257,7 @@ html,body{
        width: 100%;
        height: 30%;
 /*       background-color: #665522;*/
+	   background-color: white;
        overflow-y: hidden;
    }
    
@@ -263,6 +265,7 @@ html,body{
        width: 100%;
        height: 30%;
 /*       background-color: #a034a0;*/
+	   background-color: white;
        overflow-y: hidden;
    }
    
@@ -292,23 +295,25 @@ html,body{
    
    .content {
        width: 100%;
-       height: 32%;
+/*       height: 32%;*/
+       height: 100%;
+	   font-size: 16px;
 /*       background-color: gray;*/
        background-color: white;
    }
  
    .left {
-       width: 30%;
+       width: 25%;
        height: 100%;
        float: left;
        text-align: center;
        /* 높이 조정 */
-       line-height: 71px;
+/*       line-height: 71px;*/
        background-color: white;
    }
    
    .middle {
-       width: 40%;
+       width: 45%;
        height: 100%;
        float: left;
 /*       background-color: antiquewhite;*/
@@ -329,6 +334,10 @@ html,body{
         width: 100%;
         height: 50%;
         line-height: 25px;
+		padding-left: 5px;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
     }
    
    .right {
@@ -471,6 +480,11 @@ html,body{
         padding: 4px;
         border-radius: 5px;
         margin: 2px;
+		height: 32px;
+/*		height: 26px;*/
+		box-sizing: border-box;
+		display: block;
+		width: 100%;
     }
 
     .commentWriter
@@ -497,6 +511,7 @@ html,body{
 		position: relative;
 		top: 50%;
 		transform: translate(0,-50%);
+		text-align: left;
     }
 
     .barOK
@@ -516,6 +531,11 @@ html,body{
 .moreInfo:hover
 {
     cursor: pointer;
+}
+
+.userButton
+{
+	margin: auto;
 }
 
 .userButton:hover
@@ -576,9 +596,12 @@ input[type=radio]:hover
 	width: 80px;
 	height: 80px;
 	position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/*    top: 50%;*/
+/*    left: 50%;*/
+	top: 0;
+	right: 0;
+	z-index: 10;
+/*    transform: translate(-50%, -50%);*/
 }
 
 .birthListBox
@@ -672,7 +695,7 @@ input[type=radio]:hover
 	display: none;
 }*/
 
-.swiper-container {
+.event .swiper-container {
 	width: 100%;
 	height: 85%;
 	margin: 0px auto;
@@ -683,7 +706,7 @@ input[type=radio]:hover
 	display: block;
 }
 */
-.swiper-slide {
+.event .swiper-slide {
 /*	width: 220px;*/
 	width: auto;
 /*	text-align: center;*/
@@ -703,4 +726,260 @@ input[type=radio]:hover
 	-ms-flex-align: center;
 	-webkit-align-items: center;
 	align-items: center;
+}
+
+.vote .swiper-container {
+	width: 100%;
+	height: 80%;
+/*
+	margin-left: auto;
+	margin-right: auto;
+*/
+}
+.vote .swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+.schedule .swiper-container {
+	width: 100%;
+	height: 80%;
+/*
+	margin-left: auto;
+	margin-right: auto;
+*/
+}
+.schedule .swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+.left div
+{
+	display: block;
+/*	height: 30%;*/
+	height: 50%;
+	font-size: 14px;
+}
+
+.onlyOne
+{
+	position: relative;
+	top: 50%;
+/*	left: 50%;*/
+	transform: translate(0, -50%);
+	text-align: center;
+	line-height: 32px;
+}
+
+.ndjButton
+{
+	display: block;
+	margin: auto;
+}
+
+#confirm_button
+{
+	display: inline-block;
+}
+
+.modalComment
+{
+	width: 100%;
+/*	max-height: 280px;*/
+/*	height: 50%;*/
+/*	height: 48%;*/
+	height: 40%;
+}
+
+#commentList
+{
+	width: 100%;
+/*	height: 70%;*/
+	height: 200px;
+}
+
+#configMemInfo
+{
+	width: 80px;
+	height: 80px;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+/*
+	top: 0;
+	right: 0;
+*/
+	z-index: 10;
+    transform: translate(-50%, -50%);
+}
+
+#configMemInfo:hover
+{
+	cursor: pointer;
+}
+
+#voteListBox
+{
+	width: 100%;
+/*	height: 22px;*/
+	height: 65%;
+	overflow: hidden;
+}
+
+#voteMemo, #voteWriter, #voteMember
+{
+	height: 22px;
+	display: block;
+}
+
+rdoSelect
+{
+	display: block;
+	height: 22px;
+}
+
+#modalTitle
+{
+	overflow: hidden;
+	display: block;
+	font-size: 24px;
+    font-weight: bold;
+}
+
+#modalTitle > .stick
+{
+	width: 100%;
+}
+
+.modalSchduleInfo
+{
+	width: 100%;
+/*	height: 40%;*/
+	height: 46%;
+}
+
+#scheduleMemo, #scheduleWriter, #scheduleDate, #scheduleMember
+{
+	width: 100%;
+	font-size: 18px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.modalSchduleInfo .swiper-container {
+	width: 100%;
+/*	height: 80%;*/
+	height: 200px;
+/*
+	margin-left: auto;
+	margin-right: auto;
+*/
+}
+
+.modalSchduleInfo .swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+#commentList .swiper-container {
+	width: 100%;
+/*	height: 80%;*/
+	height: 100%;
+	display: block;
+/*
+	margin-left: auto;
+	margin-right: auto;
+*/
+}
+#commentList .swiper-slide {
+/*	display: block;*/
+	text-align: left;
+	font-size: 18px;
+	background: #fff;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+}
+
+#modalContent
+{
+	width: 100%;
+	height: 90%;
+}
+
+#vLBTitle
+{
+	display: block;
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+#myComment
+{
+	display: block;
+	width: 100%;
+}
+
+#myComment > input
+{
+	width: 89%;
+}
+
+#voteButtonBox
+{
+	text-align: center;
 }

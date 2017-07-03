@@ -85,20 +85,23 @@ public class MemberJoinGroupDAO
 	// MEMBER_IDï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ GROUP_IDï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½, GROUP_IDï¿½ï¿½ ArrayList<String>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 	public ArrayList<String> getGroupId(String MEMBER_ID)
 	{
+		PreparedStatement psmt5 = null;
+		ResultSet rs5 = null;
+		
 		ArrayList<String> arrList = new ArrayList<String>();
 		String sql = "select GROUP_ID from MEMBER_JOIN_GROUP where MEMBER_ID=?";
 		
 		try
 		{
 			con = getConnection();
-			psmt = con.prepareStatement(sql);
-			psmt.setString(1, MEMBER_ID);
+			psmt5 = con.prepareStatement(sql);
+			psmt5.setString(1, MEMBER_ID);
 			
-			rs = psmt.executeQuery();
+			rs5 = psmt5.executeQuery();
 			
-			while(rs.next())
+			while(rs5.next())
 			{
-				arrList.add(rs.getString(1));
+				arrList.add(rs5.getString(1));
 			}
 		}
 		catch (Exception e)
@@ -109,8 +112,8 @@ public class MemberJoinGroupDAO
 		{
 			try
 			{
-				if(rs != null)rs.close();
-				if(psmt != null)psmt.close();
+				if(rs5 != null)rs5.close();
+				if(psmt5 != null)psmt5.close();
 				if(con != null)con.close();
 			}
 			catch (SQLException e)
@@ -202,21 +205,21 @@ public class MemberJoinGroupDAO
 	public ArrayList<MemberJoinGroupVO> getViewCountCheck(String MEMBER_ID){
 		ArrayList<MemberJoinGroupVO> arrList = new ArrayList<MemberJoinGroupVO>();
 		String sql = "select * from MEMBER_JOIN_GROUP where MEMBER_ID=?";
-		PreparedStatement psmt1 = null;
-		ResultSet rs1 = null;
+		PreparedStatement psmt10 = null;
+		ResultSet rs10 = null;
 		try{
 			con = getConnection();
-			psmt1 = con.prepareStatement(sql);
-			psmt1.setString(1, MEMBER_ID);
+			psmt10 = con.prepareStatement(sql);
+			psmt10.setString(1, MEMBER_ID);
 			
-			rs1 = psmt1.executeQuery();
+			rs10 = psmt10.executeQuery();
 			
-			while(rs1.next()){
+			while(rs10.next()){
 				MemberJoinGroupVO mj = new MemberJoinGroupVO();
-				mj.setMEMBER_ID(rs1.getString("MEMBER_ID"));
-				mj.setGROUP_ID(rs1.getString("GROUP_ID"));
-				mj.setCALENDAR_READ_VIEW(rs1.getInt("CALENDAR_READ_VIEW"));
-				mj.setCALENDAR_VIEW(rs1.getInt("CALENDAR_VIEW"));
+				mj.setMEMBER_ID(rs10.getString("MEMBER_ID"));
+				mj.setGROUP_ID(rs10.getString("GROUP_ID"));
+				mj.setCALENDAR_READ_VIEW(rs10.getInt("CALENDAR_READ_VIEW"));
+				mj.setCALENDAR_VIEW(rs10.getInt("CALENDAR_VIEW"));
 				arrList.add(mj);
 			}
 		}
@@ -225,8 +228,8 @@ public class MemberJoinGroupDAO
 		}
 		finally{
 			try{
-				if(rs1 != null)rs1.close();
-				if(psmt1 != null)psmt1.close();
+				if(rs10 != null)rs10.close();
+				if(psmt10 != null)psmt10.close();
 				if(con != null)con.close();
 			}
 			catch (SQLException e){
@@ -264,6 +267,111 @@ public class MemberJoinGroupDAO
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		
+		
+	}
+	
+	
+	
+	public void inviteFriends(String friendId, int groupId){//±×·ì¹æ Ä£±¸ÃÊ´ë
+		PreparedStatement pstmt = null;
+		ResultSet rs2 = null;
+		try {
+			con = getConnection();
+			String sql = "insert into member_join_group values(?,?,0,0)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, friendId);
+			pstmt.setInt(2, groupId);
+			int result = pstmt.executeUpdate();
+			
+			
+			String sql2 = "select GROUP_COUNT from calgather where GROUP_ID = ?";
+			pstmt = con.prepareStatement(sql2);
+			pstmt.setInt(1, groupId);
+			
+			rs2 = pstmt.executeQuery();
+			rs2.next();
+			int groupLastNum = rs2.getInt(1);
+			
+			groupLastNum++;
+			
+			
+			String sql3 = "update calgather set GROUP_COUNT = ? where GROUP_ID = ?";
+			pstmt = con.prepareStatement(sql3);
+			pstmt.setInt(1, groupLastNum);
+			pstmt.setInt(2, groupId);
+			pstmt.executeUpdate();
+			
+			
+			
+			
+			
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs2 != null)
+					rs2.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+	}
+
+	public boolean chkId(String MEMBER_ID, String groupId)
+	{
+		PreparedStatement pstmt = null;
+		ResultSet rSet = null;
+		int result = 0;
+
+		try {
+			con = getConnection();
+			String sql = "SELECT COUNT(MEMBER_ID) FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? and GROUP_ID=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, MEMBER_ID);
+			pstmt.setInt(2, Integer.parseInt(groupId));
+
+			rSet = pstmt.executeQuery();
+			
+			
+			while(rSet.next())
+			{
+				result = rSet.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rSet != null)
+					rSet.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(result == 1)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 	

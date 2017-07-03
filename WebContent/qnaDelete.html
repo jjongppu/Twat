@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Untitled Document</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	<script src="js/jquery-3.2.1.min.js"></script>
+</head>
+	<style>
+	
+	</style>
+	<script>
+		function deleteQna() {
+			var url = decodeURI(location.href);
+			console.log(url);
+			var parameter = url.split('=', 2);
+			console.log(parameter[1]);
+			
+			if($('#id_pw') == "") {
+				alert('글 비밀번호를 입력하세요.');
+			} else {
+				$.ajax ({
+					type : 'post',
+					url : 'QnaDelete.do',
+					dataType : "json",
+					data : { val : parameter[1], pw : $('#id_pw').val() },
+
+					success : function(data) {
+						console.log(data);
+						var result = data[0].result;
+
+						if(result == "success") {
+							alert("삭제가 완료 되었습니다.");
+							location.href="qnaList.html";
+						} else {
+							alert("다시 한 번 확인해주세요.");
+						}
+
+					},
+					error: function(req) {
+						alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error );
+					},
+				});	
+			}
+			
+	
+		}
+		
+		
+		
+		
+
+	</script>
+<body>
+	<form id="Delete" action="QnaDelete.do" method="post">
+		
+		<div id="title">
+			<h4>글 삭제하기</h4>
+		</div>
+		
+		<div id=container>
+			<div>삭제하시려면 글 비밀번호를 입력해주세요.</div>
+			<div>
+				<input type="password" id="id_pw" name="qnaPw"/>
+			</div>
+		</div>
+		<div>
+			<input type="button" value="확인" onclick="deleteQna()"/>
+			<input type="button" value="목록보기" onclick="location.href='qnaList.html'" />
+			<input type="button" value="뒤로가기" onclick="history.back(-1);"/>
+		</div>
+		
+	</form>
+</body>
+</html>
