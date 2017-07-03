@@ -238,6 +238,7 @@ public class CalendarDAO {
 ////			if(con2 == null)
 //				con2 = getConnection();
 //			System.out.println(con2);
+
 //			psmt = con.prepareStatement(sql);
 //			psmt.setInt(1, cal_num);
 //			rs = psmt.executeQuery();
@@ -256,8 +257,10 @@ public class CalendarDAO {
 //					rs.close();
 //				if (psmt != null)
 //					psmt.close();
+
 //				if (con2 != null)
 //					con2.close();
+
 //			} catch (SQLException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();

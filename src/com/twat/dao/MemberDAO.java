@@ -95,7 +95,9 @@ public class MemberDAO {
 			psmt.setString(4, answer);
 
 			rs = psmt.executeQuery();
-				
+				while(rs.next()){
+					result = 1;
+				}
 			
 			
 		} catch (Exception e) {
@@ -211,7 +213,6 @@ public class MemberDAO {
 		// String insertSql = "insert into MEMBER
 		// values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 		String insertSql = "insert into MEMBER values(?,HEX(AES_ENCRYPT(?, 'memPW')),?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
-
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(insertSql);
