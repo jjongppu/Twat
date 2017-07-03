@@ -8,13 +8,16 @@
     <meta name="keywords" content="">
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendar.css">-->
 <!--        <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver2.css"> -->
-        <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">
+<!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">-->
+    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver4.css">
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!--    <link rel="stylesheet" type="text/javascript" href="js/myCalendar.js">-->
 <!--    <script type="text/javascript" src="js/myCalendar.js"></script>-->
     <!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/nav.js"></script>
+    <script src="js/swiper.jquery.min.js"></script>
 </head>
 
 <script>
@@ -1380,31 +1383,68 @@
     });
 
     
-    // ===== 개인일정 뽑아주는 함수! ========
+// ================ 개인일정 뽑아주는 함수! =====================
     $(document).ready(function(){
-       document.getElementById("myCalDate").innerHTML=""; 
-       document.getElementById("myCalContents").innerHTML=""; 
-       document.getElementById("myCalTime").innerHTML=""; 
+        var swip;
+//       document.getElementById("myCalDate").innerHTML=""; 
+//       document.getElementById("myCalContents").innerHTML=""; 
+//       document.getElementById("myCalTime").innerHTML=""; document.getElementById("privSchedule").innerHTML=+""; 
         $.ajax({
              type:'post'
             ,url:'myCal.do'
             ,dataType : "json"
             ,success : function(data){
                 console.log(data);
+                var str ="";
               $.each(data, function(index, item){
 //                  console.log(item.myCalIndex);
 //                  console.log(item.myCalContents);
 //                  console.log(item.myCalTime);
+                  
                   var calDate = item.myCalDate.split(",");
-                  if(calDate.length != 2){
-                     document.getElementById("myCalDate").innerHTML+="<div class='schedules scheList'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
-                  } else {
-                    document.getElementById("myCalDate").innerHTML+="<div class='schedules scheList'>"+calDate[0]+"</div></br>";
-                  }
-                  document.getElementById("myCalContents").innerHTML+="<div class='schedules scheList'>"+item.myCalContents+"</div></br>";
-                  document.getElementById("myCalTime").innerHTML+="<div class='schedules scheList'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
+//                  if(calDate.length != 2){
+//                     document.getElementById("myCalDate").innerHTML+="<div class='schedules scheList'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div></br>";
+//                  } else {
+//                    document.getElementById("myCalDate").innerHTML+="<div class='schedules scheList'>"+calDate[0]+"</div></br>";
+//                  }
+//                  document.getElementById("myCalContents").innerHTML+="<div class='schedules scheList'>"+item.myCalContents+"</div></br>";
+//                  document.getElementById("myCalTime").innerHTML+="<div class='schedules scheList'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
+                  
+//                  document.getElementById("privSchedule").innerHTML+= "<div class='wrap'>";
+                  
+//                  if(calDate.length != 2){
+//                     document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
+//                  } else {
+//                    document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList1'>"+calDate[0]+"</div>";
+//                  }
+//                  document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
+//                  document.getElementById("privSchedule").innerHTML+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></br>";
+                  // <div class="swiper-slide">Slide 1</div>
+                  
+//                  if(calDate.length != 2){
+//                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
+//                  } else {
+//                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"</div>";
+//                  }
+//                  str+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
+//                  str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
+                  
+                  
+
               });
+                str+="<div class='swiper-slide'>Slide 1</div>";
+                  str+="<div class='swiper-slide'>Slide 51</div>";
+                  str+="<div class='swiper-slide'>Slide4 1</div>";
+                  str+="<div class='swiper-slide'>Slide3 1</div>";
+                  str+="<div class='swiper-slide'>Slide2 1</div>";
+                  str+="<div class='swiper-slide'>Slide 21</div>";
+                  str+="<div class='swiper-slide'>Slide 61</div>";
+                  str+="<div class='swiper-slide'>Slide 21</div>";
+                  str+="<div class='swiper-slide'>Slide3 1</div>";
+                  str+="<div class='swiper-slide'>Slide 1</div>";
+                $(".leftUp .swiper-wrapper").append(str);
             },
+            
             error:function(req){ 
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }, beforeSend: function () {
@@ -1432,7 +1472,15 @@
              }
              , complete: function () {
                            $("#div_ajax_load_image").hide();
-                
+                swip = new Swiper('.leftUp .swiper-container', {
+                        pagination: '.leftUp .swiper-pagination',
+                        direction: 'vertical',
+                            centeredSlides: true,
+                        slidesPerView: 5,
+                        paginationClickable: true,
+                        spaceBetween: 3,
+                        mousewheelControl: true
+                    });
              }
         });
     });
@@ -1564,7 +1612,7 @@
     
     
     
-    /* ====== 개인일정 삭제해주는 함수 ======= */
+/* =============== 개인일정 삭제해주는 함수 =============== */
     function scheDelete(del){
         console.log(del);
         var deleteId = $(del).attr('id');
@@ -1616,7 +1664,7 @@
     }
     
     
-    /* ====== 단체일정 뽑아주는 함수 ====== */
+/* ================ 단체일정 뽑아주는 함수 ================== */
     $(document).ready(function(){
        document.getElementById("calDate").innerHTML=""; 
        document.getElementById("calMemo").innerHTML=""; 
@@ -1840,14 +1888,21 @@
                             <div class="program txt">개인 일정</div>
                             <div class="decoLine"></div>
                         </div>
-                        <div id ="privSchedule" class="schedule privSchedule">
+<!--                        <div id ="privSchedule" class="schedule privSchedule">-->
+<!--
                             <div class="schCont scheDate txt" id="myCalDate"></div>
                             <div class="schCont scheText txt" id="myCalContents"></div>
                             <div class="schCont scheTime txt" id="myCalTime"></div>
+-->
 <!--                            <div class="schCont dayTime">-->
 <!--                                <div class="scheDetail txt"></div>-->
 <!--                            </div>-->
-                        </div>
+<!--                        </div>-->
+                        <div class="swiper-container">
+							<div class="swiper-wrapper"></div>
+<!--                                <div id ="privSchedule" class="schedule  privSchedule"></div>-->
+							<div class="swiper-pagination"></div>
+						</div>
                         <!-- ===== 더보기 버튼 ===== -->
 <!--                        <button class="more" onclick=moreShow()>+</button>-->
                     </div>

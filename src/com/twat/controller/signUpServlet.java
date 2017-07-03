@@ -88,8 +88,8 @@ public class signUpServlet extends HttpServlet {
 	    String signUpAnswer = request.getParameter("signUpAnswer");
 	    
 	    MemberDAO memdao = MemberDAO.getInstance();
-	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, 
-	    		signUpBirth, signUpOutTime, signUpQuestion, signUpAnswer);
+	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, signUpBirth, signUpOutTime, signUpQuestion, signUpAnswer);
+	    
 
 	    
 	    PrintWriter writer = response.getWriter();

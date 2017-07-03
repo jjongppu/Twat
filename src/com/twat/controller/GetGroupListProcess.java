@@ -75,7 +75,6 @@ public class GetGroupListProcess extends HttpServlet {
 				MemberJoinGroupVO mj = mjg.get(i);
 				jsonObj.put("view_me", mj.getCALENDAR_VIEW());
 				jsonObj.put("view_group", mj.getCALENDAR_READ_VIEW());
-				System.out.println(mj.getCALENDAR_READ_VIEW());
 				jarr.add(jsonObj);
 			}
 		}else{

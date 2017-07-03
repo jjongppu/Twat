@@ -2201,6 +2201,7 @@
 						for (var i = 0; i < voteDateList.length; i++) {
 							voteDateSet.add(voteDateList[i]);
 						}
+						console.log(voteDateSet);
 						voteDateCount = voteDateSet.size;
 						//                        voteDateList = Array.from(voteDateSet).sort();
 						//                        console.log(voteDateList);
@@ -2396,7 +2397,12 @@
 								//                                }
 							}
 							//                            console.log(voteMemberSet);
-							if (voteDateCount > 1 && voteMemberSet.size > 1) {
+							console.log(voteDateCount);
+							console.log(voteMemberSet);
+							console.log(voteMemberSet.size);
+//							if (voteDateCount > 1 && voteMemberSet.size > 1)
+							if (voteDateCount > 0 && voteMemberSet.size > 1)
+							{
 								//                                console.log(voteMemberSet.size);
 								//                                voteString += "님 외 " + voteMemberSet.size + "명</div>";
 								voteString += "님 외 " + (voteMemberSet.size - 1) + "명";
@@ -3173,7 +3179,7 @@
 		}
         
         var comeOnStr = "";
-        
+         var comeOnFriends = new Set();
         function selectFriends(a){
 //            var groupMem =  $(".memberInfoBox").text();
 //            
@@ -3182,7 +3188,7 @@
 //                console.log(groupMem[j]);
 //                
 //            }
-            var comeOnFriends = new Set();//내가 선택한 친구를 저장할 Set
+           //내가 선택한 친구를 저장할 Set
             var select = $(a).children().eq(1).text().split(":")[1].trim();
 //            console.log(select);
             
@@ -3201,12 +3207,13 @@
             }
             
             
+//            console.log(comeOnFriends);
 
             
-            for (let item of comeOnFriends.keys()) {
-                comeOnStr += "," + item;
-                
-			}
+           
+            
+//            console.log(comeOnStr);
+            
             
 //            comeOnStr = Array.from(comeOnFriends);
             
@@ -3215,6 +3222,11 @@
         
         function friendsComeOn(){
 //            console.log(comeOnStr);
+            for (let item of comeOnFriends.keys()) {
+                
+                comeOnStr += "," + item;
+                
+			}
             
             
             $.ajax({
@@ -3243,6 +3255,7 @@
 				}
 
 			});
+            
             location.reload();
 //            inviteFriends();
             

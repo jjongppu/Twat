@@ -59,7 +59,7 @@ public class QnaDeleteServlet extends HttpServlet {
 	    
 	    
 	    QnaDAO qnaDao = QnaDAO.getInstance();
-	    int result = qnaDao.deleteQna(val, qnaPw);
+	    int result = qnaDao.deleteQna(userId, val, qnaPw);
 	    System.out.println(val);
 	    System.out.println(qnaPw);
 	    

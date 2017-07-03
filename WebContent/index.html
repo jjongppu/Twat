@@ -5,6 +5,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="js/jquery-3.2.1.min.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <style>
     *{
@@ -154,7 +155,7 @@
 				},
 				dataType : "json",
 				success : function(data) {
-	//				console.log(data);
+					
 					var result = data[0].result;
 
 	//                theForm = document.frm1
@@ -162,8 +163,33 @@
 
 					// 로그인 / 탈퇴중 / 탈퇴 / 실패 
 					if(result == 'success') {
-						location.href='home.html';
-					} else if(result == 'outIng'){
+ 
+                        
+                        
+                        var cookies = getCookie($('#idBox').val());
+                        var turn = 'getCookie';
+                        if(cookies != "visitUser"){
+                            turn = "noCookie";
+                        }
+                        console.log(cookies);
+                            var dates = setCookieAt00();
+                             $.ajax({
+                                type:"post",
+                                url: "AdminSetVisitToday.do",
+                                data: {turn:turn, dates: dates,userid : $("#idBox").val()},
+                                success: function(data){
+                                var result = data[0].result;
+                                    if(result == "success"){
+                                        location.href='home.html';
+                                    }else{
+                                        console.log("뭔가실패");
+                                    }
+
+                                }
+                            });
+
+						
+                    } else if(result == 'outIng'){
                         $('#noBtn').attr('onclick','hideModal()');
                         $('#yesBtn').attr('onclick','returnAccount()');
 						$('#modal').animate({
@@ -233,8 +259,32 @@
                 });
         
     }
+
          
+
     
+        function setCookieAt00() {   
+            var todayDate = new Date();   
+            todayDate = new Date(parseInt(todayDate.getTime() / 86400000) * 86400000 + 54000000);  
+
+            return todayDate.getTime();
+ 
+        }  
+
+    
+        function getCookie(cName) {
+            cName = cName + '=';
+            var cookieData = document.cookie;
+            var start = cookieData.indexOf(cName);
+            var cValue = '';
+            if(start != -1){
+                start += cName.length;
+                var end = cookieData.indexOf(';', start);
+                if(end == -1)end = cookieData.length;
+                cValue = cookieData.substring(start, end);
+            }
+            return unescape(cValue);
+        }  
     
 </script>
 
@@ -282,14 +332,93 @@
                         <a href="searchID.html" class="idSearch" >아이디 찾기</a>
                         <span>  &nbsp;|&nbsp; </span>
                         <a href="searchPW.html" class="pwSearch">비밀번호 찾기</a>
+                        
+                        <div id='kakao-btn' style='margin-top:10px;' onlclick='Kakao.Auth.login(settings)'>
+                            <a id="kakao-login-btn" ></a>
+                            <a href="http://developers.kakao.com/logout"></a>
+<!--
+                            <a id="custom-login-btn" href="javascript:loginWithKakao()">
+                               <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/></a>}
+-->
+                        </div>    
                     </div>
                 </div>
                     </div>
+                
+      
+
+                
             </div>
-            <!-- 쭁기리 슈방새키 -->
-            <!-- ㄴ어리ㅏㅓ라ㅣ -->
+
         </form>
+        
+     
+ 
+        
     </div>
+    
+ 
+<!--
+<script type='text/javascript'>
+  //<![CDATA[
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('cf4f2d06941459855a542dedf17b1be3');
+    function loginWithKakao() {
+      // 로그인 창을 띄웁니다.
+      Kakao.Auth.login({
+        success: function(authObj) {
+          alert(JSON.stringify(authObj));
+        },
+        fail: function(err) {
+          alert(JSON.stringify(err));
+        }
+      });
+    };
+  //]]>
+    
+//    var refreshToken = Kakao.Auth.getRefreshToken();
+//    Kakao.Auth.setAccessToken(accessTokenFromServer);    
+    
+    
+</script>
+-->
+
+    
+    
+    <script>
+     //<![CDATA[
+        // 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('cf4f2d06941459855a542dedf17b1be3');
+        // 카카오 로그인 버튼을 생성합니다.
+        Kakao.Auth.createLoginButton({
+          container: '#kakao-login-btn',
+          success: function(authObj) {
+            alert(JSON.stringify(authObj));
+          },
+          fail: function(err) {
+             alert(JSON.stringify(err));
+          }
+        });
+      //]]>
+        
+        
+        Kakao.Auth.login({
+           success: function(authObj){
+               
+               alert("성공" + JSON.stringify(authObj));
+           },
+            fail:function(sdf){
+                alert("실패");
+            }
+            
+            
+        });
+        
+        
+        
+    </script>     
+    
+    
     
 </body>
 </html>

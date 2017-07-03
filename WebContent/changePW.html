@@ -7,7 +7,7 @@
     <meta name="keywords" content="">
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/nav.css">
-	    <script src="js/nav.js"></script>
+
     <script src="js/jquery.form.js"></script>
 	
 	<style>
@@ -32,7 +32,6 @@
 		}
 		
 		#contentHeader {
-/*			border: 1px solid blue;*/
 			margin-top: 120px;
 			display: block;
 		}
@@ -45,7 +44,6 @@
 		#contentSubmit {
 			margin-top: 40px;
 			display: block;
-/*			border: 1px solid red;*/
 		}
 		
 		.textBox {
@@ -60,6 +58,9 @@
 			width: 50px;
 			height: 28px;
 		}
+        #chkPwd{
+            margin-top: 20px;
+        }
 		
 	</style>
 	
@@ -69,7 +70,7 @@
         $.ajax ({
             type : 'post',
             url : 'ChangePW.do',
-            data : $('#changePW').serialize(),
+            data : $('#userPWD').serialize(),
 
             dataType : "json",
             success : function(data) {
@@ -86,6 +87,49 @@
         });
       
     }
+/////////////////////////////////////////////////////////////////////////
+        function checkPassword(){
+            var pw1 = $('#chPwd').val();
+            var pw2 = $('#chkPwd').val();
+            var pwVal = $('#chPwd').val().length;
+            var retVal = false;
+            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
+        if(pw1 != null && pw2 != null) {
+            if(pwVal < 8 || pwVal > 16) {
+                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호는 8자 이상, 16자 이하여야 합니다.</p>");
+            } else if(pw1 != pw2 && pw2 != pw1) {
+                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
+            } else if(!pwRegex.test(pwVal) && !pwRegex.test(pw2)){
+                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호는 영문, 숫자로 구성되어야 합니다.</p>");
+            } else if(pw2 == pw1){
+                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
+                if(pw1 != pw2){
+                    $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호가 일치하지 않습니다.</p>");    
+                }
+            } else if(pw1 == ""){
+                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호를 입력해주세요.</p>");
+            } else{
+                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호가 일치하지 않습니다.</p>");
+            }
+        }
+    }
+////////////////////////////////////////////////////////////////////
+        function checkPassword2(){
+            var pw1 = $('#chPwd').val();
+            var pw2 = $('#chkPwd').val();
+            var pwVal = $('#chPwd').val().length;
+            var retVal = false;
+            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
+            
+            if(pw2 != pw1){
+                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
+            }else{
+                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
+                if(pw1 != pw2){
+                    $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
+                }
+            }
+        }
 	</script>
 </head>
 <body>
@@ -115,7 +159,7 @@
 
 		<!-- ---------------------네브바 ------------------------->
 		
-		<form id="changePW" action="ChangePW.do" method="post">
+		<form id="userPWD" action="ChangePW.do" method="post">
 			<div class="container">
 				<div id="contentHeader">
 					<h4>비밀번호 변경</h4>
@@ -123,13 +167,14 @@
 
 				<div id="contentBody">
 					<div id="pw1" class="textBox">
-						<span>변경할 비밀번호</span>
-						<input type="text" name="" />
+						
+						<input type="password" id="chPwd" name="" placeholder="변경할 비밀번호" onkeyup="checkPassword2()"/>
 					</div>
 					<div id="pw2" class="textBox">
-						<span>변경할 새 비밀번호</span>
-						<input type="text" name="" />
-					</div>
+						<input type="password" id="chkPwd" name="" placeholder="변경할 새 비밀번호" onkeyup="checkPassword()" />
+                    </div>
+                        <div id="chkOnKey"></div>
+					
 				</div>
 
 				<div id="contentSubmit">
