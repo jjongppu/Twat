@@ -47,29 +47,28 @@ public class SearchPWServlet extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 	    String id = request.getParameter("userId");
-//	    String name = request.getParameter("userName");
 	    String phone = request.getParameter("userPhone");
 	    String question = request.getParameter("searchPwQuestion");
 	    String answer = request.getParameter("searchPwAnswer");
 	    
 	    MemberDAO memDao = MemberDAO.getInstance();
 //	    String result = memDao.searchPW(id, name, phone);
-	    String result = memDao.searchPW(id, phone, question, answer);
+	    int result = memDao.searchPW(id, phone, question, answer);
 	    
 	    PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 	    
-	    if(result.equals("")) {
+	    if(result == 1) {
+			jsonOb.put("result", "success");
+		}else{
 			jsonOb.put("result", "fail");
-		} else {
-			jsonOb.put("result", result);
 		}
 		
 		jsonList.add(jsonOb);
 		
 		writer.println(jsonList);
-		writer.close();
+		
 	}
 
 }
