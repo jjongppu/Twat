@@ -81,25 +81,23 @@ public class MemberDAO {
 	}
 
 	// 占쏙옙橘占싫� 찾占쏙옙 占쌨쇽옙占쏙옙 ---------占승울옙-------------------------------
-	public String searchPW(String MEMBER_ID, String MEMBER_PHONE, String MEMBER_QUESTION, String MEMBER_ANSWER) {
+	public int searchPW(String id, String phone, String question, String answer) {
 //		String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
-		String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_PHONE=? and MEMBER_QUESTION=? and MEMBER_ANSWER=?";
-		String getPW = "";
+		String selectSql = "select * from MEMBER where MEMBER_ID=? and MEMBER_PHONE=? and MEMBER_QUESTION=? and MEMBER_ANSWER=?";
+		int result = 0;
 
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(selectSql);
-			psmt.setString(1, MEMBER_ID);
-//			psmt.setString(2, MEMBER_NAME);
-			psmt.setString(2, MEMBER_PHONE);
-			psmt.setString(3, MEMBER_QUESTION);
-			psmt.setString(4, MEMBER_ANSWER);
+			psmt.setString(1, id);
+			psmt.setString(2, phone);
+			psmt.setString(3, question);
+			psmt.setString(4, answer);
 
 			rs = psmt.executeQuery();
-
-			while (rs.next()) {
-				getPW = rs.getString(1);
-			}
+				
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,7 +115,7 @@ public class MemberDAO {
 			}
 
 		}
-		return getPW;
+		return result;
 	}
 
 	// 회占쏙옙 占싸깍옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 ----------------------------------
