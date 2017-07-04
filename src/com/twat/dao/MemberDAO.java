@@ -93,8 +93,9 @@ public class MemberDAO {
 			psmt.setString(2, phone);
 			psmt.setString(3, question);
 			psmt.setString(4, answer);
-
+			
 			rs = psmt.executeQuery();
+			
 				while(rs.next()){
 					result = 1;
 				}
@@ -1151,7 +1152,51 @@ public class MemberDAO {
 		}
 
 	}
+	public int searchangePW(String userId, String beforePw, String afterPW){
+		
+		
+		int result = 0;
+		
+		
+		try {
+			String sql = "update member set MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) where MEMBER_ID = ? ";
+			con = getConnection();
+			psmt = con.prepareStatement(sql);
+			
+			psmt.setString(1, afterPW);
+			psmt.setString(2, userId);
+			psmt.executeUpdate();
+			result = psmt.executeUpdate();
+			if(result == 1){
+				System.out.println("변경");
+				result = 0;
+			}else{
+				System.out.println("비번변경실패");
+			}
+			
+			
+				
+		} catch (Exception e) {
 
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (rs != null)
+					rs.close();
+				if (psmt != null)
+					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return 0;
+	}
+	
 	public int changePw(String userId, String beforePw, String afterPw) {
 		PreparedStatement psmt2 = null;
 		ResultSet rs2 = null;

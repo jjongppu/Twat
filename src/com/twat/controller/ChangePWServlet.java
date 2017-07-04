@@ -50,21 +50,19 @@ public class ChangePWServlet extends HttpServlet {
 	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
 		
-		HttpSession session = request.getSession();
 		String userId = request.getParameter("userId");
 	    String beforePw = request.getParameter("beforePw");
 		String afterPw = request.getParameter("afterPw");
-		
-		
-		
-	    MemberDAO mdo = MemberDAO.getInstance();
-	    
-	    int result = mdo.changePw(userId, beforePw, afterPw);
-	    
-	    
+		System.out.println(userId);
 	    System.out.println(beforePw);
 	    System.out.println(afterPw);
+	    MemberDAO mdo = MemberDAO.getInstance();
 	    
+	    int result = mdo.searchangePW(userId, beforePw, afterPw);
+	    
+	    
+	    System.out.println(result);
+	    System.out.println("여기까지나오나?");
 	    
 	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
 	    jsonArr.add(jsonObj);

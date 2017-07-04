@@ -67,7 +67,7 @@ public class ChangePwd extends HttpServlet {
 	    
 	    System.out.println(beforePw);
 	    System.out.println(afterPw);
-	    
+	    System.out.println(result);
 	    
 	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
 	    jsonArr.add(jsonObj);
