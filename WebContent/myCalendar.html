@@ -1273,117 +1273,6 @@
     }
 
     //  ================================ 달력 출력 끝! ================================
-
-
-    //================== 모달 작업 부분    =====================================
-//    function getGroupBrith() {
-//        var para = document.location.href.split("?");
-//        para = para[1].split("=");
-//        $.ajax({
-//            type: 'post',
-//            url: 'groupBirth.do',
-//            data: {
-//                group: para[1]
-//            },
-//            dataType: "json",
-//            success: function(data) {
-//                console.log("groupBirth");
-//                console.log(data);
-//                for (var i = 0; i < data.length; i++) {
-//                    var memBirth = data[i].memberBirth + "-" + data[i].memberName + "-" + data[i].memberId;
-//                    birthSet.add(memBirth);
-//                }
-//                console.log("birthSet");
-//                for (let item of birthSet.keys()) {
-//                    console.log(item.split("-"));
-//                    console.log("split : " + item.split("-")[0].substr(2, 4));
-//                }
-//            },
-//            error: function(req) {
-//                //                    alert('통신실패');
-//                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-//            }, beforeSend: function () {
-//                    var width = 0;
-//                    var height = 0;
-//                    var left = 0;
-//                    var top = 0;
-//
-//                    width = 50;
-//                    height = 50;
-//
-//                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
-//                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-//
-//                    if($("#div_ajax_load_image").length != 0) {
-//                           $("#div_ajax_load_image").css({
-//                                  "top": top+"px",
-//                                  "left": left+"px"
-//                           });
-//                           $("#div_ajax_load_image").show();
-//                    }
-//                    else {
-//                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-//                    }
-//             }
-//             , complete: function () {
-//                           $("#div_ajax_load_image").hide();
-//                
-//             }
-//        });
-//    }
-
-
-/* ==== 친구들 생일 뽑아주는 함수 ===== */
-    $(document).ready(function() {
-        document.getElementById("fName").innerHTML="";
-        document.getElementById("fBirth").innerHTML="";
-        $.ajax({
-            type: 'post',
-            url: 'myCalBirth.do',
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                $.each(data, function(index, item) {
-                    console.log(item.friendId);
-                    console.log(item.friendName);
-                    console.log(item.friendBirth);
-                    document.getElementById("fName").innerHTML+="<div class=fname>"+item.friendName+"</div></br>";
-                    document.getElementById("fBirth").innerHTML+="<div class=fbirth>"+item.friendBirth+"</div></br>";
-                });
-            },
-            error: function(req) {
-                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }, beforeSend: function () {
-                    var width = 0;
-                    var height = 0;
-                    var left = 0;
-                    var top = 0;
-
-                    width = 50;
-                    height = 50;
-
-                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
-                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
-
-                    if($("#div_ajax_load_image").length != 0) {
-                           $("#div_ajax_load_image").css({
-                                  "top": top+"px",
-                                  "left": left+"px"
-                           });
-                           $("#div_ajax_load_image").show();
-                    }
-                    else {
-                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-                    }  
-             }
-             , complete: function () {
-                           $("#div_ajax_load_image").hide();
-                
-             }
-
-        });
-    });
-
     
 // ================ 개인일정 뽑아주는 함수! =====================
     
@@ -1411,7 +1300,6 @@
               });
                 $(".leftUp .swiper-wrapper").append(str);
                 
-                
                 var swiper = new Swiper('.leftUp .swiper-container', {
                     pagination: '.leftUp .swiper-pagination',
                     direction: 'vertical',
@@ -1420,10 +1308,8 @@
 //                    centeredSlides: true,
                     spaceBetween: 5,
                     mousewheelControl: true
-                });
-                
+                });  
             },
-            
             error:function(req){ 
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }, beforeSend: function () {
@@ -1451,16 +1337,6 @@
              }
              , complete: function () {
                 $("#div_ajax_load_image").hide();
-//                swip = new Swiper('.leftUp .swiper-container', {
-//                        pagination: '.leftUp .swiper-pagination',
-//                        direction: 'vertical',
-////                        centeredSlides: true,
-////                        slidesPerView: 5,
-//                        slidesPerView: 3,
-//                        paginationClickable: true,
-////                        spaceBetween: 3,
-//                        mousewheelControl: true
-//                    });
              }
         });
     });
@@ -1668,19 +1544,17 @@
                   str2+="<div class='schedules'>"+item.calMemo+"</div>";
                   str2+="<div class='schedules'>"+item.calWriter+"</div></div></br>";
               });
-                  $(".leftDown .swiper-wrapper").append(str2);
+                    $(".leftDown .swiper-wrapper").append(str2);
                 
-                
-                var swiper = new Swiper('.leftDown .swiper-container', {
-                    pagination: '.leftDown .swiper-pagination',
-                    direction: 'vertical',
-                    slidesPerView: 5,
-                    paginationClickable: true,
-//                    centeredSlides: true,
-                    spaceBetween: 5,
-                    mousewheelControl: true
-                });
-                
+                    var swiper = new Swiper('.leftDown .swiper-container', {
+                        pagination: '.leftDown .swiper-pagination',
+                        direction: 'vertical',
+                        slidesPerView: 5,
+                        paginationClickable: true,
+    //                    centeredSlides: true,
+                        spaceBetween: 2,
+                        mousewheelControl: true
+                    });
             },
             error:function(req){
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
@@ -1710,6 +1584,73 @@
              , complete: function () {
                            $("#div_ajax_load_image").hide();
              }
+        });
+    });
+        
+/* ==== 친구들 생일 뽑아주는 함수 ===== */
+    var strBirth = "";
+    $(document).ready(function() {
+        $.ajax({
+            type: 'post',
+            url: 'myCalBirth.do',
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                $.each(data, function(index, item) {
+//                    console.log(item.friendId);
+//                    console.log(item.friendName);
+//                    console.log(item.friendBirth);
+                    console.log(item.friendImg);
+//                    strBirth+="<div class='swiper-slide'><div class=fname>"+item.friendName+"</div>";
+//                    strBirth+="<div class=fbirth>"+item.friendBirth+"</div></div>";
+                    
+                    
+                    strBirth+="<div class='swiper-slide'><div class='myScheList'><img id='friendImg' src='"+item.friendImg+"'/>";
+                    strBirth+="<div><div class=fname>"+item.friendName+"</div>";
+                    strBirth+="<div class=fbirth>"+item.friendBirth+"</div></div></div></div>";
+                });
+                $(".eveLeft .swiper-wrapper").append(strBirth);
+                
+                 var horiSwiper = new Swiper('.eveLeft .swiper-container', {
+                    pagination: '.eveLeft .swiper-pagination',
+                    nextButton: '.eveLeft .swiper-button-next',
+                    prevButton: '.eveLeft .swiper-button-prev',
+                    slidesPerView: 3,
+                    paginationClickable: true,
+                    spaceBetween: 20,
+                    loop: true
+                });
+            },
+            error: function(req) {
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+            }, beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }  
+             }
+             , complete: function () {
+                           $("#div_ajax_load_image").hide();
+                
+             }
+
         });
     });
     
@@ -1827,15 +1768,12 @@
         });
     });
     
-    
     function reloadList(){
         location.reload();
     }
 
 </script>
 </head>
-
-
 
 <body>
     <div id="newWrap">
@@ -1905,19 +1843,7 @@
                         <div class="privSchedule">
                             <div class="program txt">단체 일정</div>
                             <div class="decoLine"></div>
-                        </div>
-
-<!--
-                            <div class="schCont scheDate txt" id="calDate"></div>
-                            <div class="schCont scheText txt" id="calMemo"></div>
-                            <div class="schCont dayTime" id="calWriter">
--->
-<!--
-                                <div class="schCont scheTime txt">오전 08시 00분</div>
-                                <div class="scheDetail txt">자세히 보기gogo</div>
--->
-<!--                            </div>-->
-                       
+                        </div>                       
                             <div class="swiper-container">
                                 <div class="swiper-wrapper"></div>
                                 <div class="swiper-pagination"></div>
@@ -1932,17 +1858,13 @@
                                 <div class="closeText txt">친구 생일</div>
                                 <div class="closeDeco"></div>
                             </div>
-                            <div class="closeSub">
-                                <div class="sub closePic">
-                                    <!--<img src="/img/member/jennie.png" id="user_Img">--></div>
-                                <div class="sub closeName txt">
-                                    <div id="fName"></div>
-                                </div>
-                                <div class="sub closeCont txt">
-                                    <div id="fBirth"></div>
-                                </div>
-                                </br>
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper"></div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
                             </div>
+
                         </div>
                     </div>
                     
@@ -2041,19 +1963,6 @@
 
         </div>
     </div>
-    <script>
-//        $(document).ready(function(){
-//            var swiper = new Swiper('.leftUp .swiper-container', {
-//                        pagination: '.leftUp .swiper-pagination',
-//                        direction: 'vertical',
-////                        centeredSlides: true,
-//                        slidesPerView: 5,
-//                        paginationClickable: true,
-//                        spaceBetween: 3,
-//                        mousewheelControl: true
-//                    });
-//        });
-    </script>
 </body>
 
 </html>

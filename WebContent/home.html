@@ -19,7 +19,301 @@
         background-attachment: fixed;
         background-position: center top;
     }
+    
+    #sub_container1{
+        border: 1px solid black;
+/*        display : inline-block;*/
+        width: 1250px;
+        height: 396px;
+        margin-left: 100px;
+        margin-bottom: 0;
+        
+    }
+    
+    #sub_container2{
+        border: 1px solid blue;
+/*        display : inline-block;*/
+        width: 1250px;
+        height: 396px;
+        margin-left: 100px;
+        margin-top : 0;
+        
+        
+    }
+    
+    #sub2_1{
+        display: inline-block;
+        border: 1px solid red;
+        width: 620px;
+        height: 395px;
+        float: left;
+        
+    }
+    
+    #sub2_2{
+        display: inline-block;
+        border: 1px solid green;
+        width: 620px;
+        height: 395px;
+        float: right;
+    }
+
+    
+    .sub_news, sub_news th,.sub_news th{
+        border:0;
+    }
+    
+    .sub_news a{
+        color:#383838;
+        text-decoration: none;
+    }
+    
+    .sub_news{
+        width:88%;
+/*        border-bottom: 1px solid #999;              */
+        color:#666;
+        font-size : 12px;
+        table-layout: fixed;
+        margin: auto;
+      
+    }
+    
+    
+/*
+    .sub_news caption{
+        display: none;
+    }
+*/
+    
+    .sub_news th{
+        padding:5px 0 6px;
+        border-top: solid 1px #999;        
+/*        border-bottom: solid 1px #b2b2b2;*/
+        background-color: #f1f1f4;
+        color:#333;
+        font-weight: bold;
+        line-height: 20px;
+        vertical-align: top;
+        
+              
+    }
+    
+    .sub_news td{
+        padding: 5px 0;
+/*        border-bottom: solid 1px #d2d2d2;*/
+        text-align: center;
+        line-height: 18px;
+        overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+
+
+        
+    }
+    
+    .sub_news .data, .sub_news .hit{
+        padding:0;
+        
+        font-family: fantasy;
+        font-size: 11px;
+        line-height: normal;
+        
+    }
+    
+    
+    .sub_news .title{
+        text-align: left;
+        padding-left: 15px;
+        font-size: 13px;
+        
+    }
+    
+    .sub_news .title .pic, sub_news .title .new{
+        margin: 0 0 2px;
+        vertical-align: middle;
+    }
+    
+    
+    
+    
+    
+    .sub_news .title a.comment{
+        padding:0;
+        background: none;
+        color: #f00;
+        font-size:12px;
+        font-weight: bold;
+        
+    }
+    
+    .sub_news .title a{
+        padding-left: 16px;
+        
+        
+    }
+    
+    
+    
+    
 </style>
+    
+    <script>
+        
+        $(document).ready(function(){
+            
+            
+            $.ajax({
+                
+                
+                type: "post", 
+                url: "HomeNoticeBoard.do",               
+                dataType:"json",
+                data:{
+                    classification : "공지사항"
+                    
+                },
+                success: function (data){
+//                    console.log(data);
+                    
+          
+                    for(var i = 0; i < data.length; i++){
+                        
+                        document.getElementById("noticeBoard").innerHTML += '<tr>'
+                            + '<td class="title"><a href="#">' + data[i].noticeTitle + '</a></td>'
+                            + '<td class="name">' + data[i].noticeWriter + '</td>'
+                            + '<td class="data">' + data[i].noticeDate + '</td>'
+                            + '<td class="hit">' + data[i].noticeViews + '</td></tr>';
+                        
+                    }
+                    
+                   
+                    
+                    
+                }, error: function(req) {
+
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : HomeNoticeBoard.do");
+                }    
+                , beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+                    $('#blindCoverWhite').css('display','block');
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
+                           $("#div_ajax_load_image").hide();
+                
+             }
+            
+            
+             });
+            
+            
+             $.ajax({
+                
+                
+                type: "post", 
+                url: "HomeNoticeBoard.do",               
+                dataType:"json",
+                data:{
+                    classification : "이벤트"
+                    
+                },
+                success: function (data){
+//                    console.log(data);
+                    
+          
+                    for(var i = 0; i < data.length; i++){
+                        
+                        document.getElementById("eventBoard").innerHTML += '<tr>'
+                            + '<td class="title"><a href="#">' + data[i].noticeTitle + '</a></td>'
+                            + '<td class="name">' + data[i].noticeWriter + '</td>'
+                            + '<td class="data">' + data[i].noticeDate + '</td>'
+                            + '<td class="hit">' + data[i].noticeViews + '</td></tr>';
+                        
+                    }
+                    
+                   
+                    
+                    
+                }, error: function(req) {
+
+
+                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : HomeNoticeBoard.do");
+                }    
+                , beforeSend: function () {
+                    var width = 0;
+                    var height = 0;
+                    var left = 0;
+                    var top = 0;
+
+                    width = 50;
+                    height = 50;
+                    $('#blindCoverWhite').css('display','block');
+
+                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+       
+
+                    if($("#div_ajax_load_image").length != 0) {
+                           $("#div_ajax_load_image").css({
+                                  "top": top+"px",
+                                  "left": left+"px"
+                           });
+                           $("#div_ajax_load_image").show();
+                    }
+                    else {
+                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                    }
+                    
+
+             }
+             , complete: function () {
+                 $('#blindCoverWhite').css('display','none');
+                           $("#div_ajax_load_image").hide();
+                
+             }
+            
+            
+             });
+            
+            
+        });
+            
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    </script>
+    
+    
 <body>
 
     <div id="newWrap">
@@ -57,6 +351,96 @@
         
         <div id="main_container">
 <!--            여기에 각자 페이지 넣으시면 됩니다~~~~~~~~  -->
+            
+            <div id="sub_container1">
+               
+                
+            
+            </div>
+            
+            
+            <div id="sub_container2">
+                <div id="sub2_1">
+                    <table class="sub_news" border="0">
+                        <caption>공지사항</caption>
+                        <colgroup>
+                        <col>
+                        <col width="110" />
+                        <col width="100" />
+                        <col width="80" />
+                        
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col">제목</th>
+                                <th scope="col">글쓴이</th>
+                                <th scope="col">날짜</th>
+                                <th scope="col">조회수</th>
+                            </tr>
+                        </thead>
+                        <tbody id="noticeBoard">
+<!--
+                            <tr>
+                                <td class="title">
+                                    <a href="#">게시판 제목</a>
+                                    <img width="13" height="12" class="pic" alt="첨부이미지" src="img/etcIcon/adminView_visit.png">
+                                    <a class="comment" href="#">[5]</a>
+                                    <img width="10" height="9" class="new" alt="새글" src="img/etcIcon/new-bingo-sites.png">
+                                </td>
+                                <td class="name">글쓴이이름</td>
+                                <td class="data">2008/02/14</td>
+                                <td class="hit">1234</td>
+                                
+                            </tr>
+-->
+                           
+                           
+                        </tbody>
+                    
+                    
+                    </table>
+                    
+                    
+                    
+                </div>
+                <div id="sub2_2">
+                    
+                    <table class="sub_news" border="0">
+                        <caption>이벤트</caption>
+                        <colgroup>
+                        <col>
+                        <col width="110" />
+                        <col width="100" />
+                        <col width="80" />
+                        
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col">제목</th>
+                                <th scope="col">글쓴이</th>
+                                <th scope="col">날짜</th>
+                                <th scope="col">조회수</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventBoard">
+
+                           
+                           
+                        </tbody>
+                    
+                    
+                    </table>
+                    
+                    
+               
+                </div>
+                
+            
+            </div>
+            
+            
+            
+            
         </div>
         
         
