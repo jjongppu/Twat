@@ -51,11 +51,29 @@
             dataType : "json",
             success : function(data) {
                 var result = data[0].result;
-
+				
                 console.log(result);
 
 //                console.log(result);
-                alert(result);
+//                alert(result);
+				
+				
+				// 아이디 부분 * 표시 처리하기 수정중 ...
+				var idResult = result;
+				idResult.charAt(3)
+				var idArr = idResult.split("");
+
+				for(var i = idArr.length-4; i < idArr.length-1; i++ ){
+					idArr[i] = "*";
+
+				}
+				idResult = idArr + "";
+
+				idResult = idResult.replace(/\,/g,''); //특정문자 제거
+				console.log(idResult);
+				
+				
+				
             },
             error: function(req) {
                 console.log("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "searchID.do");
