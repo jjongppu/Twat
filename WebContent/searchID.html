@@ -4,6 +4,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="js/jquery-3.2.1.min.js"></script>   
 <style>
+	body {
+        margin: 0;
+        padding: 0;
+        background-image: url(img/background/back1.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+	.logoBox {
+        height: 180px;
+        line-height: 180px;
+        font-size: 40px;
+    }
+	#logo{
+        width: 240px;
+        height: auto;
+    }
+	
     .container {
         text-align: center;
         width: 600px;
@@ -12,15 +31,17 @@
     }
 
 	#contentHeader {
-		margin-top: 120px;
+/*		margin-top: 120px;*/
 /*		border: 1px solid blue;*/
 	}
+
+	
 	#contentBody {
-		border: 1px solid #e5e5e5;
+/*		border: 1px solid #e5e5e5;*/
 		padding: 60px 0 60px 0;
 	}
 	#contentSubmit {
-		margin-top: 40px;
+/*		margin-top: 40px;*/
 /*		border: 1px solid red;*/
 	}
 	.text {
@@ -34,11 +55,26 @@
 		width: 400px;
 		margin: 0 auto;
 	}
-	#button {
+	.btn {
 		border: none;
-		width: 50px;
+		width: 80px;
 		height: 28px;
 	}
+	
+	#searchBoxWrap {
+		margin-top: 30px;
+/*		border: 1px solid #e5e5e5;*/
+		display: none;
+	}
+	#searchH {
+/*		border-bottom: 1px solid #e5e5e5;*/
+	}
+	#goLogin {
+		margin: 20px 0 20px 0;
+		width: 130px;
+	}
+	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기존 아이디찾기 페이지 css   ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	
 
 </style>
     
@@ -54,10 +90,6 @@
 				
                 console.log(result);
 
-//                console.log(result);
-//                alert(result);
-				
-				
 				// 아이디 부분 * 표시 처리하기 수정중 ...
 				var idResult = result;
 				idResult.charAt(3)
@@ -72,7 +104,12 @@
 				idResult = idResult.replace(/\,/g,''); //특정문자 제거
 				console.log(idResult);
 				
+				var searchId = "";
 				
+				searchId = '<span>' + idResult + '</span>';
+				
+				$('#searchIdBox').html(searchId);
+				$('#searchBoxWrap').css('display', 'block');
 				
             },
             error: function(req) {
@@ -110,6 +147,9 @@
 <body>
 	<form id="searchID" action="searchID.do" method="post">
         <div class="container">
+			<div class='logoBox'>
+				<img id="logo" src="img/etcIcon/logo.png"/>
+            </div>
 			<div id="contentHeader">
 				<h4 id="contentHeader_text">아이디 찾기</h4>
 			</div>
@@ -118,19 +158,28 @@
 					<div class="text">
 						이름
 					</div>
-					<input type="text" name="userName" />
+					<input type="text" class="inputBox" name="userName" />
 				</div>
 				<div id="phone" class="textBox">
 					<div class="text">
 						전화번호
 					</div>
-					<input type="text" name="userPhone" id="phoneBox" onkeyup="autoHypen()"/>
+					<input type="text" name="userPhone" id="phoneBox" class="inputBox" onkeyup="autoHypen()"/>
 				</div>
 			</div>
 			<div id="contentSubmit">
 				<div>
-					<input type="button" value="확인" id="button" onclick="searchEnter()"/>
+					<input type="button" value="확인" id="submitBtn" class="btn" onclick="searchEnter()"/>
+					<input type="button" value="뒤로가기" id="backBtn" class="btn" onclick="location.href='index.html'"/>
 				</div>
+			</div>
+			
+			<div id="searchBoxWrap">
+				<h4 id="searchH">찾은 아이디</h4>
+				<div id="searchIdBox">
+<!--					<span>찾은 아이디 들어갈 곳</span>-->
+				</div>
+				<input type="button" value="로그인하러 가기" id="goLogin" class="btn" onclick="location.href='index.html'" />
 			</div>
         </div>
     </form>

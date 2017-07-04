@@ -58,6 +58,14 @@
 			width: 1000px;
 			background-color: #e6e6e6;
 			margin-bottom: 20px;
+			
+		}
+		#top_title {
+			border-bottom: 1px solid gray;
+			padding: 5px;
+		}
+		#bottom_title {
+			padding: 5px;
 		}
 
 		#time_div {
@@ -74,7 +82,7 @@
 			padding-left: 10px;
 		}
 		#middle_container2 {
-			background-color: yellow;
+/*			background-color: yellow;*/
 			margin-bottom: 30px;
 		}
 		#bottom_container {
@@ -104,8 +112,9 @@
 		var parameter = url.split('=', 2);
 		console.log(parameter[1]);
 		
+		
+		// 글 띄우기
 		$.ajax ({
-			
 			type : 'post',
 			url : 'QnaDetail.do',
 			data : { val : parameter[1] },
@@ -119,6 +128,15 @@
 				console.log(data[0].QNA_CONTENTS);
 				console.log(data[0].QNA_PW);
 				console.log(data[0].QNA_REPLY);
+				console.log(data[0].sessionId);
+				
+				// 다른 사람꺼 건의글 봤을때 수정하기 버튼 없애기 수정중
+				if(data[0].MEMBER_ID != data[0].sessionId) {
+					$('#update_btn_div').css('display', 'none');
+				} else {
+					$('#update_btn_div').css('display', 'block');
+				}
+				
 				var category = "";
 				var title = "";
 				var id = "";
@@ -136,7 +154,11 @@
 //				time = '</span>';
 				time = '<span id="time_span">' + data[0].QNA_DATE + '</span>';
 				content = '<span id="content_span">' + data[0].QNA_CONTENTS + '</span>';
-				reply = '<span id="reply_span">' + data[0].QNA_REPLY + '</span>';
+				if(data[0].QNA_REPLY == null) {
+					reply = '<span id="reply_span">' + "관리자의 댓글이 아직 작성되지 않았습니다." + '</span>';
+				} else {
+					reply = '<span id="reply_span">' + data[0].QNA_REPLY + '</span>';
+				}
 				
 				$('#category_div').html(category);
 				$('#title_div').html(title);

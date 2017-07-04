@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -51,6 +52,8 @@ public class QnaDetailServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 	    System.out.println("!");
+		HttpSession session = request.getSession();
+	    String userId = (String)session.getAttribute("loginUserId");
 	    int val = Integer.parseInt(request.getParameter("val"));
 	    System.out.println(val);
 	    QnaDAO qnaDao = QnaDAO.getInstance();
@@ -67,6 +70,8 @@ public class QnaDetailServlet extends HttpServlet {
 				jsonObj.put("QNA_DATE", detailList.get(i).getQNA_DATE().toString());
 				jsonObj.put("QNA_REPLY", detailList.get(i).getQNA_REPLY());
 				
+				// 세션 아이디 가져오기
+				jsonObj.put("sessionId", userId);
 				jarr.add(jsonObj);
 				
 			}
