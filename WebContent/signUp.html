@@ -101,6 +101,9 @@
 	pwTF = false;
 	nameTF = false;
 	birthTF = false;
+	questionTF = false;
+	answerTF = false;
+	
 	
     // 성별 M/F
     function test(a) {
@@ -115,6 +118,8 @@
         checkPassword();
 		checkName();
 		checkBirth();
+		checkQuestion();
+		checkAnswer();
 		
         if($('#pwBox').val() == "") {
             alert("비밀번호를 입력하세요.");
@@ -122,7 +127,7 @@
         } else if($('#phoneBox').val() == "") {
             alert("전화번호를 입력하세요.");
             $('#phoneBox').focus();
-        } else if(idTF && pwTF && nameTF && birthTF) {
+        } else if(idTF && pwTF && nameTF && birthTF && questionTF && answerTF) {
             $.ajax ({
 				type : 'post',
 				url : 'signUp.do',
@@ -167,11 +172,13 @@
 		var name = $('#nameBox').val();
 		
 		if(name == "") {
-			$('#nameMessage').html("<p style='font-size:10px; color:red'>이름은 필수 입력 사항입니다.</p>");
+//			$('#nameMessage').html("<p style='font-size:10px; color:red'>이름은 필수 입력 사항입니다.</p>");
+			alert("이름은 필수 입력 사항입니다.");
 			nameTF = false;
             $('#nameBox').focus();
 		} else if(!nameRegex.test(name)) {
-			$('#nameMessage').html("<p style='font-size:10px; color:red'>한글로만 입력해주세요.</p>");
+//			$('#nameMessage').html("<p style='font-size:10px; color:red'>한글로만 입력해주세요.</p>");
+			alert("이름은 한글로만 입력해주세요.");
 			nameTF = false;
 		} else {
 			nameTF = true;
@@ -251,43 +258,7 @@
          
     }
 
-    
-    
-    // 아이디 실시간 검색 ........테스트중.......
-//        function overlapId() {
-//			var result = data[0].result;
-//				var idVal = $('#idBox').val().length;
-//				var idVal2 = $('#idBox').val();
-//				var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
-//				
-//                console.log(result);
-//				// 1번
-//                if(result == 'fail') {
-//					if(idVal < 6 || idVal > 12) {
-//						$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
-//					} else if(!idRegex.test(idVal2)) {
-//						$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
-//					} else {
-//						$('#idMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 아이디입니다.</p>");
-//						$.ajax ({
-//							type : 'post',
-//							url : 'idCheck.do',
-//							data : $('#idBox').serialize(),
-//							dataType : "json",
-//							success : function(data) {
-//								console.log(data);
-//
-//
-//							},
-//							error: function(req) {
-//								alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
-//							}
-//            			});
-//					}
-//                } else {
-//                    $('#idMessage').html("<p style='font-size:10px; color:red'>사용중이거나 사용 불가한 아이디입니다.</p>");
-//                }	
-//        };
+
 	
 		// 아이디 실시간 검색.....
 		function overlapId() {
@@ -313,9 +284,11 @@
 					} else if(result == 'fail') {
 						if(idVal < 6 || idVal > 12) {
 							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
+							$('#idBox').focus();
 							idTF = false;
 						} else if(!idRegex.test(idVal2)) {
 							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
+							$('#idBox').focus();
 							idTF = false;
 						} else {
 							$('#idMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 아이디입니다.</p>");
@@ -323,6 +296,7 @@
 						}
                     } else {
                         $('#idMessage').html("<p style='font-size:10px; color:red'>사용중이거나 사용 불가한 아이디입니다.</p>");
+						$('#idBox').focus();
 						idTF = false;
                     }
                     
@@ -366,34 +340,85 @@
 		var today = new Date(); // 현재 날짜(년월일)
 		var yearNow = today.getFullYear();
 		
-		if(year == '' || month == '' || day == '') {
-			if(year < 1900 || year > yearNow) {
+		console.log(year);
+		console.log(month);
+		console.log(day);
+//		console.log(today);
+		console.log(yearNow);
+		
+//		if(year == '' && month == '00' && day == '') {
+//			alert("년, 월, 일을 입력하세요.");
+//			birthTF = false;
+//		} else if(year < 1900 || year > yearNow) {
+//			alert("년도를 확인하세요.");
+//			birthTF = false;
+//		} else if(month < 1 || month > 12) {
+//			alert("월을 확인하세요.");
+//			birthTF = false;
+//		} else if(day < 1 || day > 31) {
+//			alert("1일부터 31일까지 입력 가능합니다.");
+//			birthTF = false;
+//		} else if((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
+//			alert(month + "월은 31일이 존재하지 않습니다.");
+//			birthTF = false;
+//		} else if(month == 2) {
+//			var checkFeb = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+//			if(day > 29 || (day == 29 && !checkFeb)) {
+//				alert(year + "년 2월은 " + day + "일이 없습니다. 다시 입력해주세요.");
+//				birthTF = false;
+//			}
+//		} else {
+//			birthTF = true;
+//		}
+		
+			if(year == '' && month == '00' && day == '') {
+				alert("년, 월, 일을 입력하세요.");
+				birthTF = false;
+			} else if(year < 1900 || year > yearNow) {
 				alert("년도를 확인하세요.");
 				birthTF = false;
-			}
-			if(month < 1 || month > 12) {
-				alert("월을 확인하세요.");
+			} else if(month < 1 || month > 12) {
+				alert("월을 선택해 주세요.");
 				birthTF = false;
-			}
-			if(day < 1 || day > 31) {
+			} else if(day < 1 || day > 31) {
 				alert("1일부터 31일까지 입력가능합니다.");
 				birthTF = false;
-			}
-			if((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
+			} else if((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
 				alert(month + "월은 31일이 존재하지 않습니다.");
 				birthTF = false;
-			}
-			if(month == 2) {
+			} else if(month == 2) {
 				var checkFeb = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 				if(day > 29 || (day == 29 && !checkFeb)) {
 					alert(year + "년 2월은 " + day + "일이 없습니다. 다시 입력해주세요.");
 					birthTF = false;
+				} else {
+					birthTF = true;
 				}
-			}
+			} 
+			
+			
+	}
+	
+	function checkQuestion() {
+		console.log($('#questionBox').val());
+		var question = $('#questionBox').val();
+		if(question == '- 선택 -') {
+			alert('본인확인 질문을 선택해주세요.');
+			questionTF = false;
 		} else {
-			birthTF = true;
+			questionTF = true;
 		}
-
+	}
+	
+	function checkAnswer() {
+		console.log($('#answerBox').val());
+		var answer = $('#answerBox').val();
+		if(answer == '') {
+			alert('본인확인 답변을 입력해주세요.');
+			answerTF = false;
+		} else {
+			answerTF = true;
+		}
 	}
 	
 
@@ -468,7 +493,7 @@
 					</select>
 				</div>
 				<div>
-                    <input type="text" name="signUpAnswer" placeholder="본인확인 질문 답변 " class="inputBox" id="answerBox" />
+                    <input type="text" name="signUpAnswer" placeholder="본인확인 질문 답변 " maxlength="20" class="inputBox" id="answerBox" />
                     <div id="idMessage"></div>
                 </div>
 				
