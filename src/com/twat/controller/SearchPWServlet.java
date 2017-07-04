@@ -60,7 +60,7 @@ public class SearchPWServlet extends HttpServlet {
 		JSONObject jsonOb = new JSONObject();
 	    
 	    if(result == 1) {
-			jsonOb.put("result", "success");
+			jsonOb.put("result", result);
 		}else{
 			jsonOb.put("result", "fail");
 		}

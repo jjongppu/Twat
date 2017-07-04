@@ -10,6 +10,8 @@
     <link rel= "stylesheet" type="text/css" href="css/nav.css">
 <!--    네브바 js, 세션검사 -->
     <script src="js/nav.js"></script>
+     <script src="js/swiper.jquery.min.js"></script>
+    <link rel="stylesheet" href="css/swiper.min.css">
 </head>
 <style>
     body{
@@ -21,7 +23,6 @@
     }
     
     #sub_container1{
-        border: 1px solid black;
 /*        display : inline-block;*/
         width: 1250px;
         height: 396px;
@@ -31,7 +32,6 @@
     }
     
     #sub_container2{
-        border: 1px solid blue;
 /*        display : inline-block;*/
         width: 1250px;
         height: 396px;
@@ -43,7 +43,6 @@
     
     #sub2_1{
         display: inline-block;
-        border: 1px solid red;
         width: 620px;
         height: 395px;
         float: left;
@@ -52,7 +51,6 @@
     
     #sub2_2{
         display: inline-block;
-        border: 1px solid green;
         width: 620px;
         height: 395px;
         float: right;
@@ -150,9 +148,32 @@
         
     }
     
+    .swiper-container {
+        width: 90%;
+        height: 90%;
+        margin: 20px auto;
+        display: block;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        background-size: 100% 100%;
+    }
     
     
+    #swiper1{
+        background-image: url(img/benner/benner1.jpg);
+    }
+    #swiper2{
+        background-image: url(img/benner/benner2.jpg);
+    }
+    #swiper3{
+        background-image: url(img/benner/benner3.jpg);
+    }
     
+    .swiper-pagination-white .swiper-pagination-bullet-active{
+        background-color: black;
+    }
 </style>
     
     <script>
@@ -354,6 +375,39 @@
             
             <div id="sub_container1">
                
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" id="swiper1"></div>
+                            <div class="swiper-slide" id="swiper2"></div>
+                            <div class="swiper-slide" id="swiper3"></div>
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination swiper-pagination-white"></div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next swiper-button-white"></div>
+                        <div class="swiper-button-prev swiper-button-white"></div>
+                    </div>
+
+                    <!-- Swiper JS -->
+                   
+
+                    <!-- Initialize Swiper -->
+                    <script>
+                    var swiper = new Swiper('.swiper-container', {
+                        pagination: '.swiper-pagination',
+                        slidesPerView: 'auto',
+                        paginationClickable: true,
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev',
+                        spaceBetween: 30,
+                        effect: 'fade',
+                        centeredSlides: true,
+                        autoplay: 2500,
+                        autoplayDisableOnInteraction: false
+                    });
+                    </script>
+
+                
                 
             
             </div>

@@ -1921,17 +1921,23 @@
 						//                        console.log(item.split("-"));
 						//                        console.log("split : " + item.split("-")[0].substr(2, 4));
 						var birthDay = tempBirth[i].split("-")[0];
+//						console.log(CurrentMonth);
+						console.log(birthDay);
 						//						var str = "<div class='content'><div class='left birth'>" + parseInt(birthDay.substr(0, 2)) + "월 " + parseInt(birthDay.substr(2, 2)) + "일</div>";
 						//						str += "<div class='middle birth'>" + tempBirth[i].split("-")[1] + "님(" + tempBirth[i].split("-")[2] + ")의 생일</div>";
 						//						str += "<div class='right birth'></div></div>";
 						var str = "<div class='birthListBox'>";
+                        
 						if (i == 0) {
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'>                                             </div></div>";
 							CurrentMonth = parseInt(birthDay.substr(0, 2));
 						} else if (parseInt(birthDay.substr(0, 2)) > CurrentMonth) {
+//							console.log("1");
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'>                                              </div></div>";
+                            CurrentMonth = parseInt(birthDay.substr(0, 2));
 						} else {
-							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'><div class='stick'>                                                     </div></div>";
+                            console.log(tempBirth[i]);
+							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>하이<div class='stick'>                                                     </div></div>";
 						}
 
 						str += "<div class='birthMemBox' id='bMB" + i + "' value='" + tempBirth[i].split("-")[2] + "' onclick='getbMB(this)'>&nbsp;";
@@ -1961,6 +1967,7 @@
 							CurrentMonth = parseInt(birthDay.substr(0, 2));
 						} else if (parseInt(birthDay.substr(0, 2)) > CurrentMonth) {
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'>                                 </div></div>";
+							CurrentMonth = parseInt(birthDay.substr(0, 2));
 						} else {
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'><div class='stick'>                                 </div></div>";
 						}
