@@ -4,12 +4,14 @@
         background-size: cover;
         background-attachment: fixed;
         background-position: center top;
+        font-family: sans-serif;    
+
     }
 
 html,body{
             margin: 0;
             padding: 0;
-/*			font-family: */
+			font-family: sans-serif;    
         }
         div{
             position: relative;

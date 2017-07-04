@@ -5,6 +5,10 @@
     #B3B2C1 : 그레이
 */
 
+@font-face{
+    font-family:"";
+}
+
 body {
     background-image: url(../img/background/back4.jpg);
     background-repeat: no-repeat;
@@ -260,6 +264,9 @@ li {
 .scheList2{
 /*    width:230px;*/
     width:55%;
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space:nowrap;
 }
 
 .scheList3{
