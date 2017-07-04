@@ -263,7 +263,7 @@
                 if($("#chPwd").val() == $("#chkPwd").val()){                    
                     $.ajax({
                     type: "post",
-                    url: "ChangePwd.do",
+                    url: "ChangePW.do",
                     datatype: "json",
                     data: {
                         beforePw : $("#nowPwd").val(),
@@ -272,7 +272,7 @@
                     success: function(data){
                         var result = data[0].result;
                             if(result == '-1'){
-                                alert("현재 비밀번호가 일치하지 않습니다.");
+                                alert("비밀번호가 이상해슈바...");
                             }else if(result == '0'){
                                 alert("비밀번호가 변경되었습니다.");
                                 location.href='myInfo.html';
