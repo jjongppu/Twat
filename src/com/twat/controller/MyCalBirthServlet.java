@@ -53,7 +53,8 @@ public class MyCalBirthServlet extends HttpServlet {
 	    	JSONObject jsonObj = new JSONObject();
 	    	jsonObj.put("friendId", memArr.get(i).getMEMBER_ID());
 	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());	    	
-	    	jsonObj.put("friendBirth", memArr.get(i).getMEMBER_BIRTH());	    	
+	    	jsonObj.put("friendBirth", memArr.get(i).getMEMBER_BIRTH());	
+	    	jsonObj.put("friendImg", memArr.get(i).getMEMBER_IMG());
 	    	jsonArr.add(jsonObj);
 //	    	System.out.println(getServletName());
 	    }

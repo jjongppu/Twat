@@ -135,7 +135,22 @@
 			console.log(url);
 			var parameter = url.split('=', 2);
 			console.log(parameter[1]);
-
+			
+			pwTest(); // 비밀번호 숫자로만 입력
+			
+			if($('#cateId option:selected').val() == "--") {
+				alert("카테고리를 선택해주세요.");
+				$('#cateId').focus();
+			} else if($('#pwId').val() == "") {
+				alert("비밀번호를 설정해 주세요.");
+				$('#pwId').focus();
+			} else if($('#titleId').val() == "") {
+				alert("제목을 입력해 주세요.");
+				$('#titleId').focus();
+			} else if($('#contId').val() == "") {
+				alert("내용을 입력해 주세요.");
+				$('#contId').focus();
+			} else {
 				$.ajax ({
 					type : 'post',
 					url : 'QnaUpdate.do',
@@ -160,6 +175,7 @@
 					},
 				});	
 			}
+		}
 	
 	
 	</script>
