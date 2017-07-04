@@ -133,8 +133,9 @@
 				// 다른 사람꺼 건의글 봤을때 수정하기 버튼 없애기 수정중
 				if(data[0].MEMBER_ID != data[0].sessionId) {
 					$('#update_btn_div').css('display', 'none');
+					$('#delete_btn_div').css('display', 'none');
 				} else {
-					$('#update_btn_div').css('display', 'block');
+//					$('#update_btn_div').css('display', 'block');
 				}
 				
 				var category = "";
