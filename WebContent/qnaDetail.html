@@ -20,7 +20,8 @@
         }
 		
 		/* 외부 css 땜시 따로 display : block */
-		#title_box, #top_title, #middle_container, #middle_container2, #bottom_container, #bottom_title {
+
+		div {
 			display: block;
 		}
 		
@@ -32,11 +33,11 @@
 		#wrap {
 /*			border: 1px solid black;*/
 /*			margin-left: 100px;*/
-			width: 1000px;
-			height: 600px;
+			width: 700px;
+			height: 500px;
 			margin: 0 auto;
 			position: absolute;
-			top: 50%;
+			top: 35%;
 			left: 50%;
 			transform: translate(-50%,-50%);
 		}
@@ -53,9 +54,10 @@
 		}
 		
 		#top_container {
+			
 /*			border: 1px solid green;*/
 			border-top: 2px solid gray;
-			width: 1000px;
+			width: 700px;
 			background-color: #e6e6e6;
 			margin-bottom: 20px;
 			
@@ -76,7 +78,7 @@
 		#middle_container {
 /*			border: 1px solid orange;*/
 			border: 1px solid gray;
-			height: 350px;
+			height: 250px;
 			margin-bottom: 20px;
 			padding-top: 10px;
 			padding-left: 10px;
@@ -155,7 +157,7 @@
 //				time = '</span>';
 				time = '<span id="time_span">' + data[0].QNA_DATE + '</span>';
 				content = '<span id="content_span">' + data[0].QNA_CONTENTS + '</span>';
-				if(data[0].QNA_REPLY == null) {
+				if(data[0].QNA_REPLY == null || data[0].QNA_REPLY == "") {
 					reply = '<span id="reply_span">' + "관리자의 댓글이 아직 작성되지 않았습니다." + '</span>';
 				} else {
 					reply = '<span id="reply_span">' + data[0].QNA_REPLY + '</span>';
