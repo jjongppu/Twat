@@ -67,7 +67,7 @@
 			margin-bottom: 10px;
 		}
         #contentTitleWrapUl li{
-            background-color: #AFBACB;
+            background-color: #e6e6e6;
             text-align: center;
         }
         #contentListWrapUl li{
@@ -95,7 +95,7 @@
     #pageChoiceCover{
         padding: 10px 0;
         width: 800px;
-        margin: auto;
+        margin: 20px auto;
     }
         .btn{
             display: inline-block;
@@ -170,7 +170,7 @@
                     var num = page*10+i+1-10;
                     userInfos += '<li class="listLi" ';
                     if(i%2 !=0){
-                        userInfos += ' style="background-color: #AFBACB;" ';
+                        userInfos += ' style="background-color: #e6e6e6;" ';
                     }
                     userInfos += 'id="'+data[i].QNA_ID+'" onclick="qnaDetailPage(this)">';    
                     userInfos += '<span class="listNum">'+num+'</span>';
@@ -440,9 +440,9 @@
 
 			</ul>
 		</div>
-		<div>
+		<div id="writeBtnDiv">
             <div class="btn writeBtn" onclick="location.href='qnaWrite.html'">글쓰기</div>
-			</div>
+		</div>
             
             
             
