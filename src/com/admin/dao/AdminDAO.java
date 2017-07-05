@@ -87,11 +87,11 @@ public class AdminDAO {
 			ArrayList<Integer> info = new ArrayList<Integer>();
 			
 			String selectGetInfo = "SELECT"; 
-			selectGetInfo +="(SELECT COUNT(*) FROM member) as memC,";
-			selectGetInfo +="(SELECT COUNT(*) FROM qna) as qnaC,";
-			selectGetInfo +="(SELECT COUNT(*) FROM calendar where CAL_DEPTH=0) as calC,";
-			selectGetInfo +="(SELECT SUM(VISIT_COUNT) FROM VISIT) as visC,";
-			selectGetInfo +="(SELECT COUNT(*) FROM calgather) as calgC";	
+			selectGetInfo +="(SELECT COUNT(*) FROM MEMBER) AS memC,";
+			selectGetInfo +="(SELECT COUNT(*) FROM QNA) AS qnaC,";
+			selectGetInfo +="(SELECT COUNT(*) FROM CALENDER WHERE CAL_DEPTH=0) AS calC,";
+			selectGetInfo +="(SELECT SUM(VISIT_COUNT) FROM VISIT) AS visC,";
+			selectGetInfo +="(SELECT COUNT(*) FROM CALGATER) AS calgC";	
 			
 			try {
 				con = getConnection();
@@ -342,14 +342,14 @@ public class AdminDAO {
 			if(!val.equals("0")){
 				selectGroupCount+= " WHERE QNA_CONTENTS LIKE ?";
 			}
-			selectGroupCount+= " ORDER BY QNA_REPLY asc";
+			selectGroupCount+= " ORDER BY QNA_REPLY ASC";
 			
 			//실질적인 내용
 			String selectAllgroupSql = "SELECT * FROM QNA";
 			if(!val.equals("0")){
 				selectAllgroupSql+= " WHERE QNA_CONTENTS LIKE ?";
 			}
-			selectAllgroupSql +=  " ORDER BY QNA_REPLY asc LIMIT "+ (page*10-10) +",10";
+			selectAllgroupSql +=  " ORDER BY QNA_REPLY ASC LIMIT "+ (page*10-10) +",10";
 			
 			try{
 				con = getConnection();
@@ -581,7 +581,7 @@ public class AdminDAO {
 			ResultSet rs= null;
 			
 			String selectVisit1 = "SELECT * FROM VISIT ORDER BY VISIT_KIND ASC LIMIT 10";
-			String selectVisit2 = "SELECT SUM(VISIT_COUNT) FROM visit";
+			String selectVisit2 = "SELECT SUM(VISIT_COUNT) FROM VISIT";
 			try {
 				con = getConnection();
 				

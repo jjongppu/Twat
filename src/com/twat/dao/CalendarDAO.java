@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeSet;
 
 import javax.naming.Context;
@@ -62,7 +64,12 @@ public class CalendarDAO {
 			while (rSet.next()) {
 				CalendarVO schedule = new CalendarVO();
 				schedule.setCal_num(rSet.getInt(1));
-				schedule.setCal_time(rSet.getTimestamp(2));
+//				schedule.setCal_time(rSet.getTimestamp(2));
+				Date date = rSet.getTimestamp(2);
+				Timestamp timestamp = new Timestamp(date.getTime());
+//				System.out.println(timestamp.getTime());
+				schedule.setCal_time(timestamp);
+				
 				schedule.setCal_date(rSet.getString(3));
 				schedule.setGroup_id(rSet.getInt(4));
 				schedule.setCal_memo(rSet.getString(5));
@@ -101,7 +108,7 @@ public class CalendarDAO {
 		try {
 			con = getConnection();
 //			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? ORDER BY CAL_NUM";
-			String sql = "SELECT * FROM CALENDAR WHERE 0GROUP_ID=? AND CAL_REFERENCE=? ORDER BY CAL_NUM";
+			String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=? AND CAL_REFERENCE=? ORDER BY CAL_NUM";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(groupId));
@@ -113,7 +120,13 @@ public class CalendarDAO {
 				CalendarVO schedule = new CalendarVO();
 
 				schedule.setCal_num(rSet.getInt(1));
-				schedule.setCal_time(rSet.getTimestamp(2));
+//				schedule.setCal_time(rSet.getTimestamp(2));
+				
+				Date date = rSet.getTimestamp(2);
+				Timestamp timestamp = new Timestamp(date.getTime());
+//				System.out.println(timestamp.getTime());
+				schedule.setCal_time(timestamp);
+				
 				schedule.setCal_date(rSet.getString(3));
 				schedule.setGroup_id(rSet.getInt(4));
 				schedule.setCal_memo(rSet.getString(5));
@@ -606,6 +619,12 @@ public class CalendarDAO {
 				CalendarVO cv = new CalendarVO();
 				cv.setCal_num(rs.getInt("CAL_NUM"));
 				// cv.setCal_time(rs.getTimestamp("CAL_TIME"));
+				Date date = rs.getTimestamp("CAL_TIME");
+				Timestamp timestamp = new Timestamp(date.getTime());
+//				System.out.println(timestamp.getTime());
+				cv.setCal_time(timestamp);
+				
+				
 				cv.setCal_date(rs.getString("CAL_DATE"));
 				cv.setGroup_id(rs.getInt("GROUP_ID"));
 				cv.setCal_memo(rs.getString("CAL_MEMO"));

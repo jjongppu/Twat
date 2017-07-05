@@ -191,13 +191,13 @@
                     
                 },
                 success: function (data){
-//                    console.log(data);
+                    console.log(data);
                     
           
                     for(var i = 0; i < data.length; i++){
                         
                         document.getElementById("noticeBoard").innerHTML += '<tr>'
-                            + '<td class="title"><a href="#">' + data[i].noticeTitle + '</a></td>'
+                            + '<td class="title"><a href="#" onclick="detNotice()">' + data[i].noticeTitle + '</a></td>'
                             + '<td class="name">' + data[i].noticeWriter + '</td>'
                             + '<td class="data">' + data[i].noticeDate + '</td>'
                             + '<td class="hit">' + data[i].noticeViews + '</td></tr>';
@@ -307,7 +307,18 @@
         });
             
         
-        
+        function detNotice(){
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
     
     
     
@@ -320,6 +331,13 @@
         #titleName{
             color:  red;
             font-size: 30px;
+            width: 500px;
+            
+        }
+        #NotDate{
+            width: 150px;
+            font-size: 20px;
+            color:  red;
         }
         #decoBorder{
             position: absolute;
@@ -330,8 +348,35 @@
             height: 410px;
             
         }
-        
-        
+        #NoticeContainer{
+            display: none;
+            border: 1px solid black;
+            width: 800px;
+        }
+        #NotiTop{
+            display: block;
+            border: 1px solid black;
+            width: 800px;
+        }
+        #NotiTop1{
+            border: 1px solid black;
+            width: 800px;
+        }
+        #NotiTop2{
+             border: 1px solid black;
+            width: 800px;
+        }
+        #NotiWriter{
+            display: block;
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+        #NotiContent{
+            width: 800px;
+            height: 500px;
+            margin-top: 30px;
+            border: 1px solid black;
+        }
     </style>
     
 <body>
@@ -371,21 +416,26 @@
         
         <div id="main_container">
 <!--            여기에 각자 페이지 넣으시면 됩니다~~~~~~~~  -->
-            <div id="decoBorder"></div>
+            <div id="decoBorder">
             <div>
                 <div>
-                    <div>
-                        <div>
-                            <div>
+                    <div id="NotiTop3">
+                        <div id="NotiTop2">
+                            <div id="NotiTop1">
+                                <input type="hidden" value="NOTICE_ID">
                                 <div id="titleName">공지사항</div>
-                                
+                                <div id="NotDate">작성날자</div>
                             </div>
+                            <div id="NotiWriter">여기에 작성자</div>
                         </div>
+                        <div id="NotiContent"> 여기에는 내용.</div>
                     </div>
+                    <input type="button" value="뒤로가기">
                 </div>
             </div>
+            </div>
             
-            
+        <div id="NoticeContainer">
             <div id="sub_container1">
                
                     <div class="swiper-container">
@@ -505,7 +555,7 @@
                 
             
             </div>
-            
+        </div>
             
             
             
