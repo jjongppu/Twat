@@ -921,32 +921,9 @@
 		var today = new Date(); // 오늘 날짜
 
 		$(document).ready(function() {
-			var group_id = location.href.split("=")[1];
-
-			$.ajax({
-				type: 'post',
-				url: 'chkId.do',
-				dataType: "json",
-				data: {
-					groupId: group_id
-				},
-				success: function(data) {
-					console.log(data);
-					var sessionResult = data[0].result;
-					if (!sessionResult) {
-						location.href = "/Twat/groupList.html";
-					}
-				},
-				complete: function() {
-					//                    getGroupInfo();
-					//                    setTimeout(getGroupInfo(), 100);
-				},
-				error: function(req) {
-
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : chkId.do");
-				}
-
-			});
+			chkId();
+//			chkMaster();
+			
 
 			var groupId = location.href.split("=")[1];
 			//			var swiper = new Swiper('.swiper-container', {
@@ -957,44 +934,7 @@
 			//				freeMode: true
 			//			});
 
-			$.ajax({
-				type: 'post',
-				url: 'groupMaster.do',
-				data: {
-					groupId: groupId
-
-
-				},
-				dataType: "json",
-				success: function(data) {
-
-
-					//                    console.log(data);
-
-
-					$.each(data, function(index, item) {
-						//                        console.log(item.groupMaster);
-
-						if (item.groupMaster == "no") {
-							$(".addschedule").css("display", "none");
-						}
-
-						login_userId = item.userId;
-
-					});
-
-					getGroupInfo();
-				},
-				complete: function() {
-					//                    getGroupInfo();
-					//                    setTimeout(getGroupInfo(), 100);
-				},
-				error: function(req) {
-
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupMaster.do");
-				}
-
-			});
+			
 
 
 
@@ -1012,7 +952,7 @@
 			//            setTimeout(getGroupInfo(), 200);
 			//            getGroupInfo();
 			// console.log("getGroupBirth");
-			setTimeout(getGroupBrith, 300);
+//			setTimeout(getGroupBrith, 300);
 
 
 			//			var swiper = new Swiper('.swiper-container', {
@@ -1070,6 +1010,132 @@
 			})
 			//            initToday(); //  주석1
 		});
+		
+		function chkId() {
+			var group_id = location.href.split("=")[1];
+			
+			$.ajax({
+				type: 'post',
+				url: 'chkId.do',
+				dataType: "json",
+				data: {
+					groupId: group_id
+				},
+				success: function(data) {
+//					console.log(data);
+					var sessionResult = data[0].result;
+					if (!sessionResult) {
+						location.href = "/Twat/groupList.html";
+					}
+					else
+					{
+						chkMaster();
+					}
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					//                    getGroupInfo();
+					//                    setTimeout(getGroupInfo(), 100);
+//					chkMaster();
+				},
+				error: function(req) {
+
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : chkId.do");
+				}
+
+			});
+		}
+		
+		function chkMaster() {
+			var groupId = location.href.split("=")[1];
+			
+			$.ajax({
+				type: 'post',
+				url: 'groupMaster.do',
+				data: {
+					groupId: groupId
+
+
+				},
+				dataType: "json",
+				success: function(data) {
+
+
+					//                    console.log(data);
+
+
+					$.each(data, function(index, item) {
+						//                        console.log(item.groupMaster);
+
+						if (item.groupMaster == "no") {
+							$(".addschedule").css("display", "none");
+						}
+
+						login_userId = item.userId;
+
+					});
+
+					getGroupInfo();
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					//                    getGroupInfo();
+					//                    setTimeout(getGroupInfo(), 100);
+				},
+				error: function(req) {
+
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupMaster.do");
+				}
+
+			});
+		}
+		
 
 		function update() {
 			$.ajax({
@@ -1085,6 +1151,33 @@
 					});
 					buildCalendar(dateArr, titleArr);
 					initToday();
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -1761,7 +1854,8 @@
 					//                    }
 					//                    console.log(data[1].cal_date.split(","));
 					//                    console.log(mem_choice);
-					buildCalendar();
+					getGroupBrith();
+//					buildCalendar();
 					//                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
 
 					//                    if(data[1].cal_date.contains(","))
@@ -1776,7 +1870,32 @@
 						$(item.split("-")[0]).css("width", percentC + "%");
 					}
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
+//					getGroupBrith();
 					//                    getGroupBrith();
 					swiperSche = new Swiper('.schedule .swiper-container', {
 						pagination: '.schedule .swiper-pagination',
@@ -1794,6 +1913,8 @@
 						slidesPerView: 3,
 						paginationClickable: true,
 						centeredSlides: true,
+//						slidesOffsetAfter: 192/2,
+//						slidesOffsetBefore: 192/2,
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
@@ -1802,8 +1923,8 @@
 					$('.vote .contentBox').css('display', 'none');
 
 					//					if(scheSet)
-					console.log(scheduleSet);
-					console.log(voteSet);
+//					console.log(scheduleSet);
+//					console.log(voteSet);
 
 
 
@@ -1844,7 +1965,7 @@
 				return (memberSet.size - 1);
 			}
 		}
-		// 모달 작업 부분
+		// 생일 작업
 		function getGroupBrith() {
 			var para = document.location.href.split("?");
 			var tempBirth;
@@ -1924,7 +2045,7 @@
 						//                        console.log("split : " + item.split("-")[0].substr(2, 4));
 						var birthDay = tempBirth[i].split("-")[0];
 //						console.log(CurrentMonth);
-						console.log(birthDay);
+//						console.log(birthDay);
 						//						var str = "<div class='content'><div class='left birth'>" + parseInt(birthDay.substr(0, 2)) + "월 " + parseInt(birthDay.substr(2, 2)) + "일</div>";
 						//						str += "<div class='middle birth'>" + tempBirth[i].split("-")[1] + "님(" + tempBirth[i].split("-")[2] + ")의 생일</div>";
 						//						str += "<div class='right birth'></div></div>";
@@ -1938,7 +2059,7 @@
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'>                                              </div></div>";
                             CurrentMonth = parseInt(birthDay.substr(0, 2));
 						} else {
-                            console.log(tempBirth[i]);
+//                            console.log(tempBirth[i]);
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>하이<div class='stick'>                                                     </div></div>";
 						}
 
@@ -2027,13 +2148,34 @@
 					//						str += "<div class='right birth'></div></div>";
 					//						$('.event .contentBox').append(str);
 					//					}
+					buildCalendar();
 
 				},
-				error: function(req) {
-					//                    alert('통신실패');
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupBirth.do");
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
 				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
 					//					console.log(tempBirth);
 					//					for(var i = 0; i < tempBirth.length; i++)
 					//					{
@@ -2057,6 +2199,10 @@
 						spaceBetween: 0,
 						freeMode: true
 					});
+				},
+				error: function(req) {
+					//                    alert('통신실패');
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupBirth.do");
 				}
 			})
 		}
@@ -2148,11 +2294,31 @@
 					$('.commentBox').css('display', 'block');
 					//                    document.getElementById('modal2').innerHTML = scheduleString;
 				},
-				error: function(req) {
-					//                    alert('통신실패');
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
 				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
 					swiperComment = new Swiper('#commentList .swiper-container', {
 						pagination: '#commentList .swiper-pagination',
 						direction: 'vertical',
@@ -2163,6 +2329,10 @@
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
+				},
+				error: function(req) {
+					//                    alert('통신실패');
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
 				}
 			})
 		}
@@ -2232,7 +2402,7 @@
 
 								if (voteDateCount == 1) {
 									var tempML = new Set();
-									console.log(memberList);
+//									console.log(memberList);
 									for (var j = 0; j < memberList.length; j++) {
 										if (memberList[j].split("-")[0].match("00000000")) {
 											ImpossibleCount++;
@@ -2412,9 +2582,9 @@
 								//                                }
 							}
 							//                            console.log(voteMemberSet);
-							console.log(voteDateCount);
-							console.log(voteMemberSet);
-							console.log(voteMemberSet.size);
+//							console.log(voteDateCount);
+//							console.log(voteMemberSet);
+//							console.log(voteMemberSet.size);
 //							if (voteDateCount > 1 && voteMemberSet.size > 1)
 							if (voteDateCount > 0 && voteMemberSet.size > 1)
 							{
@@ -2508,7 +2678,7 @@
 
 					//                    if(alreadyVote && user0000)
 					//                    {
-					console.log(voteDateSet);
+//					console.log(voteDateSet);
 					for (let item of voteDateSet.keys()) {
 						$('#voteList' + item).css("background-image", "url(img/etcIcon/unchecked.png)");
 					}
@@ -2525,11 +2695,35 @@
 
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
 				error: function(req) {
 					//                    alert('통신실패');
 					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
 				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
 					for (let item of memberVoteListSet.keys()) {
 						//                        addMemberVoteList(item);
 						//                        $("#voteList" + item).css("backgroundColor", "antiquewhite");
@@ -2630,6 +2824,33 @@
 					//                    getGroupInfo();
 					window.location.reload(true);
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					
+				},
 				error: function(req) {
 					//                    alert('통신실패');
 					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : addVote.do");
@@ -2676,6 +2897,33 @@
 					console.log(data);
 
 					window.location.reload(true);
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -2784,6 +3032,8 @@
 					} else {
 						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
 					}
+					
+					// $("#div_ajax_load_image").hide();
 				},
 				complete: function() {
 					$("#div_ajax_load_image").hide();
@@ -3100,7 +3350,31 @@
 					});
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
 					location.reload();
 				},
 				error: function(req) {
@@ -3172,7 +3446,31 @@
 					});
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
 				complete: function() {
+					$("#div_ajax_load_image").hide();
 					getVoteInfo(nowCalNum);
 					//					console.log($('#commentContents').val());
 					$('#commentContents').val(null);
@@ -3269,6 +3567,32 @@
                     
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+				},
 				error: function(req) {
 
 //					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : MyFriendsComeOn.do");
@@ -3331,6 +3655,33 @@
                     
                     document.getElementById("inviteModal").innerHTML += "<input type='button' value='친구초대' onclick='friendsComeOn()' />";
 
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					
+					 $("#div_ajax_load_image").hide();
 				},
 				error: function(req) {
 
