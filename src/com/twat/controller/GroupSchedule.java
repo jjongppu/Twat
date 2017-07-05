@@ -3,7 +3,9 @@ package com.twat.controller;
 import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,6 +59,8 @@ public class GroupSchedule extends HttpServlet {
 		CalendarDAO calDao = CalendarDAO.getInstance();
 		ArrayList<CalendarVO> arrList = calDao.getInfo(request.getParameter("group"), request.getParameter("calNum"));
 		
+//		SimpleDateFormat simple = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
+		
 		if(arrList.size() > 0)
 		{
 			for(int i = 0; i < arrList.size(); i++)
@@ -65,6 +69,9 @@ public class GroupSchedule extends HttpServlet {
 				
 				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
 //				groupSchedule.put("cal_time", arrList.get(i).getCal_time());
+//				groupSchedule.put("cal_time", simple.format(arrList.get(i).getCal_time()));
+				Date date = arrList.get(i).getCal_time();
+				groupSchedule.put("cal_time", date.getTime());
 				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
 //				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
 				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
@@ -84,6 +91,11 @@ public class GroupSchedule extends HttpServlet {
 		
 		out.print(group.toJSONString());
 		out.close();
+		if(calDao != null)
+		{
+			calDao = null;
+		}
 	}
 
+	
 }
