@@ -20,7 +20,6 @@ public class MemberDAO {
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
 
-	// MemberDAO 占쏙옙 占싱깍옙占쏙옙 -----------------------------------
 	private static MemberDAO instance = new MemberDAO();
 
 	private MemberDAO() {
@@ -30,9 +29,7 @@ public class MemberDAO {
 		return instance;
 	}
 
-	// -------------------------------------------------------
 
-	// DB占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 con占쏙옙 占쏙옙환占싹댐옙 占쌨쇽옙占쏙옙
 	// --------------------------------------------
 	public Connection getConnection() throws Exception {
 		Context initCtx = new InitialContext();
@@ -41,11 +38,9 @@ public class MemberDAO {
 		return ds.getConnection();
 	}
 
-	// 占쏙옙占싱듸옙 찾占쏙옙 占쌨쇽옙占쏙옙 (占싱몌옙,占쏙옙화占쏙옙호占쏙옙
-	// 찾占쏙옙)-----占승울옙-------------------------
 	public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
 
-		String selectSql = "select MEMBER_ID from MEMBER where MEMBER_NAME=? and MEMBER_PHONE=?";
+		String selectSql = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_NAME=? AND MEMBER_PHONE=?";
 		String getID = "";
 
 		try {
@@ -80,10 +75,9 @@ public class MemberDAO {
 		return getID;
 	}
 
-	// 占쏙옙橘占싫� 찾占쏙옙 占쌨쇽옙占쏙옙 ---------占승울옙-------------------------------
 	public int searchPW(String id, String phone, String question, String answer) {
 //		String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
-		String selectSql = "select * from MEMBER where MEMBER_ID=? and MEMBER_PHONE=? and MEMBER_QUESTION=? and MEMBER_ANSWER=?";
+		String selectSql = "SELECT * FROM MEMBER WHERE MEMBER_ID=? AND MEMBER_PHONE=? AND MEMBER_QUESTION=? AND MEMBER_ANSWER=?";
 		int result = 0;
 
 		try {
@@ -121,7 +115,6 @@ public class MemberDAO {
 		return result;
 	}
 
-	// 회占쏙옙 占싸깍옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 ----------------------------------
 	public long loginMember(String MEMBER_ID, String MEMBER_PW) {
 		long result = -1;
 
@@ -133,7 +126,7 @@ public class MemberDAO {
 
 		// String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ?
 		// and MEMBER_PW = ?";
-		String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and AES_DECRYPT(UNHEX(MEMBER_PW), 'memPW') = ?";
+		String selectSql = "SELECT OUT_TIME FROM MEMBER WHERE MEMBER_ID = ? AND AES_DECRYPT(UNHEX(MEMBER_PW), 'memPW') = ?";
 
 		try {
 			con = getConnection();
@@ -163,15 +156,13 @@ public class MemberDAO {
 		return result;
 	}
 
-	// 占싸깍옙占쏙옙 占싼삼옙占쏙옙占� 占쌓뤄옙 占쏙옙占쏙옙占쏙옙 占싻기리
 	public ArrayList<Integer> getMyGroupList(String MEMBER_ID) {
 		ArrayList<Integer> glList = new ArrayList<Integer>();
 
 		try {
 			con = getConnection();
 
-			// 占쏙옙占싱듸옙占� 占쌓뤄옙占쏙옙 占쌀뤄옙占쏙옙占쏙옙
-			String sql = "select * from MEMBER_JOIN_GROUP where MEMBER_ID =?";
+			String sql = "SELECT * FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID =?";
 
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, MEMBER_ID);
@@ -213,7 +204,7 @@ public class MemberDAO {
 
 		// String insertSql = "insert into MEMBER
 		// values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
-		String insertSql = "insert into MEMBER values(?,HEX(AES_ENCRYPT(?, 'memPW')),?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
+		String insertSql = "INSERT INTO MEMBER VALUES(?,HEX(AES_ENCRYPT(?, 'memPW')),?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 		try {
 			con = getConnection();
 			psmt = con.prepareStatement(insertSql);
@@ -259,12 +250,10 @@ public class MemberDAO {
 
 	}
 
-	// 회占쏙옙占쏙옙占쌉쏙옙 占쏙옙占싱듸옙 占실시곤옙
-	// 占싯삼옙...---------占승울옙------------------------------
 	public int checkID(String idCheck) {
 		int result = -1;
 
-		String sql = "select MEMBER_ID from MEMBER where MEMBER_ID=?";
+		String sql = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_ID=?";
 
 		try {
 			con = getConnection();
@@ -296,7 +285,6 @@ public class MemberDAO {
 
 	}
 
-	// 친占쏙옙占쏙옙占� 占쏙옙占싶쇽옙 친占쏙옙占쏙옙占쏙옙占쏙옙 占싼곤옙占쌍깍옙 占쏙옙占쏙옙ver....
 	public ArrayList<MemberVO> getFriendList(String MEMBER_ID) {
 
 		String myFrinds = "";
@@ -315,8 +303,6 @@ public class MemberDAO {
 
 					myFrinds = rs.getString("FRIENDS_LIST");
 
-					// 친占쏙옙占쏙옙占� 占쏙옙占쏙옙占� 占쏙옙占쏙옙占쌜쇽옙占싹는곤옙 占쏙옙占쏙옙占쏙옙 db占쏙옙 占쏙옙占쏙옙
-					// 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙占실뤄옙,,,占쌥아뱄옙占쏙옙.,,
 					// try {
 					// if(rs != null)
 					// if(psmt != null) psmt.close();
@@ -324,7 +310,6 @@ public class MemberDAO {
 					// } catch (SQLException e) {
 					// e.printStackTrace();
 					// }
-					// 친占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占시뤄옙占쏙옙占쏙옙占쏙옙..
 					String[] str = myFrinds.split(",");
 					for (int i = 1; i < str.length; i++) {
 						getMyFriendsSql += "or MEMBER_ID=?";
@@ -364,10 +349,8 @@ public class MemberDAO {
 		return myfriendsList;
 	}
 
-	// 회占쏙옙占쏙옙占쏙옙占쏙옙
-	// 占쏙옙占쏙옙占쏙옙占쏙옙槁占쏙옙占�---------------占쏙옙占쏙옙--------------------------------
 	public ArrayList<MemberVO> myInfo(String MEMBER_ID) {
-		String sql = "select MEMBER_IMG, MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH from MEMBER where MEMBER_ID = ? ";
+		String sql = "SELECT MEMBER_IMG, MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_ID = ? ";
 
 		ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 
@@ -377,8 +360,6 @@ public class MemberDAO {
 			psmt.setString(1, MEMBER_ID);
 			rs = psmt.executeQuery();
 
-			// 占싱뤄옙占쏙옙占싹몌옙占쏙옙 rs.getstring(1)占쏙옙 占싱뱄옙占쏙옙 2占쏙옙 占싱몌옙 3占쏙옙 占쏙옙화占쏙옙호
-			// 4占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占승댐옙.
 			while (rs.next()) {
 				MemberVO mvo = new MemberVO();
 				mvo.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
@@ -387,7 +368,6 @@ public class MemberDAO {
 				mvo.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
 				arList.add(mvo);
 			}
-			// arList占쏙옙 占싱뱄옙占쏙옙 占싱몌옙 占쏙옙占쏙옙호 占쏙옙占쏙옙占쏙옙 占쏙옙占승댐옙.
 
 		} catch (Exception e) {
 		} finally {
@@ -406,7 +386,7 @@ public class MemberDAO {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	public ArrayList<String> test() {
 		ArrayList<String> str = new ArrayList<String>();
-		String sql = "select * from test";
+		String sql = "SELECT * FROM TEST";
 		int a = 0;
 
 		try {
@@ -438,13 +418,11 @@ public class MemberDAO {
 		return str;
 	}
 
-	// 회占쏙옙占쏙옙占쏙옙 占썼열占쏙옙 占쏙옙占쏙옙 회占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙환占싹댐옙 占쌉쇽옙, 占썼열占쏙옙 占쏙옙환占싹몌옙
-	// 占쏙옙占승댐옙 占쏙옙占쏙옙+占싱몌옙占쏙옙占쏙옙 占쏙옙占쏙옙
 	public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList) {
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 		ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
-		String sql = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_IMG from MEMBER";
+		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_IMG FROM MEMBER";
 
 		try {
 			con = getConnection();
@@ -453,8 +431,6 @@ public class MemberDAO {
 
 			while (resultSet.next()) {
 				for (int i = 0; i < memberList.size(); i++) {
-					// memberList占쏙옙 ID占쏙옙 member_id占쏙옙占쏙옙 占쏙옙占쌕몌옙 member 占쏙옙체
-					// 占쏙옙占쏙옙占쌔쇽옙 arrList占쏙옙 占쌩곤옙
 					if (resultSet.getString(1).equals(memberList.get(i))) {
 						MemberVO member = new MemberVO();
 
@@ -485,87 +461,18 @@ public class MemberDAO {
 		return arrList;
 	}
 
-	/////////////////////////////////////////////////////////////////// 占쏙옙占쏙옙
-	/////////////////////////////////////////////////////////////////// 占쏙옙橘占싫�
-	/////////////////////////////////////////////////////////////////// 占쏙옙占쏙옙.
 
-	// public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String
-	// chkpwd){
-	//
-	//
-	//
-	// String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
-	//// String chkpw = "select AES_DECRYPT(UNHEX(MEMBER_PW) from MEMBER where
-	// MEMBER_ID = ?";
-	//
-	// // ?占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아울옙 占쏙옙占싱듸옙 占쌍곤옙 占쏙옙橘占싫ｏ옙占� 占쌨아온댐옙占쏙옙占쏙옙 占쌨아울옙
-	// 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙占싻뱄옙호 占쌉력띰옙占싱띰옙 占쏙옙占쌔쇽옙 占쏙옙占쏙옙占쏙옙 占싸뱄옙占쏙옙
-	// 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占싼어가占쏙옙 占쏙옙橘占싫ｏ옙占� 占쌕뀐옙占쌔댐옙.
-	// String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
-	// //1占쏙옙占쏙옙 ?占쏙옙占쏙옙 占쌕뀐옙 占쏙옙橘占싫ｏ옙占� 占쌍곤옙 2占쏙옙占쏙옙 ? 占쏙옙占쏙옙 占쏙옙占싱듸옙
-	// 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨아넣는댐옙.
-	// int result = 0;
-	//
-	// try {
-	//
-	// con = getConnection();
-	//
-	// psmt = con.prepareStatement(chkpw);
-	// psmt.setString(1, MEMBER_ID);
-	// rs = psmt.executeQuery();
-	//
-	// if(chpwd.equals(chkpwd)){
-	//
-	// while(rs.next()){
-	//
-	// if(rs.getString("MEMBER_PW").equals(nowpwd)){
-	//
-	//
-	// psmt = con.prepareStatement(changepwd);
-	// psmt.setString(1, chpwd);
-	// psmt.setString(2, MEMBER_ID);
-	// result = psmt.executeUpdate();
-	//
-	// if(result ==1 ){
-	// System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙치占쌌니댐옙");
-	// }else{
-	// System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙치占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
-	// }
-	//
-	//
-	// }else{
-	// System.out.println("占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
-	// }
-	// }//while 占쏙옙占쏙옙占쏙옙 占쏙옙.
-	// }else{
-	// System.out.println("占쏙옙占쏙옙占쏙옙 占쏙옙橘占싫ｏ옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占십쏙옙占싹댐옙.");
-	// }
-	//
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }finally {
-	// try {
-	// if(rs != null)rs.close();
-	// if(psmt != null) psmt.close();
-	// if(con != null) con.close();
-	// } catch (SQLException e) {
-	// }
-	// }
-	// return result;
-	// }
+	
 
-	/////////////////////////// 占쏙옙占쏙옙 회占쏙옙탈占쏙옙.////////////////////////
 	public int outUser(String MEMBER_ID, String state) {
 
-		// SimpleDateFormat outDate = new SimpleDateFormat("yyyy占쏙옙 MM占쏙옙dd占쏙옙
-		// HH占쏙옙mm占쏙옙");
 		// Date date = new Date();
 		// String today = outDate.format(date);
 
 		long outTime = System.currentTimeMillis() + 60 * 60 * 24 * 1000 * 7;
 		long resetTime = 0;
 
-		String delUser = "UPDATE member SET OUT_TIME=? WHERE MEMBER_ID =?";
+		String delUser = "UPDATE MEMBER SET OUT_TIME=? WHERE MEMBER_ID =?";
 
 		int result = 0;
 		try {
@@ -598,10 +505,8 @@ public class MemberDAO {
 		return result;
 	}
 
-	///////////////////////////////// 회占쏙옙占쏙옙占쏙옙 占쏙옙
-	///////////////////////////////// 占쏙옙////////////////////////////////////////
 	public int changeInfo(String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_BIRTH, String MEMBER_ID) {
-		String changeInfo = "UPDATE MEMBER set MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? where MEMBER_ID =?";
+		String changeInfo = "UPDATE MEMBER SET MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? WHERE MEMBER_ID =?";
 		int result = 0;
 		try {
 			con = getConnection();
@@ -638,10 +543,8 @@ public class MemberDAO {
 
 	}
 
-	//////////////////////////////// 占싱뱄옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占썼보占쏙옙 占쏙옙占쏙옙
-	//////////////////////////////// 占싹깍옙.//////////////////////////////////////
 	public int changeImg(String MEMBER_ID, String MEMBER_IMG) {
-		String changepwd = "update MEMBER set MEMBER_IMG = ? where MEMBER_ID = ?";
+		String changepwd = "UPDATE MEMBER SET MEMBER_IMG = ? WHERE MEMBER_ID = ?";
 		int result = 0;
 
 		try {
@@ -673,7 +576,7 @@ public class MemberDAO {
 	public ArrayList<MemberVO> findFriends(String userPhone) {
 		// 친구 전화번호를 가지고 친구를 가져온다.
 
-		String addFriend = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG from MEMBER where MEMBER_PHONE = ?";
+		String addFriend = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG FROM MEMBER WHERE MEMBER_PHONE = ?";
 		ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 		try {
 			con = getConnection();
@@ -713,9 +616,9 @@ public class MemberDAO {
 	///////////////////////////// 친구를 추가하기./////////////////////////////
 	public ArrayList<MemberVO> plusFriend(String userPhone, String MEMBER_ID) {
 		int result = 0;
-		String findMyFriend = "select FRIENDS_LIST from MEMBER where MEMBER_ID=?";
-		String searchUserId = "select MEMBER_ID from MEMBER where MEMBER_PHONE=?";
-		String plusUser = "update MEMBER set FRIENDS_LIST = ? where MEMBER_ID = ?";
+		String findMyFriend = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID=?";
+		String searchUserId = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_PHONE=?";
+		String plusUser = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 		// 1번쨰 ?에는 친구아이디를 넣는다 ','해서 넣어야함. 두번째 ? 에는 세션받아온 아이디를 넣는다.
 		ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 		try {
@@ -845,9 +748,6 @@ public class MemberDAO {
 			return result;
 		}	
 
-		
-		
-
 			for (int i = 0; i < myFriendList.split(",").length; i++) {
 				if (myFriendList.split(",")[i].equals(friendId)) {
 					result = -1; // 이미 친구
@@ -864,7 +764,6 @@ public class MemberDAO {
 
 			requestFriendsUpdate(userId, friendId, myFriendList, friendFriendsList);
 
-		
 		return result;
 
 	}
@@ -878,13 +777,13 @@ public class MemberDAO {
 		
 			con = getConnection();
 		 
-			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, myFriendList + "," + "*" + friendId);
 			psmt2.setString(2, userId);
 			psmt2.executeUpdate();
 
-			String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2.setString(1, friendFriendsList + "," + "!" + userId);
 			psmt2.setString(2, friendId);
 			psmt2.executeUpdate();
@@ -911,7 +810,7 @@ public class MemberDAO {
 		MemberVO member = new MemberVO();
 		try {
 			
-			String sql = "select * from member where MEMBER_ID = ?";
+			String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, friendId);
 			rs2 = psmt2.executeQuery();
@@ -921,7 +820,6 @@ public class MemberDAO {
 				member.setMEMBER_IMG(rs2.getString("MEMBER_IMG"));
 				member.setMEMBER_PHONE(rs2.getString("MEMBER_PHONE"));
 				member.setMEMBER_GENDER(rs2.getString("MEMBER_GENDER"));
-
 			}
 
 		} catch (Exception e) {
@@ -952,7 +850,7 @@ public class MemberDAO {
 		ArrayList<MemberVO> memberArr = new ArrayList<MemberVO>();
 		try {
 			con = getConnection();
-			String sql = "select FRIENDS_LIST from member where MEMBER_ID = ?";
+			String sql = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, userId);
 			rs2 = psmt2.executeQuery();
@@ -1012,7 +910,7 @@ public class MemberDAO {
 		PreparedStatement psmt2 = null;
 		ResultSet rs2 = null;
 		String friendList = "";
-		String sql = "select FRIENDS_LIST FROM member where MEMBER_ID = ?";
+		String sql = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = ?";
 		try {
 
 			try {
@@ -1089,7 +987,7 @@ public class MemberDAO {
 
 			// System.out.println(changeFriendList);
 			con = getConnection();
-			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 
 			psmt2.setString(1, changeMyFriendList);
@@ -1125,7 +1023,7 @@ public class MemberDAO {
 			}
 			// System.out.println(changeFriendFriendList);
 			con = getConnection();
-			String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt3 = con.prepareStatement(sql2);
 			psmt3.setString(1, changeFriendFriendList);
 			psmt3.setString(2, friendId);
@@ -1159,7 +1057,7 @@ public class MemberDAO {
 		
 		
 		try {
-			String sql = "update member set MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) where MEMBER_ID = ? ";
+			String sql = "UPDATE MEMBER SET MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) WHERE MEMBER_ID = ? ";
 			con = getConnection();
 			psmt = con.prepareStatement(sql);
 			
@@ -1203,7 +1101,7 @@ public class MemberDAO {
 
 		try {
 			con = getConnection();
-			String sql = "select * from member where MEMBER_ID = ? AND MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW'))";
+			String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ? AND MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW'))";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, userId);
 			psmt2.setString(2, beforePw);
@@ -1212,7 +1110,7 @@ public class MemberDAO {
 
 			if (rs2.next()) { // 현재 배밀번호와 일치할때 ->새로 바꿀 비밀번호로 수정
 
-				String sql2 = "update member set MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) where MEMBER_ID = ?";
+				String sql2 = "UPDATE MEMBER SET MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) WHERE MEMBER_ID = ?";
 				psmt2 = con.prepareStatement(sql2);
 				psmt2.setString(1, afterPw);
 				psmt2.setString(2, userId);
@@ -1277,7 +1175,7 @@ public class MemberDAO {
 			// System.out.println(deletedFriendsList);
 			
 			con = getConnection();
-			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, deletedFriendsList);
 			psmt2.setString(2, userId);
@@ -1301,7 +1199,7 @@ public class MemberDAO {
 					deletedFriendsList += "," + friendsListArr.get(i);
 			}
 			con = getConnection();
-			String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			
 			psmt3 = con.prepareStatement(sql2);
 			
@@ -1333,7 +1231,7 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
 		ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
-		String sql = "select MEMBER_ID, MEMBER_NAME, MEMBER_IMG from MEMBER";
+		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_IMG FROM MEMBER";
 
 		try {
 			con = getConnection();
@@ -1342,8 +1240,6 @@ public class MemberDAO {
 
 			while (resultSet.next()) {
 				for (int i = 0; i < memberList.size(); i++) {
-					// memberList占쏙옙 ID占쏙옙 member_id占쏙옙占쏙옙 占쏙옙占쌕몌옙 member 占쏙옙체
-					// 占쏙옙占쏙옙占쌔쇽옙 arrList占쏙옙 占쌩곤옙
 					if (resultSet.getString(1).equals(memberList.get(i))) {
 						MemberVO member = new MemberVO();
 
@@ -1389,11 +1285,6 @@ public class MemberDAO {
 		}
 		
 		return friendArrList;
-		
-		
-		
-		
-		
 	}
 	
 	
@@ -1448,7 +1339,7 @@ public class MemberDAO {
 		
 		try {
 			con = getConnection();
-			String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";// 내 친구목록 갱신
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";// 내 친구목록 갱신
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, myFriendList);
 			psmt2.setString(2, userId);
@@ -1458,12 +1349,6 @@ public class MemberDAO {
 			psmt2.setString(1, friendFriendList);
 			psmt2.setString(2, friendId);
 			psmt2.executeUpdate(); 
-			
-			
-			
-			
-			
-			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1480,16 +1365,8 @@ public class MemberDAO {
 					e.printStackTrace();
 				}
 			
-			
-			
 		}
 		
-		
-		
-		
-		
 	}
-	
-	
 	
 }

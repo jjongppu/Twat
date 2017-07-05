@@ -9,8 +9,8 @@
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendar.css">-->
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver2.css"> -->
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">-->
-    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver4.css">
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver4.css">
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 <!--    <link rel="stylesheet" type="text/javascript" href="js/myCalendar.js">-->
 <!--    <script type="text/javascript" src="js/myCalendar.js"></script>-->
@@ -1314,7 +1314,7 @@
                 var tempYear = 0;
                 
                 str+="<div class='swiper-slide'>";
-                str+="<div class='fiveSwip' style='display:block;'>";
+                str+="<div class='fiveSwip''>";
                 var tempDataCount = 0;
                 for(var i = 0; i < tempDataArray.length; i++)
                 {
@@ -1325,22 +1325,22 @@
                     if(tempDataCount >=5){
                         str+="</div>";
                         str+="</div><div class='swiper-slide'>";
-                        str+="<div class='fiveSwip' style='display:block;'>";
+                        str+="<div class='fiveSwip'>";
                         tempDataCount = 0;
                     }
 
                     if(parseInt(calDate[0].substr(0,4)) > tempYear)
                     {
-                        str+="<div class='swiper-slide'>"+calDate[0].substr(0,4)+"년</div>";
+                        str+="<div class='fiveSwip scheYear'>"+calDate[0].substr(0,4)+"년</div>";
                         tempYear = parseInt(calDate[0].substr(0,4));
                         tempDataCount++;
                     }
 
                     if(calDate.length != 2){
-                        str+="<div class='fiveSwip' style='display:block;'><div class='schedules scheList1'>"+calSubStr1.substr(0,2)+"월";
+                        str+="<div class='fiveSwip mySche'><div class='schedules scheList1'>"+calSubStr1.substr(0,2)+"월";
                         str+=calSubStr1.substr(2,2)+"일"+"~"+calSubStr2.substr(0,2)+"월"+calSubStr2.substr(2,2)+"일"+"</div>";
                     } else {
-                        str+="<div class='fiveSwip' style='display:block;'><div class='schedules scheList1'>"+calSubStr1.substr(0,2)+"월";
+                        str+="<div class='fiveSwip mySche'><div class='schedules scheList1'>"+calSubStr1.substr(0,2)+"월";
                         str+=calSubStr1.substr(2,2)+"일"+"</div>";
                     }
                     str+="<div class='schedules scheList2'>"+tempDataArray[i].split("-")[1]+"</div>";
@@ -1586,7 +1586,7 @@
                 var groupYear = 0;
                 
                 str2+="<div class='swiper-slide'>";
-                str2+="<div class='fiveSwip' style='display:block;'>";
+                str2+="<div class='fiveSwip'>";
                 var groupDataCount = 0;
                 for(var i = 0; i < groupDataArray.length; i++){
                     var calDate = groupDataArray[i].split("-")[0].split(",");
@@ -1596,21 +1596,21 @@
                     if(groupDataCount >=5){
                         str2+="</div>";
                         str2+="</div><div class='swiper-slide'>";
-                        str2+="<div class='fiveSwip' style='display:block;'>";
+                        str2+="<div class='fiveSwip'>";
                         groupDataCount = 0;
                     }
                     
                     if(parseInt(calDate[0].substr(0,4)) > groupYear){
-                        str2+="<div class='fiveSwip' style='display:block;'>"+calDate[0].substr(0,4)+"년</div>";
+                        str2+="<div class='fiveSwip scheYear'>"+calDate[0].substr(0,4)+"년</div>";
                         groupYear = parseInt(calDate[0].substr(0,4));
                         groupDataCount++;
                     }
                     
                     if(calDate.length !=2){
-                        str2+="<div class='fiveSwip' style='display:block;'><div class='schedules scheList1'>"+calStr1.substr(0,2)+"월";
+                        str2+="<div class='fiveSwip mySche'><div class='schedules scheList1'>"+calStr1.substr(0,2)+"월";
                         str2+=calStr1.substr(2,2)+"일"+"~"+calStr2.substr(0,2)+"월"+calStr2.substr(2,2)+"일"+"</div>";
                     } else {
-                        str2+="<div class='fiveSwip' style='display:block;'><div class='schedules scheList1'>"+calStr1.substr(0,2)+"월";
+                        str2+="<div class='fiveSwip mySche'><div class='schedules scheList1'>"+calStr1.substr(0,2)+"월";
                         str2+=calStr1.substr(2,2)+"일"+"</div>";
                     }
                     str2+="<div class='schedules scheList2'>"+groupDataArray[i].split("-")[1]+"</div>";
@@ -2015,7 +2015,7 @@
                                 <div id="contentsHeight">
                                    
                                     <div id="titleAdd">
-                                        <input type="text" placeholder="자신의 일정을 한줄로 써보세요." id="calTitle" maxlength="20"/> 
+                                        <input type="text" placeholder="자신의 일정을 한줄로 써보세요." id="calTitle" maxlength="24"/> 
                                         <span style="font-size:10px">시간 선택</span>
                                         <select name="scheTime" id="scheTime"></select>
                                         <div id="groupAddBtn" onclick="clickAddCal()">작성하기</div>
