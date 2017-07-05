@@ -13,7 +13,7 @@
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/nav.js"></script>
 	<script src="js/swiper.jquery.min.js"></script>
-
+    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 	<script language="javascript" type="text/javascript">
 		// 일정 잡기 저장용
 		var scheSet = new Set();
@@ -2281,13 +2281,15 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
-
-					if (commentsString.match("")) {
+					console.log(commentsString.length);
+//					if (commentsString.match(""))
+					if (commentsString.length < 1)
+					{
 						//<div class="swiper-slide">Slide 1</div>
 						commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'></div>";
 						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div><div>";
 					}
-					console.log(commentsString);
+//					console.log(commentsString);
 //					$("#commentList").html(commentsString);
 					$("#commentList .swiper-wrapper").html(commentsString);
 					$("#modal2>#modalTitle").html("일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
@@ -3426,7 +3428,7 @@
 		}
 
 		function addComment(comment) {
-			console.log(nowCalNum);
+//			console.log(nowCalNum);
 			console.log($(comment).children().eq(0).text());
 			//내용 : ㅁㅁㅁ
 			//5~
@@ -3438,6 +3440,8 @@
 			var new_memo = $("#commentContents").val();
 			console.log(first_cal);
 			if (new_memo == "") {
+				console.log(scheduleSet);
+				console.log(voteSet);
 				alert("댓글을 입력해주세요!");
 				return;
 			}
@@ -3457,7 +3461,25 @@
 				},
 				dataType: "json",
 				success: function(data) {
-
+//					getVoteInfo(nowCalNum);
+					var svChk = false;
+					for (let item of scheduleSet.keys())
+					{
+						if(item.split("-")[2].match(nowCalNum))
+						{
+							svChk = true;
+//							getScheduleInfo(nowCalNum);
+						}
+					}
+					
+					if(svChk)
+					{
+						getScheduleInfo(nowCalNum);
+					}
+					else
+					{
+						getVoteInfo(nowCalNum);
+					}
 
 
 					$.each(data, function(index, item) {
@@ -3490,7 +3512,7 @@
 				},
 				complete: function() {
 					$("#div_ajax_load_image").hide();
-					getVoteInfo(nowCalNum);
+//					getVoteInfo(nowCalNum);
 					//					console.log($('#commentContents').val());
 					$('#commentContents').val(null);
 				},
@@ -3716,43 +3738,30 @@
 </head>
 
 <body>
-	<div id="newWrap">
-		<nav class="left_nav">
-			<div id="userInfo">
-				<ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-					<li class="nav_li">
-						<img id="user_Img" src="" />
-					</li>
-					<li class="nav_li idLi">
-						<div id="user_Id"></div>
-					</li>
-				</ul>
-			</div>
-			<ul class="nav_ul" id="nav_menu">
-				<li class="nav_li">
-					<a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png" /></a>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png" /></a>
-				</li>
-				<li class="nav_li">
-					<div id="navHere"></div>
-					<a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png" /></a>
-					<div id="newContents">N</div>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png" /></a>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png" /></a>
-				</li>
-			</ul>
-			<ul id="logout" class="nav_ul" onclick="logout()">
-				<li class="nav_li">
-					<a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png" /></a>
-				</li>
-			</ul>
-		</nav>
+    <div id="newWrap">
+      <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src=""/>
+                </li>
+                <li class="nav_li idLi">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
+        </ul>
+          
+    </nav>
 
 		<div id="main_container">
 			<img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()">
