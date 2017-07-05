@@ -2228,6 +2228,9 @@
 				success: function(data) {
 					console.log("확정");
 					console.log(data);
+					
+					nowCalNum = cal_num;
+//					console.log(cal_num);
 
 					var scheduleString = "";
 					//                    var commentsString = "<div id='CommentBox'>";
@@ -2355,6 +2358,7 @@
 					console.log("미확정");
 					console.log(data);
 					nowCalNum = cal_num;
+//					console.log(nowCalNum);
 					var voteString = "";
 					var swiperString = "";
 					//                    var commentsString = "<div id='CommentBox'>";
@@ -3422,7 +3426,7 @@
 		}
 
 		function addComment(comment) {
-
+			console.log(nowCalNum);
 			console.log($(comment).children().eq(0).text());
 			//내용 : ㅁㅁㅁ
 			//5~
@@ -3443,9 +3447,11 @@
 				type: 'post',
 				url: 'addComment.do',
 				data: {
-					cal_memo: cal_memo,
+//					cal_memo: cal_memo,
 					group_id: group_id,
-					first_cal: first_cal,
+//					first_cal: first_cal,
+					user_id: login_userId,
+					cal_num: nowCalNum,
 					new_memo: new_memo
 
 				},
