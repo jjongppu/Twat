@@ -29,7 +29,7 @@
 		}	
 		
 		#wrap {
-			border: 1px solid black;
+/*			border: 1px solid black;*/
 /*			margin-left: 100px;*/
 			width: 1000px;
 			height: 600px;
@@ -41,24 +41,40 @@
 		}
 		
 		#miniWrap {
-			border: 1px solid red;
+			border: 1px solid gray;
 			margin: 0 auto;
 			width: 350px;
 			text-align: center;
 			height: 200px;
 /*			line-height: 100px;*/
+			position: absolute;
+			top: 45%;
+			left: 50%;
+			transform: translate(-50%,-50%);
 		}
 		#inputBox {
-			border: 1px solid orange;
+/*			border: 1px solid orange;*/
+			margin-bottom: 35px;
+		}
+		#text {
+			margin-bottom: 15px;
+		}
+		#id_pw {
+			border: none;
+			border-bottom: 1px solid #bfbfbf;
+			background: none;
 		}
 		#btnBox {
-			border: 1px solid green;
+/*			border: 1px solid green;*/
+			
 		}
 		.btn {
 			width: 80px;
+			border: none;
+			height: 25px;
 		}
 		#submitBtn {
-			background-color: deepskyblue;
+			background-color: #ffcc80;
 		}
 		
 		
@@ -140,7 +156,7 @@
 					</div>
 					<div id="contentContainer">
 						<div id="inputBox">
-							<div>삭제하시려면 글 비밀번호를 입력해주세요.</div>
+							<div id="text">삭제하시려면 글 비밀번호를 입력해주세요.</div>
 							<div>
 								<input type="password" id="id_pw" name="qnaPw"/>
 							</div>
