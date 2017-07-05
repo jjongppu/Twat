@@ -62,7 +62,7 @@ public class CalendarDAO {
 			while (rSet.next()) {
 				CalendarVO schedule = new CalendarVO();
 				schedule.setCal_num(rSet.getInt(1));
-				schedule.setCal_time(rSet.getTimestamp(2));
+//				schedule.setCal_time(rSet.getTimestamp(2));
 				schedule.setCal_date(rSet.getString(3));
 				schedule.setGroup_id(rSet.getInt(4));
 				schedule.setCal_memo(rSet.getString(5));
@@ -101,7 +101,7 @@ public class CalendarDAO {
 		try {
 			con = getConnection();
 //			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? ORDER BY CAL_NUM";
-			String sql = "SELECT * FROM CALENDAR WHERE 0GROUP_ID=? AND CAL_REFERENCE=? ORDER BY CAL_NUM";
+			String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=? AND CAL_REFERENCE=? ORDER BY CAL_NUM";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(groupId));
