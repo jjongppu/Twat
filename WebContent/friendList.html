@@ -353,6 +353,14 @@
         #heightGet,#idSearch,#phoneSearch{
             width: 100%;
         }
+        #nowchoice{
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 80px;
+            background-color: gainsboro;
+            height: 5px;
+        }
     </style>
     <script>
 
@@ -793,12 +801,25 @@
         $('.addFriendsNow').css('display','none');
         if(ids == 'allFriend'){
             $('#allFriends').css('display','inline-block');
+          $('#nowchoice').animate({
+                left: 10,
+              width:80
+            }, 300);
             getMyfriendsList();
         }else if(ids == 'getFriends'){
             $('#requestExist').css('display','inline-block');
+               $('#nowchoice').animate({
+                left: 100,
+                   width:110
+            }, 300);
             requestFriendMe();
         }else if(ids == 'sendFriends'){            
             $('#responseExist').css('display','inline-block');
+               $('#nowchoice').animate({
+                left: 210,
+               width:105
+            }, 300);
+            
 //            alert("!!!");
 //            responseExist
             
@@ -1239,6 +1260,7 @@
     <div id="main_container">
                        
         <div id="topCover">
+            <div id="nowchoice"></div>
             <div class="topListbtn" id="allFriend" onclick="tabChange(this)"> 전체 </div>
             <div class="topListbtn" id="getFriends" onclick="tabChange(this)"> 받은 친구 요청 </div>
             <div class="topListbtn" id="sendFriends" onclick="tabChange(this)"> 보낸 친구 요청 </div>
@@ -1271,9 +1293,20 @@
        
        
             <div id = 'modal'> 
+                <div id="nowchoice_modal"></div>
                 <div class="searchTab" id="phoneTab" onclick="changeTab(this)"> 연락처로 친구 찾기 </div>
                 <div class="searchTab" id="idTab" onclick="changeTab(this)"> 아이디로 친구 찾기 </div>
-                
+                <style>
+                    
+                    #nowchoice_modal{
+                        position: absolute;
+                        top: 58px;
+                        left: 0;
+                        width: 150px;
+                        height: 5px;
+                        background-color: green;
+                    }
+                </style>
                 
                 <div id="heightGet">
 

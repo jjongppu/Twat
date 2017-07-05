@@ -270,8 +270,17 @@
         
     }
     
+    function ribbonUp(){
+      $('#ribbon').animate({
+            top: -10,
+        }, 300);
+    }
     
-    
+    function ribbonOver(){
+          $('#ribbon').animate({
+            top: -70,
+        }, 300);
+    }
     
 </script>
 <style>
@@ -386,14 +395,15 @@
     #addGroupBtn{
         position: absolute;
         right: 70px;
-        top: 5px;
+        top: 0;
         display: inline-block;
-        height: 40px;
+        height: 200px;
         line-height: 40px;
         text-align: center;
         width: 150px;
         font-size: 13px;
-        cursor: pointer;
+/*        cursor: pointer;*/
+        overflow: hidden;
     }
     
     
@@ -554,7 +564,12 @@
         bottom: 0;
         right: 0;
     }
-    
+    #ribbon{
+        position: absolute;
+        top: -70px;
+        cursor: pointer;
+        width: 60px;
+    }
 
     
 </style>
@@ -596,7 +611,10 @@
             <div id="title_cover">
                     <span id="title_name">My Calgather</span>
                     
-                <span id="addGroupBtn" onclick="addGroup();">그룹 추가하기..</span>
+                <span id="addGroupBtn">
+                    <img id="ribbon"  onclick="addGroup();" src="img/etcIcon/ribbon.png" onmouseover="ribbonUp()" onmouseout="ribbonOver()"/>
+                
+                </span>
                 
                 
             </div>
