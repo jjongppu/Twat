@@ -9,7 +9,7 @@ public class MemberJoinGroupVO
 	
 	public MemberJoinGroupVO() { }
 	
-	public MemberJoinGroupVO(String MEMBER_ID, String GROUP_ID)
+	public MemberJoinGroupVO(String MEMBER_ID, String GROUP_ID, int CALENDAR_VIEW)
 	{
 		this.MEMBER_ID = MEMBER_ID;
 		this.GROUP_ID = GROUP_ID;
