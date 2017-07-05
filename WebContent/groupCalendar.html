@@ -2281,13 +2281,15 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
-
-					if (commentsString.match("")) {
+					console.log(commentsString.length);
+//					if (commentsString.match(""))
+					if (commentsString.length < 1)
+					{
 						//<div class="swiper-slide">Slide 1</div>
 						commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'></div>";
 						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div><div>";
 					}
-					console.log(commentsString);
+//					console.log(commentsString);
 //					$("#commentList").html(commentsString);
 					$("#commentList .swiper-wrapper").html(commentsString);
 					$("#modal2>#modalTitle").html("일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
@@ -3426,7 +3428,7 @@
 		}
 
 		function addComment(comment) {
-			console.log(nowCalNum);
+//			console.log(nowCalNum);
 			console.log($(comment).children().eq(0).text());
 			//내용 : ㅁㅁㅁ
 			//5~
@@ -3438,6 +3440,8 @@
 			var new_memo = $("#commentContents").val();
 			console.log(first_cal);
 			if (new_memo == "") {
+				console.log(scheduleSet);
+				console.log(voteSet);
 				alert("댓글을 입력해주세요!");
 				return;
 			}
@@ -3457,7 +3461,25 @@
 				},
 				dataType: "json",
 				success: function(data) {
-
+//					getVoteInfo(nowCalNum);
+					var svChk = false;
+					for (let item of scheduleSet.keys())
+					{
+						if(item.split("-")[2].match(nowCalNum))
+						{
+							svChk = true;
+//							getScheduleInfo(nowCalNum);
+						}
+					}
+					
+					if(svChk)
+					{
+						getScheduleInfo(nowCalNum);
+					}
+					else
+					{
+						getVoteInfo(nowCalNum);
+					}
 
 
 					$.each(data, function(index, item) {
@@ -3490,7 +3512,7 @@
 				},
 				complete: function() {
 					$("#div_ajax_load_image").hide();
-					getVoteInfo(nowCalNum);
+//					getVoteInfo(nowCalNum);
 					//					console.log($('#commentContents').val());
 					$('#commentContents').val(null);
 				},
