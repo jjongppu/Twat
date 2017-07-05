@@ -43,7 +43,7 @@ public class QnaDAO {
 		int result = -1;
 		int cal_num = 0;
 		
-		String selectSql = "SELECT * FROM `qna` ORDER BY QNA_ID DESC LIMIT 1";
+		String selectSql = "SELECT * FROM `QNA` ORDER BY QNA_ID DESC LIMIT 1";
 		
 		try {
 			con = getConnection();
@@ -81,7 +81,7 @@ public class QnaDAO {
 //		int qna_number = 0;
 		PreparedStatement psmt2= null;
 		
-		String insertSql = "insert into qna values(?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
+		String insertSql = "INSERT INTO QNA VALUES(?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
 		
 		try {
 			con = getConnection();
@@ -222,7 +222,7 @@ public class QnaDAO {
 		if(!val.equals("0")) {
 			AllSql += "WHERE QNA_TITLE LIKE ?";
 		}
-		AllSql += "ORDER BY QNA_ID asc LIMIT " + (page*10-10) + " ,10";
+		AllSql += "ORDER BY QNA_ID ASC LIMIT " + (page*10-10) + " ,10";
 		
 		// 1 = 제목 / 제목으로 검색하기
 		if(searchCategory == 1) {
@@ -298,7 +298,7 @@ public class QnaDAO {
 		
 		int result = -1;
 		
-		String selectSql = "select * from qna where qna_id=?";
+		String selectSql = "SELECT * FROM QNA WHERE QNA_ID = ?";
 		
 		try {
 			con = getConnection();
@@ -339,7 +339,7 @@ public class QnaDAO {
 		ResultSet rs= null;
 		int result = -1;
 		
-		String deleteSql = "DELETE from qna where MEMBER_ID=? and QNA_ID=? and QNA_PW=?";
+		String deleteSql = "DELETE FROM QNA where MEMBER_ID=? and QNA_ID=? and QNA_PW=?";
 		
 		try {
 			con = getConnection();
@@ -374,7 +374,7 @@ public class QnaDAO {
 		ResultSet rs= null;
 		int result = -1;
 		
-		String updateSql = "UPDATE qna SET QNA_CATEGORY=?, QNA_PW=?, QNA_TITLE=?, QNA_CONTENTS=? WHERE MEMBER_ID=? AND QNA_ID=?";
+		String updateSql = "UPDATE QNA SET QNA_CATEGORY=?, QNA_PW=?, QNA_TITLE=?, QNA_CONTENTS=? WHERE MEMBER_ID=? AND QNA_ID=?";
 		
 		try {
 			con = getConnection();
