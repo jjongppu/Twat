@@ -35,7 +35,7 @@
 	</servlet>
 
 
-<!-- 쫑기리 서버 시작시 제일 끝의 그룹 id 얻어오기 -->
+
 
 
   <listener>
@@ -45,7 +45,6 @@
   </listener>
 
 
-<!-- 쫑기리  -->
     <servlet> 
         <servlet-name>groupCal</servlet-name> 
         <servlet-class>com.twat.controller.GroupCalendar</servlet-class> 
@@ -55,7 +54,6 @@
         <url-pattern>/groupCal.do</url-pattern> 
     </servlet-mapping> 
 
-<!-- 쫑기리 친구목록  -->
     <servlet> 
         <servlet-name>friednsList</servlet-name> 
         <servlet-class>com.twat.controller.GetFriendListServlet</servlet-class> 
@@ -66,7 +64,6 @@
     </servlet-mapping> 
 
 
-<!-- 쫑기리 참여중인 그룹 얻어오기 -->
     <servlet> 
         <servlet-name>getgroupList</servlet-name> 
         <servlet-class>com.twat.controller.GetGroupListProcess</servlet-class> 
@@ -75,8 +72,7 @@
         <servlet-name>getgroupList</servlet-name> 
         <url-pattern>/groupList.do</url-pattern> 
     </servlet-mapping> 
-	
-<!-- 최승우 LoginServlet -->
+
     <servlet> 
         <servlet-name>LoginServletcsw</servlet-name> 
         <servlet-class>com.twat.controller.LoginServlet</servlet-class> 
@@ -86,7 +82,6 @@
         <url-pattern>/login.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 최승우 signUpServlet -->
     <servlet> 
         <servlet-name>signUpServletcsw</servlet-name> 
         <servlet-class>com.twat.controller.signUpServlet</servlet-class> 
@@ -96,7 +91,7 @@
         <url-pattern>/signUp.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 최승우 searchIDServlet -->
+
     <servlet> 
         <servlet-name>searchIDServletcsw</servlet-name> 
         <servlet-class>com.twat.controller.searchIDServlet</servlet-class> 
@@ -106,7 +101,7 @@
         <url-pattern>/searchID.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 최승우 SearchPWServlet -->
+
     <servlet> 
         <servlet-name>SearchPWServletcsw</servlet-name> 
         <servlet-class>com.twat.controller.SearchPWServlet</servlet-class> 
@@ -117,7 +112,7 @@
     </servlet-mapping>
 
 
-<!-- 최승우 idCheckServlet -->
+
     <servlet> 
         <servlet-name>idCheckServletcsw</servlet-name> 
         <servlet-class>com.twat.controller.idCheckServlet</servlet-class> 
@@ -129,7 +124,7 @@
 
 
 
-<!-- 테스트 logintest-->
+
 
      <servlet> 
         <servlet-name>logintest</servlet-name> 
@@ -141,7 +136,7 @@
     </servlet-mapping>
 
 
-<!-- 쫑기리 그룹 만들기 서블릿-->
+
 
      <servlet> 
         <servlet-name>makeGourp</servlet-name> 
@@ -152,7 +147,7 @@
         <url-pattern>/makeGourp.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 현우 개인정보 가져오기 서블릿-->
+
 
      <servlet> 
         <servlet-name>personalGetInfo</servlet-name> 
@@ -163,7 +158,6 @@
         <url-pattern>/PersonalServlet.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 종길 로그인시 세션체크 -->
 
      <servlet> 
         <servlet-name>sessionCheckServlet</servlet-name> 
@@ -174,7 +168,7 @@
         <url-pattern>/SessionCheck.do</url-pattern> 
     </servlet-mapping>
 
-<!-- 종길 로그아웃 처리-->
+
 
      <servlet> 
         <servlet-name>logoutServlet</servlet-name> 
@@ -191,7 +185,7 @@
 
 
 
-<!-- 7월 5일 최승우 -->
+
 
      <servlet> 
         <servlet-name>AcceptRequest</servlet-name> 
@@ -638,11 +632,6 @@
         <url-pattern>/setRoomOut.do</url-pattern> 
     </servlet-mapping>
 
-
-
-<!-------------- 이하 7월 5일 최승우 어드민 서블릿   --------------->
-
-
      <servlet> 
         <servlet-name>AdminGetCalenarList</servlet-name> 
         <servlet-class>com.admin.controller.AdminGetCalenarList</servlet-class> 
@@ -663,7 +652,7 @@
     </servlet-mapping>
 
 
-<!-- 종기리 보이의 어드민 멤버정보 얻어오기-->
+
 
      <servlet> 
         <servlet-name>AdminGetMemberListServlet</servlet-name> 
@@ -698,7 +687,7 @@
     </servlet-mapping>
 
 
-<!-- 종길 어드민 로그인 처리-->
+
 
      <servlet> 
         <servlet-name>AdminloginServlet</servlet-name> 
@@ -730,7 +719,7 @@
     </servlet-mapping>
 
 
-<!-- 종기리 보이의 어드민 세션 체크-->
+
 
      <servlet> 
         <servlet-name>AdminSettingServlet</servlet-name> 
@@ -753,7 +742,7 @@
     </servlet-mapping>
 
 
-<!-- 종기리 보이의 어드민 세션 체크-->
+
 
      <servlet> 
         <servlet-name>GetTwatDataInfoServlet</servlet-name> 
@@ -786,6 +775,6 @@
         <url-pattern>/WriteNoticeBoard.do</url-pattern> 
     </servlet-mapping>
 
-<!-------------- 이하 7월 5일 최승우 어드민 서블릿  끝 --------------->
+
 
 </web-app>

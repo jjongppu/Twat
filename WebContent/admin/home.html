@@ -25,7 +25,7 @@
         margin: auto;
     }
     #contents{
-        margin-top: 30px;
+        margin-top: 100px;
     }
     a{
         text-decoration: none;
@@ -55,7 +55,7 @@
     
 /*     미리보기 메인 뷰*/
     .mainViewInfoCover{
-        width: 300px;
+        width: 294px;
         height: 180px;
         display: inline-block;
     }
@@ -72,7 +72,9 @@
     
     #viewCover{
         margin: auto;
-        opacity: 0.9
+        opacity: 0.9;
+        width: 1200px;
+        background-color: white;
     }
     .viewImgCover{
         display: inline-block;
@@ -138,18 +140,13 @@
         height: 20px;
     }
     #curve_chart{
-        margin: 20px;
+/*        margin: 20px;*/
         display: inline-block;
-    }
-    #todayVal{
-        width: 150px;
-        display: inline-block;
-        position: absolute;
-        top: 0;
-        right: 10px;
-        font-size: 28px;
+        padding-right: 300px;
+        background-color: white;
     }
     
+/*
     @media screen and (min-width:1130px) and (max-width : 1500px){
     
          .mainViewInfoCover{
@@ -169,6 +166,7 @@
             width: 100%;
         }
     }
+*/
      @media screen and (max-width : 360px){
         .menuMedia{
             display: none;
@@ -285,7 +283,8 @@
                 <li><a href="home.html">홈</a></li>
                 <li class="menuMedia"><a href="memberManagement.html">회원 관리</a></li>
                 <li class="menuMedia"><a href="groupManagement.html">그룹 관리</a></li>
-                <li class="menuMedia"><a href="#">문의사항 관리</a></li>
+                <li class="menuMedia"><a href="qnaManagement.html">문의사항 관리</a></li>
+                <li class="menuMedia"><a href="notice_board.html">공지사항 작성</a></li>
                 <li class="menuMedia"><a href="#">기타 작업</a></li>
                 <li id="logout" onclick="logout();"><a>로그아웃</a></li>
             </ul>
@@ -305,13 +304,37 @@
                 
                 
               <div id="curve_chart" style="width: 900px; height: 500px"></div>
-                 <script type="text/javascript">
-           
-                </script>
+        
                 
                 
                 
+                <style>
+                    .visitData{
+                        font-size: 23px;
+                        line-height: 50px;
+                    }
                 
+                    #visitKind{
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        text-align: center;
+                        width: 100px;
+                        height: 150px;
+                        font-size: 24px;
+                    }
+                    #visit{
+                        position: absolute;
+                        top: 100px;
+                        right: 50px;
+                        
+                    }
+                    #setting{
+                        position: absolute;
+                        top: 300px;
+                        right: 10px;
+                    }
+                </style>
                 
                 
                 
@@ -321,20 +344,22 @@
                 
                 
                 <!-------------------------------------           방문자 관련     ----------->
-                <div class="mainViewInfoCover">
-                    <div class="mainViewInfo" id="visit" >
+                <div class="mainViewInfoCover" id="visit">
+                    <div class="mainViewInfo">
+                        
                         <div class="viewTopCover">
-                            <div class="viewImgCover">
-                                <img class="viewImg" src="../img/etcIcon/adminView_visit.png"/> 
+                                <div id="visitKind">
+                                    <div class="visitData">Total</div>
+                                    <div class="visitData">Today</div>
                             </div>
                             <div class="viewContents">
-                                <div class="viewName">Total</div>
-                                <div class="viewData" id="visVal">0</div>
+                            <!--총 방문자-->
+                                <div class="visitData" id="visVal">0</div>
+                            <!--오늘 방문자-->
+                            <div class="visitData" id="todayVal">0</div>
                             </div>
                         </div>
-                        <div class="viewBottomCover">
-                            <span class="viewBottomText">Today</span><div class="viewData" id="todayVal">0</div>
-                        </div>
+                 
                     </div>
                 </div>
                 <!-------------------------------------           그룹 관련     ----------->
@@ -406,8 +431,8 @@
                     </div>
                 </div>
                 <!-------------------------------------           설정 관련     ----------->
-                <div class="mainViewInfoCover">
-                    <div class="mainViewInfo" id="setting"  onclick="clickSetting();">
+                <div class="mainViewInfoCover" id="setting">
+                    <div class="mainViewInfo" onclick="clickSetting();">
                         <div class="viewTopCover">
                             <div class="viewImgCover">
                                 <img class="viewImg" src="../img/etcIcon/adminView_set.png"/> 

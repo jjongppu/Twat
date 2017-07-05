@@ -7,14 +7,14 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendar.css">-->
-<!--        <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver2.css"> -->
+<!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver2.css"> -->
 <!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">-->
     <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver4.css">
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
 <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 <!--    <link rel="stylesheet" type="text/javascript" href="js/myCalendar.js">-->
 <!--    <script type="text/javascript" src="js/myCalendar.js"></script>-->
-    <!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
     
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/nav.js"></script>
@@ -910,66 +910,39 @@
     }
     /*음력 알고리즘..끝*/
     var today = new Date(); // 오늘 날짜
-//    $(document).ready(function () {
-//        var groupId = location.href.split("=")[1];
-//        $.ajax({
-//            type: 'post',
-//            url: 'groupMaster.do',
-//            data: {
-//                groupId: groupId
-//            },
-//            dataType: "json",
-//            success: function (data) {
-//                $.each(data, function (index, item) {
-//                    //                        console.log(item.groupMaster);
-//                    if (item.groupMaster == "no") {
-//                        $(".addschedule").css("display", "none");
-//                    }
-//    
-//                    login_userId = item.userId;
-//    
-//                });
-//    
-//                getGroupInfo();
-//            },
-//            error: function (req) {
-//    
-//                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-//            }
-//        });
         /*
             드레그앤 드롭
         */
-//        getGroupBrith();
-        $('#yearSelect').change(function () {
-            initToday();
-            today = new Date(parseInt($("#yearSelect").val()), today.getMonth(), today.getDate());
-            buildCalendar();
-            if ($(this).val() == "2030" && $("#monthSelect").val() == "12") {
-                $("#nextButton").css("display", "none");
-            } else if ($(this).val() == "2017" && $("#monthSelect").val() == "1") {
-                $("#preButton").css("display", "none");
-            } else {
-                $("#preButton").css("display", "block");
-                $("#nextButton").css("display", "block");
-            }
-        }); //연도 선택
-        $('#monthSelect').change(function () {
-            initToday();
-            today = new Date(parseInt($("#yearSelect").val()), parseInt($("#monthSelect").val()) - 1, today.getDate());
-            buildCalendar();
-            if ($("#yearSelect").val() == "2030" && $(this).val() == "12") {
-                $("#nextButton").css("display", "none");
-            } else if ($("#yearSelect").val() == "2017" && $(this).val() == "1") {
-                $("#preButton").css("display", "none");
-            } else {
-                $("#preButton").css("display", "block");
-                $("#nextButton").css("display", "block");
-            }
-        }); // 달 선택
-        $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
-        $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
-//    });
+//        $('#yearSelect').change(function () {
+//            initToday();
+//            today = new Date(parseInt($("#yearSelect").val()), today.getMonth(), today.getDate());
+//            buildCalendar();
+//            if ($(this).val() == "2030" && $("#monthSelect").val() == "12") {
+//                $("#nextButton").css("display", "none");
+//            } else if ($(this).val() == "2017" && $("#monthSelect").val() == "1") {
+//                $("#preButton").css("display", "none");
+//            } else {
+//                $("#preButton").css("display", "block");
+//                $("#nextButton").css("display", "block");
+//            }
+////            update();
+//        }); //연도 선택
+//        $('#monthSelect').change(function () {
+//            initToday();
+//            today = new Date(parseInt($("#yearSelect").val()), parseInt($("#monthSelect").val()) - 1, today.getDate());
+//            buildCalendar();
+//            if ($("#yearSelect").val() == "2030" && $(this).val() == "12") {
+//                $("#nextButton").css("display", "none");
+//            } else if ($("#yearSelect").val() == "2017" && $(this).val() == "1") {
+//                $("#preButton").css("display", "none");
+//            } else {
+//                $("#preButton").css("display", "block");
+//                $("#nextButton").css("display", "block");
+//            }
+////            update();
+//        }); // 달 선택
+//        $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
+//        $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
 
     function update() {
         $.ajax({
@@ -1092,19 +1065,9 @@
             }
             //                scheArr[0] = yearInfo + monthInfo;
             var selectDate = yearInfo + monthInfo + dayInfo;
-
-            //                console.log($(a).css("backgroundColor"));
-            if ($(a).css("backgroundColor") == "rgb(255, 0, 0)") {
-                alert("현재 투표중인 날짜입니다!");
-                return;
-            } else if ($(a).css("backgroundColor") == "rgb(255, 128, 128)") {
-                alert("이미 확정된 날짜 입니다!");
-                return;
-            }
-
+            
+            /*  ==========  날짜 선택해서 색깔 바꿔주는 문 ============== */
             if (selectDate < dateToFormat(initDay)) {
-                alert("지난 날짜는 선택할수 없습니다!")
-                return;
             } else {
                 if ($(a).css("backgroundColor") == "rgb(98, 188, 250)") {
                     $(a).css("backgroundColor", "white");
@@ -1136,7 +1099,7 @@
         }
     }
 
-    //  날짜 선택하고 스케줄 추가 함수
+    //  ============= 날짜 선택하고 스케줄 추가 함수 ==========
     function addSchedule() {
         if (scheSet.size == 0) {
             alert("일정이 선택 되지 않았습니다.");
@@ -1166,6 +1129,36 @@
 
     // ================ 요넘이 캘린더 그려주는 애. ================ 
     $(document).ready(function(){
+        $('#yearSelect').change(function () {
+            initToday();
+            today = new Date(parseInt($("#yearSelect").val()), today.getMonth(), today.getDate());
+            buildCalendar();
+            if ($(this).val() == "2030" && $("#monthSelect").val() == "12") {
+                $("#nextButton").css("display", "none");
+            } else if ($(this).val() == "2017" && $("#monthSelect").val() == "1") {
+                $("#preButton").css("display", "none");
+            } else {
+                $("#preButton").css("display", "block");
+                $("#nextButton").css("display", "block");
+            }
+//            update();
+        }); //연도 선택
+        $('#monthSelect').change(function () {
+            initToday();
+            today = new Date(parseInt($("#yearSelect").val()), parseInt($("#monthSelect").val()) - 1, today.getDate());
+            buildCalendar();
+            if ($("#yearSelect").val() == "2030" && $(this).val() == "12") {
+                $("#nextButton").css("display", "none");
+            } else if ($("#yearSelect").val() == "2017" && $(this).val() == "1") {
+                $("#preButton").css("display", "none");
+            } else {
+                $("#preButton").css("display", "block");
+                $("#nextButton").css("display", "block");
+            }
+//            update();
+        }); // 달 선택
+        $('#yearSelect').val(today.getFullYear()).attr("selected", "selected");
+        $('#monthSelect').val(today.getMonth() + 1).attr("selected", "selected");
         $("#yearSelect option:selected").val(today.getFullYear());
         $("#monthSelect").val(today.getMonth()+1).attr("selected","selected");
         update();
@@ -1200,6 +1193,7 @@
             $(cell).attr("onclick", "getDayInfo(this)");
             $(cell).attr("style", "cursor:pointer");
             initToday();
+            
             if ((today.getMonth() + 1) / 10 < 1) { // 월처리
                 if (calDay / 10 < 1) {
                     dateParam = today.getFullYear() + "0" + (today.getMonth() + 1) + "0" + calDay;
@@ -1220,6 +1214,7 @@
                     $('#date' + calDay).css("backgroundColor", "#62bcfa"); // 선택했을때 초록색으로 바꿔주는 부분!
                 }
             } //선택한 날짜 초록색으로 표기
+            
             var saveSolar = gfnSolar2Lunar(dateParam);
             dateColor.setFullYear(today.getFullYear());
             dateColor.setMonth(today.getMonth());
@@ -1233,20 +1228,18 @@
                 cell.innerHTML += "<div>" + calDay + "</div>";
             }
             if (calDay % 9 == 0) cell.innerHTML += "<div style='font-size:1px;'>" + saveSolar.substr(5, 2) + "." + saveSolar.substr(7, 2) + "</div>";
+            
             // 확정된 일정표시
             for (let item of scheduleSet.keys()) {
                 if (item.split("-")[0] == dateParam) {
                     cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                    //                        console.log("#date" + parseInt(dateParam.substr(6)));
-                    //                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#ff8080");
                 }
             }
+            
             // 미확정된 일정표시
             for (let item of voteSet.keys()) {
                 if (item.split("-")[0] == dateParam) {
                     cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                    //                        console.log("#date" + parseInt(dateParam.substr(6)));
-                    //                        $("#date" + parseInt(dateParam.substr(6))).css("background-color", "#00ff80");
                 }
             }
             // 생일표시
@@ -1296,42 +1289,73 @@
             ,success : function(data){
                 console.log(data);
                 var str ="";
+                var tempDataSet = new Set();
               $.each(data, function(index, item){
+                  tempDataSet.add(item.myCalDate + "-" + item.myCalContents + "-" + item.myCalTime + "-" + item.myCalIndex);
 //                  console.log(item.myCalIndex);
 //                  console.log(item.myCalContents);
 //                  console.log(item.myCalTime);
                 
-                  var calDate = item.myCalDate.split(",");
-                  var calSubStr1 = calDate[0].substr(2,8);
-                  var calSubStr2 = calDate[calDate.length-2].substr(2,8);
-//                  console.log(calSubStr1);
-//                  console.log(calSubStr2);
-                  
-                  
-                  if(calDate.length != 2){
-                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calSubStr1+"~"+calSubStr2+"</div>";
-                  } else {
-                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calSubStr1+"</div>";
-                  }
-                  str+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
-                  str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
-                  
+//                  var calDate = item.myCalDate.split(",");
+//                  var calSubStr1 = calDate[0].substr(2,8);
+//                  var calSubStr2 = calDate[calDate.length-2].substr(2,8);                  
+//                  
 //                  if(calDate.length != 2){
-//                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
+//                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calSubStr1+"~"+calSubStr2+"</div>";
 //                  } else {
-//                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"</div>";
+//                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calSubStr1+"</div>";
 //                  }
 //                  str+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
 //                  str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
-                  
-                  
               });
+                
+                var tempDataArray = Array.from(tempDataSet).sort();
+                console.log(tempDataArray);
+                var tempYear = 0;
+                
+                str+="<div class='swiper-slide'>";
+                str+="<div class='fiveSwip' style='display:block;'>";
+                var tempDataCount = 0;
+                for(var i = 0; i < tempDataArray.length; i++)
+                {
+                    var calDate = tempDataArray[i].split("-")[0].split(",");
+                    var calSubStr1 = calDate[0].substr(4,8);
+                    var calSubStr2 = calDate[calDate.length-2].substr(4,8); 
+                    
+                    if(tempDataCount >=5){
+                        str+="</div>";
+                        str+="</div><div class='swiper-slide'>";
+                        str+="<div class='fiveSwip' style='display:block;'>";
+                        tempDataCount = 0;
+                    }
+
+                    if(parseInt(calDate[0].substr(0,4)) > tempYear)
+                    {
+                        str+="<div class='swiper-slide'>"+calDate[0].substr(0,4)+"년</div>";
+                        tempYear = parseInt(calDate[0].substr(0,4));
+                        tempDataCount++;
+                    }
+
+                    if(calDate.length != 2){
+                        str+="<div class='fiveSwip' style='display:block;'><div class='schedules scheList1'>"+calSubStr1.substr(0,2)+"월";
+                        str+=calSubStr1.substr(2,2)+"일"+"~"+calSubStr2.substr(0,2)+"월"+calSubStr2.substr(2,2)+"일"+"</div>";
+                    } else {
+                        str+="<div class='fiveSwip' style='display:block;'><div class='schedules scheList1'>"+calSubStr1.substr(0,2)+"월";
+                        str+=calSubStr1.substr(2,2)+"일"+"</div>";
+                    }
+                    str+="<div class='schedules scheList2'>"+tempDataArray[i].split("-")[1]+"</div>";
+                    str+="<div class='schedules scheList3'>"+tempDataArray[i].split("-")[2]+" 시 예약<button class='scheList' name='delete"+tempDataArray[i].split("-")[3]+"' id='delete"+tempDataArray[i].split("-")[3]+"' onclick=scheDelete(this)>-</button></div></div>";
+                    tempDataCount++;
+                }
+                str+="</div>";
+                str+="</div>";
+                
                 $(".leftUp .swiper-wrapper").append(str);
                 
                 var swiper = new Swiper('.leftUp .swiper-container', {
                     pagination: '.leftUp .swiper-pagination',
                     direction: 'vertical',
-                    slidesPerView: 5,
+                    slidesPerView: 1,
                     paginationClickable: true,
 //                    centeredSlides: true,
                     spaceBetween: 5,
@@ -1369,11 +1393,6 @@
         });
     });
     
-//    window.onload() = function moreShow(){
-//            $(".scheList").append("<p>hello</p>");
-//
-//        }
-//    }
     var i =0;
     function moreShow(){
         alert("!");
@@ -1547,7 +1566,6 @@
         location.reload();
     }
     
-    var str2="";
 /* ================ 단체일정 뽑아주는 함수 ================== */
     $(document).ready(function(){
         
@@ -1557,40 +1575,64 @@
             ,dataType : "json"
             ,success : function(data){
                 console.log(data);
+                var str2="";
+                var groupDataSet = new Set();
               $.each(data, function(index, item){
-//                  console.log(item.calDate);
-//                  console.log(item.calMemo);
-//                  console.log(item.calWriter);
-                  
-                  var calDate = item.calDate.split(",");
-                  var calStr1 = calDate[0].substr(2,8);
-                  var calStr2 = calDate[calDate.length-1].substr(2,8);
-                  
-                  console.log(calDate);
-                  console.log(calStr1);
-                  console.log(calStr2+"calStr2");
-                  
-//                  var calDate = item.calDate.split(",");
-                
-                  if(calDate.length !=2){
-                    str2+="<div class='swiper-slide'><div class='schedules scheList1'>"+calStr1+"~"+calStr2+"</div>";
-                  } else {
-                    str2+="<div class='swiper-slide'><div class='schedules scheList1'>"+calStr1+"</div>";
-                  }
-                  str2+="<div class='schedules scheList2'>"+item.calMemo+"</div>";
-                  str2+="<div class='schedules scheList3'>"+item.calWriter+"</div></div></br>";
+                  groupDataSet.add(item.calDate + "-" + item.calMemo + "-" + item.calWriter);
               });
-                    $(".leftDown .swiper-wrapper").append(str2);
                 
-                    var swiper = new Swiper('.leftDown .swiper-container', {
-                        pagination: '.leftDown .swiper-pagination',
-                        direction: 'vertical',
-                        slidesPerView: 4,
-                        paginationClickable: true,
-    //                    centeredSlides: true,
-                        spaceBetween: 1,
-                        mousewheelControl: true
-                    });
+                var groupDataArray = Array.from(groupDataSet).sort();
+                console.log(groupDataArray);
+                var groupYear = 0;
+                
+                str2+="<div class='swiper-slide'>";
+                str2+="<div class='fiveSwip' style='display:block;'>";
+                var groupDataCount = 0;
+                for(var i = 0; i < groupDataArray.length; i++){
+                    var calDate = groupDataArray[i].split("-")[0].split(",");
+                    var calStr1 = calDate[0].substr(4,4);
+                    var calStr2 = calDate[calDate.length-1].substr(4,4);
+                    
+                    if(groupDataCount >=5){
+                        str2+="</div>";
+                        str2+="</div><div class='swiper-slide'>";
+                        str2+="<div class='fiveSwip' style='display:block;'>";
+                        groupDataCount = 0;
+                    }
+                    
+                    if(parseInt(calDate[0].substr(0,4)) > groupYear){
+                        str2+="<div class='fiveSwip' style='display:block;'>"+calDate[0].substr(0,4)+"년</div>";
+                        groupYear = parseInt(calDate[0].substr(0,4));
+                        groupDataCount++;
+                    }
+                    
+                    if(calDate.length !=2){
+                        str2+="<div class='fiveSwip' style='display:block;'><div class='schedules scheList1'>"+calStr1.substr(0,2)+"월";
+                        str2+=calStr1.substr(2,2)+"일"+"~"+calStr2.substr(0,2)+"월"+calStr2.substr(2,2)+"일"+"</div>";
+                    } else {
+                        str2+="<div class='fiveSwip' style='display:block;'><div class='schedules scheList1'>"+calStr1.substr(0,2)+"월";
+                        str2+=calStr1.substr(2,2)+"일"+"</div>";
+                    }
+                    str2+="<div class='schedules scheList2'>"+groupDataArray[i].split("-")[1]+"</div>";
+                    str2+="<div class='schedules scheList3'>"+groupDataArray[i].split("-")[2]+"</div></div>";
+                    groupDataCount++;
+                }
+                str2+="</div>";
+                str2+="</div>";
+
+                
+                
+                $(".leftDown .swiper-wrapper").append(str2);
+
+                var swiper = new Swiper('.leftDown .swiper-container', {
+                    pagination: '.leftDown .swiper-pagination',
+                    direction: 'vertical',
+                    slidesPerView: 1,
+                    paginationClickable: true,
+//                    centeredSlides: true,
+                    spaceBetween: 5,
+                    mousewheelControl: true
+                });
             },
             error:function(req){
              alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
@@ -1633,9 +1675,11 @@
             success: function(data) {
                 console.log(data);
                 var memberBirthSet = new Set();
+                
                 $.each(data, function(index, item) {
                     memberBirthSet.add(item.friendBirth.substr(2, 4) + "-" + item.friendName + "-" + item.friendImg + "-" + item.friendId);
                 });
+                
                 var memberBirthArray = Array.from(memberBirthSet).sort();
                 var CurrentMonth;
 //                var memBirMonth = memberBirthArray[i].split("-")[0];
@@ -1729,17 +1773,6 @@
                 height: heights,
             }, 300);
         }
-//        var times = [];
-//        var value="";
-//        for(var i = 0; i <25; i++){
-//            if(i<10){
-//                value="0"+i;
-//            }else{
-//                value=i;
-//            }
-//            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
-//        }
-//        $("#scheTime").append(times.join(''));
     }
     
     
@@ -1876,16 +1909,6 @@
                             <div class="program txt">개인 일정</div>
                             <div class="decoLine"></div>
                         </div>
-<!--                        <div id ="privSchedule" class="schedule privSchedule">-->
-<!--
-                            <div class="schCont scheDate txt" id="myCalDate"></div>
-                            <div class="schCont scheText txt" id="myCalContents"></div>
-                            <div class="schCont scheTime txt" id="myCalTime"></div>
--->
-<!--                            <div class="schCont dayTime">-->
-<!--                                <div class="scheDetail txt"></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
                         <div class="swiper-container">
 							<div class="swiper-wrapper"></div>
 							<div class="swiper-pagination"></div>
@@ -1900,10 +1923,10 @@
                             <div class="program txt">단체 일정</div>
                             <div class="decoLine"></div>
                         </div>                       
-                            <div class="swiper-container">
-                                <div class="swiper-wrapper"></div>
-                                <div class="swiper-pagination"></div>
-                            </div>
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper"></div>
+                            <div class="swiper-pagination"></div>
+                        </div>
                     </div>
                     
                     <div class="events">
