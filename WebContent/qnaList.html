@@ -223,10 +223,10 @@
                 } 
             html.push('<a href=javascript:goPaging_' + token + '("');
             html.push(s2); html.push('");>');
-            html.push('◀'); html.push("</a>"); 
+            html.push('◀ '); html.push("</a>"); 
         }else{
             html.push('<a href="#">\n');
-            html.push('◀'); html.push('</a>'); 
+            html.push('◀ '); html.push('</a>'); 
             
         } //paging Bar 
         for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
@@ -241,7 +241,7 @@
             } 
             if(index == pageCnt){ 
                 break;
-            }else html.push('|'); 
+            }else html.push(' '); 
         } //다음 화살표 
         if(pageCnt > (pRCnt + 1) * pageSize){
             html.push('<a href=javascript:goPaging_' + token + '("');
@@ -338,10 +338,10 @@
                 } 
             html.push('<a href=javascript:goPaging_' + token + '("');
             html.push(s2); html.push('");>');
-            html.push('◀'); html.push("</a>"); 
+            html.push('◀ '); html.push("</a>"); 
         }else{
             html.push('<a href="#">\n');
-            html.push('◀'); html.push('</a>'); 
+            html.push('◀ '); html.push('</a>'); 
             
         } //paging Bar 
         for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
@@ -356,7 +356,7 @@
             } 
             if(index == pageCnt){ 
                 break;
-            }else html.push('|'); 
+            }else html.push(' '); 
         } //다음 화살표 
         if(pageCnt > (pRCnt + 1) * pageSize){
             html.push('<a href=javascript:goPaging_' + token + '("');
