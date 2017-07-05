@@ -46,7 +46,7 @@ public class MemberJoinGroupDAO
 		ResultSet resultSet = null;
 		
 		ArrayList<String> arrList = new ArrayList<String>();
-		String sql = "select MEMBER_ID from MEMBER_JOIN_GROUP where GROUP_ID=?";
+		String sql = "SELECT MEMBER_ID FROM MEMBER_JOIN_GROUP WHERE GROUP_ID=?";
 		
 		try
 		{
@@ -89,7 +89,7 @@ public class MemberJoinGroupDAO
 		ResultSet rs5 = null;
 		
 		ArrayList<String> arrList = new ArrayList<String>();
-		String sql = "select GROUP_ID from MEMBER_JOIN_GROUP where MEMBER_ID=?";
+		String sql = "SELECT GROUP_ID FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=?";
 		
 		try
 		{
@@ -133,7 +133,7 @@ public class MemberJoinGroupDAO
 
 		try {
 			con = getConnection();
-			String sql = "DELETE FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? and GROUP_ID=?";
+			String sql = "DELETE FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? AND GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			pstmt.setInt(2, Integer.parseInt(groupId));
@@ -204,7 +204,7 @@ public class MemberJoinGroupDAO
 	// ���� �Խù��� ������ �Խù��� ǥ�����ֱ����ؿ�
 	public ArrayList<MemberJoinGroupVO> getViewCountCheck(String MEMBER_ID){
 		ArrayList<MemberJoinGroupVO> arrList = new ArrayList<MemberJoinGroupVO>();
-		String sql = "select * from MEMBER_JOIN_GROUP where MEMBER_ID=?";
+		String sql = "SELECT * FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=?";
 		PreparedStatement psmt10 = null;
 		ResultSet rs10 = null;
 		try{
@@ -247,7 +247,7 @@ public class MemberJoinGroupDAO
 
 		try {
 			con = getConnection();
-			String sql = "UPDATE member_join_group SET CALENDAR_VIEW = CALENDAR_READ_VIEW WHERE GROUP_ID=? AND MEMBER_ID=?";
+			String sql = "UPDATE MEMBER_JOIN_GROUP SET CALENDAR_VIEW = CALENDAR_READ_VIEW WHERE GROUP_ID=? AND MEMBER_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, groupId);
 			pstmt.setString(2, userName);
@@ -280,14 +280,14 @@ public class MemberJoinGroupDAO
 		ResultSet rs2 = null;
 		try {
 			con = getConnection();
-			String sql = "insert into member_join_group values(?,?,0,0)";
+			String sql = "INSERT INTO MEMBER_JOIN_GROUP VALUES(?,?,0,0)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, friendId);
 			pstmt.setInt(2, groupId);
 			int result = pstmt.executeUpdate();
 			
 			
-			String sql2 = "select GROUP_COUNT from calgather where GROUP_ID = ?";
+			String sql2 = "SELECT GROUP_COUNT FROM CALGATHER WHERE GROUP_ID = ?";
 			pstmt = con.prepareStatement(sql2);
 			pstmt.setInt(1, groupId);
 			
@@ -298,7 +298,7 @@ public class MemberJoinGroupDAO
 			groupLastNum++;
 			
 			
-			String sql3 = "update calgather set GROUP_COUNT = ? where GROUP_ID = ?";
+			String sql3 = "UPDATE CALGATHER SET GROUP_COUNT = ? WHERE GROUP_ID = ?";
 			pstmt = con.prepareStatement(sql3);
 			pstmt.setInt(1, groupLastNum);
 			pstmt.setInt(2, groupId);
@@ -337,7 +337,7 @@ public class MemberJoinGroupDAO
 
 		try {
 			con = getConnection();
-			String sql = "SELECT COUNT(MEMBER_ID) FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? and GROUP_ID=?";
+			String sql = "SELECT COUNT(MEMBER_ID) FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? AND GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, MEMBER_ID);
 			pstmt.setInt(2, Integer.parseInt(groupId));

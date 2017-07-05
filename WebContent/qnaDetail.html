@@ -51,10 +51,6 @@
 			background-color: #cccccc;
 			
 		}
-	
-		#title_div {
-/*			border: 1px dotted red;*/
-		}
 		
 		#top_container {
 			
@@ -69,6 +65,11 @@
 			border-bottom: 1px solid gray;
 			padding: 5px;
 		}
+		
+		#category_div, #title_div, #id_div, #time_div {
+			display: inline-block;
+		}
+		
 		#bottom_title {
 			padding: 5px;
 		}
@@ -83,8 +84,8 @@
 			border: 1px solid gray;
 			height: 250px;
 			margin-bottom: 20px;
-			padding-top: 10px;
-			padding-left: 10px;
+			padding-top: 7px;
+			padding-left: 7px;
 		}
 		#middle_container2 {
 /*			background-color: yellow;*/
@@ -96,6 +97,11 @@
 		
 		#write_btn_div {
 			float: right;
+		}
+		
+		#reply_div {
+			border: 1px solid gray;
+			height: 80px;
 		}
 		
 		.btn {
@@ -157,8 +163,8 @@
 				id = '<span id="id_span">작성자 ' + data[0].MEMBER_ID + '</span>';
 //				time = '<span id="time_span">';
 //				time = data[0].QNA_DATE;
-//				time = '</span>';
-				time = '<span id="time_span">' + data[0].QNA_DATE + '</span>';
+//				time = '</span>';				data[i].QNA_DATE.substr(0,10)
+				time = '<span id="time_span">' + data[0].QNA_DATE.substr(0,19) + '</span>';
 				content = '<span id="content_span">' + data[0].QNA_CONTENTS + '</span>';
 				if(data[0].QNA_REPLY == null || data[0].QNA_REPLY == "") {
 					reply = '<span id="reply_span">' + "관리자의 댓글이 아직 작성되지 않았습니다." + '</span>';
@@ -252,7 +258,7 @@
 					</div>
 				</div>
 				<div id="middle_container2">
-					<h5 style="border-bottom:1px solid black;">관리자 댓글</h5>
+					<h5 style="border-bottom:1px solid black; margin-bottom:5px;">관리자 댓글</h5>
 					<div id="reply_div">
 						
 <!--

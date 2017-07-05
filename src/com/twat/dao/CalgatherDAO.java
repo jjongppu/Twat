@@ -46,10 +46,10 @@ public class CalgatherDAO {
 		ArrayList<MemberJoinGroupVO> groupArray = groupList;
 		
 		ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();
-		String selectMygroupSql = "select * from CALGATHER where GROUP_ID=?";
+		String selectMygroupSql = "SELECT * FROM CALGATHER WHERE GROUP_ID=?";
 
 		for (int i = 1; i < groupList.size(); i++) {
-			selectMygroupSql += " or GROUP_ID=?";
+			selectMygroupSql += " OR GROUP_ID=?";
 		}
 
 		try {
@@ -179,7 +179,7 @@ public class CalgatherDAO {
 	// �꽌踰� �옱 �떆�옉�떆.... �쁽�옱 洹몃９ 罹섎┛�뜑�쓽 留덉�留� pk 媛믪쓣 諛섑솚�빐以띾땲�떎
 	public int getLastGroupId() {
 		int count = 0;
-		String selectMygroupSql = "SELECT * FROM CALGATHER order by GROUP_ID desc limit 1";
+		String selectMygroupSql = "SELECT * FROM CALGATHER ORDER BY GROUP_ID DESC LIMIT 1";
 
 		try {
 			con = getConnection();
@@ -219,7 +219,7 @@ public class CalgatherDAO {
 
 		try {
 			con = getConnection();
-			String sql = "select * from CALGATHER where GROUP_ID=?";
+			String sql = "SELECT * FROM CALGATHER WHERE GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(groupId));
 
@@ -259,7 +259,7 @@ public class CalgatherDAO {
 		String groupMaster = "";
 
 		try {
-			sql = "select GROUP_MASTER from calgather where GROUP_ID = ?";
+			sql = "SELECT GROUP_MASTER FROM CALGATHER WHERE GROUP_ID = ?";
 			con = getConnection();
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, groupId);
