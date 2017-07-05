@@ -7,15 +7,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.sql.DataSource;
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.servlet.ServletContext;
+//import javax.servlet.ServletContextEvent;
+//import javax.sql.DataSource;
 
-import com.twat.dto.CalendarVO;
-import com.twat.dto.CalgatherVO;
+import com.twat.dbpool.DBPool;
+//import com.twat.dto.CalendarVO;
+//import com.twat.dto.CalgatherVO;
 import com.twat.dto.MyCalendarVO;
+import com.twat.mvconnection.MVConnection;
 
 public class MyCalendarDAO{
 	Connection con = null;
@@ -31,18 +33,19 @@ public class MyCalendarDAO{
 		return instance;
 	}
 	
-	public Connection getConnection() throws Exception{
-		Context initCtx = new InitialContext();
-		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");   
-			      
-		return ds.getConnection();
-	}
+//	public Connection getConnection() throws Exception{
+//		Context initCtx = new InitialContext();
+//		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");   
+//			      
+//		return ds.getConnection();
+//	}
 
 	public void addMySchedule( String member_id, String my_cal_contents, String my_cal_date, String my_cal_time ) {
 		PreparedStatement psmt2= null;
 		String sql ="";
 		try {
-			con = getConnection();			
+//			con = getConnection();		
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			sql = "INSERT INTO MY_CALENDAR VALUES(?, ?, CURRENT_TIMESTAMP, ?, ?, ?)";
 			psmt2 = con.prepareStatement(sql);			
 			psmt2.setInt(1, getMaxNum());
@@ -72,7 +75,8 @@ public class MyCalendarDAO{
 		PreparedStatement psmt3= null;
 		String sql ="";
 		try {
-			con = getConnection();			
+//			con = getConnection();	
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			sql = "DELETE FROM MY_CALENDAR WHERE MY_CAL_INDEX = "+deleteSche;
 			psmt3 = con.prepareStatement(sql);			
 //			psmt3.setInt(1, deleteSche);
@@ -148,7 +152,8 @@ public class MyCalendarDAO{
 		ResultSet rs3 = null;
 		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ?";
 		try{
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			pstmt3 = con.prepareCall(sql);
 			pstmt3.setString(1, MEMBER_ID);
 			rs3 = pstmt3.executeQuery();
@@ -177,13 +182,14 @@ public class MyCalendarDAO{
 	
 	
 	public int getMaxNum() {
-		int result = -1;
+//		int result = -1;
 		int cal_num = 0;
 		
 		String selectSql = "SELECT * FROM `MY_CALENDAR` ORDER BY MY_CAL_INDEX DESC LIMIT 1";
 		
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(selectSql);
 			
 			rs = psmt.executeQuery();
@@ -200,9 +206,10 @@ public class MyCalendarDAO{
 	        } catch (SQLException e) {
 		        e.printStackTrace();
 	        }
-	        return cal_num + 1;
+	        
 		}    
 		
+		return cal_num + 1;
 	}
 
 	
