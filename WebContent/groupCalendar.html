@@ -1605,7 +1605,7 @@
 
 
 						str += '<div class="content">';
-						//                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
+//						                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
 						str += '<div class="left">';
 						//                        if (str2.indexOf(',') == -1)
 						// ======================================================================================================
@@ -2203,7 +2203,7 @@
 					var voteDateSet = new Set();
 					var voteDateCount = 1;
 					if (voteObject.cal_date.indexOf(",") == -1) {
-						//                        voteDateSet.add(voteObject.cal_date);
+						voteDateSet.add(voteObject.cal_date);
 					} else {
 						voteDateList = voteObject.cal_date.split(",");
 						voteDateList = Array.from(voteDateList).sort();
@@ -2508,6 +2508,7 @@
 
 					//                    if(alreadyVote && user0000)
 					//                    {
+					console.log(voteDateSet);
 					for (let item of voteDateSet.keys()) {
 						$('#voteList' + item).css("background-image", "url(img/etcIcon/unchecked.png)");
 					}
