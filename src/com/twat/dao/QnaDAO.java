@@ -4,14 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.sql.DataSource;
 
+import com.twat.dbpool.DBPool;
 import com.twat.dto.QnaVO;
+import com.twat.mvconnection.MVConnection;
 
 public class QnaDAO {
 	Connection con = null;
@@ -28,25 +30,26 @@ public class QnaDAO {
 		
 	
 	// DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
-	public Connection getConnection() throws Exception {
-		Context initCtx = new InitialContext();
-	    DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
-	         
-	    return ds.getConnection();
-	}
-	
+//	public Connection getConnection() throws Exception {
+//		Context initCtx = new InitialContext();
+//	    DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
+//	         
+//	    return ds.getConnection();
+//	}
+//	
 	
 	// qna_number 최대값 받아오는 메서드 -------------------- 최승우----------------------------
 	public int getMaxNum() {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
-		int result = -1;
+//		int result = -1;
 		int cal_num = 0;
 		
 		String selectSql = "SELECT * FROM `QNA` ORDER BY QNA_ID DESC LIMIT 1";
 		
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(selectSql);
 			
 			rs = psmt.executeQuery();
@@ -67,9 +70,9 @@ public class QnaDAO {
 	        	// TODO Auto-generated catch block
 		        e.printStackTrace();
 	        }
-	        return cal_num + 1;
+	       
 		}    
-		
+		 return cal_num + 1;
 	}
 	
 	
@@ -84,7 +87,8 @@ public class QnaDAO {
 		String insertSql = "INSERT INTO QNA VALUES(?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
 		
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt2 = con.prepareStatement(insertSql);
 			
 			psmt2.setInt(1, getMaxNum());
@@ -110,8 +114,9 @@ public class QnaDAO {
 		        e.printStackTrace();
 	        }
 //	        System.out.println(result);
-	        return result;
+	      
 		}    
+		  return result;
 	}
 	
 	
@@ -152,19 +157,29 @@ public class QnaDAO {
 		selectKindQnaSql += " ORDER BY QNA_DATE DESC LIMIT "+ (page*10-10) +",10";
 		
 		try{
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			
 			psmt = con.prepareStatement(selectQnaCount);
 			if(kind != 4) {
 				psmt.setString(1, "%"+val+"%");
 			}
 			rs = psmt.executeQuery();
+			
 			if(rs.next()) {
 				int count = rs.getInt("COUNT(*)");
 				QnaVO qv = new QnaVO();
 				qv.setQNA_ID(count);
 				qnaArry.add(qv);
 			}
+			
+			if(rs != null)
+				rs.close();
+			
+			if(psmt != null)
+				psmt.close();
+			
+			
 			
 			psmt = con.prepareStatement(selectKindQnaSql);
 			if(kind != 4) {
@@ -208,7 +223,7 @@ public class QnaDAO {
 		ResultSet rs= null;
 		
 		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
-		QnaVO qnaVo = new QnaVO();
+//		QnaVO qnaVo = new QnaVO();
 		// searchCategry = 문의사항 종류(카테고리)
 		// val = 검색어
 		
@@ -227,7 +242,8 @@ public class QnaDAO {
 		// 1 = 제목 / 제목으로 검색하기
 		if(searchCategory == 1) {
 			try {
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				
 				psmt = con.prepareStatement(countSql);
 				if(!val.equals("0")) {
@@ -240,6 +256,11 @@ public class QnaDAO {
 					qv.setQNA_ID(count);
 					arList.add(qv);
 				}
+				if(rs != null)
+					rs.close();
+				
+				if(psmt!=null)
+					psmt.close();
 				
 				psmt = con.prepareStatement(AllSql);
 				if(!val.equals("0")) {
@@ -272,7 +293,7 @@ public class QnaDAO {
 			        e.printStackTrace();
 		        }
 //		        System.out.println(result);
-		        return arList;
+		        
 			}
 		
 		// 2 = 글 내용 / 글 내용으로 검색하기
@@ -282,6 +303,8 @@ public class QnaDAO {
 			
 			
 		}
+		
+		
 		
 		
 		
@@ -296,12 +319,13 @@ public class QnaDAO {
 		
 		ArrayList<QnaVO> arList = new ArrayList<QnaVO>(); 
 		
-		int result = -1;
+//		int result = -1;
 		
 		String selectSql = "SELECT * FROM QNA WHERE QNA_ID = ?";
 		
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(selectSql);
 			psmt.setInt(1, val);
 			
@@ -342,7 +366,8 @@ public class QnaDAO {
 		String deleteSql = "DELETE FROM QNA where MEMBER_ID=? and QNA_ID=? and QNA_PW=?";
 		
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(deleteSql);
 			psmt.setString(1, userId);
 			psmt.setInt(2, val);
@@ -363,9 +388,9 @@ public class QnaDAO {
 		        e.printStackTrace();
 	        }
 //	        System.out.println(result);
-	        return result;
+	        
 		}    
-		
+		return result;
 	}
 	
 	
@@ -377,7 +402,8 @@ public class QnaDAO {
 		String updateSql = "UPDATE QNA SET QNA_CATEGORY=?, QNA_PW=?, QNA_TITLE=?, QNA_CONTENTS=? WHERE MEMBER_ID=? AND QNA_ID=?";
 		
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(updateSql);
 			psmt.setString(1, cate);
 			psmt.setInt(2, pw);
@@ -401,9 +427,9 @@ public class QnaDAO {
 		        e.printStackTrace();
 	        }
 //	        System.out.println(result);
-	        return result;
+	        
 		}    
-		
+		return result;
 	}
 
 	
