@@ -49,9 +49,9 @@ public class ChkId extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		PrintWriter out = response.getWriter();
 		
-		Date date = new Date();
-		Timestamp timestamp = new Timestamp(date.getTime());
-		System.out.println(timestamp.getTime() + "/" + timestamp.getNanos());
+//		Date date = new Date();
+//		Timestamp timestamp = new Timestamp(date.getTime());
+//		System.out.println(timestamp.getTime() + "/" + timestamp.getNanos());
 		
 		String MEMBER_ID = (String)session.getAttribute("loginUserId");
 		String groupId = request.getParameter("groupId");
