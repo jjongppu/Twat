@@ -270,6 +270,7 @@ public class MemberDAO {
 			psmt.setString(1, idCheck);
 
 			rs = psmt.executeQuery();
+			System.out.println("!");
 			if (rs.next()) {
 				result = 1;
 			}
