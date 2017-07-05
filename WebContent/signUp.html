@@ -6,16 +6,14 @@
 <script src="js/jquery-3.2.1.min.js"></script>    
 <style>
     * {
-        background-color: #D7D2BF;
+/*        background-color: #D7D2BF;*/
     }
-    .mainText {
-        margin-top: 100px;
-    }
+
     
     .container {
         text-align: center;
         width: 450px;
-        margin: 0 auto;
+        margin: 50px auto;
         
     }
     
@@ -44,7 +42,7 @@
 /*        height: 40px;*/
 /*        border: 1px solid darkgray;*/
 /*        position: relative;*/
-        margin-top: 20px;
+        margin: 15px 0 15px 0;
     }
     #genderSmallDiv {
         position: absolute;
@@ -53,16 +51,13 @@
     }
     
     .genderBtn {
+		text-align: center;
+		font-size: 12px;
         border: none;
-        background-color: white;
         height: 30px;
-        color: darkgray;
-/*        margin: 0;*/
-/*
-        float: left;
-        display: inline-block;
-*/
-/*        width: 30%;*/
+		line-height: 30px;
+		display: inline-block;
+		width: 150px;
     }
     #man {
         border: 1px solid darkgray;
@@ -78,8 +73,8 @@
         border: none;
         height: 30px;
         margin: 6px 0 0 0;
-        background-color: #80aaff;
-        color: white;
+/*        background-color: #80aaff;*/
+/*        color: white;*/
     }
     #yearBox{
         width: 25%;
@@ -101,6 +96,10 @@
 	pwTF = false;
 	nameTF = false;
 	birthTF = false;
+	questionTF = false;
+	answerTF = false;
+	phoneTF = false;
+	
 	
     // 성별 M/F
     function test(a) {
@@ -115,14 +114,11 @@
         checkPassword();
 		checkName();
 		checkBirth();
+		checkQuestion();
+		checkAnswer();
+		checkPhone();
 		
-        if($('#pwBox').val() == "") {
-            alert("비밀번호를 입력하세요.");
-            $('#pwBox').focus();
-        } else if($('#phoneBox').val() == "") {
-            alert("전화번호를 입력하세요.");
-            $('#phoneBox').focus();
-        } else if(idTF && pwTF && nameTF && birthTF) {
+        if(idTF && pwTF && nameTF && birthTF && questionTF && answerTF) {
             $.ajax ({
 				type : 'post',
 				url : 'signUp.do',
@@ -168,10 +164,12 @@
 		
 		if(name == "") {
 			$('#nameMessage').html("<p style='font-size:10px; color:red'>이름은 필수 입력 사항입니다.</p>");
+//			alert("이름은 필수 입력 사항입니다.");
 			nameTF = false;
             $('#nameBox').focus();
 		} else if(!nameRegex.test(name)) {
 			$('#nameMessage').html("<p style='font-size:10px; color:red'>한글로만 입력해주세요.</p>");
+//			alert("이름은 한글로만 입력해주세요.");
 			nameTF = false;
 		} else {
 			nameTF = true;
@@ -251,43 +249,7 @@
          
     }
 
-    
-    
-    // 아이디 실시간 검색 ........테스트중.......
-//        function overlapId() {
-//			var result = data[0].result;
-//				var idVal = $('#idBox').val().length;
-//				var idVal2 = $('#idBox').val();
-//				var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
-//				
-//                console.log(result);
-//				// 1번
-//                if(result == 'fail') {
-//					if(idVal < 6 || idVal > 12) {
-//						$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
-//					} else if(!idRegex.test(idVal2)) {
-//						$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
-//					} else {
-//						$('#idMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 아이디입니다.</p>");
-//						$.ajax ({
-//							type : 'post',
-//							url : 'idCheck.do',
-//							data : $('#idBox').serialize(),
-//							dataType : "json",
-//							success : function(data) {
-//								console.log(data);
-//
-//
-//							},
-//							error: function(req) {
-//								alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
-//							}
-//            			});
-//					}
-//                } else {
-//                    $('#idMessage').html("<p style='font-size:10px; color:red'>사용중이거나 사용 불가한 아이디입니다.</p>");
-//                }	
-//        };
+
 	
 		// 아이디 실시간 검색.....
 		function overlapId() {
@@ -313,9 +275,11 @@
 					} else if(result == 'fail') {
 						if(idVal < 6 || idVal > 12) {
 							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
+							$('#idBox').focus();
 							idTF = false;
 						} else if(!idRegex.test(idVal2)) {
 							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
+							$('#idBox').focus();
 							idTF = false;
 						} else {
 							$('#idMessage').html("<p style='font-size:10px; color:blue'>사용 가능한 아이디입니다.</p>");
@@ -323,6 +287,7 @@
 						}
                     } else {
                         $('#idMessage').html("<p style='font-size:10px; color:red'>사용중이거나 사용 불가한 아이디입니다.</p>");
+						$('#idBox').focus();
 						idTF = false;
                     }
                     
@@ -357,6 +322,18 @@
         }
     }
 	
+	// 전화번호 유효성 체크
+	function checkPhone() {
+		console.log($('#phoneBox').val());
+		var phoneNum = $('#phoneBox').val();
+		if(phoneNum == '') {
+			$('#phoneMessage').html("<p style='font-size:10px; color:red'>전화번호를 입력해주세요.</p>");
+			phoneTF = false;
+		} else {
+			phoneTF = true;
+		}
+	}
+	
 	
 	// 생년월일 유효성 체크
 	function checkBirth() {
@@ -366,37 +343,100 @@
 		var today = new Date(); // 현재 날짜(년월일)
 		var yearNow = today.getFullYear();
 		
-		if(year == '' || month == '' || day == '') {
-			if(year < 1900 || year > yearNow) {
-				alert("년도를 확인하세요.");
+		console.log(year);
+		console.log(month);
+		console.log(day);
+//		console.log(today);
+		console.log(yearNow);
+		
+//		if(year == '' && month == '00' && day == '') {
+//			alert("년, 월, 일을 입력하세요.");
+//			birthTF = false;
+//		} else if(year < 1900 || year > yearNow) {
+//			alert("년도를 확인하세요.");
+//			birthTF = false;
+//		} else if(month < 1 || month > 12) {
+//			alert("월을 확인하세요.");
+//			birthTF = false;
+//		} else if(day < 1 || day > 31) {
+//			alert("1일부터 31일까지 입력 가능합니다.");
+//			birthTF = false;
+//		} else if((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
+//			alert(month + "월은 31일이 존재하지 않습니다.");
+//			birthTF = false;
+//		} else if(month == 2) {
+//			var checkFeb = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+//			if(day > 29 || (day == 29 && !checkFeb)) {
+//				alert(year + "년 2월은 " + day + "일이 없습니다. 다시 입력해주세요.");
+//				birthTF = false;
+//			}
+//		} else {
+//			birthTF = true;
+//		}
+		
+			if(year == '' && month == '00' && day == '') {
+				$('#birthMessage').html("<p style='font-size:10px; color:red'>년, 월, 일을 입력해주세요.</p>");
+//				alert("년, 월, 일을 입력하세요.");
 				birthTF = false;
-			}
-			if(month < 1 || month > 12) {
-				alert("월을 확인하세요.");
+			} else if(year < 1900 || year > yearNow) {
+				$('#birthMessage').html("<p style='font-size:10px; color:red'>년도를 확인하세요.</p>");
+//				alert("년도를 확인하세요.");
 				birthTF = false;
-			}
-			if(day < 1 || day > 31) {
-				alert("1일부터 31일까지 입력가능합니다.");
+			} else if(month < 1 || month > 12) {
+				$('#birthMessage').html("<p style='font-size:10px; color:red'>월을 선택해주세요.</p>");
+//				alert("월을 선택해 주세요.");
 				birthTF = false;
-			}
-			if((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
-				alert(month + "월은 31일이 존재하지 않습니다.");
+			} else if(day < 1 || day > 31) {
+				$('#birthMessage').html("<p style='font-size:10px; color:red'>일은 1일부터 31일까지 입력가능합니다.</p>");
+//				alert("1일부터 31일까지 입력가능합니다.");
 				birthTF = false;
-			}
-			if(month == 2) {
+			} else if((month == 4 || month == 6 || month == 9 || month == 11) && day == 31) {
+				$('#birthMessage').html("<p style='font-size:10px; color:red'>" +month + "월은 31일이 존재하지 않습니다.</p>");
+//				alert(month + "월은 31일이 존재하지 않습니다.");
+				birthTF = false;
+			} else if(month == 2) {
 				var checkFeb = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 				if(day > 29 || (day == 29 && !checkFeb)) {
-					alert(year + "년 2월은 " + day + "일이 없습니다. 다시 입력해주세요.");
+					$('#birthMessage').html("<p style='font-size:10px; color:red'>" + year + "년 2월은 " + day + "일이 없습니다. 다시 입력해주세요.</p>");
+//					alert(year + "년 2월은 " + day + "일이 없습니다. 다시 입력해주세요.");
 					birthTF = false;
+				} else {
+					birthTF = true;
 				}
-			}
-		} else {
-			birthTF = true;
-		}
-
+			} 
+			
+			
 	}
 	
-
+	function checkQuestion() {
+		console.log($('#questionBox').val());
+		var question = $('#questionBox').val();
+		if(question == '- 선택 -') {
+			$('#questionMessage').html("<p style='font-size:10px; color:red'>본인확인 질문을 선택해주세요.</p>");
+//			alert('본인확인 질문을 선택해주세요.');
+			questionTF = false;
+		} else {
+			questionTF = true;
+		}
+	}
+	
+	function checkAnswer() {
+		console.log($('#answerBox').val());
+		var answer = $('#answerBox').val();
+		if(answer == '') {
+			$('#answerMessage').html("<p style='font-size:10px; color:red'>본인확인 답변을 입력해주세요.</p>");
+//			alert('본인확인 답변을 입력해주세요.');
+			answerTF = false;
+		} else {
+			answerTF = true;
+		}
+	}
+	
+	// 스팬 버튼으로 구현하기
+	$('#man').click(function() {
+		var c = console.log($('#man').attr());
+		console.log(c);
+	});
     
 </script>
 <title>Insert title here</title>
@@ -427,18 +467,24 @@
 					<input type="text" name="signUpName" placeholder="이름 (한글만)" maxlength='20' id="nameBox" class="inputBox"/> 
 					<div id="nameMessage"></div>
 				</div>
-                <div id="genderDiv">
+				
 <!--
-                    <div id="genderSmallDiv">
-                        <span name="signUpGender" value="남자" class="genderBtn" id="man">남자</span>
-                        <span name="signUpGender" value="여자"  class="genderBtn" id="woman">여자</span>
-                    </div>
--->
+				성별 체크박스 원본
+                <div id="genderDiv">
                     <input type="radio" name="signUpGender" value="M"  class="genderBtn" id="man" onclick="test(this)" checked />남자
                     <input type="radio" name="signUpGender" value="F"  class="genderBtn" id="woman" onclick="test(this)"/>여자
                 </div>
+-->
+				<div id="genderDiv">
+					<div>
+						<span id="man" class="genderBtn" value="M">남자</span>
+						<span id="woman" class="genderBtn" value="F">여자</span>
+					</div>
+				</div>
+				
                 <div>
                     <input type="text" name="signUpBirthYear" placeholder="년 (4자리)" id="yearBox" class="inputBox" maxlength='4'/>
+<!--					<div id="yearMessage"></div>-->
                     <select name="signUpBirthMonth" placeholder="월" id="monthBox" class="inputBox">
                         <option value="00">월</option>
                         <option value="01">1</option>
@@ -454,10 +500,16 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
+<!--					<div id="monthMessage"></div>-->
 <!--                    <input type="text" name="signUpBirth" placeholder="" id="monthBox" class="inputBox"/>-->
                     <input type="text" name="signUpBirthDay" placeholder="일" id="dayBox" class="inputBox" maxlength='2'/>
+<!--					<div id="dayMessage"></div>-->
                 </div>
-                <div><input type="tel" name="signUpPhone" placeholder="전화번호" maxlength="13" id="phoneBox" class="inputBox" onkeyup="autoHypen()"/></div>
+				<div id="birthMessage"></div>
+                <div>
+					<input type="tel" name="signUpPhone" placeholder="전화번호" maxlength="13" id="phoneBox" class="inputBox" onkeyup="autoHypen()"/>
+					<div id="phoneMessage"></div>
+				</div>
 				<div id="question" class="textBox">					
 					<select name="signUpQuestion" id="questionBox" class="inputBox">
 						<option>- 선택 -</option>
@@ -466,10 +518,11 @@
 						<option>자신의 첫사랑 이름은 ?</option>
 						<option>가장 인상 깊었던 여행지는 ?</option>
 					</select>
+					<div id="questionMessage"></div>
 				</div>
 				<div>
-                    <input type="text" name="signUpAnswer" placeholder="본인확인 질문 답변 " class="inputBox" id="answerBox" />
-                    <div id="idMessage"></div>
+                    <input type="text" name="signUpAnswer" placeholder="본인확인 질문 답변 " maxlength="20" class="inputBox" id="answerBox" />
+                    <div id="answerMessage"></div>
                 </div>
 				
             </div>
@@ -479,7 +532,7 @@
             <div id="btn">
 <!--                <input type="submit" value="확인" />-->
                 <input type="button" value="확인" class="btns" onclick="signUpEnter()"/>
-                <input type="button" value="취소" class="btns" />
+                <input type="button" value="취소" class="btns" onclick='location.href="index.html"'/>
             </div>
 		</div>
 		

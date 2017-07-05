@@ -1149,6 +1149,18 @@
 
         var a = "";
         for (let item of scheSet.keys()) console.log(item);
+        
+        var times = [];
+        var value="";
+        for(var i = 0; i <25; i++){
+            if(i<10){
+                value="0"+i;
+            }else{
+                value=i;
+            }
+            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
+        }
+        $("#scheTime").append(times.join(''));
     }
 
 
@@ -1288,15 +1300,31 @@
 //                  console.log(item.myCalIndex);
 //                  console.log(item.myCalContents);
 //                  console.log(item.myCalTime);
-                  
+                
                   var calDate = item.myCalDate.split(",");
+                  var calSubStr1 = calDate[0].substr(2,8);
+                  var calSubStr2 = calDate[calDate.length-2].substr(2,8);
+//                  console.log(calSubStr1);
+//                  console.log(calSubStr2);
+                  
+                  
                   if(calDate.length != 2){
-                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
+                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calSubStr1+"~"+calSubStr2+"</div>";
                   } else {
-                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"</div>";
+                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calSubStr1+"</div>";
                   }
                   str+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
                   str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
+                  
+//                  if(calDate.length != 2){
+//                     str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
+//                  } else {
+//                    str+="<div class='swiper-slide'><div class='schedules scheList1'>"+calDate[0]+"</div>";
+//                  }
+//                  str+="<div class='schedules scheList2'>"+item.myCalContents+"</div>";
+//                  str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
+                  
+                  
               });
                 $(".leftUp .swiper-wrapper").append(str);
                 
@@ -1535,24 +1563,32 @@
 //                  console.log(item.calWriter);
                   
                   var calDate = item.calDate.split(",");
+                  var calStr1 = calDate[0].substr(2,8);
+                  var calStr2 = calDate[calDate.length-1].substr(2,8);
+                  
+                  console.log(calDate);
+                  console.log(calStr1);
+                  console.log(calStr2+"calStr2");
+                  
+//                  var calDate = item.calDate.split(",");
                 
                   if(calDate.length !=2){
-                    str2+="<div class='swiper-slide'><div class='schedules'>"+calDate[0]+"~"+calDate[calDate.length-2]+"</div>";
+                    str2+="<div class='swiper-slide'><div class='schedules scheList1'>"+calStr1+"~"+calStr2+"</div>";
                   } else {
-                    str2+="<div class='swiper-slide'><div class='schedules'>"+calDate[0]+"</div>";
+                    str2+="<div class='swiper-slide'><div class='schedules scheList1'>"+calStr1+"</div>";
                   }
-                  str2+="<div class='schedules'>"+item.calMemo+"</div>";
-                  str2+="<div class='schedules'>"+item.calWriter+"</div></div></br>";
+                  str2+="<div class='schedules scheList2'>"+item.calMemo+"</div>";
+                  str2+="<div class='schedules scheList3'>"+item.calWriter+"</div></div></br>";
               });
                     $(".leftDown .swiper-wrapper").append(str2);
                 
                     var swiper = new Swiper('.leftDown .swiper-container', {
                         pagination: '.leftDown .swiper-pagination',
                         direction: 'vertical',
-                        slidesPerView: 5,
+                        slidesPerView: 4,
                         paginationClickable: true,
     //                    centeredSlides: true,
-                        spaceBetween: 2,
+                        spaceBetween: 1,
                         mousewheelControl: true
                     });
             },
@@ -1596,19 +1632,34 @@
             dataType: "json",
             success: function(data) {
                 console.log(data);
+                var memberBirthSet = new Set();
                 $.each(data, function(index, item) {
-//                    console.log(item.friendId);
-//                    console.log(item.friendName);
-//                    console.log(item.friendBirth);
-                    console.log(item.friendImg);
-//                    strBirth+="<div class='swiper-slide'><div class=fname>"+item.friendName+"</div>";
-//                    strBirth+="<div class=fbirth>"+item.friendBirth+"</div></div>";
-                    
-                    
-                    strBirth+="<div class='swiper-slide'><div class='myScheList'><img id='friendImg' src='"+item.friendImg+"'/>";
-                    strBirth+="<div><div class=fname>"+item.friendName+"</div>";
-                    strBirth+="<div class=fbirth>"+item.friendBirth+"</div></div></div></div>";
+                    memberBirthSet.add(item.friendBirth.substr(2, 4) + "-" + item.friendName + "-" + item.friendImg + "-" + item.friendId);
                 });
+                var memberBirthArray = Array.from(memberBirthSet).sort();
+                var CurrentMonth;
+//                var memBirMonth = memberBirthArray[i].split("-")[0];
+                for(var i = 0; i < memberBirthArray.length; i++){
+                    var birthDay = memberBirthArray[i].split("-")[0];
+                    strBirth+="<div class='swiper-slide'>";
+                    if (i == 0) {
+                        strBirth += "<div class='fbirthList'><div><div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'></div></div></div>";
+                        CurrentMonth = parseInt(birthDay.substr(0, 2));
+                    } else if (parseInt(birthDay.substr(0, 2)) > CurrentMonth) {
+                        strBirth += "<div class='fbirthList'><div><div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'></div></div></div>";
+                        CurrentMonth = parseInt(birthDay.substr(0, 2));
+                    } else {
+                        strBirth += "<div class='fbirthList'><div><div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'><div class='stick'>                                 </div></div></div>";
+                    }
+                    
+                    strBirth+="<div class='myScheList'>";
+                    strBirth+="<div class='fImg'><img id='friendImg' src='"+memberBirthArray[i].split("-")[2]+"'/></div>";
+                    strBirth+="<div class='fInfo'><div class=fname>"+memberBirthArray[i].split("-")[1]+"</div>";
+                    strBirth+="<div class=fbirth>"+memberBirthArray[i].split("-")[0].substr(1, 1)+"월";
+                    strBirth+=memberBirthArray[i].split("-")[0].substr(2,3)+"일"+"</div></div></div></div></div>";
+                    // memberBirthArray[i].split("-")[3] : userId
+                }
+                
                 $(".eveLeft .swiper-wrapper").append(strBirth);
                 
                  var horiSwiper = new Swiper('.eveLeft .swiper-container', {
@@ -1617,9 +1668,10 @@
                     prevButton: '.eveLeft .swiper-button-prev',
                     slidesPerView: 3,
                     paginationClickable: true,
-                    spaceBetween: 20,
+                    spaceBetween: 0,
                     loop: true
                 });
+//                console.log(memberBirthArray);
             },
             error: function(req) {
                 alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
@@ -1667,7 +1719,9 @@
         }
     }
 
-    function clickAddCal() {
+        
+/* ============== 작성하기 버튼 ============== */
+    function clickAddCal() {   
         $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
         var heights = $('#contentsHeight').css('height');
         if ($("#calTitle").val() != "") {
@@ -1675,17 +1729,17 @@
                 height: heights,
             }, 300);
         }
-        var times = [];
-        var value="";
-        for(var i = 0; i <25; i++){
-            if(i<10){
-                value="0"+i;
-            }else{
-                value=i;
-            }
-            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
-        }
-        $("#scheTime").append(times.join(''));
+//        var times = [];
+//        var value="";
+//        for(var i = 0; i <25; i++){
+//            if(i<10){
+//                value="0"+i;
+//            }else{
+//                value=i;
+//            }
+//            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
+//        }
+//        $("#scheTime").append(times.join(''));
     }
     
     
@@ -1746,7 +1800,7 @@
         $("#modal").css("display", "none");
         console.log("!!!!");
         $("#calTitle").val("");
-
+        location.reload();
     }
 
     
@@ -1756,6 +1810,8 @@
         $('#blindCover').css('display', 'none');
         $('#modal').css('display', 'none');
         $('#modal input').val("");
+        location.reload();
+
     }
 
     //모달 뜰떄 뒤에 까만화면 크기를....

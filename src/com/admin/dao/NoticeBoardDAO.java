@@ -87,7 +87,7 @@ public class NoticeBoardDAO {
 				
 		try {
 			con = getConnection();
-			String sql = "SELECT * FROM `notice_board` WHERE NOTICE_CLASSIFICATION = ? ORDER BY NOTICE_ID DESC LIMIT 10";
+			String sql = "SELECT * FROM `notice_board` WHERE NOTICE_CLASSIFICATION = ? ORDER BY NOTICE_ID DESC LIMIT 7";
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, noticeEvent);
 			rs = psmt.executeQuery();

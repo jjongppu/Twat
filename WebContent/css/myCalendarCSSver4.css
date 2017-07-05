@@ -5,6 +5,10 @@
     #B3B2C1 : 그레이
 */
 
+@font-face{
+    font-family:"";
+}
+
 body {
     background-image: url(../img/background/back4.jpg);
     background-repeat: no-repeat;
@@ -205,7 +209,7 @@ li {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    font-size: 40px;
+    font-size: 30px;
     padding: 0 10px 0 0;
 }
 
@@ -216,6 +220,7 @@ li {
 /*    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);*/
     background-color: #83C5F1;
 }
+
 .decoLine{
     display: inline-block;
     width: 200px;
@@ -225,7 +230,7 @@ li {
 }
 
 .program{
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .more{
@@ -235,13 +240,33 @@ li {
     border: white 5px solid;
 }
 
+.stick{
+    display: inline-block;
+    background-color: #83C5F1;
+    height: 5px;
+    width: 120px;
+    margin-top: 20px;
+}
+.birthMonth{
+    font-size: 24px;
+	font-weight: bold;
+	color: #83C5F1;
+	height: 20%;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
 .scheList1{
 /*    width:155px;*/
-    width:30%;
+    width:20%;
 }
 .scheList2{
 /*    width:230px;*/
-    width:50%;
+    width:55%;
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space:nowrap;
 }
 
 .scheList3{
@@ -249,23 +274,38 @@ li {
     width:20%;
 }
 
+.birthMonth{
+    width:100%;
+    height:20%;
+}
+
+.fImg{
+/*    height: 100%;*/
+    width: 50%;
+}
 #friendImg{
     width: 70px;
     height: 70px;
 }
-
+.fInfo{
+/*    height: 100%;*/
+    width: 50%;
+}
 .myScheList{
-    height: 100%
+    height: 73px;
 }
 
 .fname{
 /*    display: inline-block;*/
     width: 100%;
-    height: 50%;
+/*    height: 50%;*/
 }
 .fbirth{
     width: 100%;
-    height: 50%;
+/*    height: 50%;*/
+}
+.fbirthList{
+    height: 100%;
 }
 
 
