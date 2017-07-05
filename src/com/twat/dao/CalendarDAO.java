@@ -52,7 +52,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			String sql = "select * from CALENDAR where CAL_DEPTH=0 and GROUP_ID=?";
+//			String sql = "select * from CALENDAR where CAL_DEPTH=0 and GROUP_ID=?";
+			String sql = "SELECT * FROM CALENDAR WHERE CAL_DEPTH=0 AND GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(groupId));
 
@@ -99,7 +100,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? ORDER BY CAL_NUM";
+//			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? ORDER BY CAL_NUM";
+			String sql = "SELECT * FROM CALENDAR WHERE 0GROUP_ID=? AND CAL_REFERENCE=? ORDER BY CAL_NUM";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(groupId));
@@ -149,7 +151,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			sql = "SELECT * FROM calendar order by CAL_NUM desc limit 1";
+//			sql = "SELECT * FROM calendar order by CAL_NUM desc limit 1";
+			sql = "SELECT * FROM CALENDAR ORDER BY CAL_NUM DESC LIMIT 1";
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
@@ -184,7 +187,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			sql = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
+//			sql = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
+			sql = "INSERT INTO CALENDAR VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
 			String[] dateStr = cal_date.split(",");
 			String writer_id = "";
 			for (int i = 0; i < dateStr.length; i++) {
@@ -277,7 +281,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			String sql = "SELECT CAL_NUM FROM calendar where CAL_DATE LIKE ? AND GROUP_ID = ? AND CAL_MEMO = ?";
+//			String sql = "SELECT CAL_NUM FROM calendar where CAL_DATE LIKE ? AND GROUP_ID = ? AND CAL_MEMO = ?";
+			String sql = "SELECT CAL_NUM FROM CALENDAR WHERE CAL_DATE LIKE ? AND GROUP_ID = ? AND CAL_MEMO = ?";
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, "%" + first_cal + "%");
 			psmt.setInt(2, group_id);
@@ -290,7 +295,8 @@ public class CalendarDAO {
 				cal_num = rs.getInt("CAL_NUM");
 			}
 
-			String sql2 = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
+//			String sql2 = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql2 = "INSERT INTO CALENDAR VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
 			psmt2 = con.prepareStatement(sql2);
 
 			psmt2.setInt(1, getLastCalNum());
@@ -393,7 +399,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			String sql = "select MEMBER_CHOICE from CALENDAR where CAL_NUM=?";
+//			String sql = "select MEMBER_CHOICE from CALENDAR where CAL_NUM=?";
+			String sql = "SELECT MEMBER_CHOICE FROM CALENDAR WHERE CAL_NUM=?";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(calNum));
@@ -414,7 +421,7 @@ public class CalendarDAO {
 				for (String string : result) {
 					// System.out.println(string);
 					if (string.split("-")[1].equals(user)) {
-						System.out.println("string : " + string + ", user : " + user);
+//						System.out.println("string : " + string + ", user : " + user);
 						// memberSet.add(string);
 					} else {
 						memberSet.add(string);
@@ -460,7 +467,7 @@ public class CalendarDAO {
 			pstmt.setInt(2, Integer.parseInt(calNum));
 
 			if (pstmt.executeUpdate() == 1) {
-				System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + updateList);
+//				System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + updateList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -486,7 +493,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			String sql = "select MEMBER_CHOICE from CALENDAR where CAL_NUM=?";
+//			String sql = "select MEMBER_CHOICE from CALENDAR where CAL_NUM=?";
+			String sql = "SELECT MEMBER_CHOICE FROM CALENDAR WHERE CAL_NUM=?";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(calNum));
@@ -539,7 +547,7 @@ public class CalendarDAO {
 			}
 
 			updateList = updateList.substring(0, updateList.length() - 1);
-			System.out.println(updateList);
+//			System.out.println(updateList);
 
 			String updateSql = "UPDATE CALENDAR SET MEMBER_CHOICE=?, CAL_DATE=? WHERE CAL_NUM=?";
 			// UPDATE calendar SET MEMBER_CHOICE='hi' WHERE CAL_NUM=5
@@ -550,7 +558,7 @@ public class CalendarDAO {
 			pstmt.setInt(3, Integer.parseInt(calNum));
 
 			if (pstmt.executeUpdate() == 1) {
-				System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + updateList);
+//				System.out.println("�뜝�룞�삕�뜝�룞�삕 : " + updateList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -576,10 +584,12 @@ public class CalendarDAO {
 		// String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=?";
 
 		for (int i = 1; i < groupIdArr.size(); i++) {
-			sql += " or GROUP_ID=? ";
+//			sql += " or GROUP_ID=? ";
+			sql += " OR GROUP_ID=? ";
 		}
 
-		sql += "order by CAL_DATE desc limit 8";
+//		sql += "order by CAL_DATE desc limit 8";
+		sql += "ORDER BY CAL_DATE DESC LIMIT 8";
 
 		try {
 			con = getConnection();
@@ -633,7 +643,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			String sql = "select CAL_NUM, CAL_DATE, MEMBER_CHOICE FROM CALENDAR WHERE GROUP_ID=? and CAL_DEPTH=0";
+//			String sql = "select CAL_NUM, CAL_DATE, MEMBER_CHOICE FROM CALENDAR WHERE GROUP_ID=? and CAL_DEPTH=0";
+			String sql = "SELECT CAL_NUM, CAL_DATE, MEMBER_CHOICE FROM CALENDAR WHERE GROUP_ID=? AND CAL_DEPTH=0";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, groupId);
 			
@@ -673,7 +684,7 @@ public class CalendarDAO {
 			
 			if(!memberChoice.contains(","))
 			{
-				System.out.println(memberChoice);
+//				System.out.println(memberChoice);
 				return;
 			}
 			
@@ -764,7 +775,8 @@ public class CalendarDAO {
 
 		try {
 			con = getConnection();
-			String sql = "select CAL_NUM, CAL_DATE, MEMBER_CHOICE FROM CALENDAR WHERE GROUP_ID=? and CAL_DEPTH=0";
+//			String sql = "select CAL_NUM, CAL_DATE, MEMBER_CHOICE FROM CALENDAR WHERE GROUP_ID=? and CAL_DEPTH=0";
+			String sql = "SELECT CAL_NUM, CAL_DATE, MEMBER_CHOICE FROM CALENDAR WHERE GROUP_ID=? AND CAL_DEPTH=0";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, groupId);
 			
@@ -901,9 +913,13 @@ public class CalendarDAO {
 			int result = pstmt.executeUpdate();
 			
 			if(result == 1)
-				System.out.println("calendar에서 groupId가 " + groupId + "인 row 삭제");
+			{
+//				System.out.println("calendar에서 groupId가 " + groupId + "인 row 삭제");
+			}
 			else
-				System.out.println("삭제 실패");
+			{
+//				System.out.println("삭제 실패");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
