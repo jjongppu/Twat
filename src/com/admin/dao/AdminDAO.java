@@ -14,6 +14,7 @@ import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberVO;
 import com.twat.dto.QnaVO;
+import com.twat.dto.VisitVO;
 
 	
 
@@ -573,6 +574,50 @@ public class AdminDAO {
 							}
 							return result;
 						}
+
+		public ArrayList<VisitVO> getVisits() {
+			ArrayList<VisitVO> array = new ArrayList<VisitVO>();
+			PreparedStatement psmt= null;
+			ResultSet rs= null;
+			
+			String selectVisit1 = "SELECT * FROM VISIT ORDER BY VISIT_KIND ASC LIMIT 10";
+			String selectVisit2 = "SELECT SUM(VISIT_COUNT) FROM visit";
+			try {
+				con = getConnection();
+				
+//					psmt = con.prepareStatement(selectVisit2);
+//					rs = psmt.executeQuery();
+//					
+//					if(rs.next()){
+//						VisitVO vv = new VisitVO();
+//						vv.setVISIT_KIND(rs.getString("SUM(VISIT_COUNT)"));
+//						array.add(vv);
+//					}
+					
+					psmt = con.prepareStatement(selectVisit1);
+					rs = psmt.executeQuery();
+					
+					while(rs.next()){
+						VisitVO vv = new VisitVO();
+						vv.setVISIT_KIND(rs.getString("VISIT_KIND"));
+						vv.setVISIT_COUNT(rs.getInt("VISIT_COUNT"));
+						array.add(vv);
+					}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs != null) rs.close();
+						if(psmt != null) psmt.close();
+						if(con != null) con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				
+			}
+			return array;
+		}
 			
 			
 			

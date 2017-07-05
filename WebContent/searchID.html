@@ -4,6 +4,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="js/jquery-3.2.1.min.js"></script>   
 <style>
+	body {
+        margin: 0;
+        padding: 0;
+        background-image: url(img/background/back1.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+	.logoBox {
+        height: 180px;
+        line-height: 180px;
+        font-size: 40px;
+    }
+	#logo{
+        width: 240px;
+        height: auto;
+    }
+	
     .container {
         text-align: center;
         width: 600px;
@@ -12,15 +31,17 @@
     }
 
 	#contentHeader {
-		margin-top: 120px;
+/*		margin-top: 120px;*/
 /*		border: 1px solid blue;*/
 	}
+
+	
 	#contentBody {
-		border: 1px solid #e5e5e5;
+/*		border: 1px solid #e5e5e5;*/
 		padding: 60px 0 60px 0;
 	}
 	#contentSubmit {
-		margin-top: 40px;
+/*		margin-top: 40px;*/
 /*		border: 1px solid red;*/
 	}
 	.text {
@@ -34,34 +55,115 @@
 		width: 400px;
 		margin: 0 auto;
 	}
-	#button {
+	.btn {
+		background: none;
 		border: none;
-		width: 50px;
+		width: 80px;
 		height: 28px;
 	}
+	
+	#searchBoxWrap {
+		margin-top: 40px;
+		border-top: 2px solid black;
+		display: none;
+	}
+	#searchH {
+/*		border-bottom: 1px solid #e5e5e5;*/
+	}
+	#goLogin {
+		margin: 20px 0 20px 0;
+		width: 130px;
+	}
+	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기존 아이디찾기 페이지 css   ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	
 
 </style>
     
 <script>
+	nameTF = false;
+	phoneTF = false;
+	
     function searchEnter() {
-        $.ajax ({
-            type : 'post',
-            url : 'searchID.do',
-            data : $('#searchID').serialize(),
-            dataType : "json",
-            success : function(data) {
-                var result = data[0].result;
+		checkName();
+		checkPhone();
+		if (nameTF && phoneTF) {
+			$.ajax ({
+				type : 'post',
+				url : 'searchID.do',
+				data : $('#searchID').serialize(),
+				dataType : "json",
+				success : function(data) {
+					var result = data[0].result;
 
-                console.log(result);
+					console.log(result);
 
-//                console.log(result);
-                alert(result);
-            },
-            error: function(req) {
-                console.log("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "searchID.do");
-            }
-        });
+					// 아이디 부분 * 표시 처리하기 
+					var idResult = result;
+					if(result == 'fail') {
+						$('#searchIdBox').html("등록된 아이디가 없습니다.");
+						$('#searchBoxWrap').css('display', 'block');
+					} else {
+						idResult.charAt(3)
+						var idArr = idResult.split("");
+
+						for(var i = idArr.length-4; i < idArr.length-1; i++ ){
+							idArr[i] = "*";
+
+						}
+						idResult = idArr + "";
+
+						idResult = idResult.replace(/\,/g,''); //특정문자 제거
+						console.log(idResult);
+
+						var searchId = "";
+
+						searchId = '<span>' + idResult + '</span>';
+
+						$('#searchIdBox').html(searchId);
+						$('#searchBoxWrap').css('display', 'block');
+					}
+
+
+
+				},
+				error: function(req) {
+					console.log("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "searchID.do");
+				}
+			});
+		}
+
     }
+	
+	// 아이디 유효성 체크
+	function checkName() {
+		var nameRegex = /^[가-힣]{2,4}$/;
+		var name = $('#nameBox').val();
+		
+		if(name == "") {
+			$('#nameMessage').html("<p style='font-size:10px; color:red'>이름은 필수 입력 사항입니다.</p>");
+//			alert("이름은 필수 입력 사항입니다.");
+			nameTF = false;
+            $('#nameBox').focus();
+		} else if(!nameRegex.test(name)) {
+			$('#nameMessage').html("<p style='font-size:10px; color:red'>한글로만 입력해주세요.</p>");
+//			alert("이름은 한글로만 입력해주세요.");
+			nameTF = false;
+		} else {
+			nameTF = true;
+		}
+	}
+	
+	// 전화번호 유효성 체크
+	function checkPhone() {
+		console.log($('#phoneBox').val());
+		var phoneNum = $('#phoneBox').val();
+		if(phoneNum == '') {
+			$('#phoneMessage').html("<p style='font-size:10px; color:red'>전화번호를 입력해주세요.</p>");
+			phoneTF = false;
+		} else {
+			phoneTF = true;
+		}
+	}
 
     
     // 전화번호 입력시 하이픈(-) 자동 입력
@@ -92,6 +194,9 @@
 <body>
 	<form id="searchID" action="searchID.do" method="post">
         <div class="container">
+			<div class='logoBox'>
+				<img id="logo" src="img/etcIcon/logo.png"/>
+            </div>
 			<div id="contentHeader">
 				<h4 id="contentHeader_text">아이디 찾기</h4>
 			</div>
@@ -100,19 +205,30 @@
 					<div class="text">
 						이름
 					</div>
-					<input type="text" name="userName" />
+					<input type="text" id="nameBox" class="inputBox" name="userName" />
+					<div id="nameMessage"></div>
 				</div>
 				<div id="phone" class="textBox">
 					<div class="text">
 						전화번호
 					</div>
-					<input type="text" name="userPhone" id="phoneBox" onkeyup="autoHypen()"/>
+					<input type="text" name="userPhone" id="phoneBox" class="inputBox" onkeyup="autoHypen()"/>
+					<div id="phoneMessage"></div>
 				</div>
 			</div>
 			<div id="contentSubmit">
 				<div>
-					<input type="button" value="확인" id="button" onclick="searchEnter()"/>
+					<input type="button" value="확인" id="submitBtn" class="btn" onclick="searchEnter()"/>
+					<input type="button" value="뒤로가기" id="backBtn" class="btn" onclick="location.href='index.html'"/>
 				</div>
+			</div>
+			
+			<div id="searchBoxWrap">
+				<h4 id="searchH">찾은 아이디</h4>
+				<div id="searchIdBox">
+<!--					<span>찾은 아이디 들어갈 곳</span>-->
+				</div>
+				<input type="button" value="로그인하러 가기" id="goLogin" class="btn" onclick="location.href='index.html'" />
 			</div>
         </div>
     </form>

@@ -11,6 +11,9 @@
     <script src="js/jquery.form.js"></script>
 </head>
 	<style>
+		* {
+/*			font-size: 12px;*/
+		}
 		body{
             background-image: url(img/background/back1.jpg);
             background-repeat: no-repeat;
@@ -20,7 +23,8 @@
         }
 		
 		/* 외부 css 땜시 따로 display : block */
-		#title_box, #top_title, #middle_container, #middle_container2, #bottom_container, #bottom_title {
+
+		div {
 			display: block;
 		}
 		
@@ -32,11 +36,11 @@
 		#wrap {
 /*			border: 1px solid black;*/
 /*			margin-left: 100px;*/
-			width: 1000px;
-			height: 600px;
+			width: 700px;
+			height: 500px;
 			margin: 0 auto;
 			position: absolute;
-			top: 50%;
+			top: 35%;
 			left: 50%;
 			transform: translate(-50%,-50%);
 		}
@@ -53,11 +57,20 @@
 		}
 		
 		#top_container {
+			
 /*			border: 1px solid green;*/
 			border-top: 2px solid gray;
-			width: 1000px;
+			width: 700px;
 			background-color: #e6e6e6;
 			margin-bottom: 20px;
+			
+		}
+		#top_title {
+			border-bottom: 1px solid gray;
+			padding: 5px;
+		}
+		#bottom_title {
+			padding: 5px;
 		}
 
 		#time_div {
@@ -68,13 +81,14 @@
 		#middle_container {
 /*			border: 1px solid orange;*/
 			border: 1px solid gray;
-			height: 350px;
+			height: 250px;
 			margin-bottom: 20px;
 			padding-top: 10px;
 			padding-left: 10px;
 		}
 		#middle_container2 {
-			background-color: yellow;
+/*			background-color: yellow;*/
+			margin-bottom: 30px;
 		}
 		#bottom_container {
 /*			border: 1px solid purple;*/
@@ -103,8 +117,9 @@
 		var parameter = url.split('=', 2);
 		console.log(parameter[1]);
 		
+		
+		// 글 띄우기
 		$.ajax ({
-			
 			type : 'post',
 			url : 'QnaDetail.do',
 			data : { val : parameter[1] },
@@ -118,6 +133,16 @@
 				console.log(data[0].QNA_CONTENTS);
 				console.log(data[0].QNA_PW);
 				console.log(data[0].QNA_REPLY);
+				console.log(data[0].sessionId);
+				
+				// 다른 사람꺼 건의글 봤을때 수정하기 버튼 없애기 수정중
+				if(data[0].MEMBER_ID != data[0].sessionId) {
+					$('#update_btn_div').css('display', 'none');
+					$('#delete_btn_div').css('display', 'none');
+				} else {
+//					$('#update_btn_div').css('display', 'block');
+				}
+				
 				var category = "";
 				var title = "";
 				var id = "";
@@ -135,7 +160,11 @@
 //				time = '</span>';
 				time = '<span id="time_span">' + data[0].QNA_DATE + '</span>';
 				content = '<span id="content_span">' + data[0].QNA_CONTENTS + '</span>';
-				reply = '<span id="reply_span">' + data[0].QNA_REPLY + '</span>';
+				if(data[0].QNA_REPLY == null || data[0].QNA_REPLY == "") {
+					reply = '<span id="reply_span">' + "관리자의 댓글이 아직 작성되지 않았습니다." + '</span>';
+				} else {
+					reply = '<span id="reply_span">' + data[0].QNA_REPLY + '</span>';
+				}
 				
 				$('#category_div').html(category);
 				$('#title_div').html(title);

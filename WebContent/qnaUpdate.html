@@ -82,32 +82,98 @@
 		
 			$.ajax ({
 				type : 'post',
-				url : 'QnaUpdate.do',
+				url : 'QnaDetail.do',
 				dataType : "json",
-				data : { val : parameter[1], pw : $('#id_pw').val() },
+				data : { val : parameter[1] },
 
 				success : function(data) {
 					console.log(data);
-					var result = data[0].result;
+					
+					console.log(data[0].QNA_CATEGORY);
+					console.log(data[0].QNA_TITLE);
+					console.log(data[0].MEMBER_ID);
+					console.log(data[0].QNA_DATE);
+					console.log(data[0].QNA_CONTENTS);
+					console.log(data[0].QNA_PW);
+					console.log(data[0].QNA_REPLY);
+					var category = "";
+					var title = "";
+					var content = "";
+						
+					console.log(parameter[1]);
+						
+//					category = '<span id="category_span">' + data[0].QNA_CATEGORY + '</span>';
+//					title = '<span>제목</span><input type="text id="titleId name="qnaTitle" value="' + data[0].QNA_TITLE + '"/>';
+					$('#cateId').val(data[0].QNA_CATEGORY);
+					$('#pwId').val(data[0].QNA_PW);
+					$('#titleId').val(data[0].QNA_TITLE);
+					content = '<span>문의 내용</span><textarea id="contId" name="qnaContents" cols="100" rows="15" style="resize: none;">' + data[0].QNA_CONTENTS + '</textarea>';
+//					content = $('#contId').val(data[0].QNA_CONTENTS);
+						
 
-					if(result == "success") {
-						alert("글 수정이 완료 되었습니다.");
-						location.href="qnaList.html";
-					} else {
-						alert("다시 한 번 확인해주세요.");
-					}
+//					$('#category_div').html(category);
+//					$('#wrap_Title').html(title);
+					$('#wrap_Content').html(content);
 
-				},
-				error: function(req) {
-					alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error );
-				},
-			});	
+
+			},
+			error: function(req) {
+				alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error );
+			},
+		});	
 		
 		
 		function pwTest() {
 			var num_regx=/^[0-9]*$/; // 숫자만
 			if(!num_regx.test($('#pwId').val())) {
 				alert("비밀번호는 숫자로만 입력해야 합니다.");
+			}
+		}
+		
+		function qnaUpdateEnter() {
+			var url = decodeURI(location.href);
+			console.log(url);
+			var parameter = url.split('=', 2);
+			console.log(parameter[1]);
+			
+			pwTest(); // 비밀번호 숫자로만 입력
+			
+			if($('#cateId option:selected').val() == "--") {
+				alert("카테고리를 선택해주세요.");
+				$('#cateId').focus();
+			} else if($('#pwId').val() == "") {
+				alert("비밀번호를 설정해 주세요.");
+				$('#pwId').focus();
+			} else if($('#titleId').val() == "") {
+				alert("제목을 입력해 주세요.");
+				$('#titleId').focus();
+			} else if($('#contId').val() == "") {
+				alert("내용을 입력해 주세요.");
+				$('#contId').focus();
+			} else {
+				$.ajax ({
+					type : 'post',
+					url : 'QnaUpdate.do',
+					dataType : "json",
+					data : { val : parameter[1], category : $('#cateId').val(), 
+							pw : $('#pwId').val(), qnaTitle : $('#titleId').val(), qnaCont : $('#contId').val() },
+
+					success : function(data) {
+						console.log(data);
+						var result = data[0].result;
+
+						if(result == "success") {
+							alert("수정이 완료 되었습니다.");
+							location.href="qnaList.html";
+						} else {
+							alert("다시 한 번 확인해주세요.");
+						}
+
+					},
+					error: function(req) {
+						alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error );
+					},
+				});	
 			}
 		}
 	
@@ -152,11 +218,11 @@
 						<span>카테고리</span>
 						<select id="cateId" name="qnaCategory">
 							<option>--</option>
-							<option>서비스 문의</option>
-							<option>아이디 관련</option>
-							<option>해킹신고 및 예방</option>
-							<option>신고하기</option>
-							<option>개선/불만사항</option>
+							<option value="서비스 문의">서비스 문의</option>
+							<option value="아이디 관련">아이디 관련</option>
+							<option value="해킹신고 및 예방">해킹신고 및 예방</option>
+							<option value="신고하기">신고하기</option>
+							<option value="개선/불만사항">개선/불만사항</option>
 						</select>
 					</div>
 					<div id="wrap_Pw" class="container">
@@ -169,11 +235,11 @@
 					</div>
 					<div id="wrap_Content" class="container">
 						<span>문의 내용</span>
-						<textarea id="contId" name="qnaContents" cols="100" rows="15" style="resize: none;"></textarea>
+<!--						<textarea id="contId" name="qnaContents" cols="100" rows="15" style="resize: none;"></textarea>-->
 					</div>
 				</div>
 				<div id="btnWrap">
-					<input type="button" value="작성완료" id="submitBtn" class="btn" onclick="qnaEnter()"/>
+					<input type="button" value="수정완료" id="submitBtn" class="btn" onclick="qnaUpdateEnter()"/>
 					<input type="button" value="취소" id="cancelBtn" class="btn" onclick="location.href='qnaList.html'"/>
 				</div>
 			</div>

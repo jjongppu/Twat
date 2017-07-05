@@ -83,7 +83,6 @@
     #cover{
         position: relative;
         height: 500px;
-        
     }
     
     #cover:before {
@@ -118,10 +117,16 @@
     }
     
     #modal{
+        display: none;
         font-size: 12px;
         padding-top: 20px;
         overflow: hidden;
         height: 0;
+        width: 350px;
+        position: absolute;
+        margin: auto;
+        height: 500px;
+        
     }
 </style>    
 
@@ -143,46 +148,50 @@
 //    }
          
     
-    function hideModal(){
-        $('#modal').animate({
-            height: 0,
-        }, 500);
-        $('#noBtn').attr('onclick','');
-        $('#yesBtn').attr('onclick','');
-    }
+//    function hideModal(){
+//        $('#modal').animate({
+//            height: 0,
+//        }, 500);
+//        $('#noBtn').attr('onclick','');
+//        $('#yesBtn').attr('onclick','');
+//    }
          
-    function returnAccount(){ 
-                $.ajax({
-                    type:"post",
-                    url: "outUser.do",
-                    data: {state: 'return',userid : $("#idBox").val()},
-                    success: function(data){
-                    var result = data[0].result;
-                        if(result != 'success'){
-                        	alert("회원 정보를 복구하던도중 오류가 발생하였습니다.");
-                        }else{
-                        	alert("회원 복구가 완료 되었습니다.");
-                        	location.href='index.html'
-                        }
-                    }
-                });
-        
-    }
-         
+//    function returnAccount(){ 
+//                $.ajax({
+//                    type:"post",
+//                    url: "outUser.do",
+//                    data: {state: 'return',userid : $("#idBox").val()},
+//                    success: function(data){
+//                    var result = data[0].result;
+//                        if(result != 'success'){
+//                        	alert("회원 정보를 복구하던도중 오류가 발생하였습니다.");
+//                        }else{
+//                        	alert("회원 복구가 완료 되었습니다.");
+//                        	location.href='index.html'
+//                        }
+//                    }
+//                });
+//        
+//    }
+//         {state: 'return',userid : $("#idBox").val()},
     function searchEnter() {
+//            var params = jQuery("#searchPW").serialize();
+//        console.log(params);
             $.ajax ({
             type : "post",
             url : "SearchPW.do",
-            data : $('#searchPW').serialize(),
+            data : $('#idpwPass').serialize(),
+//                data : {usrId : $('#chkUserId').val(), userPhone:$('#phoneBox').val(), searchPwQuestion: $('#questionBox').val(), searchPwAnswer:$('#answerBox').val()},
             dataType : "json",
             success : function(data) {
                 console.log(data);
                 var result = data[0].result;
-                    if(result == "success"){
-                        $('#userLoginCover').css('display','none');
+                
+                    if(result == 1){
+                        $('.loginContainer').css('display','none');
                         $('#modal').css('display','block');
                         
-                        location.href="changePW.html";                        
+//                        location.href="changePW.html";                        
                     }else{
                         alert('일치하는 회원정보가 없습니다.');
                     }
@@ -278,6 +287,37 @@
                 }
             }
         }
+    ///////////////////////////////////////비밀ㅈ번호변경///////
+   function changePwd(){
+                if($("#chPwd").val() == $("#chkPwd").val()){                    
+                    $.ajax({
+                    type: "post",
+                    url: "ChangePW.do",
+                    datatype: "json",
+                    data: {
+                        userId : $("#userId").val(),
+                        beforePw : $("#chPwd").val(),
+                        afterPw : $("#chkPwd").val()
+                    },
+                    success: function(data){
+                        var result = data[0].result;
+                            if(result == 1){
+                                alert("현재 비밀번호가 일치하지 않습니다.");
+                            }else{
+                                alert("비밀번호가 변경되었습니다.\n 로그인 페이지로 이동합니다.");
+                                location.href='index.html';
+
+                            }                        
+                        }
+                    });
+                }else{
+                    alert("변경할 비밀번호가 일치하지 않습니다");
+                    
+                    console.log("불일치");
+                }
+                
+            }
+    
 </script>
 
 <title>비밀번호 찾기, 변경</title>
@@ -285,7 +325,7 @@
 <body>
 
     <div id="userLoginCover">
-        <form id="idpwPass" action="login.do" method="post">
+        <form id="idpwPass" action="SearchPW.do" method="post">
             <div id="cover">
                 <div id="cover_inCover">
                 <div class='loginContainer'>
@@ -295,11 +335,10 @@
 					<h4 id="">비밀번호 찾기</h4>
 				    </div>
                     <div>
-                            <form name="searchPW" type="post"> 
                             <div id="">
 					           <div id="">
 						          
-						          <input type="text" id="chkUserId" name="userId" maxlength="13" class="idpwBox" placeholder="아이디">
+						          <input type="text" id="userId" name="userId" maxlength="13" class="idpwBox" placeholder="아이디">
                                    <div id="idMessage"></div>
 					           </div>
 
@@ -322,25 +361,32 @@
 						          <input type="text" name="searchPwAnswer" id="answerBox" class="idpwBox"  placeholder="본인 확인 질문 답변" />
 					           </div>
 				            </div>
-                            </form>
                     </div>
                     <div>
 						<input type="button" value="확인" id="submitBtn" class="btn" onclick="searchEnter()"/>
 						<input type="button" value="취소" id="cancelBtn" class="btn" onclick='location.href="index.html"' />
                     </div>
+                    </div>
+                    
+                    
                     <div id="modal" >
+                        <div class='logoBox'><img id="logo" src="img/etcIcon/logo.png"/>
+                        </div>
+                        <div id="">
+					<h4 id="mainText">비밀번호 변경</h4>
+				    </div>
                         <div id="contentBody">
 					           <div id="pw1" class="textBox">
-                               <input type="password" id="chPwd" name="" placeholder="변경할 비밀번호" onkeyup="checkPassword2()"/>
+                               <input type="password" id="chPwd" name="chPwd" class="idpwBox" placeholder="변경할 비밀번호" onkeyup="checkPassword2()"/>
 					    </div>
 					    <div id="pw2" class="textBox">
-						      <input type="password" id="chkPwd" name="" placeholder="변경할 새 비밀번호" onkeyup="checkPassword()" />
+						      <input type="password" id="chkPwd" name="chkPwd" class="idpwBox" placeholder="변경할 새 비밀번호" onkeyup="checkPassword()" />
                         </div>
                             <div id="chkOnKey"></div>
 				        </div>
                         <div>
-                            <input type="button" value="확인" id="submitBtn" class="btn" onclick="searchEnter()"/>
-						    <input type="button" value="취소" id="cancelBtn" class="btn" onclick="" />
+                            <input type="button" value="확인" id="submitBtn" class="btn" onclick="changePwd()"/>
+						    <input type="button" value="취소" id="cancelBtn" class="btn" onclick='location.href="index.html"' />
 					    </div>
                     </div>
 
@@ -349,7 +395,7 @@
                     </div>
             </div>
         </form>
-    </div>
+    
     
 </body>
 </html>

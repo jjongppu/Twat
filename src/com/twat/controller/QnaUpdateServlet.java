@@ -2,6 +2,7 @@ package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import com.twat.dao.QnaDAO;
+import com.twat.dto.QnaVO;
 
 /**
  * Servlet implementation class QnaUpdateServlet
@@ -43,11 +48,41 @@ public class QnaUpdateServlet extends HttpServlet {
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
 	    
-	    JSONArray jarr = new JSONArray();
-		PrintWriter out = response.getWriter();
+	    JSONArray jsonArr = new JSONArray();
+	    JSONObject jsonObj = new JSONObject();
+	    PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession();
 	    String userId = (String)session.getAttribute("loginUserId");
+	    int val = Integer.parseInt(request.getParameter("val"));
+	    String cate = request.getParameter("category");
+	    int pw = Integer.parseInt(request.getParameter("pw"));
+//	    String pw = request.getParameter("pw");
+	    String qnaTitle = request.getParameter("qnaTitle");
+	    String qnaCont = request.getParameter("qnaCont");
+	    
+	    System.out.println(userId);
+	    System.out.println(val);
+	    System.out.println(cate);
+	    System.out.println(pw);
+	    System.out.println(qnaTitle);
+	    System.out.println(qnaCont);
+	    
+	    
+	    QnaDAO qnaDao = QnaDAO.getInstance();
+		int result = qnaDao.updateQna(userId, val, cate, pw, qnaTitle, qnaCont);
+		
+		if(result == 1) {
+	    	jsonObj.put("result", "success");
+	    } else {
+	    	jsonObj.put("result", "fail");
+	    }
+	    
+	    jsonArr.add(jsonObj);
+		
+	    out.println(jsonArr);
+	    out.close();
+		
 	}
 
 }

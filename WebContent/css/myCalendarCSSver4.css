@@ -5,6 +5,10 @@
     #B3B2C1 : 그레이
 */
 
+@font-face{
+    font-family:"";
+}
+
 body {
     background-image: url(../img/background/back4.jpg);
     background-repeat: no-repeat;
@@ -27,7 +31,8 @@ div {
 
 #newWrap {
     display: block;
-    background-color: #F6F6F6;
+/*    background-color: #F6F6F6;*/
+    background-color: rgba(61, 145, 236, 0.4);
     width: 1350px;
     height: 800px;
     box-shadow: 10px 10px 30px gray;
@@ -150,6 +155,10 @@ li {
     width: 500px;
     overflow: hidden;
 }
+.fiveSwip{
+    display: block;
+    width: 100%;
+}
 
 .schedule {
     width: 100%;
@@ -174,8 +183,9 @@ li {
     margin: auto;
     left: 50%;
     transform: translate(-50%, 0);
-    height: 200px;
+    height: 191px;
     width: 500px;
+    margin-top: 5px;
 }
 
 .leftDown {
@@ -186,7 +196,7 @@ li {
 }
 
 .eveLeft {
-    height: 200px;
+    height: 191px;
     width: 500px;
     /*    height: 100%;*/
     display: inline-block;
@@ -205,91 +215,107 @@ li {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    font-size: 40px;
+    font-size: 30px;
     padding: 0 10px 0 0;
 }
 
 .closeDeco {
     display: inline-block;
     width: 200px;
-    height: 10px;
+    height: 5px;
     background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
+/*    background-color: #83C5F1;*/
 }
+
 .decoLine{
     display: inline-block;
     width: 200px;
-    height: 10px;
+    height: 5px;
     background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
+/*    background-color: #83C5F1;   */
 }
-
-.closeSub {
-    display: table;
-    padding: 0;
-    margin: 0;
-}
-
-.closeSub div {
-    display: inline-block;
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-    padding: 2px 10px;
-}
-/*
-
-
-.closeName {
-    padding: 0;
-    margin: 0;
-}
-
-.closeContent {
-    padding: 0;
-    margin: 0;
-}
-
-.fname {
-    padding: 0;
-    margin: 0;
-}
-
-.fbirth {
-    padding: 0;
-    margin: 0;
-}
-
-#fName {
-    padding: 0;
-    margin: 0;
-}
-*/
 
 .program{
-    font-size: 40px;
+    font-size: 30px;
 }
 
-
 .more{
-/*    float: right;*/
     margin:3px 0 3px 450px;
     background-color: bisque;
     border-radius: 100px;
     border: white 5px solid;
 }
 
+.stick{
+    display: inline-block;
+/*    background-color: #83C5F1;*/
+    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);
+    height: 5px;
+    width: 120px;
+    margin-top: 20px;
+}
+.birthMonth{
+    font-size: 24px;
+	font-weight: bold;
+/*	color: #83C5F1;*/
+/*    background: linear-gradient( 155deg, #F1E6EA,#FDF9FF, #FFFAF3, #F0EFFD, #F1E6EA);*/
+	height: 20%;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+
 .scheList1{
 /*    width:155px;*/
-    width:30%;
+    width:22%;
 }
 .scheList2{
 /*    width:230px;*/
-    width:48%;
+    width:53%;
+    overflow:hidden; 
+    text-overflow:ellipsis; 
+    white-space:nowrap;
 }
 
 .scheList3{
 /*    width:94px;*/
     width:20%;
 }
+
+.birthMonth{
+    width:100%;
+    height:20%;
+}
+
+.fImg{
+/*    height: 100%;*/
+    width: 50%;
+}
+#friendImg{
+    width: 70px;
+    height: 70px;
+}
+.fInfo{
+/*    height: 100%;*/
+    width: 50%;
+}
+.myScheList{
+    height: 73px;
+}
+
+.fname{
+/*    display: inline-block;*/
+    width: 100%;
+/*    height: 50%;*/
+}
+.fbirth{
+    width: 100%;
+/*    height: 50%;*/
+}
+.fbirthList{
+    height: 100%;
+}
+
 
 
 /* 더보기 버튼 시도...*/
@@ -307,9 +333,6 @@ li {
 */
 
 /* 더보기 버튼 실패... */
-
-
-
 
 
 
@@ -469,7 +492,7 @@ input:focus {
 }
 .leftUp .swiper-slide {
         text-align: center;
-        font-size: 18px;
+        font-size: 14px;
         background: #fff;
 
         /* Center slide text vertically */
@@ -496,9 +519,35 @@ input:focus {
 }
 .leftDown .swiper-slide {
         text-align: center;
-        font-size: 18px;
+        font-size: 14px;
         background: #fff;
 
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+}
+    
+    
+.eveLeft .swiper-container {
+        width: 100%;
+        height: 70%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+.eveLeft .swiper-slide {
+        text-align: center;
+        font-size: 15px;
+        background: #fff;
         /* Center slide text vertically */
         display: -webkit-box;
         display: -ms-flexbox;

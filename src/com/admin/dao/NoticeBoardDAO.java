@@ -2,11 +2,15 @@ package com.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.admin.dto.NoticeBoardVO;
 
 public class NoticeBoardDAO {
 	Connection con = null;
@@ -72,6 +76,54 @@ public class NoticeBoardDAO {
 		
 		
 		return result;
+		
+	}
+	
+	
+	public ArrayList<NoticeBoardVO> getBoardInfo(String noticeEvent){
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		ArrayList<NoticeBoardVO> noticeArr = new ArrayList<NoticeBoardVO>();
+				
+		try {
+			con = getConnection();
+			String sql = "SELECT * FROM `notice_board` WHERE NOTICE_CLASSIFICATION = ? ORDER BY NOTICE_ID DESC LIMIT 7";
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, noticeEvent);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				noticeArr.add(new NoticeBoardVO(0, rs.getString("NOTICE_TITLE"), rs.getString("NOTICE_CONTENT"),
+						rs.getString("NOTICE_WRITER"), rs.getString("NOTICE_DATE"), rs.getInt("NOTICE_VIEWS"), rs.getString("NOTICE_CLASSIFICATION")));
+				
+				
+			}
+			
+			
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			
+				try {
+					if(rs != null)
+						rs.close();
+					if(psmt != null)
+						rs.close();
+					if(con != null)
+						con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			
+		}
+		
+		return noticeArr;
+		
 		
 	}
 	
