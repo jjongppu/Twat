@@ -101,7 +101,7 @@ public class CalendarDAO {
 		try {
 			con = getConnection();
 //			String sql = "select * from CALENDAR where GROUP_ID=? and CAL_REFERENCE=? ORDER BY CAL_NUM";
-			String sql = "SELECT * FROM CALENDAR WHERE 0GROUP_ID=? AND CAL_REFERENCE=? ORDER BY CAL_NUM";
+			String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=? AND CAL_REFERENCE=? ORDER BY CAL_NUM";
 
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(groupId));
