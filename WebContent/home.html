@@ -146,11 +146,15 @@
         
         
     }
-    
+    caption{
+        text-align: left;
+        font-size: 16px;
+        margin: 5px;
+    }
     .swiper-container {
         width: 90%;
         height: 90%;
-        margin: 40px auto 60px auto;
+        margin: 80px auto 40px auto;
         display: block;
     }
     .swiper-slide {
@@ -350,11 +354,7 @@
             height: 410px;
             
         }
-        #NoticeContainer{
-            display: none;
-            border: 1px solid black;
-            width: 800px;
-        }
+
         #NotiTop{
             display: block;
             border: 1px solid black;
@@ -420,26 +420,10 @@
         
         <div id="main_container">
 <!--            여기에 각자 페이지 넣으시면 됩니다~~~~~~~~  -->
-            <div id="decoBorder">
-            <div>
-                <div>
-                    <div id="NotiTop3">
-                        <div id="NotiTop2">
-                            <div id="NotiTop1">
-                                <input type="hidden" value="NOTICE_ID">
-                                <div id="titleName">공지사항</div>
-                                <div id="NotDate">작성날자</div>
-                            </div>
-                            <div id="NotiWriter">여기에 작성자</div>
-                        </div>
-                        <div id="NotiContent"> 여기에는 내용.</div>
-                    </div>
-                    <input type="button" value="뒤로가기">
-                </div>
-            </div>
-            </div>
+            <div id="decoBorder"></div>
+
             
-        <div id="NoticeContainer">
+            
             <div id="sub_container1">
                
                     <div class="swiper-container">
@@ -559,7 +543,6 @@
                 
             
             </div>
-        </div>
             
             
             
