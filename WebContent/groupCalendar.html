@@ -2602,7 +2602,20 @@
 //							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
 							// <div class="swiper-slide">Slide 1</div>
 							commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
-							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div></div>";
+							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div>";
+							
+							var commDate = new Date();
+							
+							// 초단위
+							var commNow = parseInt(commDate.getTime()/1000);
+							var commBefore = parseInt(data[i].cal_time/1000);
+							
+//							console.log(commNow);
+//							console.log(commBefore);
+							console.log(commNow - commBefore);
+							
+							commentsString += "";
+							commentsString += "</div></div>";
 						}
 
 						// 댓글창

@@ -2,8 +2,10 @@ package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -95,7 +97,7 @@ public class GroupCalendar extends HttpServlet
 //		ArrayList<CalendarVO> arrList = calDao.getInfo((String)session.getAttribute("loginUserId"));
 //		ArrayList<CalendarVO> arrList = calDao.getInfo("2");
 		
-		SimpleDateFormat simple = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
+//		SimpleDateFormat simple = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
 		
 		if(arrList.size() > 0)
 		{
@@ -104,7 +106,10 @@ public class GroupCalendar extends HttpServlet
 				JSONObject groupSchedule = new JSONObject();
 				
 				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
-				groupSchedule.put("cal_time", simple.format(arrList.get(i).getCal_time()));
+//				groupSchedule.put("cal_time", simple.format(arrList.get(i).getCal_time()));
+				Date date = arrList.get(i).getCal_time();
+				groupSchedule.put("cal_time", date.getTime());
+//				System.out.println(date.getTime());
 				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
 //				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
 				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
@@ -137,8 +142,8 @@ public class GroupCalendar extends HttpServlet
 			calDao = null;
 		if(arrList != null)
 			arrList = null;
-		if(simple != null)
-			simple = null;
+//		if(simple != null)
+//			simple = null;
 		
 	}
 }
