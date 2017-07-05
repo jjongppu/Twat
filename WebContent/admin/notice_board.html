@@ -1,14 +1,181 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>공지사항 이벤트 작성 페이지</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <script src="../js/jquery-3.2.1.min.js"></script>
+<meta charset="UTF-8">
+<title>admin</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="../js/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        background-image: url(../img/background/background2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+    div{
+        position: relative;
+    }
+    #wrap{
+        min-width: 360px;
+        margin: auto;
+    }
+    #contents{
+        margin-top: 100px;
+        background-color: white;
+        text-align: center;
+    }
+    a{
+        text-decoration: none;
+        display: block;
+        padding: 14px 0;
+        color: white;
+    }
+
+    ul{
+        margin: 0;
+        list-style: none;
+        padding: 0;
+        
+    }
+    li{
+        cursor: pointer;
+        display: inline-block;
+        text-align: center;
+        width: 120px;
+    }
+    #logout{
+        position: absolute;
+        top: 0;
+        right: 0;
+        
+    }
     
-    <script>
-        function inputNotice(){
+/*     미리보기 메인 뷰*/
+    .mainViewInfoCover{
+        width: 294px;
+        height: 180px;
+        display: inline-block;
+    }
+    
+    .mainViewInfo{
+        width: 300px;
+        cursor: pointer;
+        margin: auto;
+        background-color: white;
+        opacity: 0.9;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    
+    #viewCover{
+        margin: auto;
+        opacity: 0.9;
+        width: 1200px;
+        background-color: white;
+    }
+    .viewImgCover{
+        display: inline-block;
+        width: 110px;
+        height: 110px;
+        text-align: center;
+        padding-top: 20px;
+    }
+    
+    .viewImg{
+        width: 70px;
+        height: 70px;
+    }
+    
+/*
+    @media screen and (min-width:1130px) and (max-width : 1500px){
+    
+         .mainViewInfoCover{
+            width: 32%;
+        }
+    }
+    
+    @media screen and (max-width : 1129px){
+
+         .mainViewInfoCover{
+            width: 48%;
+        }
+    }
+    
+    @media screen and (max-width : 660px){
+     .mainViewInfoCover{
+            width: 100%;
+        }
+    }
+*/
+     @media screen and (max-width : 360px){
+        .menuMedia{
+            display: none;
+        }
+    }
+    
+</style>    
+
+<script>
+        $.ajax ({
+            type : 'post',
+            url : '../getinfo.do',
+            dataType : "json",
+            success : function(data) {
+                console.log(data);
+                $('#memVal').html(data[0].memberCount);
+                $('#qnaVal').html(data[0].qnaCount);
+                $('#calVal').html(data[0].calendatCount);
+                $('#visVal').html(data[0].visitCount);
+                $('#calgVal').html(data[0].calgtherCount);
+                
+                        $.ajax ({
+                            type : 'post',
+                            url : '../GetVisits.do',
+                            dataType : "json",
+                            success : function(data) {
+                                var visitkind = data[0].VISIT_KIND;
+                                if(visitkind != '-1'){
+                                    var arryList = new Array(data.length) ;
+                                    for(var i=0;i<data.length;i++){
+                                        arryList[i] = new Array(2);
+                                        arryList[i][0] = data[i].VISIT_KIND.substr(5,5);
+                                        arryList[i][1] = data[i].VISIT_COUNT;
+                                    }
+
+                                    google.charts.load('current', {'packages':['corechart']});
+                                    google.charts.setOnLoadCallback(drawChart);
+                                    function drawChart() {
+
+                                        var data = new google.visualization.DataTable();
+                                        data.addColumn('string', '일');
+                                        data.addColumn('number', '방문자 수 ');
+
+                                        data.addRows(arryList);
+
+                                        var options = {
+                                            hAxis: {
+                                                title: '최근 10일간 방문자 수'
+                                            }
+                                        };
+
+                                        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                                        chart.draw(data, options);
+                                    }
+                                }
+                                $('#todayVal').html(data[data.length-1].VISIT_COUNT);
+                            }
+                        });
+            }
+        });
+    
+    
+            function inputNotice(){
             
             console.log($("#noticeClassification").val());
             $.ajax({
@@ -73,13 +240,54 @@
             
             
         }
-    </script>
+	 
+    // 로그아웃처리 
+    function logout(){
+        $.ajax ({
+            type : 'post',
+            url : '../Logout.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result != 'success') {
+                    alert("권한이 없습니다.");
+                    location.href="admin.html";
+                }
+            }
+        });
+    }
     
-</head>
+
+
+  
+
+
     
     
+    
+    
+    
+</script>
+
+
 <body>
-    <div>제목<input type='text' id='noticeTitle'/></div>
+        <nav>
+            <ul id="nav_menu">
+                <li><a href="home.html">홈</a></li>
+                <li class="menuMedia"><a href="memberManagement.html">회원 관리</a></li>
+                <li class="menuMedia"><a href="groupManagement.html">그룹 관리</a></li>
+                <li class="menuMedia"><a href="qnaManagement.html">문의사항 관리</a></li>
+                <li class="menuMedia"><a href="notice_board.html">공지사항 작성</a></li>
+                <li class="menuMedia"><a href="#">기타 작업</a></li>
+                <li id="logout" onclick="logout();"><a>로그아웃</a></li>
+            </ul>
+        </nav>
+
+    <div id="wrap">
+        
+        
+        <div id="contents">
+                <div>제목<input type='text' id='noticeTitle'/></div>
     <div>내용 입력<textarea style="width:500px; height:500px;" id='noticeContent'></textarea></div>
     <div>분류
         <select id='noticeClassification'>
@@ -88,5 +296,16 @@
         </select>
     </div>
     <input type="button" value="작성하기" onclick='inputNotice()' />
+ 
+            
+        </div>
+    </div>
 </body>
 </html>
+
+
+
+
+
+
+
