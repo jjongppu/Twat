@@ -92,9 +92,9 @@ public class AdminDAO {
 			String selectGetInfo = "SELECT"; 
 			selectGetInfo +="(SELECT COUNT(*) FROM MEMBER) AS memC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM QNA) AS qnaC,";
-			selectGetInfo +="(SELECT COUNT(*) FROM CALENDER WHERE CAL_DEPTH=0) AS calC,";
+			selectGetInfo +="(SELECT COUNT(*) FROM CALENDAR WHERE CAL_DEPTH=0) AS calC,";
 			selectGetInfo +="(SELECT SUM(VISIT_COUNT) FROM VISIT) AS visC,";
-			selectGetInfo +="(SELECT COUNT(*) FROM CALGATER) AS calgC";	
+			selectGetInfo +="(SELECT COUNT(*) FROM CALGATHER) AS calgC";	
 			
 			try {
 //				con = getConnection();
