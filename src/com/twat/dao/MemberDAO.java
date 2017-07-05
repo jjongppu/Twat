@@ -1,5 +1,7 @@
 package com.twat.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +12,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+import com.twat.mvconnection.*;
 
 import org.apache.tomcat.dbcp.dbcp2.PoolableConnection;
+
 
 import com.twat.dto.MemberVO;
 
@@ -35,7 +39,7 @@ public class MemberDAO {
 		Context initCtx = new InitialContext();
 		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
 
-		return ds.getConnection();
+		return (Connection) ds.getConnection();
 	}
 
 	public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
@@ -45,7 +49,8 @@ public class MemberDAO {
 
 		try {
 			con = getConnection();
-			psmt = con.prepareStatement(selectSql);
+//			con = new MVConnection(getConnection());
+			psmt = (PreparedStatement) con.prepareStatement(selectSql);
 			psmt.setString(1, MEMBER_NAME);
 			psmt.setString(2, MEMBER_PHONE);
 
@@ -82,7 +87,7 @@ public class MemberDAO {
 
 		try {
 			con = getConnection();
-			psmt = con.prepareStatement(selectSql);
+			psmt = (PreparedStatement) con.prepareStatement(selectSql);
 			psmt.setString(1, id);
 			psmt.setString(2, phone);
 			psmt.setString(3, question);
