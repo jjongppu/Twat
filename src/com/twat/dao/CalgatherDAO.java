@@ -42,7 +42,8 @@ public class CalgatherDAO {
 	// 李몄뿬以묒씤 罹섎┛�뜑瑜� 肉뚮젮二쇨린�쐞�빐 �옄�떊�씠 李몄뿬�븯怨좎엳�뒗 紐⑤뱺 罹섎┛�뜑�쓽 �젙蹂대��
 	// �뼸�뼱�샃�땲�떎..
 	public ArrayList<CalgatherVO> myGroupList(ArrayList<MemberJoinGroupVO> groupList) {
-		
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		ArrayList<MemberJoinGroupVO> groupArray = groupList;
 		
 		ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();

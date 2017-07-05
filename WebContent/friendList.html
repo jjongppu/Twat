@@ -244,7 +244,7 @@
 
         /* 친구 커버~*/
                 .userIn{
-            width: 350px;
+            width: 250px;
             height: 100px;
             cursor: pointer;
             margin: auto;
@@ -268,13 +268,19 @@
             font-size: 14px;
             line-height: 50px;
             text-align: center;
+            position: absolute;
+            top:5px;
+            left:20px;
         }
         .userBirth{
-            width: 100px;
+/*            width: 100px;*/
             height: 50px;
             display: inline-block;
             text-align: center;
             font-size: 15px;
+            position: absolute;
+            top: -20px;
+            left: 20px;
         }
         .userPhone{
             width: 140px;
@@ -282,6 +288,8 @@
             text-align: center;
             display: inline-block;
             font-size: 15px;
+            position: absolute;
+top: 5px;       
         }
                 
         .userGender{
@@ -313,8 +321,8 @@
         }
         .delFriend{
             position: absolute;
-            bottom: -10px;
-            right: -10px;
+            top: 20px;
+            right: -40px;
         }
 
         .responsingFImg{
@@ -360,6 +368,21 @@
             width: 80px;
             background-color: gainsboro;
             height: 5px;
+        }
+
+        #nowchoice_modal{
+            position: absolute;
+            top: 58px;
+            left: 0;
+            width: 150px;
+            height: 4px;
+            background-color: gray;
+            z-index: 2;
+        }
+        #btnCover{
+            position: absolute;
+            top: -5px;
+            right: -15px;
         }
     </style>
     <script>
@@ -592,7 +615,7 @@
                             out += '<div class="userIn">';
                             out += '<div class="userImgCover">';
                             out += '<img src="'+ data[index].friendImg +'" class="userImg"></div>';
-                            out += '<div class="userTop"><div class="userName">'+ data[index].friendId +'님 에게 친구요청이 왔습니다.</div></div>';
+                            out += '<div class="userTop"><div class="userName">'+ data[index].friendId +'</div></div>';
                             out += '<div class="userBottom"><div class="userBirth">'+ data[index].friendName +'</div>';
                             out += '<div class="userPhone">'+ data[index].friendPhone +'</div></div>'
                             out += '<img class="userGender" src="';
@@ -601,8 +624,8 @@
                             }else{
                                 out += 'img/etcIcon/gender_m.png"/>';
                             }
+                            out += "<div id='btnCover'><input type=button value='수락' onclick='acceptRequest(this)'/><input type=button value='거절' onclick='refuseRequest(this)'/></div></div>";
                             out += '</div>';
-                            out += "<input type=button value='수락' onclick='acceptRequest(this)'/><input type=button value='거절' onclick='refuseRequest(this)'/></div>";
                         }
                         $('#requestExist').html(out)
                     }else{
@@ -788,8 +811,9 @@
         
 
         function viewSearch(){
-        $('#modal').css('display','block');
+        $('body').append("<div id ='modal'><div id='nowchoice_modal'></div><div class='searchTab' id='phoneTab' onclick='changeTab(this)'> 연락처로 친구 찾기 </div><div class='searchTab' id='idTab' onclick='changeTab(this)'> 아이디로 친구 찾기 </div><style></style><div id='heightGet'><div id='phoneSearch' class='searchCover'><div id='inputPhone'><input type='text' id='phoneSearchInput' class='inputText' placeholder='전화번호를 입력하세요' onkeyup='if(event.keyCode==13) {phoneSearch();}'/><div class='btn' onclick='phoneSearch();' >검색</div></div></div><div id='idSearch' class='searchCover'><input type='text' id='idSearchInput' class='inputText' placeholder='아이디를 입력하세요' onkeyup='if(event.keyCode==13) {idSearch();}'/><div class='btn' onclick='idSearch();' >검색</div></div><div id='phoneSearchList' class='divBlock'></div><div id='idSearchList' class='divBlock'></div></div></div>");
         $('#blindCover').css('display','block');
+        $('#modal').css('display','block');
         
     }
 
@@ -843,7 +867,7 @@
                                 out += '<div class="userIn">';
                                 out += '<div class="userImgCover">';
                                 out += '<img src="'+ data[h].userImg +'" class="userImg"></div>';
-                                out += '<div class="userTop"><div class="userName">'+ data[h].userId +'님 에게 친구요청 중입니다.</div></div>';
+                                out += '<div class="userTop"><div class="userName">'+ data[h].userId +'</div></div>';
                                 out += '<div class="userBottom"><div class="userBirth">'+ data[h].userName +'</div>';
                                 out += '<div class="userPhone">'+ data[h].userPhone +'</div></div>'
                                 out += '<img class="userGender" src="';
@@ -997,7 +1021,7 @@
     function closeModal(){
         $('#blindCover').css('display','none');
         $('#messagMeodal').remove();
-        $('#modal').css('display','none');
+        $('#modal').remove();
         
     }
             
@@ -1012,16 +1036,23 @@
             if(ids == 'phoneTab'){
                 $('#phoneSearch').css('display','block');
                 $('#idSearch').css('display','none');
+              $('#nowchoice_modal').animate({
+                left: 0
+            }, 300);
                 
-                
-                $('#phoneTab').css('background-color','gray');
+//                $('#phoneTab').css('background-color','gray');
                 $('#idTab').css('background-color','white');
             }else {
                 $('#idSearch').css('display','block');
                 $('#phoneSearch').css('display','none');
                 
                 $('#phoneTab').css('background-color','white'); 
-                $('#idTab').css('background-color','gray'); 
+//                $('#idTab').css('background-color','gray'); 
+              $('#nowchoice_modal').animate({
+                left: 150
+            }, 300);
+                
+                
             }
                 heightAnimation('modal',150 , 500 );
         }
@@ -1292,20 +1323,13 @@
     <div id = "addFriends" style="margin-left:120px">
        
        
+<!--
             <div id = 'modal'> 
                 <div id="nowchoice_modal"></div>
                 <div class="searchTab" id="phoneTab" onclick="changeTab(this)"> 연락처로 친구 찾기 </div>
                 <div class="searchTab" id="idTab" onclick="changeTab(this)"> 아이디로 친구 찾기 </div>
                 <style>
-                    
-                    #nowchoice_modal{
-                        position: absolute;
-                        top: 58px;
-                        left: 0;
-                        width: 150px;
-                        height: 5px;
-                        background-color: green;
-                    }
+
                 </style>
                 
                 <div id="heightGet">
@@ -1322,7 +1346,6 @@
                     <input type='text' id="idSearchInput" class="inputText" placeholder='아이디를 입력하세요' onkeyup='if(event.keyCode==13) {idSearch();}'/>
                     <div class="btn" onclick='idSearch();' >검색</div>
                 </div>    
-<!--                검색 결과-->
                     <div id="phoneSearchList" class="divBlock">
                     
                         
@@ -1333,8 +1356,9 @@
                     </div>
                 </div>
             </div>
-        <div id="blindCover" class="blind" onclick="closeModal();"></div>
-        <div id="blindCoverWhite" class="blind" ></div>
+-->
+   <div id='blindCover' class='blind' onclick='closeModal();'></div>
+        <div id='blindCoverWhite' class='blind' ></div>
         
         
         
