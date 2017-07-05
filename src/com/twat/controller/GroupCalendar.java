@@ -2,6 +2,7 @@ package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -94,6 +95,8 @@ public class GroupCalendar extends HttpServlet
 //		ArrayList<CalendarVO> arrList = calDao.getInfo((String)session.getAttribute("loginUserId"));
 //		ArrayList<CalendarVO> arrList = calDao.getInfo("2");
 		
+		SimpleDateFormat simple = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
+		
 		if(arrList.size() > 0)
 		{
 			for(int i = 0; i < arrList.size(); i++)
@@ -101,7 +104,7 @@ public class GroupCalendar extends HttpServlet
 				JSONObject groupSchedule = new JSONObject();
 				
 				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
-//				groupSchedule.put("cal_time", arrList.get(i).getCal_time());
+				groupSchedule.put("cal_time", simple.format(arrList.get(i).getCal_time()));
 				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
 //				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
 				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
@@ -125,29 +128,17 @@ public class GroupCalendar extends HttpServlet
 		
 		out.print(group.toJSONString());
 		out.close();
+		
+		if(groupTitle != null)
+			groupTitle = null;
+		if(calgDao != null)
+			calgDao = null;
+		if(calDao != null)
+			calDao = null;
+		if(arrList != null)
+			arrList = null;
+		if(simple != null)
+			simple = null;
+		
 	}
-
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-//	{
-//		HttpSession session = request.getSession();
-//		request.setCharacterEncoding("utf-8");
-//		response.setCharacterEncoding("utf-8");
-//		response.setContentType("application/json;");
-//		response.setHeader("Cache-Control", "no-cache");
-//		String uid = request.getParameter("uid");
-//		String name = request.getParameter("name");
-//		
-//		JSONArray memberList = new JSONArray();
-//		JSONObject member = new JSONObject();
-//		member.put("uid", uid);
-//		member.put("name", name);
-////		member.put("groupId", session.getAttribute("groupId"));
-//		
-//		memberList.add(member);
-//
-//		PrintWriter out = response.getWriter();
-//		out.println(memberList.toJSONString());
-////		out.println(memberList);
-//		out.close();
-//	}
 }
