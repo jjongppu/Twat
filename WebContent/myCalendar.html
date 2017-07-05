@@ -1149,6 +1149,18 @@
 
         var a = "";
         for (let item of scheSet.keys()) console.log(item);
+        
+        var times = [];
+        var value="";
+        for(var i = 0; i <25; i++){
+            if(i<10){
+                value="0"+i;
+            }else{
+                value=i;
+            }
+            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
+        }
+        $("#scheTime").append(times.join(''));
     }
 
 
@@ -1707,7 +1719,9 @@
         }
     }
 
-    function clickAddCal() {
+        
+/* ============== 작성하기 버튼 ============== */
+    function clickAddCal() {   
         $("#selectAnswer").html("'" + $("#calTitle").val() + "'" + "의 제목으로 일정을 추가하시겠습니까?");
         var heights = $('#contentsHeight').css('height');
         if ($("#calTitle").val() != "") {
@@ -1715,17 +1729,17 @@
                 height: heights,
             }, 300);
         }
-        var times = [];
-        var value="";
-        for(var i = 0; i <25; i++){
-            if(i<10){
-                value="0"+i;
-            }else{
-                value=i;
-            }
-            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
-        }
-        $("#scheTime").append(times.join(''));
+//        var times = [];
+//        var value="";
+//        for(var i = 0; i <25; i++){
+//            if(i<10){
+//                value="0"+i;
+//            }else{
+//                value=i;
+//            }
+//            times[i] = "<option id=time"+i+" value="+value+">"+value+"</option>";
+//        }
+//        $("#scheTime").append(times.join(''));
     }
     
     
@@ -1786,7 +1800,7 @@
         $("#modal").css("display", "none");
         console.log("!!!!");
         $("#calTitle").val("");
-
+        location.reload();
     }
 
     
@@ -1796,6 +1810,8 @@
         $('#blindCover').css('display', 'none');
         $('#modal').css('display', 'none');
         $('#modal input').val("");
+        location.reload();
+
     }
 
     //모달 뜰떄 뒤에 까만화면 크기를....

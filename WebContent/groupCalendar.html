@@ -1250,7 +1250,9 @@
 						initToday();
 					} else if (group_master == login_userId) {
 						//                        $(a).css("backgroundColor", "green");
+                        // 체크한날에 백그라운드 이미지 넣기
 						$(a).css("backgroundImage", "url(img/etcIcon/verified-text-paper.png)");
+                        
 						$(a).css("backgroundRepeat", "no-repeat");
 						$(a).css("backgroundPosition", "right 50%");
 						//                    scheArr[parseInt(dayInfo)] = dayInfo;
@@ -2220,6 +2222,9 @@
 						//                        console.log(data[i].cal_depth);
 						if (data[i].cal_depth == 0) {
 //							voteString += "<div id='voteListBox'>";
+                            
+
+                            
 							if (login_userId.match(group_master)) {
 								//                                var groupMemberSet = new Set();
 								var ImpossibleCount = 0;
@@ -2365,12 +2370,15 @@
 //								voteString += "</div>";
 								swiperString += "</div>";
 							}
-//							voteString += "</div>"; // voteListBox
-							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div>";
+                            
+                            //							voteString += "</div>"; // voteListBox
 							voteString += "<div id='voteWriter'>작성자 : " + findMemberName(voteObject.cal_writer) + "</div>";
+							voteString += "<div id='voteMemo'>내용 : " + voteObject.cal_memo + "</div>";
 							//							voteString += "<div id='voteDate'>일정 : " + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
 							voteString += "<div id='voteMember'>투표한 사람 : " + voteObject.cal_writer;
 							// 참가자 출력
+                            
+                            
 							var voteMemberSet = new Set();
 							var user0000 = false;
 
@@ -2698,25 +2706,27 @@
 						for (var i = 0; i < data.length; i++) {
 							var joinTempString = "";
 
-							if (login_userId.match(group_master)) {
+
+							joinTempString += "<div class='memberBox' id='mem" + (count++) + "'>";
+
+							joinTempString += "<div class='memberImgBox'><img class='memberImg' src='" + data[i].MEMBER_IMG + "'></div>"; // memberImgBox
+							joinTempString += "<div class='memberInfoBox'>" + data[i].MEMBER_NAME + "(" + data[i].MEMBER_ID + ")</div>"; // memberInfoBox
+                            
+                            
+                            if (login_userId.match(group_master)) {
 								if (data[i].MEMBER_ID.match(group_master)) {
 									joinTempString += "<img class='radioGM' src='img/etcIcon/crown.png'>";
 								} else {
 									joinTempString += "<input class='radioGM' onclick='showGiveBox(this)' type='radio' name='selectGM' value='" + data[i].MEMBER_NAME + "," + data[i].MEMBER_ID + "'>";
 								}
 							}
-
-							joinTempString += "<div class='memberBox' id='mem" + (count++) + "'>";
-
-							joinTempString += "<div class='memberImgBox'><img class='memberImg' src='" + data[i].MEMBER_IMG + "'></div>"; // memberImgBox
-							joinTempString += "<div class='memberInfoBox'>" + data[i].MEMBER_NAME + "(" + data[i].MEMBER_ID + ")</div>"; // memberInfoBox
-
-							joinTempString += "</div>"; // memberBox
-
+                            
 							if (login_userId.match(group_master)) {
 								joinTempString += "<input id='btn" + data[i].MEMBER_ID + "' class='giveBox' type='button' value='방장 넘기기'>";
 								// onclick='giveGM(" + data[i].MEMBER_ID + ")'
 							}
+							joinTempString += "</div>"; // memberBox
+
 
 							joinTempString += "";
 
@@ -2797,6 +2807,8 @@
 				$('#giveGM').val("취소");
 			} else {
 				$(".radioGM").css('display', 'none');
+				$('.radioGM').prop('checked', false);
+				$(".giveBox").css('display', 'none');
 				$('#giveGM').val("방장위임");
 			}
 			toggleGGM = !toggleGGM;
@@ -3390,10 +3402,21 @@
 								<div id="master"></div>
 								<!-- 방장 외 인원 : span? div? 고민 -->
 								<div id="otherMembers"></div>
+                                <img id='configMemInfo' src="img/etcIcon/search.png" onclick='getJoinMember()'>
 							</div>
 						</div>
 						<!-- 설정 -->
-						<div id="config"><img id='configMemInfo' src="img/etcIcon/group-button.png" onclick='getJoinMember()'></div>
+						<div id="config">
+                        <div id="btnCover">
+                            <div onclick="addSchedule()" class="addschedule">일정추가하기</div>
+                            <div onclick="inviteFriends()" class="addschedule">친구초대하기</div>
+<!--
+							<input type="button" value="일정추가하기" onclick="addSchedule()" class="addschedule" />
+							<input type="button" value="친구초대하기" onclick="inviteFriends()" class="addschedule" />
+-->
+						</div>
+                            
+                            </div>
 					</div>
 					<!-- {단체일정} -->
 					<div class="schedule" ondrop="drop(event);" ondragover="allowDrop(event);">
@@ -3539,10 +3562,7 @@
 
 						</script>
 						<!-- 버튼들인데 달력 div 태그안에 밀어 넣었음 종길..-->
-						<div id="btnCover">
-							<input type="button" value="일정추가하기" onclick="addSchedule()" class="addschedule" />
-							<input type="button" value="친구초대하기" onclick="inviteFriends()" class="addschedule" />
-						</div>
+
 
 						<div class="admin">
 							<div class="title"></div>
@@ -3575,13 +3595,14 @@
 							<div id="modalTitle"></div>
 							<div id="modalContent">
 								<div class="modalSchduleInfo">
+                                    <div class="mSIinfo"></div>
 									<div class="swiper-container">
 										<div class="swiper-wrapper">
 										</div>
 										<!-- Add Pagination -->
 										<div class="swiper-pagination"></div>
 									</div>
-									<div class="mSIinfo"></div>
+									
 								</div>
 								<div id="voteButtonBox">
 									<input type="button" value="투표하기" onclick="addVoteList()" />
@@ -3790,7 +3811,8 @@
 							/*
                             top:300px;
                             left:200px;
-*/
+*/                          
+                            width: 300px;
 							padding: 20px;
 							padding-top: 10px;
 							border: 2px solid #E2E2E2;
