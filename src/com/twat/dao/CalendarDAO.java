@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeSet;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.sql.DataSource;
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.servlet.ServletContext;
+//import javax.servlet.ServletContextEvent;
+//import javax.sql.DataSource;
 
 import com.twat.dto.CalendarVO;
-import com.twat.dto.CalgatherVO;
+//import com.twat.dto.CalgatherVO;
 import com.twat.mvconnection.MVConnection;
 import com.twat.dbpool.DBPool;
 
@@ -40,12 +40,12 @@ public class CalendarDAO {
 
 	// DB�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 con�뜝�룞�삕 �뜝�룞�삕�솚�뜝�떦�뙋�삕 �뜝�뙣�눦�삕�뜝�룞�삕
 	// ==================================================================================
-	public Connection getConnection() throws Exception {
-		Context initCtx = new InitialContext();
-		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
-
-		return ds.getConnection();
-	}
+//	public Connection getConnection() throws Exception {
+//		Context initCtx = new InitialContext();
+//		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
+//
+//		return ds.getConnection();
+//	}
 
 	// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�뙣�븘�슱�삕�뜝�룞�삕
 	// ===================================================================================================
@@ -423,7 +423,7 @@ public class CalendarDAO {
 	public void updateMemberChoice(String calNum, String voteList, String user) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
-		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
+//		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
 		String memberChoice = "";
 
 		try {
@@ -558,7 +558,7 @@ public class CalendarDAO {
 	public void scheduleSelected(String calNum, String calDate) {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
-		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
+//		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
 		String memberChoice = "";
 
 		try
@@ -1043,7 +1043,7 @@ public class CalendarDAO {
 	public void delCal(int groupId)
 	{
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+//		ResultSet rs = null;
 		
 		
 		try {

@@ -212,8 +212,9 @@ public class MemberJoinGroupDAO
 		ArrayList<MemberJoinGroupVO> arrList = new ArrayList<MemberJoinGroupVO>();
 		String sql = "SELECT * FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=?";
 		PreparedStatement psmt10 = null;
-		ResultSet rs10 = null;
+		
 		try{
+			ResultSet rs10 = null;
 //			con = getConnection();
 			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt10 = con.prepareStatement(sql);
@@ -222,6 +223,7 @@ public class MemberJoinGroupDAO
 			rs10 = psmt10.executeQuery();
 			
 			while(rs10.next()){
+				
 				MemberJoinGroupVO mj = new MemberJoinGroupVO();
 				mj.setMEMBER_ID(rs10.getString("MEMBER_ID"));
 				mj.setGROUP_ID(rs10.getString("GROUP_ID"));
@@ -235,7 +237,7 @@ public class MemberJoinGroupDAO
 		}
 		finally{
 			try{
-				if(rs10 != null)rs10.close();
+//				if(rs10 != null)rs10.close();
 				if(psmt10 != null)psmt10.close();
 				if(con != null)con.close();
 			}
