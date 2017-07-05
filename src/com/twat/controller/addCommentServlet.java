@@ -45,8 +45,8 @@ public class addCommentServlet extends HttpServlet {
 	    JSONArray jsonArr = new JSONArray();
 	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
-	    HttpSession session = request.getSession();
-	    String cal_writer = (String) session.getAttribute("loginUserId");
+//	    HttpSession session = request.getSession();
+//	    String cal_writer = (String) session.getAttribute("loginUserId");
 	    
 	    CalendarDAO calendarDAO = CalendarDAO.getInstance();
 	    
@@ -70,10 +70,14 @@ public class addCommentServlet extends HttpServlet {
 //	    calendarDAO.addCalComment(Integer.parseInt(group_id), cal_memo, first_cal, new_memo, cal_writer);
 	    
 	    calendarDAO.addCalComment(Integer.parseInt(groupId), userId, Integer.parseInt(calNum), memo);
-	    jsonObj.put("userId", cal_writer);
+	    jsonObj.put("userId", userId);
 	    jsonArr.add(jsonObj);
 	    out.print(jsonArr);
 	    out.close();
+	    if(calendarDAO != null)
+	    {
+	    	calendarDAO = null;
+	    }
 
 	}
 

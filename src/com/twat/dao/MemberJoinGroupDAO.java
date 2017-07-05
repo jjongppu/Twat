@@ -356,11 +356,12 @@ public class MemberJoinGroupDAO
 
 			rSet = pstmt.executeQuery();
 			
-			
-			while(rSet.next())
-			{
+			if(rSet.next())
 				result = rSet.getInt(1);
-			}
+//			while(rSet.next())
+//			{
+//				result = rSet.getInt(1);
+//			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
