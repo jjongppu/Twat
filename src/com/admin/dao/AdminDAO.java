@@ -656,7 +656,46 @@ public class AdminDAO {
 		}
 			
 			
-			
+		public Long getAndSetNoticeView(Long views) {
+			PreparedStatement psmt= null;
+			ResultSet rs= null;
+			Long result = null;
+			String selectVisit1 = "SELECT * FROM NOTICE_BOARD WHERE NOTICE_ID=?";
+			String updateVisit2 = "UPDATE NOTICE_BOARD SET NOTICE_VIEWS=NOTICE_VIEWS+1 WHERE NOTICE_ID=?";
+			try {
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
+				
+					psmt = con.prepareStatement(updateVisit2);
+					psmt.setLong(1, views);
+					psmt.executeUpdate();
+					
+					if(psmt != null) psmt.close();
+					
+					psmt = con.prepareStatement(selectVisit1);
+					psmt.setLong(1, views);
+					rs = psmt.executeQuery();
+					
+					while(rs.next()){
+						
+						result = rs.getLong("NOTICE_VIEWS");
+						
+					}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs != null) rs.close();
+						if(psmt != null) psmt.close();
+						if(con != null) con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				
+			}
+			return result;
+		}	
 			
 			
 		
