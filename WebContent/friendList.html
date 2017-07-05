@@ -353,6 +353,24 @@
         #heightGet,#idSearch,#phoneSearch{
             width: 100%;
         }
+        #nowchoice{
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 80px;
+            background-color: gainsboro;
+            height: 5px;
+        }
+
+        #nowchoice_modal{
+            position: absolute;
+            top: 58px;
+            left: 0;
+            width: 150px;
+            height: 4px;
+            background-color: gray;
+            z-index: 2;
+        }
     </style>
     <script>
 
@@ -780,8 +798,9 @@
         
 
         function viewSearch(){
-        $('#modal').css('display','block');
+        $('body').append("<div id ='modal'><div id='nowchoice_modal'></div><div class='searchTab' id='phoneTab' onclick='changeTab(this)'> 연락처로 친구 찾기 </div><div class='searchTab' id='idTab' onclick='changeTab(this)'> 아이디로 친구 찾기 </div><style></style><div id='heightGet'><div id='phoneSearch' class='searchCover'><div id='inputPhone'><input type='text' id='phoneSearchInput' class='inputText' placeholder='전화번호를 입력하세요' onkeyup='if(event.keyCode==13) {phoneSearch();}'/><div class='btn' onclick='phoneSearch();' >검색</div></div></div><div id='idSearch' class='searchCover'><input type='text' id='idSearchInput' class='inputText' placeholder='아이디를 입력하세요' onkeyup='if(event.keyCode==13) {idSearch();}'/><div class='btn' onclick='idSearch();' >검색</div></div><div id='phoneSearchList' class='divBlock'></div><div id='idSearchList' class='divBlock'></div></div></div>");
         $('#blindCover').css('display','block');
+        $('#modal').css('display','block');
         
     }
 
@@ -793,12 +812,25 @@
         $('.addFriendsNow').css('display','none');
         if(ids == 'allFriend'){
             $('#allFriends').css('display','inline-block');
+          $('#nowchoice').animate({
+                left: 10,
+              width:80
+            }, 300);
             getMyfriendsList();
         }else if(ids == 'getFriends'){
             $('#requestExist').css('display','inline-block');
+               $('#nowchoice').animate({
+                left: 100,
+                   width:110
+            }, 300);
             requestFriendMe();
         }else if(ids == 'sendFriends'){            
             $('#responseExist').css('display','inline-block');
+               $('#nowchoice').animate({
+                left: 210,
+               width:105
+            }, 300);
+            
 //            alert("!!!");
 //            responseExist
             
@@ -976,7 +1008,7 @@
     function closeModal(){
         $('#blindCover').css('display','none');
         $('#messagMeodal').remove();
-        $('#modal').css('display','none');
+        $('#modal').remove();
         
     }
             
@@ -991,16 +1023,23 @@
             if(ids == 'phoneTab'){
                 $('#phoneSearch').css('display','block');
                 $('#idSearch').css('display','none');
+              $('#nowchoice_modal').animate({
+                left: 0
+            }, 300);
                 
-                
-                $('#phoneTab').css('background-color','gray');
+//                $('#phoneTab').css('background-color','gray');
                 $('#idTab').css('background-color','white');
             }else {
                 $('#idSearch').css('display','block');
                 $('#phoneSearch').css('display','none');
                 
                 $('#phoneTab').css('background-color','white'); 
-                $('#idTab').css('background-color','gray'); 
+//                $('#idTab').css('background-color','gray'); 
+              $('#nowchoice_modal').animate({
+                left: 150
+            }, 300);
+                
+                
             }
                 heightAnimation('modal',150 , 500 );
         }
@@ -1239,6 +1278,7 @@
     <div id="main_container">
                        
         <div id="topCover">
+            <div id="nowchoice"></div>
             <div class="topListbtn" id="allFriend" onclick="tabChange(this)"> 전체 </div>
             <div class="topListbtn" id="getFriends" onclick="tabChange(this)"> 받은 친구 요청 </div>
             <div class="topListbtn" id="sendFriends" onclick="tabChange(this)"> 보낸 친구 요청 </div>
@@ -1270,10 +1310,14 @@
     <div id = "addFriends" style="margin-left:120px">
        
        
+<!--
             <div id = 'modal'> 
+                <div id="nowchoice_modal"></div>
                 <div class="searchTab" id="phoneTab" onclick="changeTab(this)"> 연락처로 친구 찾기 </div>
                 <div class="searchTab" id="idTab" onclick="changeTab(this)"> 아이디로 친구 찾기 </div>
-                
+                <style>
+
+                </style>
                 
                 <div id="heightGet">
 
@@ -1289,7 +1333,6 @@
                     <input type='text' id="idSearchInput" class="inputText" placeholder='아이디를 입력하세요' onkeyup='if(event.keyCode==13) {idSearch();}'/>
                     <div class="btn" onclick='idSearch();' >검색</div>
                 </div>    
-<!--                검색 결과-->
                     <div id="phoneSearchList" class="divBlock">
                     
                         
@@ -1300,8 +1343,9 @@
                     </div>
                 </div>
             </div>
-        <div id="blindCover" class="blind" onclick="closeModal();"></div>
-        <div id="blindCoverWhite" class="blind" ></div>
+-->
+   <div id='blindCover' class='blind' onclick='closeModal();'></div>
+        <div id='blindCoverWhite' class='blind' ></div>
         
         
         

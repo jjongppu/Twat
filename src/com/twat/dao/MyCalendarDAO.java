@@ -94,7 +94,7 @@ public class MyCalendarDAO{
 	}
 	
 	
-	// 더보기 버튼 구현 하려다 실패... 
+	// �뜑蹂닿린 踰꾪듉 援ы쁽 �븯�젮�떎 �떎�뙣... 
 //	int i = -10;
 //	public ArrayList<MyCalendarVO> getInfo(String MEMBER_ID){
 //		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
@@ -131,13 +131,13 @@ public class MyCalendarDAO{
 //				e.printStackTrace();
 //			}
 //		}
-//		System.out.println(myCalList.size()+"리스트 사이즈");
+//		System.out.println(myCalList.size()+"由ъ뒪�듃 �궗�씠利�");
 //		System.out.println(j +"J");
-//		System.out.println(myCalList.size()+"리스트 사이즈");
+//		System.out.println(myCalList.size()+"由ъ뒪�듃 �궗�씠利�");
 //		System.out.println(j +"J");
-//		System.out.println(myCalList.size()+"리스트 사이즈");
+//		System.out.println(myCalList.size()+"由ъ뒪�듃 �궗�씠利�");
 //		System.out.println(j +"J");
-//		System.out.println(myCalList.size()+"리스트 사이즈");
+//		System.out.println(myCalList.size()+"由ъ뒪�듃 �궗�씠利�");
 //		System.out.println(j +"J");
 //		return myCalList;
 //	}
@@ -180,7 +180,7 @@ public class MyCalendarDAO{
 		int result = -1;
 		int cal_num = 0;
 		
-		String selectSql = "SELECT * FROM `my_calendar` ORDER BY MY_CAL_INDEX DESC LIMIT 1";
+		String selectSql = "SELECT * FROM `MY_CALENDAR` ORDER BY MY_CAL_INDEX DESC LIMIT 1";
 		
 		try {
 			con = getConnection();
