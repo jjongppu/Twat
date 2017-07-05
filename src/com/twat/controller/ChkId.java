@@ -57,9 +57,9 @@ public class ChkId extends HttpServlet {
 		String groupId = request.getParameter("groupId");
 		
 		JSONArray group = new JSONArray();
-		
+		boolean result = false;
 		MemberJoinGroupDAO mDao = MemberJoinGroupDAO.getInstance();
-		boolean result = mDao.chkId(MEMBER_ID, groupId);
+		result = mDao.chkId(MEMBER_ID, groupId);
 		
 		JSONObject resultOBJ = new JSONObject();
 		resultOBJ.put("result", result);

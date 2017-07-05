@@ -845,6 +845,12 @@ input[type=radio]:hover
 	height: 200px;
 }
 
+.commentTime
+{
+	font-size: 14px;
+	color: gray;
+}
+
 #configMemInfo
 {
 	width: 30px;
