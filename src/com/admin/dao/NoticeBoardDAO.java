@@ -96,7 +96,6 @@ public class NoticeBoardDAO {
 				noticeArr.add(new NoticeBoardVO(0, rs.getString("NOTICE_TITLE"), rs.getString("NOTICE_CONTENT"),
 						rs.getString("NOTICE_WRITER"), rs.getString("NOTICE_DATE"), rs.getInt("NOTICE_VIEWS"), rs.getString("NOTICE_CLASSIFICATION")));
 				
-				
 			}
 			
 			
