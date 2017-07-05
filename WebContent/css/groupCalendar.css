@@ -827,7 +827,8 @@ input[type=radio]:hover
 /*	max-height: 280px;*/
 /*	height: 50%;*/
 /*	height: 48%;*/
-	height: 40%;
+/*	height: 40%;*/
+    border:1px solid gainsboro
 }
 
 #commentList
@@ -873,7 +874,14 @@ input[type=radio]:hover
 	height: 22px;
 	display: block;
 }
-
+#voteWriter{
+    text-align: right;
+}
+#voteMemo{
+/*   border-bottom: 1px solid gainsboro;*/
+    height: 100px;
+    border-top: 1px solid gainsboro;
+}
 rdoSelect
 {
 	display: block;
@@ -900,7 +908,7 @@ rdoSelect
 {
 	width: 100%;
 /*	height: 40%;*/
-	height: 46%;
+/*	height: 46%;*/
 }
 
 #scheduleMemo, #scheduleWriter, #scheduleDate, #scheduleMember
@@ -976,8 +984,11 @@ rdoSelect
 	height: 90%;
 }
 
-#vLBTitle
+.vLBTitle
 {
+        position: absolute;
+    top: 145px;
+    left: 20px;
 	display: block;
 	font-size: 18px;
 	font-weight: bold;
@@ -1011,4 +1022,12 @@ rdoSelect
 .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
     position: absolute;
     bottom: 0px;
+}
+
+.mSIinfo{
+    display: block;
+}
+.modalSchduleInfo .swiper-container{
+    border: 1px solid gainsboro;
+    
 }
