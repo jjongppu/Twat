@@ -4,19 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
+
 import com.twat.mvconnection.*;
 
-import org.apache.tomcat.dbcp.dbcp2.PoolableConnection;
 
 
+import com.twat.dbpool.DBPool;
 import com.twat.dto.MemberVO;
 
 public class MemberDAO {
@@ -35,12 +30,12 @@ public class MemberDAO {
 
 
 	// --------------------------------------------
-	public Connection getConnection() throws Exception {
-		Context initCtx = new InitialContext();
-		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
-
-		return (Connection) ds.getConnection();
-	}
+//	public Connection getConnection() throws Exception {
+//		Context initCtx = new InitialContext();
+//		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
+//
+//		return (Connection) ds.getConnection();
+//	}
 
 	public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
 
@@ -48,9 +43,9 @@ public class MemberDAO {
 		String getID = "";
 
 		try {
-			con = getConnection();
-//			con = new MVConnection(getConnection());
-			psmt = (PreparedStatement) con.prepareStatement(selectSql);
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(selectSql);
 			psmt.setString(1, MEMBER_NAME);
 			psmt.setString(2, MEMBER_PHONE);
 
@@ -65,10 +60,10 @@ public class MemberDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
-				if (psmt != null)
-					psmt.close();
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {
@@ -86,8 +81,10 @@ public class MemberDAO {
 		int result = 0;
 
 		try {
-			con = getConnection();
-			psmt = (PreparedStatement) con.prepareStatement(selectSql);
+//			con = getConnection();
+			
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(selectSql);
 			psmt.setString(1, id);
 			psmt.setString(2, phone);
 			psmt.setString(3, question);
@@ -134,7 +131,9 @@ public class MemberDAO {
 		String selectSql = "SELECT OUT_TIME FROM MEMBER WHERE MEMBER_ID = ? AND AES_DECRYPT(UNHEX(MEMBER_PW), 'memPW') = ?";
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt2 = con.prepareStatement(selectSql);
 			psmt2.setString(1, MEMBER_ID);
 			psmt2.setString(2, MEMBER_PW);
@@ -165,7 +164,8 @@ public class MemberDAO {
 		ArrayList<Integer> glList = new ArrayList<Integer>();
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 
 			String sql = "SELECT * FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID =?";
 
@@ -203,7 +203,7 @@ public class MemberDAO {
 			String MEMBER_GENDER, String MEMBER_BIRTH, long OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
 
 		int result = 0;
-		int signUp = 0;
+//		int signUp = 0;
 
 		// String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
 
@@ -211,7 +211,8 @@ public class MemberDAO {
 		// values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 		String insertSql = "INSERT INTO MEMBER VALUES(?,HEX(AES_ENCRYPT(?, 'memPW')),?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(insertSql);
 
 			psmt.setString(1, MEMBER_ID);
@@ -250,9 +251,10 @@ public class MemberDAO {
 				e.printStackTrace();
 			}
 			// System.out.println(result);
-			return result;
+		
 		}
 
+		return result;
 	}
 
 	public int checkID(String idCheck) {
@@ -261,7 +263,8 @@ public class MemberDAO {
 		String sql = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_ID=?";
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(sql);
 
 			psmt.setString(1, idCheck);
@@ -298,7 +301,8 @@ public class MemberDAO {
 		ArrayList<MemberVO> myfriendsList = new ArrayList<MemberVO>();
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(findMyFriendsListSql);
 			psmt.setString(1, MEMBER_ID);
 			rs = psmt.executeQuery();
@@ -360,7 +364,8 @@ public class MemberDAO {
 		ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, MEMBER_ID);
 			rs = psmt.executeQuery();
@@ -389,39 +394,41 @@ public class MemberDAO {
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	public ArrayList<String> test() {
-		ArrayList<String> str = new ArrayList<String>();
-		String sql = "SELECT * FROM TEST";
-		int a = 0;
-
-		try {
-			a = 4;
-			con = getConnection();
-			a = 5;
-			psmt = con.prepareStatement(sql);
-			a = 1;
-			rs = psmt.executeQuery();
-			a = 2;
-			while (rs.next()) {
-				str.add(rs.getString(1));
-				str.add(rs.getString(2));
-			}
-			a = 3;
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null)
-					if (psmt != null)
-						psmt.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return str;
-	}
+//	public ArrayList<String> test() {
+//		ArrayList<String> str = new ArrayList<String>();
+//		String sql = "SELECT * FROM TEST";
+//		
+//
+//		try {
+//			int a = 0;
+//			a = 4;
+////			con = getConnection();
+//			con = new MVConnection(DBPool.getInstance().getConnection());
+//			a = 5;
+//			psmt = con.prepareStatement(sql);
+//			a = 1;
+//			rs = psmt.executeQuery();
+//			a = 2;
+//			while (rs.next()) {
+//				str.add(rs.getString(1));
+//				str.add(rs.getString(2));
+//			}
+////			a = 3;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (rs != null)
+//					if (psmt != null)
+//						psmt.close();
+//				if (con != null)
+//					con.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return str;
+//	}
 
 	public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList) {
 		PreparedStatement pstmt = null;
@@ -430,7 +437,8 @@ public class MemberDAO {
 		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_IMG FROM MEMBER";
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			pstmt = con.prepareStatement(sql);
 			resultSet = pstmt.executeQuery();
 
@@ -481,7 +489,8 @@ public class MemberDAO {
 
 		int result = 0;
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(delUser);
 			if (state.equals("out")) {
 				psmt.setLong(1, outTime);
@@ -514,7 +523,8 @@ public class MemberDAO {
 		String changeInfo = "UPDATE MEMBER SET MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? WHERE MEMBER_ID =?";
 		int result = 0;
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(changeInfo);
 
 			psmt.setString(1, MEMBER_NAME);
@@ -553,7 +563,8 @@ public class MemberDAO {
 		int result = 0;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 
 			psmt = con.prepareStatement(changepwd);
 			psmt.setString(1, "img/member/" + MEMBER_IMG);
@@ -584,7 +595,8 @@ public class MemberDAO {
 		String addFriend = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG FROM MEMBER WHERE MEMBER_PHONE = ?";
 		ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(addFriend);
 			psmt.setString(1, userPhone);
 			rs = psmt.executeQuery();
@@ -620,14 +632,15 @@ public class MemberDAO {
 
 	///////////////////////////// 친구를 추가하기./////////////////////////////
 	public ArrayList<MemberVO> plusFriend(String userPhone, String MEMBER_ID) {
-		int result = 0;
+//		int result = 0;
 		String findMyFriend = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID=?";
 		String searchUserId = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_PHONE=?";
 		String plusUser = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 		// 1번쨰 ?에는 친구아이디를 넣는다 ','해서 넣어야함. 두번째 ? 에는 세션받아온 아이디를 넣는다.
 		ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(findMyFriend);
 			psmt.setString(1, MEMBER_ID);
 			rs = psmt.executeQuery();
@@ -649,7 +662,7 @@ public class MemberDAO {
 						psmt = con.prepareStatement(plusUser);
 						psmt.setString(1, myList + ',' + rs.getString(1));
 						psmt.setString(2, MEMBER_ID);
-						result = psmt.executeUpdate();
+						psmt.executeUpdate();
 
 						while (rs.next()) {
 							MemberVO member = new MemberVO();
@@ -699,7 +712,8 @@ public class MemberDAO {
 		ResultSet rs2 = null;
 		String sql = "";
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 
 			if (phoneOrId == 0)
 				sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_PHONE = ?";
@@ -739,9 +753,7 @@ public class MemberDAO {
 	}
 
 	public int requestFriend(String userId, String friendId) {
-		PreparedStatement psmt2 = null;
-		ResultSet rs2 = null;
-		ResultSet rs3 = null;
+
 		String myFriendList = getfriendListForString(userId);
 		String friendFriendsList = getfriendListForString(friendId);
 		int result = 0;
@@ -780,7 +792,8 @@ public class MemberDAO {
 
 		try {
 		
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 		 
 			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
@@ -788,7 +801,7 @@ public class MemberDAO {
 			psmt2.setString(2, userId);
 			psmt2.executeUpdate();
 
-			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
+//			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2.setString(1, friendFriendsList + "," + "!" + userId);
 			psmt2.setString(2, friendId);
 			psmt2.executeUpdate();
@@ -814,7 +827,8 @@ public class MemberDAO {
 		ResultSet rs2 = null;
 		MemberVO member = new MemberVO();
 		try {
-			
+			if(con != null)
+				con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, friendId);
@@ -854,7 +868,8 @@ public class MemberDAO {
 		String friendsList = null;
 		ArrayList<MemberVO> memberArr = new ArrayList<MemberVO>();
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, userId);
@@ -920,7 +935,8 @@ public class MemberDAO {
 
 			try {
 //				if (con.isClosed() || con == null)
-					con = getConnection();
+//					con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 			} catch (Exception e) {
 
 				e.printStackTrace();
@@ -991,7 +1007,8 @@ public class MemberDAO {
 			}
 
 			// System.out.println(changeFriendList);
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 
@@ -1027,7 +1044,8 @@ public class MemberDAO {
 
 			}
 			// System.out.println(changeFriendFriendList);
-			con = getConnection();
+//			con = getConnection();
+//			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt3 = con.prepareStatement(sql2);
 			psmt3.setString(1, changeFriendFriendList);
@@ -1063,7 +1081,8 @@ public class MemberDAO {
 		
 		try {
 			String sql = "UPDATE MEMBER SET MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) WHERE MEMBER_ID = ? ";
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(sql);
 			
 			psmt.setString(1, afterPW);
@@ -1105,11 +1124,15 @@ public class MemberDAO {
 		ResultSet rs2 = null;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ? AND MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW'))";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, userId);
 			psmt2.setString(2, beforePw);
+			
+			if(psmt2 != null)
+				psmt2.close();
 
 			rs2 = psmt2.executeQuery();
 
@@ -1179,7 +1202,8 @@ public class MemberDAO {
 
 			// System.out.println(deletedFriendsList);
 			
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, deletedFriendsList);
@@ -1203,7 +1227,8 @@ public class MemberDAO {
 				if (friendsListArr.get(i).length() != 0)
 					deletedFriendsList += "," + friendsListArr.get(i);
 			}
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			
 			psmt3 = con.prepareStatement(sql2);
@@ -1239,7 +1264,8 @@ public class MemberDAO {
 		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_IMG FROM MEMBER";
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			pstmt = con.prepareStatement(sql);
 			resultSet = pstmt.executeQuery();
 
@@ -1343,12 +1369,16 @@ public class MemberDAO {
 		
 		
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";// 내 친구목록 갱신
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, myFriendList);
 			psmt2.setString(2, userId);
 			psmt2.executeUpdate();
+			
+			if(psmt2 != null)
+				psmt2.close();
 			
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, friendFriendList);
