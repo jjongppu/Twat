@@ -1605,7 +1605,7 @@
 
 
 						str += '<div class="content">';
-						//                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
+//						                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
 						str += '<div class="left">';
 						//                        if (str2.indexOf(',') == -1)
 						// ======================================================================================================
@@ -2203,7 +2203,7 @@
 					var voteDateSet = new Set();
 					var voteDateCount = 1;
 					if (voteObject.cal_date.indexOf(",") == -1) {
-						//                        voteDateSet.add(voteObject.cal_date);
+						voteDateSet.add(voteObject.cal_date);
 					} else {
 						voteDateList = voteObject.cal_date.split(",");
 						voteDateList = Array.from(voteDateList).sort();
@@ -2296,7 +2296,7 @@
 							} else if (voteDateCount == 1) {
 //								voteString += "<div id='vLBTitle'>일정투표</div>";
 //								voteString += "<div class='voteList' id='voteList" + voteObject.cal_date + "' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월 " + voteObject.cal_date.substr(6, 2) + "일</div>";
-								swiperString += "<div class='swiper-slide'><div id='vLBTitle'>일정투표</div></div>";
+//								swiperString += "<div class='swiper-slide'><div id='vLBTitle'>일정투표</div></div>";
 								swiperString += "<div class='swiper-slide'><div class='voteYear'>" + voteObject.cal_date.substr(0, 4) + "년 " + voteObject.cal_date.substr(4, 2) + "월</div></div>";
 								swiperString += "<div class='swiper-slide'><div class='voteList' id='voteList" + voteObject.cal_date + "' onClick='addMemberVoteList(" + voteObject.cal_date + ")'>" + voteObject.cal_date.substr(6, 2) + "일&nbsp;&nbsp;&nbsp;</div></div>";
 								
@@ -2314,7 +2314,7 @@
 //								voteString += "<div id='vLBTitle'>일정투표</div>";
 //								voteString += "<div class='voteYear'>" + yearTemp + "년<br>";
 //								voteString += "<div class='voteMonth'><div class='spanMonth'>" + monthTEmp + "월</div>&nbsp;&nbsp;:&nbsp;&nbsp;";
-								swiperString += "<div class='swiper-slide'><div id='vLBTitle'>일정투표</div></div>";
+//								swiperString += "<div class='swiper-slide'><div id='vLBTitle'>일정투표</div></div>";
 								swiperString += "<div class='swiper-slide'><div class='voteYear'>" + yearTemp + "년 " + monthTEmp + "월</div></div><div class='swiper-slide'>";
 								var vDSCount = 0;
 								for (let item of voteDateSet.keys()) {
@@ -2508,6 +2508,7 @@
 
 					//                    if(alreadyVote && user0000)
 					//                    {
+					console.log(voteDateSet);
 					for (let item of voteDateSet.keys()) {
 						$('#voteList' + item).css("background-image", "url(img/etcIcon/unchecked.png)");
 					}
@@ -3583,10 +3584,14 @@
                            
 								<div id="answerBox">
 									<div id="selectAnswer"></div>
+                                    
+                                    
 									<div class="btnCenter">
 										<div class="choiceBtn" id="yesButton" onclick="selectYes()"  > 예 </div>
 										<div class="choiceBtn" id="noButton" onclick="closeModal()"> 아니오 </div>
 									</div>
+                                    
+                                    
 								</div>
 							</div>
 						</span>
@@ -3596,6 +3601,12 @@
 							<div id="modalContent">
 								<div class="modalSchduleInfo">
                                     <div class="mSIinfo"></div>
+                                    
+                                    
+                                <div class="vLBTitle">일정투표</div>
+								<div id="voteButtonBox">
+									<input type="button" value="투표하기" onclick="addVoteList()" />
+								</div>
 									<div class="swiper-container">
 										<div class="swiper-wrapper">
 										</div>
@@ -3603,13 +3614,10 @@
 										<div class="swiper-pagination"></div>
 									</div>
 									
-								</div>
-								<div id="voteButtonBox">
-									<input type="button" value="투표하기" onclick="addVoteList()" />
-								</div>
+                                </div>
 								<div class="modalComment">
 <!--									<div style="display:inline-block; height:20px; font-weight:bold;">댓글 </div>-->
-									<div class="stick" style="display:block; width:100%; margin-bottom:10px;"></div>
+<!--									<div class="stick" style="display:block; width:100%; margin-bottom:10px;"></div>-->
 									<!--
 									<fieldset>
 										<legend style="height:22px;">댓글</legend>
