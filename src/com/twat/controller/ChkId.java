@@ -62,6 +62,19 @@ public class ChkId extends HttpServlet {
 		
 		out.print(group.toJSONString());
 		out.close();
+		
+		if(group != null)
+		{
+			group = null;
+		}
+		if(mDao != null)
+		{
+			mDao = null;
+		}
+		if(resultOBJ != null)
+		{
+			resultOBJ = null;
+		}
 	}
 
 }
