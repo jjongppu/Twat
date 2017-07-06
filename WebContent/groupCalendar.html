@@ -15,6 +15,35 @@
 	<script src="js/swiper.jquery.min.js"></script>
     <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 	<script  type="text/javascript">
+        
+        
+        var COLOR1 = new Array('ddbbbb','eecccc','ffdddd',
+                                'ddc3bb','eed4cc','ffe5dd',
+                                'ddccbb','eeddcc','ffeedd',
+                                'ddd4bb','eee5cc','fff6dd',
+                                'ddddbb','eeeecc','ffffdd',
+                                'd4ddbb','e5eecc','f6ffdd',
+                                'ccddbb','ddeecc','eeffdd',
+                                'c3ddbb','d4eecc','e5ffdd',
+                                'bbddbb','cceecc','ddffdd',
+                                'bbddc3','cceed4','ddffe5',
+                                'bbddcc','cceedd','ddffee',
+                                'bbddd4','cceee5','ddfff6');
+           
+        var COLOR2 = new Array('bbdddd','cceeee','ddffff',
+                                'bbd4dd','cce5ee','ddf6ff',
+                                'bbccdd','ccddee','ddeeff',
+                                'bbc3dd','ccd4ee','dde5ff',
+                                'bbbbdd','ccccee','ddddff',
+                                'c3bbdd','d4ccee','e5ddff',
+                                'ccbbdd','ddccee','eeddff',
+                                'd4bbdd','e5ccee','f6ddff',
+                                'ddbbdd','eeccee','ffddff',
+                                'ddbbd4','eecce5','ffddf6',
+                                'ddbbcc','eeccdd','ffddee',
+                                'ddbbc3','eeccd4','ffdde5');
+        
+        
 		// 일정 잡기 저장용
 		var scheSet = new Set();
 		// 생일자 저장용
@@ -1475,16 +1504,25 @@
 				//                }
                 
 //                console.log(voteSet);
-                
+//				console.log(dateToFormat(new Date));
+                // $(this).children().eq(0).css("border", "2px solid red").css("border-radius", "22px");
 				// 확정된 일정표시
 				for (let item of scheduleSet.keys()) {
 					if (item.split("-")[0] == dateParam) {
 						//						console.log(item);
 						$(cell).attr('class', 'trSche' + item.split("-")[2]);
+						
+						if(dateToFormat(new Date) == dateParam)
+						{
+							$(cell).children().eq(0).css("border", "2px solid red").css("border-radius", "22px");
+						}
+						
 						var classTemp = item.split("-")[2];
-                        cell.innerHTML += "<div class='dateChk " + classTemp + "'></div>";
+                        var colors = Math.floor(Math.random() * 36) + 1;
+                        cell.innerHTML += "<div class='dateChk dateChk" + classTemp + "'></div>";
 //                        console.log(classTemp);
 						cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
+                        $('.dateChk'+classTemp).css('background-color','#'+COLOR1[colors]);
 					}
 				}
 				// 미확정된 일정표시
@@ -1493,16 +1531,31 @@
 					if (parseInt(item.split("-")[0]) == parseInt(dateParam)) {
 						//						console.log(item);
 						$(cell).attr('class', 'trVote' + item.split("-")[2]);
+						
+						if(dateToFormat(new Date) == dateParam)
+						{
+							$(cell).children().eq(0).css("border", "2px solid red").css("border-radius", "22px");
+						}
+						
                         var classTemp = item.split("-")[2];
-                        cell.innerHTML += "<div class='dateChk" + classTemp + "'></div>";
+                        var colors = Math.floor(Math.random() * 36) + 1;
+                        cell.innerHTML += "<div class='dateChk dateChk" + classTemp + "'></div>";
+                        cell.innerHTML += "<img class='voteImg' src='img/etcIcon/vote.png'>";
 //                        console.log(classTemp);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
+                        $('.dateChk'+classTemp).css('background-color','#'+COLOR2[colors]);
 					}
 				}
 				// 생일표시
 				for (let item of birthSet.keys()) {
 					if (item.split("-")[0].substr(2, 4) == dateParam.substr(4)) {
 						cell.innerHTML += "<div class='memberBirthDay' style='font-size:13px'>" + item.split("-")[1] + "(" + item.split("-")[2] + ")님의 생일</div>";
+						
+						if(dateToFormat(new Date) == dateParam)
+						{
+							$(cell).children().eq(0).css("border", "2px solid red").css("border-radius", "22px");
+						}
+						
 						//                        console.log("#date" + parseInt(dateParam.substr(6)));
 						//                        $('.memberBirthDay').prevAll().css("background-color", "#0080ff");
 						$("#date" + parseInt(dateParam.substr(6))).css("background-color", "#0080ff");
@@ -1545,16 +1598,16 @@
 				//                    }
 				//                }
 
-				for (let item of scheSet.keys()) {
-					if (item == dateParam) {
-						//                        $('#date' + calDay).parent().css("backgroundColor", "green");
-						$('#date' + calDay).parent().css("backgroundImage", "url(img/etcIcon/verified-text-paper.png)");
-						$('#date' + calDay).parent().css("backgroundRepeat", "no-repeat");
-						$('#date' + calDay).parent().css("backgroundPosition", "right 50%");
-						// url(img/etcIcon/verified-text-paper.png)
-						console.log(item + ", " + calDay);
-					}
-				} //선택한 날짜 초록색으로 표기
+//				for (let item of scheSet.keys()) {
+//					if (item == dateParam) {
+//						//                        $('#date' + calDay).parent().css("backgroundColor", "green");
+//						$('#date' + calDay).parent().css("backgroundImage", "url(img/etcIcon/verified-text-paper.png)");
+//						$('#date' + calDay).parent().css("backgroundRepeat", "no-repeat");
+//						$('#date' + calDay).parent().css("backgroundPosition", "right 50%");
+//						// url(img/etcIcon/verified-text-paper.png)
+//						console.log(item + ", " + calDay);
+//					}
+//				} //선택한 날짜 초록색으로 표기
 			}
 			//            initToday();
 		}
@@ -4488,6 +4541,7 @@
 							width: 22px;
 							height: 22px;
 							text-align: center;
+                            z-index: 1;
 						}
 						
 						.lunar {
@@ -4499,12 +4553,30 @@
 
                         .choiceDate{
                             position: absolute;
+                            background-image: url(img/etcIcon/checked2.png);
                             top: 0;
                             right: 0;
-                            width: 50px;
-                            height: 50px;
-                            background-color: rebeccapurple;
+                            width: 25px;
+                            height: 25px;
+                            background-size: cover;
                             
+                        }
+                        .dateChk{
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 102%;
+                            height: 20px;
+                            background-size: cover;
+                            opacity: 0.6;
+                        }
+                        .voteImg{
+                            position: absolute;
+                            display: inline-block;
+                            right: 0;
+                            bottom: 0;
+                            width: 25px;
+                            height: 25px;
                         }
 					</style>
 				</div>
