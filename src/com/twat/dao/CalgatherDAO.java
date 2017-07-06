@@ -136,11 +136,13 @@ public class CalgatherDAO {
 
 			result = 1;
 			rs = psmt.executeQuery();
-
+	
 			result = 2;
 			if (rs.next()) {
 				masterName = rs.getString("MEMBER_NAME");
 			}
+			if(psmt != null)
+				psmt.close();
 			result = 3;
 			// 諛⑹젙蹂� �씤�꽌�듃 �꽦
 
@@ -151,13 +153,16 @@ public class CalgatherDAO {
 			psmt.setString(4, masterId);
 			psmt.setString(5, masterName);
 			psmt.setString(6, GroupImg);
-			psmt.setInt(7, GroupCount);
+			psmt.setInt(7, GroupCount);			
 
 			int res = psmt.executeUpdate();
+			
+			
 
 			if (res > 0) {
 				result = 5;
-
+				if(psmt != null)
+					psmt.close();
 				psmt = con.prepareStatement(selectaddGMSql);
 
 				int res2 = psmt.executeUpdate();

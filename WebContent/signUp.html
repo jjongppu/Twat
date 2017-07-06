@@ -203,7 +203,7 @@
 	
 	// 이름 유효성 검사 진행중..
 	function checkName() {
-		var nameRegex = /^[가-힣]{2,4}$/;
+		var nameRegex = /^[가-힣]{2,20}$/;
 		var name = $('#nameBox').val();
 		
 		if(name == "") {
@@ -307,7 +307,8 @@
                     var result = data[0].result;
 					var idVal = $('#idBox').val().length;
 					var idVal2 = $('#idBox').val();
-					var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
+//					var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
+					var idRegex = /^[A-za-z0-9]{6,12}$/g;
 					
                     console.log(result);
 					// 1번
