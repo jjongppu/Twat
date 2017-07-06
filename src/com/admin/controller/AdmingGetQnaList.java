@@ -18,7 +18,7 @@ import com.twat.dao.QnaDAO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.QnaVO;
 
-@WebServlet("/admingGetQnaList.do")
+//@WebServlet("/admingGetQnaList.do")
 public class AdmingGetQnaList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

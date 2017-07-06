@@ -23,19 +23,9 @@
   version="3.0"
   metadata-complete="true">
 
-  <display-name>Poem</display-name>
-
   <description>
      Welcome to Tomcat
   </description>
-  
-  	<servlet> 
-	<servlet-name>LoginServlet</servlet-name>
-	<servlet-class>com.poem.admin.controller.LoginServlet</servlet-class> 
-	</servlet>
-
-
-
 
 
   <listener>

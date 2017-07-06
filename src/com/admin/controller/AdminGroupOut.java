@@ -19,7 +19,7 @@ import com.twat.dao.CalgatherDAO;
 import com.twat.dao.MemberDAO;
 import com.twat.dto.CalgatherVO;
 
-@WebServlet("/adminGroupOut.do")
+//@WebServlet("/adminGroupOut.do")
 public class AdminGroupOut extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

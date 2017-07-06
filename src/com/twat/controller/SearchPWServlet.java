@@ -17,7 +17,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class SearchPW
  */
-@WebServlet("/SearchPW.do")
+//@WebServlet("/SearchPW.do")
 public class SearchPWServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

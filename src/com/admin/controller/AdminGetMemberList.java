@@ -18,7 +18,7 @@ import org.json.simple.JSONObject;
 import com.admin.dao.AdminDAO;
 import com.twat.dto.MemberVO;
 
-@WebServlet("/getmemberInfo.do")
+//@WebServlet("/getmemberInfo.do")
 public class AdminGetMemberList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

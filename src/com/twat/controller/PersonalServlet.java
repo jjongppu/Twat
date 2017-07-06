@@ -19,7 +19,7 @@ import com.twat.dto.MemberVO;
 /**
  * Servlet implementation class personalServlet
  */
-@WebServlet("/PersonalServlet.do")
+//@WebServlet("/PersonalServlet.do")
 public class PersonalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    

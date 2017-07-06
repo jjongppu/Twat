@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-@WebServlet("/SessionCheck.do")
+//@WebServlet("/SessionCheck.do")
 public class SessionCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

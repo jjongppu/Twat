@@ -20,7 +20,7 @@ import com.twat.dao.QnaDAO;
 import com.twat.dto.MemberVO;
 import com.twat.dto.QnaVO;
 
-@WebServlet("/SearchQna.do")
+//@WebServlet("/SearchQna.do")
 public class SearchQnaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
