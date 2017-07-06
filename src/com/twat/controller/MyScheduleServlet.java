@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.MyCalendarDAO;
 
-@WebServlet("/mySchedule.do")
+//@WebServlet("/mySchedule.do")
 public class MyScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
