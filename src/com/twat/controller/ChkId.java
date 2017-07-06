@@ -20,7 +20,7 @@ import com.twat.dao.MemberJoinGroupDAO;
 /**
  * Servlet implementation class ChkId
  */
-@WebServlet("/chkId.do")
+//@WebServlet("/chkId.do")
 public class ChkId extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

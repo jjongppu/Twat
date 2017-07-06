@@ -23,7 +23,7 @@ import com.twat.dto.MemberVO;
 /**
  * Servlet implementation class ChangeGroupMaster
  */
-@WebServlet("/changeGroupMaster.do")
+//@WebServlet("/changeGroupMaster.do")
 public class ChangeGroupMaster extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -18,7 +18,7 @@ import com.twat.dao.MemberDAO;
 import com.twat.dto.MemberVO;
 
 
-@WebServlet("/friends.do")
+//@WebServlet("/friends.do")
 public class GetFriendListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

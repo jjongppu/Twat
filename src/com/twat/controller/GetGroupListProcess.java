@@ -22,7 +22,7 @@ import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberJoinGroupVO;
 
 
-@WebServlet("/groupList.do")
+//@WebServlet("/groupList.do")
 public class GetGroupListProcess extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
