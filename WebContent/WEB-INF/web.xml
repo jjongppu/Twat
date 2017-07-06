@@ -15,6 +15,8 @@
       </listener-class>
   </listener>
   
+  <!-- sdssd -->
+  
 	<servlet> 
         <servlet-name>outUser</servlet-name> 
         <servlet-class>com.twat.controller.OutUser</servlet-class> 
@@ -186,6 +188,8 @@
         <url-pattern>/signUp.do</url-pattern> 
     </servlet-mapping>
     
+    <!-- sdssd -->
+    <!-- goblin start-->
   	<servlet> 
         <servlet-name>myGroupSchedule</servlet-name> 
         <servlet-class>com.twat.controller.MyGroupScheduleServlet</servlet-class> 
@@ -212,6 +216,7 @@
         <servlet-name>mySchedule</servlet-name> 
         <url-pattern>/mySchedule.do</url-pattern> 
     </servlet-mapping> 
+     <!-- goblin stop-->
     
     <!-- jjonggal -->
     
