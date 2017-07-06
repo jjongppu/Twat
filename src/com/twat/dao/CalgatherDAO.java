@@ -365,8 +365,8 @@ public class CalgatherDAO {
 			
 			rSet = pstmt.executeQuery();
 			
-			if(pstmt != null)
-				pstmt.close();
+//			if(pstmt != null)
+//				pstmt.close();
 			
 			int count = -1;
 			
