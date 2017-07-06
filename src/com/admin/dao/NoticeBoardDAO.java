@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.admin.dto.NoticeBoardVO;
+import com.twat.dbpool.DBPool;
+import com.twat.mvconnection.MVConnection;
 
 public class NoticeBoardDAO {
 //	Connection con = null;
@@ -31,12 +33,12 @@ public class NoticeBoardDAO {
 	
 	
 	// DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
-	public Connection getConnection() throws Exception {
-		Context initCtx = new InitialContext();
-	    DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
-	         
-	    return ds.getConnection();
-	}
+//	public Connection getConnection() throws Exception {
+//		Context initCtx = new InitialContext();
+//	    DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
+//	         
+//	    return ds.getConnection();
+//	}
 	
 	
 	public int inputNotice(String adminId, String title, String content, String classification){
@@ -44,8 +46,9 @@ public class NoticeBoardDAO {
 		Connection con = null;
 		int result = 0;
 		try {
-			con = getConnection();
-			String sql = "INSERT INTO notice_board VALUES(?, ?, ?, ?, CURRENT_TIMESTAMP, 0, ?)";
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "INSERT INTO NOTICE_BOARD VALUES(?, ?, ?, ?, CURRENT_TIMESTAMP, 0, ?)";
 			psmt = con.prepareStatement(sql);
 			System.out.println(System.currentTimeMillis());
 			
@@ -88,8 +91,9 @@ public class NoticeBoardDAO {
 		ArrayList<NoticeBoardVO> noticeArr = new ArrayList<NoticeBoardVO>();
 				
 		try {
-			con = getConnection();
-			String sql = "SELECT * FROM `notice_board` WHERE NOTICE_CLASSIFICATION = ? ORDER BY NOTICE_ID DESC LIMIT 7";
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "SELECT * FROM NOTICE_BOARD WHERE NOTICE_CLASSIFICATION=? ORDER BY NOTICE_ID DESC LIMIT 7";
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, noticeEvent);
 			rs = psmt.executeQuery();

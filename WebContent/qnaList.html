@@ -149,8 +149,15 @@
 	</style>
 	
 	<script>
-
-        
+$.ajax({
+    type: "post",
+    url: "SessionCheck.do",
+    dataType: "json",
+    success: function(data) {
+        if(data[0].result == "s"){
+            location.href='home.html';
+        }else{
+        //////////////////////////////////////////////////////////////////////////////////////////
          nowPage = 0;
     nowPage2 = 0;
     // 세션 확인 
@@ -381,8 +388,10 @@
         function qnaDetailPage(id){
             location.href="qnaDetail.html?qna="+$(id).attr('id');
         }
-        
-        
+        //////////////////////////////////////////////////////////////////////////////////////////
+          }
+    }
+});
 	</script>
 <body>
     <div id="newWrap">

@@ -5,7 +5,7 @@
 <title>admin</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="../js/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!--  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
 </head>
 <style>
     body{
@@ -121,60 +121,7 @@
 </style>    
 
 <script>
-        $.ajax ({
-            type : 'post',
-            url : '../getinfo.do',
-            dataType : "json",
-            success : function(data) {
-                console.log(data);
-                $('#memVal').html(data[0].memberCount);
-                $('#qnaVal').html(data[0].qnaCount);
-                $('#calVal').html(data[0].calendatCount);
-                $('#visVal').html(data[0].visitCount);
-                $('#calgVal').html(data[0].calgtherCount);
-                
-                        $.ajax ({
-                            type : 'post',
-                            url : '../GetVisits.do',
-                            dataType : "json",
-                            success : function(data) {
-                                var visitkind = data[0].VISIT_KIND;
-                                if(visitkind != '-1'){
-                                    var arryList = new Array(data.length) ;
-                                    for(var i=0;i<data.length;i++){
-                                        arryList[i] = new Array(2);
-                                        arryList[i][0] = data[i].VISIT_KIND.substr(5,5);
-                                        arryList[i][1] = data[i].VISIT_COUNT;
-                                    }
-
-                                    google.charts.load('current', {'packages':['corechart']});
-                                    google.charts.setOnLoadCallback(drawChart);
-                                    function drawChart() {
-
-                                        var data = new google.visualization.DataTable();
-                                        data.addColumn('string', '일');
-                                        data.addColumn('number', '방문자 수 ');
-
-                                        data.addRows(arryList);
-
-                                        var options = {
-                                            hAxis: {
-                                                title: '최근 10일간 방문자 수'
-                                            }
-                                        };
-
-                                        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-                                        chart.draw(data, options);
-                                    }
-                                }
-                                $('#todayVal').html(data[data.length-1].VISIT_COUNT);
-                            }
-                        });
-            }
-        });
-    
-    
+          
             function inputNotice(){
             
             console.log($("#noticeClassification").val());
