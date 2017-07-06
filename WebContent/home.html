@@ -202,19 +202,17 @@
                 success: function (data){
                     console.log(data);
                     
-          
                     for(var i = 0; i < data.length; i++){
                         
                         document.getElementById("noticeBoard").innerHTML += '<tr>'
+
                             + '<td class="title"><a id="'+data[i].noticeId+'" onclick="detNotice(this)">' + data[i].noticeTitle + '</a></td>'
                             + '<td class="name">' + data[i].noticeWriter + '</td>'
                             + '<td class="data">' + data[i].noticeDate + '</td>'
                             + '<td class="hit">' + data[i].noticeViews + '</td> <input class="noContent" type="hidden" value="'+data[i].noticeContent+'"/> </tr>';
                         
+
                     }
-                    
-                   
-                    
                     
                 }, error: function(req) {
 
@@ -316,6 +314,7 @@
         });
             
         
+
         function detNotice(tagid){
             var id = $(tagid).parent().parent();
             var title = $(tagid).html();
@@ -369,14 +368,17 @@
             
         }
     
+        function backPage(){
+            location.href='home.html'
+        }
     
-    
-    
+   
     
     
     
     </script>
     <style>
+
 
         #decoBorder{
             position: absolute;
@@ -465,6 +467,7 @@
         h4{
             padding-left: 20px;
         }
+
     </style>
     
 <body>
@@ -506,6 +509,7 @@
         
         <div id="main_container">
 <!--            여기에 각자 페이지 넣으시면 됩니다~~~~~~~~  -->
+
             <div id="decoBorder"></div>
 
             
@@ -571,21 +575,7 @@
                             </tr>
                         </thead>
                         <tbody id="noticeBoard">
-<!--
-                            <tr>
-                                <td class="title">
-                                    <a href="#">게시판 제목</a>
-                                    <img width="13" height="12" class="pic" alt="첨부이미지" src="img/etcIcon/adminView_visit.png">
-                                    <a class="comment" href="#">[5]</a>
-                                    <img width="10" height="9" class="new" alt="새글" src="img/etcIcon/new-bingo-sites.png">
-                                </td>
-                                <td class="name">글쓴이이름</td>
-                                <td class="data">2008/02/14</td>
-                                <td class="hit">1234</td>
-                                
-                            </tr>
--->
-                           
+
                            
                         </tbody>
                     
@@ -664,6 +654,7 @@
 -->
 					</div>
 				</div>
+                    <input type="button" value="뒤로가기" onclick="backPage()">
             
 		</div>
         </div>
