@@ -3,23 +3,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+//import java.sql.Statement;
 import java.util.ArrayList;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.servlet.http.HttpSession;
+//import javax.sql.DataSource;
 
+import com.twat.dbpool.DBPool;
 import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberVO;
 import com.twat.dto.QnaVO;
 import com.twat.dto.VisitVO;
+import com.twat.mvconnection.MVConnection;
 
 	
 
 public class AdminDAO {
-	Connection con = null;
+//	Connection con = null;
 
 	
 	
@@ -37,16 +39,17 @@ public class AdminDAO {
 	
 	
 	   // DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
-	   public Connection getConnection() throws Exception {
-	         Context initCtx = new InitialContext();
-	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
-	         
-	      return ds.getConnection();
-	   }
+//	   public Connection getConnection() throws Exception {
+//	         Context initCtx = new InitialContext();
+//	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
+//	         
+//	      return ds.getConnection();
+//	   }
 
 
 		// 관리자 로그인을 위한 메서드 ----------------------------------쫑길빵길
 		public String adminlogin(String MEMBER_ID, String MEMBER_PW) {
+			Connection con = null;
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			String result = "";
@@ -54,7 +57,8 @@ public class AdminDAO {
 			String selectSql = "select * from ADMIN where ADMIN_ID=? and ADMIN_PW=?";
 			
 			try {
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				psmt = con.prepareStatement(selectSql);
 				psmt.setString(1, MEMBER_ID);
 				psmt.setString(2, MEMBER_PW);
@@ -82,6 +86,7 @@ public class AdminDAO {
 		
 		// 쫑길빵길의 어드민 홈 db정보 뿌려주기
 		public ArrayList<Integer> getAllInfo(){
+			Connection con = null;
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<Integer> info = new ArrayList<Integer>();
@@ -89,12 +94,13 @@ public class AdminDAO {
 			String selectGetInfo = "SELECT"; 
 			selectGetInfo +="(SELECT COUNT(*) FROM MEMBER) AS memC,";
 			selectGetInfo +="(SELECT COUNT(*) FROM QNA) AS qnaC,";
-			selectGetInfo +="(SELECT COUNT(*) FROM CALENDER WHERE CAL_DEPTH=0) AS calC,";
+			selectGetInfo +="(SELECT COUNT(*) FROM CALENDAR WHERE CAL_DEPTH=0) AS calC,";
 			selectGetInfo +="(SELECT SUM(VISIT_COUNT) FROM VISIT) AS visC,";
-			selectGetInfo +="(SELECT COUNT(*) FROM CALGATER) AS calgC";	
+			selectGetInfo +="(SELECT COUNT(*) FROM CALGATHER) AS calgC";	
 			
 			try {
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				psmt = con.prepareStatement(selectGetInfo);
 				rs = psmt.executeQuery();
 				if(rs.next()) {
@@ -122,6 +128,7 @@ public class AdminDAO {
 		
 		// 어드민 페이지 현재 정상 로그인 되는 회원들만 얻어옴 + 검색
 		public ArrayList<MemberVO> adminlogin(int page, String val){
+			Connection con = null;
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<MemberVO> members = new ArrayList<MemberVO>();
@@ -138,7 +145,8 @@ public class AdminDAO {
 			}
 			
 			try {
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				psmt = con.prepareStatement(selectMemberCount);
 				if(!val.equals("0")){
 					psmt.setString(1, val+"%");
@@ -150,6 +158,9 @@ public class AdminDAO {
 					countMem.setMEMBER_ID(count);
 					members.add(countMem);
 				}
+				
+				if(psmt != null)
+					psmt.close();
 				
 				psmt = con.prepareStatement(selectGetAllMemeber);
 				if(!val.equals("0")){
@@ -190,7 +201,7 @@ public class AdminDAO {
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();	
-			
+			Connection con = null;
 			
 			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM CALGATHER";
@@ -205,7 +216,8 @@ public class AdminDAO {
 			selectAllgroupSql +=  " LIMIT "+ (page*10-10) +",10";
 			
 			try{
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				
 				psmt = con.prepareStatement(selectGroupCount);
 				if(!val.equals("0")){
@@ -218,6 +230,11 @@ public class AdminDAO {
 					cv.setGroup_id(count);
 					calArry.add(cv);
 				}
+				
+				if(rs != null)
+					rs.close();
+				if(psmt != null)
+					psmt.close();
 				
 				psmt = con.prepareStatement(selectAllgroupSql);
 				if(!val.equals("0")){
@@ -260,7 +277,7 @@ public class AdminDAO {
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<CalendarVO> calArry = new ArrayList<CalendarVO>();	
-			
+			Connection con = null;
 			
 			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM CALENDAR WHERE CAL_DEPTH=0";
@@ -275,7 +292,8 @@ public class AdminDAO {
 			selectAllgroupSql +=  " LIMIT "+ (page*10-10) +",10";
 			
 			try{
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				
 				psmt = con.prepareStatement(selectGroupCount);
 				if(!val.equals("0")){
@@ -288,6 +306,11 @@ public class AdminDAO {
 					cv.setGroup_id(count);
 					calArry.add(cv);
 				}
+				
+				if(rs != null)
+					rs.close();
+				if(psmt != null)
+					psmt.close();
 				
 				psmt = con.prepareStatement(selectAllgroupSql);
 				if(!val.equals("0")){
@@ -335,7 +358,7 @@ public class AdminDAO {
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<QnaVO> qnaArry = new ArrayList<QnaVO>();	
-			
+			Connection con = null;
 			
 			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM QNA";
@@ -352,7 +375,8 @@ public class AdminDAO {
 			selectAllgroupSql +=  " ORDER BY QNA_REPLY ASC LIMIT "+ (page*10-10) +",10";
 			
 			try{
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				
 				psmt = con.prepareStatement(selectGroupCount);
 				if(!val.equals("0")) {
@@ -365,6 +389,11 @@ public class AdminDAO {
 					qv.setQNA_ID(count);
 					qnaArry.add(qv);
 				}
+				
+				if(rs != null)
+					rs.close();
+				if(psmt != null)
+					psmt.close();
 				
 				psmt = con.prepareStatement(selectAllgroupSql);
 				if(!val.equals("0")){
@@ -404,6 +433,7 @@ public class AdminDAO {
 		// kind 가 1이면 게시글,댓글,그룹 삭제 2면 댓글,게시글 삭제,
 		   public int outGroup(String group_ID, int kind){
 				PreparedStatement psmt= null;
+				Connection con = null;
 				ResultSet rs= null;
 				//그룸삭제 쿼리
 			   String deleteGroupSql = "DELETE FROM CALGATHER WHERE GROUP_ID =?";
@@ -414,18 +444,22 @@ public class AdminDAO {
 			   int result = 0;
 			   
 			   try {
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				//게시글 댓글 삭제
 				psmt = con.prepareStatement(deleteContentSql);
 				psmt.setString(1, group_ID);
-				int res = psmt.executeUpdate();
+				psmt.executeUpdate();
+				
+				if(psmt!=null)
+					psmt.close();
 				
 				//정규화 테이블 삭제
 				result = 1;
 				if( kind ==1){
 					psmt = con.prepareStatement(deleteJoinMemSql);
 					psmt.setString(1, group_ID);
-					int res2 = psmt.executeUpdate();
+					psmt.executeUpdate();
 					
 				// 그룹도 삭제 하기
 					result = 2;
@@ -457,10 +491,12 @@ public class AdminDAO {
 			// 관리자 답변달아주기 위한 메서드 ----------------------------------쫑길빵길
 			public int setQnaReply(String qna_id, String reply) {
 				PreparedStatement psmt= null;
+				Connection con = null;
 				String updateReplySql = "UPDATE QNA SET QNA_REPLY=? WHERE QNA_ID=?";
 				int result =0;
 				try {
-					con = getConnection();
+//					con = getConnection();
+					con = new MVConnection(DBPool.getInstance().getConnection());
 					psmt = con.prepareStatement(updateReplySql);
 					psmt.setString(1, reply);
 					psmt.setString(2, qna_id);
@@ -527,6 +563,7 @@ public class AdminDAO {
 						
 
 						public boolean visitups(String userturn, String userid, String strToday) {
+							Connection con = null;
 							PreparedStatement psmt= null;
 							ResultSet rs= null;
 							boolean result = false;
@@ -537,12 +574,18 @@ public class AdminDAO {
 							String selectVisit = "SELECT * FROM VISIT ORDER BY VISIT_KIND DESC LIMIT 1";
 							String insertVisitToday = "INSERT INTO VISIT VALUES(?,1)";
 							try {
-								con = getConnection();
+//								con = getConnection();
+								con = new MVConnection(DBPool.getInstance().getConnection());
 								if(!userturn.equals("getCookie")){
 									psmt = con.prepareStatement(selectVisit);
 									rs = psmt.executeQuery();
+									
+									
 									if(rs.next()){
+		
 										String date = rs.getString("VISIT_KIND");
+										if(psmt != null)
+											psmt.close();
 										if(!date.equals(strToday)){
 											psmt = con.prepareStatement(insertVisitToday);
 											psmt.setString(1,strToday);
@@ -576,14 +619,16 @@ public class AdminDAO {
 						}
 
 		public ArrayList<VisitVO> getVisits() {
+			Connection con = null;
 			ArrayList<VisitVO> array = new ArrayList<VisitVO>();
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			
 			String selectVisit1 = "SELECT * FROM VISIT ORDER BY VISIT_KIND ASC LIMIT 10";
-			String selectVisit2 = "SELECT SUM(VISIT_COUNT) FROM VISIT";
+//			String selectVisit2 = "SELECT SUM(VISIT_COUNT) FROM VISIT";
 			try {
-				con = getConnection();
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
 				
 //					psmt = con.prepareStatement(selectVisit2);
 //					rs = psmt.executeQuery();
@@ -620,7 +665,47 @@ public class AdminDAO {
 		}
 			
 			
-			
+		public Long getAndSetNoticeView(Long views) {
+			PreparedStatement psmt= null;
+			Connection con = null;
+			ResultSet rs= null;
+			Long result = null;
+			String selectVisit1 = "SELECT * FROM NOTICE_BOARD WHERE NOTICE_ID=?";
+			String updateVisit2 = "UPDATE NOTICE_BOARD SET NOTICE_VIEWS=NOTICE_VIEWS+1 WHERE NOTICE_ID=?";
+			try {
+//				con = getConnection();
+				con = new MVConnection(DBPool.getInstance().getConnection());
+				
+					psmt = con.prepareStatement(updateVisit2);
+					psmt.setLong(1, views);
+					psmt.executeUpdate();
+					
+					if(psmt != null) psmt.close();
+					
+					psmt = con.prepareStatement(selectVisit1);
+					psmt.setLong(1, views);
+					rs = psmt.executeQuery();
+					
+					while(rs.next()){
+						
+						result = rs.getLong("NOTICE_VIEWS");
+						
+					}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+					try {
+						if(rs != null) rs.close();
+						if(psmt != null) psmt.close();
+						if(con != null) con.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				
+			}
+			return result;
+		}	
 			
 			
 		

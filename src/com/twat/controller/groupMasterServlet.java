@@ -18,7 +18,7 @@ import com.twat.dao.CalgatherDAO;
 /**
  * Servlet implementation class groupMasterServlet
  */
-@WebServlet("/groupMaster.do")
+//@WebServlet("/groupMaster.do")
 public class groupMasterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

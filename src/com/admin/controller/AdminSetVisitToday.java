@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
 
 import com.admin.dao.AdminDAO;
 
-@WebServlet("/AdminSetVisitToday.do")
+//@WebServlet("/AdminSetVisitToday.do")
 public class AdminSetVisitToday extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

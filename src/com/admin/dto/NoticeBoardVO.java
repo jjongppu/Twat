@@ -1,7 +1,7 @@
 package com.admin.dto;
 
 public class NoticeBoardVO {
-	private int notice_id;
+	private Long notice_id;
 	private String notice_title;
 	private String notice_content;
 	private String notice_writer;
@@ -11,7 +11,7 @@ public class NoticeBoardVO {
 	
 	public NoticeBoardVO(){}
 	
-	public NoticeBoardVO(int notice_id, String notice_title, String notice_content, String notice_writer,
+	public NoticeBoardVO(Long notice_id, String notice_title, String notice_content, String notice_writer,
 			String notice_date, int notice_views, String notice_classification) {
 		super();
 		this.notice_id = notice_id;
@@ -23,11 +23,11 @@ public class NoticeBoardVO {
 		this.notice_classification = notice_classification;
 	}
 
-	public int getNotice_id() {
+	public Long getNotice_id() {
 		return notice_id;
 	}
 
-	public void setNotice_id(int notice_id) {
+	public void setNotice_id(Long notice_id) {
 		this.notice_id = notice_id;
 	}
 

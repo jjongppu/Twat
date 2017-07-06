@@ -18,7 +18,7 @@ import org.json.simple.JSONObject;
 import com.twat.dao.MemberDAO;
 import com.twat.dto.MemberVO;
 
-@WebServlet("/myCalBirth.do")
+//@WebServlet("/myCalBirth.do")
 public class MyCalBirthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

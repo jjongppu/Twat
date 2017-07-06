@@ -26,7 +26,7 @@ import com.twat.dto.CalgatherVO;
 /**
  * Servlet implementation class GroupCalendar
  */
-@WebServlet("/groupCal.do")
+//@WebServlet("/groupCal.do")
 public class GroupCalendar extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -66,7 +66,7 @@ public class GroupCalendar extends HttpServlet
 		
 		JSONArray group = new JSONArray();
 
-		// Calgather¿¡¼­ ±×·ì Á¤º¸ °¡Á®¿È
+		// Calgatherï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		CalgatherDAO calgDao = CalgatherDAO.getInstance();
 		CalgatherVO groupTitle = calgDao.getGroupInfo(request.getParameter("group"));
 //		CalgatherVO groupTitle = calgDao.getGroupInfo((String)session.getAttribute("loginUserId"));
@@ -88,10 +88,10 @@ public class GroupCalendar extends HttpServlet
 		}
 		else
 		{
-//			out.print("<script>console.log('groupTitle°ª ¾Èµé¾î¿È');</script>");
+//			out.print("<script>console.log('groupTitleï¿½ï¿½ ï¿½Èµï¿½ï¿½ï¿½');</script>");
 		}
 		
-		// Calendar¿¡¼­ ±×·ìÀÇ ÀÏÁ¤ °¡Á®¿È
+		// Calendarï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		CalendarDAO calDao = CalendarDAO.getInstance();
 		ArrayList<CalendarVO> arrList = calDao.getInfo(request.getParameter("group"));
 //		ArrayList<CalendarVO> arrList = calDao.getInfo((String)session.getAttribute("loginUserId"));
@@ -126,10 +126,10 @@ public class GroupCalendar extends HttpServlet
 		}
 		else
 		{
-//			out.print("<script>console.log('groupSchedule°ª ¾Èµé¾î¿È');</script>");
+//			out.print("<script>console.log('groupScheduleï¿½ï¿½ ï¿½Èµï¿½ï¿½ï¿½');</script>");
 		}
 		
-		// JSON Àü¼Û
+		// JSON ï¿½ï¿½ï¿½ï¿½
 		
 		out.print(group.toJSONString());
 		out.close();

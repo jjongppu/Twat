@@ -25,7 +25,7 @@ import com.twat.dao.MemberJoinGroupDAO;
 /**
  * Servlet implementation class ScheduleAdd
  */
-@WebServlet("/ScheduleAdd.do")
+//@WebServlet("/ScheduleAdd.do")
 public class ScheduleAdd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

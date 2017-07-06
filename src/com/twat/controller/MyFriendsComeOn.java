@@ -18,7 +18,7 @@ import com.twat.dao.MemberJoinGroupDAO;
 /**
  * Servlet implementation class MyFriendsComeOn
  */
-@WebServlet("/MyFriendsComeOn.do")
+//@WebServlet("/MyFriendsComeOn.do")
 public class MyFriendsComeOn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
