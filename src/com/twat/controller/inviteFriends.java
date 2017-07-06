@@ -59,7 +59,7 @@ public class inviteFriends extends HttpServlet {
 	    	
 	    	for(int j = 0; j < groupArr.length; j++){
 	    		if(groupArr[j].equals(memArr.get(i).getMEMBER_ID())){
-	    			if(memArr.size()!=0)
+//	    			if(memArr.size()!=0)
 	    				memArr.remove(i);	    			
 	    		}
 	    		
