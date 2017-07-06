@@ -20,7 +20,7 @@ import com.twat.dto.QnaVO;
 /**
  * Servlet implementation class QnaDetailServlet
  */
-@WebServlet("/QnaDetail.do")
+//@WebServlet("/QnaDetail.do")
 public class QnaDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

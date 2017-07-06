@@ -19,7 +19,7 @@ import com.twat.dao.MemberJoinGroupDAO;
 /**
  * Servlet implementation class SetRoomOut
  */
-@WebServlet("/setRoomOut.do")
+//@WebServlet("/setRoomOut.do")
 public class SetRoomOut extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

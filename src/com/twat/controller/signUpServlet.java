@@ -20,7 +20,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class signUpServlet
  */
-@WebServlet("/signUp.do")
+//@WebServlet("/signUp.do")
 public class signUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
