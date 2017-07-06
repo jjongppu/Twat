@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
 
 import com.admin.dao.AdminDAO;
 
-@WebServlet("/NoticeView.do")
+//@WebServlet("/NoticeView.do")
 public class NoticeView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

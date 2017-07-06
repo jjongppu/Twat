@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.MemberDAO;
 // �б⸮ ��ǰ
-@WebServlet("/memberout.do")
+//@WebServlet("/memberout.do")
 public class AdminMemberOut extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

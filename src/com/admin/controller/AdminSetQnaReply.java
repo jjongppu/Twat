@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
 
 import com.admin.dao.AdminDAO;
 
-@WebServlet("/adminSetQnaReply.do")
+//@WebServlet("/adminSetQnaReply.do")
 public class AdminSetQnaReply extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

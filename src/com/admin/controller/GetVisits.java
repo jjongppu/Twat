@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
 import com.admin.dao.AdminDAO;
 import com.twat.dto.VisitVO;
 
-@WebServlet("/GetVisits.do")
+//@WebServlet("/GetVisits.do")
 public class GetVisits extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

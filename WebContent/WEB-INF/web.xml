@@ -42,4 +42,134 @@
         <url-pattern>/mySchedule.do</url-pattern> 
     </servlet-mapping> 
     
+    <!-- jjonggal -->
+    
+     <servlet> 
+        <servlet-name>AdminGetCalenarList</servlet-name> 
+        <servlet-class>com.admin.controller.AdminGetCalenarList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminGetCalenarList</servlet-name> 
+        <url-pattern>/adminGetCalenarList.do</url-pattern> 
+    </servlet-mapping>
+
+
+     <servlet> 
+        <servlet-name>AdminGetGroupList</servlet-name> 
+        <servlet-class>com.admin.controller.AdminGetGroupList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminGetGroupList</servlet-name> 
+        <url-pattern>/adminGetGroupList.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>AdminGetMemberListServlet</servlet-name> 
+        <servlet-class>com.admin.controller.AdminGetMemberList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminGetMemberListServlet</servlet-name> 
+        <url-pattern>/getmemberInfo.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>AdmingGetQnaList</servlet-name> 
+        <servlet-class>com.admin.controller.AdmingGetQnaList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdmingGetQnaList</servlet-name> 
+        <url-pattern>/admingGetQnaList.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>AdminGroupOut</servlet-name> 
+        <servlet-class>com.admin.controller.AdminGroupOut</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminGroupOut</servlet-name> 
+        <url-pattern>/adminGroupOut.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>AdminloginServlet</servlet-name> 
+        <servlet-class>com.admin.controller.Adminlogin</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminloginServlet</servlet-name> 
+        <url-pattern>/adminlogin.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>AdminMemberOut</servlet-name> 
+        <servlet-class>com.admin.controller.AdminMemberOut</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminMemberOut</servlet-name> 
+        <url-pattern>/memberout.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>AdminSetQnaReply</servlet-name> 
+        <servlet-class>com.admin.controller.AdminSetQnaReply</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminSetQnaReply</servlet-name> 
+        <url-pattern>/adminSetQnaReply.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>AdminSettingServlet</servlet-name> 
+        <servlet-class>com.admin.controller.AdminSetting</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminSettingServlet</servlet-name> 
+        <url-pattern>/adminSetting.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>AdminSetVisitToday</servlet-name> 
+        <servlet-class>com.admin.controller.AdminSetVisitToday</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AdminSetVisitToday</servlet-name> 
+        <url-pattern>/AdminSetVisitToday.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>GetTwatDataInfoServlet</servlet-name> 
+        <servlet-class>com.admin.controller.GetTwatDataInfo</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetTwatDataInfoServlet</servlet-name> 
+        <url-pattern>/getinfo.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>GetVisits</servlet-name> 
+        <servlet-class>com.admin.controller.GetVisits</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetVisits</servlet-name> 
+        <url-pattern>/GetVisits.do</url-pattern> 
+    </servlet-mapping>
+
+	<servlet> 
+        <servlet-name>NoticeView</servlet-name> 
+        <servlet-class>com.admin.controller.NoticeView</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>NoticeView</servlet-name> 
+        <url-pattern>/NoticeView.do</url-pattern> 
+    </servlet-mapping>
+
+     <servlet> 
+        <servlet-name>WriteNoticeBoard</servlet-name> 
+        <servlet-class>com.admin.controller.WriteNoticeBoard</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>WriteNoticeBoard</servlet-name> 
+        <url-pattern>/WriteNoticeBoard.do</url-pattern> 
+    </servlet-mapping>
+    
+    <!-- jjonggal -->
 </web-app>

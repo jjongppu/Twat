@@ -18,7 +18,7 @@ import com.admin.dao.NoticeBoardDAO;
 /**
  * Servlet implementation class WriteNoticeBoard
  */
-@WebServlet("/WriteNoticeBoard.do")
+//@WebServlet("/WriteNoticeBoard.do")
 public class WriteNoticeBoard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
