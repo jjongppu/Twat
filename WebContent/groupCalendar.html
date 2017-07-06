@@ -17,7 +17,7 @@
 	<script  type="text/javascript">
         
         
-        var COLOR1 = new Array('ddbbbb','eecccc','ffdddd',
+        var COLOR = new Array('ddbbbb','eecccc','ffdddd',
                                 'ddc3bb','eed4cc','ffe5dd',
                                 'ddccbb','eeddcc','ffeedd',
                                 'ddd4bb','eee5cc','fff6dd',
@@ -28,9 +28,8 @@
                                 'bbddbb','cceecc','ddffdd',
                                 'bbddc3','cceed4','ddffe5',
                                 'bbddcc','cceedd','ddffee',
-                                'bbddd4','cceee5','ddfff6');
-           
-        var COLOR2 = new Array('bbdddd','cceeee','ddffff',
+                                'bbddd4','cceee5','ddfff6',
+                                'bbdddd','cceeee','ddffff',
                                 'bbd4dd','cce5ee','ddf6ff',
                                 'bbccdd','ccddee','ddeeff',
                                 'bbc3dd','ccd4ee','dde5ff',
@@ -42,6 +41,8 @@
                                 'ddbbd4','eecce5','ffddf6',
                                 'ddbbcc','eeccdd','ffddee',
                                 'ddbbc3','eeccd4','ffdde5');
+           
+      
         
         
 		// 일정 잡기 저장용
@@ -1518,11 +1519,11 @@
 						}
 						
 						var classTemp = item.split("-")[2];
-                        var colors = Math.floor(Math.random() * 36) + 1;
+                        var colors = Math.floor(Math.random() * 72) + 1;
                         cell.innerHTML += "<div class='dateChk dateChk" + classTemp + "'></div>";
 //                        console.log(classTemp);
 						cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        $('.dateChk'+classTemp).css('background-color','#'+COLOR1[colors]);
+                        $('.dateChk'+classTemp).css('background-color','#'+COLOR[colors]);
 					}
 				}
 				// 미확정된 일정표시
@@ -1538,12 +1539,12 @@
 						}
 						
                         var classTemp = item.split("-")[2];
-                        var colors = Math.floor(Math.random() * 36) + 1;
+                        var colors = Math.floor(Math.random() * 72) + 1;
                         cell.innerHTML += "<div class='dateChk dateChk" + classTemp + "'></div>";
                         cell.innerHTML += "<img class='voteImg' src='img/etcIcon/vote.png'>";
 //                        console.log(classTemp);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        $('.dateChk'+classTemp).css('background-color','#'+COLOR2[colors]);
+                        $('.dateChk'+classTemp).css('background-color','#'+COLOR[colors]);
 					}
 				}
 				// 생일표시
@@ -3718,13 +3719,13 @@
             console.log($(a).children().eq(3).attr("src"));
             
             
-            if($(a).children().eq(3).attr("src") != "img/etcIcon/friendcheck.png"){
+            if($(a).children().eq(3).css("width") == undefined){
                 
-                $(a).children().eq(3).attr("src","img/etcIcon/friendcheck.png");
+                $(a).append('<img src="img/etcIcon/checked2.png" class="checkImg">');
                 
                 comeOnFriends.add(select); //선택한 아이디                
             }else{
-                $(a).children().eq(3).attr("src","");
+                $(a).children().eq(3).remove();
                 comeOnFriends.delete(select);                
             }
             
@@ -3843,9 +3844,9 @@
 
 						
                             
-                            document.getElementById("inviteModal").innerHTML += "<div id='friend" + index + "' style='border:3px solid black; margin:20px;' onclick='selectFriends(this)'><img src='" + item.friendImg + "'style='width:100px; height:100px; ' /><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
+                            document.getElementById("inviteModal").innerHTML += "<div class='friednsSendCover' id='friend" + index + "' onclick='selectFriends(this)'><img src='" + item.friendImg + "'style='width:64px; height:64px; border-radius: 64px;' /><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
 							item.friendId + "  </div><div class='friendName'> 이름 : " +
-							item.friendName + "</div><img src='' class='checkImg'/></div>";
+							item.friendName + "</div></div>";
                             
                             
                         
@@ -3899,7 +3900,29 @@
 
 	</script>
 </head>
-
+    <style>
+        .friednsSendCover{
+            width: 300px;
+            margin: 20px;
+        }
+        .friendId{
+               position: absolute;
+                top: 10px;
+                left: 70px;
+        }
+        .friendName{
+            position: absolute;
+            left: 86px;
+            bottom: 10px;
+        }
+        .checkImg{
+            position: absolute;
+            right: 0;
+            top: 10px;
+                width: 25px;
+    height: 25px;
+        }
+    </style>
 <body>
     <div id="newWrap">
       <nav class="left_nav">
@@ -4570,8 +4593,8 @@
                         .choiceDate{
                             position: absolute;
                             background-image: url(img/etcIcon/checked2.png);
-                            top: 0;
-                            right: 0;
+                            top: -10px;
+                            left: 22px;
                             width: 25px;
                             height: 25px;
                             background-size: cover;
