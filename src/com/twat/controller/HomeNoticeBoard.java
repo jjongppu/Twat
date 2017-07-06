@@ -55,6 +55,8 @@ public class HomeNoticeBoard extends HttpServlet {
 	    for(int i = 0; i < noticeArr.size(); i++){
 	    	jsonObj = new JSONObject();
 	    	jsonObj.put("noticeId", noticeArr.get(i).getNotice_id());
+
+	    	jsonObj.put("noticeKind", noticeArr.get(i).getNotice_classification());
 	    	jsonObj.put("noticeTitle", noticeArr.get(i).getNotice_title());
 	    	jsonObj.put("noticeContent", noticeArr.get(i).getNotice_content());
 	    	jsonObj.put("noticeWriter", noticeArr.get(i).getNotice_writer());

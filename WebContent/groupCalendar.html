@@ -13,8 +13,8 @@
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/nav.js"></script>
 	<script src="js/swiper.jquery.min.js"></script>
-
-	<script language="javascript" type="text/javascript">
+    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+	<script  type="text/javascript">
 		// 일정 잡기 저장용
 		var scheSet = new Set();
 		// 생일자 저장용
@@ -921,32 +921,9 @@
 		var today = new Date(); // 오늘 날짜
 
 		$(document).ready(function() {
-			var group_id = location.href.split("=")[1];
-
-			$.ajax({
-				type: 'post',
-				url: 'chkId.do',
-				dataType: "json",
-				data: {
-					groupId: group_id
-				},
-				success: function(data) {
-					console.log(data);
-					var sessionResult = data[0].result;
-					if (!sessionResult) {
-						location.href = "/Twat/groupList.html";
-					}
-				},
-				complete: function() {
-					//                    getGroupInfo();
-					//                    setTimeout(getGroupInfo(), 100);
-				},
-				error: function(req) {
-
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : chkId.do");
-				}
-
-			});
+//			chkId();
+			chkMaster();
+			
 
 			var groupId = location.href.split("=")[1];
 			//			var swiper = new Swiper('.swiper-container', {
@@ -957,44 +934,7 @@
 			//				freeMode: true
 			//			});
 
-			$.ajax({
-				type: 'post',
-				url: 'groupMaster.do',
-				data: {
-					groupId: groupId
-
-
-				},
-				dataType: "json",
-				success: function(data) {
-
-
-					//                    console.log(data);
-
-
-					$.each(data, function(index, item) {
-						//                        console.log(item.groupMaster);
-
-						if (item.groupMaster == "no") {
-							$(".addschedule").css("display", "none");
-						}
-
-						login_userId = item.userId;
-
-					});
-
-					getGroupInfo();
-				},
-				complete: function() {
-					//                    getGroupInfo();
-					//                    setTimeout(getGroupInfo(), 100);
-				},
-				error: function(req) {
-
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupMaster.do");
-				}
-
-			});
+			
 
 
 
@@ -1012,7 +952,7 @@
 			//            setTimeout(getGroupInfo(), 200);
 			//            getGroupInfo();
 			// console.log("getGroupBirth");
-			setTimeout(getGroupBrith, 300);
+//			setTimeout(getGroupBrith, 300);
 
 
 			//			var swiper = new Swiper('.swiper-container', {
@@ -1069,7 +1009,136 @@
 				//				alert('!!');
 			})
 			//            initToday(); //  주석1
+			chkId();
 		});
+		
+		function chkId() {
+			var group_id = location.href.split("=")[1];
+			
+			$.ajax({
+				type: 'post',
+				url: 'chkId.do',
+				dataType: "json",
+				data: {
+					groupId: group_id
+				},
+				success: function(data) {
+//					console.log(data);
+					var sessionResult = data[0].result;
+					if (!sessionResult) {
+						$('#newWrap').html("");
+						location.href = "/Twat/groupList.html";
+					}
+					else
+					{
+//						chkMaster();
+//						$('#newWrap').html("");
+					}
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					//                    getGroupInfo();
+					//                    setTimeout(getGroupInfo(), 100);
+//					chkMaster();
+				},
+				error: function(req) {
+
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : chkId.do");
+				}
+
+			});
+		}
+		
+		function chkMaster() {
+			var groupId = location.href.split("=")[1];
+			
+			$.ajax({
+				type: 'post',
+				url: 'groupMaster.do',
+				data: {
+					groupId: groupId
+
+
+				},
+				dataType: "json",
+				success: function(data) {
+
+
+					//                    console.log(data);
+
+
+					$.each(data, function(index, item) {
+						//                        console.log(item.groupMaster);
+
+						if (item.groupMaster == "no") {
+							$(".addschedule").css("display", "none");
+						}
+
+						login_userId = item.userId;
+
+					});
+
+					getGroupInfo();
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					//                    getGroupInfo();
+					//                    setTimeout(getGroupInfo(), 100);
+				},
+				error: function(req) {
+
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupMaster.do");
+				}
+
+			});
+		}
+		
 
 		function update() {
 			$.ajax({
@@ -1085,6 +1154,33 @@
 					});
 					buildCalendar(dateArr, titleArr);
 					initToday();
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -1490,7 +1586,8 @@
 					//                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
 					document.getElementById("otherMembers").innerHTML += "<span>&nbsp;외 " + data[0].group_count + "명</span>";
 
-					for (var arrCal = 1; arrCal < data.length; arrCal++) {
+					for (var arrCal = 1; arrCal < data.length; arrCal++)
+					{
 
 						//						var chkDate = false;
 						if (parseInt(data[arrCal].cal_date) < parseInt(dateToFormat(initDay)) && data[arrCal].cal_date.indexOf(",") == -1) {
@@ -1525,7 +1622,8 @@
 						//						strA += '<div class="right-top">';
 						// 0 / 0 / 0 처리
 						//                        if (data[arrCal].member_choice.indexOf(",") == -1)
-						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
+						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+						{
 							// 확정된 날짜 왼쪽 상단 표시
 
 							var mcCheck = data[arrCal].member_choice.split(",");
@@ -1607,9 +1705,10 @@
 						str += '<div class="content">';
 //						                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
 						str += '<div class="left">';
-						//                        if (str2.indexOf(',') == -1)
+//						                        if (str2.indexOf(',') == -1)
 						// ======================================================================================================
-						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
+						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+						{
 							//							str += data[arrCal].cal_date;
 							if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
 								str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
@@ -1644,6 +1743,12 @@
 								var resMDate1 = parseInt(res[0].substr(6, 2));
 								var resMonth2 = parseInt(res[res.length - 1].substr(4, 2));
 								var resMDate2 = parseInt(res[res.length - 1].substr(6, 2));
+								
+								if(parseInt(res[res.length - 1]) < parseInt(dateToFormat(initDay)))
+								{
+									continue;
+								}
+								
 								//								str += res[0] + "~" + res[res.length - 1];
 								if (parseInt(res[0].substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
 									str += "<div style='text-align:left; padding-left:5px;'>" + resMonth1 + "월 " + resMDate1 + "일</div>";
@@ -1686,7 +1791,7 @@
 						//                            str += res[0] + "~" + res[res.length - 1];
 						////                            console.log("투표 : " + data[arrCal].cal_memo);
 						//                            for (var i = 0; i < res.length; i++) {
-						//                                voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
+//						                                voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
 						//                            }
 						//                        }
 						//                        str += '</div>';
@@ -1709,7 +1814,7 @@
 						//                        }
 						//                        else
 						//                        {
-						//                            // 투표(미확정)
+//						                             투표(미확정)
 						//                            str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
 						//                        }
 						//                        
@@ -1761,7 +1866,8 @@
 					//                    }
 					//                    console.log(data[1].cal_date.split(","));
 					//                    console.log(mem_choice);
-					buildCalendar();
+					getGroupBrith();
+//					buildCalendar();
 					//                    voteMeeting(data[1].cal_date.split(","));//투표중인 날짜표시
 
 					//                    if(data[1].cal_date.contains(","))
@@ -1776,7 +1882,32 @@
 						$(item.split("-")[0]).css("width", percentC + "%");
 					}
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
+//					getGroupBrith();
 					//                    getGroupBrith();
 					swiperSche = new Swiper('.schedule .swiper-container', {
 						pagination: '.schedule .swiper-pagination',
@@ -1794,6 +1925,8 @@
 						slidesPerView: 3,
 						paginationClickable: true,
 						centeredSlides: true,
+//						slidesOffsetAfter: 192/2,
+//						slidesOffsetBefore: 192/2,
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
@@ -1802,8 +1935,8 @@
 					$('.vote .contentBox').css('display', 'none');
 
 					//					if(scheSet)
-					console.log(scheduleSet);
-					console.log(voteSet);
+//					console.log(scheduleSet);
+//					console.log(voteSet);
 
 
 
@@ -1844,7 +1977,7 @@
 				return (memberSet.size - 1);
 			}
 		}
-		// 모달 작업 부분
+		// 생일 작업
 		function getGroupBrith() {
 			var para = document.location.href.split("?");
 			var tempBirth;
@@ -1924,7 +2057,7 @@
 						//                        console.log("split : " + item.split("-")[0].substr(2, 4));
 						var birthDay = tempBirth[i].split("-")[0];
 //						console.log(CurrentMonth);
-						console.log(birthDay);
+//						console.log(birthDay);
 						//						var str = "<div class='content'><div class='left birth'>" + parseInt(birthDay.substr(0, 2)) + "월 " + parseInt(birthDay.substr(2, 2)) + "일</div>";
 						//						str += "<div class='middle birth'>" + tempBirth[i].split("-")[1] + "님(" + tempBirth[i].split("-")[2] + ")의 생일</div>";
 						//						str += "<div class='right birth'></div></div>";
@@ -1938,7 +2071,7 @@
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>&nbsp;" + parseInt(birthDay.substr(0, 2)) + "월 <div class='stick'>                                              </div></div>";
                             CurrentMonth = parseInt(birthDay.substr(0, 2));
 						} else {
-                            console.log(tempBirth[i]);
+//                            console.log(tempBirth[i]);
 							str += "<div class ='birthMonth' id='bm" + parseInt(birthDay.substr(0, 2)) + "'>하이<div class='stick'>                                                     </div></div>";
 						}
 
@@ -2027,13 +2160,34 @@
 					//						str += "<div class='right birth'></div></div>";
 					//						$('.event .contentBox').append(str);
 					//					}
-
+					buildCalendar();
+//					chkId();
 				},
-				error: function(req) {
-					//                    alert('통신실패');
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupBirth.do");
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
 				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
 					//					console.log(tempBirth);
 					//					for(var i = 0; i < tempBirth.length; i++)
 					//					{
@@ -2057,6 +2211,10 @@
 						spaceBetween: 0,
 						freeMode: true
 					});
+				},
+				error: function(req) {
+					//                    alert('통신실패');
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupBirth.do");
 				}
 			})
 		}
@@ -2082,6 +2240,9 @@
 				success: function(data) {
 					console.log("확정");
 					console.log(data);
+					
+					nowCalNum = cal_num;
+//					console.log(cal_num);
 
 					var scheduleString = "";
 					//                    var commentsString = "<div id='CommentBox'>";
@@ -2091,7 +2252,7 @@
 					var memberList = scheduleObject.member_choice.split(",");
 
 					for (var i = 0; i < data.length; i++) {
-						// 일정 정보
+//						 일정 정보
 						if (data[i].cal_depth == 0) {
 							scheduleString += "<div id='scheduleDate'>일정 : " + scheduleObject.cal_date.substr(0, 4) + "년 " + scheduleObject.cal_date.substr(4, 2) + "월 " + scheduleObject.cal_date.substr(6, 2) + "일</div>";
 							scheduleString += "<div id='scheduleWriter'>작성자 : " + findMemberName(scheduleObject.cal_writer) + "</div>";
@@ -2099,7 +2260,7 @@
 							scheduleString += "<div id='scheduleMember'>참가자 : ";
 							// 참가자 출력
 							for (var j = 0; j < memberList.length; j++) {
-								//                        console.log(memberList[i].substr(8));
+//								                        console.log(memberList[i].substr(8));
 								//                                scheduleString += findMemberName(memberList[j].substr(8));
 								scheduleString += findMemberName(memberList[j]);
 
@@ -2114,7 +2275,48 @@
 //							commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
 //							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div></div>";
 							commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
-							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div></div></div>";
+							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div>";
+							
+							var commDate = new Date();
+							
+							// 초단위
+							var commNow = parseInt(commDate.getTime()/1000);
+							var commBefore = parseInt(data[i].cal_time/1000);
+							var commTime = commNow - commBefore;
+//							console.log(commNow);
+//							console.log(commBefore);
+//							console.log(commNow - commBefore);
+							
+							if(commTime >= 3600 * 24 * 365)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 365) + "년 전</span>";
+							}
+							else if(commTime >= 3600 * 24 * 30)
+							{	
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 30) + "개월 전</span>";
+							}
+							else if(commTime >= 3600 * 24)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24) + "일 전</span>";
+							}
+							else if(commTime >= 3600)
+							{
+								if(parseInt(commTime/3600) == 1)
+									commentsString += "<span class='commentTime'> - 한 시간 전</span>";
+								else
+									commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600) + "시간 전</span>";
+							}
+							else if(commTime >= 60)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/60) + "분 전</span>";
+							}
+							else
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime) + "초 전</span>";
+							}
+							
+							
+							commentsString += "</div></div>";
 							//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
 						}
 
@@ -2132,13 +2334,15 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
-
-					if (commentsString.match("")) {
+					console.log(commentsString.length);
+//					if (commentsString.match(""))
+					if (commentsString.length < 1)
+					{
 						//<div class="swiper-slide">Slide 1</div>
 						commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'></div>";
 						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div><div>";
 					}
-					console.log(commentsString);
+//					console.log(commentsString);
 //					$("#commentList").html(commentsString);
 					$("#commentList .swiper-wrapper").html(commentsString);
 					$("#modal2>#modalTitle").html("일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
@@ -2148,11 +2352,31 @@
 					$('.commentBox').css('display', 'block');
 					//                    document.getElementById('modal2').innerHTML = scheduleString;
 				},
-				error: function(req) {
-					//                    alert('통신실패');
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
 				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
 					swiperComment = new Swiper('#commentList .swiper-container', {
 						pagination: '#commentList .swiper-pagination',
 						direction: 'vertical',
@@ -2163,6 +2387,10 @@
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
+				},
+				error: function(req) {
+					//                    alert('통신실패');
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
 				}
 			})
 		}
@@ -2185,6 +2413,7 @@
 					console.log("미확정");
 					console.log(data);
 					nowCalNum = cal_num;
+//					console.log(nowCalNum);
 					var voteString = "";
 					var swiperString = "";
 					//                    var commentsString = "<div id='CommentBox'>";
@@ -2232,7 +2461,7 @@
 
 								if (voteDateCount == 1) {
 									var tempML = new Set();
-									console.log(memberList);
+//									console.log(memberList);
 									for (var j = 0; j < memberList.length; j++) {
 										if (memberList[j].split("-")[0].match("00000000")) {
 											ImpossibleCount++;
@@ -2412,9 +2641,9 @@
 								//                                }
 							}
 							//                            console.log(voteMemberSet);
-							console.log(voteDateCount);
-							console.log(voteMemberSet);
-							console.log(voteMemberSet.size);
+//							console.log(voteDateCount);
+//							console.log(voteMemberSet);
+//							console.log(voteMemberSet.size);
 //							if (voteDateCount > 1 && voteMemberSet.size > 1)
 							if (voteDateCount > 0 && voteMemberSet.size > 1)
 							{
@@ -2432,7 +2661,48 @@
 //							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div>";
 							// <div class="swiper-slide">Slide 1</div>
 							commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
-							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div></div></div>";
+							commentsString += "<div class='commentMemo'>" + data[i].cal_memo + "</div>";
+							
+							var commDate = new Date();
+							
+							// 초단위
+							var commNow = parseInt(commDate.getTime()/1000);
+							var commBefore = parseInt(data[i].cal_time/1000);
+							var commTime = commNow - commBefore;
+//							console.log(commNow);
+//							console.log(commBefore);
+//							console.log(commNow - commBefore);
+							
+							if(commTime >= 3600 * 24 * 365)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 365) + "년 전</span>";
+							}
+							else if(commTime >= 3600 * 24 * 30)
+							{	
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 30) + "개월 전</span>";
+							}
+							else if(commTime >= 3600 * 24)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24) + "일 전</span>";
+							}
+							else if(commTime >= 3600)
+							{
+								if(parseInt(commTime/3600) == 1)
+									commentsString += "<span class='commentTime'> - 한 시간 전</span>";
+								else
+									commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600) + "시간 전</span>";
+							}
+							else if(commTime >= 60)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/60) + "분 전</span>";
+							}
+							else
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime) + "초 전</span>";
+							}
+							
+//							commentsString += "";
+							commentsString += "</div></div>";
 						}
 
 						// 댓글창
@@ -2508,7 +2778,7 @@
 
 					//                    if(alreadyVote && user0000)
 					//                    {
-					console.log(voteDateSet);
+//					console.log(voteDateSet);
 					for (let item of voteDateSet.keys()) {
 						$('#voteList' + item).css("background-image", "url(img/etcIcon/unchecked.png)");
 					}
@@ -2525,11 +2795,35 @@
 
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
 				error: function(req) {
 					//                    alert('통신실패');
 					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : groupSchedule.do");
 				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
 					for (let item of memberVoteListSet.keys()) {
 						//                        addMemberVoteList(item);
 						//                        $("#voteList" + item).css("backgroundColor", "antiquewhite");
@@ -2630,6 +2924,33 @@
 					//                    getGroupInfo();
 					window.location.reload(true);
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					
+				},
 				error: function(req) {
 					//                    alert('통신실패');
 					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : addVote.do");
@@ -2676,6 +2997,33 @@
 					console.log(data);
 
 					window.location.reload(true);
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -2784,6 +3132,8 @@
 					} else {
 						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
 					}
+					
+					// $("#div_ajax_load_image").hide();
 				},
 				complete: function() {
 					$("#div_ajax_load_image").hide();
@@ -3100,7 +3450,31 @@
 					});
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
 				complete: function() {
+					 $("#div_ajax_load_image").hide();
 					location.reload();
 				},
 				error: function(req) {
@@ -3135,7 +3509,7 @@
 		}
 
 		function addComment(comment) {
-
+//			console.log(nowCalNum);
 			console.log($(comment).children().eq(0).text());
 			//내용 : ㅁㅁㅁ
 			//5~
@@ -3147,6 +3521,8 @@
 			var new_memo = $("#commentContents").val();
 			console.log(first_cal);
 			if (new_memo == "") {
+				console.log(scheduleSet);
+				console.log(voteSet);
 				alert("댓글을 입력해주세요!");
 				return;
 			}
@@ -3156,15 +3532,35 @@
 				type: 'post',
 				url: 'addComment.do',
 				data: {
-					cal_memo: cal_memo,
+//					cal_memo: cal_memo,
 					group_id: group_id,
-					first_cal: first_cal,
+//					first_cal: first_cal,
+					user_id: login_userId,
+					cal_num: nowCalNum,
 					new_memo: new_memo
 
 				},
 				dataType: "json",
 				success: function(data) {
-
+//					getVoteInfo(nowCalNum);
+					var svChk = false;
+					for (let item of scheduleSet.keys())
+					{
+						if(item.split("-")[2].match(nowCalNum))
+						{
+							svChk = true;
+//							getScheduleInfo(nowCalNum);
+						}
+					}
+					
+					if(svChk)
+					{
+						getScheduleInfo(nowCalNum);
+					}
+					else
+					{
+						getVoteInfo(nowCalNum);
+					}
 
 
 					$.each(data, function(index, item) {
@@ -3172,8 +3568,32 @@
 					});
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
 				complete: function() {
-					getVoteInfo(nowCalNum);
+					$("#div_ajax_load_image").hide();
+//					getVoteInfo(nowCalNum);
 					//					console.log($('#commentContents').val());
 					$('#commentContents').val(null);
 				},
@@ -3269,6 +3689,32 @@
                     
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+				},
 				error: function(req) {
 
 //					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : MyFriendsComeOn.do");
@@ -3332,6 +3778,33 @@
                     document.getElementById("inviteModal").innerHTML += "<input type='button' value='친구초대' onclick='friendsComeOn()' />";
 
 				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					
+					 $("#div_ajax_load_image").hide();
+				},
 				error: function(req) {
 
 					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : inviteFriends.do");
@@ -3346,43 +3819,30 @@
 </head>
 
 <body>
-	<div id="newWrap">
-		<nav class="left_nav">
-			<div id="userInfo">
-				<ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-					<li class="nav_li">
-						<img id="user_Img" src="" />
-					</li>
-					<li class="nav_li idLi">
-						<div id="user_Id"></div>
-					</li>
-				</ul>
-			</div>
-			<ul class="nav_ul" id="nav_menu">
-				<li class="nav_li">
-					<a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png" /></a>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png" /></a>
-				</li>
-				<li class="nav_li">
-					<div id="navHere"></div>
-					<a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png" /></a>
-					<div id="newContents">N</div>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png" /></a>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png" /></a>
-				</li>
-			</ul>
-			<ul id="logout" class="nav_ul" onclick="logout()">
-				<li class="nav_li">
-					<a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png" /></a>
-				</li>
-			</ul>
-		</nav>
+    <div id="newWrap">
+      <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src=""/>
+                </li>
+                <li class="nav_li idLi">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
+        </ul>
+          
+    </nav>
 
 		<div id="main_container">
 			<img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()">

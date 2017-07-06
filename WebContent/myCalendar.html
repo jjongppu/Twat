@@ -15,7 +15,7 @@
 <!--    <link rel="stylesheet" type="text/javascript" href="js/myCalendar.js">-->
 <!--    <script type="text/javascript" src="js/myCalendar.js"></script>-->
 <!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
-    
+        <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/nav.js"></script>
 <!--    <script src="js/swiper.jquery.min.js"></script>-->
@@ -1358,7 +1358,7 @@
                     slidesPerView: 1,
                     paginationClickable: true,
 //                    centeredSlides: true,
-                    spaceBetween: 5,
+                    spaceBetween: 20,
                     mousewheelControl: true
                 });  
             },
@@ -1878,15 +1878,16 @@
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/home.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/diary.png"/></a></li>
-            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/calendar.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/friends.png"/></a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/qna.png"/></a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/exit.png"/></a></li>
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
         </ul>
+          
     </nav>
 
         <!--  ========================= NAV 밑 ========================== -->

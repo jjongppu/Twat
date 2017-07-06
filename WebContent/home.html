@@ -12,6 +12,8 @@
     <script src="js/nav.js"></script>
      <script src="js/swiper.jquery.min.js"></script>
     <link rel="stylesheet" href="css/swiper.min.css">
+<!--    http://fonts.googleapis.com/earlyaccess/hanna.css-->
+    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
 </head>
 <style>
     body{
@@ -144,11 +146,18 @@
         
         
     }
-    
+    tr a{
+        cursor: pointer;
+    }
+    caption{
+        text-align: left;
+        font-size: 16px;
+        margin: 5px;
+    }
     .swiper-container {
         width: 90%;
         height: 90%;
-        margin: 40px auto 60px auto;
+        margin: 80px auto 40px auto;
         display: block;
     }
     .swiper-slide {
@@ -196,11 +205,13 @@
                     for(var i = 0; i < data.length; i++){
                         
                         document.getElementById("noticeBoard").innerHTML += '<tr>'
-                            + '<td class="title"><a href="#" id="'  +data[i].noticeId + '" onclick="detNotice(this)">' + data[i].noticeTitle + '</a></td>'
+
+                            + '<td class="title"><a id="'+data[i].noticeId+'" onclick="detNotice(this)">' + data[i].noticeTitle + '</a></td>'
                             + '<td class="name">' + data[i].noticeWriter + '</td>'
                             + '<td class="data">' + data[i].noticeDate + '</td>'
-                            + '<td class="hit">' + data[i].noticeViews + '</td></tr>';
-                                                                
+                            + '<td class="hit">' + data[i].noticeViews + '</td> <input class="noContent" type="hidden" value="'+data[i].noticeContent+'"/> </tr>';
+                        
+
                     }
                     
                 }, error: function(req) {
@@ -255,10 +266,10 @@
                                         for(var i = 0; i < data.length; i++){
 
                                             document.getElementById("eventBoard").innerHTML += '<tr>'
-                                                + '<td class="title"><a href="#">' + data[i].noticeTitle + '</a></td>'
+                                                + '<td class="title"><a id="'+data[i].noticeId+'" onclick="detNotice(this)">' + data[i].noticeTitle + '</a></td>'
                                                 + '<td class="name">' + data[i].noticeWriter + '</td>'
                                                 + '<td class="data">' + data[i].noticeDate + '</td>'
-                                                + '<td class="hit">' + data[i].noticeViews + '</td></tr>';
+                                                + '<td class="hit">' + data[i].noticeViews + '</td> <input class="noContent" type="hidden" value="'+data[i].noticeContent+'"/> </tr>';
                                         }
                                     }, error: function(req) {
 //                                        alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + " : HomeNoticeBoard.do");
@@ -304,11 +315,155 @@
             
         
 
+        function detNotice(tagid){
+            var id = $(tagid).parent().parent();
+            var title = $(tagid).html();
+            id.find('.hit').html();
+            $('#time_div').html(id.find('.data').html());
+            $('#id_div').html(id.find('.name').html());
+            $('#title_div').html(title);
+            $('#content_div').html(id.find('.noContent').attr('value'));
+            
+            $('#detailNo').css('display','block');
+            $('#main_container').css('display','none');
+        
+              $.ajax({
+                    type: "post", 
+                    url: "NoticeView.do",               
+                    dataType:"json",
+                    data:{  id : $(tagid).attr('id')  },
+                    success: function (data){
+                        console.log(data);
+                        $('#noview').html(data[0].result);
+
+                    }, beforeSend: function () {
+                        var width = 0;
+                        var height = 0;
+                        var left = 0;
+                        var top = 0;
+
+                        width = 50;
+                        height = 50;
+                        $('#blindCoverWhite').css('display','block');
+                        top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                        left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+                        if($("#div_ajax_load_image").length != 0) {
+                               $("#div_ajax_load_image").css({
+                                      "top": top+"px",
+                                      "left": left+"px"
+                               });
+                               $("#div_ajax_load_image").show();
+                        }
+                        else {
+                               $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                        }
+                 }
+                 , complete: function () {
+                     $('#blindCoverWhite').css('display','none');
+                               $("#div_ajax_load_image").hide();
+
+                 }
+             });
+            
+        }
+    
+    
+   
     
     
     
     </script>
     <style>
+
+
+        #decoBorder{
+            position: absolute;
+            border: 3px solid gainsboro;
+            top: 50px;
+            left: 140px;
+            width: 1170px;
+            height: 410px;
+            
+        }
+        #detailNo{
+            position: relative;
+            width: 1250px;
+            height: 800px;
+            left: 0;
+            background-color: white;
+            top: 0;
+            display: none;
+            margin-left: 100px;
+        }
+        #wrap div{
+            display: block;
+        }
+        		#wrap {
+/*			border: 1px solid black;*/
+/*			margin-left: 100px;*/
+			width: 700px;
+			height: 500px;
+			margin: 0 auto;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+		}
+		#title_box {
+/*			border: 1px solid blue;*/
+			margin-bottom: 40px;
+			background-color: #cccccc;
+			
+		}
+		
+		#top_container {
+			
+/*			border: 1px solid green;*/
+			border-top: 2px solid gray;
+			width: 700px;
+			background-color: #e6e6e6;
+			margin-bottom: 20px;
+			
+		}
+		#top_title {
+			border-bottom: 1px solid gray;
+			padding: 5px;
+		}
+		
+		#category_div, #title_div, #id_div, #time_div {
+			display: inline-block;
+		}
+		
+		#bottom_title {
+			padding: 5px;
+		}
+
+		#time_div ,#joView{
+/*			border: 1px dotted black;*/
+			position: absolute;
+            right: 5px;
+            top: 5px;
+		}
+		
+		#middle_container {
+/*			border: 1px solid orange;*/
+			border: 1px solid gainsboro;
+			height: 250px;
+			margin-bottom: 20px;
+			padding-top: 7px;
+			padding-left: 7px;
+		}
+		#middle_container2 {
+/*			background-color: yellow;*/
+			margin-bottom: 30px;
+		}
+		#bottom_container {
+/*			border: 1px solid purple;*/
+		}
+        h4{
+            padding-left: 20px;
+        }
 
     </style>
     
@@ -327,33 +482,35 @@
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
+<!--
             <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png"/></a><div id="newContents">N</div></li>
             <li class="nav_li"><a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png"/></a></li>
             <li class="nav_li"><a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png"/></a></li>
+-->
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>
+<!--            <li class="nav_li"><a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png"/></a></li>-->
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
         </ul>
           
     </nav>
-        
-        
-        
-        
-        
-        
 
 
         
         <div id="main_container">
 <!--            여기에 각자 페이지 넣으시면 됩니다~~~~~~~~  -->
-            <div id="decoBorder">
 
-            </div>
+            <div id="decoBorder"></div>
+
             
-        <div id="NoticeContainer">
+            
             <div id="sub_container1">
                
                     <div class="swiper-container">
@@ -459,11 +616,49 @@
                 
             
             </div>
-        </div>
             
             
             
         </div>
+        
+        <div id="detailNo">
+        		<div id="wrap">
+				<div id="title_box">
+					<h4> 게시판 </h4>
+				</div>
+				<div id="top_container">
+					<div id="top_title">
+						<div id="time_div">
+<!--							<span id="time_span">작성 시간</span>-->
+						</div>
+						<div id="title_div">
+<!--							<div id="title_divDiv">나 해킹 당했다니가 운영자 개쉐기야</div>-->
+						</div>
+					</div>
+					<div id="bottom_title">
+						<div id="id_div">
+<!--							<span id="id_span">글쓴이</span>-->
+						</div>
+                        <div id="joView">조회수 : <span id="noview">0</span></div>
+					</div>
+				</div>
+				<div id="middle_container">
+					<div id="content_div">
+<!--
+						<span id="content_span">
+							내용이 들어갈 곳
+						</span>
+-->
+					</div>
+				</div>
+            
+		</div>
+        </div>
+        
+        
+        
+        
+        
         
         
         

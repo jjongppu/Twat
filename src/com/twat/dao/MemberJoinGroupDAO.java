@@ -6,12 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.sql.DataSource;
 
-import com.twat.dto.CalgatherVO;
+import com.twat.dbpool.DBPool;
+//import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberJoinGroupVO;
+import com.twat.mvconnection.MVConnection;
 
 public class MemberJoinGroupDAO
 {
@@ -31,13 +33,13 @@ public class MemberJoinGroupDAO
 	}
 	
 	// DB������ ���� con�� ��ȯ�ϴ� �޼��� --------------------------------------------
-	public Connection getConnection() throws Exception
-	{
-		Context initCtx = new InitialContext();
-		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
-	         
-		return ds.getConnection();
-	}
+//	public Connection getConnection() throws Exception
+//	{
+//		Context initCtx = new InitialContext();
+//		DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
+//	         
+//		return ds.getConnection();
+//	}
 	
 	// GROUP_ID�� ���� MEMBER_ID�� �޾ƿ��� �Լ�, MEMBER_ID�� ArrayList<String>���� ��ȯ
 	public ArrayList<String> getMemberId(String GROUP_ID)
@@ -50,7 +52,8 @@ public class MemberJoinGroupDAO
 		
 		try
 		{
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, GROUP_ID);
 			
@@ -93,7 +96,8 @@ public class MemberJoinGroupDAO
 		
 		try
 		{
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt5 = con.prepareStatement(sql);
 			psmt5.setString(1, MEMBER_ID);
 			
@@ -132,7 +136,8 @@ public class MemberJoinGroupDAO
 		ResultSet rSet = null;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "DELETE FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? AND GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, userId);
@@ -169,7 +174,8 @@ public class MemberJoinGroupDAO
 		PreparedStatement pstmt = null;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "UPDATE MEMBER_JOIN_GROUP SET CALENDAR_READ_VIEW=CALENDAR_READ_VIEW+1 WHERE GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, groupId);
@@ -206,15 +212,18 @@ public class MemberJoinGroupDAO
 		ArrayList<MemberJoinGroupVO> arrList = new ArrayList<MemberJoinGroupVO>();
 		String sql = "SELECT * FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=?";
 		PreparedStatement psmt10 = null;
-		ResultSet rs10 = null;
+		
 		try{
-			con = getConnection();
+			ResultSet rs10 = null;
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt10 = con.prepareStatement(sql);
 			psmt10.setString(1, MEMBER_ID);
 			
 			rs10 = psmt10.executeQuery();
 			
 			while(rs10.next()){
+				
 				MemberJoinGroupVO mj = new MemberJoinGroupVO();
 				mj.setMEMBER_ID(rs10.getString("MEMBER_ID"));
 				mj.setGROUP_ID(rs10.getString("GROUP_ID"));
@@ -228,7 +237,7 @@ public class MemberJoinGroupDAO
 		}
 		finally{
 			try{
-				if(rs10 != null)rs10.close();
+//				if(rs10 != null)rs10.close();
 				if(psmt10 != null)psmt10.close();
 				if(con != null)con.close();
 			}
@@ -246,13 +255,14 @@ public class MemberJoinGroupDAO
 		PreparedStatement pstmt = null;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "UPDATE MEMBER_JOIN_GROUP SET CALENDAR_VIEW = CALENDAR_READ_VIEW WHERE GROUP_ID=? AND MEMBER_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, groupId);
 			pstmt.setString(2, userName);
 
-			int result = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 			
 
 		} catch (Exception e) {
@@ -279,12 +289,15 @@ public class MemberJoinGroupDAO
 		PreparedStatement pstmt = null;
 		ResultSet rs2 = null;
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "INSERT INTO MEMBER_JOIN_GROUP VALUES(?,?,0,0)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, friendId);
 			pstmt.setInt(2, groupId);
-			int result = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			if(pstmt != null)
+				pstmt.close();
 			
 			
 			String sql2 = "SELECT GROUP_COUNT FROM CALGATHER WHERE GROUP_ID = ?";
@@ -336,7 +349,8 @@ public class MemberJoinGroupDAO
 		int result = 0;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "SELECT COUNT(MEMBER_ID) FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? AND GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, MEMBER_ID);
@@ -344,11 +358,12 @@ public class MemberJoinGroupDAO
 
 			rSet = pstmt.executeQuery();
 			
-			
-			while(rSet.next())
-			{
+			if(rSet.next())
 				result = rSet.getInt(1);
-			}
+//			while(rSet.next())
+//			{
+//				result = rSet.getInt(1);
+//			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

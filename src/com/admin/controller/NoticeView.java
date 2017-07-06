@@ -1,4 +1,4 @@
-package com.twat.controller;
+package com.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,58 +12,42 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import com.twat.dao.MemberDAO;
+import com.admin.dao.AdminDAO;
 
-/**
- * Servlet implementation class idCheckServlet
- */
-@WebServlet("/idCheck.do")
-public class idCheckServlet extends HttpServlet {
+@WebServlet("/NoticeView.do")
+public class NoticeView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public idCheckServlet() {
+    public NoticeView() {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter writer = response.getWriter();
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
 	    
-	    String checkId = request.getParameter("signUpId");
+		PrintWriter out = response.getWriter();
+		// 댓글이달릴 글 번호
+	    Long views = Long.parseLong(request.getParameter("id"));
 	    
-	    MemberDAO memdao = MemberDAO.getInstance();
-	    int result = memdao.checkID(checkId);
-	    
+	    AdminDAO ado = AdminDAO.getInstance();
+	    Long viewss = ado.getAndSetNoticeView(views);
 	    JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
+	    
 		
-		if(result == 1) {
-			jsonOb.put("result", "success");
-		} else {
-			jsonOb.put("result", "fail");
-		}
+	    	jsonOb.put("result", viewss+"");
 		
 		jsonList.add(jsonOb);
-	    writer.println(jsonList);
-	    writer.close();
 		
+		out.println(jsonList);
 	}
 
 }

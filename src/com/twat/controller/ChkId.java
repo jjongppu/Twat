@@ -2,6 +2,8 @@ package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -47,13 +49,17 @@ public class ChkId extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		PrintWriter out = response.getWriter();
 		
+//		Date date = new Date();
+//		Timestamp timestamp = new Timestamp(date.getTime());
+//		System.out.println(timestamp.getTime() + "/" + timestamp.getNanos());
+		
 		String MEMBER_ID = (String)session.getAttribute("loginUserId");
 		String groupId = request.getParameter("groupId");
 		
 		JSONArray group = new JSONArray();
-		
+		boolean result = false;
 		MemberJoinGroupDAO mDao = MemberJoinGroupDAO.getInstance();
-		boolean result = mDao.chkId(MEMBER_ID, groupId);
+		result = mDao.chkId(MEMBER_ID, groupId);
 		
 		JSONObject resultOBJ = new JSONObject();
 		resultOBJ.put("result", result);

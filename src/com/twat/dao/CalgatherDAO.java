@@ -6,13 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
+//import javax.naming.Context;
+//import javax.naming.InitialContext;
+//import javax.sql.DataSource;
 
+import com.twat.dbpool.DBPool;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberJoinGroupVO;
-import com.twat.dto.MyCalendarVO;
+//import com.twat.dto.MyCalendarVO;
+import com.twat.mvconnection.MVConnection;
 
 public class CalgatherDAO {
 	Connection con = null;
@@ -32,17 +34,18 @@ public class CalgatherDAO {
 
 	// DB�뿰寃곗쓣 �쐞�빐 con�쓣 諛섑솚�븯�뒗 硫붿꽌�뱶
 	// --------------------------------------------
-	public Connection getConnection() throws Exception {
-		Context initCtx = new InitialContext();
-		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
-
-		return ds.getConnection();
-	}
+//	public Connection getConnection() throws Exception {
+//		Context initCtx = new InitialContext();
+//		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
+//
+//		return ds.getConnection();
+//	}
 
 	// 李몄뿬以묒씤 罹섎┛�뜑瑜� 肉뚮젮二쇨린�쐞�빐 �옄�떊�씠 李몄뿬�븯怨좎엳�뒗 紐⑤뱺 罹섎┛�뜑�쓽 �젙蹂대��
 	// �뼸�뼱�샃�땲�떎..
 	public ArrayList<CalgatherVO> myGroupList(ArrayList<MemberJoinGroupVO> groupList) {
-		
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		ArrayList<MemberJoinGroupVO> groupArray = groupList;
 		
 		ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();
@@ -53,7 +56,8 @@ public class CalgatherDAO {
 		}
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(selectMygroupSql);
 			int groupId = Integer.parseInt(groupArray.get(0).getGROUP_ID());
 			psmt.setInt(1, groupId);
@@ -120,7 +124,8 @@ public class CalgatherDAO {
 		}
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			// 諛⑹옣 �씠由� �뼸�뼱�샂 �뀫�뀫
 			psmt = con.prepareStatement(selectMasterName);
 			psmt.setString(1, masterId);
@@ -182,7 +187,8 @@ public class CalgatherDAO {
 		String selectMygroupSql = "SELECT * FROM CALGATHER ORDER BY GROUP_ID DESC LIMIT 1";
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(selectMygroupSql);
 
 			rs = psmt.executeQuery();
@@ -218,7 +224,8 @@ public class CalgatherDAO {
 		CalgatherVO cv = new CalgatherVO();
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "SELECT * FROM CALGATHER WHERE GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Integer.parseInt(groupId));
@@ -260,7 +267,8 @@ public class CalgatherDAO {
 
 		try {
 			sql = "SELECT GROUP_MASTER FROM CALGATHER WHERE GROUP_ID = ?";
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, groupId);
 			rs = psmt.executeQuery();
@@ -293,7 +301,8 @@ public class CalgatherDAO {
 		ResultSet rSet = null;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "UPDATE CALGATHER SET GROUP_MASTER=?, GROUP_MASTER_NAME=? WHERE GROUP_ID=?";
 			// UPDATE `calgather` SET `GROUP_ID`=[value-1],`GROUP_NAME`=[value-2],`CREATE_DATE`=[value-3],`GROUP_MASTER`=[value-4],`GROUP_MASTER_NAME`=[value-5],`GROUP_IMG`=[value-6],`GROUP_COUNT`=[value-7] WHERE 1
 			pstmt = con.prepareStatement(sql);
@@ -334,12 +343,16 @@ public class CalgatherDAO {
 		boolean isDel = false;
 
 		try {
-			con = getConnection();
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "SELECT GROUP_COUNT FROM CALGATHER WHERE GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, groupId);
 			
 			rSet = pstmt.executeQuery();
+			
+			if(pstmt != null)
+				pstmt.close();
 			
 			int count = -1;
 			

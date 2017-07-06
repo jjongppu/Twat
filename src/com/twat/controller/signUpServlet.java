@@ -87,6 +87,7 @@ public class signUpServlet extends HttpServlet {
 	    String signUpQuestion = request.getParameter("signUpQuestion");
 	    String signUpAnswer = request.getParameter("signUpAnswer");
 	    
+	    
 	    MemberDAO memdao = MemberDAO.getInstance();
 	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, signUpBirth, signUpOutTime, signUpQuestion, signUpAnswer);
 	    
