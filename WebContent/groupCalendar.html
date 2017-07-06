@@ -2355,15 +2355,16 @@
 							
 							if(commTime >= 3600 * 24 * 365)
 							{
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 365) + "년 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24 * 365)) + "년 전</span>";
 							}
 							else if(commTime >= 3600 * 24 * 30)
 							{	
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 30) + "개월 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24 * 30)) + "개월 전</span>";
 							}
 							else if(commTime >= 3600 * 24)
 							{
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24) + "일 전</span>";
+//								console.log(commTime);
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24)) + "일 전</span>";
 							}
 							else if(commTime >= 3600)
 							{
@@ -2741,15 +2742,15 @@
 							
 							if(commTime >= 3600 * 24 * 365)
 							{
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 365) + "년 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24 * 365)) + "년 전</span>";
 							}
 							else if(commTime >= 3600 * 24 * 30)
 							{	
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 30) + "개월 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24 * 30)) + "개월 전</span>";
 							}
 							else if(commTime >= 3600 * 24)
 							{
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24) + "일 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24)) + "일 전</span>";
 							}
 							else if(commTime >= 3600)
 							{

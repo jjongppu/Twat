@@ -202,6 +202,8 @@ public class CalgatherDAO {
 
 			if (rs.next()) {
 				count = rs.getInt("GROUP_ID") + 1;
+			}else{
+				count =1;
 			}
 
 		} catch (Exception e) {
