@@ -193,19 +193,15 @@
                 success: function (data){
                     console.log(data);
                     
-          
                     for(var i = 0; i < data.length; i++){
                         
                         document.getElementById("noticeBoard").innerHTML += '<tr>'
-                            + '<td class="title"><a href="#" onclick="detNotice()">' + data[i].noticeTitle + '</a></td>'
+                            + '<td class="title"><a href="#" id="'  +data[i].noticeId + '" onclick="detNotice(this)">' + data[i].noticeTitle + '</a></td>'
                             + '<td class="name">' + data[i].noticeWriter + '</td>'
                             + '<td class="data">' + data[i].noticeDate + '</td>'
                             + '<td class="hit">' + data[i].noticeViews + '</td></tr>';
-                        
+                                                                
                     }
-                    
-                   
-                    
                     
                 }, error: function(req) {
 
@@ -307,76 +303,13 @@
         });
             
         
-        function detNotice(){
 
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        }
-    
-    
-    
-    
     
     
     
     </script>
     <style>
-        #titleName{
-            color:  red;
-            font-size: 30px;
-            width: 500px;
-            
-        }
-        #NotDate{
-            width: 150px;
-            font-size: 20px;
-            color:  red;
-        }
-        #decoBorder{
-            position: absolute;
-            border: 3px solid gainsboro;
-            top: 50px;
-            left: 140px;
-            width: 1170px;
-            height: 410px;
-            
-        }
-        #NoticeContainer{
-            display: none;
-            border: 1px solid black;
-            width: 800px;
-        }
-        #NotiTop{
-            display: block;
-            border: 1px solid black;
-            width: 800px;
-        }
-        #NotiTop1{
-            border: 1px solid black;
-            width: 800px;
-        }
-        #NotiTop2{
-             border: 1px solid black;
-            width: 800px;
-        }
-        #NotiWriter{
-            display: block;
-            border: 1px solid black;
-            margin-top: 20px;
-        }
-        #NotiContent{
-            width: 800px;
-            height: 500px;
-            margin-top: 30px;
-            border: 1px solid black;
-        }
+
     </style>
     
 <body>
@@ -417,22 +350,7 @@
         <div id="main_container">
 <!--            여기에 각자 페이지 넣으시면 됩니다~~~~~~~~  -->
             <div id="decoBorder">
-            <div>
-                <div>
-                    <div id="NotiTop3">
-                        <div id="NotiTop2">
-                            <div id="NotiTop1">
-                                <input type="hidden" value="NOTICE_ID">
-                                <div id="titleName">공지사항</div>
-                                <div id="NotDate">작성날자</div>
-                            </div>
-                            <div id="NotiWriter">여기에 작성자</div>
-                        </div>
-                        <div id="NotiContent"> 여기에는 내용.</div>
-                    </div>
-                    <input type="button" value="뒤로가기">
-                </div>
-            </div>
+
             </div>
             
         <div id="NoticeContainer">
@@ -497,21 +415,7 @@
                             </tr>
                         </thead>
                         <tbody id="noticeBoard">
-<!--
-                            <tr>
-                                <td class="title">
-                                    <a href="#">게시판 제목</a>
-                                    <img width="13" height="12" class="pic" alt="첨부이미지" src="img/etcIcon/adminView_visit.png">
-                                    <a class="comment" href="#">[5]</a>
-                                    <img width="10" height="9" class="new" alt="새글" src="img/etcIcon/new-bingo-sites.png">
-                                </td>
-                                <td class="name">글쓴이이름</td>
-                                <td class="data">2008/02/14</td>
-                                <td class="hit">1234</td>
-                                
-                            </tr>
--->
-                           
+
                            
                         </tbody>
                     
