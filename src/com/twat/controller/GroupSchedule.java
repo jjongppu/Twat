@@ -23,7 +23,7 @@ import com.twat.dto.CalendarVO;
 /**
  * Servlet implementation class GroupSchedule
  */
-@WebServlet("/groupSchedule.do")
+//@WebServlet("/groupSchedule.do")
 public class GroupSchedule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -55,7 +55,7 @@ public class GroupSchedule extends HttpServlet {
 		
 		JSONArray group = new JSONArray();
 		
-		// Calendar¿¡¼­ ±×·ìÀÇ ÀÏÁ¤ °¡Á®¿È
+		// Calendarï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		CalendarDAO calDao = CalendarDAO.getInstance();
 		ArrayList<CalendarVO> arrList = calDao.getInfo(request.getParameter("group"), request.getParameter("calNum"));
 		
@@ -87,7 +87,7 @@ public class GroupSchedule extends HttpServlet {
 			}
 		}
 		
-		// JSON Àü¼Û
+		// JSON ï¿½ï¿½ï¿½ï¿½
 		
 		out.print(group.toJSONString());
 		out.close();

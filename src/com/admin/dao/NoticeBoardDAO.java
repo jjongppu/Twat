@@ -93,8 +93,7 @@ public class NoticeBoardDAO {
 			rs = psmt.executeQuery();
 			
 			while(rs.next()){
-				noticeArr.add(new NoticeBoardVO(rs.getLong("NOTICE_ID"), rs.getString("NOTICE_TITLE"), rs.getString("NOTICE_CONTENT"),
-						rs.getString("NOTICE_WRITER"), rs.getString("NOTICE_DATE"), rs.getInt("NOTICE_VIEWS"), rs.getString("NOTICE_CLASSIFICATION")));
+				noticeArr.add(new NoticeBoardVO(rs.getLong("NOTICE_ID"), rs.getString("NOTICE_TITLE"), rs.getString("NOTICE_CONTENT"),rs.getString("NOTICE_WRITER"), rs.getString("NOTICE_DATE"), rs.getInt("NOTICE_VIEWS"), rs.getString("NOTICE_CLASSIFICATION")));
 				
 			}
 			
