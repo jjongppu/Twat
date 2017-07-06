@@ -691,7 +691,7 @@ public class CalendarDAO {
 
 		for (int i = 1; i < groupIdArr.size(); i++) {
 //			sql += " or GROUP_ID=? ";
-			sql += " OR GROUP_ID=? ";
+			sql += " OR GROUP_ID=? AND CAL_DEPTH=0 ";
 		}
 
 //		sql += "order by CAL_DATE desc limit 8";
