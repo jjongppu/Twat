@@ -20,10 +20,10 @@ import com.twat.dto.MyCalendarVO;
 import com.twat.mvconnection.MVConnection;
 
 public class MyCalendarDAO{
-	Connection con = null;
-	PreparedStatement psmt= null;
-	ResultSet rs= null;
-	Statement stmt;
+//	Connection con = null;
+//	PreparedStatement psmt= null;
+//	ResultSet rs= null;
+//	Statement stmt;
 	
 	private static MyCalendarDAO instance = new MyCalendarDAO();
 	
@@ -42,6 +42,7 @@ public class MyCalendarDAO{
 
 	public void addMySchedule( String member_id, String my_cal_contents, String my_cal_date, String my_cal_time ) {
 		PreparedStatement psmt2= null;
+		Connection con = null;
 		String sql ="";
 		try {
 //			con = getConnection();		
@@ -73,6 +74,7 @@ public class MyCalendarDAO{
 	
 	public void deleteMySchedule(int deleteSche){
 		PreparedStatement psmt3= null;
+		Connection con = null;
 		String sql ="";
 		try {
 //			con = getConnection();	
@@ -150,6 +152,7 @@ public class MyCalendarDAO{
 		ArrayList<MyCalendarVO> myCalList = new ArrayList<MyCalendarVO>();
 		PreparedStatement pstmt3 = null;
 		ResultSet rs3 = null;
+		Connection con = null;
 		String sql = "SELECT * FROM MY_CALENDAR WHERE MEMBER_ID = ?";
 		try{
 //			con = getConnection();
@@ -184,7 +187,9 @@ public class MyCalendarDAO{
 	public int getMaxNum() {
 //		int result = -1;
 		int cal_num = 0;
-		
+		Connection con = null;
+		PreparedStatement psmt= null;
+		ResultSet rs= null;
 		String selectSql = "SELECT * FROM `MY_CALENDAR` ORDER BY MY_CAL_INDEX DESC LIMIT 1";
 		
 		try {
