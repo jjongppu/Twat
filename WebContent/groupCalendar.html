@@ -2294,6 +2294,7 @@
 			//            console.log("확정된 일정 : " + cal_num);
 
 			var para = document.location.href.split("?");
+			var swiperIndex = 0;
 			para = para[1].split("=");
 			$.ajax({
 				type: 'post',
@@ -2306,6 +2307,8 @@
 				success: function(data) {
 					console.log("확정");
 					console.log(data);
+					
+					swiperIndex = data.length - 1;
 					
 					nowCalNum = cal_num;
 //					console.log(cal_num);
@@ -2355,15 +2358,16 @@
 							
 							if(commTime >= 3600 * 24 * 365)
 							{
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 365) + "년 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24 * 365)) + "년 전</span>";
 							}
 							else if(commTime >= 3600 * 24 * 30)
 							{	
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 30) + "개월 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24 * 30)) + "개월 전</span>";
 							}
 							else if(commTime >= 3600 * 24)
 							{
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24) + "일 전</span>";
+//								console.log(commTime);
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24)) + "일 전</span>";
 							}
 							else if(commTime >= 3600)
 							{
@@ -2453,6 +2457,10 @@
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
+					
+					swiperComment.slideTo(swiperIndex, 300, true);
+					
+					//swiperComment.slideTo(index, speed, runCallbacks);
 				},
 				error: function(req) {
 					//                    alert('통신실패');
@@ -2464,6 +2472,8 @@
 		function getVoteInfo(cal_num) {
 			memberVoteListSet = new Set();
 			console.log("투표할 일정 : " + cal_num);
+			
+			var swiperIndex = 0;
 
 			var para = document.location.href.split("?");
 			para = para[1].split("=");
@@ -2478,6 +2488,7 @@
 				success: function(data) {
 					console.log("미확정");
 					console.log(data);
+					swiperIndex = data.length - 1;
 					nowCalNum = cal_num;
 //					console.log(nowCalNum);
 					var voteString = "";
@@ -2741,15 +2752,15 @@
 							
 							if(commTime >= 3600 * 24 * 365)
 							{
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 365) + "년 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24 * 365)) + "년 전</span>";
 							}
 							else if(commTime >= 3600 * 24 * 30)
 							{	
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 30) + "개월 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24 * 30)) + "개월 전</span>";
 							}
 							else if(commTime >= 3600 * 24)
 							{
-								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24) + "일 전</span>";
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/(3600 * 24)) + "일 전</span>";
 							}
 							else if(commTime >= 3600)
 							{
@@ -2919,6 +2930,8 @@
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
+					
+					swiperComment.slideTo(swiperIndex, 300, true);
 				}
 			})
 		}
