@@ -19,7 +19,7 @@ import com.twat.dao.MemberJoinGroupDAO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MemberJoinGroupVO;
 
-@WebServlet("/setMyGroupContentsView.do")
+//@WebServlet("/setMyGroupContentsView.do")
 public class SetMyGroupContentsView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

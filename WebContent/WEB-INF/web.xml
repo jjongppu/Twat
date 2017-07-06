@@ -15,6 +15,177 @@
       </listener-class>
   </listener>
   
+	<servlet> 
+        <servlet-name>outUser</servlet-name> 
+        <servlet-class>com.twat.controller.OutUser</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>outUser</servlet-name> 
+        <url-pattern>/outUser.do</url-pattern> 
+    </servlet-mapping> 
+    
+    <servlet> 
+        <servlet-name>PersonalServlet</servlet-name> 
+        <servlet-class>com.twat.controller.PersonalServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>PersonalServlet</servlet-name> 
+        <url-pattern>/PersonalServlet.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>QnaDelete</servlet-name> 
+        <servlet-class>com.twat.controller.QnaDeleteServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>QnaDelete</servlet-name> 
+        <url-pattern>/QnaDelete.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>QnaDetail</servlet-name> 
+        <servlet-class>com.twat.controller.QnaDetailServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>QnaDetail</servlet-name> 
+        <url-pattern>/QnaDetail.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>QnaUpdate</servlet-name> 
+        <servlet-class>com.twat.controller.QnaUpdateServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>QnaUpdate</servlet-name> 
+        <url-pattern>/QnaUpdate.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>QnaWrite</servlet-name> 
+        <servlet-class>com.twat.controller.QnaWriteServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>QnaWrite</servlet-name> 
+        <url-pattern>/QnaWrite.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>RefuseRequest</servlet-name> 
+        <servlet-class>com.twat.controller.RefuseRequest</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>RefuseRequest</servlet-name> 
+        <url-pattern>/RefuseRequest.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>RequestFriend</servlet-name> 
+        <servlet-class>com.twat.controller.RequestFriend</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>RequestFriend</servlet-name> 
+        <url-pattern>/RequestFriend.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>RequestingFriend</servlet-name> 
+        <servlet-class>com.twat.controller.RequestingFriend</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>RequestingFriend</servlet-name> 
+        <url-pattern>/RequestingFriend.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>ResponsingFriends</servlet-name> 
+        <servlet-class>com.twat.controller.ResponsingFriends</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ResponsingFriends</servlet-name> 
+        <url-pattern>/ResponsingFriends.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>ScheduleAdd</servlet-name> 
+        <servlet-class>com.twat.controller.ScheduleAdd</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ScheduleAdd</servlet-name> 
+        <url-pattern>/ScheduleAdd.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>scheduleSelected</servlet-name> 
+        <servlet-class>com.twat.controller.ScheduleSelected</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>scheduleSelected</servlet-name> 
+        <url-pattern>/scheduleSelected.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>searchID</servlet-name> 
+        <servlet-class>com.twat.controller.searchIDServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>searchID</servlet-name> 
+        <url-pattern>/searchID.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>SearchPW</servlet-name> 
+        <servlet-class>com.twat.controller.SearchPWServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>SearchPW</servlet-name> 
+        <url-pattern>/SearchPW.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>SearchQna</servlet-name> 
+        <servlet-class>com.twat.controller.SearchQnaServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>SearchQna</servlet-name> 
+        <url-pattern>/SearchQna.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>SessionCheck</servlet-name> 
+        <servlet-class>com.twat.controller.SessionCheck</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>SessionCheck</servlet-name> 
+        <url-pattern>/SessionCheck.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>setMyGroupContentsView</servlet-name> 
+        <servlet-class>com.twat.controller.SetMyGroupContentsView</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>setMyGroupContentsView</servlet-name> 
+        <url-pattern>/setMyGroupContentsView.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>setRoomOut</servlet-name> 
+        <servlet-class>com.twat.controller.SetRoomOut</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>setRoomOut</servlet-name> 
+        <url-pattern>/setRoomOut.do</url-pattern> 
+    </servlet-mapping>
+    
+    <servlet> 
+        <servlet-name>signUp</servlet-name> 
+        <servlet-class>com.twat.controller.signUpServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>signUp</servlet-name> 
+        <url-pattern>/signUp.do</url-pattern> 
+    </servlet-mapping>
+    
   	<servlet> 
         <servlet-name>myGroupSchedule</servlet-name> 
         <servlet-class>com.twat.controller.MyGroupScheduleServlet</servlet-class> 

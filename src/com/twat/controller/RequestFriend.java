@@ -18,7 +18,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class RequestFriend
  */
-@WebServlet("/RequestFriend.do")
+//@WebServlet("/RequestFriend.do")
 public class RequestFriend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
