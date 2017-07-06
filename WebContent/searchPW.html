@@ -44,12 +44,12 @@
         border-bottom: 1px solid gray;
     }
     .btn {
-        width: 60%;
         border: none;
         height: 38px;
         margin: 6px 0 0 0;
         background-color:transparent;
         cursor: pointer;
+        width: 120px;
     }
     .smallBtn{
         display: inline-block;
@@ -131,18 +131,15 @@
     }
     .text{
         margin-top: 20px;
+        font-size: 20px;
     }
     #questionBox{
         margin-top: 20px;
     }
     #mainText{
         text-align: center;   
-    }
-    #submitBtn{
-        width: 150px;
-    }
-    #cancelBtn{
-        width: 150px;
+        font-size: 20px;
+        margin-bottom: 20px;
     }
     #confirmBtn{
         margin-top: 20px;
@@ -159,6 +156,17 @@
          });
      });
     
+     $(window).resize(function(){
+        $('#userLoginCover').css("height",$(window).height());
+        $('#userLoginCover').css("width",$(window).width());
+            
+        if((window.innerHeight-500)/2 > 1){
+            $('#userLoginCover').css("margin-top",(window.innerHeight-500)/2 );
+        }else{
+            $('#userLoginCover').css("margin-top", 0 );
+        }
+
+    });
     
 //    function enterLog(){        
 //        if(window.event.keyCode == 13) {
@@ -351,7 +359,7 @@
                 <div class='loginContainer'>
                     
                     <div id="">
-					<h4 id="">비밀번호 찾기</h4>
+                        <div id="mainText">비밀번호 찾기</div>
 				    </div>
                     <div>
                             <div id="">
@@ -391,7 +399,7 @@
                     <div id="modal" >
                         
                         <div id="">
-					<h4 id="mainText">비밀번호 변경</h4>
+                            <div id="mainText">비밀번호 변경</div>
 				    </div>
                         <div id="contentBody">
 					           <div id="pw1" class="textBox">
