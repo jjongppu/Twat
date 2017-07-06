@@ -1319,10 +1319,13 @@
 				} else {
 					//                    if ($(a).css("backgroundColor") == "rgb(0, 128, 0)")
 					//                    console.log($(a).css("backgroundImage"));
-					if (!$(a).css("backgroundImage").match("none")) {
+//					if (!$(a).css("backgroundImage").match("none"))
+                    console.log($(a).find(".choiceDate").attr('width'));
+					if ($(a).find(".choiceDate").css('width') != undefined)
+                    {
 						//                        $(a).css("backgroundColor", "white");
 						console.log("!");
-						$(a).css("backgroundImage", "none");
+						$(a).find(".choiceDate").remove();
 						//                    scheArr[parseInt(dayInfo)] = false;
 						scheSet.delete(yearInfo + monthInfo + dayInfo);
 						for (let item of voteSet.keys()) {
@@ -1347,10 +1350,11 @@
 					} else if (group_master == login_userId) {
 						//                        $(a).css("backgroundColor", "green");
                         // 체크한날에 백그라운드 이미지 넣기
-						$(a).css("backgroundImage", "url(img/etcIcon/verified-text-paper.png)");
+//						$(a).css("backgroundImage", "url(img/etcIcon/verified-text-paper.png)");
+						$(a).append('<div class="choiceDate"> </div>');
                         
-						$(a).css("backgroundRepeat", "no-repeat");
-						$(a).css("backgroundPosition", "right 50%");
+//						$(a).css("backgroundRepeat", "no-repeat");
+//						$(a).css("backgroundPosition", "right 50%");
 						//                    scheArr[parseInt(dayInfo)] = dayInfo;
 						scheSet.add(yearInfo + monthInfo + dayInfo);
 						//                        console.log(selectDate);
@@ -1469,11 +1473,17 @@
 				//                    
 				//                    
 				//                }
+                
+//                console.log(voteSet);
+                
 				// 확정된 일정표시
 				for (let item of scheduleSet.keys()) {
 					if (item.split("-")[0] == dateParam) {
 						//						console.log(item);
 						$(cell).attr('class', 'trSche' + item.split("-")[2]);
+						var classTemp = item.split("-")[2];
+                        cell.innerHTML += "<div class='dateChk " + classTemp + "'></div>";
+//                        console.log(classTemp);
 						cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
 					}
 				}
@@ -1483,6 +1493,9 @@
 					if (parseInt(item.split("-")[0]) == parseInt(dateParam)) {
 						//						console.log(item);
 						$(cell).attr('class', 'trVote' + item.split("-")[2]);
+                        var classTemp = item.split("-")[2];
+                        cell.innerHTML += "<div class='dateChk" + classTemp + "'></div>";
+//                        console.log(classTemp);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
 					}
 				}
@@ -4484,6 +4497,15 @@
 							left: 3px;
 						}
 
+                        .choiceDate{
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 50px;
+                            height: 50px;
+                            background-color: rebeccapurple;
+                            
+                        }
 					</style>
 				</div>
 			</div>
