@@ -201,14 +201,7 @@
        
     </style>
     <script>
-        $.ajax({
-    type: "post",
-    url: "SessionCheck.do",
-    dataType: "json",
-    success: function(data) {
-        if(data[0].result == "s"){
-            location.href='home.html';
-        }else{
+
             //////////////////////////////////////////
         ////////////////정보가져오기///////////////////////////////////////////////////
             $.ajax({
@@ -245,6 +238,7 @@
                             data: formData,
                             type: 'POST',
                             success: function(result){
+                                console.log(result);
 //                                if(namename == ""){
 //                                    alert("이름을 입력해주세요");
 //                                }else{
@@ -481,9 +475,7 @@
 //           });
 //        });
 //////////////////////////////////////////////////////////////////////////////////////////////////
-              }
-    }
-});
+
     </script>
 <body>
     <div id="newWrap">
