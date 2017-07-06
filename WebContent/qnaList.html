@@ -149,14 +149,8 @@
 	</style>
 	
 	<script>
-$.ajax({
-    type: "post",
-    url: "SessionCheck.do",
-    dataType: "json",
-    success: function(data) {
-        if(data[0].result == "s"){
-            location.href='home.html';
-        }else{
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
          nowPage = 0;
     nowPage2 = 0;
@@ -275,7 +269,7 @@ $.ajax({
             nowPage = page;
             var pages =1;
             if(page >pages){
-                pages = page
+                pages = page;
             }
             $.ajax ({
                 type : 'post',
@@ -389,9 +383,7 @@ $.ajax({
             location.href="qnaDetail.html?qna="+$(id).attr('id');
         }
         //////////////////////////////////////////////////////////////////////////////////////////
-          }
-    }
-});
+
 	</script>
 <body>
     <div id="newWrap">
