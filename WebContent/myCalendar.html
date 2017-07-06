@@ -1777,6 +1777,9 @@
     
     
     function selectYes() {
+        console.log($("#calTitle").val());
+        console.log($("#calTitle").val().length);
+        
         var groupId = location.href.split("=")[1];
         console.log(groupId);
         var calDate = "";
@@ -1784,49 +1787,55 @@
             calDate += item + ","; // 달력에 날짜를 클릭했을때 (년도+월+선택한 일) + ","
         var calTitle = $("#calTitle").val();
         var calTime = $("#scheTime").val();
-        $.ajax({
-            type: 'post',
-            url: 'mySchedule.do',
-            data: { // 이 데이터가 서블릿으로 보내주는것이다.
-                title: calTitle,
-                calDate: calDate,
-                groupId: groupId,
-                calTime: calTime
-            },
-            dataType: "json",
-            success: function(data) { // 이것이 서블릿에서 받는 코드.
-                console.log(data);
-            },
-            error: function(req) {
-                //                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-            }, beforeSend: function () {
-                    var width = 0;
-                    var height = 0;
-                    var left = 0;
-                    var top = 0;
+        if($("#calTitle").val().length == 0){
+//            $("#selectAnswer").add("내용을 입력하세요.");
+            alert("내용을 입력해주세요!");
+        }else{
+            $.ajax({
+                type: 'post',
+                url: 'mySchedule.do',
+                data: { // 이 데이터가 서블릿으로 보내주는것이다.
+                    title: calTitle,
+                    calDate: calDate,
+                    groupId: groupId,
+                    calTime: calTime
+                },
+                dataType: "json",
+                success: function(data) { // 이것이 서블릿에서 받는 코드.
+                    console.log(data);
+                },
+                error: function(req) {
+                    //                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+                }, beforeSend: function () {
+                        var width = 0;
+                        var height = 0;
+                        var left = 0;
+                        var top = 0;
 
-                    width = 50;
-                    height = 50;
-                
-                    top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
-                    left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+                        width = 50;
+                        height = 50;
 
-                    if($("#div_ajax_load_image").length != 0) {
-                           $("#div_ajax_load_image").css({
-                                  "top": top+"px",
-                                  "left": left+"px"
-                           });
-                           $("#div_ajax_load_image").show();
-                    }
-                    else {
-                           $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
-                    }
-             }
-             , complete: function () {
-                           $("#div_ajax_load_image").hide();
-             }
-        });
-        location.reload();
+                        top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+                        left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+                        if($("#div_ajax_load_image").length != 0) {
+                               $("#div_ajax_load_image").css({
+                                      "top": top+"px",
+                                      "left": left+"px"
+                               });
+                               $("#div_ajax_load_image").show();
+                        }
+                        else {
+                               $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+                        }
+                 }
+                 , complete: function () {
+                               $("#div_ajax_load_image").hide();
+                 }
+            });
+            location.reload();
+        }
+        
     }
     
     function selectNo() {
