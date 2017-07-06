@@ -354,7 +354,12 @@ public class MemberJoinGroupDAO
 			String sql = "SELECT COUNT(MEMBER_ID) FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? AND GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, MEMBER_ID);
-			pstmt.setInt(2, Integer.parseInt(groupId));
+			try {
+				pstmt.setInt(2, Integer.parseInt(groupId));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				pstmt.setInt(2, -1);
+			}
 
 			rSet = pstmt.executeQuery();
 			
