@@ -952,6 +952,10 @@
 		var today = new Date(); // 오늘 날짜
 
 		$(document).ready(function() {
+            
+            if(group_master != login_userId)
+                $("#comeOnMyFriend").css("display","none");
+            
 //			chkId();
 			chkMaster();
 			
@@ -2309,7 +2313,7 @@
 						nextButton: '.swiper-button-next',
 						prevButton: '.swiper-button-prev',
 						spaceBetween: 0,
-						loop: true,
+//						loop: true,
 						freeMode: true
 					});
 				},
@@ -4092,7 +4096,7 @@
 						<div id="config">
                         <div id="btnCover">
                             <div onclick="addSchedule()" class="addschedule">일정추가하기</div>
-                            <div onclick="inviteFriends()" class="addschedule">친구초대하기</div>
+                            <div onclick="inviteFriends()" class="addschedule" id="comeOnMyFriend">친구초대하기</div>
 <!--
 							<input type="button" value="일정추가하기" onclick="addSchedule()" class="addschedule" />
 							<input type="button" value="친구초대하기" onclick="inviteFriends()" class="addschedule" />
