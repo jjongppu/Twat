@@ -29,7 +29,7 @@
         width: 350px;
 /*        border: 1px solid #e5e5e5;*/
 		margin: auto;
-		margin-top: 226px;
+		margin-top: 150px;
     }
 
 	#contentHeader {
@@ -162,7 +162,7 @@
 	
 	// 아이디 유효성 체크
 	function checkName() {
-		var nameRegex = /^[가-힣]{2,4}$/;
+		var nameRegex = /^[가-힣]{2,20}$/;
 		var name = $('#nameBox').val();
 		
 		if(name == "") {
@@ -236,7 +236,7 @@
 						이름
 					</div>
 -->
-					<input type="text" id="nameBox" class="inputBox" name="userName" placeholder="회원 이름"/>
+					<input type="text" id="nameBox" class="inputBox" name="userName" maxlength="20" placeholder="회원 이름"/>
 					<div id="nameMessage"></div>
 				</div>
 				<div id="phone" class="textBox">
