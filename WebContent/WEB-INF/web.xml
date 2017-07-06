@@ -15,7 +15,7 @@
       </listener-class>
   </listener>
   
-  <servlet> 
+	<servlet> 
         <servlet-name>outUser</servlet-name> 
         <servlet-class>com.twat.controller.OutUser</servlet-class> 
     </servlet> 
@@ -185,4 +185,32 @@
         <servlet-name>signUp</servlet-name> 
         <url-pattern>/signUp.do</url-pattern> 
     </servlet-mapping>
+    
+  	<servlet> 
+        <servlet-name>myGroupSchedule</servlet-name> 
+        <servlet-class>com.twat.controller.MyGroupScheduleServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>myGroupSchedule</servlet-name> 
+        <url-pattern>/myGroupSchedule.do</url-pattern> 
+    </servlet-mapping> 
+    
+    <servlet> 
+        <servlet-name>scheDelete</servlet-name> 
+        <servlet-class>com.twat.controller.MyScheDeleteServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>scheDelete</servlet-name> 
+        <url-pattern>/scheDelete.do</url-pattern> 
+    </servlet-mapping> 
+    
+    <servlet> 
+        <servlet-name>mySchedule</servlet-name> 
+        <servlet-class>com.twat.controller.MyScheduleServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>mySchedule</servlet-name> 
+        <url-pattern>/mySchedule.do</url-pattern> 
+    </servlet-mapping> 
+    
 </web-app>
