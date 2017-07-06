@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>개인정보</title>
+    <title>달게더 개인정보</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -200,6 +200,15 @@
        
     </style>
     <script>
+        $.ajax({
+    type: "post",
+    url: "SessionCheck.do",
+    dataType: "json",
+    success: function(data) {
+        if(data[0].result == "s"){
+            location.href='home.html';
+        }else{
+            //////////////////////////////////////////
         ////////////////정보가져오기///////////////////////////////////////////////////
             $.ajax({
                 type:"post",
@@ -471,6 +480,9 @@
 //           });
 //        });
 //////////////////////////////////////////////////////////////////////////////////////////////////
+              }
+    }
+});
     </script>
 <body>
     <div id="newWrap">

@@ -1980,7 +1980,7 @@
 						direction: 'vertical',
 						slidesPerView: 3,
 						paginationClickable: true,
-						centeredSlides: true,
+//						centeredSlides: true,
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
@@ -1990,7 +1990,7 @@
 						direction: 'vertical',
 						slidesPerView: 3,
 						paginationClickable: true,
-						centeredSlides: true,
+//						centeredSlides: true,
 //						slidesOffsetAfter: 192/2,
 //						slidesOffsetBefore: 192/2,
 						//						spaceBetween: 30,
@@ -2275,6 +2275,7 @@
 						nextButton: '.swiper-button-next',
 						prevButton: '.swiper-button-prev',
 						spaceBetween: 0,
+						loop: true,
 						freeMode: true
 					});
 				},
@@ -2453,6 +2454,7 @@
 						slidesPerView: 5,
 						paginationClickable: true,
 //						centeredSlides: true,
+//						loop: true,
 						spaceBetween: 10,
 						//						spaceBetween: 30,
 						mousewheelControl: true
@@ -2468,7 +2470,7 @@
 				}
 			})
 		}
-		// 미확정된 일정 정보 출력
+//		 미확정된 일정 정보 출력
 		function getVoteInfo(cal_num) {
 			memberVoteListSet = new Set();
 			console.log("투표할 일정 : " + cal_num);
@@ -2489,6 +2491,7 @@
 					console.log("미확정");
 					console.log(data);
 					swiperIndex = data.length - 1;
+					console.log(swiperIndex);
 					nowCalNum = cal_num;
 //					console.log(nowCalNum);
 					var voteString = "";
