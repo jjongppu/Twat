@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>단체페이지</title>
+	<title>달게더 모임</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="">
 	<meta name="keywords" content="">
@@ -14,10 +14,11 @@
 	<script src="js/nav.js"></script>
 	<script src="js/swiper.jquery.min.js"></script>
     <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
 	<script  type="text/javascript">
         
         
-        var COLOR1 = new Array('ddbbbb','eecccc','ffdddd',
+        var COLOR = new Array('ddbbbb','eecccc','ffdddd',
                                 'ddc3bb','eed4cc','ffe5dd',
                                 'ddccbb','eeddcc','ffeedd',
                                 'ddd4bb','eee5cc','fff6dd',
@@ -28,9 +29,8 @@
                                 'bbddbb','cceecc','ddffdd',
                                 'bbddc3','cceed4','ddffe5',
                                 'bbddcc','cceedd','ddffee',
-                                'bbddd4','cceee5','ddfff6');
-           
-        var COLOR2 = new Array('bbdddd','cceeee','ddffff',
+                                'bbddd4','cceee5','ddfff6',
+                                'bbdddd','cceeee','ddffff',
                                 'bbd4dd','cce5ee','ddf6ff',
                                 'bbccdd','ccddee','ddeeff',
                                 'bbc3dd','ccd4ee','dde5ff',
@@ -42,6 +42,8 @@
                                 'ddbbd4','eecce5','ffddf6',
                                 'ddbbcc','eeccdd','ffddee',
                                 'ddbbc3','eeccd4','ffdde5');
+           
+      
         
         
 		// 일정 잡기 저장용
@@ -1056,7 +1058,8 @@
 					var sessionResult = data[0].result;
 					if (!sessionResult) {
 						$('#newWrap').html("");
-						location.href = "/Twat/groupList.html";
+//						location.href = "/Twat/groupList.html";
+						location.href = "groupList.html";
 					}
 					else
 					{
@@ -1518,11 +1521,11 @@
 						}
 						
 						var classTemp = item.split("-")[2];
-                        var colors = Math.floor(Math.random() * 36) + 1;
+                        var colors = Math.floor(Math.random() * 72) + 1;
                         cell.innerHTML += "<div class='dateChk dateChk" + classTemp + "'></div>";
 //                        console.log(classTemp);
 						cell.innerHTML += "<div class='votedSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        $('.dateChk'+classTemp).css('background-color','#'+COLOR1[colors]);
+                        $('.dateChk'+classTemp).css('background-color','#'+COLOR[colors]);
 					}
 				}
 				// 미확정된 일정표시
@@ -1538,12 +1541,12 @@
 						}
 						
                         var classTemp = item.split("-")[2];
-                        var colors = Math.floor(Math.random() * 36) + 1;
+                        var colors = Math.floor(Math.random() * 72) + 1;
                         cell.innerHTML += "<div class='dateChk dateChk" + classTemp + "'></div>";
                         cell.innerHTML += "<img class='voteImg' src='img/etcIcon/vote.png'>";
 //                        console.log(classTemp);
 						cell.innerHTML += "<div class='voteSchedule' style='font-size:13px'>" + item.split("-")[1] + "</div>";
-                        $('.dateChk'+classTemp).css('background-color','#'+COLOR2[colors]);
+                        $('.dateChk'+classTemp).css('background-color','#'+COLOR[colors]);
 					}
 				}
 				// 생일표시
@@ -2405,7 +2408,7 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
-					console.log(commentsString.length);
+//					console.log(commentsString.length);
 //					if (commentsString.match(""))
 					if (commentsString.length < 1)
 					{
@@ -2416,9 +2419,13 @@
 //					console.log(commentsString);
 //					$("#commentList").html(commentsString);
 					$("#commentList .swiper-wrapper").html(commentsString);
-					$("#modal2>#modalTitle").html("일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
+					if(login_userId.match(group_master))
+						$("#modal2>#modalTitle").html("일정 <input type=button class='btnDel' value='일정 삭제' onclick='callModal5(" + cal_num + ")'><div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
+					else
+						$("#modal2>#modalTitle").html("일정<div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
 					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
+					$("#blindCover").css('z-index', 350);
 					$("#voteButtonBox").html("");
 					$('.commentBox').css('display', 'block');
 					//                    document.getElementById('modal2').innerHTML = scheduleString;
@@ -2836,9 +2843,14 @@
 
 //					$("#commentList").html(commentsString);
 					$("#commentList .swiper-wrapper").html(commentsString);
-					$("#modal2>#modalTitle").html("투표중인 일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>")
+					if(login_userId.match(group_master))
+						$("#modal2>#modalTitle").html("일정 <input type=button class='btnDel' value='일정 삭제' onclick='callModal5(" + cal_num + ")'><div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
+					else
+						$("#modal2>#modalTitle").html("일정<div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
 					$("#modal2").css('display', 'inline-block');
+//					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
+					$("#blindCover").css('z-index', 350);
 
 					//					setTimeout(function(){
 					//						if(parseInt($("#modal2").css('height'))%2 == 1)
@@ -2937,6 +2949,80 @@
 					swiperComment.slideTo(swiperIndex, 300, true);
 				}
 			})
+		}
+		// 일정 삭제 모달
+		function callModal5(cal_num)
+		{
+			var modal5str = "";
+			modal5str += "<input style='float:right' type='button' value='아니오' onclick='closeModal5()'>";
+			modal5str += "<input style='float:right; margin-right:10px' type='button' value='예' onclick='delSchedule(" + cal_num + ")'>&nbsp;";
+			
+			
+			$('#modal5').append(modal5str);
+			$('#modal5').css('display', 'inline-block');
+			$("#blindCover").css('display', 'block');
+			$("#blindCover").css('z-index', 500);
+		}
+		// 삭제 모달 닫기
+		function closeModal5()
+		{
+			$('#modal5').html("<h3>정말로 일정을 삭제하시겠습니까?</h3>");
+			$('#modal5').css('display', 'none');
+//			$("#blindCover").css('display', 'none');
+			$("#blindCover").css('z-index', 350);
+		}
+		// 일정 삭제
+		function delSchedule(cal_num)
+		{
+			
+//			$("#modal2").css('display', 'inline-block');
+//			$("#blindCover").css('display', 'block');
+//			$("#blindCover").css('z-index', 350);
+			
+			$.ajax({
+				type: 'post',
+				url: 'delCal.do',
+				data: {
+					cal_num: cal_num,
+				},
+				dataType: "json",
+				success: function(data) {
+//					console.log(data);
+					alert("일정이 삭제되었습니다");
+					window.location.reload(true);
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					
+				},
+				error: function(req) {
+					//                    alert('통신실패');
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : delCal.do");
+				}
+			});
 		}
 		// 선택한 날짜 등록/삭제
 		function addMemberVoteList(date) {
@@ -3315,7 +3401,7 @@
 					},
 					error: function(req) {
 						//                    alert('통신실패');
-						alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : getGroupMember.do");
+						alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : changeGroupMaster.do");
 					}
 				})
 			})
@@ -3443,11 +3529,12 @@
 				complete: function() {
 					$("#div_ajax_load_image").hide();
 					//					window.location.reload(true);
-					location.href = "/Twat/groupList.html";
+//					location.href = "/Twat/groupList.html";
+					location.href = "groupList.html";
 				},
 				error: function(req) {
 					//                    alert('통신실패');
-					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : getGroupMember.do");
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : setRoomOut.do");
 				}
 			})
 		}
@@ -3718,13 +3805,13 @@
             console.log($(a).children().eq(3).attr("src"));
             
             
-            if($(a).children().eq(3).attr("src") != "img/etcIcon/friendcheck.png"){
+            if($(a).children().eq(3).css("width") == undefined){
                 
-                $(a).children().eq(3).attr("src","img/etcIcon/friendcheck.png");
+                $(a).append('<img src="img/etcIcon/checked2.png" class="checkImg">');
                 
                 comeOnFriends.add(select); //선택한 아이디                
             }else{
-                $(a).children().eq(3).attr("src","");
+                $(a).children().eq(3).remove();
                 comeOnFriends.delete(select);                
             }
             
@@ -3843,9 +3930,9 @@
 
 						
                             
-                            document.getElementById("inviteModal").innerHTML += "<div id='friend" + index + "' style='border:3px solid black; margin:20px;' onclick='selectFriends(this)'><img src='" + item.friendImg + "'style='width:100px; height:100px; ' /><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
+                            document.getElementById("inviteModal").innerHTML += "<div class='friednsSendCover' id='friend" + index + "' onclick='selectFriends(this)'><img src='" + item.friendImg + "'style='width:64px; height:64px; border-radius: 64px;' /><div class='friendId' onclick='inviteFriends2()'> 아이디 : " +
 							item.friendId + "  </div><div class='friendName'> 이름 : " +
-							item.friendName + "</div><img src='' class='checkImg'/></div>";
+							item.friendName + "</div></div>";
                             
                             
                         
@@ -3899,7 +3986,29 @@
 
 	</script>
 </head>
-
+    <style>
+        .friednsSendCover{
+            width: 300px;
+            margin: 20px;
+        }
+        .friendId{
+               position: absolute;
+                top: 10px;
+                left: 70px;
+        }
+        .friendName{
+            position: absolute;
+            left: 86px;
+            bottom: 10px;
+        }
+        .checkImg{
+            position: absolute;
+            right: 0;
+            top: 10px;
+                width: 25px;
+    height: 25px;
+        }
+    </style>
 <body>
     <div id="newWrap">
       <nav class="left_nav">
@@ -4202,6 +4311,9 @@
 							<input type="button" value="예" onclick="getOutRoom()">
 							<input type="button" value="아니오" onclick="closeModal4()">
 						</div>
+						<div id="modal5">
+							<h3>정말로 일정을 삭제하시겠습니까?</h3>
+						</div>
 
 						<div id="inviteModal">
 
@@ -4223,6 +4335,10 @@
 							$('#modal2').css('display', 'none');
 							$('#modal3').css('display', 'none');
 							$('#modal4').css('display', 'none');
+							$('#modal5').css('display', 'none');
+							$('#modal5').html('<h3>정말로 일정을 삭제하시겠습니까?</h3>');
+//							$("#blindCover").css('display', 'none');
+							$("#blindCover").css('z-index', 350);
 						}
 
 						function closeModal2() {
@@ -4390,6 +4506,28 @@
 							border: 2px solid #E2E2E2;
 							z-Index: 1000;
 							text-align: right;
+						}
+						
+						#modal5 {
+							/*                            display: none;*/
+							/*                            display: inline-block;*/
+							background-color: #FFFFFF;
+							/*                            position:absolute;*/
+							/* 추가 */
+							position: fixed;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+							display: none;
+							/*
+                            top:300px;
+                            left:200px;
+*/                          
+                            width: 300px;
+							padding: 20px;
+							padding-top: 10px;
+							border: 2px solid #E2E2E2;
+							z-Index: 1000;
 						}
 
 					</style>
@@ -4570,8 +4708,8 @@
                         .choiceDate{
                             position: absolute;
                             background-image: url(img/etcIcon/checked2.png);
-                            top: 0;
-                            right: 0;
+                            top: -10px;
+                            left: 22px;
                             width: 25px;
                             height: 25px;
                             background-size: cover;

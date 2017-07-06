@@ -136,6 +136,9 @@ public class CalgatherDAO {
 
 			result = 1;
 			rs = psmt.executeQuery();
+			
+			if(psmt != null)
+				psmt.close();
 
 			result = 2;
 			if (rs.next()) {
@@ -151,9 +154,12 @@ public class CalgatherDAO {
 			psmt.setString(4, masterId);
 			psmt.setString(5, masterName);
 			psmt.setString(6, GroupImg);
-			psmt.setInt(7, GroupCount);
+			psmt.setInt(7, GroupCount);			
 
 			int res = psmt.executeUpdate();
+			
+			if(psmt != null)
+				psmt.close();
 
 			if (res > 0) {
 				result = 5;
@@ -355,6 +361,7 @@ public class CalgatherDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		boolean isDel = false;
+		int count = -1;
 
 		try {
 //			con = getConnection();
@@ -365,29 +372,54 @@ public class CalgatherDAO {
 			
 			rSet = pstmt.executeQuery();
 			
-			if(pstmt != null)
-				pstmt.close();
+//			if(pstmt != null)
+//				pstmt.close();
 			
-			int count = -1;
+//			int count = -1;
 			
 			while(rSet.next())
 			{
 				count = rSet.getInt(1) - 1;
 			}
-			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rSet != null)
+//					rSet.close();
+//				if (pstmt != null)
+//					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "";
 			
 			if(count < 0)
 			{
 				sql = "DELETE FROM CALGATHER WHERE GROUP_ID=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setInt(1, groupId);
-				
-				isDel = true;
+//				pstmt = con.prepareStatement(sql);
 			}
 			else
 			{
 				sql = "UPDATE CALGATHER SET GROUP_COUNT=? WHERE GROUP_ID=?";
-				pstmt = con.prepareStatement(sql);
+			}
+			
+			pstmt = con.prepareStatement(sql);
+			
+			if(count < 0)
+			{
+				pstmt.setInt(1, groupId);
+				isDel = true;
+			}
+			else
+			{
 				pstmt.setInt(1, count);
 				pstmt.setInt(2, groupId);
 			}
@@ -406,10 +438,10 @@ public class CalgatherDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rSet != null)
-					rSet.close();
-				if (pstmt != null)
-					pstmt.close();
+//				if (rSet != null)
+//					rSet.close();
+//				if (pstmt != null)
+//					pstmt.close();
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {

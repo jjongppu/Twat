@@ -10,6 +10,7 @@
 	    <script src="js/nav.js"></script>
     <script src="js/jquery.form.js"></script>
         <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
 </head>
 	<style>
 		* {
@@ -111,14 +112,7 @@
 	</style>
 	
 	<script>
-        $.ajax({
-    type: "post",
-    url: "SessionCheck.do",
-    dataType: "json",
-    success: function(data) {
-        if(data[0].result == "s"){
-            location.href='home.html';
-        }else{
+
 //		$(document).ready(function() {
 //			
 //			function qnaView() {
@@ -201,9 +195,7 @@
 		}
 
 ///////////////////////////////////////////////////////////////		
-	    }
-    }
-});
+
 	
 	</script>
 	
