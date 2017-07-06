@@ -6,16 +6,10 @@
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
-<!--    <link rel="stylesheet" type="text/css" href="css/myCalendar.css">-->
-<!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver2.css"> -->
-<!--    <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver3.css">-->
     <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
     <link rel="stylesheet" type="text/css" href="css/myCalendarCSSver4.css">
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-<!--    <link rel="stylesheet" type="text/javascript" href="js/myCalendar.js">-->
-<!--    <script type="text/javascript" src="js/myCalendar.js"></script>-->
-<!--    <link rel="stylesheet" type="text/css" href="css/nav.css">-->
         <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/nav.js"></script>
 <!--    <script src="js/swiper.jquery.min.js"></script>-->
@@ -1012,12 +1006,13 @@
     function initToday() {
         $('tr').children().each(function(i) {
             if ($(this).text() == initDay.getDate() && $('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1) {
-                $(this).css("background-color", "yellow");
+//                $(this).css("background-color", "yellow");
+                $(this).find('.dayNum').css("border", "2px solid red").css("border-radius", "22px");
             }
             for (let item of scheSet.keys()) {
                 if (item == dateToFormat(initDay)) {
                     if ($('#yearSelect option:selected').val() == initDay.getFullYear() && $('#monthSelect option:selected').val() == initDay.getMonth() + 1) {
-                        $('#date' + initDay.getDate()).css("backgroundColor", "green");
+//                        $('#date' + initDay.getDate()).css("backgroundColor", "green");
                     }
                 }
             }
@@ -1069,8 +1064,8 @@
             /*  ==========  날짜 선택해서 색깔 바꿔주는 문 ============== */
             if (selectDate < dateToFormat(initDay)) {
             } else {
-                if ($(a).css("backgroundColor") == "rgb(98, 188, 250)") {
-                    $(a).css("backgroundColor", "white");
+                if ($(a).find(".choiceDate").css('width') != undefined) {
+                    $(a).find(".choiceDate").remove();
                     scheSet.delete(yearInfo + monthInfo + dayInfo);
                     for (let item of voteSet.keys()) {
                         if (item.split("-")[0] == (yearInfo + monthInfo + dayInfo)) {
@@ -1091,7 +1086,7 @@
                     }
                     initToday();
                 } else {
-                    $(a).css("backgroundColor", "#62bcfa");
+                    $(a).append('<div class="choiceDate"> </div>');
                     scheSet.add(yearInfo + monthInfo + dayInfo);
                     console.log(selectDate);
                 }
@@ -1211,7 +1206,7 @@
 
             for (let item of scheSet.keys()) {
                 if (item == dateParam) {
-                    $('#date' + calDay).css("backgroundColor", "#62bcfa"); // 선택했을때 초록색으로 바꿔주는 부분!
+                    $('#date' + calDay).append('<div class="choiceDate"> </div>');// 선택했을때 초록색으로 바꿔주는 부분!
                 }
             } //선택한 날짜 초록색으로 표기
             
@@ -1220,12 +1215,12 @@
             dateColor.setMonth(today.getMonth());
             dateColor.setDate(calDay);
             if (dateColor.getDay() == 6) {
-                cell.innerHTML += "<div class='saturday' style='color:blue;'>" + calDay + "</div>";
+                cell.innerHTML += "<div class='saturday dayNum' style='color:blue;'>" + calDay + "</div>";
             } else if (dateColor.getDay() == 0) {
-                cell.innerHTML += "<div class='sunday'>" + calDay + "</div>";
+                cell.innerHTML += "<div class='sunday dayNum'>" + calDay + "</div>";
                 $('.sunday').css('color', 'red');
             } else {
-                cell.innerHTML += "<div>" + calDay + "</div>";
+                cell.innerHTML += "<div class='dayNum'>" + calDay + "</div>";
             }
             if (calDay % 9 == 0) cell.innerHTML += "<div style='font-size:1px;'>" + saveSolar.substr(5, 2) + "." + saveSolar.substr(7, 2) + "</div>";
             
