@@ -483,4 +483,215 @@
     </servlet-mapping>
     
     <!-- jjonggal -->
+    
+    <!-- dong -->
+    <servlet> 
+        <servlet-name>AcceptRequest</servlet-name> 
+        <servlet-class>com.twat.controller.AcceptRequest</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AcceptRequest</servlet-name> 
+        <url-pattern>/AcceptRequest.do</url-pattern> 
+    </servlet-mapping>
+
+    
+
+    <servlet> 
+        <servlet-name>addComment</servlet-name> 
+        <servlet-class>com.twat.controller.addCommentServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>addComment</servlet-name> 
+        <url-pattern>/addComment.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+
+    <servlet> 
+        <servlet-name>FindFriendservlet</servlet-name> 
+        <servlet-class>com.twat.controller.AddFriendservlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>FindFriendservlet</servlet-name> 
+        <url-pattern>/FindFriendservlet.do</url-pattern> 
+    </servlet-mapping>
+
+    
+
+
+    <servlet> 
+        <servlet-name>AddVoteList</servlet-name> 
+        <servlet-class>com.twat.controller.AddVoteList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>AddVoteList</servlet-name> 
+        <url-pattern>/addVote.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+<servlet> 
+        <servlet-name>ChangeGroupMaster</servlet-name> 
+        <servlet-class>com.twat.controller.ChangeGroupMaster</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangeGroupMaster</servlet-name> 
+        <url-pattern>/changeGroupMaster.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+<servlet> 
+        <servlet-name>ChangeImg</servlet-name> 
+        <servlet-class>com.twat.controller.ChangeImg</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangeImg</servlet-name> 
+        <url-pattern>/changeImg.do</url-pattern> 
+    </servlet-mapping>
+
+
+<servlet> 
+        <servlet-name>ChangeInfo</servlet-name> 
+        <servlet-class>com.twat.controller.ChangeInfo</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangeInfo</servlet-name> 
+        <url-pattern>/ChangeInfo.do</url-pattern> 
+    </servlet-mapping>
+
+<servlet> 
+        <servlet-name>ChangePwd</servlet-name> 
+        <servlet-class>com.twat.controller.ChangePwd</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangePwd</servlet-name> 
+        <url-pattern>/ChangePwd.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+<servlet> 
+        <servlet-name>ChangePWServlet</servlet-name> 
+        <servlet-class>com.twat.controller.ChangePWServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChangePWServlet</servlet-name> 
+        <url-pattern>/ChangePW.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+<servlet> 
+        <servlet-name>ChkId</servlet-name> 
+        <servlet-class>com.twat.controller.ChkId</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>ChkId</servlet-name> 
+        <url-pattern>/chkId.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+
+<servlet> 
+        <servlet-name>DeleteFriend</servlet-name> 
+        <servlet-class>com.twat.controller.DeleteFriend</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>DeleteFriend</servlet-name> 
+        <url-pattern>/DeleteFriend.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+
+
+
+
+<servlet> 
+        <servlet-name>FriendPhoneSearch</servlet-name> 
+        <servlet-class>com.twat.controller.FriendPhoneSearch</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>FriendPhoneSearch</servlet-name> 
+        <url-pattern>/friendPhoneSearch.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+
+
+<servlet> 
+        <servlet-name>GetFriendListServlet</servlet-name> 
+        <servlet-class>com.twat.controller.GetFriendListServlet</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetFriendListServlet</servlet-name> 
+        <url-pattern>/friends.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+
+
+<servlet> 
+        <servlet-name>GetGroupListProcess</servlet-name> 
+        <servlet-class>com.twat.controller.GetGroupListProcess</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetGroupListProcess</servlet-name> 
+        <url-pattern>/groupList.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+
+<servlet> 
+        <servlet-name>GetGroupMember</servlet-name> 
+        <servlet-class>com.twat.controller.GetGroupMember</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetGroupMember</servlet-name> 
+        <url-pattern>/getGroupMember.do</url-pattern> 
+    </servlet-mapping>
+
+
+
+
+
+
+
+<servlet> 
+        <servlet-name>GetQnaList</servlet-name> 
+        <servlet-class>com.twat.controller.GetQnaList</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GetQnaList</servlet-name> 
+        <url-pattern>/getQnaList.do</url-pattern> 
+    </servlet-mapping>	
+
+
+
+
+
+<servlet> 
+        <servlet-name>GroupBirth</servlet-name> 
+        <servlet-class>com.twat.controller.GroupBirth</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>GroupBirth</servlet-name> 
+        <url-pattern>/GetViewCountCheck.do</url-pattern> 
+    </servlet-mapping>	
+
+    	
+    
+    
+    <!-- dong -->
+    
+    
+    
+    
+    
 </web-app>

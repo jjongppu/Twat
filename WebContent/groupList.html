@@ -99,6 +99,7 @@
     
     // 모달 창을 띄우면서 친구리스트를 불러와주는 함수
     function addGroup(){
+        $('.okBtn').attr('onclick','goMakeGroup()');
         $('#blindCover').css('display','block');
         $('body').append('<div id="modal"><form id="make_group"><div id="contTit_Cover"><input class="contTit" type="text" name="make_group_title" placeholder="그룹 이름  (20자 이내)" maxlength="20"/></div><div id="titfriends">친구 선택</div><div id="friend_choice"></div><div id="btn_place"></div></form></div>');
         
@@ -191,11 +192,13 @@
     //메시지모달만 없앰
     function closeMessageModal(){
         $('#messagMeodal').remove();
-        
+        $('#blindCover_message').css('display','none');
+        $('.okBtn').attr('onclick','goMakeGroup()');
     }
     // 그룹 생성하기
     function goMakeGroup(){
         var formserial = $('#make_group').serialize();
+        $('#blindCover_message').css('display','block');
         var messageModal = '<div id="messagMeodal"><div id="messageTop"><div id="messagePrint"></div></div><div id="messageBottom"><div class="okBtn_message" onclick="closeModal();">확인</div></div></div>';
         var messageModal2 = '<div id="messagMeodal"><div id="messageTop"><div id="messagePrint"></div></div><div id="messageBottom"><div class="okBtn_message" onclick="closeMessageModal();">확인</div></div></div>';
         
@@ -220,7 +223,7 @@
                         }
                     },
                     error: function () {
-                        $('#ody').append(messageModal);
+                        $('#body').append(messageModal);
                         $('#messagePrint').html("그룹을 생성하던도중 오류가 발생하였습니다.");
                     }
                 });    
@@ -233,6 +236,8 @@
             $('body').append(messageModal2);
             $('#messagePrint').html("그룹 이름을 정해주세요.");
         }
+        
+        $('.okBtn').attr('onclick','');
         
     }
     
@@ -409,6 +414,16 @@
     
     
 /*    메세지 모달---*/
+    
+    #blindCover_message{
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0.7;
+        display: none;
+        z-index: 950;
+    }
     #messagMeodal{
         position: fixed;
         z-index: 1000;
@@ -625,6 +640,7 @@
             </div>
 
             <div id="blindCover" class="blind" onclick="closeModal();"></div>
+            <div id="blindCover_message" class="blind" onclick="closeMessageModal();"></div>
             <div id="blindCoverWhite" class="blind" ></div>
 
         </div>

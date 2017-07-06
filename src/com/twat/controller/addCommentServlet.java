@@ -18,7 +18,7 @@ import com.twat.dao.CalendarDAO;
 /**
  * Servlet implementation class addCommentServlet
  */
-@WebServlet("/addComment.do")
+//@WebServlet("/addComment.do")
 public class addCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

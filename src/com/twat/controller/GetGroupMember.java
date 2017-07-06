@@ -21,7 +21,7 @@ import com.twat.dto.MemberVO;
 /**
  * Servlet implementation class GetGroupMember
  */
-@WebServlet("/getGroupMember.do")
+//@WebServlet("/getGroupMember.do")
 public class GetGroupMember extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;

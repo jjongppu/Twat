@@ -19,7 +19,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class friendPhoneSearch
  */
-@WebServlet("/friendPhoneSearch.do")
+//@WebServlet("/friendPhoneSearch.do")
 public class FriendPhoneSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
