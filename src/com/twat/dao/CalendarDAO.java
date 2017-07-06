@@ -686,8 +686,8 @@ public class CalendarDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<CalendarVO> myCalGatherList = new ArrayList<CalendarVO>();
-		String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=?";
-		// String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=?";
+//		String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=?";
+		String sql = "SELECT * FROM CALENDAR WHERE GROUP_ID=? AND CAL_DEPTH=0";
 
 		for (int i = 1; i < groupIdArr.size(); i++) {
 //			sql += " or GROUP_ID=? ";
