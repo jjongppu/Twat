@@ -17,9 +17,9 @@ import com.twat.dto.MemberJoinGroupVO;
 import com.twat.mvconnection.MVConnection;
 
 public class CalgatherDAO {
-	Connection con = null;
-	PreparedStatement psmt = null;
-	ResultSet rs = null;
+//	Connection con = null;
+//	PreparedStatement psmt = null;
+//	ResultSet rs = null;
 
 	// MemberDAO �쓽 �떛湲��넠 -----------------------------------
 	private static CalgatherDAO instance = new CalgatherDAO();
@@ -44,6 +44,7 @@ public class CalgatherDAO {
 	// 李몄뿬以묒씤 罹섎┛�뜑瑜� 肉뚮젮二쇨린�쐞�빐 �옄�떊�씠 李몄뿬�븯怨좎엳�뒗 紐⑤뱺 罹섎┛�뜑�쓽 �젙蹂대��
 	// �뼸�뼱�샃�땲�떎..
 	public ArrayList<CalgatherVO> myGroupList(ArrayList<MemberJoinGroupVO> groupList) {
+		Connection con = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		ArrayList<MemberJoinGroupVO> groupArray = groupList;
@@ -104,6 +105,9 @@ public class CalgatherDAO {
 
 	public int makeGorup(String groupName, String[] members, String Today, String masterId, String GroupImg,
 			int GroupPk) {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		int result = 0;
 		int GroupCount = members.length;
 		String masterName = "";
@@ -183,6 +187,9 @@ public class CalgatherDAO {
 
 	// �꽌踰� �옱 �떆�옉�떆.... �쁽�옱 洹몃９ 罹섎┛�뜑�쓽 留덉�留� pk 媛믪쓣 諛섑솚�빐以띾땲�떎
 	public int getLastGroupId() {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		int count = 0;
 		String selectMygroupSql = "SELECT * FROM CALGATHER ORDER BY GROUP_ID DESC LIMIT 1";
 
@@ -219,6 +226,7 @@ public class CalgatherDAO {
 	// 諛� �엯�옣�떆 肉뚮젮以� 諛⑹젙蹂� �뼸�뼱�삤湲�
 	// ===============================================================
 	public CalgatherVO getGroupInfo(String groupId) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		CalgatherVO cv = new CalgatherVO();
@@ -261,7 +269,9 @@ public class CalgatherDAO {
 	}
 
 	public String getGroupMaster(int groupId) {// 현재 그룹방의 그룹 마스터 알아오기 // 나동주 추가
-
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		String sql = "";
 		String groupMaster = "";
 
@@ -297,6 +307,7 @@ public class CalgatherDAO {
 	}
 
 	public void changeGM(int groupId, String gmId, String gmName) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 
@@ -338,6 +349,7 @@ public class CalgatherDAO {
 
 	public boolean setRoomOut(int groupId)
 	{
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		boolean isDel = false;

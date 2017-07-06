@@ -22,10 +22,10 @@ import com.twat.mvconnection.MVConnection;
 import com.twat.dbpool.DBPool;
 
 public class CalendarDAO {
-	Connection con = null;
-	PreparedStatement psmt = null;
-	ResultSet rs = null;
-	Statement stmt;
+//	Connection con = null;
+//	PreparedStatement psmt = null;
+//	ResultSet rs = null;
+//	Statement stmt;
 
 	// CalendarDAO �뜝�룞�삕 �뜝�떛源띿삕�뜝�룞�삕
 	// ================================================================================================
@@ -50,6 +50,7 @@ public class CalendarDAO {
 	// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�뙣�븘�슱�삕�뜝�룞�삕
 	// ===================================================================================================
 	public ArrayList<CalendarVO> getInfo(String groupId) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
@@ -115,6 +116,7 @@ public class CalendarDAO {
 
 	// �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙣�븘�슱�삕�뜝�룞�삕(�뜝�뙎琉꾩삕 �뜝�룞�삕�뜝�떛�벝�삕, �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떛�벝�삕)
 	public ArrayList<CalendarVO> getInfo(String groupId, String calId) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
@@ -184,6 +186,9 @@ public class CalendarDAO {
 	}
 
 	public int getLastCalNum() {
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 		String sql = "";
 		int cal_num = 0;
 
@@ -231,6 +236,7 @@ public class CalendarDAO {
 	}
 
 	public void addGroupCal(int cal_num, String cal_date, int group_id, String cal_memo, String cal_writer) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = "";
 
@@ -363,6 +369,7 @@ public class CalendarDAO {
 //	public void addCalComment(int groupId, String userId, int calNum, String memo)
 	public void addCalComment(int groupId, String userId, int calNum, String memo)
 	{
+		Connection con = null;
 		PreparedStatement psmt2 = null;
 
 		try {
@@ -421,6 +428,7 @@ public class CalendarDAO {
 
 	// �뜝�룞�삕�몴 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�듃
 	public void updateMemberChoice(String calNum, String voteList, String user) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 //		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
@@ -556,6 +564,7 @@ public class CalendarDAO {
 
 	// �뜝�룞�삕�뜝�룞�삕 �솗�뜝�룞�삕�뜝�떦�뙋�삕 �뜝�뙃�눦�삕
 	public void scheduleSelected(String calNum, String calDate) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 //		ArrayList<CalendarVO> arrList = new ArrayList<CalendarVO>();
@@ -673,6 +682,7 @@ public class CalendarDAO {
 	}
 
 	public ArrayList<CalendarVO> groupCalInfo(ArrayList<String> groupIdArr) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<CalendarVO> myCalGatherList = new ArrayList<CalendarVO>();
@@ -746,6 +756,7 @@ public class CalendarDAO {
 
 	// 諛⑹옣 �쟾�솚 : �돩肉�,,, �씠嫄�,,, �븘�땲�떎,,, 吏꾩쭨,,, �걫李랁븯�꽕
 	public void changeGM(int groupId, String before, String after) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -894,6 +905,7 @@ public class CalendarDAO {
 	// 방나가기 처리
 	public void setRoomOut(int groupId, String userId)
 	{
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -1042,6 +1054,7 @@ public class CalendarDAO {
 
 	public void delCal(int groupId)
 	{
+		Connection con = null;
 		PreparedStatement pstmt = null;
 //		ResultSet rs = null;
 		
