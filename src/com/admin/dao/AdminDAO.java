@@ -558,6 +558,7 @@ public class AdminDAO {
 						
 
 						public boolean visitups(String userturn, String userid, String strToday) {
+							Connection con = null;
 							PreparedStatement psmt= null;
 							ResultSet rs= null;
 							boolean result = false;
@@ -573,11 +574,13 @@ public class AdminDAO {
 								if(!userturn.equals("getCookie")){
 									psmt = con.prepareStatement(selectVisit);
 									rs = psmt.executeQuery();
-									if(psmt != null)
-										psmt.close();
+									
 									
 									if(rs.next()){
+		
 										String date = rs.getString("VISIT_KIND");
+										if(psmt != null)
+											psmt.close();
 										if(!date.equals(strToday)){
 											psmt = con.prepareStatement(insertVisitToday);
 											psmt.setString(1,strToday);
