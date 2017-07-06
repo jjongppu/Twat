@@ -19,7 +19,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class ChangePwd
  */
-@WebServlet("/ChangePwd.do")
+//@WebServlet("/ChangePwd.do")
 public class ChangePwd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

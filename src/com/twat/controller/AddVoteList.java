@@ -19,7 +19,7 @@ import com.twat.dao.CalendarDAO;
 /**
  * Servlet implementation class AddVoteList
  */
-@WebServlet("/addVote.do")
+//@WebServlet("/addVote.do")
 public class AddVoteList extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;

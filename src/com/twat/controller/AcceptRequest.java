@@ -18,7 +18,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class AcceptRequest
  */
-@WebServlet("/AcceptRequest.do")
+//@WebServlet("/AcceptRequest.do")
 public class AcceptRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
