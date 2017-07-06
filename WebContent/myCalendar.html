@@ -1344,7 +1344,7 @@
                         str+=calSubStr1.substr(2,2)+"일"+"</div>";
                     }
                     str+="<div class='schedules scheList2'>"+tempDataArray[i].split("-")[1]+"</div>";
-                    str+="<div class='schedules scheList3'>"+tempDataArray[i].split("-")[2]+" 시 예약<button class='scheList' name='delete"+tempDataArray[i].split("-")[3]+"' id='delete"+tempDataArray[i].split("-")[3]+"' onclick=scheDelete(this)>-</button></div></div>";
+                    str+="<div class='schedules scheList3'>"+tempDataArray[i].split("-")[2]+" 시 예약<button class='scheList delBtn' id='delete"+tempDataArray[i].split("-")[3]+"' onclick=scheDelete(this)>-</button></div></div>";
                     tempDataCount++;
                 }
                 str+="</div>";
@@ -1393,54 +1393,54 @@
         });
     });
     
-    var i =0;
-    function moreShow(){
-        alert("!");
-        $("#privSchedule").append(
-            $.ajax({
-                 type:'post'
-                ,url:'myCal.do'
-                ,dataType : "json"
-                
-                ,success : function(data){
-                    console.log(data);
-                    console.log(i+=1);
-                  $.each(data, function(index, item){
-                      var calDate = item.myCalDate.split(",");
-                      if(calDate.length != 2){
-                         document.getElementById("myCalDate").innerHTML+=
-                             "<div class='schedules scheList'>"
-                             +calDate[0]
-                             +"~"
-                             +calDate[calDate.length-2]
-                             +"</div></br>";
-                      } else {
-                        document.getElementById("myCalDate").innerHTML+=
-                            "<div class='schedules scheList'>"
-                            +calDate[0]
-                            +"</div></br>";
-                      }
-                      
-                      document.getElementById("myCalContents").innerHTML+=
-                          "<div class='schedules scheList'>"
-                          +item.myCalContents
-                          +"</div></br>";
-                      
-                      document.getElementById("myCalTime").innerHTML+=
-                          "<div class='schedules scheList'>"
-                          +item.myCalTime+" 시 예약"
-                          +"<button class='scheList' name='delete"
-                          +item.myCalIndex
-                          +"' id='delete"
-                          +item.myCalIndex
-                          +"' onclick=scheDelete(this)>-</button></div></br>";
-                  });
-                },
-                error:function(req){ 
-                 alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
-                }
-        }));
-    }
+//    var i =0;
+//    function moreShow(){
+//        alert("!");
+//        $("#privSchedule").append(
+//            $.ajax({
+//                 type:'post'
+//                ,url:'myCal.do'
+//                ,dataType : "json"
+//                
+//                ,success : function(data){
+//                    console.log(data);
+//                    console.log(i+=1);
+//                  $.each(data, function(index, item){
+//                      var calDate = item.myCalDate.split(",");
+//                      if(calDate.length != 2){
+//                         document.getElementById("myCalDate").innerHTML+=
+//                             "<div class='schedules scheList'>"
+//                             +calDate[0]
+//                             +"~"
+//                             +calDate[calDate.length-2]
+//                             +"</div></br>";
+//                      } else {
+//                        document.getElementById("myCalDate").innerHTML+=
+//                            "<div class='schedules scheList'>"
+//                            +calDate[0]
+//                            +"</div></br>";
+//                      }
+//                      
+//                      document.getElementById("myCalContents").innerHTML+=
+//                          "<div class='schedules scheList'>"
+//                          +item.myCalContents
+//                          +"</div></br>";
+//                      
+//                      document.getElementById("myCalTime").innerHTML+=
+//                          "<div class='schedules scheList'>"
+//                          +item.myCalTime+" 시 예약"
+//                          +"<button class='scheList' name='delete"
+//                          +item.myCalIndex
+//                          +"' id='delete"
+//                          +item.myCalIndex
+//                          +"' onclick=scheDelete(this)>-</button></div></br>";
+//                  });
+//                },
+//                error:function(req){ 
+//                 alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//                }
+//        }));
+//    }
     
 //    function moreShow(){
 //        alert("!");
@@ -1535,7 +1535,7 @@
                 
             },
             error:function(req){
-             alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+//             alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }, beforeSend: function () {
                     var width = 0;
                     var height = 0;
