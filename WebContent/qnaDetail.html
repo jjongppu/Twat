@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Untitled Document</title>
+    <title>달게더 문의사항</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -111,6 +111,14 @@
 	</style>
 	
 	<script>
+        $.ajax({
+    type: "post",
+    url: "SessionCheck.do",
+    dataType: "json",
+    success: function(data) {
+        if(data[0].result == "s"){
+            location.href='home.html';
+        }else{
 //		$(document).ready(function() {
 //			
 //			function qnaView() {
@@ -192,8 +200,10 @@
 			
 		}
 
-		
-	
+///////////////////////////////////////////////////////////////		
+	    }
+    }
+});
 	
 	</script>
 	
@@ -228,7 +238,7 @@
 		
 		<div id="wrap">
 				<div id="title_box">
-					<h4>건의사항</h4>
+					<h4>문의사항</h4>
 				</div>
 				<div id="top_container">
 					<div id="top_title">
