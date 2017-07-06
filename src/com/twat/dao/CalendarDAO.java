@@ -1099,4 +1099,51 @@ public class CalendarDAO {
 		}
 	}
 
+	public void delCal2(int calNum)
+	{
+		Connection con = null;
+		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+		
+		
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "DELETE FROM CALENDAR WHERE CAL_REFERENCE=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, calNum);
+
+			int result = pstmt.executeUpdate();
+			
+			if(result == 1)
+			{
+//				System.out.println("calendar에서 groupId가 " + groupId + "인 row 삭제");
+			}
+			else
+			{
+//				System.out.println("삭제 실패");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+//			try {
+//				if (rs != null)
+//					rs.close();
+//				if (pstmt != null)
+//					pstmt.close();
+//				if (con != null)
+//					con.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+			try
+        	{
+        		con.close();
+        	}
+        	catch (SQLException ex) {
+				ex.printStackTrace();
+    		}
+		}
+	}
+
 }

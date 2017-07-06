@@ -1980,7 +1980,7 @@
 						direction: 'vertical',
 						slidesPerView: 3,
 						paginationClickable: true,
-						centeredSlides: true,
+//						centeredSlides: true,
 						//						spaceBetween: 30,
 						mousewheelControl: true
 					});
@@ -1990,7 +1990,7 @@
 						direction: 'vertical',
 						slidesPerView: 3,
 						paginationClickable: true,
-						centeredSlides: true,
+//						centeredSlides: true,
 //						slidesOffsetAfter: 192/2,
 //						slidesOffsetBefore: 192/2,
 						//						spaceBetween: 30,
@@ -2275,6 +2275,7 @@
 						nextButton: '.swiper-button-next',
 						prevButton: '.swiper-button-prev',
 						spaceBetween: 0,
+						loop: true,
 						freeMode: true
 					});
 				},
@@ -2404,7 +2405,7 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
-					console.log(commentsString.length);
+//					console.log(commentsString.length);
 //					if (commentsString.match(""))
 					if (commentsString.length < 1)
 					{
@@ -2415,9 +2416,13 @@
 //					console.log(commentsString);
 //					$("#commentList").html(commentsString);
 					$("#commentList .swiper-wrapper").html(commentsString);
-					$("#modal2>#modalTitle").html("일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
+					if(login_userId.match(group_master))
+						$("#modal2>#modalTitle").html("일정 <input type=button class='btnDel' value='일정 삭제' onclick='callModal5(" + cal_num + ")'><div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
+					else
+						$("#modal2>#modalTitle").html("일정<div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
 					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
+					$("#blindCover").css('z-index', 350);
 					$("#voteButtonBox").html("");
 					$('.commentBox').css('display', 'block');
 					//                    document.getElementById('modal2').innerHTML = scheduleString;
@@ -2453,6 +2458,7 @@
 						slidesPerView: 5,
 						paginationClickable: true,
 //						centeredSlides: true,
+//						loop: true,
 						spaceBetween: 10,
 						//						spaceBetween: 30,
 						mousewheelControl: true
@@ -2468,7 +2474,7 @@
 				}
 			})
 		}
-		// 미확정된 일정 정보 출력
+//		 미확정된 일정 정보 출력
 		function getVoteInfo(cal_num) {
 			memberVoteListSet = new Set();
 			console.log("투표할 일정 : " + cal_num);
@@ -2489,6 +2495,7 @@
 					console.log("미확정");
 					console.log(data);
 					swiperIndex = data.length - 1;
+					console.log(swiperIndex);
 					nowCalNum = cal_num;
 //					console.log(nowCalNum);
 					var voteString = "";
@@ -2833,9 +2840,14 @@
 
 //					$("#commentList").html(commentsString);
 					$("#commentList .swiper-wrapper").html(commentsString);
-					$("#modal2>#modalTitle").html("투표중인 일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>")
+					if(login_userId.match(group_master))
+						$("#modal2>#modalTitle").html("일정 <input type=button class='btnDel' value='일정 삭제' onclick='callModal5(" + cal_num + ")'><div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
+					else
+						$("#modal2>#modalTitle").html("일정<div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
 					$("#modal2").css('display', 'inline-block');
+//					$("#modal2").css('display', 'inline-block');
 					$("#blindCover").css('display', 'block');
+					$("#blindCover").css('z-index', 350);
 
 					//					setTimeout(function(){
 					//						if(parseInt($("#modal2").css('height'))%2 == 1)
@@ -2934,6 +2946,80 @@
 					swiperComment.slideTo(swiperIndex, 300, true);
 				}
 			})
+		}
+		// 일정 삭제 모달
+		function callModal5(cal_num)
+		{
+			var modal5str = "";
+			modal5str += "<input style='float:right' type='button' value='아니오' onclick='closeModal5()'>";
+			modal5str += "<input style='float:right; margin-right:10px' type='button' value='예' onclick='delSchedule(" + cal_num + ")'>&nbsp;";
+			
+			
+			$('#modal5').append(modal5str);
+			$('#modal5').css('display', 'inline-block');
+			$("#blindCover").css('display', 'block');
+			$("#blindCover").css('z-index', 500);
+		}
+		// 삭제 모달 닫기
+		function closeModal5()
+		{
+			$('#modal5').html("<h3>정말로 일정을 삭제하시겠습니까?</h3>");
+			$('#modal5').css('display', 'none');
+//			$("#blindCover").css('display', 'none');
+			$("#blindCover").css('z-index', 350);
+		}
+		// 일정 삭제
+		function delSchedule(cal_num)
+		{
+			
+//			$("#modal2").css('display', 'inline-block');
+//			$("#blindCover").css('display', 'block');
+//			$("#blindCover").css('z-index', 350);
+			
+			$.ajax({
+				type: 'post',
+				url: 'delCal.do',
+				data: {
+					cal_num: cal_num,
+				},
+				dataType: "json",
+				success: function(data) {
+//					console.log(data);
+					alert("일정이 삭제되었습니다");
+					window.location.reload(true);
+				},
+				beforeSend: function() {
+					var width = 0;
+					var height = 0;
+					var left = 0;
+					var top = 0;
+
+					width = 50;
+					height = 50;
+
+					top = ($(window).height() - height) / 2 + $(window).scrollTop();
+					left = ($(window).width() - width) / 2 + $(window).scrollLeft();
+
+					if ($("#div_ajax_load_image").length != 0) {
+						$("#div_ajax_load_image").css({
+							"top": top + "px",
+							"left": left + "px"
+						});
+						$("#div_ajax_load_image").show();
+					} else {
+						$('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="img/loadingImg/ajax_loader6.gif" style="width:50px; height:50px;"></div>');
+					}
+					
+				},
+				complete: function() {
+					 $("#div_ajax_load_image").hide();
+					
+				},
+				error: function(req) {
+					//                    alert('통신실패');
+					alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error + ", ajax : delCal.do");
+				}
+			});
 		}
 		// 선택한 날짜 등록/삭제
 		function addMemberVoteList(date) {
@@ -4199,6 +4285,9 @@
 							<input type="button" value="예" onclick="getOutRoom()">
 							<input type="button" value="아니오" onclick="closeModal4()">
 						</div>
+						<div id="modal5">
+							<h3>정말로 일정을 삭제하시겠습니까?</h3>
+						</div>
 
 						<div id="inviteModal">
 
@@ -4220,6 +4309,10 @@
 							$('#modal2').css('display', 'none');
 							$('#modal3').css('display', 'none');
 							$('#modal4').css('display', 'none');
+							$('#modal5').css('display', 'none');
+							$('#modal5').html('<h3>정말로 일정을 삭제하시겠습니까?</h3>');
+//							$("#blindCover").css('display', 'none');
+							$("#blindCover").css('z-index', 350);
 						}
 
 						function closeModal2() {
@@ -4387,6 +4480,28 @@
 							border: 2px solid #E2E2E2;
 							z-Index: 1000;
 							text-align: right;
+						}
+						
+						#modal5 {
+							/*                            display: none;*/
+							/*                            display: inline-block;*/
+							background-color: #FFFFFF;
+							/*                            position:absolute;*/
+							/* 추가 */
+							position: fixed;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+							display: none;
+							/*
+                            top:300px;
+                            left:200px;
+*/                          
+                            width: 300px;
+							padding: 20px;
+							padding-top: 10px;
+							border: 2px solid #E2E2E2;
+							z-Index: 1000;
 						}
 
 					</style>
