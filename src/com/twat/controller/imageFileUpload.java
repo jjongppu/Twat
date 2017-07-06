@@ -18,7 +18,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class imageFileUpload
  */
-@WebServlet("/imageFileUpload.do")
+//@WebServlet("/imageFileUpload.do")
 public class imageFileUpload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,14 +42,14 @@ public class imageFileUpload extends HttpServlet {
         //C:\Twat\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\Twat\main1.png
         File f = new File(pathname);
         if (!f.exists()) {
-            // Æú´õ°¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é Æú´õ »ý¼º
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             f.mkdirs();
         }
 
         String encType = "UTF-8";
         int maxFilesize = 5 * 1024 * 1024;
 
-        // MultipartRequest(request, ÀúÀå°æ·Î[, ÃÖ´ëÇã¿ëÅ©±â, ÀÎÄÚµùÄÉ¸¯ÅÍ¼Â, µ¿ÀÏÇÑ ÆÄÀÏ¸í º¸È£ ¿©ºÎ])
+        // MultipartRequest(request, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[, ï¿½Ö´ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½, ï¿½ï¿½ï¿½Úµï¿½ï¿½É¸ï¿½ï¿½Í¼ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½])
         MultipartRequest mr = new MultipartRequest(request, pathname, maxFilesize,
                 encType, new DefaultFileRenamePolicy());        
 
@@ -61,10 +61,10 @@ public class imageFileUpload extends HttpServlet {
 
         
         String fileName = mr.getFilesystemName(formName);
-        if(fileName == null) {   // ÆÄÀÏÀÌ ¾÷·Îµå µÇÁö ¾Ê¾ÒÀ»¶§
-        	System.out.println("ÆÄÀÏ ¾÷·Îµå µÇÁö ¾Ê¾ÒÀ½");
-        	} else {  // ÆÄÀÏÀÌ ¾÷·Îµå µÇ¾úÀ»¶§
-        	fileName=new String(fileName.getBytes("8859_1"),"UTF-8"); // ÇÑ±ÛÀÎÄÚµù - ºê¶ó¿ìÁ®¿¡ Ãâ·Â        	
+        if(fileName == null) {   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½
+        	System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ï¿½ï¿½");
+        	} else {  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½
+        	fileName=new String(fileName.getBytes("8859_1"),"UTF-8"); // ï¿½Ñ±ï¿½ï¿½ï¿½ï¿½Úµï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½        	
         	System.out.println("Form Name : " + formName + "<BR>");
         	System.out.println("File Name  : " + fileName);
         	} // end 
@@ -72,7 +72,7 @@ public class imageFileUpload extends HttpServlet {
         MemberDAO memberDao = MemberDAO.getInstance();
         memberDao.changeImg(userId, fileName);
         
-        System.out.println(file); // Ã·ºÎµÈ ÆÄÀÏÀÇ ÀüÃ¼°æ·Î
+        System.out.println(file); // Ã·ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½
         response.sendRedirect("myInfo.html");
         
         

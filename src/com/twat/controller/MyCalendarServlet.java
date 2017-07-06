@@ -22,7 +22,7 @@ import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 import com.twat.dto.MyCalendarVO;
 
-@WebServlet("/myCal.do")
+//@WebServlet("/myCal.do")
 public class MyCalendarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;       
 

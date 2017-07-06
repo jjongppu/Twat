@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.CalgatherDAO;
 
-@WebServlet("/makeGourp.do")
+//@WebServlet("/makeGourp.do")
 public class MakeGroupProcess extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -53,7 +53,7 @@ public class MakeGroupProcess extends HttpServlet {
         String masterId = (String)session.getAttribute("loginUserId");
         int groupCount = (int)application.getAttribute("groupCount");
         
-        //ÀÌ¹ÌÁö ·£´ý »ý¼º..
+        //ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½..
         int rand = (int)(Math.random()*10+1);
         String GroupImg = "img/group/groupImg"+rand+".png";
 

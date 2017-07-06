@@ -19,7 +19,7 @@ import com.admin.dto.NoticeBoardVO;
 /**
  * Servlet implementation class HomeNoticeBoard
  */
-@WebServlet("/HomeNoticeBoard.do")
+//@WebServlet("/HomeNoticeBoard.do")
 public class HomeNoticeBoard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
