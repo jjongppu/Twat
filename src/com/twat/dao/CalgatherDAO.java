@@ -136,6 +136,9 @@ public class CalgatherDAO {
 
 			result = 1;
 			rs = psmt.executeQuery();
+			
+			if(psmt != null)
+				psmt.close();
 
 			result = 2;
 			if (rs.next()) {
@@ -151,9 +154,12 @@ public class CalgatherDAO {
 			psmt.setString(4, masterId);
 			psmt.setString(5, masterName);
 			psmt.setString(6, GroupImg);
-			psmt.setInt(7, GroupCount);
+			psmt.setInt(7, GroupCount);			
 
 			int res = psmt.executeUpdate();
+			
+			if(psmt != null)
+				psmt.close();
 
 			if (res > 0) {
 				result = 5;

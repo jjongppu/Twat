@@ -366,14 +366,33 @@
     </div>
     
  
-<!--
-<script type='text/javascript'>
-  //<![CDATA[
-    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+
+    
+</script>
+
+    
+    
+    <script>
+//        cf4f2d06941459855a542dedf17b1be3
+        
+    
+    Kakao.init('cf4f2d06941459855a542dedf17b1be3');
+    // 카카오 로그인 버튼을 생성합니다.
+    Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: function(authObj) {
+        alert(JSON.stringify(authObj));
+      },
+        fail: function(err) {
+        alert(JSON.stringify(err));
+      }
+    });
+        
+        
     Kakao.init('cf4f2d06941459855a542dedf17b1be3');
     function loginWithKakao() {
       // 로그인 창을 띄웁니다.
-      Kakao.Auth.login({
+        Kakao.Auth.login({
         success: function(authObj) {
           alert(JSON.stringify(authObj));
         },
@@ -382,46 +401,10 @@
         }
       });
     };
-  //]]>
-    
-//    var refreshToken = Kakao.Auth.getRefreshToken();
-//    Kakao.Auth.setAccessToken(accessTokenFromServer);    
-    
-    
-</script>
--->
-
-    
-    
-    <script>
-     //<![CDATA[
-        // 사용할 앱의 JavaScript 키를 설정해 주세요.
-        Kakao.init('cf4f2d06941459855a542dedf17b1be3');
-        // 카카오 로그인 버튼을 생성합니다.
-        Kakao.Auth.createLoginButton({
-          container: '#kakao-login-btn',
-          success: function(authObj) {
-            alert(JSON.stringify(authObj));
-          },
-          fail: function(err) {
-             alert(JSON.stringify(err));
-          }
-        });
-      //]]>
         
         
-        Kakao.Auth.login({
-           success: function(authObj){
-               
-               alert("성공" + JSON.stringify(authObj));
-           },
-            fail:function(sdf){
-                alert("실패");
-            }
-            
-            
-        });
         
+ 
         
         
     </script>     
