@@ -16,7 +16,7 @@ import com.twat.dto.QnaVO;
 import com.twat.mvconnection.MVConnection;
 
 public class QnaDAO {
-	Connection con = null;
+//	Connection con = null;
 	
 	
 	// MemberDAO 의 싱글톤 -----------------------------------
@@ -40,6 +40,7 @@ public class QnaDAO {
 	
 	// qna_number 최대값 받아오는 메서드 -------------------- 최승우----------------------------
 	public int getMaxNum() {
+		Connection con = null;
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
 //		int result = -1;
@@ -83,7 +84,7 @@ public class QnaDAO {
 		int result = -1;
 //		int qna_number = 0;
 		PreparedStatement psmt2= null;
-		
+		Connection con = null;
 		String insertSql = "INSERT INTO QNA VALUES(?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, ?)";
 		
 		try {
@@ -125,7 +126,7 @@ public class QnaDAO {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
 		ArrayList<QnaVO> qnaArry = new ArrayList<QnaVO>();
-		
+		Connection con = null;
 		
 		
 		// 그릅수 얻어옴
@@ -221,7 +222,7 @@ public class QnaDAO {
 	public ArrayList<QnaVO> getList(int searchCategory, int page, String val) {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
-		
+		Connection con = null;
 		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
 //		QnaVO qnaVo = new QnaVO();
 		// searchCategry = 문의사항 종류(카테고리)
@@ -316,7 +317,7 @@ public class QnaDAO {
 	public ArrayList<QnaVO> detailQnA(int val) {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
-		
+		Connection con = null;
 		ArrayList<QnaVO> arList = new ArrayList<QnaVO>(); 
 		
 //		int result = -1;
@@ -362,7 +363,7 @@ public class QnaDAO {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
 		int result = -1;
-		
+		Connection con = null;
 		String deleteSql = "DELETE FROM QNA where MEMBER_ID=? and QNA_ID=? and QNA_PW=?";
 		
 		try {
@@ -398,7 +399,7 @@ public class QnaDAO {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
 		int result = -1;
-		
+		Connection con = null;
 		String updateSql = "UPDATE QNA SET QNA_CATEGORY=?, QNA_PW=?, QNA_TITLE=?, QNA_CONTENTS=? WHERE MEMBER_ID=? AND QNA_ID=?";
 		
 		try {

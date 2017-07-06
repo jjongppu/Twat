@@ -52,6 +52,7 @@ public class MemberDAO {
 			psmt.setString(1, MEMBER_NAME);
 			psmt.setString(2, MEMBER_PHONE);
 
+			
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
@@ -153,10 +154,10 @@ public class MemberDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs2 != null)
-					rs2.close();
-				if (psmt2 != null)
-					psmt2.close();
+//				if (rs2 != null)
+//					rs2.close();
+//				if (psmt2 != null)
+//					psmt2.close();
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {
@@ -192,10 +193,10 @@ public class MemberDAO {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
-				if (psmt != null)
-					psmt.close();
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {

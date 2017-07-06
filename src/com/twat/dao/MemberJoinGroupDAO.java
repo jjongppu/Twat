@@ -17,9 +17,9 @@ import com.twat.mvconnection.MVConnection;
 
 public class MemberJoinGroupDAO
 {
-	Connection con = null;
-	PreparedStatement psmt= null;
-	ResultSet rs= null;
+//	Connection con = null;
+//	PreparedStatement psmt= null;
+//	ResultSet rs= null;
 
 	
 	// MemberJoinGroupDAO ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½ -----------------------------------
@@ -46,7 +46,7 @@ public class MemberJoinGroupDAO
 	{
 		PreparedStatement pstmt = null;
 		ResultSet resultSet = null;
-		
+		Connection con = null;
 		ArrayList<String> arrList = new ArrayList<String>();
 		String sql = "SELECT MEMBER_ID FROM MEMBER_JOIN_GROUP WHERE GROUP_ID=?";
 		
@@ -90,7 +90,7 @@ public class MemberJoinGroupDAO
 	{
 		PreparedStatement psmt5 = null;
 		ResultSet rs5 = null;
-		
+		Connection con = null;
 		ArrayList<String> arrList = new ArrayList<String>();
 		String sql = "SELECT GROUP_ID FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=?";
 		
@@ -134,7 +134,7 @@ public class MemberJoinGroupDAO
 	{
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
-
+		Connection con = null;
 		try {
 //			con = getConnection();
 			con = new MVConnection(DBPool.getInstance().getConnection());
@@ -172,7 +172,7 @@ public class MemberJoinGroupDAO
 	public void updateCalView(int groupId)
 	{
 		PreparedStatement pstmt = null;
-
+		Connection con = null;
 		try {
 //			con = getConnection();
 			con = new MVConnection(DBPool.getInstance().getConnection());
@@ -212,7 +212,7 @@ public class MemberJoinGroupDAO
 		ArrayList<MemberJoinGroupVO> arrList = new ArrayList<MemberJoinGroupVO>();
 		String sql = "SELECT * FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=?";
 		PreparedStatement psmt10 = null;
-		
+		Connection con = null;
 		try{
 			ResultSet rs10 = null;
 //			con = getConnection();
@@ -253,7 +253,7 @@ public class MemberJoinGroupDAO
 	// ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½Ð¾ï¿½ï¿½Ù°ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½...
 	public void updateMyCalView(int groupId, String userName){
 		PreparedStatement pstmt = null;
-
+		Connection con = null;
 		try {
 //			con = getConnection();
 			con = new MVConnection(DBPool.getInstance().getConnection());
@@ -288,6 +288,7 @@ public class MemberJoinGroupDAO
 	public void inviteFriends(String friendId, int groupId){//±×·ì¹æ Ä£±¸ÃÊ´ë
 		PreparedStatement pstmt = null;
 		ResultSet rs2 = null;
+		Connection con = null;
 		try {
 //			con = getConnection();
 			con = new MVConnection(DBPool.getInstance().getConnection());
@@ -344,6 +345,7 @@ public class MemberJoinGroupDAO
 
 	public boolean chkId(String MEMBER_ID, String groupId)
 	{
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rSet = null;
 		int result = 0;
@@ -354,7 +356,11 @@ public class MemberJoinGroupDAO
 			String sql = "SELECT COUNT(MEMBER_ID) FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=? AND GROUP_ID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, MEMBER_ID);
-			pstmt.setInt(2, Integer.parseInt(groupId));
+			try {
+				pstmt.setInt(2, Integer.parseInt(groupId));
+			} catch (NumberFormatException e) {
+				pstmt.setInt(2, -1);
+			}
 
 			rSet = pstmt.executeQuery();
 			

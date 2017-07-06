@@ -21,7 +21,7 @@ import com.twat.mvconnection.MVConnection;
 	
 
 public class AdminDAO {
-	Connection con = null;
+//	Connection con = null;
 
 	
 	
@@ -49,6 +49,7 @@ public class AdminDAO {
 
 		// 관리자 로그인을 위한 메서드 ----------------------------------쫑길빵길
 		public String adminlogin(String MEMBER_ID, String MEMBER_PW) {
+			Connection con = null;
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			String result = "";
@@ -85,6 +86,7 @@ public class AdminDAO {
 		
 		// 쫑길빵길의 어드민 홈 db정보 뿌려주기
 		public ArrayList<Integer> getAllInfo(){
+			Connection con = null;
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<Integer> info = new ArrayList<Integer>();
@@ -126,6 +128,7 @@ public class AdminDAO {
 		
 		// 어드민 페이지 현재 정상 로그인 되는 회원들만 얻어옴 + 검색
 		public ArrayList<MemberVO> adminlogin(int page, String val){
+			Connection con = null;
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<MemberVO> members = new ArrayList<MemberVO>();
@@ -198,7 +201,7 @@ public class AdminDAO {
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();	
-			
+			Connection con = null;
 			
 			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM CALGATHER";
@@ -274,7 +277,7 @@ public class AdminDAO {
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<CalendarVO> calArry = new ArrayList<CalendarVO>();	
-			
+			Connection con = null;
 			
 			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM CALENDAR WHERE CAL_DEPTH=0";
@@ -355,7 +358,7 @@ public class AdminDAO {
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<QnaVO> qnaArry = new ArrayList<QnaVO>();	
-			
+			Connection con = null;
 			
 			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM QNA";
@@ -430,6 +433,7 @@ public class AdminDAO {
 		// kind 가 1이면 게시글,댓글,그룹 삭제 2면 댓글,게시글 삭제,
 		   public int outGroup(String group_ID, int kind){
 				PreparedStatement psmt= null;
+				Connection con = null;
 				ResultSet rs= null;
 				//그룸삭제 쿼리
 			   String deleteGroupSql = "DELETE FROM CALGATHER WHERE GROUP_ID =?";
@@ -487,6 +491,7 @@ public class AdminDAO {
 			// 관리자 답변달아주기 위한 메서드 ----------------------------------쫑길빵길
 			public int setQnaReply(String qna_id, String reply) {
 				PreparedStatement psmt= null;
+				Connection con = null;
 				String updateReplySql = "UPDATE QNA SET QNA_REPLY=? WHERE QNA_ID=?";
 				int result =0;
 				try {
@@ -558,6 +563,7 @@ public class AdminDAO {
 						
 
 						public boolean visitups(String userturn, String userid, String strToday) {
+							Connection con = null;
 							PreparedStatement psmt= null;
 							ResultSet rs= null;
 							boolean result = false;
@@ -573,11 +579,13 @@ public class AdminDAO {
 								if(!userturn.equals("getCookie")){
 									psmt = con.prepareStatement(selectVisit);
 									rs = psmt.executeQuery();
-									if(psmt != null)
-										psmt.close();
+									
 									
 									if(rs.next()){
+		
 										String date = rs.getString("VISIT_KIND");
+										if(psmt != null)
+											psmt.close();
 										if(!date.equals(strToday)){
 											psmt = con.prepareStatement(insertVisitToday);
 											psmt.setString(1,strToday);
@@ -611,6 +619,7 @@ public class AdminDAO {
 						}
 
 		public ArrayList<VisitVO> getVisits() {
+			Connection con = null;
 			ArrayList<VisitVO> array = new ArrayList<VisitVO>();
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
@@ -658,6 +667,7 @@ public class AdminDAO {
 			
 		public Long getAndSetNoticeView(Long views) {
 			PreparedStatement psmt= null;
+			Connection con = null;
 			ResultSet rs= null;
 			Long result = null;
 			String selectVisit1 = "SELECT * FROM NOTICE_BOARD WHERE NOTICE_ID=?";
