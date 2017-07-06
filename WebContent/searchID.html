@@ -25,9 +25,10 @@
 	
     .container {
         text-align: center;
-        width: 600px;
+        width: 350px;
 /*        border: 1px solid #e5e5e5;*/
-		margin: 0 auto;
+		margin: auto;
+		margin-top: 226px;
     }
 
 	#contentHeader {
@@ -52,15 +53,28 @@
 	
 	.textBox {
 /*		border: 1px solid green;*/
-		width: 400px;
+/*		width: 400px;*/
 		margin: 0 auto;
+	}
+	
+	.inputBox {
+		border: none;
+		border-bottom: 1px solid gray;
+		background: none;
+		width: 80%;
+		height: 38px;
+		margin: 6px 0;
+		padding-left: 18px;
+		background-color: transparent;
+		
 	}
 	.btn {
 		background: none;
 		border: none;
-		width: 80px;
+		width: 120px;
 		height: 28px;
 	}
+	
 	
 	#searchBoxWrap {
 		margin-top: 40px;
@@ -204,24 +218,28 @@
 			</div>
 			<div id="contentBody">
 				<div id="name" class="textBox">
+<!--
 					<div class="text">
 						이름
 					</div>
-					<input type="text" id="nameBox" class="inputBox" name="userName" />
+-->
+					<input type="text" id="nameBox" class="inputBox" name="userName" placeholder="회원 이름"/>
 					<div id="nameMessage"></div>
 				</div>
 				<div id="phone" class="textBox">
+<!--
 					<div class="text">
 						전화번호
 					</div>
-					<input type="text" name="userPhone" id="phoneBox" class="inputBox" onkeyup="autoHypen()"/>
+-->
+					<input type="text" name="userPhone" id="phoneBox" class="inputBox" placeholder="전화번호" onkeyup="autoHypen()"/>
 					<div id="phoneMessage"></div>
 				</div>
 			</div>
 			<div id="contentSubmit">
 				<div>
 					<input type="button" value="확인" id="submitBtn" class="btn" onclick="searchEnter()"/>
-					<input type="button" value="뒤로가기" id="backBtn" class="btn" onclick="location.href='index.html'"/>
+					<input type="button" value="취소" id="backBtn" class="btn" onclick="location.href='index.html'"/>
 				</div>
 			</div>
 			
