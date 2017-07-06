@@ -185,6 +185,8 @@
     //모달 사라짐
     function closeModal(){
         $('#blindCover').css('display','none');
+        $('#blindCover_message').css('display','none');
+        $('#blindCover').css('z-index','300');
         $('#messagMeodal').remove();
         $('#modal').remove();
         
@@ -193,6 +195,7 @@
     function closeMessageModal(){
         $('#messagMeodal').remove();
         $('#blindCover_message').css('display','none');
+        $('#blindCover').css('z-index','300');
         $('.okBtn').attr('onclick','goMakeGroup()');
     }
     // 그룹 생성하기
@@ -216,6 +219,7 @@
                         if(data[0].result == 's'){
                             $('body').append(messageModal);
                             $('#messagePrint').html("그룹이 정상적으로 생성 되었습니다.");
+                            $('#blindCover').css('z-index','960');
                             $('.okBtn_message').attr('onclick','location.href="groupList.html"');
                         }else{
                             $('body').append(messageModal);
