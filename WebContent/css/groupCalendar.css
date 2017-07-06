@@ -1044,3 +1044,8 @@ rdoSelect
     border: 1px solid gainsboro;
     
 }
+
+.btnDel
+{
+	float: right;
+}
