@@ -99,6 +99,7 @@
     
     // 모달 창을 띄우면서 친구리스트를 불러와주는 함수
     function addGroup(){
+        $('.okBtn').attr('onclick','goMakeGroup()');
         $('#blindCover').css('display','block');
         $('body').append('<div id="modal"><form id="make_group"><div id="contTit_Cover"><input class="contTit" type="text" name="make_group_title" placeholder="그룹 이름  (20자 이내)" maxlength="20"/></div><div id="titfriends">친구 선택</div><div id="friend_choice"></div><div id="btn_place"></div></form></div>');
         
@@ -192,7 +193,7 @@
     function closeMessageModal(){
         $('#messagMeodal').remove();
         $('#blindCover_message').css('display','none');
-        
+        $('.okBtn').attr('onclick','goMakeGroup()');
     }
     // 그룹 생성하기
     function goMakeGroup(){
@@ -222,7 +223,7 @@
                         }
                     },
                     error: function () {
-                        $('#ody').append(messageModal);
+                        $('#body').append(messageModal);
                         $('#messagePrint').html("그룹을 생성하던도중 오류가 발생하였습니다.");
                     }
                 });    
@@ -235,6 +236,8 @@
             $('body').append(messageModal2);
             $('#messagePrint').html("그룹 이름을 정해주세요.");
         }
+        
+        $('.okBtn').attr('onclick','');
         
     }
     

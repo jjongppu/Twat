@@ -44,12 +44,12 @@
         border-bottom: 1px solid gray;
     }
     .btn {
-        width: 60%;
         border: none;
         height: 38px;
         margin: 6px 0 0 0;
         background-color:transparent;
         cursor: pointer;
+        width: 120px;
     }
     .smallBtn{
         display: inline-block;
@@ -126,7 +126,23 @@
         position: absolute;
         margin: auto;
         height: 500px;
+        text-align: center;
         
+    }
+    .text{
+        margin-top: 20px;
+        font-size: 20px;
+    }
+    #questionBox{
+        margin-top: 20px;
+    }
+    #mainText{
+        text-align: center;   
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    #confirmBtn{
+        margin-top: 20px;
     }
 </style>    
 
@@ -140,6 +156,17 @@
          });
      });
     
+     $(window).resize(function(){
+        $('#userLoginCover').css("height",$(window).height());
+        $('#userLoginCover').css("width",$(window).width());
+            
+        if((window.innerHeight-500)/2 > 1){
+            $('#userLoginCover').css("margin-top",(window.innerHeight-500)/2 );
+        }else{
+            $('#userLoginCover').css("margin-top", 0 );
+        }
+
+    });
     
 //    function enterLog(){        
 //        if(window.event.keyCode == 13) {
@@ -330,10 +357,9 @@
             <div id="cover">
                 <div id="cover_inCover">
                 <div class='loginContainer'>
-                    <div class='logoBox'><img id="logo" src="img/etcIcon/logo.png"/>
-                    </div>
+                    
                     <div id="">
-					<h4 id="">비밀번호 찾기</h4>
+                        <div id="mainText">비밀번호 찾기</div>
 				    </div>
                     <div>
                             <div id="">
@@ -363,7 +389,7 @@
 					           </div>
 				            </div>
                     </div>
-                    <div>
+                    <div id="confirmBtn">
 						<input type="button" value="확인" id="submitBtn" class="btn" onclick="searchEnter()"/>
 						<input type="button" value="취소" id="cancelBtn" class="btn" onclick='location.href="index.html"' />
                     </div>
@@ -371,10 +397,9 @@
                     
                     
                     <div id="modal" >
-                        <div class='logoBox'><img id="logo" src="img/etcIcon/logo.png"/>
-                        </div>
+                        
                         <div id="">
-					<h4 id="mainText">비밀번호 변경</h4>
+                            <div id="mainText">비밀번호 변경</div>
 				    </div>
                         <div id="contentBody">
 					           <div id="pw1" class="textBox">
@@ -385,7 +410,7 @@
                         </div>
                             <div id="chkOnKey"></div>
 				        </div>
-                        <div>
+                        <div id="confirmBtn">
                             <input type="button" value="확인" id="submitBtn" class="btn" onclick="changePwd()"/>
 						    <input type="button" value="취소" id="cancelBtn" class="btn" onclick='location.href="index.html"' />
 					    </div>
