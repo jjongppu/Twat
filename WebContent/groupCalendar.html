@@ -1056,7 +1056,8 @@
 					var sessionResult = data[0].result;
 					if (!sessionResult) {
 						$('#newWrap').html("");
-						location.href = "/Twat/groupList.html";
+//						location.href = "/Twat/groupList.html";
+						location.href = "groupList.html";
 					}
 					else
 					{
@@ -3526,7 +3527,8 @@
 				complete: function() {
 					$("#div_ajax_load_image").hide();
 					//					window.location.reload(true);
-					location.href = "/Twat/groupList.html";
+//					location.href = "/Twat/groupList.html";
+					location.href = "groupList.html";
 				},
 				error: function(req) {
 					//                    alert('통신실패');
