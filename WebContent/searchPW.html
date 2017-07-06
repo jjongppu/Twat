@@ -151,14 +151,17 @@
 
 <script>
     $.ajax({
-    type: "post",
-    url: "SessionCheck.do",
-    dataType: "json",
-    success: function(data) {
-        if(data[0].result == "s"){
-            location.href='home.html';
-        }else{
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		type: "post",
+		url: "SessionCheck.do",
+		dataType: "json",
+		success: function(data) {
+			if(data[0].result == "s"){
+				location.href='home.html';
+			}
+		}
+	});           
+	
+	
     // 중앙정렬 시켜줌 ----------
      $(document).ready(function(){
          $('#userLoginCover').css('margin-top',($(window).height()-500)/2);
@@ -355,10 +358,8 @@
                 }
                 
             }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
-            }
-    }
-});
+        
+
 </script>
 
 <body>
