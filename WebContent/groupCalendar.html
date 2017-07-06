@@ -13,8 +13,8 @@
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/nav.js"></script>
 	<script src="js/swiper.jquery.min.js"></script>
-
-	<script language="javascript" type="text/javascript">
+    <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+	<script  type="text/javascript">
 		// 일정 잡기 저장용
 		var scheSet = new Set();
 		// 생일자 저장용
@@ -921,8 +921,8 @@
 		var today = new Date(); // 오늘 날짜
 
 		$(document).ready(function() {
-			chkId();
-//			chkMaster();
+//			chkId();
+			chkMaster();
 			
 
 			var groupId = location.href.split("=")[1];
@@ -1009,6 +1009,7 @@
 				//				alert('!!');
 			})
 			//            initToday(); //  주석1
+			chkId();
 		});
 		
 		function chkId() {
@@ -1025,11 +1026,13 @@
 //					console.log(data);
 					var sessionResult = data[0].result;
 					if (!sessionResult) {
+						$('#newWrap').html("");
 						location.href = "/Twat/groupList.html";
 					}
 					else
 					{
-						chkMaster();
+//						chkMaster();
+//						$('#newWrap').html("");
 					}
 				},
 				beforeSend: function() {
@@ -1583,7 +1586,8 @@
 					//                    $("#otherMembers").html = "<span> 외 " + data[0].group_count + "명</span>";
 					document.getElementById("otherMembers").innerHTML += "<span>&nbsp;외 " + data[0].group_count + "명</span>";
 
-					for (var arrCal = 1; arrCal < data.length; arrCal++) {
+					for (var arrCal = 1; arrCal < data.length; arrCal++)
+					{
 
 						//						var chkDate = false;
 						if (parseInt(data[arrCal].cal_date) < parseInt(dateToFormat(initDay)) && data[arrCal].cal_date.indexOf(",") == -1) {
@@ -1618,7 +1622,8 @@
 						//						strA += '<div class="right-top">';
 						// 0 / 0 / 0 처리
 						//                        if (data[arrCal].member_choice.indexOf(",") == -1)
-						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
+						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+						{
 							// 확정된 날짜 왼쪽 상단 표시
 
 							var mcCheck = data[arrCal].member_choice.split(",");
@@ -1700,9 +1705,10 @@
 						str += '<div class="content">';
 //						                        str += '<div class="left">' + data[arrCal].state_icon + '</div>';
 						str += '<div class="left">';
-						//                        if (str2.indexOf(',') == -1)
+//						                        if (str2.indexOf(',') == -1)
 						// ======================================================================================================
-						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date)) {
+						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
+						{
 							//							str += data[arrCal].cal_date;
 							if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
 								str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
@@ -1737,6 +1743,12 @@
 								var resMDate1 = parseInt(res[0].substr(6, 2));
 								var resMonth2 = parseInt(res[res.length - 1].substr(4, 2));
 								var resMDate2 = parseInt(res[res.length - 1].substr(6, 2));
+								
+								if(parseInt(res[res.length - 1]) < parseInt(dateToFormat(initDay)))
+								{
+									continue;
+								}
+								
 								//								str += res[0] + "~" + res[res.length - 1];
 								if (parseInt(res[0].substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
 									str += "<div style='text-align:left; padding-left:5px;'>" + resMonth1 + "월 " + resMDate1 + "일</div>";
@@ -1779,7 +1791,7 @@
 						//                            str += res[0] + "~" + res[res.length - 1];
 						////                            console.log("투표 : " + data[arrCal].cal_memo);
 						//                            for (var i = 0; i < res.length; i++) {
-						//                                voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
+//						                                voteSet.add(res[i] + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
 						//                            }
 						//                        }
 						//                        str += '</div>';
@@ -1802,7 +1814,7 @@
 						//                        }
 						//                        else
 						//                        {
-						//                            // 투표(미확정)
+//						                             투표(미확정)
 						//                            str += '<a class="moreInfo" onclick="getVoteInfo(' + data[arrCal].cal_num + ')">자세히보기</a>';
 						//                        }
 						//                        
@@ -2149,7 +2161,7 @@
 					//						$('.event .contentBox').append(str);
 					//					}
 					buildCalendar();
-
+//					chkId();
 				},
 				beforeSend: function() {
 					var width = 0;
@@ -2240,7 +2252,7 @@
 					var memberList = scheduleObject.member_choice.split(",");
 
 					for (var i = 0; i < data.length; i++) {
-						// 일정 정보
+//						 일정 정보
 						if (data[i].cal_depth == 0) {
 							scheduleString += "<div id='scheduleDate'>일정 : " + scheduleObject.cal_date.substr(0, 4) + "년 " + scheduleObject.cal_date.substr(4, 2) + "월 " + scheduleObject.cal_date.substr(6, 2) + "일</div>";
 							scheduleString += "<div id='scheduleWriter'>작성자 : " + findMemberName(scheduleObject.cal_writer) + "</div>";
@@ -2248,7 +2260,7 @@
 							scheduleString += "<div id='scheduleMember'>참가자 : ";
 							// 참가자 출력
 							for (var j = 0; j < memberList.length; j++) {
-								//                        console.log(memberList[i].substr(8));
+//								                        console.log(memberList[i].substr(8));
 								//                                scheduleString += findMemberName(memberList[j].substr(8));
 								scheduleString += findMemberName(memberList[j]);
 
@@ -2263,7 +2275,48 @@
 //							commentsString += "<div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
 //							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div></div>";
 							commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'>" + findMemberName(data[i].cal_writer) + " : </div>";
-							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div></div></div>";
+							commentsString += "<div calss='commentMemo'>\t" + data[i].cal_memo + "</div>";
+							
+							var commDate = new Date();
+							
+							// 초단위
+							var commNow = parseInt(commDate.getTime()/1000);
+							var commBefore = parseInt(data[i].cal_time/1000);
+							var commTime = commNow - commBefore;
+//							console.log(commNow);
+//							console.log(commBefore);
+//							console.log(commNow - commBefore);
+							
+							if(commTime >= 3600 * 24 * 365)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 365) + "년 전</span>";
+							}
+							else if(commTime >= 3600 * 24 * 30)
+							{	
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 30) + "개월 전</span>";
+							}
+							else if(commTime >= 3600 * 24)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24) + "일 전</span>";
+							}
+							else if(commTime >= 3600)
+							{
+								if(parseInt(commTime/3600) == 1)
+									commentsString += "<span class='commentTime'> - 한 시간 전</span>";
+								else
+									commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600) + "시간 전</span>";
+							}
+							else if(commTime >= 60)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/60) + "분 전</span>";
+							}
+							else
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime) + "초 전</span>";
+							}
+							
+							
+							commentsString += "</div></div>";
 							//                            commentsString += "<div id='commentTime'>" + data[i].cal_time + "</div>";
 						}
 
@@ -2281,13 +2334,15 @@
 					//                    scheduleString += "</div>"; // CommentBox
 
 					$(".modalSchduleInfo").html(scheduleString);
-
-					if (commentsString.match("")) {
+					console.log(commentsString.length);
+//					if (commentsString.match(""))
+					if (commentsString.length < 1)
+					{
 						//<div class="swiper-slide">Slide 1</div>
 						commentsString += "<div class='swiper-slide'><div class='commentBox'><div class='commentWriter'></div>";
 						commentsString += "<div calss='commentMemo'>아직 입력된 댓글이 없습니다</div></div><div>";
 					}
-					console.log(commentsString);
+//					console.log(commentsString);
 //					$("#commentList").html(commentsString);
 					$("#commentList .swiper-wrapper").html(commentsString);
 					$("#modal2>#modalTitle").html("일정 <div class='stick'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>");
@@ -2613,12 +2668,40 @@
 							// 초단위
 							var commNow = parseInt(commDate.getTime()/1000);
 							var commBefore = parseInt(data[i].cal_time/1000);
-							
+							var commTime = commNow - commBefore;
 //							console.log(commNow);
 //							console.log(commBefore);
 //							console.log(commNow - commBefore);
 							
-							commentsString += "";
+							if(commTime >= 3600 * 24 * 365)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 365) + "년 전</span>";
+							}
+							else if(commTime >= 3600 * 24 * 30)
+							{	
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24 * 30) + "개월 전</span>";
+							}
+							else if(commTime >= 3600 * 24)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600 * 24) + "일 전</span>";
+							}
+							else if(commTime >= 3600)
+							{
+								if(parseInt(commTime/3600) == 1)
+									commentsString += "<span class='commentTime'> - 한 시간 전</span>";
+								else
+									commentsString += "<span class='commentTime'> - " + parseInt(commTime/3600) + "시간 전</span>";
+							}
+							else if(commTime >= 60)
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime/60) + "분 전</span>";
+							}
+							else
+							{
+								commentsString += "<span class='commentTime'> - " + parseInt(commTime) + "초 전</span>";
+							}
+							
+//							commentsString += "";
 							commentsString += "</div></div>";
 						}
 
@@ -3426,7 +3509,7 @@
 		}
 
 		function addComment(comment) {
-			console.log(nowCalNum);
+//			console.log(nowCalNum);
 			console.log($(comment).children().eq(0).text());
 			//내용 : ㅁㅁㅁ
 			//5~
@@ -3438,6 +3521,8 @@
 			var new_memo = $("#commentContents").val();
 			console.log(first_cal);
 			if (new_memo == "") {
+				console.log(scheduleSet);
+				console.log(voteSet);
 				alert("댓글을 입력해주세요!");
 				return;
 			}
@@ -3457,7 +3542,25 @@
 				},
 				dataType: "json",
 				success: function(data) {
-
+//					getVoteInfo(nowCalNum);
+					var svChk = false;
+					for (let item of scheduleSet.keys())
+					{
+						if(item.split("-")[2].match(nowCalNum))
+						{
+							svChk = true;
+//							getScheduleInfo(nowCalNum);
+						}
+					}
+					
+					if(svChk)
+					{
+						getScheduleInfo(nowCalNum);
+					}
+					else
+					{
+						getVoteInfo(nowCalNum);
+					}
 
 
 					$.each(data, function(index, item) {
@@ -3490,7 +3593,7 @@
 				},
 				complete: function() {
 					$("#div_ajax_load_image").hide();
-					getVoteInfo(nowCalNum);
+//					getVoteInfo(nowCalNum);
 					//					console.log($('#commentContents').val());
 					$('#commentContents').val(null);
 				},
@@ -3716,43 +3819,30 @@
 </head>
 
 <body>
-	<div id="newWrap">
-		<nav class="left_nav">
-			<div id="userInfo">
-				<ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-					<li class="nav_li">
-						<img id="user_Img" src="" />
-					</li>
-					<li class="nav_li idLi">
-						<div id="user_Id"></div>
-					</li>
-				</ul>
-			</div>
-			<ul class="nav_ul" id="nav_menu">
-				<li class="nav_li">
-					<a class="nav_text" href="home.html"><img class="navMenuImg" src="img/etcIcon/nav_home.png" /></a>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="myCalendar.html"><img class="navMenuImg" src="img/etcIcon/nav_mycal.png" /></a>
-				</li>
-				<li class="nav_li">
-					<div id="navHere"></div>
-					<a class="nav_text" href="groupList.html"><img class="navMenuImg" src="img/etcIcon/nav_cal.png" /></a>
-					<div id="newContents">N</div>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="friendList.html"><img class="navMenuImg" src="img/etcIcon/nav_friend.png" /></a>
-				</li>
-				<li class="nav_li">
-					<a class="nav_text" href="qnaList.html"><img class="navMenuImg" src="img/etcIcon/nav_qna.png" /></a>
-				</li>
-			</ul>
-			<ul id="logout" class="nav_ul" onclick="logout()">
-				<li class="nav_li">
-					<a class="nav_text" onclick="logout();"><img class="navMenuImg" src="img/etcIcon/nav_logout.png" /></a>
-				</li>
-			</ul>
-		</nav>
+    <div id="newWrap">
+      <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src=""/>
+                </li>
+                <li class="nav_li idLi">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
+        </ul>
+          
+    </nav>
 
 		<div id="main_container">
 			<img id='roomOut' src="img/etcIcon/door.png" onclick="showModal4()">
