@@ -35,7 +35,6 @@
         font-size: 40px;
     }
     .idpwBox{
-        width: 80%;
         height: 38px;
         margin: 6px 0;
         padding-left: 18px;
@@ -148,6 +147,15 @@
 
 
 <script>
+    $.ajax({
+    type: "post",
+    url: "SessionCheck.do",
+    dataType: "json",
+    success: function(data) {
+        if(data[0].result == "s"){
+            location.href='home.html';
+        }else{
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // 중앙정렬 시켜줌 ----------
      $(document).ready(function(){
          $('#userLoginCover').css('margin-top',($(window).height()-500)/2);
@@ -344,7 +352,10 @@
                 }
                 
             }
-    
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////            
+            }
+    }
+});
 </script>
 
 <title>달게더 비밀번호 찾기, 변경</title>
