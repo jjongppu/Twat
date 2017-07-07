@@ -952,6 +952,10 @@
 		var today = new Date(); // 오늘 날짜
 
 		$(document).ready(function() {
+            
+            if(group_master != login_userId)
+                $("#comeOnMyFriend").css("display","none");
+            
 //			chkId();
 			chkMaster();
 			
@@ -1637,6 +1641,8 @@
 				success: function(data) {
 					console.log(data);
 					var groupMemberCount = data[0].group_count + 1;
+					var currentScheYear = 0;
+					var currentVoteYear = 0;
 					//                    data[0].group_id;
 					//                    data[0].group_name;
 					//                    data[0].group_date;
@@ -1707,7 +1713,7 @@
 							} else {
 								strA += '<span>' + group_master + '님</span>';
 							}
-							//                        strA += '<span>외 ' + data[0].group_count + '명 참여</span>';
+//							                        strA += '<span>외 ' + data[0].group_count + '명 참여</span>';
 							strA += '<span> 외 ' + getMemberCount(data[arrCal].member_choice) + '명 참여</span>';
 							strA += '</div>'; // div-down
 							strA += '</div>'; // div-up
@@ -1750,7 +1756,7 @@
 								}
 							}
 							//                            strA += "<span class='stateOK'>가능: " + (countStateOK.size - countStateNO) + "</span> / <span class='stateNO'>불가능: " + countStateNO + "</span> / <span class='stateYET'>" + (groupMemberCount - countStateOK.size) + "</span>";
-							//                            strA += "<span class='stateOK'>가능 : " + (countStateOK.size - countStateNO) + "</span> / <span class='stateNO'>불가능 : " + countStateNO + "</span>";
+//							                            strA += "<span class='stateOK'>가능 : " + (countStateOK.size - countStateNO) + "</span> / <span class='stateNO'>불가능 : " + countStateNO + "</span>";
 							strA += "<div class='stateBar'>";
 							strA += "<div class='barOK' id='bar" + data[arrCal].cal_num + "OK'></div>";
 							strA += "<div class='barNO' id='bar" + data[arrCal].cal_num + "NO'></div>";
@@ -1776,13 +1782,28 @@
 						str += '<div class="left">';
 //						                        if (str2.indexOf(',') == -1)
 						// ======================================================================================================
+//						var currentYear = parseInt(dateToFormat(initDay).substr(0, 4));
 						if (scheduleCheck(data[arrCal].member_choice, data[arrCal].cal_date))
 						{
 							//							str += data[arrCal].cal_date;
-							if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
+//							if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
+//								str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+//							} else {
+////								str += "<div class='onlyOne'>" + str2.substr(0, 4) + "년 " + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+//								var tempYear = "<div class='swiper-slide' style='background-color:black;'>" + str2.substr(0, 4) + "년</div>";
+//								$(".schedule .swiper-wrapper").append(tempYear);
+//								str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+//							}
+//							if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4)))
+							if (parseInt(str2.substr(0, 4)) > currentScheYear)
+							{
+								var tempYear = "<div class='swiper-slide' style='background-color:#353535; color:white; font-weight:bold;'>" + str2.substr(0, 4) + "년</div>";
+								$(".schedule .swiper-wrapper").append(tempYear);
 								str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+								currentScheYear = parseInt(str2.substr(0, 4));
 							} else {
-								str += "<div class='onlyOne'>" + str2.substr(0, 4) + "년 " + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+//								str += "<div class='onlyOne'>" + str2.substr(0, 4) + "년 " + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+								str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
 							}
 							//                            console.log("확정 : " + data[arrCal].cal_memo);
 							scheduleSet.add(data[arrCal].cal_date + "-" + data[arrCal].cal_memo + "-" + data[arrCal].cal_num);
@@ -1801,10 +1822,16 @@
 							//							str += res[0] + "~" + res[res.length - 1];
 							if (str2.indexOf(",") == -1) {
 								//								res = str2;
-								if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
+//								if (parseInt(str2.substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4)))
+								if (parseInt(str2.substr(0, 4)) > currentVoteYear)
+								{
+									var tempYear = "<div class='swiper-slide' style='background-color:#353535; color:white; font-weight:bold;'>" + str2.substr(0, 4) + "년</div>";
+									$(".vote .swiper-wrapper").append(tempYear);
 									str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+									currentVoteYear = parseInt(str2.substr(0, 4));
 								} else {
-									str += "<div class='onlyOne'>" + str2.substr(0, 4) + "년 " + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+//									str += "<div class='onlyOne'>" + str2.substr(0, 4) + "년 " + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
+									str += "<div class='onlyOne'>" + parseInt(str2.substr(4, 2)) + "월 " + parseInt(str2.substr(6, 2)) + "일</div>";
 								}
 							} else {
 								res = str2.split(",");
@@ -1819,8 +1846,13 @@
 								}
 								
 								//								str += res[0] + "~" + res[res.length - 1];
-								if (parseInt(res[0].substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4))) {
+//								if (parseInt(res[0].substr(0, 4)) == parseInt(dateToFormat(initDay).substr(0, 4)))
+								if (parseInt(res[0].substr(0, 4)) > currentVoteYear)
+								{
+									var tempYear = "<div class='swiper-slide' style='background-color:#353535; color:white; font-weight:bold;'>" + str2.substr(0, 4) + "년</div>";
+									$(".vote .swiper-wrapper").append(tempYear);
 									str += "<div style='text-align:left; padding-left:5px;'>" + resMonth1 + "월 " + resMDate1 + "일</div>";
+									currentVoteYear = parseInt(res[0].substr(0, 4));
 								} else {
 									str += "<div style='text-align:left; padding-left:5px;'>" + res[0].substr(0, 4) + "년 " + resMonth1 + "월 " + resMDate1 + "일</div>";
 								}
@@ -1945,6 +1977,7 @@
 					//                        voteMeeting(cal_date);
 					//                    }
 					//					console.log(barColorSet);
+					
 					for (let item of barColorSet.keys()) {
 						var percentC = parseFloat(item.split("-")[1]) * 100;
 
@@ -1983,6 +2016,7 @@
 						direction: 'vertical',
 						slidesPerView: 3,
 						paginationClickable: true,
+//						spaceBetween: 2,
 //						centeredSlides: true,
 						//						spaceBetween: 30,
 						mousewheelControl: true
@@ -1993,6 +2027,7 @@
 						direction: 'vertical',
 						slidesPerView: 3,
 						paginationClickable: true,
+//						spaceBetween: 2,
 //						centeredSlides: true,
 //						slidesOffsetAfter: 192/2,
 //						slidesOffsetBefore: 192/2,
@@ -2278,7 +2313,7 @@
 						nextButton: '.swiper-button-next',
 						prevButton: '.swiper-button-prev',
 						spaceBetween: 0,
-						loop: true,
+//						loop: true,
 						freeMode: true
 					});
 				},
@@ -4061,7 +4096,7 @@
 						<div id="config">
                         <div id="btnCover">
                             <div onclick="addSchedule()" class="addschedule">일정추가하기</div>
-                            <div onclick="inviteFriends()" class="addschedule">친구초대하기</div>
+                            <div onclick="inviteFriends()" class="addschedule" id="comeOnMyFriend">친구초대하기</div>
 <!--
 							<input type="button" value="일정추가하기" onclick="addSchedule()" class="addschedule" />
 							<input type="button" value="친구초대하기" onclick="inviteFriends()" class="addschedule" />
