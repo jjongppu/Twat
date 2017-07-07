@@ -317,12 +317,12 @@
 						$('#idBox').focus();
 						idTF = false;
 					} else if(result == 'fail') {
-						if(idVal <= 5 || idVal > 12) { /* 1~5 || 13   */
+						if(idVal <= 5 || idVal > 13) { /* 1~5 || 13   */
 							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
 							$('#idBox').focus();
 							idTF = false;
-						} else if(!idRegex.test(idVal2+1)) { /*  길이 6~ 12면 여기로  */
-							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문 또는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
+						} else if(!idRegex.test(idVal2)) { /*  길이 6~ 12면 여기로  */
+							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문, 숫자 또는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
 							$('#idBox').focus();
 							idTF = false;
 						} else {
