@@ -124,15 +124,20 @@
 	answerTF = false;
 	phoneTF = false;
 	
+	gender = '';
 	
     // 성별 M/F
     function test(a) {
         console.log($(a).val());
+		
+		gender = $(a).val();
     }
 	
     
     
     function signUpEnter() {
+		
+		
 		
         overlapId();
         checkPassword();
@@ -167,8 +172,8 @@
 	                signUpId : $('#idBox').val(),
 	                signUpPw : $('#pwBox').val(),
 	                signUpName : $('#nameBox').val(),
-//	                signUpGender : $('.genderBtn').val(),
-					$('#personalInfo').serialize(),
+	                signUpGender : gender,
+					
 					signUpBirthYear : $('#yearBox').val(),
 					signUpBirthMonth : $('#monthBox').val(),
 					signUpBirthDay : realDay,
