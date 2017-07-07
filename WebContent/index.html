@@ -342,10 +342,12 @@
                         <a href="searchID.html" class="idSearch" >아이디 찾기</a>
                         <span>  &nbsp;|&nbsp; </span>
                         <a href="searchPW.html" class="pwSearch">비밀번호 찾기</a>
+<!--
                         
                         <div id='kakao-btn' style='margin-top:10px;' onclick='Kakao.Auth.login(settings)'>
                             <a id="kakao-login-btn" ></a>
                             <a href="http://developers.kakao.com/logout"></a>
+-->
 <!--
                             <a id="custom-login-btn" href="javascript:loginWithKakao()">
                                <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/></a>}
@@ -377,34 +379,34 @@
     <script>
 //        cf4f2d06941459855a542dedf17b1be3
         
-    
-    Kakao.init('cf4f2d06941459855a542dedf17b1be3');
-    // 카카오 로그인 버튼을 생성합니다.
-    Kakao.Auth.createLoginButton({
-        container: '#kakao-login-btn',
-        success: function(authObj) {
-        alert(JSON.stringify(authObj));
-      },
-        fail: function(err) {
-        alert(JSON.stringify(err));
-      }
-    });
-        
-        
-    Kakao.init('cf4f2d06941459855a542dedf17b1be3');
-    function loginWithKakao() {
-      // 로그인 창을 띄웁니다.
-        Kakao.Auth.login({
-        success: function(authObj) {
-          alert(JSON.stringify(authObj));
-        },
-        fail: function(err) {
-          alert(JSON.stringify(err));
-        }
-      });
-    };
-        
-        
+//    
+//    Kakao.init('cf4f2d06941459855a542dedf17b1be3');
+//    // 카카오 로그인 버튼을 생성합니다.
+//    Kakao.Auth.createLoginButton({
+//        container: '#kakao-login-btn',
+//        success: function(authObj) {
+//        alert(JSON.stringify(authObj));
+//      },
+//        fail: function(err) {
+//        alert(JSON.stringify(err));
+//      }
+//    });
+//        
+//        
+//    Kakao.init('cf4f2d06941459855a542dedf17b1be3');
+//    function loginWithKakao() {
+//      // 로그인 창을 띄웁니다.
+//        Kakao.Auth.login({
+//        success: function(authObj) {
+//          alert(JSON.stringify(authObj));
+//        },
+//        fail: function(err) {
+//          alert(JSON.stringify(err));
+//        }
+//      });
+//    };
+//        
+//        
         
  
         
