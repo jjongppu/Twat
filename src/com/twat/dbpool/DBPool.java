@@ -24,6 +24,7 @@ public class DBPool {
 	
 	public Connection getConnection() throws Exception {
 		Context initCtx = new InitialContext();
+//		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
 		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/aclass0201");
 
 		return (Connection) ds.getConnection();
