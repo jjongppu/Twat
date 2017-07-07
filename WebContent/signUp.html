@@ -167,7 +167,8 @@
 	                signUpId : $('#idBox').val(),
 	                signUpPw : $('#pwBox').val(),
 	                signUpName : $('#nameBox').val(),
-	                signUpGender : $('.genderBtn').val(),
+//	                signUpGender : $('.genderBtn').val(),
+					signUpGender : $('#personalInfo').serialize(),
 					signUpBirthYear : $('#yearBox').val(),
 					signUpBirthMonth : $('#monthBox').val(),
 					signUpBirthDay : realDay,
@@ -468,7 +469,7 @@
 </head>
 
 <body>
-	<form id="personalInfo" action="signUp.do" method="post">
+	
         
         <div class="container">
             <h3 class="mainText">회원가입</h3>
@@ -495,8 +496,10 @@
 				
 <!--				성별 체크박스 원본-->
                 <div id="genderDiv">
-                    <input type="radio" name="signUpGender" value="M"  class="genderBtn" id="man" onclick="test(this)" checked />남자
-                    <input type="radio" name="signUpGender" value="F"  class="genderBtn" id="woman" onclick="test(this)"/>여자
+					<form id="personalInfo" action="signUp.do" method="post">
+						<input type="radio" name="signUpGender" value="M"  class="genderBtn" id="man" onclick="test(this)" checked />남자
+						<input type="radio" name="signUpGender" value="F"  class="genderBtn" id="woman" onclick="test(this)"/>여자
+					</form>
                 </div>
 <!--
 				<div id="genderDiv">
@@ -564,6 +567,6 @@
             </div>
 		</div>
 		
-	</form>
+	
 </body>
 </html>
