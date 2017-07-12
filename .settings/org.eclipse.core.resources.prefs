@@ -1,2 +1,10 @@
 eclipse.preferences.version=1
+encoding//WebContent/css/groupCalendar.css=UTF-8
+encoding//cafe24\ \uB9E4\uD551/web.xml=UTF-8
+encoding//src/com/twat/controller/LoginServlet.java=UTF-8
+encoding//src/com/twat/controller/imageFileUpload.java=UTF-8
+encoding//src/com/twat/controller/signUpServlet.java=UTF-8
+encoding//src/com/twat/dao/CalendarDAO.java=UTF-8
 encoding//src/com/twat/dao/CalgatherDAO.java=UTF-8
+encoding//src/com/twat/dao/MemberDAO.java=UTF-8
+encoding//src/com/twat/dao/MyCalendarDAO.java=UTF-8

@@ -2,7 +2,10 @@ package com.twat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +26,7 @@ import com.twat.dto.CalgatherVO;
 /**
  * Servlet implementation class GroupCalendar
  */
-@WebServlet("/groupCal.do")
+//@WebServlet("/groupCal.do")
 public class GroupCalendar extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -63,7 +66,7 @@ public class GroupCalendar extends HttpServlet
 		
 		JSONArray group = new JSONArray();
 
-		// Calgather¿¡¼­ ±×·ì Á¤º¸ °¡Á®¿È
+		// Calgatherï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		CalgatherDAO calgDao = CalgatherDAO.getInstance();
 		CalgatherVO groupTitle = calgDao.getGroupInfo(request.getParameter("group"));
 //		CalgatherVO groupTitle = calgDao.getGroupInfo((String)session.getAttribute("loginUserId"));
@@ -85,14 +88,16 @@ public class GroupCalendar extends HttpServlet
 		}
 		else
 		{
-//			out.print("<script>console.log('groupTitle°ª ¾Èµé¾î¿È');</script>");
+//			out.print("<script>console.log('groupTitleï¿½ï¿½ ï¿½Èµï¿½ï¿½ï¿½');</script>");
 		}
 		
-		// Calendar¿¡¼­ ±×·ìÀÇ ÀÏÁ¤ °¡Á®¿È
+		// Calendarï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		CalendarDAO calDao = CalendarDAO.getInstance();
 		ArrayList<CalendarVO> arrList = calDao.getInfo(request.getParameter("group"));
 //		ArrayList<CalendarVO> arrList = calDao.getInfo((String)session.getAttribute("loginUserId"));
 //		ArrayList<CalendarVO> arrList = calDao.getInfo("2");
+		
+//		SimpleDateFormat simple = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
 		
 		if(arrList.size() > 0)
 		{
@@ -101,9 +106,13 @@ public class GroupCalendar extends HttpServlet
 				JSONObject groupSchedule = new JSONObject();
 				
 				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
+//				groupSchedule.put("cal_time", simple.format(arrList.get(i).getCal_time()));
+				Date date = arrList.get(i).getCal_time();
+				groupSchedule.put("cal_time", date.getTime());
+//				System.out.println(date.getTime());
 				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
 //				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
-				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
+				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
 				//getCal_group
 				groupSchedule.put("cal_memo", arrList.get(i).getCal_memo());
 				groupSchedule.put("cal_writer", arrList.get(i).getCal_writer());
@@ -117,36 +126,24 @@ public class GroupCalendar extends HttpServlet
 		}
 		else
 		{
-//			out.print("<script>console.log('groupSchedule°ª ¾Èµé¾î¿È');</script>");
+//			out.print("<script>console.log('groupScheduleï¿½ï¿½ ï¿½Èµï¿½ï¿½ï¿½');</script>");
 		}
 		
-		// JSON Àü¼Û
+		// JSON ï¿½ï¿½ï¿½ï¿½
 		
 		out.print(group.toJSONString());
 		out.close();
+		
+		if(groupTitle != null)
+			groupTitle = null;
+		if(calgDao != null)
+			calgDao = null;
+		if(calDao != null)
+			calDao = null;
+		if(arrList != null)
+			arrList = null;
+//		if(simple != null)
+//			simple = null;
+		
 	}
-
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-//	{
-//		HttpSession session = request.getSession();
-//		request.setCharacterEncoding("utf-8");
-//		response.setCharacterEncoding("utf-8");
-//		response.setContentType("application/json;");
-//		response.setHeader("Cache-Control", "no-cache");
-//		String uid = request.getParameter("uid");
-//		String name = request.getParameter("name");
-//		
-//		JSONArray memberList = new JSONArray();
-//		JSONObject member = new JSONObject();
-//		member.put("uid", uid);
-//		member.put("name", name);
-////		member.put("groupId", session.getAttribute("groupId"));
-//		
-//		memberList.add(member);
-//
-//		PrintWriter out = response.getWriter();
-//		out.println(memberList.toJSONString());
-////		out.println(memberList);
-//		out.close();
-//	}
 }

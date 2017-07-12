@@ -1,12 +1,727 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Untitled Document</title>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-</head>
-<body>
 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="../js/jquery-3.2.1.min.js"></script>
+        <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
+<title>admin</title>
+</head>
+    
+    
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        background-image: url(../img/background/background2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
+    div{
+        position: relative;
+    }
+ 
+
+    a{
+        text-decoration: none;
+        display: block;
+        padding: 14px 0;
+        color: white;
+    }
+
+
+    ul{
+        margin: 0;
+        list-style: none;
+        padding: 0;
+        
+    }
+    li{
+        cursor: pointer;
+        display: inline-block;
+        text-align: center;
+        width: 120px;
+    }
+        #logout > li:hover,#nav_menu > li:hover{
+        color: gray;
+    }
+ 
+    #logout{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    
+   #wrap{
+        width: 1100px;
+        margin: auto;
+           border-radius: 5px;
+    }
+        #contents{
+        margin-top: 40px;
+    }
+    
+/*    메뉴마다 상단 바 설정*/
+    .contentsTopCover{
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translate(-50%,0);
+        width:95%;
+        height: 80px;
+        border-radius: 5px;
+        background-color: #B78AFF ;
+        box-shadow: 10px 10px 5px rgba(0,0,0,0.3);
+        padding-left: 10px;
+    }
+    
+    #findMemCover{
+        position: absolute;
+        top: 40%;
+        right: 10px;
+        
+    }
+    #findMember{
+        height: 24px;
+        border: none;
+        border-bottom: 1px solid #3B3E42;
+        background-color: transparent;
+        padding-left: 10px;
+        width: 200px;
+        
+    }
+        textarea:focus, input:focus{
+        outline: none;
+    }
+    
+    .topKind{
+        height: 35px;
+        font-size: 30px;
+        font-weight: bold;
+        
+    }
+    .topName{
+        margin-top: 5px;
+    }
+    
+    
+/*    펏번쨰 칸 */
+    #firstCover{
+        padding-top: 70px;
+        background-color: #C7D5E2;
+        border-radius: 10px;
+    }
+    .memberInfoTable{
+  
+        display: block;
+        width: 990px;
+        margin: auto;
+        padding: 0;
+        opacity: 1;
+    }
+/*    공용...*/
+    /* 실제로 데이터가 뿌려질 영역*/
+    .realContentsPlace{
+        width: 90%;
+        margin: auto;
+    }
+    /*테이블 td 크기*/
+    
+    
+    
+    .tdNum{
+        width: 70px;
+    }
+   
+     .tdKind{
+        width: 100px;
+    }
+    .tdtit{
+        width: 150px;
+    }
+    .tdCon{
+        width: 200px;
+        
+
+    }
+    .tdId{
+        width: 90px;
+    }
+    .tdan{
+        width: 180px;
+    }
+    .tdBt2{
+        width: 70px;
+    }
+    .tdBi{
+        width: 95px;
+    }
+    
+    
+    td{
+        border: 1px solid black;
+        text-align: center;
+    }
+    tr{
+        height: 30px;
+    }
+    
+    .memberInfoTable li{
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid white;
+        cursor: auto;
+    }
+    .memberInfoTable li span{
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    .memberInfoTable div span{
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+    }
+    .countText{
+        display: none;
+    }
+    .memberInfoTableTitle{
+        width: 990px;
+        margin: auto;
+        background-color: #AFB6C8;
+    }
+    #titleCover{
+        border-bottom: 1px solid white; 
+    }
+    
+    /*아래 버튼들...*/
+    #pageChoiceCover{
+        padding: 10px 0;
+        text-align: center;
+        width: 990px;
+        margin: auto;
+    }
+    .pageBtn{
+        margin: 0 5px 0 5px;
+        cursor: pointer;
+    }
+    
+    #addPageCover a{
+        display: inline-block;
+        width: 24px;
+        color: black;
+    }
+    strong{
+        display: inline-block;
+        width: 24px;
+        color: darkslategray;
+    }
+    
+    #inputMemberinfo{
+        background-color: #C7D5E2; 
+    }
+    
+        input:-ms-input-placeholder { color: #3B3E42; } 
+   input::-webkit-input-placeholder { color: #3B3E42; } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+    
+  
+    
+    
+    
+    /*폰겝 전용 미디어 쿼리*/
+    @media screen and (max-width : 360px){
+        #wrap, ul,#pageChoiceCover,#inputMemberinfo{
+            width: 360px;
+        }
+        #findMemCover{
+            position: static;
+        }
+        .contentsTopCover{
+            height: 120px;
+        }
+        .memberInfoTableTitle{
+            width: 360px;
+        }
+        .realContentsPlace{
+            margin-top: 50px;
+            width: 100%;
+        }
+        #nav_menu{
+            padding: 0;
+        }
+        #titleCover{
+            display: none;
+        }
+        #inputMemberinfo{
+            height: auto;
+            border-top: 1px solid white;
+        }
+        #findMember{
+            margin-top: 10px;
+        }
+        li{
+            position: relative;
+        }
+        li span{
+            position: absolute;
+            text-align: left;
+        }
+        #inputMemberinfo li{
+            height: 150px;
+        }
+        .tdNum{
+            top: 10px;
+            left: 10px;
+        }
+
+         .tdKind{
+         width: 100px;
+             bottom: 55px;
+            left: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+        .tdtit{
+            bottom: 30px;
+            left: 10px;
+            width: 130px;
+           white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+        .tdCon{
+            right: 40px;
+            top: 0px;
+            height: 60px;
+            overflow: hidden;
+            display: block;
+        }
+        .tdId{
+            bottom: 100px;
+            left: 10px;
+        }
+        .tdan{
+            bottom: 10px;
+            right: 60px;
+        }
+        .tdBt2{
+            bottom: 10px;
+            right: 0px;
+        }
+        .tdBi{
+            bottom: 77px;
+            left: 10px;
+        }
+        .menuMedia{
+            display: none;
+        }
+    }
+    
+
+    
+</style>    
+
+<script>
+    nowPage = 1;
+    nowPage2 = 1;
+    // 세션 확인 
+        
+        $.ajax ({
+            type : 'post',
+            url : '../adminSetting.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result != 'success') {
+                    alert("권한이 없습니다.");
+                    location.href="admin.html";
+                }else{
+                //페이지 로딩시 1번 멤버 를 얻어오고 뿌려줌
+                   getList(1);
+                }
+            } , error: function (req) {
+                
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
+            }
+            
+        });
+        
+    
+    //문의사항을 호출 무식하게 호출
+    function getList(page) {
+        nowPage = page;
+        var notfind = '0';
+        $.ajax ({
+            type : 'post',
+            url : '../admingGetQnaList.do',
+            dataType : "json",
+            data: {page : page , val : notfind } ,
+            success : function(data) {
+                console.log(data);
+                var userInfos = "";
+                for(var i=0; i< data.length;i++){
+                    var num = page*10+i+1-10;
+                    if(i%2 !=0){
+                        userInfos += '<li style="background-color: #AFBACB;">';
+                    }else{
+                        userInfos += '<li>';    
+                    }
+                    
+                    userInfos += '<span class="tdNum">'+num+'</span>';
+                    userInfos += '<span class="tdKind">'+ data[i].QNA_CATEGORY +'</span>';
+                    userInfos += '<span class="tdtit">'+ data[i].QNA_TITLE +'</span>'
+                    userInfos += '<div class="countText">게시글 방번호 :</div>';
+                    userInfos += '<span class="tdCon">'+ data[i].QNA_CONTENTS +'</span>';
+                    userInfos += '<span class="tdId">'+ data[i].MEMBER_ID +'</span>';
+                    userInfos += '<span class="tdBi">'; 
+                    userInfos += data[i].QNA_DATE.substring(0,10);
+                    userInfos += '</span>';
+                    userInfos += '<span class="tdan"><textarea rows="4" cols="20" style="resize :none;">';
+                    var reply = data[i].QNA_REPLY;
+                    if(reply != null && reply != ""){
+                        userInfos += reply;    
+                    }
+                    userInfos += '</textarea></span>';
+                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick="replyBtn(this)"/> </span>';
+                    userInfos += '</li>';
+                }
+                $('#inputMemberinfo').html(userInfos);
+                
+                var page_viewList = Paging(data[0].COUNT, 10, 10 ,nowPage, "PagingView");
+                $("#addPageCover").empty().html(page_viewList);
+
+                
+            }, error: function (req) {
+                
+                console.log(req);
+            }
+        });
+    }
+    
+        //페이지 나타내기
+    Paging = function(totalCnt, dataSize, pageSize, pageNo, token){
+        totalCnt = parseInt(totalCnt);// 전체레코드수 dataSize = parseInt(dataSize);
+        // 페이지당 보여줄 데이타수 
+        pageSize = parseInt(pageSize); // 페이지 그룹 범위 1 2 3 5 6 7 8 9 10 
+        pageNo = parseInt(pageNo); // 현재페이지 
+        var html = new Array(); 
+        if(totalCnt == 0){
+            return ""; 
+        } // 페이지 카운트 
+        var pageCnt = totalCnt % dataSize; 
+        if(pageCnt == 0){
+            pageCnt = parseInt(totalCnt / dataSize);
+        }else{
+            pageCnt = parseInt(totalCnt / dataSize) + 1;
+        } 
+        var pRCnt = parseInt(pageNo / pageSize);
+        if(pageNo % pageSize == 0){
+            pRCnt = parseInt(pageNo / pageSize) - 1; 
+        } //이전 화살표
+        if(pageNo > pageSize){ 
+            var s2; if(pageNo % pageSize == 0){
+                s2 = pageNo - pageSize; 
+            }else{
+                    s2 = pageNo - pageNo % pageSize; 
+                } 
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push(s2); html.push('");>');
+            html.push('◀'); html.push("</a>"); 
+        }else{
+            html.push('<a href="#">\n');
+            html.push('◀'); html.push('</a>'); 
+            
+        } //paging Bar 
+        for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            if(index == pageNo){ 
+                html.push('<strong>');
+                html.push(index);
+                html.push('</strong>'); 
+            }else{ 
+                html.push('<a href=javascript:goPaging_' + token + '("');
+                html.push(index); html.push('");>');
+                html.push(index); html.push('</a>'); 
+            } 
+            if(index == pageCnt){ 
+                break;
+            }else html.push('|'); 
+        } //다음 화살표 
+        if(pageCnt > (pRCnt + 1) * pageSize){
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push((pRCnt + 1)*pageSize+1); 
+            html.push('");>'); html.push('▶'); 
+            html.push('</a>');
+        }else{
+            html.push('<a href="#">');
+            html.push('▶'); html.push('</a>');
+        } 
+        return html.join("");
+    }
+
+    var goPaging_PagingView = function(cPage){
+        getList(cPage);
+    };
+    
+    //검색으로 실시간 호출
+    function getList2(page) {
+        nowPage = page;
+        var pages =1;
+        if(page >pages){
+            pages = page
+        }
+    $.ajax ({
+        type : 'post',
+        url : '../admingGetQnaList.do',
+        dataType : "json",
+        data: {page : pages ,val : $('#findMember').val()} ,
+        success : function(data) {
+            console.log(data);
+            var userInfos = "";
+                for(var i=0; i< data.length;i++){
+                    var num = pages*10+i+1-10;
+                    if(i%2 !=0){
+                        userInfos += '<li style="background-color: #AFBACB;">';
+                    }else{
+                        userInfos += '<li>';    
+                    }
+                    
+                    userInfos += '<span class="tdNum">'+num+'</span>';
+                    userInfos += '<span class="tdKind">'+ data[i].QNA_CATEGORY +'</span>';
+                    userInfos += '<span class="tdtit">'+ data[i].QNA_TITLE +'</span>'
+                    userInfos += '<div class="countText">게시글 방번호 :</div>';
+                    userInfos += '<span class="tdCon">'+ data[i].QNA_CONTENTS +'</span>';
+                    userInfos += '<span class="tdId">'+ data[i].MEMBER_ID +'</span>';
+                    userInfos += '<span class="tdBi">'; 
+                    userInfos += data[i].QNA_DATE.substring(0,10);
+                    userInfos += '</span>';
+                    userInfos += '<span class="tdan"><textarea rows="4" cols="20" style="resize :none;">';
+                    var reply = data[i].QNA_REPLY;
+                    if(reply != null && reply != ""){
+                        userInfos += reply;    
+                    }
+                    userInfos += '</textarea></span>';
+                    userInfos += '<span class="tdBt2"> <input type="button" value="답변" id="'+data[i].QNA_ID+'"  onclick="replyBtn(this)"/> </span>';
+                    userInfos += '</li>';
+                }
+                $('#inputMemberinfo').html(userInfos);
+
+            var page_viewList2 = Paging2(data[0].COUNT, 10, 10 ,pages, "S");
+            $("#addPageCover").empty().html(page_viewList2);
+
+
+        }, error: function (req) {
+
+            console.log(req);
+        }
+    });
+}
+    
+            //페이지 나타내기
+    Paging2 = function(totalCnt, dataSize, pageSize, pageNo, token){
+        totalCnt = parseInt(totalCnt);// 전체레코드수 dataSize = parseInt(dataSize);
+        // 페이지당 보여줄 데이타수 
+        pageSize = parseInt(pageSize); // 페이지 그룹 범위 1 2 3 5 6 7 8 9 10 
+        pageNo = parseInt(pageNo); // 현재페이지 
+        var html = new Array(); 
+        if(totalCnt == 0){
+            return ""; 
+        } // 페이지 카운트 
+        var pageCnt = totalCnt % dataSize; 
+        if(pageCnt == 0){
+            pageCnt = parseInt(totalCnt / dataSize);
+        }else{
+            pageCnt = parseInt(totalCnt / dataSize) + 1;
+        } 
+        var pRCnt = parseInt(pageNo / pageSize);
+        if(pageNo % pageSize == 0){
+            pRCnt = parseInt(pageNo / pageSize) - 1; 
+        } //이전 화살표
+        if(pageNo > pageSize){ 
+            var s2; if(pageNo % pageSize == 0){
+                s2 = pageNo - pageSize; 
+            }else{
+                    s2 = pageNo - pageNo % pageSize; 
+                } 
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push(s2); html.push('");>');
+            html.push('◀'); html.push("</a>"); 
+        }else{
+            html.push('<a href="#">\n');
+            html.push('◀'); html.push('</a>'); 
+            
+        } //paging Bar 
+        for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            if(index == pageNo){ 
+                html.push('<strong>');
+                html.push(index);
+                html.push('</strong>'); 
+            }else{ 
+                html.push('<a href=javascript:goPaging_' + token + '("');
+                html.push(index); html.push('");>');
+                html.push(index); html.push('</a>'); 
+            } 
+            if(index == pageCnt){ 
+                break;
+            }else html.push('|'); 
+        } //다음 화살표 
+        if(pageCnt > (pRCnt + 1) * pageSize){
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push((pRCnt + 1)*pageSize+1); 
+            html.push('");>'); html.push('▶'); 
+            html.push('</a>');
+        }else{
+            html.push('<a href="#">');
+            html.push('▶'); html.push('</a>');
+        } 
+        return html.join("");
+    }
+
+    var goPaging_S = function(cPage){
+//        var vals = $('#findMember').val();
+//        console.log(vals);
+        getList(cPage);
+    };
+    
+    
+    
+    
+
+
+    
+    
+    function logout(){
+        $.ajax ({
+            type : 'post',
+            url : '../Logout.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result != 'success') {
+                    alert("로그아웃 되었습니다.");
+                    location.href="admin.html";
+                }
+            }
+        });
+    
+    }
+           
+    //인풋에서 검색시 맴버를 찾아와줘용
+//        function findMember(){
+//            if($('#findMember').val().length>5 && $('#findMember').val().length<13 ){
+//                console.log("!");
+//            $.ajax ({
+//                type : 'post',
+//                url : '../Logout.do',
+//                dataType : "json",
+//                success : function(data) {
+//                    var result = data[0].result;
+//                    if(result != 'success') {
+//                        alert("권한이 없습니다.");
+//                        location.href="admin.html";
+//                    }
+//                }
+//            });
+//            }
+//            
+//            
+//        }
+    
+    // 답변등록
+    function replyBtn(id){
+        // 답변달 qna id
+        var qnaid = $(id).attr('id');
+        var text = $('#'+qnaid).parent().parent().find('.tdan').find('textarea').val();
+        
+        console.log("id : "+qnaid+"text : "+text);
+        $.ajax({
+            type:"post",
+            url: "../adminSetQnaReply.do",
+            data: {id:qnaid, textVal:text},
+            dataType:'json',
+            success: function(data){
+            var result = data[0].result;
+                if(result != '0'){
+                    alert("답변을 등록 하였습니다.");
+                    location.href='qnaManagement.html';
+                }else{
+                    alert("오류");
+                }
+            }
+        });
+    }
+    
+    
+        
+</script>
+
+
+<body>
+        <nav>
+            <ul id="nav_menu">
+                <li><a href="home.html">홈</a></li>
+                <li class="menuMedia"><a href="memberManagement.html">회원 관리</a></li>
+                <li class="menuMedia"><a href="groupManagement.html">그룹 관리</a></li>
+                <li class="menuMedia"><a href="qnaManagement.html">문의사항 관리</a></li>
+                <li class="menuMedia"><a href="notice_board.html">공지사항 작성</a></li>
+                <li class="menuMedia"><a href="#">기타 작업</a></li>
+                <li id="logout" onclick="logout();"><a>로그아웃</a></li>
+            </ul>
+        </nav>
+
+    <div id="wrap">
+        
+        
+        <div id="contents">
+            
+            <div id="firstCover">
+                <div class="contentsTopCover">
+                    <div class="topKind">QnA</div>
+                    <div class="topName">문의사항 조회 및 관리
+                    </div>
+                        <div id="findMemCover"> 
+                            <input id="findMember" type="text" onkeyup="getList2(nowPage2);" maxlength="9" placeholder="게시글 내용 검색 (최대 8자)"/>
+                        </div>
+                </div>
+
+                <div class="realContentsPlace">
+                    
+                    <div class="memberInfoTable memberInfoTableTitle">
+                        <div id="titleCover">
+                            <span style="width:80px;">No.</span>
+                            <span style="width:100px;">분류</span>
+                            <span style="width:150px;">제목</span>
+                            <span style="width:180px;">내용</span>
+                            <span style="width:90px;">작성자</span>
+                            <span style="width:100px;">작성 시간</span>
+                            <span style="width:160px;">답변</span>
+                        </div>
+                    </div>
+                    <ul class="memberInfoTable" id="inputMemberinfo">
+                    </ul>
+
+                    
+                    <div id="pageChoiceCover">
+                        <span id="addPageCover">
+                        </span>
+                    </div>
+                </div>
+            
+            </div>
+            
+            
+            
+          
+            
+            
+        </div>
+    </div>
 </body>
 </html>

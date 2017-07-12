@@ -5,7 +5,11 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="../js/jquery-3.2.1.min.js"></script>
-
+        <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
+<title>admin</title>
+</head>
+    
+    
 <style>
     body{
         margin: 0;
@@ -19,15 +23,8 @@
     div{
         position: relative;
     }
-    #wrap{
-        min-width: 800px;
-        max-width: 1500px;
-        height: 700px; 
-        margin: auto;
-    }
-    #contents{
-        margin-top: 30px;
-    }
+ 
+
     a{
         text-decoration: none;
         display: block;
@@ -39,8 +36,6 @@
     ul{
         margin: 0;
         list-style: none;
-        background-color:gray;
-        opacity: 0.7;
         
     }
     li{
@@ -50,32 +45,166 @@
         width: 120px;
     }
         #logout > li:hover,#nav_menu > li:hover{
-        background-color: black;
-        opacity: 0.7;
+        color: gray;
     }
+ 
     #logout{
         position: absolute;
         top: 0;
         right: 0;
+    }
+    
+   #wrap{
+        width: 1100px;
+        margin: auto;
+           border-radius: 5px;
+    }
+        #contents{
+        margin-top: 40px;
+    }
+    
+/*    메뉴마다 상단 바 설정*/
+    .contentsTopCover{
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translate(-50%,0);
+        width:95%;
+        height: 80px;
+        border-radius: 5px;
+        background-color: gray;
+        box-shadow: 10px 10px 5px rgba(0,0,0,0.3);
+        padding-left: 10px;
+    }
+
+        textarea:focus, input:focus{
+        outline: none;
+    }
+    
+    .topKind{
+        height: 35px;
+        font-size: 30px;
+        font-weight: bold;
+        
+    }
+    .topName{
+        margin-top: 5px;
+    }
+    
+    
+/*    펏번쨰 칸 */
+    #firstCover{
+        padding-top: 70px;
+        background-color: #C7D5E2;
+        border-radius: 10px;
+    }
+    .memberInfoTable{
+  
+        display: block;
+        width: 990px;
+        margin: auto;
+        padding: 0;
+        opacity: 1;
+    }
+/*    공용...*/
+    /* 실제로 데이터가 뿌려질 영역*/
+
+
+    #titleCover{
+        padding: 0 30px;
+        border-bottom: 1px solid white; 
+    }
+    
+    /*아래 버튼들...*/
+
+    .pageBtn{
+        margin: 0 5px 0 5px;
+        cursor: pointer;
+    }
+    
+    #addPageCover a{
+        display: inline-block;
+        width: 24px;
+        color: black;
+    }
+    strong{
+        display: inline-block;
+        width: 24px;
+        color: darkslategray;
+    }
+    
+    #inputMemberinfo{
+    	height:650px;
+        background-color: #C7D5E2; 
+    }
+    
+        input:-ms-input-placeholder { color: #3B3E42; } 
+   input::-webkit-input-placeholder { color: #3B3E42; } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+    
+  
+    
+    
+    
+    /*폰겝 전용 미디어 쿼리*/
+    @media screen and (max-width : 360px){
+        #wrap, ul,#pageChoiceCover,#inputMemberinfo{
+            width: 360px;
+        }
+        #findMemCover{
+            position: static;
+        }
+        .contentsTopCover{
+            height: 120px;
+        }
+        .memberInfoTableTitle{
+            width: 360px;
+        }
+        .realContentsPlace{
+            margin-top: 50px;
+            width: 100%;
+        }
+        #nav_menu{
+            padding: 0;
+        }
+        #titleCover{
+            display: none;
+        }
+        #inputMemberinfo{
+            height: auto;
+            border-top: 1px solid white;
+        }
+
+        li{
+            position: relative;
+        }
+        li span{
+            position: absolute;
+            text-align: left;
+        }
+        #inputMemberinfo li{
+            height: 150px;
+        }
+
+        .menuMedia{
+            display: none;
+        }
+        .countText{
+            position: absolute;
+            display: block;
+            left: 90px;
+            top: 20px;
+        }
         
     }
     
-    @media screen and (min-width:1130px) and (max-width : 1500px){
-    
-    }
-    
-    @media screen and (max-width : 1129px){
 
-    }
-    
-    
-    
     
 </style>    
 
 <script>
-    
-    // 세션 확인 
+
         
         $.ajax ({
             type : 'post',
@@ -86,28 +215,55 @@
                 if(result != 'success') {
                     alert("권한이 없습니다.");
                     location.href="admin.html";
+                }else{
+                //페이지 로딩시 1번 멤버 를 얻어오고 뿌려줌
                 }
+            } , error: function (req) {
+                
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }
+            
         });
         
     
 
     
-          
+
+
     
+    
+    function logout(){
+        $.ajax ({
+            type : 'post',
+            url : '../Logout.do',
+            dataType : "json",
+            success : function(data) {
+                var result = data[0].result;
+                if(result != 'success') {
+                    alert("로그아웃 되었습니다.");
+                    location.href="admin.html";
+                }
+            }
+        });
+    
+    }
+           
+
+    
+        
 </script>
 
-<title>Insert title here</title>
-</head>
+
 <body>
         <nav>
             <ul id="nav_menu">
                 <li><a href="home.html">홈</a></li>
-                <li><a href="#">회원 관리</a></li>
-                <li><a href="#">게시글 관리</a></li>
-                <li><a href="#">문의사항 관리</a></li>
-                <li><a href="#">기타 작업</a></li>
-                <li id="logout" onclick="logout()"><a>로그아웃</a></li>
+                <li class="menuMedia"><a href="memberManagement.html">회원 관리</a></li>
+                <li class="menuMedia"><a href="groupManagement.html">그룹 관리</a></li>
+                <li class="menuMedia"><a href="qnaManagement.html">문의사항 관리</a></li>
+                <li class="menuMedia"><a href="notice_board.html">공지사항 작성</a></li>
+                <li class="menuMedia"><a href="#">기타 작업</a></li>
+                <li id="logout" onclick="logout();"><a>로그아웃</a></li>
             </ul>
         </nav>
 
@@ -115,6 +271,28 @@
         
         
         <div id="contents">
+            
+            <div id="firstCover">
+                <div class="contentsTopCover">
+                    <div class="topKind">Setting</div>
+                    <div class="topName">설정 및 관리
+                    </div>
+
+                </div>
+
+                <div class="realContentsPlace">
+                    <form id="adminSingup">
+                        <input type="text" name="adminID" placeholder=" 아이디 "/>
+                        <input type="password" name="adminPW" placeholder=" 비밀번호 "/>
+                    </form>
+
+ 
+  
+                </div>
+            
+            </div>
+            
+            
             
           
             

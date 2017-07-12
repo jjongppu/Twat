@@ -20,7 +20,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class signUpServlet
  */
-@WebServlet("/signUp.do")
+//@WebServlet("/signUp.do")
 public class signUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -53,14 +53,14 @@ public class signUpServlet extends HttpServlet {
 	    String signUpId = request.getParameter("signUpId");
 	    String signUpPw = request.getParameter("signUpPw");
 	    
-//	    // »çÁø ¾÷·Îµå ÇØ°áx----------------------------------------------------------
+//	    // å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹¸ë“¸ì˜™ å ìŒ”ê³¤ì˜™x----------------------------------------------------------
 //	    String savePath = "img/member";
-//	    int uploadFileSize = 5 * 1024 * 1024; // ÆÄÀÏÀÇ Å©±â¸¦ 5MB·Î Á¦ÇÑ (1024 = 2^10)
+//	    int uploadFileSize = 5 * 1024 * 1024; // å ì™ì˜™å ì™ì˜™å ì™ì˜™ í¬å ì©ë¥¼ 5MBå ì™ì˜™ å ì™ì˜™å ì™ì˜™ (1024 = 2^10)
 ////	    String encType = "UTF-8";
 //	    
-//	    ServletContext context = getServletContext(); // ¼­ºí¸´ ÄÁÅØ½ºÆ® °´Ã¼ »ı¼º
-//	    String uploadFilePath = context.getContextPath(); // ¼­ºí¸´ ¼­¹ö¿¡ ½ÇÁ¦ ÀúÀå°æ·Î¸¦ ¾ò¾î¿È
-//	    System.out.println("¼­¹ö»óÀÇ ÀúÀå°æ·Î : " + uploadFilePath);
+//	    ServletContext context = getServletContext(); // å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ìŒ”ì™ì˜™íŠ¸ å ì™ì˜™ì²´ å ì™ì˜™å ì™ì˜™
+//	    String uploadFilePath = context.getContextPath(); // å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì‹¸ëªŒì˜™ å ì™ì˜™å ì™ì˜™
+//	    System.out.println("å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ : " + uploadFilePath);
 //	    
 //	    MultipartRequest multi = new MultipartRequest(
 //				request
@@ -68,9 +68,9 @@ public class signUpServlet extends HttpServlet {
 //				, uploadFileSize
 //				, new DefaultFileRenamePolicy());
 //	    
-//	    // ¾÷·Îµå µÈ ÆÄÀÏ ÀÌ¸§ ¾ò±â
+//	    // å ì™ì˜™å ì‹¸ë“¸ì˜™ å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì‹±ëªŒì˜™ å ì™ì˜™å ï¿½
 //	 	String fileName = multi.getFilesystemName("uploadFile");
-//	    // ------¿¹Á¦ ºÙ¿©³Ö±â ¸Â´ÂÁö ¾È¸Â´ÂÁö ¸ô¶ó¿¬----------------------------------------------------------------------
+//	    // ------å ì™ì˜™å ì™ì˜™ å ìŒ•ìš¸ì˜™å ìŒê¹ì˜™ å ìŠ¹ëŒì˜™å ì™ì˜™ å ì‹«ë§ëŒì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™----------------------------------------------------------------------
 //	    String signUpImgName = request.getParameter("signUpImg");
 //	    String signUpImg = savePath + fileName;
 	    String signUpName = request.getParameter("signUpName");
@@ -82,14 +82,15 @@ public class signUpServlet extends HttpServlet {
 	    String signUpBirth = signUpBirthYear.substring(2) + signUpBirthMonth + signUpBirthDay;
 	    
 	    String signUpPhone = request.getParameter("signUpPhone");
-	    int signUpOutTime = 0;
+	    long signUpOutTime = 0;
 
 	    String signUpQuestion = request.getParameter("signUpQuestion");
 	    String signUpAnswer = request.getParameter("signUpAnswer");
 	    
+	    
 	    MemberDAO memdao = MemberDAO.getInstance();
-	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, 
-	    		signUpBirth, signUpOutTime, signUpQuestion, signUpAnswer);
+	    int result = memdao.signUpMember(signUpId, signUpPw, signUpName, signUpPhone,  signUpGender, signUpBirth, signUpOutTime, signUpQuestion, signUpAnswer);
+	    
 
 	    
 	    PrintWriter writer = response.getWriter();
@@ -98,18 +99,10 @@ public class signUpServlet extends HttpServlet {
 	    
 	    if(result == 1) {
 	    	jsonOb.put("result", "success");
-	    	jsonOb.put("signUpOutTime", signUpOutTime);
 	    } else {
 	    	jsonOb.put("result", "fail");
 	    	
-	    	jsonOb.put("signUpId", signUpId);
-	    	jsonOb.put("signUpPw", signUpPw);
-//	    	jsonOb.put("signUpImg", signUpImg);
-	    	jsonOb.put("signUpName", signUpName);
-	    	jsonOb.put("signUpGender", signUpGender);
-	    	jsonOb.put("signUpBirth", signUpBirth);
-	    	jsonOb.put("signUpPhone", signUpPhone);
-	    	jsonOb.put("signUpOutTime", signUpOutTime);
+
 	    }
 	    
 	    jsonList.add(jsonOb);

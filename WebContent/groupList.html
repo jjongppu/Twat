@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>내일 머햇</title>
+    <title>달게더 참여중인 모임</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -9,21 +9,32 @@
     <!--    네브바 css-->
     <link rel= "stylesheet" type="text/css" href="css/nav.css">
     <script src="js/nav.js"></script>
+        <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
 </head>
 <script>
     
     $.ajax({
         type: "post",
         url: "groupList.do",
+        data: {kind:1},
         dataType: "json",
         success: function(data) {
             var output = "";
+            var countMeView = 0;
+            var countGroupView = 0;
             console.log(data);
             if(data[0].group_id != "noGroup"){
                 for(var i=0;i<data.length;i++){
-                    output += '<div class="center_cover">';
+                    var count = data[i].view_group;
+
+                    output += '<div class="center_cover"  draggable="true" ondragstart="drag(event);" name="'+data[i].group_master+'">';
+
                     output += '<div class="group_Cover" id="'+ data[i].group_id +'">';
                     output += '<div class="group_top">';
+                       if((count-data[i].view_me) >0){
+                        output +='<div class="newCon">'+(count-data[i].view_me)+'</div>';
+                    }
                     output += '<div class="group_icon">';
                     output += '<img class="iconImg" src="'+data[i].group_img+'"/>';
                     output += '</div>';
@@ -44,6 +55,9 @@
                     output += '</div>';
                     output += '</div>';
                     output += '</div>';
+                    countGroupView += count;
+                    countMeView += data[i].view_me;
+                    
                 }
             }else{
                 output += '<div class="center_cover">';
@@ -52,18 +66,13 @@
                 output += '</div>';
                 output += '</div>';
             }
-                // + 그룹 추가 버튼 올자리
-            output += '<div class="center_cover">';
-            output += '<div class="group_Cover">';
-            output += '<div id="addGroup">';
-            output += '<span id="addGroupBtn" onclick="addGroup();">';
-            output += '<img id="plusImg" src="img/etcIcon/plus.png"/>';
-            output += '</span>';
-            output += '</div>';
-            output += '</div>';
-            output += '</div>';
-            
+
             document.getElementById('list_Cover_Cover').innerHTML = output;
+            if(countGroupView > countMeView){
+                $('#newContents').css('display','inline-block');
+            }
+            
+            
             
         },
         error: function(e) {
@@ -76,12 +85,22 @@
         // 입장하기 누르면 그방의 pk 값을 들고 고고씽~?
     function jongGroup(tag){
         var groupPk = $(tag).parent().parents('.group_Cover').attr('id');
+        $.ajax({
+            type: 'post', 
+            dataType: 'json',
+            url: 'setMyGroupContentsView.do',
+            data: { group_id : groupPk},
+            success: function (data){
+
+            }
+        });    
         location.href="groupCalendar.html?group="+groupPk ;
     }
     
     
     // 모달 창을 띄우면서 친구리스트를 불러와주는 함수
     function addGroup(){
+        $('.okBtn').attr('onclick','goMakeGroup()');
         $('#blindCover').css('display','block');
         $('body').append('<div id="modal"><form id="make_group"><div id="contTit_Cover"><input class="contTit" type="text" name="make_group_title" placeholder="그룹 이름  (20자 이내)" maxlength="20"/></div><div id="titfriends">친구 선택</div><div id="friend_choice"></div><div id="btn_place"></div></form></div>');
         
@@ -145,22 +164,10 @@
         });
         
     }
-        
-    $(document).ready(function(){
-        
-        $('#blindCover').css("height",$(window).height());
-        $('#blindCover').css("width",$(window).width());
-        
-        $(window).resize(function(){
-        
-            $('#blindCover').css("height",$(window).height());
-            $('#blindCover').css("width",$(window).width());
-            
-        });
-        
-    });
+     
+
     
-        
+    //선택한 친구들 체크
     function choiceFriend(tag){
         var backcolor = $(tag).css('background-color');
         var thisId = $(tag).attr('id');
@@ -179,6 +186,8 @@
     //모달 사라짐
     function closeModal(){
         $('#blindCover').css('display','none');
+        $('#blindCover_message').css('display','none');
+        $('#blindCover').css('z-index','300');
         $('#messagMeodal').remove();
         $('#modal').remove();
         
@@ -186,11 +195,14 @@
     //메시지모달만 없앰
     function closeMessageModal(){
         $('#messagMeodal').remove();
-        
+        $('#blindCover_message').css('display','none');
+        $('#blindCover').css('z-index','300');
+        $('.okBtn').attr('onclick','goMakeGroup()');
     }
     // 그룹 생성하기
     function goMakeGroup(){
         var formserial = $('#make_group').serialize();
+        $('#blindCover_message').css('display','block');
         var messageModal = '<div id="messagMeodal"><div id="messageTop"><div id="messagePrint"></div></div><div id="messageBottom"><div class="okBtn_message" onclick="closeModal();">확인</div></div></div>';
         var messageModal2 = '<div id="messagMeodal"><div id="messageTop"><div id="messagePrint"></div></div><div id="messageBottom"><div class="okBtn_message" onclick="closeMessageModal();">확인</div></div></div>';
         
@@ -208,6 +220,7 @@
                         if(data[0].result == 's'){
                             $('body').append(messageModal);
                             $('#messagePrint').html("그룹이 정상적으로 생성 되었습니다.");
+                            $('#blindCover').css('z-index','960');
                             $('.okBtn_message').attr('onclick','location.href="groupList.html"');
                         }else{
                             $('body').append(messageModal);
@@ -215,7 +228,7 @@
                         }
                     },
                     error: function () {
-                        $('#ody').append(messageModal);
+                        $('#body').append(messageModal);
                         $('#messagePrint').html("그룹을 생성하던도중 오류가 발생하였습니다.");
                     }
                 });    
@@ -229,14 +242,71 @@
             $('#messagePrint').html("그룹 이름을 정해주세요.");
         }
         
+        $('.okBtn').attr('onclick','');
+        
     }
     
     
+    function drag(ev, a){
+        ev.dataTransfer.setData("text",ev.target.id);
+        console.log($(a).html());
+        
+    }
+    
+    
+    function drop(ev){
+        ev.preventDefault();
+//        var data = ev.dataTransfer.getData("tag");
+//        ev.target.appendChild(document.getElementById(data));
+        
+        
+        console.log("!!");
+        
+        
+    }
+    
+    function allowDrop(ev){
+        ev.preventDefault();
+    }
+    
+    
+    function changeTrashCanOpen(){
+        
+        $("#trashCanIcon").attr("src", "img/etcIcon/trash-can-open.png");            
+        
+    }
+    
+    function changeTrashCanClosed(){
+        $("#trashCanIcon").attr("src", "img/etcIcon/trash-can-closed.png");            
+        
+    }
+    
+    function ribbonUp(){
+      $('#ribbon').animate({
+            top: -10,
+        }, 300);
+    }
+    
+    function ribbonOver(){
+          $('#ribbon').animate({
+            top: -70,
+        }, 300);
+    }
+    
 </script>
 <style>
+    
+    
+    
+    body{
+        background-image: url(img/background/back1.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center top;
+    }
     div{
         position: relative;
-        display: inline-block;
     }
     #list_Cover_Cover{
        display: block;
@@ -244,19 +314,20 @@
         margin: auto;
     }
     #list_Cover{
+            position: absolute;
+        top: 70px;
+        left: 100px;
          display: block;
-        min-width: 550px;
+        width: 1250px;
         margin: auto;
     }
     .center_cover{
-        width: 505px;
-        margin: 25px 0;
+        width: 29%;
+        margin: 25px 25px;
     }
     .group_Cover{
-        display: block;
         height: 100px;
         width: 350px;
-        margin: auto;
     }
     .group_top{
         width: 350px;
@@ -273,8 +344,12 @@
         height: 50px;
     }
     .title_Cover{
-        width: 290px;
+        width: 270px;
         height: 50px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+/*        display: block;*/
     }
     .group_Title{
         display: block;
@@ -305,8 +380,8 @@
     
     
     #title_cover{
+        margin-left: 100px;
         display: block;
-        width: 50%;
     }
     .stick{
         background-color: #83C5F1;
@@ -328,18 +403,35 @@
         text-align: center;
         font-size: 20px;
     }
-    #plusImg,#addGroupBtn{
+    #addGroupBtn{
+        position: absolute;
+        right: 70px;
+        top: 0;
         display: inline-block;
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
+        height: 200px;
+        line-height: 40px;
+        text-align: center;
+        width: 150px;
+        font-size: 13px;
+/*        cursor: pointer;*/
+        overflow: hidden;
     }
     
     
 /*    메세지 모달---*/
+    
+    #blindCover_message{
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0.7;
+        display: none;
+        z-index: 950;
+    }
     #messagMeodal{
         position: fixed;
-        z-index: 100;
+        z-index: 1000;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
@@ -373,14 +465,7 @@
     }
     
 /*    모달 ----------------- */
-    #blindCover{
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: black;
-        opacity: 0.7;
-        display: none;
-    }
+    
     #modal{
         position: fixed;
         width: 500px;
@@ -388,7 +473,7 @@
         left: 50%;
         transform: translate(-50%,-50%);
         background-color: white;
-        z-index: 50;
+        z-index: 900;
     }
     #ment{
         font-size: 20px;
@@ -473,70 +558,85 @@
     #btn_place{
         display: block;
     }
-    
-    
-/*    중앙정렬 미디어 쿼릿~~~~~~~~~~~~~~~*/
-     @media screen and (min-width:1130px) and (max-width : 1634px){
-         #list_Cover_Cover{
-             width: 1050px;
-        }
+    #title_name{
+        display: inline-block;
+        font-size: 40px;
+        font-weight: bold;
+        margin-left: 20px;
+        
+    }
+    .newCon{
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: red;
+        height: 20px;
+        min-width: 20px;
+        text-align: center;
+        font-weight: bold;
+        line-height: 20px;
+        font-size: 11px;
+        color: yellow;
+        border-radius: 20px;
     }
     
-    @media screen and (max-width : 1130px){
-        #list_Cover_Cover{
-             width: 600px;
-        }
-    
+    #trashcan{
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
-    
-    
-    
-    
-    
+    #ribbon{
+        position: absolute;
+        top: -70px;
+        cursor: pointer;
+        width: 60px;
+    }
+
     
 </style>
        
 <body>
     
-    <div id="wrap">
-    
-    
+
+    <div id="newWrap">
       <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                 <li class="nav_li">
-                    <img id="user_Img" src="/img/member/basis_photo.png"/>
+                    <img id="user_Img" src=""/>
                 </li>
-                <li class="nav_li">
+                <li class="nav_li idLi">
                     <div id="user_Id"></div>
                 </li>
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" href="home.html">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
         </ul>
+          
     </nav>
-    
-    
-    
-    
-    
-    
+        
+        
         <div id="main_container">
 
+        
+        
             <div id="title_cover">
-                <div class="center_coverTitle">
-                    <span id="tilte_name">참여중인 캘린더</span>
-                    <div class="stick">
-                    </div>
-                </div>   
+                    <span id="title_name">My Calgather</span>
+                    
+                <span id="addGroupBtn">
+                    <img id="ribbon"  onclick="addGroup();" src="img/etcIcon/ribbon.png" onmouseover="ribbonUp()" onmouseout="ribbonOver()"/>
+                
+                </span>
+                
+                
             </div>
             
             <div id="list_Cover">
@@ -544,11 +644,15 @@
                 </div>
             </div>
 
-            <div id="blindCover" onclick="closeModal();">
-            </div>
+            <div id="blindCover" class="blind" onclick="closeModal();"></div>
+            <div id="blindCover_message" class="blind" onclick="closeMessageModal();"></div>
+            <div id="blindCoverWhite" class="blind" ></div>
 
         </div>
-        
+<!--
+        <div id="trashcan">
+        <img src="img/etcIcon/trash-can-closed.png" ondrop="drop(event)" ondragover="allowDrop(event)"  id="trashCanIcon" onmouseover="changeTrashCanOpen()" onmouseout="changeTrashCanClosed()"/></div>
+-->
     </div>
 </body>
 </html>

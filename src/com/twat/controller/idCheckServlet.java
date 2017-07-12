@@ -17,7 +17,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class idCheckServlet
  */
-@WebServlet("/idCheck.do")
+//@WebServlet("/idCheck.do")
 public class idCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -61,7 +61,8 @@ public class idCheckServlet extends HttpServlet {
 		}
 		
 		jsonList.add(jsonOb);
-	    writer.println(jsonList.toJSONString());
+	    writer.println(jsonList);
+	    writer.close();
 		
 	}
 

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>달게더 문의사항</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	<script src="js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/nav.css">
+	    <script src="js/nav.js"></script>
+    <script src="js/jquery.form.js"></script>
+        <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
+</head>
+	<style>
+		* {
+/*			font-size: 12px;*/
+		}
+		body{
+            background-image: url(img/background/back1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center top;
+        }
+		
+		/* 외부 css 땜시 따로 display : block */
+
+		div {
+			display: block;
+		}
+		
+		#newWrap {
+		    width: 1350px;
+    		height: 800px;
+		}
+		
+		#wrap {
+/*			border: 1px solid black;*/
+/*			margin-left: 100px;*/
+			width: 700px;
+			height: 500px;
+			margin: 0 auto;
+			position: absolute;
+			top: 35%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+		}
+		
+		#title_box {
+/*			border: 1px solid blue;*/
+			margin-bottom: 40px;
+			background-color: #cccccc;
+			
+		}
+		
+		#top_container {
+			
+/*			border: 1px solid green;*/
+			border-top: 2px solid gray;
+			width: 700px;
+			background-color: #e6e6e6;
+			margin-bottom: 20px;
+			
+		}
+		#top_title {
+			border-bottom: 1px solid gray;
+			padding: 5px;
+		}
+		
+		#category_div, #title_div, #id_div, #time_div {
+			display: inline-block;
+		}
+		
+		#bottom_title {
+			padding: 5px;
+		}
+
+		#time_div {
+/*			border: 1px dotted black;*/
+			float: right;
+		}
+		
+		#middle_container {
+/*			border: 1px solid orange;*/
+			border: 1px solid gray;
+			height: 250px;
+			margin-bottom: 20px;
+			padding-top: 7px;
+			padding-left: 7px;
+		}
+		#middle_container2 {
+/*			background-color: yellow;*/
+			margin-bottom: 30px;
+		}
+		#bottom_container {
+/*			border: 1px solid purple;*/
+		}
+		
+		#write_btn_div {
+			float: right;
+		}
+		
+		#reply_div {
+			border: 1px solid gray;
+			height: 80px;
+		}
+		
+		.btn {
+			border: none;
+		}
+	</style>
+	
+	<script>
+
+//		$(document).ready(function() {
+//			
+//			function qnaView() {
+//				
+//
+//			}
+//		});
+		
+		var url = decodeURI(location.href);
+		console.log(url);
+		var parameter = url.split('=', 2);
+		console.log(parameter[1]);
+		
+		
+		// 글 띄우기
+		$.ajax ({
+			type : 'post',
+			url : 'QnaDetail.do',
+			data : { val : parameter[1] },
+			dataType : "json",
+			success : function(data) {
+				console.log(data);
+				console.log(data[0].QNA_CATEGORY);
+				console.log(data[0].QNA_TITLE);
+				console.log(data[0].MEMBER_ID);
+				console.log(data[0].QNA_DATE);
+				console.log(data[0].QNA_CONTENTS);
+				console.log(data[0].QNA_PW);
+				console.log(data[0].QNA_REPLY);
+				console.log(data[0].sessionId);
+				
+				// 다른 사람꺼 건의글 봤을때 수정하기 버튼 없애기 수정중
+				if(data[0].MEMBER_ID != data[0].sessionId) {
+					$('#update_btn_div').css('display', 'none');
+					$('#delete_btn_div').css('display', 'none');
+				} else {
+//					$('#update_btn_div').css('display', 'block');
+				}
+				
+				var category = "";
+				var title = "";
+				var id = "";
+				var time = "";
+				var content = "";
+				var reply = "";
+				
+				console.log(parameter[1]);
+				
+				category = '<span id="category_span">' + data[0].QNA_CATEGORY + '</span>';
+				title = '<div id="title_divDiv">' + data[0].QNA_TITLE + '</div>';
+				id = '<span id="id_span">작성자 ' + data[0].MEMBER_ID + '</span>';
+//				time = '<span id="time_span">';
+//				time = data[0].QNA_DATE;
+//				time = '</span>';				data[i].QNA_DATE.substr(0,10)
+				time = '<span id="time_span">' + data[0].QNA_DATE.substr(0,19) + '</span>';
+				content = '<span id="content_span">' + data[0].QNA_CONTENTS + '</span>';
+				if(data[0].QNA_REPLY == null || data[0].QNA_REPLY == "") {
+					reply = '<span id="reply_span">' + "관리자의 댓글이 아직 작성되지 않았습니다." + '</span>';
+				} else {
+					reply = '<span id="reply_span">' + data[0].QNA_REPLY + '</span>';
+				}
+				
+				$('#category_div').html(category);
+				$('#title_div').html(title);
+				$('#id_div').html(id);
+				$('#time_div').html(time);
+				$('#content_div').html(content);
+				$('#reply_div').html(reply);
+				
+			},
+			error: function(req) {
+				alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "QnaDetail.do");
+			}
+		});
+		
+		
+		// 글 삭제하기
+		function deleteQna() {
+			
+		}
+
+///////////////////////////////////////////////////////////////		
+
+	
+	</script>
+	
+<body>
+    <div id="newWrap">
+      <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src=""/>
+                </li>
+                <li class="nav_li idLi">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="qnaList.html">문의</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
+        </ul>
+          
+    </nav>
+			
+		<!--여기까지 네브바-->
+		
+		
+		<div id="wrap">
+				<div id="title_box">
+					<h4>문의사항</h4>
+				</div>
+				<div id="top_container">
+					<div id="top_title">
+						<div id="category_div">
+<!--							<span id="category_span">해킹신고 및 예방</span>-->
+						</div> &nbsp;|&nbsp;
+						<div id="title_div">
+<!--							<div id="title_divDiv">나 해킹 당했다니가 운영자 개쉐기야</div>-->
+						</div>
+					</div>
+					<div id="bottom_title">
+						<div id="id_div">
+<!--							<span id="id_span">글쓴이</span>-->
+						</div>
+						<div id="time_div">
+<!--							<span id="time_span">작성 시간</span>-->
+						</div>
+					</div>
+				</div>
+				<div id="middle_container">
+					<div id="content_div">
+<!--
+						<span id="content_span">
+							내용이 들어갈 곳
+						</span>
+-->
+					</div>
+				</div>
+				<div id="middle_container2">
+					<h5 style="border-bottom:1px solid black; margin-bottom:5px;">관리자 댓글</h5>
+					<div id="reply_div">
+						
+<!--
+						<span>
+							관리자 댓글 들어갈 곳
+						</span>
+-->
+						
+					</div>
+				</div>
+				<div id="bottom_container">
+					<span id="list_btn_div">
+						<input type="button" id="listBtn" class="btn" value="전체목록" onclick="location.href='qnaList.html'"/>
+					</span>
+					<span id="update_btn_div">
+						<input type="button" id="updateBtn" class="btn" value="수정하기" onclick="location.href='qnaUpdate.html?qna=' + parameter[1]"/>
+					</span>					
+					<span id="delete_btn_div">
+						<input type="button" id="deleteBtn" class="btn" value="삭제하기" onclick="location.href='qnaDelete.html?qna=' + parameter[1]"/>
+					</span>
+					<span id="write_btn_div">
+						<input type="button" id="writeBtn" class="btn" value="글쓰기" onclick="location.href='qnaWrite.html'"/>
+					</span>
+				</div>
+		</div>
+		
+	
+	</div>
+</body>
+</html>

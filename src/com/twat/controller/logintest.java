@@ -19,7 +19,7 @@ import com.twat.dto.MemberVO;
 /**
  * Servlet implementation class logintest
  */
-@WebServlet("/logintest.do")
+//@WebServlet("/logintest.do")
 public class logintest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -79,6 +79,7 @@ public class logintest extends HttpServlet {
 		
 		out.print(jarr.toJSONString());
 		out.flush();
+		 out.close();
 		
 	}
 

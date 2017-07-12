@@ -19,7 +19,7 @@ import com.twat.dto.MemberVO;
 /**
  * Servlet implementation class personalServlet
  */
-@WebServlet("/PersonalServlet.do")
+//@WebServlet("/PersonalServlet.do")
 public class PersonalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
@@ -60,13 +60,15 @@ public class PersonalServlet extends HttpServlet {
 	    		jsonArr.add(jsonOb);
 	    		
 	    	}
-	    	jsonArr.add(new JSONObject().put("a", "a"));
 	    }else{
 	    	JSONObject jsonob = new JSONObject();
 	    	jsonob.put("MEMBER_ID", "");
 	    	jsonArr.add(jsonob);
 	    }
+	    
 	    out.print(jsonArr);
+	    
+	    out.close();
 		
 	}
 

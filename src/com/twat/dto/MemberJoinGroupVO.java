@@ -4,13 +4,36 @@ public class MemberJoinGroupVO
 {
 	private String MEMBER_ID;
 	private String GROUP_ID;
+	private int CALENDAR_VIEW;
+	private int CALENDAR_READ_VIEW;
 	
 	public MemberJoinGroupVO() { }
 	
-	public MemberJoinGroupVO(String MEMBER_ID, String GROUP_ID)
+	public MemberJoinGroupVO(String MEMBER_ID, String GROUP_ID, int CALENDAR_VIEW)
 	{
 		this.MEMBER_ID = MEMBER_ID;
 		this.GROUP_ID = GROUP_ID;
+		this.CALENDAR_VIEW = CALENDAR_VIEW;
+	}
+	
+	public int getCALENDAR_READ_VIEW()
+	{
+		return CALENDAR_READ_VIEW;
+	}
+
+	public void setCALENDAR_READ_VIEW(int CALENDAR_READ_VIEW)
+	{
+		this.CALENDAR_READ_VIEW = CALENDAR_READ_VIEW;
+	}
+	
+	public int getCALENDAR_VIEW()
+	{
+		return CALENDAR_VIEW;
+	}
+
+	public void setCALENDAR_VIEW(int CALENDAR_VIEW)
+	{
+		this.CALENDAR_VIEW = CALENDAR_VIEW;
 	}
 
 	public String getMEMBER_ID()

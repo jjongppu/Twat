@@ -3,7 +3,9 @@ package com.twat.controller;
 import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +23,7 @@ import com.twat.dto.CalendarVO;
 /**
  * Servlet implementation class GroupSchedule
  */
-@WebServlet("/groupSchedule.do")
+//@WebServlet("/groupSchedule.do")
 public class GroupSchedule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -53,9 +55,11 @@ public class GroupSchedule extends HttpServlet {
 		
 		JSONArray group = new JSONArray();
 		
-		// Calendar¿¡¼­ ±×·ìÀÇ ÀÏÁ¤ °¡Á®¿È
+		// Calendarï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		CalendarDAO calDao = CalendarDAO.getInstance();
 		ArrayList<CalendarVO> arrList = calDao.getInfo(request.getParameter("group"), request.getParameter("calNum"));
+		
+//		SimpleDateFormat simple = new SimpleDateFormat("yyyyMMdd-HH:mm:ss");
 		
 		if(arrList.size() > 0)
 		{
@@ -64,9 +68,13 @@ public class GroupSchedule extends HttpServlet {
 				JSONObject groupSchedule = new JSONObject();
 				
 				groupSchedule.put("cal_num", arrList.get(i).getCal_num());
+//				groupSchedule.put("cal_time", arrList.get(i).getCal_time());
+//				groupSchedule.put("cal_time", simple.format(arrList.get(i).getCal_time()));
+				Date date = arrList.get(i).getCal_time();
+				groupSchedule.put("cal_time", date.getTime());
 				groupSchedule.put("cal_date", arrList.get(i).getCal_date());
 //				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
-				groupSchedule.put("cal_group", arrList.get(i).getCal_group());
+				groupSchedule.put("cal_group", arrList.get(i).getGroup_id());
 				//getCal_group
 				groupSchedule.put("cal_memo", arrList.get(i).getCal_memo());
 				groupSchedule.put("cal_writer", arrList.get(i).getCal_writer());
@@ -79,10 +87,15 @@ public class GroupSchedule extends HttpServlet {
 			}
 		}
 		
-		// JSON Àü¼Û
+		// JSON ï¿½ï¿½ï¿½ï¿½
 		
 		out.print(group.toJSONString());
 		out.close();
+		if(calDao != null)
+		{
+			calDao = null;
+		}
 	}
 
+	
 }

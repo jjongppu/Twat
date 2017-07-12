@@ -5,7 +5,9 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="js/jquery-3.2.1.min.js"></script>
-
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
+    
 <style>
     *{
         color: black;
@@ -14,7 +16,7 @@
     body{
         margin: 0;
         padding: 0;
-        background-image: url(img/background/background4.jpg);
+        background-image: url(img/background/back1.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
@@ -35,7 +37,7 @@
         font-size: 40px;
     }
     .idpwBox{
-        width: 60%;
+        width: 80%;
         height: 38px;
         margin: 6px 0;
         padding-left: 18px;
@@ -51,7 +53,13 @@
         background-color:transparent;
         cursor: pointer;
     }
-
+    .smallBtn{
+        display: inline-block;
+        width: 100px;
+        margin: 20px 0;
+        float: right;
+    }
+    
     #idpwSearchBox {
         margin-top: 22px;
         font-size: 12px;
@@ -59,7 +67,7 @@
     #userLoginCover{
         
 /*        transform: translate(-50%,-50%);*/
-        width: 450px;
+        width: 350px;
         margin: auto;
         height: 500px;
     }
@@ -77,6 +85,7 @@
     #cover{
         position: relative;
         height: 500px;
+        
     }
     
     #cover:before {
@@ -88,7 +97,7 @@
       left: 0px;
 /*        transform: translate(50%,50%);*/
       z-index: 0;
-      background-image: url('img/background/background4.jpg');
+      background-image: url('img/background/back1.jpg');
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center top;
@@ -103,71 +112,126 @@
         display:flex;
     }
     #logo{
-        width: 240px;
-        height: auto;
+        width: 250px;
+        height: 170px;
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translate(-50%,0);
     }
         textarea:focus, input:focus{
         outline: none;
+    }
+    
+    #modal{
+        font-size: 12px;
+        padding-top: 20px;
+        overflow: hidden;
+        height: 0;
     }
 </style>    
 
 
 <script>
     
+        $.ajax({
+		type: "post",
+		url: "SessionCheck.do",
+		dataType: "json",
+		success: function(data) {
+			if(data[0].result == "s"){
+				location.href='home.html';
+			}
+		}
+	});           
+	
 	function loginEnter() {
 //        console.log("!");
         var loginDate = new Date();
         $('#date').val(loginDate);
         
-//        console.log(loginDate);
-       /* loginDate.setDate(loginDate.getDate() + 15);
-        var deleteDate = loginDate;*/
-//        console.log(deleteDate);
-       
-		console.log($('#idpwPass').serialize());
-		$.ajax ({
-			type : 'post',
-			url : 'login.do',
-			//data : $('#idpwPass').serialize(),
-			data : {
-				userid : $("#idBox").val(),
-				userpw : $("#pwBox").val()
-			},
-			dataType : "json",
-			success : function(data) {
-//				console.log(data);
-                var result = data[0].result;
-                
-//                theForm = document.frm1
-                console.log(result);
-                
-                
-                
-                
-                
-                // 로그인 시 유효성 검사
-                if($('#idBox').val() == "") {
-                    alert("아이디를 입력하세요.");
-                    $('#idBox').focus();	
-                } else if($('#pwBox').val() == "") {
-                    alert("비밀번호를 입력하세요.");
-                    $('#pwBox').focus();
-                } else if(result == 'success') {
-                    alert("로그인 되었습니다.");
-//                    location.href='Home.html';
-                    location.href='home.html';
-                } else if(result > 0){
-                    alert("회원탈퇴가 진행중인 회원입니다.");
-                }else {
-                    alert("아이디 또는 비밀번호가 잘못되었습니다.");
-                    $('#idBox').val("");
-                    $('#pwBox').val("");
-                }
-			},error: function(req) {
-                alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
-            }
+		// 로그인 시 유효성 검사
+        if($('#idBox').val() == "") {
+            alert("아이디를 입력하세요.");
+            $('#idBox').focus();	
+        } else if($('#pwBox').val() == "") {
+            alert("비밀번호를 입력하세요.");
+            $('#pwBox').focus();
+        } else {
 			
-		});
+			// 에이잭스
+			console.log($('#idpwPass').serialize());
+			$.ajax ({
+				type : 'post',
+				url : 'login.do',
+				//data : $('#idpwPass').serialize(),
+				data : {
+					userid : $("#idBox").val(),
+					userpw : $("#pwBox").val()
+				},
+				dataType : "json",
+				success : function(data) {
+					
+					var result = data[0].result;
+
+	//                theForm = document.frm1
+					console.log(result);
+
+					// 로그인 / 탈퇴중 / 탈퇴 / 실패 
+					if(result == 'success') {
+ 
+                        
+                        
+                        var cookies = getCookie($('#idBox').val());
+                        var turn = 'getCookie';
+                        if(cookies != "visitUser"){
+                            turn = "noCookie";
+                        }
+                        console.log(cookies);
+                            var dates = setCookieAt00();
+                             $.ajax({
+                                type:"post",
+                                url: "AdminSetVisitToday.do",
+                                data: {turn:turn, dates: dates,userid : $("#idBox").val()},
+                                success: function(data){
+                                var result = data[0].result;
+                                    if(result == "success"){
+                                        location.href='home.html';
+                                    }else{
+                                        console.log("뭔가실패");
+                                    }
+
+                                }
+                            });
+
+						
+                    } else if(result == 'outIng'){
+                        $('#noBtn').attr('onclick','hideModal()');
+                        $('#yesBtn').attr('onclick','returnAccount()');
+						$('#modal').animate({
+                            height: 100,
+                        }, 500);
+
+					} else if(result == 'out') {
+						alert("탈퇴 처리된 회원입니다.");
+						$('#idBox').val("");
+						$('#pwBox').val("");
+						$('#idBox').focus();
+					} else {
+						alert("아이디 또는 비밀번호가 잘못되었습니다.");
+						$('#idBox').val("");
+						$('#pwBox').val("");
+						$('#idBox').focus();
+					}
+
+				},error: function(req) {
+					alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
+				}
+
+			});
+		}
+       
+		
     }
     
     // 중앙정렬 시켜줌 ----------
@@ -178,17 +242,74 @@
          });
      });
     
+   
     
     function enterLog(){        
         if(window.event.keyCode == 13) {
             loginEnter();
         }
     }
-                       
+         
+    
+    function hideModal(){
+        $('#modal').animate({
+            height: 0,
+        }, 500);
+        $('#noBtn').attr('onclick','');
+        $('#yesBtn').attr('onclick','');
+    }
+         
+    function returnAccount(){ 
+                $.ajax({
+                    type:"post",
+                    url: "outUser.do",
+                    data: {state: 'return',userid : $("#idBox").val()},
+                    success: function(data){
+                    var result = data[0].result;
+                        if(result != 'success'){
+                        	alert("회원 정보를 복구하던도중 오류가 발생하였습니다.");
+                        }else{
+                        	alert("회원 복구가 완료 되었습니다.");
+                        	location.href='index.html'
+                        }
+                    }
+                });
+        
+    }
+
+         
+
+    
+        function setCookieAt00() {   
+            var todayDate = new Date();   
+            todayDate = new Date(parseInt(todayDate.getTime() / 86400000) * 86400000 + 54000000);  
+
+            return todayDate.getTime();
+ 
+        }  
+
+    
+        function getCookie(cName) {
+            cName = cName + '=';
+            var cookieData = document.cookie;
+            var start = cookieData.indexOf(cName);
+            var cValue = '';
+            if(start != -1){
+                start += cName.length;
+                var end = cookieData.indexOf(';', start);
+                if(end == -1)end = cookieData.length;
+                cValue = cookieData.substring(start, end);
+            }
+            return unescape(cValue);
+        }  
+	
+
+	
+	
     
 </script>
 
-<title>Insert title here</title>
+<title>환영합니다 달게더 입니다</title>
 </head>
 <body>
 
@@ -197,7 +318,7 @@
             <div id="cover">
                 <div id="cover_inCover">
                 <div class='loginContainer'>
-                    <div class='logoBox'><img id="logo" src="img/etcIcon/logo.png"/>
+                    <div class='logoBox'><img id="logo" src="img/logo/logo1.png"/>
                     </div>
 
                     <div>
@@ -208,9 +329,16 @@
                             <input type="password" id="pwBox" name="userpw" class="idpwBox" placeholder='비밀번호' onkeypress="enterLog()"/>
                         </div>
                     </div>
-
+                    <div id="modal" >
+                        <div><b>회원탈퇴</b>가 진행중인 회원입니다.</div>
+                        <div>계정을 <strong>복구</strong> 하시겠습니까?</div>
+                    
+                        <div id='noBtn' class='btn smallBtn' onclick="">아니오</div>
+                        <div id='yesBtn' class='btn smallBtn' onclick="">네</div>
+                    </div>
                     <div>
                         <div>
+                            
                             <input type="button"  id='loginBtn' class='btn' value="로그인" onclick="loginEnter()"/>
                             <input type="hidden" id="date" name="date" value=""/>
                         </div>
@@ -225,11 +353,78 @@
                         <a href="searchID.html" class="idSearch" >아이디 찾기</a>
                         <span>  &nbsp;|&nbsp; </span>
                         <a href="searchPW.html" class="pwSearch">비밀번호 찾기</a>
+<!--
+                        
+                        <div id='kakao-btn' style='margin-top:10px;' onclick='Kakao.Auth.login(settings)'>
+                            <a id="kakao-login-btn" ></a>
+                            <a href="http://developers.kakao.com/logout"></a>
+-->
+<!--
+                            <a id="custom-login-btn" href="javascript:loginWithKakao()">
+                               <img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/></a>}
+-->
+                        </div>    
                     </div>
                 </div>
                     </div>
+                
+      
+
+                
             </div>
+
         </form>
+        
+     
+ 
+        
     </div>
+    
+ 
+
+    
+</script>
+
+    
+    
+    <script>
+//        cf4f2d06941459855a542dedf17b1be3
+        
+//    
+//    Kakao.init('cf4f2d06941459855a542dedf17b1be3');
+//    // 카카오 로그인 버튼을 생성합니다.
+//    Kakao.Auth.createLoginButton({
+//        container: '#kakao-login-btn',
+//        success: function(authObj) {
+//        alert(JSON.stringify(authObj));
+//      },
+//        fail: function(err) {
+//        alert(JSON.stringify(err));
+//      }
+//    });
+//        
+//        
+//    Kakao.init('cf4f2d06941459855a542dedf17b1be3');
+//    function loginWithKakao() {
+//      // 로그인 창을 띄웁니다.
+//        Kakao.Auth.login({
+//        success: function(authObj) {
+//          alert(JSON.stringify(authObj));
+//        },
+//        fail: function(err) {
+//          alert(JSON.stringify(err));
+//        }
+//      });
+//    };
+//        
+//        
+        
+ 
+        
+        
+    </script>     
+    
+    
+    
 </body>
 </html>

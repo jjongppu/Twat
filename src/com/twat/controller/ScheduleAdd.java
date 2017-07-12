@@ -18,13 +18,14 @@ import org.json.simple.JSONObject;
 import com.mysql.fabric.Server;
 import com.twat.dao.CalendarDAO;
 import com.twat.dao.CalgatherDAO;
+import com.twat.dao.MemberJoinGroupDAO;
 
 // 나동주 추가
 
 /**
  * Servlet implementation class ScheduleAdd
  */
-@WebServlet("/ScheduleAdd.do")
+//@WebServlet("/ScheduleAdd.do")
 public class ScheduleAdd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -68,8 +69,9 @@ public class ScheduleAdd extends HttpServlet {
 //		System.out.println(request.getRequestURL().toString());
 	
 		calendarDao.addGroupCal(count, cal_date2, groupId, cal_memo, cal_writer);
-		
-		
+
+		MemberJoinGroupDAO mDao = MemberJoinGroupDAO.getInstance();
+		mDao.updateCalView(groupId);
 		
 //		response.sendRedirect(request.getRequestURL().toString());
 		
@@ -79,6 +81,7 @@ public class ScheduleAdd extends HttpServlet {
 
 		System.out.println(jsonArr);		
 		out.print(jsonArr);
+		 out.close();
 
 		
 	

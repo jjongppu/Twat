@@ -17,10 +17,12 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.CalgatherDAO;
 import com.twat.dao.MemberDAO;
+import com.twat.dao.MemberJoinGroupDAO;
 import com.twat.dto.CalgatherVO;
+import com.twat.dto.MemberJoinGroupVO;
 
 
-@WebServlet("/groupList.do")
+//@WebServlet("/groupList.do")
 public class GetGroupListProcess extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -39,22 +41,29 @@ public class GetGroupListProcess extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("loginUserId");
+		
 		JSONArray jarr = new JSONArray();
 		PrintWriter out = response.getWriter();
+		ArrayList<CalgatherVO> groupInfo = null;
 		
-		
-		String userId = (String)session.getAttribute("loginUserId");
-		MemberDAO mdao = MemberDAO.getInstance();
-		ArrayList<Integer> group_List = mdao.getMyGroupList(userId);
+		// 종류 구분해버리깃
+		int kinds = Integer.parseInt(request.getParameter("kind"));
 
 		CalgatherDAO calDao = CalgatherDAO.getInstance();
-		ArrayList<CalgatherVO> groupInfo = calDao.myGroupList(group_List);
+		MemberJoinGroupDAO getGourpInfo = MemberJoinGroupDAO.getInstance();
+		ArrayList<MemberJoinGroupVO> mjg = getGourpInfo.getViewCountCheck(userId);
+		System.out.println(mjg.size());
+		// 1일떄만 방정보까지 얻어옴 불필요한 정보 최소화
+		if(kinds == 1){
+			groupInfo = calDao.myGroupList(mjg);
+			System.out.println(groupInfo.size());
+		}
 		
-		if(group_List.size() > 0 ){
-			
-			if(groupInfo.size() > 0 ){
-				for (int i = 0; i < groupInfo.size(); i++) {
-					JSONObject jsonObj = new JSONObject();
+		if(mjg.size() > 0 ){
+			for (int i = 0; i < mjg.size(); i++) {
+				JSONObject jsonObj = new JSONObject();
+				if(kinds == 1){
 					CalgatherVO cao = (CalgatherVO)groupInfo.get(i);
 					jsonObj.put("group_id", cao.getGroup_id());
 					jsonObj.put("group_name", cao.getGroup_name());
@@ -63,12 +72,10 @@ public class GetGroupListProcess extends HttpServlet {
 					jsonObj.put("group_master_name", cao.getGroup_master_name());
 					jsonObj.put("group_img", cao.getGroup_img());
 					jsonObj.put("group_count", cao.getGroup_count());
-					
-					jarr.add(jsonObj);
 				}
-			}else{
-				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("group_id","noGroup");
+				MemberJoinGroupVO mj = mjg.get(i);
+				jsonObj.put("view_me", mj.getCALENDAR_VIEW());
+				jsonObj.put("view_group", mj.getCALENDAR_READ_VIEW());
 				jarr.add(jsonObj);
 			}
 		}else{
@@ -76,8 +83,8 @@ public class GetGroupListProcess extends HttpServlet {
 			jsonObj.put("group_id","noGroup");
 			jarr.add(jsonObj);
 		}
-			
-			
+		
+		
 			
 		out.print(jarr);
 		out.flush();

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>달게더 문의사항</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/nav.css">
+	    <script src="js/nav.js"></script>
+    <script src="js/jquery.form.js"></script>
+        <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
+	
+	<style>
+		body{
+            background-image: url(img/background/back1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center top;
+        }
+		
+		#wrap {
+/*			margin-left: 100px;*/
+			width: 1000px;
+			margin: 0 auto;
+			position: absolute;
+			top: 40%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+		}
+		span {
+			display: inline-block;
+			width: 140px;
+			padding-left: 8px;
+		}
+		div {
+			display: block;
+		}
+		
+		#bigTitle {
+			margin-bottom: 80px;
+			background-color: #cccccc;
+		}
+		
+		#pwId {
+			width: 121px;
+		}
+		#titleId {
+			width: 720px;
+		}
+		#contWrap {
+/*			border: 1px solid black;*/
+		}
+		
+		.container {
+			border: 1px solid white;
+			margin: 2px;
+			background-color: #e6e6e6;
+		}
+		
+		
+		/* ------------------버튼 div ---------------*/
+		#btnWrap {
+/*			border: 1px solid red;*/
+			margin-top: 35px;
+			float: right;
+		}
+		.btn {
+			border: none;
+			widows: 100px;
+			height: 28px;
+/*			background-color: white;*/
+		}
+		
+	</style>
+	
+	<script>
+
+///////////////////////////////////////////////////////////////////////////////            
+		var url = decodeURI(location.href);
+		console.log(url);
+		var parameter = url.split('=', 2);
+		console.log(parameter[1]);
+		
+			$.ajax ({
+				type : 'post',
+				url : 'QnaDetail.do',
+				dataType : "json",
+				data : { val : parameter[1] },
+
+				success : function(data) {
+					console.log(data);
+					
+					console.log(data[0].QNA_CATEGORY);
+					console.log(data[0].QNA_TITLE);
+					console.log(data[0].MEMBER_ID);
+					console.log(data[0].QNA_DATE);
+					console.log(data[0].QNA_CONTENTS);
+					console.log(data[0].QNA_PW);
+					console.log(data[0].QNA_REPLY);
+					var category = "";
+					var title = "";
+					var content = "";
+						
+					console.log(parameter[1]);
+						
+//					category = '<span id="category_span">' + data[0].QNA_CATEGORY + '</span>';
+//					title = '<span>제목</span><input type="text id="titleId name="qnaTitle" value="' + data[0].QNA_TITLE + '"/>';
+					$('#cateId').val(data[0].QNA_CATEGORY);
+					$('#pwId').val(data[0].QNA_PW);
+					$('#titleId').val(data[0].QNA_TITLE);
+					content = '<span>문의 내용</span><textarea id="contId" name="qnaContents" cols="100" rows="15" style="resize: none;">' + data[0].QNA_CONTENTS + '</textarea>';
+//					content = $('#contId').val(data[0].QNA_CONTENTS);
+						
+
+//					$('#category_div').html(category);
+//					$('#wrap_Title').html(title);
+					$('#wrap_Content').html(content);
+
+
+			},
+			error: function(req) {
+				alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error );
+			},
+		});	
+		
+		
+		function pwTest() {
+			var num_regx=/^[0-9]*$/; // 숫자만
+			if(!num_regx.test($('#pwId').val())) {
+				alert("비밀번호는 숫자로만 입력해야 합니다.");
+			}
+		}
+		
+		function qnaUpdateEnter() {
+			var url = decodeURI(location.href);
+			console.log(url);
+			var parameter = url.split('=', 2);
+			console.log(parameter[1]);
+			
+			pwTest(); // 비밀번호 숫자로만 입력
+			
+			if($('#cateId option:selected').val() == "--") {
+				alert("카테고리를 선택해주세요.");
+				$('#cateId').focus();
+			} else if($('#pwId').val() == "") {
+				alert("비밀번호를 설정해 주세요.");
+				$('#pwId').focus();
+			} else if($('#titleId').val() == "") {
+				alert("제목을 입력해 주세요.");
+				$('#titleId').focus();
+			} else if($('#contId').val() == "") {
+				alert("내용을 입력해 주세요.");
+				$('#contId').focus();
+			} else {
+				$.ajax ({
+					type : 'post',
+					url : 'QnaUpdate.do',
+					dataType : "json",
+					data : { val : parameter[1], category : $('#cateId').val(), 
+							pw : $('#pwId').val(), qnaTitle : $('#titleId').val(), qnaCont : $('#contId').val() },
+
+					success : function(data) {
+						console.log(data);
+						var result = data[0].result;
+
+						if(result == "success") {
+							alert("수정이 완료 되었습니다.");
+							location.href="qnaList.html";
+						} else {
+							alert("다시 한 번 확인해주세요.");
+						}
+
+					},
+					error: function(req) {
+						alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error );
+					},
+				});	
+			}
+		}
+/////////////////////////////////////////////////////////////////////////////	
+
+	</script>
+</head>
+<body>
+	<form id="qnaForm" action="QnaUpdate.do" method="post">
+    <div id="newWrap">
+      <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src=""/>
+                </li>
+                <li class="nav_li idLi">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="qnaList.html">문의</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
+        </ul>
+          
+    </nav>
+			
+			<!--여기까지 네브바-->
+			<div id="wrap">
+				<div id="bigTitle">
+					<h4>문의사항 수정하기</h4>
+				</div>
+
+				<div id="contWrap">
+					<div id="wrap_Cate" class="container">
+						<span>카테고리</span>
+						<select id="cateId" name="qnaCategory">
+							<option>--</option>
+							<option value="서비스 문의">서비스 문의</option>
+							<option value="아이디 관련">아이디 관련</option>
+							<option value="해킹신고 및 예방">해킹신고 및 예방</option>
+							<option value="신고하기">신고하기</option>
+							<option value="개선/불만사항">개선/불만사항</option>
+						</select>
+					</div>
+					<div id="wrap_Pw" class="container">
+						<span>비밀번호</span>
+						<input type="password" id="pwId" name="qnaPw" maxlength="10"/>
+					</div>
+					<div id="wrap_Title" class="container">
+						<span>제목</span>
+						<input type="text" id="titleId" name="qnaTitle"/>
+					</div>
+					<div id="wrap_Content" class="container">
+						<span>문의 내용</span>
+<!--						<textarea id="contId" name="qnaContents" cols="100" rows="15" style="resize: none;"></textarea>-->
+					</div>
+				</div>
+				<div id="btnWrap">
+					<input type="button" value="수정완료" id="submitBtn" class="btn" onclick="qnaUpdateEnter()"/>
+					<input type="button" value="취소" id="cancelBtn" class="btn" onclick="location.href='qnaList.html'"/>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

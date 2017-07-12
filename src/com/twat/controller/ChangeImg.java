@@ -18,7 +18,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class ChangeImg
  */
-@WebServlet("/changeImg.do")
+//@WebServlet("/changeImg.do")
 public class ChangeImg extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -68,7 +68,7 @@ public class ChangeImg extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		out.println(jsonList);
-
+		 out.close();
 		}
 
 }

@@ -18,7 +18,7 @@ import com.twat.dao.CalgatherDAO;
 /**
  * Servlet implementation class groupMasterServlet
  */
-@WebServlet("/groupMaster.do")
+//@WebServlet("/groupMaster.do")
 public class groupMasterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -56,7 +56,11 @@ public class groupMasterServlet extends HttpServlet {
 	    	
 	    }
 	    
+	    jsonObj.put("userId", session.getAttribute("loginUserId"));
+	    jsonArr.add(jsonObj);
+	    
 	    out.print(jsonArr);
+	    out.close();
 	    
 	    
 	    

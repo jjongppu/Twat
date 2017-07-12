@@ -1,689 +1,1384 @@
 package com.twat.dao;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.servlet.http.HttpSession;
-import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
+import java.util.ArrayList;
+
+import com.twat.mvconnection.*;
+
+
+
+import com.twat.dbpool.DBPool;
 import com.twat.dto.MemberVO;
 
-	
-
 public class MemberDAO {
-	Connection con = null;
-	PreparedStatement psmt= null;
-	ResultSet rs= null;
-	
-	
-	// MemberDAO ¿« ΩÃ±€≈Ê -----------------------------------
+//	Connection con = null;
+//	PreparedStatement psmt = null;
+//	ResultSet rs = null;
+
 	private static MemberDAO instance = new MemberDAO();
-	
-	private MemberDAO(){}
-	
-	public static MemberDAO getInstance(){
+
+	private MemberDAO() {
+	}
+
+	public static MemberDAO getInstance() {
 		return instance;
 	}
-	 
-	// -------------------------------------------------------
-	
-	
-	
-	   // DBø¨∞·¿ª ¿ß«ÿ con¿ª π›»Ø«œ¥¬ ∏ﬁº≠µÂ --------------------------------------------
-	   public Connection getConnection() throws Exception {
-	         Context initCtx = new InitialContext();
-	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
-	         
-	      return ds.getConnection();
-	   }
 
-	
-	
-	  // æ∆¿Ãµ √£¥¬ ∏ﬁº≠µÂ (¿Ã∏ß,¿¸»≠π¯»£∑Œ √£±‚)-----Ω¬øÏ-------------------------
-	   public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
-	      
-	      String selectSql = "select MEMBER_ID from MEMBER where MEMBER_NAME=? and MEMBER_PHONE=?";
-	      String getID = ""; 
-	      
-	      try {
-	         con = getConnection();
-	         psmt = con.prepareStatement(selectSql);
-	         psmt.setString(1, MEMBER_NAME);
-	         psmt.setString(2, MEMBER_PHONE);
-	         
-	         rs = psmt.executeQuery();
-	         
-	         while(rs.next()) {
-	            getID = rs.getString(1);
-	         }
-	         
-	      } catch (Exception e) {
-	         // TODO Auto-generated catch block
-	         e.printStackTrace();
-	      } finally {
-	         try {
-	            if(rs != null)   rs.close();
-	            if(psmt != null) psmt.close();
-	            if(con != null) con.close();
-	         } catch (SQLException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	         }
-	      
-	   }
-	      return getID;
-	   }
-	   
-	   
-	   
-// ∫Òπ–π¯»£ √£¥¬ ∏ﬁº≠µÂ ---------Ω¬øÏ-------------------------------
-	   public String searchPW(String MEMBER_ID, String MEMBER_NAME, String MEMBER_PHONE) {
-		   String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
-		   String getPW = "";
-		   
-		   try {
-			con = getConnection();
+
+	// --------------------------------------------
+//	public Connection getConnection() throws Exception {
+//		Context initCtx = new InitialContext();
+//		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
+//
+//		return (Connection) ds.getConnection();
+//	}
+
+	public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
+
+		String selectSql = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_NAME=? AND MEMBER_PHONE=?";
+		String getID = "";
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
 			psmt = con.prepareStatement(selectSql);
-			psmt.setString(1, MEMBER_ID);
-			psmt.setString(2, MEMBER_NAME);
-			psmt.setString(3, MEMBER_PHONE);
+			psmt.setString(1, MEMBER_NAME);
+			psmt.setString(2, MEMBER_PHONE);
+
 			
 			rs = psmt.executeQuery();
-			
-			while(rs.next()) {
-				getPW = rs.getString(1);
+
+			while (rs.next()) {
+				getID = rs.getString(1);
 			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-	         try {
-		            if(rs != null)   rs.close();
-		            if(psmt != null) psmt.close();
-		            if(con != null) con.close();
-		         } catch (SQLException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		         }
-		      
-		   }
-		   return getPW;
-	   }	   
-	   
-
-		// »∏ø¯ ∑Œ±◊¿Œ¿ª ¿ß«— ∏ﬁº≠µÂ ----------------------------------
-		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
-			int result = -1;
-			
-			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
-			
-			
 			try {
-				con = getConnection();
-				psmt = con.prepareStatement(selectSql);
-				psmt.setString(1, MEMBER_ID);
-				psmt.setString(2, MEMBER_PW);
-//				System.out.println("!");
-				rs = psmt.executeQuery();
-				
-				if(rs.next()) {
-					// out_time¿Ã 0¿Ã∏È ∑Œ±◊¿Œ º∫∞¯ resultø° 1≥÷æÓ¡‹
-					if(rs.getInt(1) == 0) {
-						// ∑Œ±◊¿Œ º∫∞¯
-						result = 1;
-					} else {
-						result = rs.getInt(1);
-						System.out.println(result);
-					}
-				}
-			} catch (Exception e) {
-				System.out.print("¡¢º” ø°∑Ø");
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
-					try {
-						if(rs != null)rs.close();
-						if(psmt != null) psmt.close();
-						if(con != null) con.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
 			}
-			return result;
+
 		}
-	   
-	   
-	   
-	// ∑Œ±◊¿Œ «—ªÁ∂˜¿« ±◊∑Ï æÚæÓø¿±‚ ¬–±‚∏Æ
-			public ArrayList<Integer> getMyGroupList(String MEMBER_ID) {
-				ArrayList<Integer> glList = new ArrayList<Integer>();
-				
-				
-				try {
-					con = getConnection();
-					
-					// æ∆¿Ãµ∑Œ ±◊∑Ï∏Ò∑œ ∫“∑Øø¿±‚
-					String sql = "select GROUP_ID from MEMBER_JOIN_GROUP where MEMBER_ID =?";
-					
-					psmt = con.prepareStatement(sql);
-					psmt.setString(1, MEMBER_ID);
-					
-					rs = psmt.executeQuery();
-					while(rs.next()) {
-						glList.add(rs.getInt("GROUP_ID"));
-					}
-						
-						
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-						try {
-							if(rs != null)	rs.close();
-							if(psmt != null) psmt.close();
-							if(con != null) con.close();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					
-				}
-				return glList;
-			}
+		return getID;
+	}
 
+	public int searchPW(String id, String phone, String question, String answer) {
+//		String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
+		String selectSql = "SELECT * FROM MEMBER WHERE MEMBER_ID=? AND MEMBER_PHONE=? AND MEMBER_QUESTION=? AND MEMBER_ANSWER=?";
+		int result = 0;
+		Connection con = null; 
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 
-	   
-	   
-// »∏ø¯ ∞°¿‘¿ª ¿ß«— ∏ﬁº≠µÂ ------Ω¬øÏ----------------------------
-
-	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, 
-			   String MEMBER_GENDER, String MEMBER_BIRTH, int OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
-
-	      
-	      int result = 0;
-	      int signUp = 0;
-	      
-//	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
-
-	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
-
-	      
-	      try {
-	         con = getConnection();
-	         psmt = con.prepareStatement(insertSql);
-	      
-	         psmt.setString(1, MEMBER_ID);
-	         psmt.setString(2, MEMBER_PW);
-	         psmt.setString(3, MEMBER_NAME);
-	         psmt.setString(4, MEMBER_PHONE);
-	         psmt.setString(5, "img/member/basis_photo.png");
-	         psmt.setString(6, MEMBER_GENDER);
-	         psmt.setString(7, MEMBER_BIRTH);
-	         psmt.setString(8, null);
-	         psmt.setString(9, null);
-//	         psmt.setTimestamp(10, null);
-	         psmt.setInt(10, OUT_TIME);
-
-	         psmt.setString(11, MEMBER_QUESTION);
-	         psmt.setString(12, MEMBER_ANSWER);
-
-	         
-	         result = psmt.executeUpdate();
-	         
-//	         rs = psmt.executeQuery();
-//	         
-
-	      } catch (Exception e) {
-	         // TODO Auto-generated catch block
-	         e.printStackTrace();
-	      } finally {
-	         try {
-	            if(rs != null)   rs.close();
-	            if(psmt != null) psmt.close();
-	            if(con != null) con.close();
-	         } catch (SQLException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	         }
-//	         System.out.println(result);
-	         return result;
-	      }    
-
-	   }	   
-	   
-
-	   
-	   
-// »∏ø¯∞°¿‘Ω√ æ∆¿Ãµ Ω«Ω√∞£ ∞ÀªÁ...---------Ω¬øÏ------------------------------
-	   public int checkID(String idCheck) {
-		   int result = -1;
-		   
-		   String sql = "select MEMBER_ID from MEMBER where MEMBER_ID=?";
-		   
-		   try {
-			con = getConnection();
-			psmt = con.prepareStatement(sql);
+		try {
+//			con = getConnection();
 			
-			psmt.setString(1, idCheck);
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(selectSql);
+			psmt.setString(1, id);
+			psmt.setString(2, phone);
+			psmt.setString(3, question);
+			psmt.setString(4, answer);
 			
 			rs = psmt.executeQuery();
-			if(rs.next()) {
+			
+				while(rs.next()){
+					result = 1;
+				}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return result;
+	}
+
+	public long loginMember(String MEMBER_ID, String MEMBER_PW) {
+		long result = -1;
+
+		long currentTime = System.currentTimeMillis();
+		Connection con = null;
+		PreparedStatement psmt2 = null;
+		ResultSet rs2 = null;
+
+		System.out.println(currentTime);
+
+		// String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ?
+		// and MEMBER_PW = ?";
+		String selectSql = "SELECT OUT_TIME FROM MEMBER WHERE MEMBER_ID = ? AND AES_DECRYPT(UNHEX(MEMBER_PW), 'memPW') = ?";
+
+		try {
+//			con = getConnection();
+			
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt2 = con.prepareStatement(selectSql);
+			psmt2.setString(1, MEMBER_ID);
+			psmt2.setString(2, MEMBER_PW);
+			rs2 = psmt2.executeQuery();
+			if (rs2.next()) {
+				result = rs2.getLong(1);
+			}
+		} catch (Exception e) {
+			System.out.print("Âç†ÏèôÏòôÂç†ÏèôÏòô Âç†ÏèôÏòôÂç†ÏèôÏòô");
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rs2 != null)
+//					rs2.close();
+//				if (psmt2 != null)
+//					psmt2.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return result;
+	}
+
+	public ArrayList<Integer> getMyGroupList(String MEMBER_ID) {
+		ArrayList<Integer> glList = new ArrayList<Integer>();
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+
+			String sql = "SELECT * FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID =?";
+
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, MEMBER_ID);
+
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				glList.add(rs.getInt("GROUP_ID"));
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return glList;
+	}
+
+	// ÌöåÂç†ÏèôÏòô Âç†ÏèôÏòôÂç†ÏèôÏòôÂç†ÏèôÏòô Âç†ÏèôÏòôÂç†ÏèôÏòô Âç†Ïå®ÏáΩÏòôÂç†ÏèôÏòô ------Âç†ÏäπÏö∏Ïòô----------------------------
+
+	public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE,
+			String MEMBER_GENDER, String MEMBER_BIRTH, long OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
+
+		int result = 0;
+		Connection con = null;
+		PreparedStatement psmt = null;
+//		int signUp = 0;
+
+		// String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
+
+		// String insertSql = "insert into MEMBER
+		// values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
+		String insertSql = "INSERT INTO MEMBER VALUES(?,HEX(AES_ENCRYPT(?, 'memPW')),?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(insertSql);
+
+			psmt.setString(1, MEMBER_ID);
+			psmt.setString(2, MEMBER_PW);
+			psmt.setString(3, MEMBER_NAME);
+			psmt.setString(4, MEMBER_PHONE);
+			psmt.setString(5, "img/member/basis_photo.png");
+			psmt.setString(6, MEMBER_GENDER);
+			psmt.setString(7, MEMBER_BIRTH);
+			psmt.setString(8, "");
+			psmt.setString(9, "");
+			// psmt.setTimestamp(10, null);
+			psmt.setLong(10, OUT_TIME);
+
+			psmt.setString(11, MEMBER_QUESTION);
+			psmt.setString(12, MEMBER_ANSWER);
+
+			result = psmt.executeUpdate();
+			// System.out.println(result);
+			// rs = psmt.executeQuery();
+			//
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// System.out.println(result);
+		
+		}
+
+		return result;
+	}
+
+	public int checkID(String idCheck) {
+		int result = -1;
+
+		String sql = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_ID=?";
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(sql);
+
+			psmt.setString(1, idCheck);
+
+			rs = psmt.executeQuery();
+			System.out.println("!");
+			if (rs.next()) {
 				result = 1;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-	         try {
-		            if(rs != null) rs.close();
-		            if(psmt != null) psmt.close();
-		            if(con != null) con.close();
-		         } catch (SQLException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		         }
-		   }
-	       return result;
-		  
-	   }	   
-	   
-	   
-	   
-
-	
-	// ƒ£±∏ ∏Ò∑œ¿ª ªÃæ∆ø¿∞ÌΩÕæÓ«œ¥¬ ∏ﬁº≠µÂ -----«ˆøÏ ---------------------
-	public ArrayList printFriendList(String MEMBER_ID, String MEMBER_NAME, String MEMBER_BIRTH, String MEMBER_PHONE, String MEMBER_IMG){
-		 
-
-		String sql = "SELECT MEMBER_IMG, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = 'asdfasdf'";
-		//∑Œ±◊¿Œººº« æ∆¿Ãµ πﬁæ∆øÕº≠ ≥÷±‚.
-		ArrayList arList = new ArrayList();
-		
-		HttpSession session = null;
-	    session.getAttribute(MEMBER_ID);
-		
-		try {
-			con = getConnection();
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				// ƒ£±∏∏ÆΩ∫∆Æ∏¶ ¬…∞≥º≠ strø° ¡˝æÓ≥÷∞Ì
-				String[] str = rs.getString(9).split(",");
-				System.out.println(str);
-				
-				// strø°º≠ b∞° ¿÷¥¬¡ˆ æÀæ∆∫∏∞Ì
-				for(int i=0; i<arList.size(); i++){
-					// ∏∏æ‡ b∞° ¿÷¥Ÿ∏È memberVO∞¥√º∏¶ ∏∏µÈæÓº≠ rs∞™¿ª ≥÷¿∫µ⁄ arListø° add
-					if(str[i] == MEMBER_ID) {	
-						MemberVO mdo = new MemberVO();
-					arList.add(mdo.getMEMBER_NAME());					
-					
-				}else{
-					System.out.println("ƒ£±∏∞° æ¯Ω¿¥œ¥Ÿ.");
-				}	
-			}								
+			try {
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-			
-			rs.close();
-			stmt.close();
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		return arList;	
+		return result;
+
 	}
-	
-	   // ƒ£±∏∏Ò∑œ æÚæÓøÕº≠ ƒ£±∏µÈ¡§∫∏ ≥—∞‹¡÷±‚ ¡æ±Êver....
-	   public ArrayList<MemberVO> getFriendList(String MEMBER_ID){
-	       
-	      String myFrinds ="";
-	      String findMyFriendsListSql = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID=?";
-	      String getMyFriendsSql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_ID=?";
-	      ArrayList<MemberVO> myfriendsList = new ArrayList<MemberVO>();
-	      
-	      try {
-	         con = getConnection();
-	         psmt = con.prepareStatement(findMyFriendsListSql);
-	         psmt.setString(1, MEMBER_ID);
-	         rs = psmt.executeQuery();
-	         
-	         if(rs.next()){
-	            if(rs.getString("FRIENDS_LIST") != null){
-	               
-	               myFrinds = rs.getString("FRIENDS_LIST");
-	               
-	               // ƒ£±∏∏Ò∑œ ∏∏µÈ∞Ì ƒı∏Æ¿€º∫«œ¥¬∞‘ ¥¿∑¡¿˙ db∏¶ ø¿∑° ¿‚∞Ì¿÷¿ªºˆµµ ¿÷¿∏π«∑Œ,,,¥›æ∆πˆ∑«.,,
-//	               try {
-//	                  if(rs != null)
-//	                  if(psmt != null) psmt.close();
-//	                  if(con != null) con.close();
-//	               } catch (SQLException e) {
-//	                  e.printStackTrace();
-//	               }
-	               //ƒ£±∏ ºˆø°µ˚∂Û ƒı∏ÆπÆ ¥√∑¡πˆ∏Æ±Í..
-	               String[] str = myFrinds.split(",");
-	               for(int i = 1; i < str.length; i++){
-	                  getMyFriendsSql+= "or MEMBER_ID=?";
-	               }
-//	               con = getConnection();
-	               psmt = con.prepareStatement(getMyFriendsSql);
-	               for(int i = 0; i < str.length; i++){
-	                  psmt.setString(i+1, str[i]);
-	               }
-	               rs = psmt.executeQuery();
-	               
-	               while(rs.next()){
-	                  MemberVO mv = new MemberVO();
-	                  mv.setMEMBER_ID(rs.getString("MEMBER_ID"));
-	                  mv.setMEMBER_NAME(rs.getString("MEMBER_NAME"));
-	                  mv.setMEMBER_PHONE(rs.getString("MEMBER_PHONE"));
-	                  mv.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
-	                  mv.setMEMBER_GENDER(rs.getString("MEMBER_GENDER"));
-	                  mv.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
-	                  myfriendsList.add(mv);
-	               }
-	               
-	            }
-	         }
-	         
-	      } catch (Exception e) {
-	      } finally {
-	         try {
-	            if(rs != null)
-	            if(psmt != null) psmt.close();
-	            if(con != null) con.close();
-	         } catch (SQLException e) {
-	         }
-	   }
-	      return myfriendsList;   
-	   }
-	   
-	 //»∏ø¯¡§∫∏∏¶ ∞°¡Æø¿∞ÌΩÕæÓ«‘---------------«ˆøÏ--------------------------------
-	   public ArrayList<MemberVO> myInfo(String MEMBER_ID){
-	      String sql = "select MEMBER_IMG, MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH from MEMBER where MEMBER_ID = ? ";
-	      
-	      ArrayList<MemberVO> arList = new ArrayList<MemberVO>(); 
-	      
-	      try {
-	         con = getConnection();
-	          psmt = con.prepareStatement(sql);
-	            psmt.setString(1, MEMBER_ID);
-	            rs = psmt.executeQuery();
-	            
-	            //¿Ã∑∏∞‘«œ∏È¿∫ rs.getstring(1)ø° ¿ÃπÃ¡ˆ 2ø° ¿Ã∏ß 3ø° ¿¸»≠π¯»£ 4ø° ª˝¿œ¿Ã µÈæÓø¬¥Ÿ.
-	            while(rs.next()){
-	               MemberVO mvo = new MemberVO();
-	               mvo.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
-	               mvo.setMEMBER_NAME(rs.getString("MEMBER_NAME"));
-	               mvo.setMEMBER_PHONE(rs.getString("MEMBER_PHONE"));
-	               mvo.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
-	                 arList.add(mvo);
-	            }
-	            //arListø° ¿ÃπÃ¡ˆ ¿Ã∏ß ∆˘π¯»£ ª˝¿œ¿Ã ≥™ø¬¥Ÿ.
-	         
-	      } catch (Exception e) {
-	      }finally {
-	            try {
-	                  if(rs != null)
-	                  if(psmt != null) psmt.close();
-	                  if(con != null) con.close();
-	               } catch (SQLException e) {
-	               }
-	         }
-	      return arList;
-	   }
-	   
-	   
-//////////////////////////////////////////////////////////////////////////////////////////////	   
-	   public ArrayList<String> test(){
-		      ArrayList<String> str = new ArrayList<String>(); 
-		      String sql = "select * from test";
-		      int a=0;
-		      
-		      try {
-		         a=4;
-		            con = getConnection();
-		            a=5;
-		             psmt = con.prepareStatement(sql);
-		             a=1;  
-		             rs = psmt.executeQuery();
-		               a=2;    
-		               while(rs.next()){
-		                  str.add(rs.getString(1));
-		                  str.add(rs.getString(2));
-		               }
-		               a=3;
-		         } catch (Exception e) {
-		            e.printStackTrace();
-		         }finally {
-		               try {
-		                     if(rs != null)
-		                     if(psmt != null) psmt.close();
-		                     if(con != null) con.close();
-		                  } catch (SQLException e) {
-		                     e.printStackTrace();
-		                  }
-		            }
-		      return str;
-		   }
 
-// »∏ø¯¡§∫∏ πËø≠¿ª ≈Î«ÿ »∏ø¯¿« ª˝¿œ π›»Ø«œ¥¬ «‘ºˆ, πËø≠∑Œ π›»Ø«œ∏Á «¸≈¬¥¬ ª˝¿œ+¿Ã∏ß¿∏∑Œ ¿˙¿Â
-	   public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList)
-	   {
-		   ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
-		   String sql = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH from MEMBER";
-		   
-		   try
-		   {
-			   con = getConnection();
-			   psmt = con.prepareStatement(sql);
-			   rs = psmt.executeQuery();
-			   
-			   while(rs.next())
-			   {
-				   for(int i = 0; i < memberList.size(); i++)
-				   {
-					   // memberList¿« IDøÕ member_id∞™¿Ã ∞∞¥Ÿ∏È member ∞¥√º ª˝º∫«ÿº≠ arrListø° √ﬂ∞°
-					   if(rs.getString(1).equals(memberList.get(i)))
-					   {
-						   MemberVO member = new MemberVO();
-						   
-						   member.setMEMBER_ID(rs.getString(1));
-						   member.setMEMBER_NAME(rs.getString(2));
-						   member.setMEMBER_BIRTH(rs.getString(3));
-						   
-						   arrList.add(member);
-					   }
-				   }
-			   }
-		   }
-		   catch (Exception e)
-		   {
-			   e.printStackTrace();
-		   }
-		   finally
-		   {
-			   try
-			   {
-				   if(rs != null) rs.close();
-				   if(psmt != null) psmt.close();
-				   if(con != null) con.close();
-			   }
-			   catch (SQLException e)
-			   {
-				   e.printStackTrace();
-			   }
-		   }
-		   
-		   return arrList;
-	   }
+	public ArrayList<MemberVO> getFriendList(String MEMBER_ID) {
 
-///////////////////////////////////////////////////////////////////«ˆøÏ ∫Òπ–π¯»£ ∫Ø∞Ê.
-	   
-	   public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String chkpwd){
-		   
-		   
-		   
-		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
-		   // ?ø°¥¬ ººº«¿∏∑Œ πﬁæ∆ø¬ æ∆¿Ãµ∏¶ ≥÷∞Ì ∫Òπ–π¯»£∏¶ πﬁæ∆ø¬¥Ÿ¿Ωø° πﬁæ∆ø¬ ∫Òπ–π¯»£∂˚ «ˆ¿Á∫Òπ–π¯»£ ¿‘∑¬∂ı¿Ã∂˚ ∫Ò±≥«ÿº≠ ∏¬¿∏∏È µŒπ¯§ä ƒı∏ÆπÆ¿∏∑Œ ≥—æÓ∞°º≠ ∫Òπ–π¯»£∏¶ πŸ≤„¡ÿ¥Ÿ.
-		   String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
-		   //1π¯§ä ?ø°¥¬ πŸ≤Ô ∫Òπ–π¯»£∏¶ ≥÷∞Ì  2π¯§ä ? ø°¥¬ æ∆¿Ãµ∞™ ººº«¿∏∑Œ πﬁæ∆≥÷¥¬¥Ÿ.
-		   int result = 0;
-		   
-		   try {
-			   
-			con = getConnection();
-			
-			psmt = con.prepareStatement(chkpw);
+		String myFrinds = "";
+		String findMyFriendsListSql = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID=?";
+		String getMyFriendsSql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_ID=?";
+		ArrayList<MemberVO> myfriendsList = new ArrayList<MemberVO>();
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(findMyFriendsListSql);
 			psmt.setString(1, MEMBER_ID);
 			rs = psmt.executeQuery();
-			
-			if(chpwd.equals(chkpwd)){
-				
-			while(rs.next()){
-				
-			if(rs.getString("MEMBER_PW").equals(nowpwd)){
-				
-				
-				psmt = con.prepareStatement(changepwd);
-				psmt.setString(1, chpwd);
-				psmt.setString(2, MEMBER_ID);
-				result = psmt.executeUpdate();
-				
-				if(result ==1 ){
-					System.out.println("∫Òπ–π¯»£∞° ¿œƒ°«’¥œ¥Ÿ");
-				}else{
-					System.out.println("∫Òπ–π¯»£∞° ¿œƒ°«œ¡ˆ æ Ω¿¥œ¥Ÿ.");
+
+			if (rs.next()) {
+				if (rs.getString("FRIENDS_LIST") != null) {
+
+					myFrinds = rs.getString("FRIENDS_LIST");
+
+					// try {
+					// if(rs != null)
+					// if(psmt != null) psmt.close();
+					// if(con != null) con.close();
+					// } catch (SQLException e) {
+					// e.printStackTrace();
+					// }
+					String[] str = myFrinds.split(",");
+					for (int i = 1; i < str.length; i++) {
+						getMyFriendsSql += "or MEMBER_ID=?";
+					}
+					// con = getConnection();
+					psmt = con.prepareStatement(getMyFriendsSql);
+					for (int i = 0; i < str.length; i++) {
+						psmt.setString(i + 1, str[i]);
+					}
+					rs = psmt.executeQuery();
+
+					while (rs.next()) {
+						MemberVO mv = new MemberVO();
+						mv.setMEMBER_ID(rs.getString("MEMBER_ID"));
+						mv.setMEMBER_NAME(rs.getString("MEMBER_NAME"));
+						mv.setMEMBER_PHONE(rs.getString("MEMBER_PHONE"));
+						mv.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
+						mv.setMEMBER_GENDER(rs.getString("MEMBER_GENDER"));
+						mv.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
+						myfriendsList.add(mv);
+					}
+
 				}
+			}
+
+		} catch (Exception e) {
+		} finally {
+			try {
+//				if (rs != null)
+//					if (psmt != null)
+//						psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+			}
+		}
+		return myfriendsList;
+	}
+
+	public ArrayList<MemberVO> myInfo(String MEMBER_ID) {
+		String sql = "SELECT MEMBER_IMG, MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_ID = ? ";
+
+		ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
+		
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
 				
-			
-		}else{
-			System.out.println("∫Òπ–π¯»£∞° º≠∑Œ ∏¬¡ˆ æ Ω¿¥œ¥Ÿ.");
+
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, MEMBER_ID);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				MemberVO mvo = new MemberVO();
+				mvo.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
+				mvo.setMEMBER_NAME(rs.getString("MEMBER_NAME"));
+				mvo.setMEMBER_PHONE(rs.getString("MEMBER_PHONE"));
+				mvo.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
+				arList.add(mvo);
+			}
+
+		} catch (Exception e) {
+		} finally {
+			try {
+//				if (rs != null)
+//					if (psmt != null)
+//						psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+			}
 		}
-		}//while ≥°≥™¥¬ ∞˜.
-		}else{
-			System.out.println("∫Ø∞Ê«“ ∫Òπ–π¯»£∞° º≠∑Œ ∏¬¡ˆ æ Ω¿¥œ¥Ÿ.");
+		return arList;
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////
+//	public ArrayList<String> test() {
+//		ArrayList<String> str = new ArrayList<String>();
+//		String sql = "SELECT * FROM TEST";
+//		
+//
+//		try {
+//			int a = 0;
+//			a = 4;
+////			con = getConnection();
+//			con = new MVConnection(DBPool.getInstance().getConnection());
+//			a = 5;
+//			psmt = con.prepareStatement(sql);
+//			a = 1;
+//			rs = psmt.executeQuery();
+//			a = 2;
+//			while (rs.next()) {
+//				str.add(rs.getString(1));
+//				str.add(rs.getString(2));
+//			}
+////			a = 3;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (rs != null)
+//					if (psmt != null)
+//						psmt.close();
+//				if (con != null)
+//					con.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return str;
+//	}
+
+	public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
+		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_IMG FROM MEMBER";
+
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			pstmt = con.prepareStatement(sql);
+			resultSet = pstmt.executeQuery();
+
+			while (resultSet.next()) {
+				for (int i = 0; i < memberList.size(); i++) {
+					if (resultSet.getString(1).equals(memberList.get(i))) {
+						MemberVO member = new MemberVO();
+
+						member.setMEMBER_ID(resultSet.getString(1));
+						member.setMEMBER_NAME(resultSet.getString(2));
+						member.setMEMBER_BIRTH(resultSet.getString(3));
+						member.setMEMBER_IMG(resultSet.getString(4));
+
+						arrList.add(member);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (resultSet != null)
+//					resultSet.close();
+//				if (pstmt != null)
+//					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+
+		return arrList;
+	}
+
+
+	
+
+	public int outUser(String MEMBER_ID, String state) {
+
+		// Date date = new Date();
+		// String today = outDate.format(date);
+		Connection con = null;
+		PreparedStatement psmt = null;
+		
+
+		long outTime = System.currentTimeMillis() + 60 * 60 * 24 * 1000 * 7;
+		long resetTime = 0;
+
+		String delUser = "UPDATE MEMBER SET OUT_TIME=? WHERE MEMBER_ID =?";
+
+		int result = 0;
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(delUser);
+			if (state.equals("out")) {
+				psmt.setLong(1, outTime);
+				System.out.println("1");
+			} else {
+				psmt.setLong(1, resetTime);
+				System.out.println("2");
+			}
+			psmt.setString(2, MEMBER_ID);
+			result = psmt.executeUpdate();
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-            try {
-                if(rs != null)rs.close();
-                if(psmt != null) psmt.close();
-                if(con != null) con.close();
-             } catch (SQLException e) {
-             }
-       }
-		return result;
- }
-///////////////////////////«ˆøÏ »∏ø¯≈ª≈.////////////////////////
-		   public int outUser(String MEMBER_ID){
-			   
-//			   SimpleDateFormat outDate = new SimpleDateFormat("yyyy≥‚ MMø˘dd¿œ HHΩ√mm∫–");
-//			   Date date = new Date();
-//			   String today = outDate.format(date);
-			   
-			   long outTime = System.currentTimeMillis()+60*60*24*1000*7;
-			   
-			   System.out.println(outTime * 60*60*24*1000*7);
-			   
-			   
-			   String delUser = "UPDATE member SET OUT_TIME=? WHERE MEMBER_ID =?";
-			   int result = 0;
-			   try {
-				con = getConnection();
-				psmt = con.prepareStatement(delUser);
-				psmt.setLong(1, outTime);
-				psmt.setString(2, MEMBER_ID);
-				result = psmt.executeUpdate();
-				
-			} catch (Exception e) {
-				
-				e.printStackTrace();
-			}finally {
-	            try {
-	                if(rs != null)
-	                if(psmt != null) psmt.close();
-	                if(con != null) con.close();
-	             } catch (SQLException e) {
-	             }
-	       }
-			   
-			   return result;
-		   }
-/////////////////////////////////»∏ø¯¡§∫∏ ∫Ø ∞Ê////////////////////////////////////////
-		   public int changeInfo(String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_BIRTH, String MEMBER_ID){
-			   String changeInfo = "UPDATE MEMBER set MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? where MEMBER_ID =?";
-			   int result = 0;
-			   try {
-				con = getConnection();
-				psmt = con.prepareStatement(changeInfo);
-				
-				psmt.setString(1, MEMBER_NAME);
-				psmt.setString(2, MEMBER_PHONE);
-				psmt.setString(3, MEMBER_BIRTH);
-				psmt.setString(4, MEMBER_ID);
-				result = psmt.executeUpdate();
-				
-				if(result != 1){
-					System.out.println("»∏ø¯ ºˆ¡§µ«æ˘¥Ÿ.");
-					System.out.println("ø÷");
-				}else{
-					System.out.println("»∏ø¯ ºˆ¡§æ»µ«æ˘¥Ÿ.");
-					System.out.println("ø÷2");
-				}
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-	            try {
-	                if(rs != null)
-	                if(psmt != null) psmt.close();
-	                if(con != null) con.close();
-	             } catch (SQLException e) {
-	             }
-	       }
-			   
-			   return result;
-			   
-			   
-		   }
-		  		   
-///////////////////////////////////////////////////////////////////////////
-		public int changeImg(String MEMBER_ID, String MEMBER_IMG){
-			String changepwd = "update MEMBER set MEMBER_IMG = ? where MEMBER_ID = ?";
-			int result = 0;
-			
-			 try {
-					con = getConnection();
-					
-					psmt = con.prepareStatement(changepwd);
-					psmt.setString(1, "img/" + MEMBER_IMG);
-					psmt.setString(2, MEMBER_ID);
-					result = psmt.executeUpdate();
-						
-					
+		} finally {
+			try {
+//				if (rs != null)
+//					if (psmt != null)
+//						psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}finally {
-		            try {
-		                if(rs != null)rs.close();
-		                if(psmt != null) psmt.close();
-		                if(con != null) con.close();
-		             } catch (SQLException e) {
-		             }
-		       }
-				return result;
+			}
+		}
+
+		return result;
+	}
+
+	public int changeInfo(String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_BIRTH, String MEMBER_ID) {
+		String changeInfo = "UPDATE MEMBER SET MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? WHERE MEMBER_ID =?";
+		int result = 0;
+		Connection con = null;
+		PreparedStatement psmt = null;
+		
+		
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(changeInfo);
+
+			psmt.setString(1, MEMBER_NAME);
+			psmt.setString(2, MEMBER_PHONE);
+			psmt.setString(3, MEMBER_BIRTH);
+			psmt.setString(4, MEMBER_ID);
+			result = psmt.executeUpdate();
+
+			if (result != 1) {
+				System.out.println("ÌöåÂç†ÏèôÏòô Âç†ÏèôÏòôÂç†ÏèôÏòôÂç†Ïã§ÏñµÏòôÂç†ÏèôÏòô.");
+				System.out.println("Âç†ÏèôÏòô");
+			} else {
+				System.out.println("ÌöåÂç†ÏèôÏòô Âç†ÏèôÏòôÂç†ÏèôÏòôÂç†Ïã´ÎêòÏñµÏòôÂç†ÏèôÏòô.");
+				System.out.println("Âç†ÏèôÏòô2");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rs != null)
+//					if (psmt != null)
+//						psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return result;
+
+	}
+
+	public int changeImg(String MEMBER_ID, String MEMBER_IMG) {
+		String changepwd = "UPDATE MEMBER SET MEMBER_IMG = ? WHERE MEMBER_ID = ?";
+		int result = 0;
+		Connection con = null;
+		PreparedStatement psmt = null;
+		
+		
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+
+			psmt = con.prepareStatement(changepwd);
+			psmt.setString(1, "img/member/" + MEMBER_IMG);
+			psmt.setString(2, MEMBER_ID);
+			result = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+			}
+		}
+		return result;
+
+	}
+
+	/////////////////// ÏπúÍµ¨Î™©Î°ùÏóêÏÑú ÏπúÍµ¨Ï∞æÍ∏∞/////////////////////////////////////////
+	public ArrayList<MemberVO> findFriends(String userPhone) {
+		// ÏπúÍµ¨ Ï†ÑÌôîÎ≤àÌò∏Î•º Í∞ÄÏßÄÍ≥† ÏπúÍµ¨Î•º Í∞ÄÏ†∏Ïò®Îã§.
+		Connection con = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;				
+
+		String addFriend = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG FROM MEMBER WHERE MEMBER_PHONE = ?";
+		ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(addFriend);
+			psmt.setString(1, userPhone);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				MemberVO member = new MemberVO();
+				member.setMEMBER_IMG(rs.getString(5));
+				member.setMEMBER_NAME(rs.getString(2));
+				member.setMEMBER_BIRTH(rs.getString(3));
+				member.setMEMBER_PHONE(rs.getString(4));
+				member.setMEMBER_ID(rs.getString(1));
+
+				arList.add(member);
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return arList;
+	}
+
+	
+
+	public ArrayList<String> friendPhoneSearch(int phoneOrId, String phoneId) {// 0:
+																				// Ìè∞Î≤àÌò∏Î°ú
+																				// ÏπúÍµ¨
+																				// Í≤ÄÏÉâ,
+																				// 1:
+																				// ÏïÑÏù¥ÎîîÎ°ú
+																				// ÏπúÍµ¨Í≤ÄÏÉâ
+		
+		Connection con = null;		
+		ArrayList<String> memArr = new ArrayList<String>();
+		PreparedStatement psmt2 = null;
+		ResultSet rs2 = null;
+		String sql = "";
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+
+			if (phoneOrId == 0)
+				sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_PHONE = ?";
+			else
+				sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_ID = ?";
+
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, phoneId);
+			rs2 = psmt2.executeQuery();
+			while (rs2.next()) {
+				memArr.add(rs2.getString("MEMBER_ID"));
+				memArr.add(rs2.getString("MEMBER_NAME"));
+				memArr.add(rs2.getString("MEMBER_PHONE"));
+				memArr.add(rs2.getString("MEMBER_IMG"));
+				memArr.add(rs2.getString("MEMBER_GENDER"));
+				memArr.add(rs2.getString("MEMBER_BIRTH"));
+
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (rs2 != null)
+//					rs2.close();
+//				if (psmt2 != null)
+//					psmt2.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return memArr;
+
+	}
+
+	public int requestFriend(String userId, String friendId) {
+
+		String myFriendList = getfriendListForString(userId);
+		String friendFriendsList = getfriendListForString(friendId);
+		int result = 0;
+		
+		System.out.println(userId + " , " + friendId);
+		
+		if (userId.equals(friendId)) {
+			result = 3; // Î≥∏Ïù∏ ÏùºÎïå
+			return result;
+		}	
+
+			for (int i = 0; i < myFriendList.split(",").length; i++) {
+				if (myFriendList.split(",")[i].equals(friendId)) {
+					result = -1; // Ïù¥ÎØ∏ ÏπúÍµ¨
+					return result;
+				} else if (myFriendList.split(",")[i].equals("*" + friendId)) {
+					result = 1; // ÏÉÅÎåÄÎ∞©ÏóêÍ≤å ÏöîÏ≤≠ÌñàÏùÑÎïå
+					return result;
+				} else if (myFriendList.split(",")[i].equals("!" + friendId)) {
+					result = 2; // ÎÇòÏóêÍ≤å Ïò® ÏπúÍµ¨ÏöîÏ≤≠Ïù¥ ÏûàÏùÑÎïå
+					return result;
+				}
+
+			}
+
+			requestFriendsUpdate(userId, friendId, myFriendList, friendFriendsList);
+
+		return result;
+
+	}
+
+	public void requestFriendsUpdate(String userId, String friendId, String myFriendList, String friendFriendsList) {
+		Connection con = null;
+		PreparedStatement psmt2 = null;
+
+		System.out.println(myFriendList);
+
+		try {
+		
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+		 
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, myFriendList + "," + "*" + friendId);
+			psmt2.setString(2, userId);
+			psmt2.executeUpdate();
+
+//			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
+			psmt2.setString(1, friendFriendsList + "," + "!" + userId);
+			psmt2.setString(2, friendId);
+			psmt2.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+
+				if(con != null)
+					con.close();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public MemberVO friendInfo(String friendId) {
+		Connection con = null;
+		PreparedStatement psmt2 = null;
+		ResultSet rs2 = null;
+		MemberVO member = new MemberVO();
+		try {
+			
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ?";
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, friendId);
+			rs2 = psmt2.executeQuery();
+			while (rs2.next()) {
+				member.setMEMBER_ID(rs2.getString("MEMBER_ID"));
+				member.setMEMBER_NAME(rs2.getString("MEMBER_NAME"));
+				member.setMEMBER_IMG(rs2.getString("MEMBER_IMG"));
+				member.setMEMBER_PHONE(rs2.getString("MEMBER_PHONE"));
+				member.setMEMBER_GENDER(rs2.getString("MEMBER_GENDER"));
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+//				if (rs2 != null)
+//					rs2.close();
+//				if (psmt2 != null)
+//					psmt2.close();
+				if(con != null)
+					con.close();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return member;
+
+	}
+
+	public ArrayList<MemberVO> requestingFriendList(String userId, String tokenRes) {
+		Connection con = null;
+		PreparedStatement psmt2 = null;
+		ResultSet rs2 = null;
+		String friendsList = null;
+		ArrayList<MemberVO> memberArr = new ArrayList<MemberVO>();
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = ?";
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, userId);
+			rs2 = psmt2.executeQuery();
+			// System.out.println(rs2);
+
+			while (rs2.next())
+				friendsList = rs2.getString("FRIENDS_LIST");
+
+			// System.out.println("ÎÇ¥ÏïÑÏù¥Îîî : " +userId);
+			// System.out.println("ÏπúÍµ¨Î¶¨Ïä§Ìä∏ : " + friendsList);
+			if (friendsList.equals("") || friendsList.equals(",")) {
+
+				return null;
+			} else {
+				String[] eachFriend = friendsList.split(",");
+				for (int i = 0; i < eachFriend.length; i++) {
+
+					if (eachFriend[i].length() != 0) {
+						if (eachFriend[i].substring(0, 1).equals(tokenRes)) {
+
+							// System.out.println(friendInfo(eachFriend[i].substring(1,
+							// eachFriend[i].length())).getMEMBER_NAME());
+							memberArr.add(friendInfo(eachFriend[i].substring(1, eachFriend[i].length())));
+
+						}
+
+					}
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+//				if (rs2 != null)
+//					rs2.close();
+//				if (psmt2 != null)
+//					psmt2.close();
+				if (con != null)
+					con.close();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return memberArr;
+
+	}
+
+	public String getfriendListForString(String userId) {
+		Connection con = null;
+		PreparedStatement psmt2 = null;
+		ResultSet rs2 = null;
+		String friendList = "";
+		String sql = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = ?";
+		try {
+
+		
+			con = new MVConnection(DBPool.getInstance().getConnection());
+		
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, userId);
+			rs2 = psmt2.executeQuery();
+			if (rs2.next())				
+				friendList = rs2.getString("FRIENDS_LIST");
+
+		}catch(Exception e){
+			
+		}finally {
+
+			try {
+				
+//				if (rs2 != null)
+//					rs2.close();
+//				if (psmt2 != null)
+//					psmt2.close();
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return friendList;
+
+	}
+
+	public void acceptFriend(String userId, String friendId) {// ÏπúÍµ¨ÏöîÏ≤≠ ÏàòÎùΩ
+		Connection con = null;		
+		PreparedStatement psmt2 = null;
+		String[] myFriendList = null;
+		String changeMyFriendList = "";
+		String[] friendFriendList = null;
+		String changeFriendFriendList = "";
+
+		try {
+			// ÎÇ¥ÏπúÍµ¨Î™©Î°ù ÏàòÏ†ï
+			
+			
+			myFriendList = getfriendListForString(userId).split(",");
+
+			for (int i = 0; i < myFriendList.length; i++) {
+				if (myFriendList[i].length() != 0) {
+					if (myFriendList[i].equals("!" + friendId)) {
+						myFriendList[i] = myFriendList[i].substring(1, myFriendList[i].length());
+
+					}
+
+				}
+
+			}
+
+			for (int i = 0; i < myFriendList.length; i++) {
+				if (i == myFriendList.length - 1) {
+					changeMyFriendList += myFriendList[i];
+
+				} else {
+					changeMyFriendList += myFriendList[i] + ",";
+				}
+
+			}
+
+			// System.out.println(changeFriendList);
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
+			psmt2 = con.prepareStatement(sql);
+
+			psmt2.setString(1, changeMyFriendList);
+			psmt2.setString(2, userId);
+
+			psmt2.executeUpdate();
+
+			// System.out.println(changeMyFriendList);
+			
+			// ÏπúÍµ¨Ïùò ÏπúÍµ¨Î™©Î°ù ÏàòÏ†ï
+			
+
+			friendFriendList = getfriendListForString(friendId).split(",");
+			for (int i = 0; i < friendFriendList.length; i++) {
+				if (friendFriendList[i].length() != 0) {
+					if (friendFriendList[i].equals("*" + userId)) {
+						friendFriendList[i] = friendFriendList[i].substring(1, friendFriendList[i].length());
+
+					}
+
+				}
+
+			}
+
+			for (int i = 0; i < friendFriendList.length; i++) {
+				if (i == friendFriendList.length - 1) {
+					changeFriendFriendList += friendFriendList[i];
+
+				} else {
+					changeFriendFriendList += friendFriendList[i] + ",";
+				}
+
+			}
+			// System.out.println(changeFriendFriendList);
+//			con = getConnection();
+//			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
+			psmt2 = con.prepareStatement(sql2);
+			psmt2.setString(1, changeFriendFriendList);
+			psmt2.setString(2, friendId);
+
+			psmt2.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+//				if (psmt2 != null)
+//					psmt2.close();
+//				if (psmt3 != null)
+//					psmt3.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+	public int searchangePW(String userId, String beforePw, String afterPW){
+		
+		
+		int result = 0;
+		Connection con = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			String sql = "UPDATE MEMBER SET MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) WHERE MEMBER_ID = ? ";
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			psmt = con.prepareStatement(sql);
+			
+			psmt.setString(1, afterPW);
+			psmt.setString(2, userId);
+			psmt.executeUpdate();
+			result = psmt.executeUpdate();
+			if(result == 1){
+				System.out.println("Î≥ÄÍ≤Ω");
+				result = 0;
+			}else{
+				System.out.println("ÎπÑÎ≤àÎ≥ÄÍ≤ΩÏã§Ìå®");
+			}
+			
+			
+				
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} finally {
+
+			try {
+//				if (rs != null)
+//					rs.close();
+//				if (psmt != null)
+//					psmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return 0;
+	}
+	
+	public int changePw(String userId, String beforePw, String afterPw) {
+		Connection con = null;
+		PreparedStatement psmt2 = null;
+		ResultSet rs2 = null;
+
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ? AND MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW'))";
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, userId);
+			psmt2.setString(2, beforePw);
+			
+			if(psmt2 != null)
+				psmt2.close();
+
+			rs2 = psmt2.executeQuery();
+
+			if (rs2.next()) { // ÌòÑÏû¨ Î∞∞Î∞ÄÎ≤àÌò∏ÏôÄ ÏùºÏπòÌï†Îïå ->ÏÉàÎ°ú Î∞îÍøÄ ÎπÑÎ∞ÄÎ≤àÌò∏Î°ú ÏàòÏ†ï
+
+				String sql2 = "UPDATE MEMBER SET MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) WHERE MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql2);
+				psmt2.setString(1, afterPw);
+				psmt2.setString(2, userId);
+				psmt2.executeUpdate();
+				return 0;
+
+			} else {// ÌòÑÏû¨ÎπÑÎ∞ÄÎ≤àÌò∏ÏôÄ ÏùºÏπòÌïòÏßÄ ÏïäÏùÑÎïå
+				return -1;
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (rs2 != null)
+					rs2.close();
+				if (psmt2 != null)
+					psmt2.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return 1;
+	}
+
+	public void deleteFriend(String userId, String deleteFriend) { // ÏπúÍµ¨ ÏÇ≠Ï†úÌïòÍ∏∞
+		Connection con = null;
+		PreparedStatement psmt2 = null;
+		
+//		ResultSet rs2 = null;
+		String friendsList = "";
+		ArrayList<String> friendsListArr = new ArrayList<String>();
+		String deletedFriendsList = "";
+
+		try {
+			
+
+			friendsList = getfriendListForString(userId);
+
+			for (int i = 0; i < friendsList.split(",").length; i++) {
+				friendsListArr.add(friendsList.split(",")[i]);
+			}
+
+			for (int i = 0; i < friendsListArr.size(); i++) {
+				if (friendsListArr.get(i).equals(deleteFriend))
+					friendsListArr.remove(i);
+
+			}
+
+			for (int i = 0; i < friendsListArr.size(); i++) {
+				if (friendsListArr.get(i).length() != 0)
+					deletedFriendsList += "," + friendsListArr.get(i);
+
+			}
+
+			// System.out.println(deletedFriendsList);
+			
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, deletedFriendsList);
+			psmt2.setString(2, userId);
+			psmt2.executeUpdate();
+
+			friendsList = getfriendListForString(deleteFriend);
+			friendsListArr.clear();// Ïñ¥Î†àÏù¥Î¶¨Ïä§Ìä∏ Ï¥àÍ∏∞Ìôî
+			deletedFriendsList = ""; // ÏπúÍµ¨Î¶¨Ïä§Ìä∏ Î≥ÄÏàò Ï¥àÍ∏∞Ìôî
+
+			for (int i = 0; i < friendsList.split(",").length; i++) {
+				friendsListArr.add(friendsList.split(",")[i]);
+			}
+
+			for (int i = 0; i < friendsListArr.size(); i++) {
+				if (friendsListArr.get(i).equals(userId))
+					friendsListArr.remove(i);
+			}
+
+			for (int i = 0; i < friendsListArr.size(); i++) {
+				if (friendsListArr.get(i).length() != 0)
+					deletedFriendsList += "," + friendsListArr.get(i);
+			}
+//			con = getConnection();
+			
+			String sql2 = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
+			
+			psmt2 = con.prepareStatement(sql2);
+			
+			psmt2.setString(1, deletedFriendsList);
+			psmt2.setString(2, deleteFriend);
+			psmt2.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			try {
+//				if (rs2 != null)
+//					rs2.close();
+//				if (psmt2 != null)
+//					psmt2.close();				
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public ArrayList<MemberVO> getMemberList(ArrayList<String> memberList) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
+		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_IMG FROM MEMBER";
+
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			pstmt = con.prepareStatement(sql);
+			resultSet = pstmt.executeQuery();
+
+			while (resultSet.next()) {
+				for (int i = 0; i < memberList.size(); i++) {
+					if (resultSet.getString(1).equals(memberList.get(i))) {
+						MemberVO member = new MemberVO();
+
+						member.setMEMBER_ID(resultSet.getString(1));
+						member.setMEMBER_NAME(resultSet.getString(2));
+						member.setMEMBER_IMG(resultSet.getString(3));
+
+						arrList.add(member);
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+//				if (resultSet != null)
+//					resultSet.close();
+//				if (pstmt != null)
+//					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return arrList;
+	}
+	
+	public ArrayList<String> friendsListForArrList(String userId){
+		
+		ArrayList<String> friendArrList = new ArrayList<String>();
+		String friendsList = getfriendListForString(userId);
+		
+		for(int i = 0; i < friendsList.split(",").length; i++){
+			
+			if(friendsList.split(",")[i].length() != 0){
+				friendArrList.add(friendsList.split(",")[i]);
+				
+			}
+			
 			
 		}
+		
+		return friendArrList;
+	}
 	
+	
+	
+	public void requestCancelRefuse(String userId, String friendId, String refuseOrCancel){
+		Connection con = null;
+		PreparedStatement psmt2 = null;
+		String myFriendList = "";
+		String friendFriendList = "";
+		String myToken = "";
+		String frToken = "";		
+		ArrayList<String> myArr = friendsListForArrList(userId);
+		ArrayList<String> frArr = friendsListForArrList(friendId);
+		System.out.println(friendId);
+		
+		if(refuseOrCancel.equals("refuse")){
+			myToken = "!";
+			frToken = "*";			
+		}else{
+			myToken = "*";
+			frToken = "!";			
+		}
+		
+		
+		
+		for(int i = 0; i < myArr.size(); i++){
+			if(myArr.get(i).equals(myToken+friendId)){
+				myArr.remove(i);				
+			}else{
+				if(myArr.get(i).length() != 0)
+					myFriendList += "," + myArr.get(i); 
+				
+			}			
+		}
+		
+		for(int i = 0; i < frArr.size(); i++){
+			if(frArr.get(i).equals(frToken+userId)){
+				frArr.remove(i);				
+			}else{
+				if(frArr.get(i).length() != 0)
+					friendFriendList += "," + frArr.get(i);
+				
+			}			
+		}
+		
+		
+		
+		
+		
+		System.out.println("ÎÇ¥Î¶¨Ïä§Ìä∏ :" + myFriendList);
+		System.out.println("ÏπúÍµ¨Î¶¨Ïä§Ìä∏ : " + friendFriendList);
+		
+		
+		try {
+//			con = getConnection();
+			con = new MVConnection(DBPool.getInstance().getConnection());
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";// ÎÇ¥ ÏπúÍµ¨Î™©Î°ù Í∞±Ïã†
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, myFriendList);
+			psmt2.setString(2, userId);
+			psmt2.executeUpdate();
+			
+			if(psmt2 != null)
+				psmt2.close();
+			
+			psmt2 = con.prepareStatement(sql);
+			psmt2.setString(1, friendFriendList);
+			psmt2.setString(2, friendId);
+			psmt2.executeUpdate(); 
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+				try {
+//					if(psmt2 != null)
+//						psmt2.close();
+					if(con != null)
+						con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+		}
+		
+	}
 	
 }

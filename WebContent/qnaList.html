@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>달게더 문의사항</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+	<script src="js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/nav.css">
+	    <script src="js/nav.js"></script>
+    <script src="js/jquery.form.js"></script>
+        <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
+    </head>
+	<style>
+        body{
+            background-image: url(img/background/back1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center top;
+        }
+		ul {
+			list-style: none;
+		}
+        div{
+            display: block;
+        }
+         .main_container{
+             width: 1350px;
+             height: 800px;
+             
+        }
+        #qnaCover{
+            width: 800px;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        
+		span {
+            display: inline-block;
+            vertical-align: middle;
+		}
+		.listNum {
+			width: 60px;
+		}
+		.listCate {
+			width: 150px;
+		}
+		.listTitle {
+			width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+		}
+		.listWriter {
+			width: 100px;
+		}
+		.listDate {
+			width: 150px;
+		}
+		.listViewNum {
+			width: 70px;
+		}
+		#contentTitleWrap {
+			margin-bottom: 10px;
+		}
+        #contentTitleWrapUl li{
+            background-color: #e6e6e6;
+            text-align: center;
+        }
+        #contentListWrapUl li{
+            cursor: pointer;
+            text-align: center;
+            border-bottom: 1px solid gray;
+        }
+        .listLi{
+            padding: 5px 0;
+            
+        }
+        #contentTitleWrapUl{
+            margin: 0;
+        }
+        #contentListWrapUl{
+            margin: 0;
+            border-top: 1px solid gray;
+            font-size: 13px;
+            height: 301px;
+            
+        }
+        ul{
+            padding: 0;
+        }
+    #pageChoiceCover{
+        padding: 10px 0;
+        width: 800px;
+        margin: 20px auto;
+    }
+        .btn{
+            display: inline-block;
+            height: 50px;
+            line-height: 50px;
+            font-size: 12px;
+            cursor: pointer;
+            width:82px;
+			text-align: center;
+    		z-index: 1;
+        }
+        
+        /*검색 커버*/
+        #selectCover{
+            width: 500px;
+            margin: auto;
+            text-align: center;
+        }
+        #searchText{
+            height: 24px;
+            border: none;
+            border-bottom: 1px solid #3B3E42;
+            padding-left: 10px;
+            margin: 0 10px;
+            width: 200px;
+            background-color: transparent;
+        }
+        #searchCategory{
+            height: 24px;
+        }
+        
+        .writeBtn{
+            float: right;
+        }
+    #addPageCover a{
+        text-decoration: none;
+        padding: 14px 0;
+        color: black;
+    }
+        #addPageCover{
+            width: 200px;
+            text-align: center;
+            margin: auto;
+        }
+    input:-ms-input-placeholder { color: #3B3E42; } 
+   input::-webkit-input-placeholder { color: #3B3E42; } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+   input::-moz-placeholder { color: #3B3E42;  } 
+        
+	</style>
+	
+	<script>
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////
+         nowPage = 0;
+    nowPage2 = 0;
+    // 세션 확인 
+
+        
+    getNextFriends(1);
+    //친구들 호출 무식하게 호출
+    function getNextFriends(page) {
+        nowPage = page;
+        var notfind = '0';
+        $.ajax ({
+            type : 'post',
+            url : 'SearchQna.do',
+            dataType : "json",
+            data: {page : page ,val : 'get', kind : 4 } ,
+            success : function(data) {
+                console.log(data);
+                var userInfos = "";
+              for(var i=0; i< data.length;i++){
+                    var num = page*10+i+1-10;
+                    userInfos += '<li class="listLi" ';
+                    if(i%2 !=0){
+                        userInfos += ' style="background-color: #e6e6e6;" ';
+                    }
+                    userInfos += 'id="'+data[i].QNA_ID+'" onclick="qnaDetailPage(this)">';    
+                    userInfos += '<span class="listNum">'+num+'</span>';
+                    userInfos += '<span class="listCate">'+ data[i].QNA_CATEGORY +'</span>';
+                    userInfos += '<span class="listTitle">'+ data[i].QNA_TITLE +'</span>'
+                    userInfos += '<span class="listWriter">'+ data[i].MEMBER_ID +'</span>';
+                    userInfos += '<span class="listDate">'; 
+                    userInfos += data[i].QNA_DATE.substring(0,10);
+                    userInfos += '</span>';
+                    userInfos += '</li>';
+                }
+                $('#contentListWrapUl').html(userInfos);
+                
+                var page_viewList = Paging(data[0].COUNT, 10, 10 ,nowPage, "PagingView");
+                $("#addPageCover").empty().html(page_viewList);
+
+                
+            }, error: function (req) {
+                alert("SearchQna.do");
+                console.log(req);
+            }
+        });
+    }
+    
+        //페이지 나타내기
+    Paging = function(totalCnt, dataSize, pageSize, pageNo, token){
+        totalCnt = parseInt(totalCnt);// 전체레코드수 dataSize = parseInt(dataSize);
+        // 페이지당 보여줄 데이타수 
+        pageSize = parseInt(pageSize); // 페이지 그룹 범위 1 2 3 5 6 7 8 9 10 
+        pageNo = parseInt(pageNo); // 현재페이지 
+        var html = new Array(); 
+        if(totalCnt == 0){
+            return ""; 
+        } // 페이지 카운트 
+        var pageCnt = totalCnt % dataSize; 
+        if(pageCnt == 0){
+            pageCnt = parseInt(totalCnt / dataSize);
+        }else{
+            pageCnt = parseInt(totalCnt / dataSize) + 1;
+        } 
+        var pRCnt = parseInt(pageNo / pageSize);
+        if(pageNo % pageSize == 0){
+            pRCnt = parseInt(pageNo / pageSize) - 1; 
+        } //이전 화살표
+        if(pageNo > pageSize){ 
+            var s2; if(pageNo % pageSize == 0){
+                s2 = pageNo - pageSize; 
+            }else{
+                    s2 = pageNo - pageNo % pageSize; 
+                } 
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push(s2); html.push('");>');
+            html.push('◀ '); html.push("</a>"); 
+        }else{
+            html.push('<a href="#">\n');
+            html.push('◀ '); html.push('</a>'); 
+            
+        } //paging Bar 
+        for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            if(index == pageNo){ 
+                html.push('<strong>');
+                html.push(index);
+                html.push('</strong>'); 
+            }else{ 
+                html.push('<a href=javascript:goPaging_' + token + '("');
+                html.push(index); html.push('");>');
+                html.push(index); html.push('</a>'); 
+            } 
+            if(index == pageCnt){ 
+                break;
+            }else html.push(' '); 
+        } //다음 화살표 
+        if(pageCnt > (pRCnt + 1) * pageSize){
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push((pRCnt + 1)*pageSize+1); 
+            html.push('");>'); html.push('▶'); 
+            html.push('</a>');
+        }else{
+            html.push('<a href="#">');
+            html.push('▶'); html.push('</a>');
+        } 
+        return html.join("");
+    }
+
+    var goPaging_PagingView = function(cPage){
+        getNextFriends(cPage);
+    };
+    
+    //검색으로 누르면 호출
+    function getNextQna2(page) {
+        if($('#searchText').val().trim() != ""){
+            nowPage = page;
+            var pages =1;
+            if(page >pages){
+                pages = page;
+            }
+            $.ajax ({
+                type : 'post',
+                url : 'SearchQna.do',
+                dataType : "json",
+                data: {page : pages ,val : $('#searchText').val() , kind : $('#searchCategory').val() } ,
+                success : function(data) {
+                    console.log(data);
+                    var userInfos = "";
+                    if(data.length > 0){
+                      for(var i=0; i< data.length;i++){
+                        var num = pages*10+i+1-10;
+                        userInfos += '<li class="listLi" ';
+                        if(i%2 !=0){
+                            userInfos += ' style="background-color: #AFBACB;" ';
+                        }
+                        userInfos += 'id="'+data[i].QNA_ID+'" onclick="qnaDetailPage(this)">';    
+                        userInfos += '<span class="listNum">'+num+'</span>';
+                        userInfos += '<span class="listCate">'+ data[i].QNA_CATEGORY +'</span>';
+                        userInfos += '<span class="listTitle">'+ data[i].QNA_TITLE +'</span>'
+                        userInfos += '<span class="listWriter">'+ data[i].MEMBER_ID +'</span>';
+                        userInfos += '<span class="listDate">'; 
+//                        userInfos += data[i].QNA_DATE.substring(0,10);
+                        userInfos += data[i].QNA_DATE.substr(0,10);
+                        userInfos += '</span>';
+                        userInfos += '</li>';
+                    }
+                    var page_viewList2 = Paging2(data[0].QNA_ID, 10, 10 ,pages, "S");
+                    }else{
+                    var page_viewList2 = Paging2(1, 10, 10 ,1, "S");
+                    }
+                    $("#addPageCover").empty().html(page_viewList2);
+                    $('#contentListWrapUl').html(userInfos);
+
+
+
+                }, error: function (req) {
+
+                    console.log(req);
+                }
+            });
+        }
+    }
+    
+            //페이지 나타내기
+    Paging2 = function(totalCnt, dataSize, pageSize, pageNo, token){
+        totalCnt = parseInt(totalCnt);// 전체레코드수 dataSize = parseInt(dataSize);
+        // 페이지당 보여줄 데이타수 
+        pageSize = parseInt(pageSize); // 페이지 그룹 범위 1 2 3 5 6 7 8 9 10 
+        pageNo = parseInt(pageNo); // 현재페이지 
+        var html = new Array(); 
+        if(totalCnt == 0){
+            return ""; 
+        } // 페이지 카운트 
+        var pageCnt = totalCnt % dataSize; 
+        if(pageCnt == 0){
+            pageCnt = parseInt(totalCnt / dataSize);
+        }else{
+            pageCnt = parseInt(totalCnt / dataSize) + 1;
+        } 
+        var pRCnt = parseInt(pageNo / pageSize);
+        if(pageNo % pageSize == 0){
+            pRCnt = parseInt(pageNo / pageSize) - 1; 
+        } //이전 화살표
+        if(pageNo > pageSize){ 
+            var s2; if(pageNo % pageSize == 0){
+                s2 = pageNo - pageSize; 
+            }else{
+                    s2 = pageNo - pageNo % pageSize; 
+                } 
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push(s2); html.push('");>');
+            html.push('◀ '); html.push("</a>"); 
+        }else{
+            html.push('<a href="#">\n');
+            html.push('◀ '); html.push('</a>'); 
+            
+        } //paging Bar 
+        for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
+            if(index == pageNo){ 
+                html.push('<strong>');
+                html.push(index);
+                html.push('</strong>'); 
+            }else{ 
+                html.push('<a href=javascript:goPaging_' + token + '("');
+                html.push(index); html.push('");>');
+                html.push(index); html.push('</a>'); 
+            } 
+            if(index == pageCnt){ 
+                break;
+            }else html.push(' '); 
+        } //다음 화살표 
+        if(pageCnt > (pRCnt + 1) * pageSize){
+            html.push('<a href=javascript:goPaging_' + token + '("');
+            html.push((pRCnt + 1)*pageSize+1); 
+            html.push('");>'); html.push('▶'); 
+            html.push('</a>');
+        }else{
+            html.push('<a href="#">');
+            html.push('▶'); html.push('</a>');
+        } 
+        return html.join("");
+    }
+
+    var goPaging_S = function(cPage){
+        getNextQna2(cPage);
+    };
+        
+        
+        function qnaDetailPage(id){
+            location.href="qnaDetail.html?qna="+$(id).attr('id');
+        }
+        //////////////////////////////////////////////////////////////////////////////////////////
+
+	</script>
+<body>
+    <div id="newWrap">
+      <nav class="left_nav">
+        <div id="userInfo">
+            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                <li class="nav_li">
+                    <img id="user_Img" src=""/>
+                </li>
+                <li class="nav_li idLi">
+                    <div id="user_Id"></div>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav_ul" id="nav_menu">
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="qnaList.html">문의</a></li>
+        </ul>
+        <ul id="logout" class="nav_ul" onclick="logout()">
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
+        </ul>
+          
+    </nav>
+
+
+	
+        <div class="main_container">
+            
+            <div id="qnaCover">
+		<div id="contentTitleWrap">
+			<ul id="contentTitleWrapUl">
+				<li>
+					<span class="listNum" style="width:50px;">글번호</span>
+					<span class="listCate" style="width:140px;">카테고리</span>
+					<span class="listTitle" style="width:250px;">제목</span>
+					<span class="listWriter" style="width:90px;">작성자</span>
+					<span  style="width:140px;">날짜</span>
+<!--					<span class="listViewNum" style="width:60px;">조회수</span>-->
+				</li>
+			</ul>
+		</div>
+		<div id="contentListWrap">
+			<ul id="contentListWrapUl">
+<!--
+	여기에다가 추가 할거야
+				<li>
+					<span class="listNum">1</span>
+					<span class="listCate">불만사항</span>
+					<span class="listTitle">너무 불편해요.</span>
+					<span class="listWriter">최승우</span>
+					<span class="listDate">06-18</span>
+					<span class="listViewNum">0</span>
+				</li>
+-->
+
+			</ul>
+		</div>
+		<div id="writeBtnDiv">
+            <div class="btn writeBtn" onclick="location.href='qnaWrite.html'">글쓰기</div>
+		</div>
+            
+            
+            
+            
+                    <div id="pageChoiceCover">
+                        <div id="addPageCover">
+                        </div>
+                    </div>
+            
+            
+            
+			<div id="selectCover">
+				<select id="searchCategory">
+					<option value="1">제목</option>
+					<option value="2">글 내용</option>
+					<option value="3">글 작성자</option>
+				</select>
+				<input type="text" name="searchBox" id="searchText"/>
+                <div class="btn" onclick="getNextQna2(nowPage2)">검색</div>
+			</div>
+    	</div>
+	</div>
+	</div>
+</body>
+</html>
