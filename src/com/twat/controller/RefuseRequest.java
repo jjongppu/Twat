@@ -55,8 +55,6 @@ public class RefuseRequest extends HttpServlet {
 	    memberDAO.requestCancelRefuse(loginUserId, friendId, tok);
 	    	
 	    
-	    
-	    
 	    jsonObj.put("result", "refuseSuccess");
 	    jsonArr.add(jsonObj);
 	    
