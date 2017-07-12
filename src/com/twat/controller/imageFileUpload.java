@@ -2,6 +2,7 @@ package com.twat.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.twat.dao.MemberDAO;
@@ -18,7 +22,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class imageFileUpload
  */
-@WebServlet("/imageFileUpload.do")
+//@WebServlet("/imageFileUpload.do")
 public class imageFileUpload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,21 +39,28 @@ public class imageFileUpload extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		response.setCharacterEncoding("UTF-8");
+//	    response.setContentType("application/json;");
+//	    response.setHeader("Cache-Control", "no-cache");
+//	    request.setCharacterEncoding("UTF-8");
+//		
+//		
+		
 		HttpSession session = request.getSession();	
 		String userId = (String) session.getAttribute("loginUserId");
 		String root = request.getSession().getServletContext().getRealPath("/");
-        String pathname = root + "//..//..//..//..//..//..//Twat//WebContent//img//member";
+        String pathname = root + "//img//member";
         //C:\Twat\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\Twat\main1.png
         File f = new File(pathname);
         if (!f.exists()) {
-            // Æú´õ°¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¸é Æú´õ »ı¼º
+            // å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
             f.mkdirs();
         }
 
         String encType = "UTF-8";
         int maxFilesize = 5 * 1024 * 1024;
 
-        // MultipartRequest(request, ÀúÀå°æ·Î[, ÃÖ´ëÇã¿ëÅ©±â, ÀÎÄÚµùÄÉ¸¯ÅÍ¼Â, µ¿ÀÏÇÑ ÆÄÀÏ¸í º¸È£ ¿©ºÎ])
+        // MultipartRequest(request, å ì™ì˜™å ì™ì˜™å ì™ì˜™[, å ìŒëŒì˜™å ì™ì˜™å ì‹ â‘¼ì˜™å ï¿½, å ì™ì˜™å ìŒ˜ë“¸ì˜™å ì‹¬ëªŒì˜™å ì‹¶ì‡½ì˜™, å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹¹ëªŒì˜™ å ì™ì˜™í˜¸ å ì™ì˜™å ì™ì˜™])
         MultipartRequest mr = new MultipartRequest(request, pathname, maxFilesize,
                 encType, new DefaultFileRenamePolicy());        
 
@@ -61,10 +72,10 @@ public class imageFileUpload extends HttpServlet {
 
         
         String fileName = mr.getFilesystemName(formName);
-        if(fileName == null) {   // ÆÄÀÏÀÌ ¾÷·Îµå µÇÁö ¾Ê¾ÒÀ»¶§
-        	System.out.println("ÆÄÀÏ ¾÷·Îµå µÇÁö ¾Ê¾ÒÀ½");
-        	} else {  // ÆÄÀÏÀÌ ¾÷·Îµå µÇ¾úÀ»¶§
-        	fileName=new String(fileName.getBytes("8859_1"),"UTF-8"); // ÇÑ±ÛÀÎÄÚµù - ºê¶ó¿ìÁ®¿¡ Ãâ·Â        	
+        if(fileName == null) {   // å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹¸ë“¸ì˜™ å ì™ì˜™å ì™ì˜™ å ì‹­ì–µì˜™å ì™ì˜™å ì™ì˜™
+        	System.out.println("å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹¸ë“¸ì˜™ å ì™ì˜™å ì™ì˜™ å ì‹­ì–µì˜™å ì™ì˜™");
+        	} else {  // å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹¸ë“¸ì˜™ å ì‹¤ì–µì˜™å ì™ì˜™å ì™ì˜™
+        	fileName=new String(fileName.getBytes("8859_1"),"UTF-8"); // å ì‹¼ê¹ì˜™å ì™ì˜™å ìŒ˜ë“¸ì˜™ - å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ï¿½        	
         	System.out.println("Form Name : " + formName + "<BR>");
         	System.out.println("File Name  : " + fileName);
         	} // end 
@@ -72,11 +83,18 @@ public class imageFileUpload extends HttpServlet {
         MemberDAO memberDao = MemberDAO.getInstance();
         memberDao.changeImg(userId, fileName);
         
-        System.out.println(file); // Ã·ºÎµÈ ÆÄÀÏÀÇ ÀüÃ¼°æ·Î
+        System.out.println(file); // ì²¨å ì‹¸ë“¸ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™ì²´å ì™ì˜™å ï¿½
         response.sendRedirect("myInfo.html");
-        
-        
-        
+//        
+//		PrintWriter writer = response.getWriter();
+//	    JSONArray jsonList = new JSONArray();
+//		JSONObject jsonOb = new JSONObject();
+//		
+//			jsonOb.put("result", root.toString());
+//		
+//		jsonList.add(jsonOb);
+//	    writer.println(jsonList);
+//	    writer.close();
 
         
 

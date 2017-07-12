@@ -18,7 +18,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class RequestFriend
  */
-@WebServlet("/RequestFriend.do")
+//@WebServlet("/RequestFriend.do")
 public class RequestFriend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -56,6 +56,7 @@ public class RequestFriend extends HttpServlet {
 	    
 		    MemberDAO memberDao = MemberDAO.getInstance();
 		    int result = memberDao.requestFriend(loginUserId, friendId); 
+		    System.out.println(result);
 		    if(result == -1){
 		    	jsonObj.put("friendExist", "Exist");		    	
 		    }else if(result == 0){
@@ -71,6 +72,7 @@ public class RequestFriend extends HttpServlet {
 		    jsonArr.add(jsonObj);
 		    
 		    out.print(jsonArr);
+		    out.close();
 		    
 		    
 		    

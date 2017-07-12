@@ -16,7 +16,7 @@ import org.json.simple.JSONObject;
 
 import com.admin.dao.AdminDAO;
 
-@WebServlet("/getinfo.do")
+//@WebServlet("/getinfo.do")
 public class GetTwatDataInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

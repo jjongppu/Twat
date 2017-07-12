@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.MemberDAO;
 
-@WebServlet("/ChangeInfo.do")
+//@WebServlet("/ChangeInfo.do")
 public class ChangeInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -56,6 +56,7 @@ public class ChangeInfo extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		out.println(jsonList);
+		 out.close();
 	}
 
 }

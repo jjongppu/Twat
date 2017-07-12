@@ -19,7 +19,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class friendPhoneSearch
  */
-@WebServlet("/friendPhoneSearch.do")
+//@WebServlet("/friendPhoneSearch.do")
 public class FriendPhoneSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -44,9 +44,16 @@ public class FriendPhoneSearch extends HttpServlet {
 	    JSONArray jsonArr = new JSONArray();
 	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
-	    String friendPhone = request.getParameter("friendPhone");
+	    String friendPhoneId = request.getParameter("friendPhoneId");
 	    MemberDAO memberDAO = MemberDAO.getInstance();
-	    ArrayList<String> memArr = memberDAO.friendPhoneSearch(friendPhone);
+	    ArrayList<String> memArr = new ArrayList<String>();
+	    
+	    if(request.getParameter("selectPhoneOrId").equals("0")){
+	    	memArr = memberDAO.friendPhoneSearch(0,friendPhoneId);
+	    }else if(request.getParameter("selectPhoneOrId").equals("1")){
+	    	memArr = memberDAO.friendPhoneSearch(1,friendPhoneId);
+	    }
+	    	
 	    
 //	    for(int i = 0; i < memArr.size(); i++){
 //	    	System.out.println(memArr.get(i));
@@ -73,6 +80,7 @@ public class FriendPhoneSearch extends HttpServlet {
 	    
 //	    System.out.println(jsonArr);
 	    out.print(jsonArr);
+	    out.close();
 	    
 
 	}

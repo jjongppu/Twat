@@ -18,7 +18,7 @@ import com.twat.dao.QnaDAO;
 /**
  * Servlet implementation class QnaWriteServlet
  */
-@WebServlet("/QnaWrite.do")
+//@WebServlet("/QnaWrite.do")
 public class QnaWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -67,7 +67,10 @@ public class QnaWriteServlet extends HttpServlet {
 		}
 		
 		jsonList.add(jsonOb);
-	    writer.println(jsonList.toJSONString());
+	    writer.println(jsonList);
+	    writer.close();
+	    
+	    
 	}
 
 }

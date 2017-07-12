@@ -14,11 +14,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.twat.dao.CalendarDAO;
+import com.twat.dao.MemberJoinGroupDAO;
 
 /**
  * Servlet implementation class ScheduleSelected
  */
-@WebServlet("/scheduleSelected.do")
+//@WebServlet("/scheduleSelected.do")
 public class ScheduleSelected extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -55,10 +56,15 @@ public class ScheduleSelected extends HttpServlet
 		
 		String calNum = request.getParameter("calNum");
 		String calDate = request.getParameter("calDate");
+		String groupId = request.getParameter("groupId");
 		
 		CalendarDAO calDAO = CalendarDAO.getInstance();
 		calDAO.scheduleSelected(calNum, calDate);
 		
+		MemberJoinGroupDAO mDao = MemberJoinGroupDAO.getInstance();
+		mDao.updateCalView(Integer.parseInt(groupId));
+		
+		test.put("groupId", groupId);
 		test.put("cal_num", calNum);
 		test.put("calDate", calDate);
 		group.add(test);

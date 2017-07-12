@@ -23,7 +23,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/login.do")
+//@WebServlet("/login.do")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -83,5 +83,6 @@ public class LoginServlet extends HttpServlet {
 		jsonList.add(jsonOb);
 		
 		writer.println(jsonList);
+		writer.close();
 	}
 }

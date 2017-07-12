@@ -17,7 +17,7 @@ import com.admin.dao.AdminDAO;
 import com.twat.dto.CalendarVO;
 import com.twat.dto.CalgatherVO;
 
-@WebServlet("/adminGetCalenarList.do")
+//@WebServlet("/adminGetCalenarList.do")
 public class AdminGetCalenarList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

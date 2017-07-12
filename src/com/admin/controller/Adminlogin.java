@@ -16,7 +16,7 @@ import org.json.simple.JSONObject;
 import com.admin.dao.AdminDAO;
 
 
-@WebServlet("/adminlogin.do")
+//@WebServlet("/adminlogin.do")
 public class Adminlogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	

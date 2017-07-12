@@ -18,7 +18,7 @@ import com.twat.dao.CalendarDAO;
 /**
  * Servlet implementation class addCommentServlet
  */
-@WebServlet("/addComment.do")
+//@WebServlet("/addComment.do")
 public class addCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -45,26 +45,39 @@ public class addCommentServlet extends HttpServlet {
 	    JSONArray jsonArr = new JSONArray();
 	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
-	    HttpSession session = request.getSession();
-	    String cal_writer = (String) session.getAttribute("loginUserId");
+//	    HttpSession session = request.getSession();
+//	    String cal_writer = (String) session.getAttribute("loginUserId");
 	    
 	    CalendarDAO calendarDAO = CalendarDAO.getInstance();
 	    
-	    String cal_memo = request.getParameter("cal_memo");
-	    String group_id = request.getParameter("group_id");
-	    String first_cal = request.getParameter("first_cal");
-	    String new_memo = request.getParameter("new_memo");
+//	    String cal_memo = request.getParameter("cal_memo");
+	    String groupId = request.getParameter("group_id");
+	    String userId = request.getParameter("user_id");
+	    String calNum = request.getParameter("cal_num");
+//	    String first_cal = request.getParameter("first_cal");
+	    String memo = request.getParameter("new_memo");
 	    
-	    System.out.println(cal_memo);
-	    System.out.println(group_id);
-	    System.out.println(first_cal);
-	    System.out.println(new_memo);
+//	    group_id: group_id,
+//		user_id: login_userId,
+//		cal_num: nowCalNum,
+//		new_memo: new_memo
 	    
-	    calendarDAO.addCalComment(Integer.parseInt(group_id), cal_memo, first_cal, new_memo, cal_writer);
-	    jsonObj.put("userId", cal_writer);
+//	    System.out.println(cal_memo);
+//	    System.out.println(group_id);
+//	    System.out.println(first_cal);
+//	    System.out.println(new_memo);
+	    
+//	    calendarDAO.addCalComment(Integer.parseInt(group_id), cal_memo, first_cal, new_memo, cal_writer);
+	    
+	    calendarDAO.addCalComment(Integer.parseInt(groupId), userId, Integer.parseInt(calNum), memo);
+	    jsonObj.put("userId", userId);
 	    jsonArr.add(jsonObj);
 	    out.print(jsonArr);
-	    
+	    out.close();
+	    if(calendarDAO != null)
+	    {
+	    	calendarDAO = null;
+	    }
 
 	}
 

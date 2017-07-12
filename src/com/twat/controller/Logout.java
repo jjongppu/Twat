@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-@WebServlet("/Logout.do")
+//@WebServlet("/Logout.do")
 public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,6 +37,7 @@ public class Logout extends HttpServlet {
 	
 		jarr.add(jsonObj);
 		out.print(jarr);
+		 out.close();
 	}
 	
 

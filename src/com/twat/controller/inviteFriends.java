@@ -21,7 +21,7 @@ import com.twat.dto.MemberVO;
 /**
  * Servlet implementation class inviteFriends
  */
-@WebServlet("/inviteFriends.do")
+//@WebServlet("/inviteFriends.do")
 public class inviteFriends extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -51,18 +51,37 @@ public class inviteFriends extends HttpServlet {
 	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
 	    ArrayList<MemberVO> memArr = memberDAO.getFriendList(userId);
+	    String groupMem = request.getParameter("groupMem");
+	    
+	    String[] groupArr = groupMem.split(",");
+	    
+	    for(int i = 0; i < memArr.size(); i++){
+	    	
+	    	for(int j = 0; j < groupArr.length; j++){
+	    		if(groupArr[j].equals(memArr.get(i).getMEMBER_ID())){
+//	    			if(memArr.size()!=0)
+	    				memArr.remove(i);	    			
+	    		}
+	    		
+	    	}
+	    	
+	    	
+	    }
+	    
+	    
 	    
 	    for(int i = 0; i < memArr.size(); i++){
 	    	JSONObject jsonObj = new JSONObject();
 	    	jsonObj.put("friendId", memArr.get(i).getMEMBER_ID());
-	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());	    	
+	    	jsonObj.put("friendName", memArr.get(i).getMEMBER_NAME());
+	    	jsonObj.put("friendImg", memArr.get(i).getMEMBER_IMG());
 	    	jsonArr.add(jsonObj);
 	    	System.out.println(getServletName());
 	    }
 	    
 	    System.out.println(jsonArr.toJSONString());
 	    out.print(jsonArr);
-	    
+	    out.close();
 	    
 	    
 	    

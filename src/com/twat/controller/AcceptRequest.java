@@ -18,7 +18,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class AcceptRequest
  */
-@WebServlet("/AcceptRequest.do")
+//@WebServlet("/AcceptRequest.do")
 public class AcceptRequest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -55,11 +55,13 @@ public class AcceptRequest extends HttpServlet {
 //	    System.out.println(requestFriendId);
 	    
 	    
-	    jsonObj.put("myId", loginUserId);
-	    jsonObj.put("friendId", requestFriendId);
+//	    jsonObj.put("myId", loginUserId);
+//	    jsonObj.put("friendId", requestFriendId);
+	    jsonObj.put("result", "yes");
 	    jsonArr.add(jsonObj);
 	    System.out.println(jsonArr);
 	    out.println(jsonArr);
+	    out.close();
 	    
 	    
 		

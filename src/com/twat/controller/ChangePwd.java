@@ -19,7 +19,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class ChangePwd
  */
-@WebServlet("/ChangePwd.do")
+//@WebServlet("/ChangePwd.do")
 public class ChangePwd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -67,13 +67,13 @@ public class ChangePwd extends HttpServlet {
 	    
 	    System.out.println(beforePw);
 	    System.out.println(afterPw);
-	    
+	    System.out.println(result);
 	    
 	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
 	    jsonArr.add(jsonObj);
 	    
 	    out.println(jsonArr);
-
+	    out.close();
 		
 		
 		

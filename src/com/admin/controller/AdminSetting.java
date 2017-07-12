@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 
 import com.admin.dao.AdminDAO;
 
-@WebServlet("/adminSetting.do")
+//@WebServlet("/adminSetting.do")
 public class AdminSetting extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,9 +32,10 @@ public class AdminSetting extends HttpServlet {
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
+	    HttpSession session = request.getSession();
 	    
-	    String adminGrade = request.getParameter("adminGrade");
-		String loginAdmin = request.getParameter("loginAdmin");
+	    String adminGrade = (String) session.getAttribute("adminGrade");
+		String loginAdmin = (String) session.getAttribute("loginAdmin");
 		AdminDAO adDao = AdminDAO.getInstance();
 		
 		PrintWriter writer = response.getWriter();
@@ -42,7 +43,7 @@ public class AdminSetting extends HttpServlet {
 		JSONObject jsonOb = new JSONObject();
 		
 		// 로그인 성공/실패 
-		if(loginAdmin == "" || adminGrade == "" ){
+		if(loginAdmin == null ){
 			
 			jsonOb.put("result", "fail");
 		} else {

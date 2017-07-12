@@ -5,15 +5,36 @@ $.ajax({
     dataType: "json",
     success: function(data) {
         if(data[0].result == "s"){
+            /*세션이 있으면 왼쪽 개인정보 띄워주는것들 불러옴*/
             $.ajax({
                 type: "post",
                 url: "PersonalServlet.do",
                 dataType: "json",
                 success: function(data) {
+                    console.log(data);
                     var id = data[0].MEMBER_ID;
                     var photo = data[0].MEMBER_IMG;
                     $('#user_Id').html(id);
                     $('#user_Img').attr('src',photo);
+                     $.ajax({
+                        type: "post",
+                        url: "groupList.do",
+                        data: {kind:0},
+                        dataType: "json",
+                        success: function(data) {
+                            var countMeView = 0;
+                            var countGroupView = 0;
+                            if(data[0].group_id != "noGroup"){
+                                for(var i=0;i<data.length;i++){
+                                    countGroupView += data[i].view_group;
+                                    countMeView += data[i].view_me;
+                                }
+                            }
+                            if(countGroupView > countMeView){
+                                $('#newContents').css('display','inline-block');
+                            }
+                        }
+                    });
                 }
             });
         }else{
@@ -27,18 +48,49 @@ $.ajax({
 
 
 
-    window.onload = function(){
-        $(".left_nav").css("height",window.innerHeight );
-    }
+
+        window.onload = function(){
+                    //블라인드 꽉채우기
+        $('.blind').css("height",$(window).height());
+        $('.blind').css("width",$(window).width());
+        
+            //중앙 정렬
+            if((window.innerHeight-800)/2 > 1){
+                $("#newWrap").css("margin-top",(window.innerHeight-800)/2 );
+            }else{
+                $("#newWrap").css("margin-top", 0 );
+            }
+
+            //네브바 옆 체크표시 애니매이션 ㅋㅋ 귀욥
+                
+            $('#navHere').animate({
+                    width: 12,
+                }, 500);
+                for(var j=0;j <4;j++){
+                    if(j%2==0){
+                        $('#navHere').animate({
+                            width: 8,
+                        }, 300);
+                    }else{
+                        $('#navHere').animate({
+                            width: 12,
+                        }, 300);
+                    }
+            }
     
+        }
     $(window).resize(function(){
-        if(window.innerHeight > 600){
-            $(".left_nav").css("height",window.innerHeight);
+        $('.blind').css("height",$(window).height());
+        $('.blind').css("width",$(window).width());
+            
+        if((window.innerHeight-800)/2 > 1){
+            $("#newWrap").css("margin-top",(window.innerHeight-800)/2 );
         }else{
-            $(".left_nav").css("height",'600px');
+            $("#newWrap").css("margin-top", 0 );
         }
 
     });
+
 
             
     /* 로그아웃 처리*/
@@ -49,7 +101,6 @@ $.ajax({
                 dataType: "json",
                 success: function(data) {
                     if(data[0].result == "s"){
-                        alert("로그아웃 되었습니다.");
                         location.href='index.html';
                     }
                 }

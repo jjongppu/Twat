@@ -130,11 +130,11 @@
     font-family: sans-serif;
 }
     #left-side {
-        margin: 50px 0 0 0;
-       width: 40%;
-       height: 650px;
-       float: left;
-       background-color: white;
+        margin: 50px 0 0 50px;
+        width: 40%;
+        height: 650px;
+        float: left;
+        background-color: white;
     }
         
 .leftUp{
@@ -157,11 +157,11 @@
     width: 200px;
     height: 10px;
     background: linear-gradient( 45deg, pink, #6534ff);
-
 }
 
 .schedule{
-    display:table;
+    display:table; 
+    /* height: 300px; */ 
 }
 
 .schCont{
@@ -195,17 +195,19 @@
 
 
 
-
-
-
-
    
 /*  오른편 ===============================================  */
     .modalButton{        
-        float: right;
+/*        float: right;*/
+        margin-left: 510px;
+        font-size: 12px;
+        background:linear-gradient( 45deg, white, pink, white, #6534ff);
+        padding: 10px;
+        border-radius: 50px;
+        border: 1px solid pink;
     }
    #right-side {
-       width: 60%;
+       width: 50%;
        height: 700px;
        float: right;
        background-color: white;
@@ -218,7 +220,7 @@
     font-size: 30px;
    }
    #calendar {
-       padding-left: 70px;
+       padding-left: 50px;
        /*        width: 100%;*/
        /*        height: 100%;*/
        color: black;
@@ -330,10 +332,12 @@ textarea:focus, input:focus{
 /*   ================   footer    ============  */
 .footer{
     background: linear-gradient( 45deg, white, pink, white, #6534ff);
+    height: 100%;
 }
 
 .events{
     background-color: white;
+    height: 100%;
     position: relative;
     display: inline-block;    
     margin: auto;
@@ -343,7 +347,7 @@ textarea:focus, input:focus{
 
 .eveLeft{
     width:500px;
-    height: 170px;
+    height: 100%;
     display: inline-block;
     background-color: white;
 }
@@ -379,16 +383,36 @@ textarea:focus, input:focus{
 }
 .closeSub{
     display:table;
+    padding: 0;
+    margin: 0;
 }
 .closeSub div {
     display: inline-block;
     display:table-cell; 
     text-align:center; 
     vertical-align:middle;
-    padding: 10px 10px;
+    padding: 2px 10px;
 }
-
-
+.closeName{
+    padding: 0;
+    margin: 0;
+}
+.closeContent{
+    padding: 0;
+    margin: 0;
+}
+.fname{
+    padding: 0;
+    margin: 0;
+}
+.fbirth{
+    padding: 0;
+    margin: 0;
+}
+#fName{
+    padding: 0;
+    margin: 0;
+}
 
 
 

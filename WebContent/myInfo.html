@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>개인정보를가져오긔</title>
+    <title>달게더 개인정보</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -12,27 +12,47 @@
     <script src="http://code.jquery.com/jquery.min.js"></script>
     <script src="js/nav.js"></script>
     <script src="js/jquery.form.js"></script>
+        <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
 </head>
     <style>
+        #newWrap {
+            display: block;
+            background-color: #F6F6F6;
+            width: 1350px;
+            height: 800px;
+            box-shadow: 10px 10px 30px grey;
+            margin: auto;
+        }
+        body{
+             background-image: url(img/background/back1.jpg);
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-attachment: fixed;
+             background-position: center top;
+        }
+        #wrap{
+            width: auto;
+        }
         div{
             position: relative;
+            display: block
         }
         .container{
-            margin:200px auto 0 auto;
+            margin: 0 auto 0 auto;
             width: 800px;
             height: 600px;
         }
         .userIn{
             width: 780px;
             height: 500px;
-            margin: auto;
-            margin-top: 10px; 
+            margin: 0 auto 0 auto;
         }
         .userInfo{
             width: 340px;
             height: 480px;
             margin-left: 10px;
-            margin-top: 10px;
+            margin-top: 70px;
             float: left;
         }
         .userInfo2{
@@ -48,6 +68,7 @@
             display: block; 
             border-radius: 180px;
             overflow: hidden;
+            border: 1px solid black;
         }
         #uImg{
             width: 180px;
@@ -60,75 +81,68 @@
             display: inline-block;
             cursor: pointer;
             margin-left: 40px;
-            /* border: 1px solid black; */
             
         }
-        #userName{
-            border: 1px solid black;
+
+        #userName,#userPhone,#userBirth,#uId{
+            display: block;
+            border: none;
+            border-bottom: 1px solid gray;
             width: 200px;
-            margin-left: 40px;
-            margin-top: 40px;
+            margin: 20px auto 0 auto;
             text-align: center;
             height: 30px;
             
+            
         }
-        #userPhone{
-            border: 1px solid black;
-            width: 200px;
-            margin-left: 40px;
-            margin-top: 20px;
-            text-align: center;
-            height: 30px;
-        }
-        #userBirth{
-            border: 1px solid black;
-            width: 200px;
-            margin-left: 40px;
-            margin-top: 20px;
-            text-align: center;
-            height: 30px;
+        #uId{
+            border: none;
         }
         #chInfo{
-            border: 1px solid black;
+            margin-top: 40px;
+            cursor: pointer;
+            border: none;
+            display: block;
+            border: none;
+            
             width: 200px;
-            margin: auto;
-            margin-top: 20px;
+            margin: 20px auto 0 auto;
             text-align: center;
             height: 30px;
-            cursor: pointer;
+            padding: 0;
         }
         .chPwd{
-            border: 1px solid pink;
             float: right;
             width: 340px;
             height: 480px;
             margin-left: 10px;
-            
         }
         #ckck{
-            
             cursor: pointer;
-            width: 250px;
+            width: 240px;
             display: block;
             height: 30px;
-            margin-top: 20px;
+            margin-top: 40px;
             text-align: center;
+            
         }
         #nowPwd{
             width: 250px;
             display: block;
             height: 30px;
-            margin-top: 100px;
+            margin-top: 280px;
             padding-left: 20px;
-            margin-bottom: 
-            
+            border: none;
+            border-bottom: 1px solid gray;
         }
         #chPwd{
             width: 250px;
             display: block;
             height: 30px;
-            margin-top: 20px;
+            margin-top: 50px;
             padding-left: 20px;
+            border: none;
+            border-bottom: 1px solid gray;
         }
         #chkPwd{
             width: 250px;
@@ -136,7 +150,9 @@
             height: 30px;
             margin-top: 20px;
             padding-left: 20px;
-            margin-bottom: 50px;
+            border: none;
+            border-bottom: 1px solid gray;
+            
         }
         #uOut{
             width: 100px;
@@ -144,8 +160,13 @@
             float: right;
             display: inline-block;
             top: 30px;
-            border: 1px solid red;
             cursor: pointer;
+            text-align: center;
+            padding-top: 5px;
+            margin-right: 80px;
+            
+            margin-top: 80px;
+            
         }
         
         #formTag{
@@ -153,6 +174,7 @@
         }
         #attachFile{
             display: none;
+            border: 1px solid black;
         }
         #fileTagCss{
             position: absolute;
@@ -170,8 +192,17 @@
             left: 0;
             z-index: 1000;
         }
+        #checkedName{
+            width: 200px;
+            height: 30px;
+            margin-left: 40px;
+            padding-left: 30px;
+        }
+       
     </style>
     <script>
+
+            //////////////////////////////////////////
         ////////////////정보가져오기///////////////////////////////////////////////////
             $.ajax({
                 type:"post",
@@ -179,6 +210,7 @@
                 datatype:"json",
                 success: function(data){
                     console.log(data);
+                    $("#uId").html(data[0].MEMBER_ID);
                     $("#uImg").attr("src",data[0].MEMBER_IMG);
                     $('#userName').val(data[0].MEMBER_NAME);
                     $('#userPhone').val(data[0].MEMBER_PHONE);
@@ -196,6 +228,9 @@
                         ////////////////////////사진 변경/////////////////////
                         var form = $('#formTag')[0];
                         var formData = new FormData(form);
+                        var namename = $('#userName').val();
+                        var phonephone = $('#userPhone').val();
+                        var birthbirth = $('#userbirth').val();
                          $.ajax({
                             url: 'imageFileUpload.do',
                             processData: false,
@@ -203,30 +238,36 @@
                             data: formData,
                             type: 'POST',
                             success: function(result){
-                                location.href='myInfo.html';
-                            }
+                                console.log(result);
+//                                if(namename == ""){
+//                                    alert("이름을 입력해주세요");
+//                                }else{
+                                    alert("회원정보가 변경되었습니다.");
+                                    location.href='myInfo.html';    
+//                                }
+                                
+                                }
+//                            }
                         });
                     }
                 });
                
             }
-                     
-                     
-        
-        ////////////////비밀번호 변경///////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+            function chInformation(){        
+                if(window.event.keyCode == 13) {
+                changeInfo();
+                }
+            }       
+////////////////비밀번호 변경///////////////////////////////////////////////////
 //                var nowPwd = document.getElementById('nowPwd').value;
 //                var chPwd = document.getElementById('chPwd').value;
 //                var chkPwd = document.getElementById('chkPwd').value;
             function changePwd(){
-                
-                
-                
                 if($("#chPwd").val() == $("#chkPwd").val()){                    
-                    
-                    
                     $.ajax({
                     type: "post",
-                    url: "ChangePwd.do",
+                    url: "ChangePW.do",
                     datatype: "json",
                     data: {
                         beforePw : $("#nowPwd").val(),
@@ -235,33 +276,21 @@
                     success: function(data){
                         var result = data[0].result;
                             if(result == '-1'){
-                                alert("현재 비밀번호가 일치하지 않습니다.");
+                                alert("비밀번호가 이상해슈바...");
                             }else if(result == '0'){
                                 alert("비밀번호가 변경되었습니다.");
-                            }
-                        
+                                location.href='myInfo.html';
+                            }                        
                         }
-
                     });
-                    
-                    
-                    
-                    
                 }else{
                     alert("변경할 비밀번호가 일치하지 않습니다");
                     
                     console.log("불일치");
                 }
                 
-                
-                                
-            	
-                
-                
             }
-
-
-        ///////////////////////////회원탈퇴/////////////////////////////////////
+///////////////////////////회원탈퇴/////////////////////////////////////
             function outclick(){
                 $.ajax({
                     type:"post",
@@ -278,90 +307,223 @@
                     }
                 });
             }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                $(document).ready(function() {
+                  $('#attachFile').change(function(){
+                    var file = document.querySelector('#attachFile');
+                    var url = $(this).val();
+                    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+                    if ($('#formTag') && $('#formTag')[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+                     {
+                        var reader = new FileReader();
+                        var fileList = file.files ;
+                        reader.readAsDataURL(fileList[0]);
 
-$(document).ready(function() {
-  $('#attachFile').change(function(){
-    var file = document.querySelector('#attachFile');
-    var url = $(this).val();
-    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-    if ($('#formTag') && $('#formTag')[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
-     {
-        var reader = new FileReader();
-        var fileList = file.files ;
-        reader.readAsDataURL(fileList[0]);
-         
-        reader.onload = function (e) {
-           $('#uImg').attr('src', e.target.result);
-        }
-    }else{
-        alert("이미지파일만 업로드 가능합니다.")
-    }
-  });
+                        reader.onload = function (e) {
+                           $('#uImg').attr('src', e.target.result);
+                        }
 
-});
+                    }else{
+                        alert("이미지파일만 업로드 가능합니다.")
+                    }
+                  });
+
+                });
         
         function pageload(){
             location.reload();
             
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    function autoHypen() {
+        var x = document.getElementById("userPhone");
+        x.value = x.value.replace(/[^0-9]/g, '');
+        var tmp = "";
+        var uPhone = $('#userPhone').val().length;
+//        var regExp = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
+        if (x.value.length > 3 && x.value.length <= 7) {
+            tmp += x.value.substr(0, 3);
+            tmp += '-';
+            tmp += x.value.substr(3);
+            x.value = tmp;
+        } else if (x.value.length > 7) {
+            tmp += x.value.substr(0, 3);
+            tmp += '-';
+            tmp += x.value.substr(3, 4);
+            tmp += '-';
+            tmp += x.value.substr(7);
+            x.value = tmp;
+        }else if(uPhone > 12 && uPhone < 12){
+            alert("핸드폰번호가 길거나 작습니다.");
+        }else{
+            
+        }
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+          function checkPassword2(){
+            var pw1 = $('#chPwd').val();
+            var pw2 = $('#chkPwd').val();
+            var pwVal = $('#chPwd').val().length;
+            var retVal = false;
+            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
+            
+            if(pw2 != pw1){
+                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
+            }else{
+                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
+                if(pw1 != pw2){
+                    $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
+                }
+            }
+        }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function checkPassword(){
+            var pw1 = $('#chPwd').val();
+            var pw2 = $('#chkPwd').val();
+            var pwVal = $('#chPwd').val().length;
+            var retVal = false;
+            var pwRegex = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/; // 영문, 숫자 조합
+        if(pw1 != null && pw2 != null) {
+            if(pwVal < 8 || pwVal > 16) {
+                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호는 8자 이상, 16자 이하여야 합니다.</p>");
+            } else if(pw1 != pw2 && pw2 != pw1) {
+                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호가 일치하지 않습니다.</p>");
+            } else if(!pwRegex.test(pwVal) && !pwRegex.test(pw2)){
+                $('#chkOnKey').html("<p style='font-size:10px; color:red'>비밀번호는 영문, 숫자로 구성되어야 합니다.</p>");
+            } else if(pw2 == pw1){
+                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>사용 가능한 비밀번호입니다.</p>");
+                if(pw1 != pw2){
+                    $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호가 일치하지 않습니다.</p>");    
+                }
+            } else if(pw1 == ""){
+                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호를 입력해주세요.</p>");
+            } else{
+                $('#chkOnKey').html("<p style='font-size:10px; color:blue'>비밀번호가 일치하지 않습니다.</p>");
+            }
+        }
+    }
+///////////////////////////이름 유효성 검사/////////////////////////////////////////////////////////////////////////////////////
+//        function chkName(){
+//            var Uname = $('#userName').val();
+//            var Uname2 = $('#userName').val().length;
+//            var reg = /^[가-힣ㄱ-ㅎㅏ-ㅣ]{2,6}$/;
+//            if(Uname == null){
+//            if(Uname == ""){
+//                $('#checkedName').html("<p style='font-size:10px; color:red'>이름을 입력해주세요.</p>");    
+//            }else if (Uname2 > 5){
+//                $('#checkedName').html("<p style='font-size:10px; color:red'>이름을 6자 이하로 입력해주세요.</p>");    
+//            }else if (Uname2 == 4 && Uname2 ==3 && Uname2 ==2 && Uname2 ==1){
+//                $('#checkedName').html("<p style='font-size:10px; color:red'>이름을 6자 이하로 입력해주세요.</p>");    
+//            }else if(!reg.test(Uname)){
+//                $('#checkedName').html("<p style='font-size:10px; color:red'>이름은 한글로만 입력해주세요.</p>");    
+//            }else{
+//                
+//            }
+//            }
+//    }
+///////////////////////////이름 유효성 검사알럿으로 띄우기./////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(function() {
 
+             $("input[name=userName]").keyup(function(event){
+                var Uname = $('#userName').val();
+                var Uname2 = $('#userName').val().length;
+                var regexp = /^[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+                var reg = /^[가-힣ㄱ-ㅎㅏ-ㅣ]{2,6}$/;
+                v = $('#userName').val();
+                if( regexp.test(v) ) {
+                    alert("이름은 한글만 입력해주세요");
+                $(this).val(v.replace(regexp,''));
+                }else if (Uname2 >= 7){
+                    alert("이름을 6자 이하로 입력해주세요.");    
+                    $('#userName').val(v.replace(reg,''));
+                }
+            });
+
+        });
+////////////////////////////////////////////////////////////////////////////////////////////
+        $(document).ready(function(){
+            $("input[name=userPhone]").keyup(function(event){
+                var phonephone = $('#userPhone').val();
+                var phonelen = $('#userPhone').val().length;
+                console.log(phonelen);
+                var regExp = /^01([0|1|6|7|8|9]{3})-?([0-9]{4})-?([0-9]{4})$/g;
+                var special = /^[a-z]|[\[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+                if(phonelen >= 16){
+                    alert("핸드폰번호 형식에 맞게 입력해주세요\n ex) 010-XXXX-XXXX");
+                }
+                if(!regExp.test(v)){
+                    alert("핸드폰번호 형식에 맞게 입력해주세요\n ex) 010-XXXX-XXXX");
+                    $(this).val(v.replace(regExp,''));
+                }else if(!special.test(v)){
+                    alert("숫자만 입력해주세요.");
+                    
+                }
+            });
+        });
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//        $(document).ready(function(){
+//           $("input[name=userBirth]").keyup(function(event){
+//               var birbir = $('#userPhone') .val();
+//               var birbirth = $('#userPhone') .val().length;
+//               var chkBirth = /^[1-9][a-z][\[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]{6}/g;
+//               //v = $('#userbirth').val();
+//               console.log(birbirth);
+//           });
+//        });
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
     </script>
 <body>
- <div id="wrap">
-<!--        네브바 입니다 ```````````````````````````````````````````````` -->
-    <nav class="left_nav">
+    <div id="newWrap">
+      <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-                <li class="nav_li">
+                <li class="nav_li"><div id="navHere"></div>
                     <img id="user_Img" src=""/>
                 </li>
-                <li class="nav_li">
+                <li class="nav_li idLi">
                     <div id="user_Id"></div>
                 </li>
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="home.html">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html" onclick='pageload()'>친구 목록</a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의 하기</a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
         </ul>
+          
     </nav>
         <div id="main_container">
-
-    
     
     <div class="container">
         <div class="userIn">
             <div class="userInfo"> 
                 <div class="userInfo2">
+                    
+                    
                     <div id="userImg">
                             <img src="" id="uImg"/>
-
-<!--                            <form id="formTag" enctype="multipart/form-data" method="post" action="imageFileUpload.do">-->
                             <form id="formTag" enctype="multipart/form-data">
                                   <input type="file"  id="attachFile" name="attachFile" size="5"/>
-                                        <label id="fileTagCss" for="attachFile"></label>
-
-                                    
-<!--                                    <input id="Imgsubmit" type="submit" value="사진 변경">-->
-<!--                                    <input id="Imgsubmit" type="button" onclick="test()" value="사진 변경">-->
+                                <label id="fileTagCss" for="attachFile"></label>
                             </form>
-
--->
                     </div>
                     <form method="post" id="changeInfo">
-                        <input type="text" id="userName" name="userName">
-                        <input type="text" id="userPhone" name="userPhone">
-                        <input type="text" id="userBirth" name="userBirth">
-                        <div id="chInfo" onclick="changeInfo()" >정보 수정하기</div>
+                        <div id="uId"></div>
+                        <input type="text" id="userName" name="userName" onkeyup="chkName()" placeholder="이름을 입력하세요.">
+<!--                        <div id="checkedName"></div>-->
+                        <input type="text" id="userPhone" name="userPhone" onkeyup="autoHypen()"placeholder="핸드폰 번호를 입력하세요." maxlength="13">
+                        <input type="text" id="userBirth" name="userBirth" onkeyup="chInformation()" placeholder="생년월일을 입력하세요." maxlength="6">
+                        <div id="chInfo" class="btnInfo"onclick="changeInfo()" >정보 수정하기</div>
                     </form>
                 </div>
             </div>
@@ -370,9 +532,12 @@ $(document).ready(function() {
             <div class="secondInfo">
                 <div class="chPwd">
                     <input type="password" placeholder="현재 비밀번호" id="nowPwd" name="nowPwd">
-                    <input type="password" placeholder="변경할 비밀번호" id="chPwd" name="chPwd">
-                    <input type="password" placeholder="비밀번호 확인" id="chkPwd" name="chkPwd">
-                    <div id="ckck" onclick="changePwd()">비밀번호 변경</div>
+                    <div id="currentPwd"></div>
+                    <input type="password" placeholder="변경할 비밀번호" id="chPwd" name="chPwd" onkeyup="checkPassword2()">
+                    
+                    <input type="password" placeholder="비밀번호 확인" id="chkPwd" name="chkPwd" onkeyup="checkPassword()">
+                    <div id="chkOnKey"></div>
+                    <div id="ckck" class="btnckck" onclick="changePwd()">비밀번호 변경</div>
                 </div>  
             </div>
             </form>
@@ -381,81 +546,12 @@ $(document).ready(function() {
         <form method="post" id="outout">
         <div class="userout">
             <div> 
-                <div id="uOut" onclick="outclick()"> 회원 탈퇴</div>
+                <div id="uOut" class="btnStyle" onclick="outclick()"> 회원 탈퇴</div>
             </div>
         </div>
         </form>
         </div>
             </div>
             </div>
-    
-    
-    
-    
-
-    
-    
-    <script>
-        
-    
-    
-//        var option = {
-//            type : 'POST',
-//            url : '/uploadImage.json',
-//            dataType : 'json',
-//            success : function(data) {
-//            // 적절한 callback 함수 정의
-//            }
-//        };
-//        $('#formTag').ajaxSubmit(option);
-//        
-//        
-//        
-        
-        
-
-//         function test(){
-////            var data = new FormData();
-////            $.each($('#attachFile')[0].files, function(i, file) {          
-////                data.append('file-' + i, file);
-////            });
-////             
-////            $.ajax({
-////                url: '/upload.action',
-////                type: "post",
-////                dataType: "text",
-////                data: data,
-////                // cache: false,
-////                processData: false,
-////                contentType: false,
-////                success: function(data, textStatus, jqXHR) {
-////                    alert(data);
-////                }, error: function(jqXHR, textStatus, errorThrown) {}
-////            });
-//             
-//             var formdata = new FormData();
-//             var form = $('#formTag')[0];
-//            formdata.append("img", form);
-//            var xhr = new XMLHttpRequest();
-//
-//            xhr.open("POST", "changMemberImg.do");  
-//            xhr.send(formdata);
-//             
-//             
-//             
-//             
-//        }
-        
-       
-    </script>
-    
-    
-    
-    
-    
-    
-    
-    
-    
 </body>
 </html>

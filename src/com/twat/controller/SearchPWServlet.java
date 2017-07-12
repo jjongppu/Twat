@@ -17,7 +17,7 @@ import com.twat.dao.MemberDAO;
 /**
  * Servlet implementation class SearchPW
  */
-@WebServlet("/SearchPW.do")
+//@WebServlet("/SearchPW.do")
 public class SearchPWServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -47,25 +47,28 @@ public class SearchPWServlet extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 	    String id = request.getParameter("userId");
-	    String name = request.getParameter("userName");
 	    String phone = request.getParameter("userPhone");
+	    String question = request.getParameter("searchPwQuestion");
+	    String answer = request.getParameter("searchPwAnswer");
 	    
 	    MemberDAO memDao = MemberDAO.getInstance();
-	    String result = memDao.searchPW(id, name, phone);
+//	    String result = memDao.searchPW(id, name, phone);
+	    int result = memDao.searchPW(id, phone, question, answer);
 	    
 	    PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 	    
-	    if(result.equals("")) {
-			jsonOb.put("result", "fail");
-		} else {
+	    if(result == 1) {
 			jsonOb.put("result", result);
+		}else{
+			jsonOb.put("result", "fail");
 		}
 		
 		jsonList.add(jsonOb);
 		
 		writer.println(jsonList);
+		
 	}
 
 }

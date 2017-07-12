@@ -20,7 +20,7 @@ import com.twat.dto.CalgatherVO;
 /**
  * Servlet implementation class AdminGetGroupList
  */
-@WebServlet("/adminGetGroupList.do")
+//@WebServlet("/adminGetGroupList.do")
 public class AdminGetGroupList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

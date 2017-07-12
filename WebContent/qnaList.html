@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Untitled Document</title>
+    <title>달게더 문의사항</title>
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -9,19 +9,35 @@
     <link rel="stylesheet" type="text/css" href="css/nav.css">
 	    <script src="js/nav.js"></script>
     <script src="js/jquery.form.js"></script>
+        <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/img/logo/logo2.png" type="image/png">
     </head>
 	<style>
-  
+        body{
+            background-image: url(img/background/back1.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center top;
+        }
 		ul {
 			list-style: none;
 		}
-         .container{
-            
-            margin-left: 120px;
+        div{
+            display: block;
+        }
+         .main_container{
+             width: 1350px;
+             height: 800px;
+             
         }
         #qnaCover{
             width: 800px;
-            margin: 100px auto 0 auto;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
         }
         
 		span {
@@ -49,8 +65,11 @@
 		.listViewNum {
 			width: 70px;
 		}
+		#contentTitleWrap {
+			margin-bottom: 10px;
+		}
         #contentTitleWrapUl li{
-            background-color: #AFBACB;
+            background-color: #e6e6e6;
             text-align: center;
         }
         #contentListWrapUl li{
@@ -69,6 +88,7 @@
             margin: 0;
             border-top: 1px solid gray;
             font-size: 13px;
+            height: 301px;
             
         }
         ul{
@@ -77,7 +97,7 @@
     #pageChoiceCover{
         padding: 10px 0;
         width: 800px;
-        margin: auto;
+        margin: 20px auto;
     }
         .btn{
             display: inline-block;
@@ -86,6 +106,8 @@
             font-size: 12px;
             cursor: pointer;
             width:82px;
+			text-align: center;
+    		z-index: 1;
         }
         
         /*검색 커버*/
@@ -101,6 +123,7 @@
             padding-left: 10px;
             margin: 0 10px;
             width: 200px;
+            background-color: transparent;
         }
         #searchCategory{
             height: 24px;
@@ -109,7 +132,7 @@
         .writeBtn{
             float: right;
         }
-    a{
+    #addPageCover a{
         text-decoration: none;
         padding: 14px 0;
         color: black;
@@ -128,7 +151,8 @@
 	
 	<script>
 
-        
+
+        //////////////////////////////////////////////////////////////////////////////////////////
          nowPage = 0;
     nowPage2 = 0;
     // 세션 확인 
@@ -151,7 +175,7 @@
                     var num = page*10+i+1-10;
                     userInfos += '<li class="listLi" ';
                     if(i%2 !=0){
-                        userInfos += ' style="background-color: #AFBACB;" ';
+                        userInfos += ' style="background-color: #e6e6e6;" ';
                     }
                     userInfos += 'id="'+data[i].QNA_ID+'" onclick="qnaDetailPage(this)">';    
                     userInfos += '<span class="listNum">'+num+'</span>';
@@ -170,7 +194,7 @@
 
                 
             }, error: function (req) {
-                
+                alert("SearchQna.do");
                 console.log(req);
             }
         });
@@ -204,10 +228,10 @@
                 } 
             html.push('<a href=javascript:goPaging_' + token + '("');
             html.push(s2); html.push('");>');
-            html.push('◀'); html.push("</a>"); 
+            html.push('◀ '); html.push("</a>"); 
         }else{
             html.push('<a href="#">\n');
-            html.push('◀'); html.push('</a>'); 
+            html.push('◀ '); html.push('</a>'); 
             
         } //paging Bar 
         for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
@@ -222,7 +246,7 @@
             } 
             if(index == pageCnt){ 
                 break;
-            }else html.push('|'); 
+            }else html.push(' '); 
         } //다음 화살표 
         if(pageCnt > (pRCnt + 1) * pageSize){
             html.push('<a href=javascript:goPaging_' + token + '("');
@@ -246,7 +270,7 @@
             nowPage = page;
             var pages =1;
             if(page >pages){
-                pages = page
+                pages = page;
             }
             $.ajax ({
                 type : 'post',
@@ -269,7 +293,8 @@
                         userInfos += '<span class="listTitle">'+ data[i].QNA_TITLE +'</span>'
                         userInfos += '<span class="listWriter">'+ data[i].MEMBER_ID +'</span>';
                         userInfos += '<span class="listDate">'; 
-                        userInfos += data[i].QNA_DATE.substring(0,10);
+//                        userInfos += data[i].QNA_DATE.substring(0,10);
+                        userInfos += data[i].QNA_DATE.substr(0,10);
                         userInfos += '</span>';
                         userInfos += '</li>';
                     }
@@ -318,10 +343,10 @@
                 } 
             html.push('<a href=javascript:goPaging_' + token + '("');
             html.push(s2); html.push('");>');
-            html.push('◀'); html.push("</a>"); 
+            html.push('◀ '); html.push("</a>"); 
         }else{
             html.push('<a href="#">\n');
-            html.push('◀'); html.push('</a>'); 
+            html.push('◀ '); html.push('</a>'); 
             
         } //paging Bar 
         for(var index=pRCnt * pageSize + 1;index<(pRCnt + 1)*pageSize + 1;index++){
@@ -336,7 +361,7 @@
             } 
             if(index == pageCnt){ 
                 break;
-            }else html.push('|'); 
+            }else html.push(' '); 
         } //다음 화살표 
         if(pageCnt > (pRCnt + 1) * pageSize){
             html.push('<a href=javascript:goPaging_' + token + '("');
@@ -356,41 +381,40 @@
         
         
         function qnaDetailPage(id){
-            location.href="test.html?qna="+$(id).attr('id');
+            location.href="qnaDetail.html?qna="+$(id).attr('id');
         }
-        
-        
+        //////////////////////////////////////////////////////////////////////////////////////////
+
 	</script>
 <body>
-    <div>
-    <!--  네브바 입니다  -->
-    <nav class="left_nav">
+    <div id="newWrap">
+      <nav class="left_nav">
         <div id="userInfo">
             <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
                 <li class="nav_li">
                     <img id="user_Img" src=""/>
                 </li>
-                <li class="nav_li">
+                <li class="nav_li idLi">
                     <div id="user_Id"></div>
                 </li>
             </ul>
         </div>
         <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text"  href="home.html">홈</a></li>
-            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="groupList.html">단체 캘린더</a></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html">친구 목록</a></li>
-            <li class="nav_li"><a class="nav_text" style="background-color:#182D42;" href="qnaList.html">문의 하기</a></li>
+            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+            <li class="nav_li"><a class="nav_text" href="myCalendar.html">개인</a></li>
+            <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="qnaList.html">문의</a></li>
         </ul>
         <ul id="logout" class="nav_ul" onclick="logout()">
-            <li class="nav_li"><a class="nav_text" onclick="logout();">로그아웃</a></li>
+             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
         </ul>
+          
     </nav>
 
 
 	
-	<div id="wrap">
-        <div class="container">
+        <div class="main_container">
             
             <div id="qnaCover">
 		<div id="contentTitleWrap">
@@ -421,9 +445,9 @@
 
 			</ul>
 		</div>
-		<div>
+		<div id="writeBtnDiv">
             <div class="btn writeBtn" onclick="location.href='qnaWrite.html'">글쓰기</div>
-			</div>
+		</div>
             
             
             
@@ -447,6 +471,5 @@
     	</div>
 	</div>
 	</div>
-</div>
 </body>
 </html>

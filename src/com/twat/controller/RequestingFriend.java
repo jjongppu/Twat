@@ -20,7 +20,7 @@ import com.twat.dto.MemberVO;
 /**
  * Servlet implementation class RequestingFriend
  */
-@WebServlet("/RequestingFriend.do")
+//@WebServlet("/RequestingFriend.do")
 public class RequestingFriend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -51,7 +51,7 @@ public class RequestingFriend extends HttpServlet {
 	    
 	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
-	    ArrayList<MemberVO> member = memberDAO.requestingFriendList(loginUserId);
+	    ArrayList<MemberVO> member = memberDAO.requestingFriendList(loginUserId , "!");
 //	    System.out.println(member.size());
 	    
 	    if(member != null){
@@ -60,7 +60,8 @@ public class RequestingFriend extends HttpServlet {
 		    	jsonObj.put("friendImg", member.get(i).getMEMBER_IMG());
 		    	jsonObj.put("friendId", member.get(i).getMEMBER_ID());
 		    	jsonObj.put("friendName", member.get(i).getMEMBER_NAME());
-		    	jsonObj.put("friendPhone", member.get(i).getMEMBER_PHONE());		    	
+		    	jsonObj.put("friendPhone", member.get(i).getMEMBER_PHONE());
+		    	jsonObj.put("friendGender",member.get(i).getMEMBER_GENDER() );
 		    	jsonArr.add(jsonObj);	    	
 		    	
 		    }
@@ -71,6 +72,7 @@ public class RequestingFriend extends HttpServlet {
 	    
 //	    System.out.println(jsonArr);
 	    out.println(jsonArr);
+	    out.close();
 	    
 	    
 	    

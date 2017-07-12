@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.MemberDAO;
 // �б⸮ ��ǰ
-@WebServlet("/memberout.do")
+//@WebServlet("/memberout.do")
 public class AdminMemberOut extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -50,7 +50,7 @@ public class AdminMemberOut extends HttpServlet {
 	    
 		int result = mdo.outUser(MEMBER_ID,"out");
 		
-		session.invalidate();
+
 	    if(result ==1){
 	    	
 	    	jsonOb.put("result", "success");

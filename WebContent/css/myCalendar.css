@@ -193,7 +193,8 @@
    
 /*  오른편 ===============================================  */
     .modalButton{        
-        float: right;
+/*        float: right;*/
+        margin-left: 500px;
     }
    #right-side {
        width: 60%;

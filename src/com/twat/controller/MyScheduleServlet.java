@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.MyCalendarDAO;
 
-@WebServlet("/mySchedule.do")
+//@WebServlet("/mySchedule.do")
 public class MyScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,18 +43,20 @@ public class MyScheduleServlet extends HttpServlet {
 		String member_id = (String) session.getAttribute("loginUserId");
 		String my_cal_contents = (String) request.getParameter("title");
 		String my_cal_date = (String) request.getParameter("calDate");		
+		String my_cal_time = (String) request.getParameter("calTime");		
 		
 //		System.out.println(member_id);
 //		System.out.println(my_cal_contents);
 //		System.out.println(my_cal_date);
 		
-		mycalendarDAO.addMySchedule(member_id, my_cal_contents, my_cal_date);
+		mycalendarDAO.addMySchedule(member_id, my_cal_contents, my_cal_date, my_cal_time);
 		
 		jsonObj.put("result", "succesCalAdd");
 		jsonArr.add(jsonObj);		
 
 		System.out.println(jsonArr);		
 		out.print(jsonArr);
+		out.close();
 		
 	}
 
