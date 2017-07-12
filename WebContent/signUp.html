@@ -124,15 +124,20 @@
 	answerTF = false;
 	phoneTF = false;
 	
+	gender = '';
 	
     // 성별 M/F
     function test(a) {
         console.log($(a).val());
+		
+		gender = $(a).val();
     }
 	
     
     
     function signUpEnter() {
+		
+		
 		
         overlapId();
         checkPassword();
@@ -167,7 +172,8 @@
 	                signUpId : $('#idBox').val(),
 	                signUpPw : $('#pwBox').val(),
 	                signUpName : $('#nameBox').val(),
-	                signUpGender : $('.genderBtn').val(),
+	                signUpGender : gender,
+					
 					signUpBirthYear : $('#yearBox').val(),
 					signUpBirthMonth : $('#monthBox').val(),
 					signUpBirthDay : realDay,
@@ -317,12 +323,12 @@
 						$('#idBox').focus();
 						idTF = false;
 					} else if(result == 'fail') {
-						if(idVal <= 5 || idVal > 12) { /* 1~5 || 13   */
+						if(idVal <= 5 || idVal > 13) { /* 1~5 || 13   */
 							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
 							$('#idBox').focus();
 							idTF = false;
-						} else if(!idRegex.test(idVal2+1)) { /*  길이 6~ 12면 여기로  */
-							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문 또는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
+						} else if(!idRegex.test(idVal2)) { /*  길이 6~ 12면 여기로  */
+							$('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 영문, 숫자 또는 영문, 숫자 조합으로 구성되어야 합니다.</p>");
 							$('#idBox').focus();
 							idTF = false;
 						} else {
@@ -468,7 +474,7 @@
 </head>
 
 <body>
-	<form id="personalInfo" action="signUp.do" method="post">
+	
         
         <div class="container">
             <h3 class="mainText">회원가입</h3>
@@ -495,8 +501,10 @@
 				
 <!--				성별 체크박스 원본-->
                 <div id="genderDiv">
-                    <input type="radio" name="signUpGender" value="M"  class="genderBtn" id="man" onclick="test(this)" checked />남자
-                    <input type="radio" name="signUpGender" value="F"  class="genderBtn" id="woman" onclick="test(this)"/>여자
+					<form id="personalInfo" action="signUp.do" method="post">
+						<input type="radio" name="signUpGender" value="M"  class="genderBtn" id="man" onclick="test(this)" checked />남자
+						<input type="radio" name="signUpGender" value="F"  class="genderBtn" id="woman" onclick="test(this)"/>여자
+					</form>
                 </div>
 <!--
 				<div id="genderDiv">
@@ -564,6 +572,6 @@
             </div>
 		</div>
 		
-	</form>
+	
 </body>
 </html>

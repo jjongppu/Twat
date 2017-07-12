@@ -176,59 +176,80 @@
 </style>    
 
 <script>
-        $.ajax ({
+    
+    
+            $.ajax ({
             type : 'post',
-            url : '../getinfo.do',
+            url : '../adminSetting.do',
             dataType : "json",
             success : function(data) {
-                console.log(data);
-                $('#memVal').html(data[0].memberCount);
-                $('#qnaVal').html(data[0].qnaCount);
-                $('#calVal').html(data[0].calendatCount);
-                $('#visVal').html(data[0].visitCount);
-                $('#calgVal').html(data[0].calgtherCount);
-                
-                        $.ajax ({
-                            type : 'post',
-                            url : '../GetVisits.do',
-                            dataType : "json",
-                            success : function(data) {
-                                var visitkind = data[0].VISIT_KIND;
-                                if(visitkind != '-1'){
-                                    var arryList = new Array(data.length) ;
-                                    for(var i=0;i<data.length;i++){
-                                        arryList[i] = new Array(2);
-                                        arryList[i][0] = data[i].VISIT_KIND.substr(5,5);
-                                        arryList[i][1] = data[i].VISIT_COUNT;
-                                    }
+                var result = data[0].result;
+                if(result != 'success') {
+                    alert("권한이 없습니다.");
+                    location.href="admin.html";
+                }else{
+                //페이지 로딩시 1번 멤버 를 얻어오고 뿌려줌
+                    $.ajax ({
+                        type : 'post',
+                        url : '../getinfo.do',
+                        dataType : "json",
+                        success : function(data) {
+                            console.log(data);
+                            $('#memVal').html(data[0].memberCount);
+                            $('#qnaVal').html(data[0].qnaCount);
+                            $('#calVal').html(data[0].calendatCount);
+                            $('#visVal').html(data[0].visitCount);
+                            $('#calgVal').html(data[0].calgtherCount);
 
-                                    google.charts.load('current', {'packages':['corechart']});
-                                    google.charts.setOnLoadCallback(drawChart);
-                                    function drawChart() {
+                                    $.ajax ({
+                                        type : 'post',
+                                        url : '../GetVisits.do',
+                                        dataType : "json",
+                                        success : function(data) {
+                                            var visitkind = data[0].VISIT_KIND;
+                                            if(visitkind != '-1'){
+                                                var arryList = new Array(data.length) ;
+                                                for(var i=0;i<data.length;i++){
+                                                    arryList[i] = new Array(2);
+                                                    arryList[i][0] = data[i].VISIT_KIND.substr(5,5);
+                                                    arryList[i][1] = data[i].VISIT_COUNT;
+                                                }
 
-                                        var data = new google.visualization.DataTable();
-                                        data.addColumn('string', '일');
-                                        data.addColumn('number', '방문자 수 ');
+                                                google.charts.load('current', {'packages':['corechart']});
+                                                google.charts.setOnLoadCallback(drawChart);
+                                                function drawChart() {
 
-                                        data.addRows(arryList);
+                                                    var data = new google.visualization.DataTable();
+                                                    data.addColumn('string', '일');
+                                                    data.addColumn('number', '방문자 수 ');
 
-                                        var options = {
-                                            hAxis: {
-                                                title: '최근 10일간 방문자 수'
+                                                    data.addRows(arryList);
+
+                                                    var options = {
+                                                        hAxis: {
+                                                            title: '최근 10일간 방문자 수'
+                                                        }
+                                                    };
+
+                                                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                                                    chart.draw(data, options);
+                                                }
                                             }
-                                        };
+                                            $('#todayVal').html(data[data.length-1].VISIT_COUNT);
+                                        }
+                                    });
+                        }
+                    });
 
-                                        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-                                        chart.draw(data, options);
                                     }
-                                }
-                                $('#todayVal').html(data[data.length-1].VISIT_COUNT);
-                            }
-                        });
+            } , error: function (req) {
+                
+                alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
             }
+            
         });
-    
+
     // 현재 admin 이 master 인지 확인함
 	function clickSetting() {
         
@@ -256,7 +277,7 @@
             success : function(data) {
                 var result = data[0].result;
                 if(result != 'success') {
-                    alert("권한이 없습니다.");
+                    alert("로그아웃 되었습니다.");
                     location.href="admin.html";
                 }
             }
