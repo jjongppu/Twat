@@ -20,7 +20,7 @@ public class MemberDAO {
 	ResultSet rs= null;
 	
 	
-	// MemberDAO ÀÇ ½Ì±ÛÅæ -----------------------------------
+	// MemberDAO å ì™ì˜™ å ì‹±ê¹ì˜™å ì™ì˜™ -----------------------------------
 	private static MemberDAO instance = new MemberDAO();
 	
 	private MemberDAO(){}
@@ -33,7 +33,7 @@ public class MemberDAO {
 	
 	
 	
-	   // DB¿¬°áÀ» À§ÇØ conÀ» ¹İÈ¯ÇÏ´Â ¸Ş¼­µå --------------------------------------------
+	   // DBå ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ conå ì™ì˜™ å ì™ì˜™í™˜å ì‹¹ëŒì˜™ å ìŒ¨ì‡½ì˜™å ì™ì˜™ --------------------------------------------
 	   public Connection getConnection() throws Exception {
 	         Context initCtx = new InitialContext();
 	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
@@ -43,7 +43,7 @@ public class MemberDAO {
 
 	
 	
-	  // ¾ÆÀÌµğ Ã£´Â ¸Ş¼­µå (ÀÌ¸§,ÀüÈ­¹øÈ£·Î Ã£±â)-----½Â¿ì-------------------------
+	  // å ì™ì˜™å ì‹±ë“¸ì˜™ ì°¾å ì™ì˜™ å ìŒ¨ì‡½ì˜™å ì™ì˜™ (å ì‹±ëªŒì˜™,å ì™ì˜™í™”å ì™ì˜™í˜¸å ì™ì˜™ ì°¾å ì™ì˜™)-----å ìŠ¹ìš¸ì˜™-------------------------
 	   public String searchID(String MEMBER_NAME, String MEMBER_PHONE) {
 	      
 	      String selectSql = "select MEMBER_ID from MEMBER where MEMBER_NAME=? and MEMBER_PHONE=?";
@@ -80,7 +80,7 @@ public class MemberDAO {
 	   
 	   
 	   
-// ºñ¹Ğ¹øÈ£ Ã£´Â ¸Ş¼­µå ---------½Â¿ì-------------------------------
+// å ì™ì˜™æ©˜å ì‹«ï¿½ ì°¾å ì™ì˜™ å ìŒ¨ì‡½ì˜™å ì™ì˜™ ---------å ìŠ¹ìš¸ì˜™-------------------------------
 	   public String searchPW(String MEMBER_ID, String MEMBER_NAME, String MEMBER_PHONE) {
 		   String selectSql = "select MEMBER_PW from MEMBER where MEMBER_ID=? and MEMBER_NAME=? and MEMBER_PHONE=?";
 		   String getPW = "";
@@ -115,34 +115,28 @@ public class MemberDAO {
 	   }	   
 	   
 
-		// È¸¿ø ·Î±×ÀÎÀ» À§ÇÑ ¸Ş¼­µå ----------------------------------
-		public int loginMember(String MEMBER_ID, String MEMBER_PW) {
-			int result = -1;
+		// íšŒå ì™ì˜™ å ì‹¸ê¹ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ìŒ¨ì‡½ì˜™å ì™ì˜™ ----------------------------------
+		public long loginMember(String MEMBER_ID, String MEMBER_PW) {
+			long result = -1;
 			
-			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
+			long currentTime = System.currentTimeMillis();
+			   
+			System.out.println(currentTime);
 			
+//			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and MEMBER_PW = ?";
+			String selectSql = "select OUT_TIME from MEMBER where MEMBER_ID = ? and AES_DECRYPT(UNHEX(MEMBER_PW), 'memPW') = ?";
 			
 			try {
 				con = getConnection();
 				psmt = con.prepareStatement(selectSql);
 				psmt.setString(1, MEMBER_ID);
 				psmt.setString(2, MEMBER_PW);
-//				System.out.println("!");
 				rs = psmt.executeQuery();
-				
 				if(rs.next()) {
-					// out_timeÀÌ 0ÀÌ¸é ·Î±×ÀÎ ¼º°ø result¿¡ 1³Ö¾îÁÜ
-					if(rs.getInt(1) == 0) {
-						// ·Î±×ÀÎ ¼º°ø
-						result = 1;
-					} else {
-						result = rs.getInt(1);
-						System.out.println(result);
-					}
+						result = rs.getLong(1);
 				}
 			} catch (Exception e) {
-				System.out.print("Á¢¼Ó ¿¡·¯");
-				// TODO Auto-generated catch block
+				System.out.print("å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™");
 				e.printStackTrace();
 			} finally {
 					try {
@@ -150,7 +144,6 @@ public class MemberDAO {
 						if(psmt != null) psmt.close();
 						if(con != null) con.close();
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				
@@ -160,7 +153,7 @@ public class MemberDAO {
 	   
 	   
 	   
-	// ·Î±×ÀÎ ÇÑ»ç¶÷ÀÇ ±×·ì ¾ò¾î¿À±â ÂĞ±â¸®
+	// å ì‹¸ê¹ì˜™å ì™ì˜™ å ì‹¼ì‚¼ì˜™å ì™ì˜™å ï¿½ å ìŒ“ë¤„ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì‹»ê¸°ë¦¬
 			public ArrayList<Integer> getMyGroupList(String MEMBER_ID) {
 				ArrayList<Integer> glList = new ArrayList<Integer>();
 				
@@ -168,7 +161,7 @@ public class MemberDAO {
 				try {
 					con = getConnection();
 					
-					// ¾ÆÀÌµğ·Î ±×·ì¸ñ·Ï ºÒ·¯¿À±â
+					// å ì™ì˜™å ì‹±ë“¸ì˜™å ï¿½ å ìŒ“ë¤„ì˜™å ì™ì˜™ å ìŒ€ë¤„ì˜™å ì™ì˜™å ì™ì˜™
 					String sql = "select GROUP_ID from MEMBER_JOIN_GROUP where MEMBER_ID =?";
 					
 					psmt = con.prepareStatement(sql);
@@ -200,7 +193,7 @@ public class MemberDAO {
 
 	   
 	   
-// È¸¿ø °¡ÀÔÀ» À§ÇÑ ¸Ş¼­µå ------½Â¿ì----------------------------
+// íšŒå ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ìŒ¨ì‡½ì˜™å ì™ì˜™ ------å ìŠ¹ìš¸ì˜™----------------------------
 
 	   public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE, 
 			   String MEMBER_GENDER, String MEMBER_BIRTH, int OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
@@ -211,22 +204,22 @@ public class MemberDAO {
 	      
 //	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,?)";
 
-	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
-
+//	      String insertSql = "insert into MEMBER values(?,?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
+	      String insertSql = "insert into MEMBER values(?,HEX(AES_ENCRYPT(?, 'memPW')),?,?,?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 	      
 	      try {
 	         con = getConnection();
 	         psmt = con.prepareStatement(insertSql);
 	      
 	         psmt.setString(1, MEMBER_ID);
-	         psmt.setString(2, MEMBER_PW);
+	         psmt.setString(2,MEMBER_PW);
 	         psmt.setString(3, MEMBER_NAME);
 	         psmt.setString(4, MEMBER_PHONE);
 	         psmt.setString(5, "img/member/basis_photo.png");
 	         psmt.setString(6, MEMBER_GENDER);
 	         psmt.setString(7, MEMBER_BIRTH);
 	         psmt.setString(8, null);
-	         psmt.setString(9, null);
+	         psmt.setString(9, "");
 //	         psmt.setTimestamp(10, null);
 	         psmt.setInt(10, OUT_TIME);
 
@@ -235,7 +228,7 @@ public class MemberDAO {
 
 	         
 	         result = psmt.executeUpdate();
-	         
+//	         System.out.println(result);
 //	         rs = psmt.executeQuery();
 //	         
 
@@ -260,7 +253,7 @@ public class MemberDAO {
 
 	   
 	   
-// È¸¿ø°¡ÀÔ½Ã ¾ÆÀÌµğ ½Ç½Ã°£ °Ë»ç...---------½Â¿ì------------------------------
+// íšŒå ì™ì˜™å ì™ì˜™å ìŒ‰ì™ì˜™ å ì™ì˜™å ì‹±ë“¸ì˜™ å ì‹¤ì‹œê³¤ì˜™ å ì‹¯ì‚¼ì˜™...---------å ìŠ¹ìš¸ì˜™------------------------------
 	   public int checkID(String idCheck) {
 		   int result = -1;
 		   
@@ -293,53 +286,9 @@ public class MemberDAO {
 		  
 	   }	   
 	   
-	   
-	   
 
 	
-	// Ä£±¸ ¸ñ·ÏÀ» »Ì¾Æ¿À°í½Í¾îÇÏ´Â ¸Ş¼­µå -----Çö¿ì ---------------------
-	public ArrayList printFriendList(String MEMBER_ID, String MEMBER_NAME, String MEMBER_BIRTH, String MEMBER_PHONE, String MEMBER_IMG){
-		 
-
-		String sql = "SELECT MEMBER_IMG, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = 'asdfasdf'";
-		//·Î±×ÀÎ¼¼¼Ç ¾ÆÀÌµğ ¹Ş¾Æ¿Í¼­ ³Ö±â.
-		ArrayList arList = new ArrayList();
-		
-		HttpSession session = null;
-	    session.getAttribute(MEMBER_ID);
-		
-		try {
-			con = getConnection();
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			while(rs.next()){
-				// Ä£±¸¸®½ºÆ®¸¦ ÂÉ°³¼­ str¿¡ Áı¾î³Ö°í
-				String[] str = rs.getString(9).split(",");
-				System.out.println(str);
-				
-				// str¿¡¼­ b°¡ ÀÖ´ÂÁö ¾Ë¾Æº¸°í
-				for(int i=0; i<arList.size(); i++){
-					// ¸¸¾à b°¡ ÀÖ´Ù¸é memberVO°´Ã¼¸¦ ¸¸µé¾î¼­ rs°ªÀ» ³ÖÀºµÚ arList¿¡ add
-					if(str[i] == MEMBER_ID) {	
-						MemberVO mdo = new MemberVO();
-					arList.add(mdo.getMEMBER_NAME());					
-					
-				}else{
-					System.out.println("Ä£±¸°¡ ¾ø½À´Ï´Ù.");
-				}	
-			}								
-		}
-			
-			rs.close();
-			stmt.close();
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		return arList;	
-	}
-	
-	   // Ä£±¸¸ñ·Ï ¾ò¾î¿Í¼­ Ä£±¸µéÁ¤º¸ ³Ñ°ÜÁÖ±â Á¾±æver....
+	   // ì¹œå ì™ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™å ì‹¶ì‡½ì˜™ ì¹œå ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì‹¼ê³¤ì˜™å ìŒê¹ì˜™ å ì™ì˜™å ì™ì˜™ver....
 	   public ArrayList<MemberVO> getFriendList(String MEMBER_ID){
 	       
 	      String myFrinds ="";
@@ -358,7 +307,7 @@ public class MemberDAO {
 	               
 	               myFrinds = rs.getString("FRIENDS_LIST");
 	               
-	               // Ä£±¸¸ñ·Ï ¸¸µé°í Äõ¸®ÀÛ¼ºÇÏ´Â°Ô ´À·ÁÀú db¸¦ ¿À·¡ Àâ°íÀÖÀ»¼öµµ ÀÖÀ¸¹Ç·Î,,,´İ¾Æ¹ö·Ç.,,
+	               // ì¹œå ì™ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™å ìŒœì‡½ì˜™å ì‹¹ëŠ”ê³¤ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ dbå ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™å ì‹¤ë¤„ì˜™,,,å ìŒ¥ì•„ë±„ì˜™å ì™ì˜™.,,
 //	               try {
 //	                  if(rs != null)
 //	                  if(psmt != null) psmt.close();
@@ -366,7 +315,7 @@ public class MemberDAO {
 //	               } catch (SQLException e) {
 //	                  e.printStackTrace();
 //	               }
-	               //Ä£±¸ ¼ö¿¡µû¶ó Äõ¸®¹® ´Ã·Á¹ö¸®±ê..
+	               //ì¹œå ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì‹œë¤„ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™..
 	               String[] str = myFrinds.split(",");
 	               for(int i = 1; i < str.length; i++){
 	                  getMyFriendsSql+= "or MEMBER_ID=?";
@@ -404,7 +353,7 @@ public class MemberDAO {
 	      return myfriendsList;   
 	   }
 	   
-	 //È¸¿øÁ¤º¸¸¦ °¡Á®¿À°í½Í¾îÇÔ---------------Çö¿ì--------------------------------
+	 //íšŒå ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™æ§å ì™ì˜™å ï¿½---------------å ì™ì˜™å ì™ì˜™--------------------------------
 	   public ArrayList<MemberVO> myInfo(String MEMBER_ID){
 	      String sql = "select MEMBER_IMG, MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH from MEMBER where MEMBER_ID = ? ";
 	      
@@ -416,7 +365,7 @@ public class MemberDAO {
 	            psmt.setString(1, MEMBER_ID);
 	            rs = psmt.executeQuery();
 	            
-	            //ÀÌ·¸°ÔÇÏ¸éÀº rs.getstring(1)¿¡ ÀÌ¹ÌÁö 2¿¡ ÀÌ¸§ 3¿¡ ÀüÈ­¹øÈ£ 4¿¡ »ıÀÏÀÌ µé¾î¿Â´Ù.
+	            //å ì‹±ë¤„ì˜™å ì™ì˜™å ì‹¹ëªŒì˜™å ì™ì˜™ rs.getstring(1)å ì™ì˜™ å ì‹±ë±„ì˜™å ì™ì˜™ 2å ì™ì˜™ å ì‹±ëªŒì˜™ 3å ì™ì˜™ å ì™ì˜™í™”å ì™ì˜™í˜¸ 4å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ìŠ¹ëŒì˜™.
 	            while(rs.next()){
 	               MemberVO mvo = new MemberVO();
 	               mvo.setMEMBER_IMG(rs.getString("MEMBER_IMG"));
@@ -425,7 +374,7 @@ public class MemberDAO {
 	               mvo.setMEMBER_BIRTH(rs.getString("MEMBER_BIRTH"));
 	                 arList.add(mvo);
 	            }
-	            //arList¿¡ ÀÌ¹ÌÁö ÀÌ¸§ Æù¹øÈ£ »ıÀÏÀÌ ³ª¿Â´Ù.
+	            //arListå ì™ì˜™ å ì‹±ë±„ì˜™å ì™ì˜™ å ì‹±ëªŒì˜™ å ì™ì˜™å ì™ì˜™í˜¸ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ìŠ¹ëŒì˜™.
 	         
 	      } catch (Exception e) {
 	      }finally {
@@ -473,7 +422,7 @@ public class MemberDAO {
 		      return str;
 		   }
 
-// È¸¿øÁ¤º¸ ¹è¿­À» ÅëÇØ È¸¿øÀÇ »ıÀÏ ¹İÈ¯ÇÏ´Â ÇÔ¼ö, ¹è¿­·Î ¹İÈ¯ÇÏ¸ç ÇüÅÂ´Â »ıÀÏ+ÀÌ¸§À¸·Î ÀúÀå
+// íšŒå ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì¼ì—´å ì™ì˜™ å ì™ì˜™å ì™ì˜™ íšŒå ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™í™˜å ì‹¹ëŒì˜™ å ìŒ‰ì‡½ì˜™, å ì¼ì—´å ì™ì˜™ å ì™ì˜™í™˜å ì‹¹ëªŒì˜™ å ì™ì˜™å ìŠ¹ëŒì˜™ å ì™ì˜™å ì™ì˜™+å ì‹±ëªŒì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™
 	   public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList)
 	   {
 		   ArrayList<MemberVO> arrList = new ArrayList<MemberVO>();
@@ -489,7 +438,7 @@ public class MemberDAO {
 			   {
 				   for(int i = 0; i < memberList.size(); i++)
 				   {
-					   // memberListÀÇ ID¿Í member_id°ªÀÌ °°´Ù¸é member °´Ã¼ »ı¼ºÇØ¼­ arrList¿¡ Ãß°¡
+					   // memberListå ì™ì˜™ IDå ì™ì˜™ member_idå ì™ì˜™å ì™ì˜™ å ì™ì˜™å ìŒ•ëªŒì˜™ member å ì™ì˜™ì²´ å ì™ì˜™å ì™ì˜™å ìŒ”ì‡½ì˜™ arrListå ì™ì˜™ å ìŒ©ê³¤ì˜™
 					   if(rs.getString(1).equals(memberList.get(i)))
 					   {
 						   MemberVO member = new MemberVO();
@@ -524,88 +473,103 @@ public class MemberDAO {
 		   return arrList;
 	   }
 
-///////////////////////////////////////////////////////////////////Çö¿ì ºñ¹Ğ¹øÈ£ º¯°æ.
+///////////////////////////////////////////////////////////////////å ì™ì˜™å ì™ì˜™ å ì™ì˜™æ©˜å ì‹«ï¿½ å ì™ì˜™å ì™ì˜™.
 	   
-	   public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String chkpwd){
-		   
-		   
-		   
-		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
-		   // ?¿¡´Â ¼¼¼ÇÀ¸·Î ¹Ş¾Æ¿Â ¾ÆÀÌµğ¸¦ ³Ö°í ºñ¹Ğ¹øÈ£¸¦ ¹Ş¾Æ¿Â´ÙÀ½¿¡ ¹Ş¾Æ¿Â ºñ¹Ğ¹øÈ£¶û ÇöÀçºñ¹Ğ¹øÈ£ ÀÔ·Â¶õÀÌ¶û ºñ±³ÇØ¼­ ¸ÂÀ¸¸é µÎ¹ø¤Š Äõ¸®¹®À¸·Î ³Ñ¾î°¡¼­ ºñ¹Ğ¹øÈ£¸¦ ¹Ù²ãÁØ´Ù.
-		   String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
-		   //1¹ø¤Š ?¿¡´Â ¹Ù²ï ºñ¹Ğ¹øÈ£¸¦ ³Ö°í  2¹ø¤Š ? ¿¡´Â ¾ÆÀÌµğ°ª ¼¼¼ÇÀ¸·Î ¹Ş¾Æ³Ö´Â´Ù.
-		   int result = 0;
-		   
-		   try {
-			   
-			con = getConnection();
-			
-			psmt = con.prepareStatement(chkpw);
-			psmt.setString(1, MEMBER_ID);
-			rs = psmt.executeQuery();
-			
-			if(chpwd.equals(chkpwd)){
-				
-			while(rs.next()){
-				
-			if(rs.getString("MEMBER_PW").equals(nowpwd)){
-				
-				
-				psmt = con.prepareStatement(changepwd);
-				psmt.setString(1, chpwd);
-				psmt.setString(2, MEMBER_ID);
-				result = psmt.executeUpdate();
-				
-				if(result ==1 ){
-					System.out.println("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù");
-				}else{
-					System.out.println("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-				}
-				
-			
-		}else{
-			System.out.println("ºñ¹Ğ¹øÈ£°¡ ¼­·Î ¸ÂÁö ¾Ê½À´Ï´Ù.");
-		}
-		}//while ³¡³ª´Â °÷.
-		}else{
-			System.out.println("º¯°æÇÒ ºñ¹Ğ¹øÈ£°¡ ¼­·Î ¸ÂÁö ¾Ê½À´Ï´Ù.");
-		}
+//	   public int changePw(String MEMBER_ID, String nowpwd, String chpwd, String chkpwd){
+//		   
+//		   
+//		   
+//		   String chkpw = "select MEMBER_PW from MEMBER where MEMBER_ID = ?";
+////		   String chkpw = "select AES_DECRYPT(UNHEX(MEMBER_PW) from MEMBER where MEMBER_ID = ?";
+//		   
+//		   // ?å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ìŒ¨ì•„ìš¸ì˜™ å ì™ì˜™å ì‹±ë“¸ì˜™ å ìŒê³¤ì˜™ å ì™ì˜™æ©˜å ì‹«ï½ì˜™å ï¿½ å ìŒ¨ì•„ì˜¨ëŒì˜™å ì™ì˜™å ì™ì˜™ å ìŒ¨ì•„ìš¸ì˜™ å ì™ì˜™æ©˜å ì‹«ï½ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™å ì‹»ë±„ì˜™í˜¸ å ìŒ‰ë ¥ë°ì˜™å ì‹±ë°ì˜™ å ì™ì˜™å ìŒ”ì‡½ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì‹¸ë±„ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì‹¼ì–´ê°€å ì™ì˜™ å ì™ì˜™æ©˜å ì‹«ï½ì˜™å ï¿½ å ìŒ•ë€ì˜™å ìŒ”ëŒì˜™.
+//		   String changepwd = "update MEMBER set MEMBER_PW = ? where MEMBER_ID = ?";
+//		   //1å ì™ì˜™å ì™ì˜™ ?å ì™ì˜™å ì™ì˜™ å ìŒ•ë€ì˜™ å ì™ì˜™æ©˜å ì‹«ï½ì˜™å ï¿½ å ìŒê³¤ì˜™  2å ì™ì˜™å ì™ì˜™ ? å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹±ë“¸ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ìŒ¨ì•„ë„£ëŠ”ëŒì˜™.
+//		   int result = 0;
+//		   
+//		   try {
+//			   
+//			con = getConnection();
+//			
+//			psmt = con.prepareStatement(chkpw);
+//			psmt.setString(1, MEMBER_ID);
+//			rs = psmt.executeQuery();
+//			
+//			if(chpwd.equals(chkpwd)){
+//				
+//			while(rs.next()){
+//				
+//			if(rs.getString("MEMBER_PW").equals(nowpwd)){
+//				
+//				
+//				psmt = con.prepareStatement(changepwd);
+//				psmt.setString(1, chpwd);
+//				psmt.setString(2, MEMBER_ID);
+//				result = psmt.executeUpdate();
+//				
+//				if(result ==1 ){
+//					System.out.println("å ì™ì˜™æ©˜å ì‹«ï½ì˜™å ï¿½ å ì™ì˜™ì¹˜å ìŒŒë‹ˆëŒì˜™");
+//				}else{
+//					System.out.println("å ì™ì˜™æ©˜å ì‹«ï½ì˜™å ï¿½ å ì™ì˜™ì¹˜å ì™ì˜™å ì™ì˜™ å ì‹­ì™ì˜™å ì‹¹ëŒì˜™.");
+//				}
+//				
+//			
+//		}else{
+//			System.out.println("å ì™ì˜™æ©˜å ì‹«ï½ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì‹­ì™ì˜™å ì‹¹ëŒì˜™.");
+//		}
+//		}//while å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™.
+//		}else{
+//			System.out.println("å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™æ©˜å ì‹«ï½ì˜™å ï¿½ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì‹­ì™ì˜™å ì‹¹ëŒì˜™.");
+//		}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}finally {
+//            try {
+//                if(rs != null)rs.close();
+//                if(psmt != null) psmt.close();
+//                if(con != null) con.close();
+//             } catch (SQLException e) {
+//             }
+//       }
+//		return result;
+// }
+	   
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-            try {
-                if(rs != null)rs.close();
-                if(psmt != null) psmt.close();
-                if(con != null) con.close();
-             } catch (SQLException e) {
-             }
-       }
-		return result;
- }
-///////////////////////////Çö¿ì È¸¿øÅ»Åğ.////////////////////////
-		   public int outUser(String MEMBER_ID){
+
+	   
+	   
+	   
+///////////////////////////å ì™ì˜™å ì™ì˜™ íšŒå ì™ì˜™íƒˆå ì™ì˜™.////////////////////////
+		   public int outUser(String MEMBER_ID,String state){
 			   
-//			   SimpleDateFormat outDate = new SimpleDateFormat("yyyy³â MM¿ùddÀÏ HH½ÃmmºĞ");
+//			   SimpleDateFormat outDate = new SimpleDateFormat("yyyyå ì™ì˜™ MMå ì™ì˜™ddå ì™ì˜™ HHå ì™ì˜™mmå ì™ì˜™");
 //			   Date date = new Date();
 //			   String today = outDate.format(date);
 			   
 			   long outTime = System.currentTimeMillis()+60*60*24*1000*7;
+			   long resetTime = 0;
 			   
-			   System.out.println(outTime * 60*60*24*1000*7);
 			   
 			   
 			   String delUser = "UPDATE member SET OUT_TIME=? WHERE MEMBER_ID =?";
+				   
+			   
 			   int result = 0;
 			   try {
 				con = getConnection();
 				psmt = con.prepareStatement(delUser);
-				psmt.setLong(1, outTime);
+				if(state.equals("out")){
+					psmt.setLong(1, outTime);
+					System.out.println("1");
+				}else{
+					psmt.setLong(1, resetTime);
+					System.out.println("2");
+				}
 				psmt.setString(2, MEMBER_ID);
 				result = psmt.executeUpdate();
 				
 			} catch (Exception e) {
-				
 				e.printStackTrace();
 			}finally {
 	            try {
@@ -613,12 +577,13 @@ public class MemberDAO {
 	                if(psmt != null) psmt.close();
 	                if(con != null) con.close();
 	             } catch (SQLException e) {
+	            	 
 	             }
 	       }
 			   
 			   return result;
 		   }
-/////////////////////////////////È¸¿øÁ¤º¸ º¯ °æ////////////////////////////////////////
+/////////////////////////////////íšŒå ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™ å ì™ì˜™////////////////////////////////////////
 		   public int changeInfo(String MEMBER_NAME, String MEMBER_PHONE, String MEMBER_BIRTH, String MEMBER_ID){
 			   String changeInfo = "UPDATE MEMBER set MEMBER_NAME=?, MEMBER_PHONE=?,MEMBER_BIRTH=? where MEMBER_ID =?";
 			   int result = 0;
@@ -633,11 +598,11 @@ public class MemberDAO {
 				result = psmt.executeUpdate();
 				
 				if(result != 1){
-					System.out.println("È¸¿ø ¼öÁ¤µÇ¾ù´Ù.");
-					System.out.println("¿Ö");
+					System.out.println("íšŒå ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì‹¤ì–µì˜™å ì™ì˜™.");
+					System.out.println("å ì™ì˜™");
 				}else{
-					System.out.println("È¸¿ø ¼öÁ¤¾ÈµÇ¾ù´Ù.");
-					System.out.println("¿Ö2");
+					System.out.println("íšŒå ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì‹«ë˜ì–µì˜™å ì™ì˜™.");
+					System.out.println("å ì™ì˜™2");
 				}
 				
 			} catch (Exception e) {
@@ -656,7 +621,7 @@ public class MemberDAO {
 			   
 		   }
 		  		   
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////å ì‹±ë±„ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì¼ë³´å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì‹¹ê¹ì˜™.//////////////////////////////////////
 		public int changeImg(String MEMBER_ID, String MEMBER_IMG){
 			String changepwd = "update MEMBER set MEMBER_IMG = ? where MEMBER_ID = ?";
 			int result = 0;
@@ -665,7 +630,7 @@ public class MemberDAO {
 					con = getConnection();
 					
 					psmt = con.prepareStatement(changepwd);
-					psmt.setString(1, "img/" + MEMBER_IMG);
+					psmt.setString(1, "img/member/" + MEMBER_IMG);
 					psmt.setString(2, MEMBER_ID);
 					result = psmt.executeUpdate();
 						
@@ -684,6 +649,635 @@ public class MemberDAO {
 				return result;
 			
 		}
+
+///////////////////ì¹œêµ¬ëª©ë¡ì—ì„œ ì¹œêµ¬ì°¾ê¸°/////////////////////////////////////////
+		public ArrayList<MemberVO> findFriends(String userPhone){
+			//ì¹œêµ¬ ì „í™”ë²ˆí˜¸ë¥¼ ê°€ì§€ê³  ì¹œêµ¬ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
+
+
+			String addFriend = "select MEMBER_ID, MEMBER_NAME, MEMBER_BIRTH, MEMBER_PHONE, MEMBER_IMG from MEMBER where MEMBER_PHONE = ?";
+			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
+			try {
+				con =getConnection();
+				psmt = con.prepareStatement(addFriend);
+				psmt.setString(1, userPhone);
+				rs = psmt.executeQuery();
+				
+				while(rs.next()){
+					MemberVO member = new MemberVO();
+					member.setMEMBER_IMG(rs.getString(5));
+					member.setMEMBER_NAME(rs.getString(2));
+					member.setMEMBER_BIRTH(rs.getString(3));
+					member.setMEMBER_PHONE(rs.getString(4));
+					member.setMEMBER_ID(rs.getString(1));
+					
+					arList.add(member);
+					
+				
+			
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs != null)rs.close();
+	                if(psmt != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	             }
+	       }
+			
+			return arList;
+		}	
+		/////////////////////////////ì¹œêµ¬ë¥¼ ì¶”ê°€í•˜ê¸°./////////////////////////////
+		public ArrayList<MemberVO> plusFriend(String userPhone, String MEMBER_ID){
+			int result = 0;
+			String findMyFriend = "select FRIENDS_LIST from MEMBER where MEMBER_ID=?";
+			String searchUserId = "select MEMBER_ID from MEMBER where MEMBER_PHONE=?";
+			String plusUser = "update MEMBER set FRIENDS_LIST = ? where MEMBER_ID = ?";
+			   //1ë²ˆì¨° ?ì—ëŠ” ì¹œêµ¬ì•„ì´ë””ë¥¼ ë„£ëŠ”ë‹¤ ','í•´ì„œ ë„£ì–´ì•¼í•¨. ë‘ë²ˆì§¸ ? ì—ëŠ” ì„¸ì…˜ë°›ì•„ì˜¨ ì•„ì´ë””ë¥¼ ë„£ëŠ”ë‹¤.
+			ArrayList<MemberVO> arList = new ArrayList<MemberVO>();
+		try {
+			con = getConnection();
+			psmt = con.prepareStatement(findMyFriend);
+			psmt.setString(1, MEMBER_ID);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				//ì´ê²Œ ë‚˜ì˜ ì¹œêµ¬ëª©ë¡ì´ ì­‰ë‚˜ì˜¨ë‹¤.
+//				MemberVO mvo = new MemberVO();
+//				for(int i=0; i < arList.size(); i++){
+//					mvo.setMEMBER_ID(rs.getString(i));
+//				}
+				
+				
+				String myList = rs.getString(1);
+				psmt = con.prepareStatement(searchUserId);
+				psmt.setString(1, userPhone);
+				rs = psmt.executeQuery();
+			while(rs.next()){
+			//ì„¸ì…˜ì„ ë°›ì•„ì„œ ì•„ì´ë””ë„£ê³  ê·¸ ì¹œêµ¬ ëª©ë¡ì„ ë½‘ì•„ì˜¨ë‹¤ìŒì— ê·¸ ì¹œêµ¬ëª©ë¡ ì— , ì¶”ê°€í•´ì„œ 
+				if(findMyFriend != rs.getString(1)){
+				psmt = con.prepareStatement(plusUser);
+				psmt.setString(1, myList + ',' + rs.getString(1));
+				psmt.setString(2, MEMBER_ID);
+				result = psmt.executeUpdate();
+				
+				while(rs.next()){
+					MemberVO member = new MemberVO();
+					member.setMEMBER_IMG(rs.getString(5));
+					member.setMEMBER_NAME(rs.getString(2));
+					member.setMEMBER_BIRTH(rs.getString(3));
+					member.setMEMBER_PHONE(rs.getString(4));
+					member.setMEMBER_ID(rs.getString(1));
+					
+					arList.add(member);
+				}
+				
+				}else{
+					System.out.println("ì´ë¯¸ ì¹œêµ¬ê°€ ìˆìŠµë‹ˆë‹¤.");
+					
+				}
+				
+			
+			}
+			}
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}finally {
+            try {
+                if(rs != null)rs.close();
+                if(psmt != null) psmt.close();
+                if(con != null) con.close();
+             } catch (SQLException e) {
+             }
+       }
+		
 	
-	
+		
+			return arList;
+		}
+		
+		
+		
+		public ArrayList<String> friendPhoneSearch(String phoneNum){
+			ArrayList<String> memArr = new ArrayList<String>();
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			try {
+				con = getConnection();
+								 
+				String Sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PHONE, MEMBER_IMG, MEMBER_GENDER, MEMBER_BIRTH FROM MEMBER WHERE MEMBER_PHONE = ?";
+				psmt2 = con.prepareStatement(Sql);
+				psmt2.setString(1, phoneNum);
+				rs2 = psmt2.executeQuery();
+				
+				while(rs2.next()){
+					memArr.add(rs2.getString("MEMBER_ID"));
+					memArr.add(rs2.getString("MEMBER_NAME"));					
+					memArr.add(rs2.getString("MEMBER_PHONE"));
+					memArr.add(rs2.getString("MEMBER_IMG"));
+					memArr.add(rs2.getString("MEMBER_GENDER"));
+					memArr.add(rs2.getString("MEMBER_BIRTH"));
+					
+				}
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs2 != null)rs.close();
+	                if(psmt2 != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	             }
+	       }
+			
+		
+			return memArr;
+			
+		}
+		
+		
+		public int requestFriend(String userId, String friendId){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			ResultSet rs3 = null;
+			String myFriendList = null;
+			String friendFriendsList = null;
+			int result = 0;
+			
+			try {
+				con = getConnection();
+				String sql ="select FRIENDS_LIST from member where MEMBER_ID = ?"; 
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				rs2 = psmt2.executeQuery();
+				while(rs2.next())
+					myFriendList = rs2.getString("FRIENDS_LIST"); //ë¡œê·¸ì¸í•œ ìœ ì €ì˜ ì¹œêµ¬ ë¦¬ìŠ¤íŠ¸
+				
+				
+				psmt2.setString(1, friendId);				
+				rs3 = psmt2.executeQuery();
+				
+				while(rs3.next())
+					friendFriendsList = rs3.getString("FRIENDS_LIST"); // ì¹œêµ¬ì˜ ì¹œêµ¬ ë¦¬ìŠ¤íŠ¸
+				
+				
+				
+				
+				System.out.println(myFriendList);
+				System.out.println(friendFriendsList);
+				
+				for(int i=0; i<myFriendList.split(",").length; i++){
+					if(myFriendList.split(",")[i].equals(friendId)){
+						result = -1; // ì´ë¯¸ ì¹œêµ¬
+						return result;
+					}else if(myFriendList.split(",")[i].equals("*" + friendId)){
+						result = 1; // ìƒëŒ€ë°©ì—ê²Œ ìš”ì²­í–ˆì„ë•Œ
+						return result;
+					}else if(myFriendList.split(",")[i].equals("!" + friendId)){
+						result = 2; // ë‚˜ì—ê²Œ ì˜¨ ì¹œêµ¬ìš”ì²­ì´ ìˆì„ë•Œ
+						return result;
+					}else if(userId.equals(friendId)){
+						result = 3; // ë³¸ì¸ ì¼ë•Œ
+						return result;
+					}						
+					
+				}
+				
+				requestFriendsUpdate(userId, friendId, myFriendList, friendFriendsList);
+				
+				
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+	            try {
+	                if(rs2 != null)rs.close();
+	                if(rs3 != null)rs.close();
+	                if(psmt2 != null) psmt.close();
+	                if(con != null) con.close();
+	             } catch (SQLException e) {
+	             }
+	       }
+			
+			return result;
+			
+			
+		}
+		
+		public void requestFriendsUpdate(String userId, String friendId, String myFriendList, String friendFriendsList){
+			PreparedStatement psmt2 = null;			
+			
+			System.out.println(myFriendList);
+			
+			
+			try {
+				String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, myFriendList + "," + "*" + friendId);
+				psmt2.setString(2, userId);
+				psmt2.executeUpdate();
+				
+				String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2.setString(1, friendFriendsList + "," + "!" + userId);
+				psmt2.setString(2, friendId);
+				psmt2.executeUpdate();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				
+					try {
+						if(psmt2 != null)
+							psmt2.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
+			
+			
+		}
+		
+		public MemberVO friendInfo(String friendId){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			MemberVO member = new MemberVO();
+			try {
+				con = getConnection();
+				String sql = "select * from member where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, friendId);
+				rs2 = psmt2.executeQuery();
+				while(rs2.next()){
+					member.setMEMBER_ID(rs2.getString("MEMBER_ID"));
+					member.setMEMBER_NAME(rs2.getString("MEMBER_NAME"));
+					member.setMEMBER_IMG(rs2.getString("MEMBER_IMG"));
+					member.setMEMBER_PHONE(rs2.getString("MEMBER_PHONE"));
+					
+				}
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				
+					try {
+						if(rs2 != null)
+							rs2.close();
+						if(psmt2 !=null)
+							psmt2.close();
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
+			
+			return member;
+			
+		}
+		
+		
+		public ArrayList<MemberVO> requestingFriendList(String userId){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			String friendsList = null;
+			ArrayList<MemberVO> memberArr = new ArrayList<MemberVO>();
+			try {
+				con = getConnection();
+				String sql ="select FRIENDS_LIST from member where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				rs2 = psmt2.executeQuery();
+//				System.out.println(rs2);
+				
+				
+				while(rs2.next())
+					friendsList = rs2.getString("FRIENDS_LIST");
+				
+//				System.out.println("ë‚´ì•„ì´ë”” : " +userId);
+//				System.out.println("ì¹œêµ¬ë¦¬ìŠ¤íŠ¸ : " + friendsList);
+				if(friendsList.equals("") || friendsList.equals(",")){
+							
+					return null;
+				}else{
+					String[] eachFriend = friendsList.split(",");
+					for(int i = 0; i < eachFriend.length; i++){
+						
+						if(eachFriend[i].length() != 0){
+							if(eachFriend[i].substring(0, 1).equals("!") ){
+								
+//								System.out.println(friendInfo(eachFriend[i].substring(1, eachFriend[i].length())).getMEMBER_NAME());
+								memberArr.add(friendInfo(eachFriend[i].substring(1, eachFriend[i].length())));
+								
+							}
+							
+							
+						}
+						
+					
+						
+					}
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally{
+				
+				try {
+					if(rs2 != null)
+						rs2.close();					
+					if(psmt2 != null)
+						psmt2.close();
+					if(con != null)
+						con.close();
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+			return memberArr;
+			
+			
+			
+			
+		}
+		public String getfriendListForString(String userId){
+			
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			String friendList = "";
+			String sql = "select FRIENDS_LIST FROM member where MEMBER_ID = ?";
+			try {
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				rs2 = psmt2.executeQuery();
+				if(rs2.next());
+					friendList = rs2.getString("FRIENDS_LIST");
+					
+					
+				
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				
+					try {
+						if(rs2 != null)
+							rs2.close();
+						if(psmt2 != null)
+							psmt2.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+			
+			return friendList;
+			
+		}
+		
+		
+		
+		
+		public void acceptFriend(String userId, String friendId){//ì¹œêµ¬ìš”ì²­ ìˆ˜ë½
+			
+			PreparedStatement psmt2 = null;
+			String []myFriendList = null;
+			String changeMyFriendList = "";
+			String []friendFriendList =null;
+			String changeFriendFriendList = "";
+			
+			try {
+//				ë‚´ì¹œêµ¬ëª©ë¡ ìˆ˜ì •
+				con = getConnection();
+				String sql = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql);
+				
+				myFriendList = getfriendListForString(userId).split(",");
+				
+				for(int i = 0; i < myFriendList.length; i++){
+					if(myFriendList[i].length() != 0){
+						if(myFriendList[i].equals("!" + friendId)){
+							myFriendList[i] = myFriendList[i].substring(1, myFriendList[i].length());
+							
+						}
+						
+					}
+						
+					
+				}
+				
+				for(int i = 0; i < myFriendList.length; i++){
+					if(i == myFriendList.length - 1){
+						changeMyFriendList += myFriendList[i];
+						
+					}else{
+						changeMyFriendList += myFriendList[i] + ",";	
+					}
+					
+					
+				}
+				
+//				System.out.println(changeFriendList);
+				
+				psmt2.setString(1, changeMyFriendList);				
+				psmt2.setString(2, userId);
+				
+				psmt2.executeUpdate();
+				
+//				System.out.println(changeMyFriendList);
+				
+
+				
+				// ì¹œêµ¬ì˜ ì¹œêµ¬ëª©ë¡ ìˆ˜ì •
+				String sql2 = "update member set FRIENDS_LIST = ? where MEMBER_ID = ?";
+				psmt2 = con.prepareStatement(sql2);
+				
+				
+				friendFriendList = getfriendListForString(friendId).split(",");
+				for(int i = 0; i < friendFriendList.length; i++){
+					if(friendFriendList[i].length() != 0){
+						if(friendFriendList[i].equals("*" + userId)){
+							friendFriendList[i] = friendFriendList[i].substring(1, friendFriendList[i].length());
+							
+						}
+						
+					}
+						
+					
+				}
+				
+				
+				for(int i = 0; i < friendFriendList.length; i++){
+					if(i == friendFriendList.length - 1){
+						changeFriendFriendList += friendFriendList[i];
+						
+					}else{
+						changeFriendFriendList += friendFriendList[i] + ",";	
+					}
+					
+					
+				}
+//				System.out.println(changeFriendFriendList);
+				
+				psmt2.setString(1, changeFriendFriendList);				
+				psmt2.setString(2, friendId);
+				
+				psmt2.executeUpdate();
+				
+				
+				
+			
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				
+					try {
+						if(psmt2!=null)
+							psmt2.close();
+						if(con!=null)
+							con.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+			}
+			
+			
+			
+		}
+		
+		
+		public int changePw(String userId, String beforePw, String afterPw){
+			PreparedStatement psmt2 = null;
+			ResultSet rs2 = null;
+			
+			
+			
+			 try {
+				con = getConnection();
+				String sql = "select * from member where MEMBER_ID = ? AND MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW'))";
+				psmt2 = con.prepareStatement(sql);
+				psmt2.setString(1, userId);
+				psmt2.setString(2, beforePw);
+				rs2 = psmt2.executeQuery();
+				
+				
+				
+				if(rs2.next()){ // í˜„ì¬ ë°°ë°€ë²ˆí˜¸ì™€ ì¼ì¹˜í• ë•Œ ->ìƒˆë¡œ ë°”ê¿€ ë¹„ë°€ë²ˆí˜¸ë¡œ ìˆ˜ì •
+					
+					String sql2 = "update member set MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) where MEMBER_ID = ?";
+					psmt2 = con.prepareStatement(sql2);
+					psmt2.setString(1, afterPw);
+					psmt2.setString(2, userId);
+					psmt2.executeUpdate();
+					return 0;
+					
+					
+				}else{// í˜„ì¬ë¹„ë°€ë²ˆí˜¸ì™€ ì¼ì¹˜í•˜ì§€ ì•Šì„ë•Œ
+					return -1; 
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}finally {
+				
+				try {
+					if(rs2 != null)
+						rs2.close();
+					if(psmt2!=null)
+						psmt2.close();
+					if(con!=null)
+						con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+		}
+			 
+			 
+			return 1;
+				
+			   
+		}
+		
+		
+		
+		
 }
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

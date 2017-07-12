@@ -61,7 +61,9 @@ public class addCommentServlet extends HttpServlet {
 	    System.out.println(new_memo);
 	    
 	    calendarDAO.addCalComment(Integer.parseInt(group_id), cal_memo, first_cal, new_memo, cal_writer);
-	    
+	    jsonObj.put("userId", cal_writer);
+	    jsonArr.add(jsonObj);
+	    out.print(jsonArr);
 	    
 
 	}

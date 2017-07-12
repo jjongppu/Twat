@@ -55,47 +55,30 @@ public class LoginServlet extends HttpServlet {
 		String userid = request.getParameter("userid");
 		String userpw = request.getParameter("userpw");
 	
-//		String date = request.getParameter("date");
 		
 		MemberDAO memDao = MemberDAO.getInstance();
-		int result = memDao.loginMember(userid, userpw);
-		
-		// ��¥ �غ��� ����
-//		Calendar cal = Calendar.getInstance();
-//		cal.add(Calendar.DATE, 15);
+		long result = memDao.loginMember(userid, userpw);
+		long currentTime = System.currentTimeMillis();
 		
 		PrintWriter writer = response.getWriter();
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 		
-		System.out.println(userid);
-		System.out.println(userpw);
-//		
-		// �α��� ����/���� 
-//		if(result == 1){
-//			HttpSession session = request.getSession();
-//			session.setAttribute("loginUserId", userid);
-//			
-//			jsonOb.put("result", "success");
-//		} else if(result == -1) {
-//			jsonOb.put("result", "fail");
-//		} else {
-//			jsonOb.put("result", result);
-//		}
 		
-		// �α��� ����/���� 
-		if(result == -1) {
+		// 占싸깍옙占쏙옙 占쏙옙占쏙옙/占쏙옙占쏙옙
+		if(result == -1) { // 占싣듸옙, 占쏙옙占� 틀占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙
 			jsonOb.put("result", "fail");
-		} else if(result > 0) {
-			if(result == 1) {
-				HttpSession session = request.getSession();
-				session.setAttribute("loginUserId", userid);
-				
-				jsonOb.put("result", "success");
-			} else {
-				jsonOb.put("result", result);
-			}
+		}else if(result == 0){
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUserId", userid);
+			jsonOb.put("result", "success");
+		}else if(currentTime < result) { // 탈占쏙옙占쏙옙占쏙옙 회占쏙옙
+			jsonOb.put("result", "outIng");
+		} else if(currentTime > result) { // 탈占쏙옙占� 회占쏙옙
+			jsonOb.put("result", "out");
 		}
+		
+		
 		
 		jsonList.add(jsonOb);
 		

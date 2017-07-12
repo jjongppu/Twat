@@ -140,30 +140,10 @@
                 console.log(data);
                 var result = data[0].result;
                 
-//                console.log(result);
-//                console.log(outTime);
-                
-                
-                
 
                 alert('회원가입이 완료되었습니다.');
                 location.href="index.html";
 
-//                var re_id = /^[a-z0-9_-]{3,16}$/; // 아이디 검사식
-//                var re_pw = /^[a-z0-9_-]{6,18}$/; // 비밀번호 검사식
-//                var re_tel = /^[0-9]{8,11}$/; // 전화번호 검사식
-//                
-//                if(re_id.test($('#idBox').val()) != true) {
-//                    alert("아이디는 필수 정보입니다.");
-//                    $('#idBox').focus();
-//                    return false;
-//                }
-//                
-//                // 아이디 유효성 검사
-//                $('#signUpPw').focusout(function() {
-//                    var val = $(this).val(),
-//                });
-                
             },
             error: function(req) {
                 alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
@@ -179,17 +159,32 @@
         var retVal = false;
         var idVal = $('#idBox').val().length;
         var idVal2 = $('#idBox').val();
-        var idRegex = /^[a-z]+[a-z0-9]{5,19}$/g;
+        var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
         console.log(idVal);
+		// 아이디 길이 검사
         if(idVal < 6 || idVal > 12) { // 1~5거나, 13이상 이면
             alert("아이디는 6자 이상, 12자 이하여야 합니다.");
-//            $('#idMessage').html("<p style='font-size:10px; color:blue'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
-        } else if(!idRegex.test(idVal2)) {
-            alert("아이디는 영문, 숫자 조합으로 구성되어야 합니다.");
+//            $('#idMessage').html("<p style='font-size:10px; color:red'>아이디는 6자 이상, 12자 이하여야 합니다.</p>");
         } else {
             retVal = true;
         }
         return retVal;
+		
+		// 정규식 검사
+//		if(!idRegex.test(idVal2)) {
+//            alert("아이디는 영문, 숫자 조합으로 구성되어야 합니다.");
+//        } else {
+//			retVal = true;
+//		}
+//		return retVal;
+		
+		
+		// test
+		var idRegex = /^[a-z]+[a-z0-9]{6,12}$/g;
+        if( !idRegex.test( $('#idBox').val() ) ) {
+            alert("아이디는 영문, 숫자 조합으로 구성되어야 합니다.");
+            return;
+        }
     }
     
 
@@ -326,7 +321,7 @@
                         <span name="signUpGender" value="여자"  class="genderBtn" id="woman">여자</span>
                     </div>
 -->
-                    <input type="radio" name="signUpGender" value="M"  class="genderBtn" id="man" onclick="test(this)"/>남자
+                    <input type="radio" name="signUpGender" value="M"  class="genderBtn" id="man" onclick="test(this)" checked />남자
                     <input type="radio" name="signUpGender" value="F"  class="genderBtn" id="woman" onclick="test(this)"/>여자
                 </div>
                 <div>
