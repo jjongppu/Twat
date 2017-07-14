@@ -45,24 +45,20 @@ public class RefuseRequest extends HttpServlet {
 	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
 	    HttpSession session = request.getSession(); 
+	    
 	    String loginUserId = (String) session.getAttribute("loginUserId");
 	    String friendId = request.getParameter("friendId");
 	    String tok = request.getParameter("tok");
 	    
 	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
-	    
-	    memberDAO.requestCancelRefuse(loginUserId, friendId, tok);
-	    	
+	    memberDAO.requestCancelRefuse(loginUserId, friendId, tok);	
 	    
 	    jsonObj.put("result", "refuseSuccess");
 	    jsonArr.add(jsonObj);
 	    
 	    out.println(jsonArr);
 	    
-	    
-	    
-	
 	}
 
 }
