@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.twat.mvconnection.*;
 
@@ -871,11 +872,9 @@ public class MemberDAO {
 
 					if (eachFriend[i].length() != 0) {
 						if (eachFriend[i].substring(0, 1).equals(tokenRes)) {
-
 							// System.out.println(friendInfo(eachFriend[i].substring(1,
 							// eachFriend[i].length())).getMEMBER_NAME());
 							memberArr.add(friendInfo(eachFriend[i].substring(1, eachFriend[i].length())));
-
 						}
 
 					}
@@ -883,12 +882,9 @@ public class MemberDAO {
 				}
 
 			}
-
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-
 			try {
 //				if (rs2 != null)
 //					rs2.close();
@@ -896,14 +892,11 @@ public class MemberDAO {
 //					psmt2.close();
 				if (con != null)
 					con.close();
-
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return memberArr;
-
 	}
 
 	public String getfriendListForString(String userId) {
@@ -913,22 +906,17 @@ public class MemberDAO {
 		String friendList = "";
 		String sql = "SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = ?";
 		try {
-
-		
 			con = new MVConnection(DBPool.getInstance().getConnection());
 		
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, userId);
 			rs2 = psmt2.executeQuery();
-			if (rs2.next())				
+			if (rs2.next()){
 				friendList = rs2.getString("FRIENDS_LIST");
-
-		}catch(Exception e){
-			
+			}
+		}catch(Exception e){			
 		}finally {
-
 			try {
-				
 //				if (rs2 != null)
 //					rs2.close();
 //				if (psmt2 != null)
@@ -936,13 +924,10 @@ public class MemberDAO {
 				if(con != null)
 					con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		return friendList;
-
 	}
 
 	public void acceptFriend(String userId, String friendId) {// 친구요청 수락
@@ -1277,24 +1262,17 @@ public class MemberDAO {
 	}
 	
 	public ArrayList<String> friendsListForArrList(String userId){
-		
 		ArrayList<String> friendArrList = new ArrayList<String>();
-		String friendsList = getfriendListForString(userId);
+		String friendsList = getfriendListForString(userId); 
+//		getfriendListForString query is SELECT FRIENDS_LIST FROM MEMBER WHERE MEMBER_ID = ?
 		
 		for(int i = 0; i < friendsList.split(",").length; i++){
-			
 			if(friendsList.split(",")[i].length() != 0){
-				friendArrList.add(friendsList.split(",")[i]);
-				
-			}
-			
-			
+				friendArrList.add(friendsList.split(",")[i]);	
+			}	
 		}
-		
-		return friendArrList;
+		return friendArrList; 
 	}
-	
-	
 	
 	public void requestCancelRefuse(String userId, String friendId, String refuseOrCancel){
 		Connection con = null;
@@ -1303,50 +1281,80 @@ public class MemberDAO {
 		String friendFriendList = "";
 		String myToken = "";
 		String frToken = "";		
-		ArrayList<String> myArr = friendsListForArrList(userId);
+		ArrayList<String> myArr = friendsListForArrList(userId); // this method will get friends lists.
 		ArrayList<String> frArr = friendsListForArrList(friendId);
-		System.out.println(friendId);
+//		System.out.println(friendId);
 		
 		if(refuseOrCancel.equals("refuse")){
-			myToken = "!";
-			frToken = "*";			
+			myToken = "!";	// recieved friend requesting 
+			frToken = "*";  // requested friend 			
 		}else{
-			myToken = "*";
-			frToken = "!";			
+			myToken = "*";  // requested friend
+			frToken = "!";	// recieved friend requesting
 		}
 		
+		System.out.println(myToken+friendId);
+		System.out.println(myToken+friendId);
+		System.out.println(myToken+friendId + "  시작!!  ");
+		
+//		Iterator<String> it = myArr.iterator();
+//		String value = it.next();
+		
+//		for(int i = 0; i < myArr.size(); i++){ // friends lists array by my ID
+//
+//			System.out.println(myToken+friendId + "    " + i);
+//			System.out.println(myArr.get(i));
+////			if(myArr.get(i).equals(myToken+friendId)){ // myToken("!") + friendId(refused ID) 
+//			if(value.equals(myToken+friendId)){ // myToken("!") + friendId(refused ID) 
+//				System.out.println(myArr.size() + "   = myArr.size() " + i);
+//				System.out.println(myArr.get(i) + "     = myArr.get() " + i);
+//				System.out.println(myArr + "   <=== 지우기전 arr  " + i);
+////				myArr.remove(i);				
+//				it.remove();				
+//				System.out.println(myArr + "   <=== 지우고난 후의 arr  " + i);
+//				
+//			}else if(myArr.get(i).length() != 0){
+//				System.out.println(myArr + "   <=== 지우고난 후의 arr2222   " + i);
+//				System.out.println(myFriendList + "  지우고 난 후 = myFriendList " + i);
+////				myFriendList += "," + myArr.get(i);
+//				myFriendList += "," + myArr.get(i);
+//				System.out.println(myFriendList + "   = myFriendList " + i);
+//			}		
+//		}
+//		System.out.println(myFriendList);
+		System.out.println(myFriendList + " 내 친구요청 리스트 한번 뽑아주고! ");
 		
 		
-		for(int i = 0; i < myArr.size(); i++){
-			if(myArr.get(i).equals(myToken+friendId)){
-				myArr.remove(i);				
-			}else{
-				if(myArr.get(i).length() != 0)
-					myFriendList += "," + myArr.get(i); 
-				
-			}			
+		for(Iterator<String> it = myArr.iterator(); it.hasNext();){ // friends lists array by my ID
+			String value = it.next();
+			System.out.println(value);
+//			if(value.equals(myToken+friendId)){ // myToken("!") + friendId(refused ID) 
+//				it.remove();
+//			}else{
+////				myFriendList += "," + myArr.get(it.hashCode());
+//				myFriendList += "," + value;
+//			}
+			if(!value.equals(myToken+friendId)){
+				myFriendList += "," + value;
+			}
+			
+//			System.out.println(myFriendList);
 		}
 		
-		for(int i = 0; i < frArr.size(); i++){
-			if(frArr.get(i).equals(frToken+userId)){
+		System.out.println(myFriendList);
+		
+		for(int i = 0; i < frArr.size(); i++){ // friends lists array by refused person ID
+			if(frArr.get(i).equals(frToken+userId)){ // frToken("*") + friendId(refused ID) 
 				frArr.remove(i);				
-			}else{
-				if(frArr.get(i).length() != 0)
-					friendFriendList += "," + frArr.get(i);
-				
+			}else if(frArr.get(i).length() != 0){
+				friendFriendList += "," + frArr.get(i);
 			}			
 		}
 		
-		
-		
-		
-		
-		System.out.println("내리스트 :" + myFriendList);
+		System.out.println("내리스트 :" + myFriendList); 
 		System.out.println("친구리스트 : " + friendFriendList);
 		
-		
 		try {
-//			con = getConnection();
 			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";// 내 친구목록 갱신
 			psmt2 = con.prepareStatement(sql);
@@ -1354,8 +1362,9 @@ public class MemberDAO {
 			psmt2.setString(2, userId);
 			psmt2.executeUpdate();
 			
-			if(psmt2 != null)
+			if(psmt2 != null){
 				psmt2.close();
+			}
 			
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, friendFriendList);
@@ -1363,22 +1372,14 @@ public class MemberDAO {
 			psmt2.executeUpdate(); 
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
-			
-				try {
-//					if(psmt2 != null)
-//						psmt2.close();
-					if(con != null)
-						con.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
+			try {
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}		
 		}
-		
 	}
-	
 }

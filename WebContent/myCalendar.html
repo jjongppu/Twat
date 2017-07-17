@@ -985,7 +985,7 @@
         });
     }
 
-    function dateToFormat(sendCal) {
+    function dateToFormat(sendCal) {  // date()함수의 날짜를 오늘날의 형식으로 바꿔주는 함수.
         var dateStr = "";
         if ((sendCal.getMonth() + 1) / 10 < 1) {
             if (sendCal.getDate() / 10 < 1) {
@@ -1049,20 +1049,20 @@
 
     function getDayInfo(a) { // 선택한 날짜 정보를 얻기 위한 함수
         if (a != null) {
-            var yearInfo = $("#yearSelect").val() + "";
-            var monthInfo = $("#monthSelect").val() + "";
-            var dayInfo = $(a).attr("id").substr(4, $(a).attr("id").length - 4) + "";
-            if (monthInfo.length == 1) {
+            var yearInfo = $("#yearSelect").val() + "";    // 년도 값 가져오기
+            var monthInfo = $("#monthSelect").val() + "";  // 월의 값 가져오기
+            var dayInfo = $(a).attr("id").substr(4, $(a).attr("id").length - 4) + "";  
+            if (monthInfo.length == 1) {  // 월의 숫자가 한자리 일경우 앞에 0 붙이기.
                 monthInfo = "0" + monthInfo;
             }
-            if (dayInfo.length == 1) {
+            if (dayInfo.length == 1) { // 일의 숫자가 한자리 일경우 앞에 0 붙이기.
                 dayInfo = "0" + dayInfo;
             }
             //                scheArr[0] = yearInfo + monthInfo;
-            var selectDate = yearInfo + monthInfo + dayInfo;
+            var selectDate = yearInfo + monthInfo + dayInfo;    // 년도 + 월 + 일 합치기.
             
             /*  ==========  날짜 선택해서 색깔 바꿔주는 문 ============== */
-            if (selectDate < dateToFormat(initDay)) {
+            if (selectDate < dateToFormat(initDay)) { // var initDay = new Date();
             } else {
                 if ($(a).find(".choiceDate").css('width') != undefined) {
                     $(a).find(".choiceDate").remove();
@@ -1088,7 +1088,7 @@
                 } else {
                     $(a).append('<div class="choiceDate"> </div>');
                     scheSet.add(yearInfo + monthInfo + dayInfo);
-                    console.log(selectDate);
+                    console.log(selectDate); // 년도 + 월 + 일 합친거 콘솔 출력.
                 }
             }
         }
@@ -1192,7 +1192,7 @@
             if ((today.getMonth() + 1) / 10 < 1) { // 월처리
                 if (calDay / 10 < 1) {
                     dateParam = today.getFullYear() + "0" + (today.getMonth() + 1) + "0" + calDay;
-                } // dateParam은 원래 2017712에서  7앞에 0을 넣는다. 20170712
+                } // dateParam은 원래 20170712에서  7앞에 0을 넣는다. 20170712
                 else {
                     dateParam = today.getFullYear() + "0" + (today.getMonth() + 1) + "" + calDay;
                 }
@@ -1304,8 +1304,10 @@
 //                  str+="<div class='schedules scheList3'>"+item.myCalTime+" 시 예약<button class='scheList' name='delete"+item.myCalIndex+"' id='delete"+item.myCalIndex+"' onclick=scheDelete(this)>-</button></div></div>";
               });
                 
-                var tempDataArray = Array.from(tempDataSet).sort();
-                console.log(tempDataArray);
+                var tempDataArray = Array.from(tempDataSet).sort(function(a, b){
+                    return a - b;
+                }); 
+                // console.log(tempDataArray);
                 var tempYear = 0;
                 
                 str+="<div class='swiper-slide'>";
@@ -1577,7 +1579,7 @@
               });
                 
                 var groupDataArray = Array.from(groupDataSet).sort();
-                console.log(groupDataArray);
+                // console.log(groupDataArray);
                 var groupYear = 0;
                 
                 str2+="<div class='swiper-slide'>";
@@ -1770,16 +1772,25 @@
         }
     }
     
-    
+    var sendDate = "";
     function selectYes() {
         console.log($("#calTitle").val());
         console.log($("#calTitle").val().length);
         
-        var groupId = location.href.split("=")[1];
-        console.log(groupId);
-        var calDate = "";
-        for (let item of scheSet.keys())
-            calDate += item + ","; // 달력에 날짜를 클릭했을때 (년도+월+선택한 일) + ","
+        var sendDateSet = new Set();
+
+        for (let item of scheSet.keys()){
+            sendDateSet.add(item);// 달력에 날짜를 클릭했을때 (년도+월+선택한 일) + ","
+        }
+
+        var dateArray = Array.from(sendDateSet).sort();
+        console.log(dateArray);
+        
+        for(var i=0; i <dateArray.length; i++){
+            sendDate += dateArray[i]+",";
+        }
+        console.log(sendDate);
+
         var calTitle = $("#calTitle").val();
         var calTime = $("#scheTime").val();
         if($("#calTitle").val().length == 0){
@@ -1791,13 +1802,12 @@
                 url: 'mySchedule.do',
                 data: { // 이 데이터가 서블릿으로 보내주는것이다.
                     title: calTitle,
-                    calDate: calDate,
-                    groupId: groupId,
+                    calDate: sendDate,
                     calTime: calTime
                 },
                 dataType: "json",
                 success: function(data) { // 이것이 서블릿에서 받는 코드.
-                    console.log(data);
+                    // console.log(data);
                 },
                 error: function(req) {
                     //                    alert("상태 : " + req.status + ", " + req.responseText + ", error : " + req.error);
@@ -1870,29 +1880,28 @@
 
 <body>
     <div id="newWrap">
-      <nav class="left_nav">
-        <div id="userInfo">
-            <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
-                <li class="nav_li">
-                    <img id="user_Img" src=""/>
-                </li>
-                <li class="nav_li idLi">
-                    <div id="user_Id"></div>
-                </li>
+        <nav class="left_nav">
+            <div id="userInfo">
+                <ul id="user_Img_Cover" class="nav_ul" onclick="location.href='myInfo.html'">
+                    <li class="nav_li">
+                        <img id="user_Img" src=""/>
+                    </li>
+                    <li class="nav_li idLi">
+                        <div id="user_Id"></div>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav_ul" id="nav_menu">
+                <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
+                <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="myCalendar.html">개인</a></li>
+                <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
+                <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
+                <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
             </ul>
-        </div>
-        <ul class="nav_ul" id="nav_menu">
-            <li class="nav_li"><a class="nav_text" href="home.html">메인</a></li>
-            <li class="nav_li"><div id="navHere"></div><a class="nav_text" href="myCalendar.html">개인</a></li>
-            <li class="nav_li"><a class="nav_text" href="groupList.html">모임</a><div id="newContents">N</div></li>
-            <li class="nav_li"><a class="nav_text" href="friendList.html">지인</a></li>
-            <li class="nav_li"><a class="nav_text" href="qnaList.html">문의</a></li>
-        </ul>
-        <ul id="logout" class="nav_ul" onclick="logout()">
-             <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
-        </ul>
-          
-    </nav>
+            <ul id="logout" class="nav_ul" onclick="logout()">
+                <li class="nav_li"><a class="nav_text" onclick="logout();">아웃</a>
+            </ul>  
+        </nav>
 
         <!--  ========================= NAV 밑 ========================== -->
 
