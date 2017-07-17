@@ -766,5 +766,16 @@
     </servlet-mapping>
 
 
+     <servlet> 
+        <servlet-name>MakeSession</servlet-name> 
+        <servlet-class>com.mtwat.controller.MakeSession</servlet-class> 
+    </servlet> 
+    <servlet-mapping> 
+        <servlet-name>MakeSession</servlet-name> 
+        <url-pattern>/MakeSession.do</url-pattern> 
+    </servlet-mapping>
+
+
+
 
 </web-app>
