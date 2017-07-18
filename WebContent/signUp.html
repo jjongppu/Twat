@@ -47,8 +47,33 @@
         border-bottom: 1px solid darkgray;
 		background: none;
     }
+	
+	#idBox {
+		width: 60%;
+	}
+	
+	#authBox {
+		display: none;
+	}
+	#authBtn {
+		display: inline-block;
+		width: 18%;
+		font-size: 12px;
+		background: orange;
+	}
     
-    
+	#authNum {
+		width: 30%;
+        height: 20px;
+	}
+	#authCheckBtn {
+		display: inline-block;
+		width: 12%;
+		height: 22px;
+		font-size: 12px;
+		background: orange;
+	}
+	
     #genderDiv {
 /*        height: 40px;*/
 /*        border: 1px solid darkgray;*/
@@ -340,15 +365,25 @@
 						$('#idBox').focus();
 						idTF = false;
                     }
-                    
-					
-					
                 },
                 error: function(req) {
                     alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error);
                 }
             });  
         };
+	
+	
+	
+	// 이메일 유효성 검사
+	// 1. 문자,숫자 랜덤
+	// 2. 
+	function checkEmail() {
+		var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+//		$('#authBtn').click(function (){
+//			$('#authNum').css('display', 'block');
+//		});
+		$('#authBox').css('display', 'block');
+	}
     
     
     // 전화번호 입력시 하이픈(-) 자동 입력
@@ -480,7 +515,13 @@
             <h3 class="mainText">회원가입</h3>
             <div class="idpwContaioner">
                 <div>
-                    <input type="text" name="signUpId" placeholder="아이디" class="inputBox" maxlength='14' id="idBox" onkeyup="overlapId()" />
+<!--                    <input type="text" name="signUpId" placeholder="아이디" class="inputBox" maxlength='14' id="idBox" onkeyup="overlapId()" />-->
+					<input type="text" name="signUpId" placeholder="이메일 주소" class="inputBox" id="idBox" />
+					<input type="button" value="이메일 인증" id="authBtn" class="btns" onclick="checkEmail()"/>
+					<div id="authBox">
+						<input type="text" placeholder="인증번호" id="authNum" class="inputBox"/>
+						<input type="button" value="확인" id="authCheckBtn" class="btns" onclick=""/>
+					</div>
                     <div id="idMessage"></div>
                 </div>
                 <div>
