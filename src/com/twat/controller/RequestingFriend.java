@@ -17,26 +17,14 @@ import org.json.simple.JSONObject;
 import com.twat.dao.MemberDAO;
 import com.twat.dto.MemberVO;
 
-/**
- * Servlet implementation class RequestingFriend
- */
 //@WebServlet("/RequestingFriend.do")
 public class RequestingFriend extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public RequestingFriend() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
@@ -52,7 +40,6 @@ public class RequestingFriend extends HttpServlet {
 	    MemberDAO memberDAO = MemberDAO.getInstance();
 	    
 	    ArrayList<MemberVO> member = memberDAO.requestingFriendList(loginUserId , "!");
-//	    System.out.println(member.size());
 	    
 	    if(member != null){
 	    	for(int i = 0; i < member.size(); i++){
@@ -63,19 +50,12 @@ public class RequestingFriend extends HttpServlet {
 		    	jsonObj.put("friendPhone", member.get(i).getMEMBER_PHONE());
 		    	jsonObj.put("friendGender",member.get(i).getMEMBER_GENDER() );
 		    	jsonArr.add(jsonObj);	    	
-		    	
 		    }
-	    	
 	    }
 	    
-	    
-	    
-//	    System.out.println(jsonArr);
+	    System.out.println(jsonArr);
 	    out.println(jsonArr);
 	    out.close();
-	    
-	    
-	    
 	    
 	}
 
