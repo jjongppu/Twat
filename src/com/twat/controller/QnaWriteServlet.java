@@ -52,6 +52,11 @@ public class QnaWriteServlet extends HttpServlet {
 	    int qnaPw = Integer.parseInt(request.getParameter("qnaPw"));
 	    String qnaTitle = request.getParameter("qnaTitle");
 	    String qnaContents = request.getParameter("qnaContents");
+	    System.out.println(qnaCategory);
+	    System.out.println(qnaPw);
+	    System.out.println(qnaTitle);
+	    System.out.println(qnaContents);
+	    
 	    
 	    QnaDAO qnaDao = QnaDAO.getInstance();
 	    int result = qnaDao.insertQnA(qnaId, qnaCategory, qnaPw, qnaTitle, qnaContents);
