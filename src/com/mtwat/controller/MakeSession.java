@@ -45,8 +45,12 @@ public class MakeSession extends HttpServlet {
 		
 		session.setAttribute("loginUserId", loginCookie);
 		
+		if(session.getAttribute("loginUserId") != null){
+			jsonOb.put("result", "success");
+		}else{
+			jsonOb.put("result", "fail");
+		}
 		
-		jsonOb.put("result", "success");
 		jsonList.add(jsonOb);
 		
 		writer.println(jsonList);

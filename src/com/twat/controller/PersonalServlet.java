@@ -42,6 +42,11 @@ public class PersonalServlet extends HttpServlet {
 	    HttpSession session = request.getSession();
 	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
 	    
+	    String mobile = request.getParameter("mobile");
+	    if(mobile != null){
+	    	MEMBER_ID=mobile;
+	    }
+	    
 	    MemberDAO mdo = MemberDAO.getInstance();
 	    
 	    ArrayList<MemberVO> arList = mdo.myInfo(MEMBER_ID);

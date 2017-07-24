@@ -37,6 +37,10 @@ public class ChangeInfo extends HttpServlet {
 	     
 	    HttpSession session = request.getSession();
 	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
+	    String mobile = request.getParameter("mobile");
+	    if(mobile != null){
+	    	MEMBER_ID=mobile;
+	    }
 	    String MEMBER_NAME = request.getParameter("userName");
 	    String MEMBER_PHONE = request.getParameter("userPhone");
 		String MEMBER_BIRTH = request.getParameter("userBirth");

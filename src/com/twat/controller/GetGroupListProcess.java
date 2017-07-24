@@ -50,12 +50,16 @@ public class GetGroupListProcess extends HttpServlet {
 		// 종류 구분해버리깃
 		int kinds = Integer.parseInt(request.getParameter("kind"));
 
+		if(kinds ==3){
+			userId = request.getParameter("login");
+		}
+		
 		CalgatherDAO calDao = CalgatherDAO.getInstance();
 		MemberJoinGroupDAO getGourpInfo = MemberJoinGroupDAO.getInstance();
 		ArrayList<MemberJoinGroupVO> mjg = getGourpInfo.getViewCountCheck(userId);
 		System.out.println(mjg.size());
 		// 1일떄만 방정보까지 얻어옴 불필요한 정보 최소화
-		if(kinds == 1){
+		if(kinds == 1 || kinds == 3){
 			groupInfo = calDao.myGroupList(mjg);
 			System.out.println(groupInfo.size());
 		}
@@ -63,7 +67,7 @@ public class GetGroupListProcess extends HttpServlet {
 		if(mjg.size() > 0 ){
 			for (int i = 0; i < mjg.size(); i++) {
 				JSONObject jsonObj = new JSONObject();
-				if(kinds == 1){
+				if(kinds == 1 || kinds == 3){
 					CalgatherVO cao = (CalgatherVO)groupInfo.get(i);
 					jsonObj.put("group_id", cao.getGroup_id());
 					jsonObj.put("group_name", cao.getGroup_name());
