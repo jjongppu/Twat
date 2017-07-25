@@ -47,7 +47,7 @@ public class SetMyGroupContentsView extends HttpServlet {
 		MemberJoinGroupDAO IseeContens = MemberJoinGroupDAO.getInstance();
 		IseeContens.updateMyCalView(groupid,userId);
 		
-		// 1일떄만 방정보까지 얻어옴 불필요한 정보 최소화
+		
 		
 			JSONObject jsonObj = new JSONObject();
 			jsonObj.put(" "," ");

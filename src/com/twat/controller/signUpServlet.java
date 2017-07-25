@@ -53,7 +53,6 @@ public class signUpServlet extends HttpServlet {
 	    String signUpId = request.getParameter("signUpId");
 	    String signUpPw = request.getParameter("signUpPw");
 	    
-//	    // 占쏙옙占쏙옙 占쏙옙占싸듸옙 占쌔곤옙x----------------------------------------------------------
 //	    String savePath = "img/member";
 //	    int uploadFileSize = 5 * 1024 * 1024; // 占쏙옙占쏙옙占쏙옙 크占썩를 5MB占쏙옙 占쏙옙占쏙옙 (1024 = 2^10)
 ////	    String encType = "UTF-8";
@@ -68,9 +67,7 @@ public class signUpServlet extends HttpServlet {
 //				, uploadFileSize
 //				, new DefaultFileRenamePolicy());
 //	    
-//	    // 占쏙옙占싸듸옙 占쏙옙 占쏙옙占쏙옙 占싱몌옙 占쏙옙占�
 //	 	String fileName = multi.getFilesystemName("uploadFile");
-//	    // ------占쏙옙占쏙옙 占쌕울옙占쌍깍옙 占승댐옙占쏙옙 占싫맞댐옙占쏙옙 占쏙옙占쏙옙----------------------------------------------------------------------
 //	    String signUpImgName = request.getParameter("signUpImg");
 //	    String signUpImg = savePath + fileName;
 	    String signUpName = request.getParameter("signUpName");

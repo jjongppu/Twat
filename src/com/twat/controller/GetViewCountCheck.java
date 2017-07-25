@@ -18,7 +18,7 @@ import com.twat.dao.CalgatherDAO;
 import com.twat.dao.MemberDAO;
 import com.twat.dto.CalgatherVO;
 
-// 읽은게시물과 안읽은 게시물을 확인해 주기위한 서블릿
+
 //@WebServlet("/GetViewCountCheck.do")
 public class GetViewCountCheck extends HttpServlet {
 	private static final long serialVersionUID = 1L;

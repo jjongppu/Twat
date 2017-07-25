@@ -38,9 +38,9 @@ public class AdminGroupOut extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 		PrintWriter out = response.getWriter();
-		// 삭제될 그룹 번호
+		
 	    String Group_Id = request.getParameter("out");
-	    // 삭제할 종류 1=그룹 게시글 댓글 삭제  2=게시글 댓글 삭제
+	    
 	    int kind = Integer.parseInt(request.getParameter("kind"));
 	    
 	    AdminDAO ado = AdminDAO.getInstance();

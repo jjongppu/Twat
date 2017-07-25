@@ -313,7 +313,7 @@
                 if(end == -1)end = cookieData.length;
                 cValue = cookieData.substring(start, end);
             }
-            return unescape(cValue);
+            return unescape(cValue); 
         }  
 	
 
@@ -367,7 +367,7 @@
                         <span>  &nbsp;|&nbsp; </span>
                         <a href="searchPW.html" class="pwSearch">비밀번호 찾기</a>
 <!--              이 밑은  카카오톡 로그인 입니다 -->
-                        <a id="kakao-login-btn"></a>
+                      <!--   <a id="kakao-login-btn"></a>
                         <a href="http://developers.kakao.com/logout"></a>
                     <script type='text/javascript'>
 
@@ -382,7 +382,7 @@
                           fail: function(err) {
                              alert(JSON.stringify(err));
                           }
-                        });
+                        }); -->
                     </script>
 
                         </div>    
@@ -392,9 +392,6 @@
             </div>
 
         </form>
-        
-     
- 
         
     </div>
     

@@ -20,7 +20,7 @@ import com.twat.dao.CalendarDAO;
 import com.twat.dao.CalgatherDAO;
 import com.twat.dao.MemberJoinGroupDAO;
 
-// 나동주 추가
+
 
 /**
  * Servlet implementation class ScheduleAdd

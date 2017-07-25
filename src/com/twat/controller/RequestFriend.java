@@ -48,8 +48,8 @@ public class RequestFriend extends HttpServlet {
 		    HttpSession session = request.getSession(); 
 		    String loginUserId = (String) session.getAttribute("loginUserId");
 		    String friendId = request.getParameter("friendId");
-		    //*로시작 : 친구요청을 함
-		    //!로시작 : 친구요청을 받음
+		    
+		    
 		    
 //		    System.out.println(loginUserId);
 //		    System.out.println(friendId);

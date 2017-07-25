@@ -43,9 +43,9 @@ public class AdminSetVisitToday extends HttpServlet {
 	    
 	    String userturn = request.getParameter("turn");
 		String userid = request.getParameter("userid");
-		//오늘 정각까지의 시간
+		
 		long dates = Long.parseLong(request.getParameter("dates"));
-		//현재시간
+		
 		long nowtimes = System.currentTimeMillis();
 
 
@@ -72,7 +72,7 @@ public class AdminSetVisitToday extends HttpServlet {
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 		
-		// 로그인 성공/실패 
+		 
 		if(!result){
 			jsonOb.put("result", "fail");
 		} else {

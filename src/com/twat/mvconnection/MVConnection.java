@@ -22,9 +22,9 @@ import java.util.concurrent.Executor;
 public class MVConnection implements Connection{
 	
 	
-	 private Connection conn; // 角力 目池记
+	 private Connection conn; 
      
-     private java.util.List<Statement> statementList; // statement甫 历厘
+     private java.util.List<Statement> statementList; 
      
      public MVConnection(Connection conn) {
          this.conn = conn;

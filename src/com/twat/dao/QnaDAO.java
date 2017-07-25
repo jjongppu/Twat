@@ -19,7 +19,7 @@ public class QnaDAO {
 //	Connection con = null;
 	
 	
-	// MemberDAO 의 싱글톤 -----------------------------------
+	
 	private static QnaDAO instance = new QnaDAO();
 		
 	private QnaDAO(){}
@@ -29,7 +29,7 @@ public class QnaDAO {
 	}
 		
 	
-	// DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
+	
 //	public Connection getConnection() throws Exception {
 //		Context initCtx = new InitialContext();
 //	    DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
@@ -38,7 +38,7 @@ public class QnaDAO {
 //	}
 //	
 	
-	// qna_number 최대값 받아오는 메서드 -------------------- 최승우----------------------------
+	
 	public int getMaxNum() {
 		Connection con = null;
 		PreparedStatement psmt= null;
@@ -77,7 +77,7 @@ public class QnaDAO {
 	}
 	
 	
-	// 건의사항 글쓰기 --------------------------최승우-------------------
+	
 	public int insertQnA(String qnaId, String qnaCategory, int qnaPW, String qnaTitle, String qnaContents) {
 //		PreparedStatement psmt= null;
 		ResultSet rs= null;
@@ -121,7 +121,7 @@ public class QnaDAO {
 	}
 	
 	
-	// 건의사항 제목으로 찾기 ----------------승우---------------------------- 쫑길수정
+	
 	public ArrayList<QnaVO> searchQnA(int page, String val, int kind) {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
@@ -129,7 +129,7 @@ public class QnaDAO {
 		Connection con = null;
 		
 		
-		// 그릅수 얻어옴
+		
 		String selectQnaCount = "SELECT COUNT(*) FROM QNA ";
 		if(kind ==1){
 			selectQnaCount += " WHERE QNA_TITLE LIKE ?";
@@ -142,8 +142,6 @@ public class QnaDAO {
 		}
 		selectQnaCount+= "  ORDER BY QNA_DATE DESC";
 		
-		//실질적인 내용
-		//제목순
 		String selectKindQnaSql = "SELECT * FROM QNA";
 		
 		if(kind ==1){
@@ -218,15 +216,15 @@ public class QnaDAO {
 	
 	
 	
-	// 문의사항 리스트 불러오기 -----------최승우-----------------------
+
 	public ArrayList<QnaVO> getList(int searchCategory, int page, String val) {
 		PreparedStatement psmt= null;
 		ResultSet rs= null;
 		Connection con = null;
 		ArrayList<QnaVO> arList = new ArrayList<QnaVO>();
 //		QnaVO qnaVo = new QnaVO();
-		// searchCategry = 문의사항 종류(카테고리)
-		// val = 검색어
+		
+		
 		
 		String countSql = "SELECT COUNT(*) FROM QNA";
 		if(!val.equals("0")) {
@@ -240,7 +238,7 @@ public class QnaDAO {
 		}
 		AllSql += "ORDER BY QNA_ID ASC LIMIT " + (page*10-10) + " ,10";
 		
-		// 1 = 제목 / 제목으로 검색하기
+		
 		if(searchCategory == 1) {
 			try {
 //				con = getConnection();
@@ -276,7 +274,6 @@ public class QnaDAO {
 					qv.setQNA_TITLE(rs.getString("QNA_TITLE"));
 					qv.setMEMBER_ID(rs.getString("MEMBER_ID"));
 					qv.setQNA_DATE(rs.getTimestamp("QNA_DATE"));
-					// 조회수 어떻게 처리할지 생각해야되
 					
 					arList.add(qv);
 				}
@@ -297,7 +294,6 @@ public class QnaDAO {
 		        
 			}
 		
-		// 2 = 글 내용 / 글 내용으로 검색하기
 		} else if(searchCategory == 2) {
 			
 			

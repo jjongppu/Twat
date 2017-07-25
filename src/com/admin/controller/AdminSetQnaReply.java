@@ -32,7 +32,7 @@ public class AdminSetQnaReply extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 		PrintWriter out = response.getWriter();
-		// 댓글이달릴 글 번호
+		
 	    String qna_id = request.getParameter("id");
 	    String textval = request.getParameter("textVal");
 	    

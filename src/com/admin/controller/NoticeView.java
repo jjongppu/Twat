@@ -34,7 +34,7 @@ public class NoticeView extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 		PrintWriter out = response.getWriter();
-		// 댓글이달릴 글 번호
+		
 	    Long views = Long.parseLong(request.getParameter("id"));
 	    
 	    AdminDAO ado = AdminDAO.getInstance();

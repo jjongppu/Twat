@@ -27,8 +27,6 @@ public class CalendarDAO {
 //	ResultSet rs = null;
 //	Statement stmt;
 
-	// CalendarDAO �뜝�룞�삕 �뜝�떛源띿삕�뜝�룞�삕
-	// ================================================================================================
 	private static CalendarDAO instance = new CalendarDAO();
 
 	private CalendarDAO() {
@@ -38,7 +36,6 @@ public class CalendarDAO {
 		return instance;
 	}
 
-	// DB�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 con�뜝�룞�삕 �뜝�룞�삕�솚�뜝�떦�뙋�삕 �뜝�뙣�눦�삕�뜝�룞�삕
 	// ==================================================================================
 //	public Connection getConnection() throws Exception {
 //		Context initCtx = new InitialContext();
@@ -114,7 +111,6 @@ public class CalendarDAO {
 		return arrList;
 	}
 
-	// �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙣�븘�슱�삕�뜝�룞�삕(�뜝�뙎琉꾩삕 �뜝�룞�삕�뜝�떛�벝�삕, �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떛�벝�삕)
 	public ArrayList<CalendarVO> getInfo(String groupId, String calId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -295,78 +291,6 @@ public class CalendarDAO {
 
 	}
 
-//	public void addCalComment(int group_id, String cal_memo, String first_cal, String new_memo, String cal_writer) {
-//		PreparedStatement psmt2 = null;
-//
-//		try {
-////			con = getConnection();
-//			con = new MVConnection(DBPool.getInstance().getConnection());
-////			String sql = "SELECT CAL_NUM FROM calendar where CAL_DATE LIKE ? AND GROUP_ID = ? AND CAL_MEMO = ?";
-//			String sql = "SELECT CAL_NUM FROM CALENDAR WHERE CAL_DATE LIKE ? AND GROUP_ID = ? AND CAL_MEMO = ?";
-//			psmt = con.prepareStatement(sql);
-//			psmt.setString(1, "%" + first_cal + "%");
-//			psmt.setInt(2, group_id);
-//			psmt.setString(3, cal_memo);
-//
-//			rs = psmt.executeQuery();
-//
-//			int cal_num = 0;
-//			while (rs.next()) {
-//				cal_num = rs.getInt("CAL_NUM");
-//			}
-//
-////			String sql2 = "insert into calendar VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
-//			String sql2 = "INSERT INTO CALENDAR VALUES(?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, ?, ?)";
-//			psmt2 = con.prepareStatement(sql2);
-//
-//			psmt2.setInt(1, getLastCalNum());
-//			// System.out.println(psmt2.isClosed());
-//			psmt2.setString(2, "");
-//			// System.out.println(psmt2.isClosed());
-//			psmt2.setInt(3, group_id);
-//			psmt2.setString(4, new_memo);
-//			psmt2.setString(5, cal_writer);
-//			psmt2.setString(6, " ");
-//			psmt2.setString(7, " ");
-//			psmt2.setInt(8, cal_num);
-//			psmt2.setInt(9, 1);
-//
-//			psmt2.executeUpdate();
-//
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//
-////			try {
-////				if (rs != null)
-////					rs.close();
-////				if (psmt != null)
-////					psmt.close();
-////				if (psmt2 != null)
-////					psmt2.close();
-////				if (con != null)
-////					con.close();
-////			} catch (SQLException e) {
-////				// TODO Auto-generated catch block
-////				e.printStackTrace();
-////			}
-//
-//			if (con != null)
-//	        {
-//	        	try
-//	        	{
-//	        		con.close();
-//	        	}
-//	        	catch (SQLException ex) {
-//					ex.printStackTrace();
-//	    		}
-//	        }
-//		}
-//
-//	}
-
-//	public void addCalComment(int groupId, String userId, int calNum, String memo)
 	public void addCalComment(int groupId, String userId, int calNum, String memo)
 	{
 		Connection con = null;
@@ -426,7 +350,6 @@ public class CalendarDAO {
 		}
 	}
 
-	// �뜝�룞�삕�몴 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕�듃
 	public void updateMemberChoice(String calNum, String voteList, String user) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -562,7 +485,6 @@ public class CalendarDAO {
 		}
 	}
 
-	// �뜝�룞�삕�뜝�룞�삕 �솗�뜝�룞�삕�뜝�떦�뙋�삕 �뜝�뙃�눦�삕
 	public void scheduleSelected(String calNum, String calDate) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -754,7 +676,6 @@ public class CalendarDAO {
 		return myCalGatherList;
 	}
 
-	// 諛⑹옣 �쟾�솚 : �돩肉�,,, �씠嫄�,,, �븘�땲�떎,,, 吏꾩쭨,,, �걫李랁븯�꽕
 	public void changeGM(int groupId, String before, String after) {
 		Connection con = null;
 		PreparedStatement pstmt = null;

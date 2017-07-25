@@ -54,10 +54,18 @@ public class ChangePwd extends HttpServlet {
 	    PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession();
+			
+		
 	    String userId = (String)session.getAttribute("loginUserId");
+	    
+	    String mobile = request.getParameter("mobile");
+	       if(mobile != null){
+	    	   userId=mobile;
+	       }
+	    
 	    String beforePw = request.getParameter("beforePw");
 		String afterPw = request.getParameter("afterPw");
-		
+
 		
 		
 	    MemberDAO mdo = MemberDAO.getInstance();
@@ -67,9 +75,9 @@ public class ChangePwd extends HttpServlet {
 	    
 	    System.out.println(beforePw);
 	    System.out.println(afterPw);
-	    System.out.println(result);
+	    System.out.println("321321");
 	    
-	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
+	    jsonObj.put("result", result); 
 	    jsonArr.add(jsonObj);
 	    
 	    out.println(jsonArr);

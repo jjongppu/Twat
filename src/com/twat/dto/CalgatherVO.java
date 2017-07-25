@@ -1,5 +1,6 @@
 package com.twat.dto;
 
+
 public class CalgatherVO {
 	private int group_id;
 	private String group_name;
@@ -11,6 +12,7 @@ public class CalgatherVO {
 	
 	
 	public CalgatherVO(){}
+	
 	public CalgatherVO(int group_id, String group_name, String create_date, String group_master,
 			String group_master_name, String group_img, int group_count) {
 		this.group_id = group_id;
@@ -24,15 +26,19 @@ public class CalgatherVO {
 	public int getGroup_count() {
 		return group_count;
 	}
+	
 	public void setGroup_count(int group_count) {
 		this.group_count = group_count;
 	}
+	
 	public int getGroup_id() {
 		return group_id;
 	}
+	
 	public void setGroup_id(int group_id) {
 		this.group_id = group_id;
 	}
+	
 	public String getGroup_name() {
 		return group_name;
 	}

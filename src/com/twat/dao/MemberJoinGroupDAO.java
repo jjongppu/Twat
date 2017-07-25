@@ -22,7 +22,6 @@ public class MemberJoinGroupDAO
 //	ResultSet rs= null;
 
 	
-	// MemberJoinGroupDAO �� �̱��� -----------------------------------
 	private static MemberJoinGroupDAO instance = new MemberJoinGroupDAO();
 	
 	private MemberJoinGroupDAO(){}
@@ -32,7 +31,6 @@ public class MemberJoinGroupDAO
 		return instance;
 	}
 	
-	// DB������ ���� con�� ��ȯ�ϴ� �޼��� --------------------------------------------
 //	public Connection getConnection() throws Exception
 //	{
 //		Context initCtx = new InitialContext();
@@ -85,7 +83,6 @@ public class MemberJoinGroupDAO
 		return arrList;
 	}
 	
-	// MEMBER_ID�� ���� GROUP_ID�� �޾ƿ��� �Լ�, GROUP_ID�� ArrayList<String>���� ��ȯ
 	public ArrayList<String> getGroupId(String MEMBER_ID)
 	{
 		PreparedStatement psmt5 = null;
@@ -129,7 +126,6 @@ public class MemberJoinGroupDAO
 		return arrList;
 	}
 
-	// ��Ż��
 	public void roomOut(String groupId, String userId)
 	{
 		PreparedStatement pstmt = null;
@@ -207,7 +203,6 @@ public class MemberJoinGroupDAO
 	
 	
 	
-	// ���� �Խù��� ������ �Խù��� ǥ�����ֱ����ؿ�
 	public ArrayList<MemberJoinGroupVO> getViewCountCheck(String MEMBER_ID){
 		ArrayList<MemberJoinGroupVO> arrList = new ArrayList<MemberJoinGroupVO>();
 		String sql = "SELECT * FROM MEMBER_JOIN_GROUP WHERE MEMBER_ID=?";
@@ -250,7 +245,6 @@ public class MemberJoinGroupDAO
 	}
 	
 	
-	// �Խù��� �о��ٰ� ǥ�����ֱ� ���� �޼���...
 	public void updateMyCalView(int groupId, String userName){
 		PreparedStatement pstmt = null;
 		Connection con = null;
@@ -285,7 +279,7 @@ public class MemberJoinGroupDAO
 	
 	
 	
-	public void inviteFriends(String friendId, int groupId){//�׷�� ģ���ʴ�
+	public void inviteFriends(String friendId, int groupId){
 		PreparedStatement pstmt = null;
 		ResultSet rs2 = null;
 		Connection con = null;

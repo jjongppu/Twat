@@ -30,7 +30,6 @@ public class MemberDAO {
 	}
 
 
-	// --------------------------------------------
 //	public Connection getConnection() throws Exception {
 //		Context initCtx = new InitialContext();
 //		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
@@ -151,7 +150,6 @@ public class MemberDAO {
 				result = rs2.getLong(1);
 			}
 		} catch (Exception e) {
-			System.out.print("占쏙옙占쏙옙 占쏙옙占쏙옙");
 			e.printStackTrace();
 		} finally {
 			try {
@@ -209,7 +207,6 @@ public class MemberDAO {
 		return glList;
 	}
 
-	// 회占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쌨쇽옙占쏙옙 ------占승울옙----------------------------
 
 	public int signUpMember(String MEMBER_ID, String MEMBER_PW, String MEMBER_NAME, String MEMBER_PHONE,
 			String MEMBER_GENDER, String MEMBER_BIRTH, long OUT_TIME, String MEMBER_QUESTION, String MEMBER_ANSWER) {
@@ -420,42 +417,6 @@ public class MemberDAO {
 		return arList;
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
-//	public ArrayList<String> test() {
-//		ArrayList<String> str = new ArrayList<String>();
-//		String sql = "SELECT * FROM TEST";
-//		
-//
-//		try {
-//			int a = 0;
-//			a = 4;
-////			con = getConnection();
-//			con = new MVConnection(DBPool.getInstance().getConnection());
-//			a = 5;
-//			psmt = con.prepareStatement(sql);
-//			a = 1;
-//			rs = psmt.executeQuery();
-//			a = 2;
-//			while (rs.next()) {
-//				str.add(rs.getString(1));
-//				str.add(rs.getString(2));
-//			}
-////			a = 3;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (rs != null)
-//					if (psmt != null)
-//						psmt.close();
-//				if (con != null)
-//					con.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return str;
-//	}
 
 	public ArrayList<MemberVO> getMemberBirth(ArrayList<String> memberList) {
 		Connection con = null;
@@ -626,9 +587,7 @@ public class MemberDAO {
 
 	}
 
-	/////////////////// 친구목록에서 친구찾기/////////////////////////////////////////
 	public ArrayList<MemberVO> findFriends(String userPhone) {
-		// 친구 전화번호를 가지고 친구를 가져온다.
 		Connection con = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;				
@@ -673,13 +632,7 @@ public class MemberDAO {
 
 	
 
-	public ArrayList<String> friendPhoneSearch(int phoneOrId, String phoneId) {// 0:
-																				// 폰번호로
-																				// 친구
-																				// 검색,
-																				// 1:
-																				// 아이디로
-																				// 친구검색
+	public ArrayList<String> friendPhoneSearch(int phoneOrId, String phoneId) {
 		
 		Connection con = null;		
 		ArrayList<String> memArr = new ArrayList<String>();
@@ -736,19 +689,19 @@ public class MemberDAO {
 		System.out.println(userId + " , " + friendId);
 		
 		if (userId.equals(friendId)) {
-			result = 3; // 본인 일때
+			result = 3; 
 			return result;
 		}	
 
 			for (int i = 0; i < myFriendList.split(",").length; i++) {
 				if (myFriendList.split(",")[i].equals(friendId)) {
-					result = -1; // 이미 친구
+					result = -1;
 					return result;
 				} else if (myFriendList.split(",")[i].equals("*" + friendId)) {
-					result = 1; // 상대방에게 요청했을때
+					result = 1; 
 					return result;
 				} else if (myFriendList.split(",")[i].equals("!" + friendId)) {
-					result = 2; // 나에게 온 친구요청이 있을때
+					result = 2; 
 					return result;
 				}
 
@@ -930,7 +883,7 @@ public class MemberDAO {
 		return friendList;
 	}
 
-	public void acceptFriend(String userId, String friendId) {// 친구요청 수락
+	public void acceptFriend(String userId, String friendId) {
 		Connection con = null;		
 		PreparedStatement psmt2 = null;
 		String[] myFriendList = null;
@@ -939,7 +892,6 @@ public class MemberDAO {
 		String changeFriendFriendList = "";
 
 		try {
-			// 내친구목록 수정
 			
 			
 			myFriendList = getfriendListForString(userId).split(",");
@@ -978,7 +930,6 @@ public class MemberDAO {
 
 			// System.out.println(changeMyFriendList);
 			
-			// 친구의 친구목록 수정
 			
 
 			friendFriendList = getfriendListForString(friendId).split(",");
@@ -1050,10 +1001,7 @@ public class MemberDAO {
 			psmt.executeUpdate();
 			result = psmt.executeUpdate();
 			if(result == 1){
-				System.out.println("변경");
 				result = 0;
-			}else{
-				System.out.println("비번변경실패");
 			}
 			
 			
@@ -1083,22 +1031,21 @@ public class MemberDAO {
 		Connection con = null;
 		PreparedStatement psmt2 = null;
 		ResultSet rs2 = null;
-
 		try {
-//			con = getConnection();
 			con = new MVConnection(DBPool.getInstance().getConnection());
 			String sql = "SELECT * FROM MEMBER WHERE MEMBER_ID = ? AND MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW'))";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, userId);
 			psmt2.setString(2, beforePw);
 			
-			if(psmt2 != null)
-				psmt2.close();
-
+//			if(psmt2 != null){
+//				psmt2.close();
+//			System.out.println("2");
+			
 			rs2 = psmt2.executeQuery();
-
-			if (rs2.next()) { // 현재 배밀번호와 일치할때 ->새로 바꿀 비밀번호로 수정
-
+//			}
+			
+			if (rs2.next()) { 
 				String sql2 = "UPDATE MEMBER SET MEMBER_PW = HEX(AES_ENCRYPT(?, 'memPW')) WHERE MEMBER_ID = ?";
 				psmt2 = con.prepareStatement(sql2);
 				psmt2.setString(1, afterPw);
@@ -1106,7 +1053,7 @@ public class MemberDAO {
 				psmt2.executeUpdate();
 				return 0;
 
-			} else {// 현재비밀번호와 일치하지 않을때
+			} else {
 				return -1;
 
 			}
@@ -1132,7 +1079,7 @@ public class MemberDAO {
 		return 1;
 	}
 
-	public void deleteFriend(String userId, String deleteFriend) { // 친구 삭제하기
+	public void deleteFriend(String userId, String deleteFriend) { 
 		Connection con = null;
 		PreparedStatement psmt2 = null;
 		
@@ -1173,8 +1120,8 @@ public class MemberDAO {
 			psmt2.executeUpdate();
 
 			friendsList = getfriendListForString(deleteFriend);
-			friendsListArr.clear();// 어레이리스트 초기화
-			deletedFriendsList = ""; // 친구리스트 변수 초기화
+			friendsListArr.clear();
+			deletedFriendsList = "";
 
 			for (int i = 0; i < friendsList.split(",").length; i++) {
 				friendsListArr.add(friendsList.split(",")[i]);
@@ -1296,33 +1243,7 @@ public class MemberDAO {
 		System.out.println(myToken+friendId);
 		System.out.println(myToken+friendId);
 		System.out.println(myToken+friendId + "  시작!!  ");
-		
-//		Iterator<String> it = myArr.iterator();
-//		String value = it.next();
-		
-//		for(int i = 0; i < myArr.size(); i++){ // friends lists array by my ID
-//
-//			System.out.println(myToken+friendId + "    " + i);
-//			System.out.println(myArr.get(i));
-////			if(myArr.get(i).equals(myToken+friendId)){ // myToken("!") + friendId(refused ID) 
-//			if(value.equals(myToken+friendId)){ // myToken("!") + friendId(refused ID) 
-//				System.out.println(myArr.size() + "   = myArr.size() " + i);
-//				System.out.println(myArr.get(i) + "     = myArr.get() " + i);
-//				System.out.println(myArr + "   <=== 지우기전 arr  " + i);
-////				myArr.remove(i);				
-//				it.remove();				
-//				System.out.println(myArr + "   <=== 지우고난 후의 arr  " + i);
-//				
-//			}else if(myArr.get(i).length() != 0){
-//				System.out.println(myArr + "   <=== 지우고난 후의 arr2222   " + i);
-//				System.out.println(myFriendList + "  지우고 난 후 = myFriendList " + i);
-////				myFriendList += "," + myArr.get(i);
-//				myFriendList += "," + myArr.get(i);
-//				System.out.println(myFriendList + "   = myFriendList " + i);
-//			}		
-//		}
-//		System.out.println(myFriendList);
-		System.out.println(myFriendList + " 내 친구요청 리스트 한번 뽑아주고! ");
+
 		
 		
 		for(Iterator<String> it = myArr.iterator(); it.hasNext();){ // friends lists array by my ID
@@ -1351,12 +1272,10 @@ public class MemberDAO {
 			}			
 		}
 		
-		System.out.println("내리스트 :" + myFriendList); 
-		System.out.println("친구리스트 : " + friendFriendList);
 		
 		try {
 			con = new MVConnection(DBPool.getInstance().getConnection());
-			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";// 내 친구목록 갱신
+			String sql = "UPDATE MEMBER SET FRIENDS_LIST = ? WHERE MEMBER_ID = ?";
 			psmt2 = con.prepareStatement(sql);
 			psmt2.setString(1, myFriendList);
 			psmt2.setString(2, userId);

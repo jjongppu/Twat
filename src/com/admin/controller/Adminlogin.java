@@ -44,7 +44,7 @@ public class Adminlogin extends HttpServlet {
 		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
 		
-		// 로그인 성공/실패 
+		 
 		if(result != ""){
 			HttpSession session = request.getSession();
 			

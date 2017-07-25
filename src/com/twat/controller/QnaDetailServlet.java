@@ -70,7 +70,7 @@ public class QnaDetailServlet extends HttpServlet {
 				jsonObj.put("QNA_DATE", detailList.get(i).getQNA_DATE().toString());
 				jsonObj.put("QNA_REPLY", detailList.get(i).getQNA_REPLY());
 				
-				// 세션 아이디 가져오기
+				
 				jsonObj.put("sessionId", userId);
 				jarr.add(jsonObj);
 				

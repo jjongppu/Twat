@@ -413,7 +413,7 @@
         text-align: center;
         width: 150px;
         font-size: 13px;
-/*        cursor: pointer;*/
+        cursor: pointer;
         overflow: hidden;
     }
     
@@ -587,9 +587,10 @@
     }
     #ribbon{
         position: absolute;
-        top: -70px;
-        cursor: pointer;
+        top: -100px;
+/*        cursor: pointer;*/
         width: 60px;
+        color: black;
     }
 
     
@@ -631,9 +632,11 @@
             <div id="title_cover">
                     <span id="title_name">My Calgather</span>
                     
-                <span id="addGroupBtn">
-                    <img id="ribbon"  onclick="addGroup();" src="img/etcIcon/ribbon.png" onmouseover="ribbonUp()" onmouseout="ribbonOver()"/>
-                
+                <span id="addGroupBtn" onclick="addGroup();" onmouseover="ribbonUp()" onmouseout="ribbonOver()">
+                    <div onclick="addGroup();" >방 생성</div>
+                    <img id="ribbon"   src="img/etcIcon/ribbon.png" onmouseover="ribbonUp()" onmouseout="ribbonOver()"/>
+                    
+                    
                 </span>
                 
                 

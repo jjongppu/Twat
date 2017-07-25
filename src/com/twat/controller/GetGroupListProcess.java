@@ -47,14 +47,14 @@ public class GetGroupListProcess extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		ArrayList<CalgatherVO> groupInfo = null;
 		
-		// 종류 구분해버리깃
+
 		int kinds = Integer.parseInt(request.getParameter("kind"));
 
 		CalgatherDAO calDao = CalgatherDAO.getInstance();
 		MemberJoinGroupDAO getGourpInfo = MemberJoinGroupDAO.getInstance();
 		ArrayList<MemberJoinGroupVO> mjg = getGourpInfo.getViewCountCheck(userId);
 		System.out.println(mjg.size());
-		// 1일떄만 방정보까지 얻어옴 불필요한 정보 최소화
+
 		if(kinds == 1){
 			groupInfo = calDao.myGroupList(mjg);
 			System.out.println(groupInfo.size());

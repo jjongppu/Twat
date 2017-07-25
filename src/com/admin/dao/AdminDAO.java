@@ -25,7 +25,6 @@ public class AdminDAO {
 
 	
 	
-	// MemberDAO 의 싱글톤 -----------------------------------
 	private static AdminDAO instance = new AdminDAO();
 	
 	private AdminDAO(){}
@@ -38,7 +37,6 @@ public class AdminDAO {
 	
 	
 	
-	   // DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
 //	   public Connection getConnection() throws Exception {
 //	         Context initCtx = new InitialContext();
 //	         DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      
@@ -47,7 +45,6 @@ public class AdminDAO {
 //	   }
 
 
-		// 관리자 로그인을 위한 메서드 ----------------------------------쫑길빵길
 		public String adminlogin(String MEMBER_ID, String MEMBER_PW) {
 			Connection con = null;
 			PreparedStatement psmt= null;
@@ -65,7 +62,6 @@ public class AdminDAO {
 				rs = psmt.executeQuery();
 				
 				if(rs.next()) {
-					// 로그인 성공
 					result = rs.getString("ADMIN_GRADE");
 				}
 			} catch (Exception e) {
@@ -84,7 +80,6 @@ public class AdminDAO {
 		}
 		
 		
-		// 쫑길빵길의 어드민 홈 db정보 뿌려주기
 		public ArrayList<Integer> getAllInfo(){
 			Connection con = null;
 			PreparedStatement psmt= null;
@@ -126,7 +121,6 @@ public class AdminDAO {
 		
 		
 		
-		// 어드민 페이지 현재 정상 로그인 되는 회원들만 얻어옴 + 검색
 		public ArrayList<MemberVO> adminlogin(int page, String val){
 			Connection con = null;
 			PreparedStatement psmt= null;
@@ -196,14 +190,12 @@ public class AdminDAO {
 		
 		
 		
-		// 그룹리스트 다뽑아옴 ㅋㅋ val이 0이면 select* 검색값이 있으면 방이름으로 라이크검색
 		public ArrayList<CalgatherVO> getGroupList(int page, String val){
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<CalgatherVO> calArry = new ArrayList<CalgatherVO>();	
 			Connection con = null;
 			
-			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM CALGATHER";
 			if(!val.equals("0")){
 				selectGroupCount+= " WHERE GROUP_NAME LIKE ?";
@@ -272,14 +264,12 @@ public class AdminDAO {
 		
 		
 		
-		// 게시글 싸그리 다뽑아옴 ㅋㅋ val이 0이면 select* 검색값이 있으면 방이름으로 라이크검색
 		public ArrayList<CalendarVO> getCalenarList(int page, String val){
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<CalendarVO> calArry = new ArrayList<CalendarVO>();	
 			Connection con = null;
 			
-			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM CALENDAR WHERE CAL_DEPTH=0";
 			if(!val.equals("0")){
 				selectGroupCount+= " AND CAL_MEMO LIKE ?";
@@ -353,21 +343,18 @@ public class AdminDAO {
 		
 		
 		
-		// 문의글 싸그리 다뽑아옴 ㅋㅋ val이 0이면 select* 검색값이 있으면 방이름으로 라이크검색
 		public ArrayList<QnaVO> getQnaList(int page, String val){
 			PreparedStatement psmt= null;
 			ResultSet rs= null;
 			ArrayList<QnaVO> qnaArry = new ArrayList<QnaVO>();	
 			Connection con = null;
 			
-			// 그릅수 얻어옴
 			String selectGroupCount = "SELECT COUNT(*) FROM QNA";
 			if(!val.equals("0")){
 				selectGroupCount+= " WHERE QNA_CONTENTS LIKE ?";
 			}
 			selectGroupCount+= " ORDER BY QNA_REPLY ASC";
 			
-			//실질적인 내용
 			String selectAllgroupSql = "SELECT * FROM QNA";
 			if(!val.equals("0")){
 				selectAllgroupSql+= " WHERE QNA_CONTENTS LIKE ?";
@@ -430,23 +417,18 @@ public class AdminDAO {
 			
 		}
 		
-		// kind 가 1이면 게시글,댓글,그룹 삭제 2면 댓글,게시글 삭제,
 		   public int outGroup(String group_ID, int kind){
 				PreparedStatement psmt= null;
 				Connection con = null;
 				ResultSet rs= null;
-				//그룸삭제 쿼리
 			   String deleteGroupSql = "DELETE FROM CALGATHER WHERE GROUP_ID =?";
-			   //게시글 댓글 삭제 쿼리
 			   String deleteContentSql = "DELETE FROM CALENDAR WHERE GROUP_ID =?";
-			   // 정규화테이블 삭제 쿼리
 			   String deleteJoinMemSql = "DELETE FROM MEMBER_JOIN_GROUP WHERE GROUP_ID =?";
 			   int result = 0;
 			   
 			   try {
 //				con = getConnection();
 				con = new MVConnection(DBPool.getInstance().getConnection());
-				//게시글 댓글 삭제
 				psmt = con.prepareStatement(deleteContentSql);
 				psmt.setString(1, group_ID);
 				psmt.executeUpdate();
@@ -454,14 +436,12 @@ public class AdminDAO {
 				if(psmt!=null)
 					psmt.close();
 				
-				//정규화 테이블 삭제
 				result = 1;
 				if( kind ==1){
 					psmt = con.prepareStatement(deleteJoinMemSql);
 					psmt.setString(1, group_ID);
 					psmt.executeUpdate();
 					
-				// 그룹도 삭제 하기
 					result = 2;
 					psmt = con.prepareStatement(deleteGroupSql);
 					psmt.setString(1, group_ID);
@@ -488,7 +468,6 @@ public class AdminDAO {
 			   return result;
 		   }
 		
-			// 관리자 답변달아주기 위한 메서드 ----------------------------------쫑길빵길
 			public int setQnaReply(String qna_id, String reply) {
 				PreparedStatement psmt= null;
 				Connection con = null;
@@ -520,7 +499,6 @@ public class AdminDAO {
 			}
 			
 			
-			// 방문자 수 얻어오기 업데이트 한방에 해결 ----------------------------------쫑길빵길 -- 잠시 묻음..
 //						public int setGetVisit(int count, String state) {
 //							PreparedStatement psmt= null;
 //							ResultSet rs= null;
@@ -568,9 +546,7 @@ public class AdminDAO {
 							ResultSet rs= null;
 							boolean result = false;
 							String updateVisit = "UPDATE VISIT SET VISIT_COUNT=VISIT_COUNT+1 WHERE VISIT_KIND=?";
-							//개인 방문 기록
 							String updateVisituser = "INSERT INTO VISIT_MEMBER VALUES(?,CURRENT_TIMESTAMP)";
-							// 쿠키!
 							String selectVisit = "SELECT * FROM VISIT ORDER BY VISIT_KIND DESC LIMIT 1";
 							String insertVisitToday = "INSERT INTO VISIT VALUES(?,1)";
 							try {

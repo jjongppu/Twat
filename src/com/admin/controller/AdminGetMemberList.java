@@ -50,7 +50,7 @@ public class AdminGetMemberList extends HttpServlet {
 		JSONArray jsonList = new JSONArray();
 		
 		
-		// 로그인 성공/실패 
+		 
 		if(result.size() !=0 ){
 			for (int i = 1; i < result.size(); i++) {
 				JSONObject jsonOb = new JSONObject();

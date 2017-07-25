@@ -21,7 +21,6 @@ public class CalgatherDAO {
 //	PreparedStatement psmt = null;
 //	ResultSet rs = null;
 
-	// MemberDAO �쓽 �떛湲��넠 -----------------------------------
 	private static CalgatherDAO instance = new CalgatherDAO();
 
 	private CalgatherDAO() {
@@ -30,10 +29,7 @@ public class CalgatherDAO {
 	public static CalgatherDAO getInstance() {
 		return instance;
 	}
-	// -------------------------------------------------------
 
-	// DB�뿰寃곗쓣 �쐞�빐 con�쓣 諛섑솚�븯�뒗 硫붿꽌�뱶
-	// --------------------------------------------
 //	public Connection getConnection() throws Exception {
 //		Context initCtx = new InitialContext();
 //		DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jdbc/twhat");
@@ -41,8 +37,6 @@ public class CalgatherDAO {
 //		return ds.getConnection();
 //	}
 
-	// 李몄뿬以묒씤 罹섎┛�뜑瑜� 肉뚮젮二쇨린�쐞�빐 �옄�떊�씠 李몄뿬�븯怨좎엳�뒗 紐⑤뱺 罹섎┛�뜑�쓽 �젙蹂대��
-	// �뼸�뼱�샃�땲�떎..
 	public ArrayList<CalgatherVO> myGroupList(ArrayList<MemberJoinGroupVO> groupList) {
 		Connection con = null;
 		PreparedStatement psmt = null;
@@ -101,7 +95,6 @@ public class CalgatherDAO {
 
 	}
 
-	// 새로운 그룹을 생성과 동시에 정규화테이블에도 쮺쮺넣어줌
 
 	public int makeGorup(String groupName, String[] members, String Today, String masterId, String GroupImg,
 			int GroupPk) {
@@ -130,7 +123,6 @@ public class CalgatherDAO {
 		try {
 //			con = getConnection();
 			con = new MVConnection(DBPool.getInstance().getConnection());
-			// 諛⑹옣 �씠由� �뼸�뼱�샂 �뀫�뀫
 			psmt = con.prepareStatement(selectMasterName);
 			psmt.setString(1, masterId);
 
@@ -144,7 +136,6 @@ public class CalgatherDAO {
 			if(psmt != null)
 				psmt.close();
 			result = 3;
-			// 諛⑹젙蹂� �씤�꽌�듃 �꽦
 
 			psmt = con.prepareStatement(selectMakeGroupSql);
 			psmt.setInt(1, GroupPk);
@@ -190,7 +181,6 @@ public class CalgatherDAO {
 		return result;
 	}
 
-	// �꽌踰� �옱 �떆�옉�떆.... �쁽�옱 洹몃９ 罹섎┛�뜑�쓽 留덉�留� pk 媛믪쓣 諛섑솚�빐以띾땲�떎
 	public int getLastGroupId() {
 		Connection con = null;
 		PreparedStatement psmt = null;
@@ -230,8 +220,6 @@ public class CalgatherDAO {
 
 	}
 
-	// 諛� �엯�옣�떆 肉뚮젮以� 諛⑹젙蹂� �뼸�뼱�삤湲�
-	// ===============================================================
 	public CalgatherVO getGroupInfo(String groupId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -275,7 +263,7 @@ public class CalgatherDAO {
 		return cv;
 	}
 
-	public String getGroupMaster(int groupId) {// 현재 그룹방의 그룹 마스터 알아오기 // 나동주 추가
+	public String getGroupMaster(int groupId) {
 		Connection con = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -332,11 +320,9 @@ public class CalgatherDAO {
 			
 			if(result == 1)
 			{
-				System.out.println("방장 넘김");
 			}
 			else
 			{
-				System.out.println("방장 넘기기 실패");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

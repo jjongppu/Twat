@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class CalendarVO
 {
-	// 멤버 변수 ==============================================================================================================
+	
 	private int cal_num;
 	private Timestamp cal_time;
 	private String cal_date;
@@ -17,7 +17,7 @@ public class CalendarVO
 	private int cal_reference;
 	private int cal_depth;
 	
-	// 생성자 ==============================================================================================================
+
 	public CalendarVO() {	}
 	
 	public CalendarVO(int cal_num, Timestamp cal_time, String cal_date, int cal_group, String cal_memo,

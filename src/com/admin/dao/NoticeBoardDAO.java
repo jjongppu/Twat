@@ -19,7 +19,6 @@ public class NoticeBoardDAO {
 
 	
 	
-	// MemberDAO 의 싱글톤 -----------------------------------
 	private static NoticeBoardDAO instance = new NoticeBoardDAO();
 	
 	private NoticeBoardDAO(){}
@@ -32,7 +31,6 @@ public class NoticeBoardDAO {
 	
 	
 	
-	// DB연결을 위해 con을 반환하는 메서드 --------------------------------------------
 //	public Connection getConnection() throws Exception {
 //		Context initCtx = new InitialContext();
 //	    DataSource ds = (DataSource)initCtx.lookup("java:comp/env/jdbc/twhat");      

@@ -50,9 +50,11 @@ public class ChangePWServlet extends HttpServlet {
 	    JSONObject jsonObj = new JSONObject();
 	    PrintWriter out = response.getWriter();
 		
-		String userId = request.getParameter("userId");
+	    HttpSession session = request.getSession();
+	    String userId = (String)session.getAttribute("loginUserId");
 	    String beforePw = request.getParameter("beforePw");
 		String afterPw = request.getParameter("afterPw");
+		
 		System.out.println(userId);
 	    System.out.println(beforePw);
 	    System.out.println(afterPw);
@@ -62,9 +64,9 @@ public class ChangePWServlet extends HttpServlet {
 	    
 	    
 	    System.out.println(result);
-	    System.out.println("여기까지나오나?");
 	    
-	    jsonObj.put("result", result); // -1이면 실패 0이면 성공
+	    
+	    jsonObj.put("result", result);
 	    jsonArr.add(jsonObj);
 	    
 	    out.println(jsonArr);
