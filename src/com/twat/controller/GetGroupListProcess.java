@@ -50,12 +50,17 @@ public class GetGroupListProcess extends HttpServlet {
 
 		int kinds = Integer.parseInt(request.getParameter("kind"));
 
+		if(kinds ==3){
+			userId = request.getParameter("login");
+		}
+		
 		CalgatherDAO calDao = CalgatherDAO.getInstance();
 		MemberJoinGroupDAO getGourpInfo = MemberJoinGroupDAO.getInstance();
 		ArrayList<MemberJoinGroupVO> mjg = getGourpInfo.getViewCountCheck(userId);
 		System.out.println(mjg.size());
 
-		if(kinds == 1){
+		if(kinds == 1 || kinds == 3){
+
 			groupInfo = calDao.myGroupList(mjg);
 			System.out.println(groupInfo.size());
 		}
@@ -63,7 +68,7 @@ public class GetGroupListProcess extends HttpServlet {
 		if(mjg.size() > 0 ){
 			for (int i = 0; i < mjg.size(); i++) {
 				JSONObject jsonObj = new JSONObject();
-				if(kinds == 1){
+				if(kinds == 1 || kinds == 3){
 					CalgatherVO cao = (CalgatherVO)groupInfo.get(i);
 					jsonObj.put("group_id", cao.getGroup_id());
 					jsonObj.put("group_name", cao.getGroup_name());

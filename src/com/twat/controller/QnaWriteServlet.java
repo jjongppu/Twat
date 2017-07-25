@@ -47,8 +47,18 @@ public class QnaWriteServlet extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    
 	    HttpSession session = request.getSession();
+
+	    
+	    
 	    String qnaId = (String)session.getAttribute("loginUserId");
+	    
+	    String mobile = request.getParameter("mobile");
+	    if(mobile != null){
+	    	qnaId=mobile;
+	    }
+	    
 	    String qnaCategory = request.getParameter("qnaCategory");
+	    
 	    int qnaPw = Integer.parseInt(request.getParameter("qnaPw"));
 	    String qnaTitle = request.getParameter("qnaTitle");
 	    String qnaContents = request.getParameter("qnaContents");

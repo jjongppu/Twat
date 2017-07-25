@@ -1,4 +1,4 @@
-package com.twat.controller;
+package com.mtwat.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,11 +15,11 @@ import org.json.simple.JSONObject;
 
 import com.twat.dao.MemberDAO;
 
-//@WebServlet("/ChangeInfo.do")
-public class ChangeInfo extends HttpServlet {
+@WebServlet("/MakeSession.do")
+public class MakeSession extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ChangeInfo() {
+    public MakeSession() {
         super();
     }
 
@@ -28,39 +28,33 @@ public class ChangeInfo extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
+		
+	    response.setCharacterEncoding("UTF-8");
 	    response.setContentType("application/json;");
 	    response.setHeader("Cache-Control", "no-cache");
 	    request.setCharacterEncoding("UTF-8");
-	    
-	    PrintWriter out = response.getWriter();
-	     
 	    HttpSession session = request.getSession();
-	    String MEMBER_ID = (String)session.getAttribute("loginUserId");
-	    String mobile = request.getParameter("mobile");
-	    if(mobile != null){
-	    	MEMBER_ID=mobile;
-	    }
-	    String MEMBER_NAME = request.getParameter("userName");
-	    String MEMBER_PHONE = request.getParameter("userPhone");
-		String MEMBER_BIRTH = request.getParameter("userBirth");
-	    
-	    MemberDAO mdo = MemberDAO.getInstance();
-	    JSONArray jsonList = new JSONArray();
+		
+		String loginCookie = request.getParameter("LoginCookie");
+	
+		
+		
+		PrintWriter writer = response.getWriter();
+		JSONArray jsonList = new JSONArray();
 		JSONObject jsonOb = new JSONObject();
-	    
-	    int result = mdo.changeInfo(MEMBER_NAME, MEMBER_PHONE, MEMBER_BIRTH, MEMBER_ID);
-	    
-	    if(result ==1){
-	    	jsonOb.put("result", "success");
-	    }else{
-	    	jsonOb.put("result", "fail");
-	    }
+		
+		session.setAttribute("loginUserId", loginCookie);
+		
+		if(session.getAttribute("loginUserId") != null){
+			jsonOb.put("result", "success");
+		}else{
+			jsonOb.put("result", "fail");
+		}
 		
 		jsonList.add(jsonOb);
 		
-		out.println(jsonList);
-		 out.close();
+		writer.println(jsonList);
+		writer.close();
 	}
 
 }

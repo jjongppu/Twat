@@ -78,7 +78,8 @@
 	
 	<script>
 		function qnaEnter() {
-			
+			console.log("!");
+			console.log($('#qnaForm').serialize());
 			pwTest(); // 비밀번호 숫자로만 입력
 			
 			if($('#cateId option:selected').val() == "--") {
@@ -100,9 +101,12 @@
 					data : $('#qnaForm').serialize(),
 					dataType : "json",
 					success : function(data) {
+						console.log("1");
 						console.log(data);
 						var result = data[0].result;
+						console.log("2");
 						console.log(result);
+						console.log("3");
 						
 						if(result == 'success') {
 							alert("글 작성이 완료 되었습니다.");
@@ -116,8 +120,7 @@
 						alert("상태 : " + req.status + ", " + req.responseText + ", error :" + req.error + "QnaWrite.do");
 					}
 				});  
-			}
-				
+			}	
 				
 		}
 		
